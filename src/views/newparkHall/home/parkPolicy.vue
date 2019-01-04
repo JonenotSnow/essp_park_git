@@ -67,7 +67,7 @@ import Moment from "moment";
 import "swiper/dist/css/swiper.css"; ////这里注意具体看使用的版本是否需要引入样式，以及具体位置。
 import { swiper, swiperSlide } from "vue-awesome-swiper";
 export default {
-  components:{   
+  components:{
             swiper,
             swiperSlide,
             },
@@ -283,11 +283,11 @@ export default {
     line-height: 30px;
     font-size: 14px;
     overflow: hidden;
-    overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
+      word-break: break-all;
   }
   .gn {
     padding: 15px 0;

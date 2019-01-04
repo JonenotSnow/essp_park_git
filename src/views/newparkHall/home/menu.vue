@@ -44,12 +44,12 @@
                  v-if="LoginUserRole.includes('33') || LoginUserRole.includes('34')">
                 <div class="swiper_inner">任务池：</div>
                 <div class="esspclearfix" v-if="lastApplyParkFlag">
-                    <div class="swiper_inner3">{{lastApplyPark.cstNm}}申请入园</div>
+                    <div class="swiper_inner3" @click="linkToPage">{{lastApplyPark.cstNm}}申请入园</div>
                     <div class="swiper_inner2"> {{lastApplyPark.joinTime | timerFormat}}</div>
                     <span
                         class="more"
                         v-if="LoginUserRole.includes('33') || LoginUserRole.includes('34')"
-                        @click="$router.push('/parkHall/manage/activityPoolAddPark')"
+                        @click="linkToPage"
                     >More&gt;</span>
                 </div>
                 <div class="noData" v-else>您当前暂无要处理入园申请~~</div>
@@ -162,6 +162,9 @@
             }
         },
         methods: {
+            linkToPage(){
+                this.$router.push('/parkHall/manage/activityPoolAddPark')
+            },
             // 点击任务池标题获取该审核权限
             cancelAudit(id){
                 this.$post(this.$apiUrl.manage.auditCancer,{
