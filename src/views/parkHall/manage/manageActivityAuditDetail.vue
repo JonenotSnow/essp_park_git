@@ -207,7 +207,7 @@ export default {
             })
             .then((response) => {
                 this.auditInfo = response.resultData;
-            },(err)=>{
+            },(response)=>{
                 this.$message({
                     type: 'error',
                     message: response.resultMsg
