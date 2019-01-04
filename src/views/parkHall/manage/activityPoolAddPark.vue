@@ -220,7 +220,7 @@ export default {
                     this.list = response.resultData.applyParkList;
                 // }
                 this.totalCount = response.resultData.apParkCount;
-            },(err)=>{
+            },(response)=>{
                 this.$message({
                     type: 'warn',
                     message: response.returnMsg

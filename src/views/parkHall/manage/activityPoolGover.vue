@@ -182,7 +182,7 @@ export default {
             this.$post(this.$apiUrl.manage.getAuditList,pop).then((response) => {
                 this.list = response.resultData.policyList;
                 this.totalCount = response.resultData.policyCount;
-            },(err)=>{
+            },(response)=>{
                 this.$message({
                     type: 'warn',
                     message: response.returnMsg

@@ -202,7 +202,7 @@ export default {
             this.$post(this.$apiUrl.manage.getAuditList,pop).then((response) => {
                 this.list = response.resultData.infomationList;
                 this.totalCount = response.resultData.infomationCount;
-            },(err)=>{
+            },(response)=>{
                 this.$message({
                     type: 'warn',
                     message: response.returnMsg
@@ -228,7 +228,7 @@ export default {
                 if (response.resultCode == 'CLT000000000') {
                     this.$router.push({path:'/parkHall/manage/manageZXAuditing',query:{id:id}})
                 }
-            },(err)=>{
+            },(response)=>{
                 this.$message({
                     type: 'warn',
                     message: response.resultMsg
