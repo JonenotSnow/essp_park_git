@@ -62,15 +62,16 @@
                         </el-upload>
                     </div>
                 </div>
+                <div class="ticket-td">
+                    <span class="inline_span">是否开放线上申请 :</span>
+                    <div class="inline_div">
+                        <el-radio v-model="formTicketList.t_isOnlineApply" label="1">是</el-radio>
+                        <el-radio v-model="formTicketList.t_isOnlineApply" label="0">否</el-radio>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="ticket-td">
-            <span class="inline_span">是否开放线上申请 :</span>
-            <div class="inline_div">
-                <el-radio v-model="formTicketList.t_isOnlineApply" label="1">是</el-radio>
-                <el-radio v-model="formTicketList.t_isOnlineApply" label="0">否</el-radio>
-            </div>
-        </div>
+
         <div v-show="formTicketList.t_isOnlineApply =='1'">
             <div class="common_titwrap esspclearfix">
                 <div>
@@ -307,7 +308,7 @@
             </div>
             <div class="final_tablecon" v-show="formTicketList.t_isOnlineApply =='1'">
                 <div class="tditem">
-                    <span class="inline_span">申报是否需审核：</span>
+                    <span class="inline_span">申报是否需审核 :</span>
                     <div class="inline_div">
                         <el-radio v-model="formTicketList.t_intercheck" label="1">是</el-radio>
                         <el-radio v-model="formTicketList.t_intercheck" label="0">否</el-radio>
@@ -327,7 +328,7 @@
             </div>
             <div class="final_tableconA" v-if="formTicketList.t_isOnlineApply =='1' && !LoginUserRol.includes('34')">
                 <div class="tditem">
-                    <span class="inline_span">发布是否需高级管理员审核：</span>
+                    <span class="inline_span">是否高级管理员审核 :</span>
                     <div class="inline_div">
                         <el-radio v-model="formTicketList.isReview" label="1">是</el-radio>
                         <el-radio v-model="formTicketList.isReview" label="0">否</el-radio>
@@ -1636,7 +1637,7 @@
         margin-bottom: 15px;
         .inline_span {
             float: left;
-            width: 150px;
+            width: 12%;
             text-align: right;
             line-height: 40px;
             margin-right: 15px;
@@ -1677,7 +1678,7 @@
 
             .inline_span {
                 float: left;
-                width: 150px;
+                width: 12%;
                 text-align: right;
                 line-height: 40px;
                 margin-right: 15px;
@@ -1692,9 +1693,18 @@
     }
 
     .final_tableconA {
+        float: left;
+        width: 100%;
+        .tditem {
+            float: left;
+            width: 100%;
+            padding-left: 55px;
+            margin-left: 32px;
+            margin-bottom: 10px;
+        }
         .inline_span {
-            width: 127px !important;
-            margin-left: 24px !important;
+            width: 152px !important;
+            margin-left: 0px !important;
         }
         .inline_div {
             position: relative;

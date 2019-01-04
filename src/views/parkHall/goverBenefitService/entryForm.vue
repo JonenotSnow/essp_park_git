@@ -259,7 +259,7 @@
             </div>
             <span slot="footer" class="dialog-footer">
                 <el-button @click="dialogVisible = false">取 消</el-button>
-                <el-button type="primary" @click="upDatefollowStatus()">确 认</el-button>
+                <el-button type="primary" @click="upDatefollowStatus(0)">确 认</el-button>
             </span>
         </el-dialog>
         <!-- 关注事件对话框end -->
@@ -283,6 +283,7 @@
                 btnBloon: true,
                 enrollType: '', // 根据个人还是公司报名 0.个人 1. 公司
                 input: '',
+                followId:'',
                 bookstyle: '1',
                 radioEnroll: '0', // 报名是否需要审核
                 showBtn: true,   // true 表示确定隐藏
@@ -305,7 +306,7 @@
                 breadlist: [
                     {
                         path: '/parkIndex/goverBene/all',
-                        name: "惠政服务"
+                        name: "园区惠政"
                     },
                     {
                         path: '/parkIndex/activityDetail',
@@ -344,6 +345,8 @@
                     this.activeDetailData = response.resultData;
                     this.fileList = this.activeDetailData.fileUrl;
 
+                    this.followId =  this.activeDetailData.followId || '';
+
                     var arr = JSON.parse(this.activeDetailData.applyForm).formRqList;
                     var arr1 = JSON.parse(this.activeDetailData.applyForm).formTypeList;
 
@@ -352,6 +355,7 @@
 
                     this.tags = this.activeDetailData.tagsTxt ? this.activeDetailData.tagsTxt.split(",") : [];
                     this.followStatus = this.activeDetailData.followStatus;
+                    console.log(this.followStatus);
                     this.enrollType = this.activeDetailData.applyType;
                     var allArr = arr.concat(arr1);
 //                    allArr.forEach((item,index)=>{
@@ -445,32 +449,6 @@
             reFile() {
                 this.selcetfile = "";
                 this.listfile = [];
-            },
-            upDatefollowStatus(type) {
-                var pop =
-                    type == 0 ? {id: this.$route.query.id} : {followId: this.followId};
-                var url =
-                    type == 0
-                        ? this.$apiUrl.goverBene.addMyFocus
-                        : this.$apiUrl.goverBene.cancelMyFocus;
-                var successMsg = type == 0 ? "关注成功" : "取消关注成功";
-                var failMsg = type == 0 ? "关注失败" : "取消关注失败";
-                this.$post(url, pop).then(
-                    response => {
-                        var codestatus = response.resultCode;
-                        if (codestatus == "CLT000000000") {
-                            let data = response.resultData;
-                            this.$message.success(successMsg);
-                            this.followId = data.followId;
-                            this.followStatus = data.followStatus;
-                        } else {
-                            this.$message.error(failMsg + response.resultMsg);
-                        }
-                    },
-                    err => {
-                        this.$message.error("接口异常");
-                    }
-                );
             },
             // 点击报名
             submitForm() {
@@ -592,12 +570,15 @@
             },
             upDatefollowStatus() {
                 let type = this.followStatus;
+
                 var pop =
                     type == 0 ? {id: this.$route.query.id} : {followId: this.followId};
                 var url =
                     type == 0
                         ? this.$apiUrl.goverBene.addMyFocus
                         : this.$apiUrl.goverBene.cancelMyFocus;
+                console.log(this.followId);
+
                 var successMsg = type == 0 ? "关注成功" : "取消关注成功";
                 var failMsg = type == 0 ? "关注失败" : "取消关注失败";
                 this.$post(url, pop).then(
