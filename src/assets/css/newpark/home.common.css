@@ -1,0 +1,32 @@
+/*
+ * @Author: Evan-lian
+ * @Date: 2018-12-14 10:48:05
+ * @LastEditors: Evan-lian
+ * @LastEditTime: 2018-12-20 20:30:09
+ * @Description: 新版园区首页公共样式抽离
+ */
+.newpark_warp {
+  width: 100%;
+}
+.newpark_warp .main_inter {
+  width: 1200px;
+  margin: 0 auto;
+}
+.com-tit {
+  text-align: center;
+  padding-top: 50px;
+  font-size: 28px;
+  font-weight: normal;
+  font-stretch: normal;
+  letter-spacing: 2.8px;
+  color: #333333;
+}
+.com-brf {
+  text-align: center;
+  padding-top: 12px;
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  letter-spacing: 0.4px;
+  color: #999999;
+}

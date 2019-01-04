@@ -1,0 +1,331 @@
+/*
+ * @Author: Evan-lian
+ * @Date: 2018-07-11 09:30:34
+ * @LastEditors: Evan-lian
+ * @LastEditTime: 2018-12-25 10:11:59
+ * @Description: ESSP_WEB 项目公共样式提取
+ */
+@charset "utf-8";
+body,
+div,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+pre,
+code,
+form,
+fieldset,
+legend,
+input,
+button,
+textarea,
+p,
+blockquote,
+th,
+td {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: #fff;
+    color: #555;
+    font-size: 14px;
+    
+}
+
+/*td, th, caption {*/
+/*font-size: 14px;*/
+/*}*/
+
+/*h1, h2, h3, h4, h5, h6 {*/
+/*!*font-weight: normal;*!*/
+/*font-size: 100%;*/
+/*}*/
+
+/*address, caption, cite, code, dfn, em, strong, th, var {*/
+/*font-style: normal;*/
+/*font-weight: normal;*/
+/*}*/
+
+a {
+    color: #555;
+    text-decoration: none;
+}
+
+img {
+    border: none;
+}
+
+ol,
+ul,
+li {
+    list-style: none;
+}
+
+/* input,
+textarea,
+select,
+button {
+    font: 14px Verdana, Helvetica, Arial, sans-serif;
+} */
+
+table {
+    border-collapse: collapse;
+}
+
+/* html {
+    overflow-y: scroll;
+} */
+
+body,
+html {
+    background-color: #f5f5f5;
+    font-family: "Microsoft YaHei";
+}
+.common_titwrap {
+    width: 1200px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 38px 0;
+    border-top: 1px solid #ccc;
+}
+
+.common_titwrap .common_titdes {
+    float: left;
+    font-size: 20px;
+    margin-left: 55px;
+    padding: 0 12px 4px;
+    border-left: 10px solid #00a0e9;
+}
+/* 由于less是预编语言，内部样式不生效，出此下策。
+资讯预览的富文本编辑的图片大小控制，代码勿动,谢谢 */
+.inlookContent img {
+    display: block;
+    max-width: 90%;
+}
+.inlookContent {
+    max-width: 90%;
+    word-wrap: break-word;
+}
+/* 公共的面包屑头部样式 */
+.common_detailNav {
+    background: #f5f5f5;
+    font-size: 16px;
+    line-height: 30px;
+    color: #666;
+}
+.newsbtncon {
+    text-align: center;
+    background: #fff;
+}
+.el-dialog__header .el-dialog__headerbtn {
+    /*display: none;*/
+}
+
+.el-cascader-menu > .el-cascader-menu__item {
+    padding: 8px 40px 8px 20px;
+}
+
+/*.el-dialog__body {
+    padding: 0 0 20px!important;
+}*/
+.addFClass .el-dialog__body,
+.removePark .el-dialog__body {
+    padding: 20px !important;
+}
+.scanModelOne .el-dialog__header,
+.scanModelTwo .el-dialog__header,
+.addFClass .el-dialog__header,
+.removePark .el-dialog__header,
+.confirmRequest .el-dialog__header,
+.confirmRequest .el-dialog__body,
+.sendRequest .el-dialog__header,
+.scanRequest .el-dialog__body {
+    padding: 0 !important;
+}
+
+/*左浮动*/
+.esspfl {
+    float: left;
+}
+
+/*右浮动*/
+.esspfr {
+    float: right;
+}
+
+/*//定位全屏*/
+.esspallcover {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+/*//transform上下左右居中*/
+.esspctt {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/*//定位上下居中*/
+.essptb {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/*定位左右居中*/
+.essplr {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/*//固定css*/
+.content_l {
+    float: left;
+    width: 16%;
+    background: #fff;
+}
+
+.content_r {
+    float: right;
+    width: 83%;
+    min-height: 375px;
+}
+.floats .el-input__inner {
+    height: 34px;
+    line-height: 34px;
+}
+.text_align_r {
+    text-align: right !important;
+}
+.text_align_l {
+    text-align: left !important;
+}
+.text_align_c {
+    text-align: center !important;
+}
+.pjdiv .el-table {
+    border: 1px solid #ebeef5;
+}
+.pjdiv .el-table th {
+    background: #f5f5f5;
+}
+
+.pjdiv .el-table th > .cell {
+    font-size: 16px;
+}
+.pjdiv .el-table td > .cell {
+    font-size: 12px;
+    height: 24px;
+    line-height: 24px;
+}
+.pjdiv .el-table td {
+    padding: 15px 0;
+}
+.el-popup-parent--hidden {
+    padding-right: 0 !important;
+}
+/*举报弹窗样式*/
+.tip_off_mask_wrap {
+    width: 738px !important;
+}
+
+.tip_off_mask {
+    margin-top: -20px;
+}
+.tip_off_mask_wrap .el-message-box__header {
+    z-index: 10;
+}
+.tip_off_mask_wrap .el-message-box__btns {
+    text-align: center !important;
+}
+.tip_off_mask_wrap .el-message-box__btns button {
+    width: 100px;
+    height: 36px;
+    margin-top: 21px;
+    margin-bottom: 15px;
+}
+.tip_off_mask_wrap .el-message-box__content {
+    padding: 0 0 0 30px;
+}
+.tip_off_mask_head {
+    line-height: 50px;
+    border-bottom: 1px solid #efefef;
+}
+.tip_off_mask_head strong {
+    margin-right: 10px;
+	/*font-family: PingFangSC-Regular;*/
+	font-size: 18px;
+	font-weight: normal;
+	font-stretch: normal;
+	line-height: 30px;
+	letter-spacing: 0.5px;
+}
+.tip_off_mask_head span {
+    font-size: 12px;
+    color: #b6b6b6;
+}
+.tip_off_mask_body h3 {
+    font-size: 14px;
+    color: #666;
+    line-height: 50px;
+	/*font-family: PingFangSC-Light;*/
+	font-weight: normal;
+	font-stretch: normal;
+	line-height: 30px;
+	letter-spacing: 0.1px;
+	color: #666666;
+    padding: 15px 0;
+}
+.tip_off_mask_body ul li {
+    float: left;
+    width: 200px;
+    height: 40px;
+    line-height: 40px;
+    margin-right: 36px;
+    margin-bottom: 26px;
+    text-align: center;
+    cursor: pointer;
+    background-color: #ececec;
+}
+.tip_off_mask_body ul li.sel {
+    background-color: #e1f4fe;
+    color: #20affb;
+}
+.tip_off_mask_body textarea {
+    display: block;
+    width: 664px;
+    height: 120px;
+    border-radius: 6px;
+    border: solid 2px #e0e0e0;
+    resize: none;
+    padding: 10px 5px;
+}
+.tip_off_mask_submit {
+    width: 120px;
+    height: 38px;
+    line-height: 38px;
+    background-color: #22a2fa;
+    border-radius: 3px;
+    margin: 21px auto 10px;
+    text-align: center;
+    color: #fff;
+    cursor: pointer;
+}
+.editor-style {
+    white-space: pre-wrap;
+}

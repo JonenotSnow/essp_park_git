@@ -1,0 +1,629 @@
+<template>
+ <div>
+     <!-- 园区搜索页面 -->
+     <div class="banner_index">
+        <div class="banner_bg"></div>
+        <div class="indexSeach">
+            <el-input placeholder="请输入标题关键字" v-model="indexSeachKW">
+                <el-select v-model="typeselect" slot="prepend" placeholder="请选择" class="typecon" @change="changetype">
+                    <el-option label="活动" value="park_activity"></el-option>
+                    <el-option label="惠政" value="park_gover" v-if="!isBdPark"></el-option>
+                    <el-option label="资讯" value="park_information"  v-if="!isBdPark"></el-option>
+                </el-select>
+                <el-button slot="append" icon="el-icon-search" @click="getListResult()">园区内搜索</el-button>
+            </el-input>
+            <div class="local esspclearfix">
+                <span v-for="(item,index) in sometags" :key="index" v-if="index<5" @click="setTagTxtSearch(item,index)" :class="{'sel':currentIndex===index}"
+                >{{item}}</span>
+            </div>
+        </div>
+    </div>
+    <div class="ffbox">
+        <div class="listbox">
+            <div class="toollist">
+                <div class="tit-toolcon esspclearfix">
+                    <h2 class="tit-tool">筛选条件</h2>
+                    <el-button type="text" class="reset-tool" @click="resetHandelSearch()">重置条件</el-button>
+                </div>
+                <div class="tdcon esspclearfix">
+                    <span class="inline_span"><em></em>{{typeName}}类型 :</span>
+                     <el-select v-model="classtType" placeholder="请选择" class="inline_select" @change="getListResult">
+                        <el-option v-for="(item,index) in typeitems" :key="index" :label="item.name"
+                                   :value="item.id">
+                        </el-option>
+                    </el-select>
+                </div>
+                <div class="tdcon esspclearfix">
+                    <span class="inline_span"><em></em>发布日期 :</span>
+                     <el-date-picker @change="changeTimeSeach()"
+                        v-model="timeRange"
+                        type="daterange"
+                        range-separator="至"
+                        start-placeholder="开始日期"
+                        end-placeholder="结束日期" value-format="yyyy-MM-dd">
+                    </el-date-picker>
+                </div>
+            </div>
+            <div class="resultlist">
+                <h2 class="tit-tool">筛选结果</h2>
+                <div class="rescon">
+                    <!-- 资讯 -->
+                    <ul v-if="this.typeselect=='park_information'">
+                        <li v-for="(items,index) in searchData" :key="index" class="itemli esspclearfix">
+                            <div class="itemli_wrap_div esspclearfix">
+                                <div class="imgcon" @click="goinfoDetail(items)"><img class="imgdetail" :src="items.titleImg" alt=""></div>
+                                <div class="maincon">
+                                    <h2 class="tit_main" @click="goinfoDetail(items)">{{items.informationTitle}}</h2>
+                                    <div class="time_main">发布时间 : {{items.createTime | timerFormat(items.createTime)}}</div>
+                                    <div class="btncon esspclearfix">
+                                        <span><i class="icon iconfont icon-liulan"></i> {{items.viewTime}}</span>
+                                        <span><i class="icon iconfont icon-collect2"></i> {{items.countFollower}}</span>
+                                        <span><i class="icon iconfont icon-pinglun"></i> {{items.countComment}}</span>
+                                    </div>
+                                </div>
+                                <div class="funbtncn">
+                                    <i :class="items.followStatus==0?'iconfont icon-aixin-xianxing':'iconfont icon-collect2'"></i>
+                                    <span class="btntext">{{items.followStatus==0?"未关注":"已关注"}}</span>
+                                </div>
+                            </div>
+
+                        </li>
+                        <li v-if="searchData.length==0" class="nothing">暂无数据</li>
+                    </ul>
+                    <!-- 惠政 -->
+                    <ul v-if="this.typeselect=='park_gover'">
+                        <li v-for="(items,index) in searchData" :key="index" class="itemli esspclearfix">
+                            <div class="itemli_wrap_div esspclearfix">
+                                <div class="imgcon" @click="gotoGoverDetail(items)"><img class="imgdetail" :src="items.titleImg" alt=""></div>
+                                <div class="maincon">
+                                    <h2 class="tit_main" @click="gotoGoverDetail(items)">{{items.policyTitle}}</h2>
+                                    <div class="time_main">发布方 : {{items.cstNm || "无发布方"}}</div>
+                                    <div class="btncon esspclearfix">
+                                        <span><i class="icon iconfont icon-liulan"></i> {{items.viewTime}}</span>
+                                        <span><i class="icon iconfont icon-collect2"></i> {{items.countFollower}}</span>
+                                        <!-- <span><i class="icon iconfont icon-pinglun"></i> {{items.countComment}}</span> -->
+                                    </div>
+                                </div>
+                                <div class="funbtncn">
+                                    <i :class="items.followStatus==0?'iconfont icon-aixin-xianxing':'iconfont icon-collect2'"></i>
+                                    <span class="btntext">{{items.followStatus==0?"未关注":"已关注"}}</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li v-if="searchData.length==0" class="nothing">暂无数据</li>
+                    </ul>
+                    <!-- 活动 -->
+                    <ul v-if="this.typeselect=='park_activity'">
+                        <li v-for="(items,index) in searchData" :key="index" class="itemli esspclearfix">
+                            <div class="itemli_wrap_div esspclearfix">
+                                <div class="imgcon" @click="gotoActiveDetail(items)"><img class="imgdetail" :src="items.activityPhoto" alt=""></div>
+                                <div class="maincon">
+                                    <h2 class="tit_main" @click="gotoActiveDetail(items)">{{items.activityTheme}}</h2>
+                                    <div class="time_main">发布地点 : {{items.activityPlace || "无该地点"}}</div>
+                                    <div class="btncon esspclearfix">
+                                        <span><i class="icon iconfont icon-liulan"></i> {{items.viewSum}}</span>
+                                        <span><i class="icon iconfont icon-collect2"></i> {{items.attentionSum}}</span>
+                                        <span><i class="icon iconfont icon-pinglun"></i> {{items.commentSum}}</span>
+                                    </div>
+                                </div>
+                                <div class="funbtncn">
+                                    <i :class="items.attentionSum==0?'iconfont icon-aixin-xianxing':'iconfont icon-collect2'"></i>
+                                    <span class="btntext">{{items.attentionSum==0?"未关注":"已关注"}}</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li v-if="searchData.length==0" class="nothing"></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="pageList">
+                <el-pagination
+                    @size-change="handleSizeChange"
+                    @current-change="handleCurrentChange"
+                    :current-page="pageNum"
+                    :page-sizes="pageRanges"
+                    :page-size="pageSize"
+                    layout="total, sizes, prev, pager, next, jumper"
+                    :total="allTotal">
+                </el-pagination>
+            </div>
+        </div>
+    </div>
+
+ </div>
+</template>
+
+<script>
+import Moment from "moment";
+import { classtType } from "./../../../util/classtType";
+export default {
+    data() {
+        return {
+            isBdPark: this.utils.isBdPark(),
+            currentIndex: "", //默认选第一个
+            typeselect: this.$route.query.type || "park_activity", //关键类型判断，默认采用活动
+            indexSeachKW: this.$route.query.title || "", //关键词搜索
+            tagTxt: this.$route.query.tagTxt || "", //标签搜索
+            parkId:sessionStorage.getItem("parkId") || "",//园区id
+            searchData: [], //搜索的数据源头
+            tagItems: [], //接纳标签所有数据
+            sometags: [], //加工处理标签内容
+            pageRanges: [5, 10, 20, 50], //默认每页10条数区间
+            pageNum: 1, //当前页码
+            pageSize: 10, //每页条数
+            allTotal: 0, //总条数
+            timeRange: [], //时间区间
+            classtType: "" //明细分类条件
+            
+        };
+    },
+    computed: {
+        //判断类型
+        typeName() {
+            let nameObj = {
+                park_activity: "活动", //活动标签
+                park_gover: "惠政", //惠政标签
+                park_information: "资讯" //资讯标签
+            };
+            return nameObj[this.typeselect];
+        },
+        typeitems() {
+            let itemTypeObj = {
+                park_activity: classtType.activetType, //活动标签
+                park_gover: classtType.goverType, //惠政标签
+                park_information: classtType.infoType //资讯标签
+            };
+            return itemTypeObj[this.typeselect];
+        }
+    },
+    created() {
+        this.changetype();
+    },
+    methods: {
+        setTagTxtSearch(item, index) {
+            this.tagTxt = item;
+            this.currentIndex = index;
+            this.getListResult();
+        },
+        //彻底重置搜索条件
+        resetSearch() {
+            this.classtType = "";
+            this.currentIndex = "";
+            this.tagTxt = "";
+            this.indexSeachKW = "";
+            this.timeRange = [];
+        },
+        //按重置的操作
+        resetHandelSearch(){
+            this.resetSearch();
+            this.getListResult();
+        },
+        //清空标签，清空类型
+        resetSerchA(){
+            // this.classtType = "";
+            this.currentIndex = "";
+            this.tagTxt = "";
+
+        },
+        //改变时间后搜索
+        changeTimeSeach(){
+            setTimeout(()=>{
+                this.getListResult()
+            },1000)
+        },
+        async changetype() {
+            this.classtType = "";
+            await this.getListInfoTags();
+            await this.getListResult();
+        },
+        async getListResult() {
+        let type = this.typeselect;
+            //活动
+            if (type == "park_activity") {
+                await this.getParkActiveList();
+                return;
+            }
+            //惠政
+            if (type == "park_gover") {
+                await this.getParkGoverList();
+                return;
+            }
+            //资讯
+            if (type == "park_information") {
+                await this.getParkInfoList();
+                return;
+            }
+            return
+        },
+        //全部活动
+        getParkActiveList() {
+            var url = this.$apiUrl.active.actAll;
+            var pop = {
+                pageNum: this.pageNum,
+                pageSize: this.pageSize,
+                timeStart: this.timeRange[0] || "",
+                timeEnd: this.timeRange[1] || "",
+                activityLabel: this.tagTxt,
+                parkId: this.parkId,
+                activityTheme: this.indexSeachKW,
+                activityType: this.classtType
+            };
+            this.$post(url, pop).then(response => {
+                var codestatus = response.resultCode;
+                    if (codestatus == "CLT000000000") {
+                        this.searchData = response.resultData.activityList;
+                        this.resetSerchA();
+                        this.allTotal = response.resultData.total; //总条数
+                    } else {
+                        this.$message.info(response.resultMsg);
+                    }
+                },err => {
+                    this.$message.error("接口异常");
+                }
+            );
+        },
+        //全部惠政
+        getParkGoverList() {
+            var url = this.$apiUrl.goverBene.allPolicy;
+            var pop = {
+                pageNum: this.pageNum,
+                pageSize: this.pageSize,
+                startDate: this.timeRange[0] || "",
+                endDate: this.timeRange[1] || "",
+                tagTxt: this.tagTxt,
+                parkId: this.parkId,
+                title: this.indexSeachKW,
+                classtType: this.classtType
+            };
+            this.$post(url, pop).then(response => {
+                var codestatus = response.resultCode;
+                    if (codestatus == "CLT000000000") {
+                        this.searchData = response.resultData.policyList;
+                        this.resetSerchA();
+                        this.allTotal = response.resultData.total; //总条数
+                    } else {
+                        this.$message.info(response.resultMsg);
+                    }
+                },err => {
+                this.$message.error("接口异常");
+                }
+            );
+        },
+        //全部资讯
+        getParkInfoList() {
+            var url = this.$apiUrl.parkInfo.allInfos;
+            var pop = {
+                pageNum: this.pageNum,
+                pageSize: this.pageSize,
+                startDate: this.timeRange[0] || "",
+                endDate: this.timeRange[1] || "",
+                tagTxt: this.tagTxt,
+                parkId: this.parkId,
+                title: this.indexSeachKW,
+                classtType: this.classtType
+            };
+            this.$post(url, pop).then(response => {
+                var codestatus = response.resultCode;
+                    if (codestatus == "CLT000000000") {
+                        this.searchData = response.resultData.informationList;
+                        this.resetSerchA();
+                        this.allTotal = response.resultData.total; //总条数
+                    } else {
+                        this.$message.info(response.resultMsg);
+                    }
+                },err => {
+                this.$message.error("接口异常");
+                }
+            );
+        },
+        //活动详情页
+        gotoActiveDetail(item) {
+            var url = "/parkIndex/activityDetail";
+            this.$router.push({path: url, query: {activityId:item.activityId,opMark: "01"}});
+        },
+        //惠政详情页
+        gotoGoverDetail(item) {
+            var url = "/parkIndex/goverBeneDetail";
+            this.$router.push({ path: url, query: {id: item.id } });
+        },
+        //资讯详情页
+        goinfoDetail(item) {
+            var informationId = item.informationId;
+            this.$router.push({path: "/parkIndex/infoDetail",query: { informationId: informationId }});
+        },
+        handleSizeChange(val) {
+            this.pageSize = val;
+            this.getListResult();
+        },
+        handleCurrentChange(val) {
+            this.pageNum = val;
+            this.getListResult();
+        },
+        //获取热门标签
+        getListInfoTags() {
+            var url = this.$apiUrl.parkInfo.getListTags;
+            var parkId = sessionStorage.getItem("parkId") || "";
+            var tagTpObj = {
+                park_activity: "3000002", //活动标签
+                park_gover: "3000004", //惠政标签
+                park_information: "3000003" //资讯标签
+            };
+            var tagTp = tagTpObj[this.typeselect]||"3000003";
+            var pop = {tagTp,parkId}
+            this.$post(url,pop).then(response => {
+                var codestatus = response.resultCode;
+                    if (codestatus == "CLT000000000") {
+                        this.resetSearch();//彻底重置搜索条件
+                        var data = response.resultData;
+                        this.tagItems = data;
+                        this.resometags(data);
+                    } else {
+                        this.$message.info(response.resultMsg);
+                    }
+                },err => {
+                this.$message.error("接口异常");
+                }
+            );
+        },
+        //获取列表的标签
+        resometags(data) {
+            //每次重新组合，计算属性处理不了异步处理，改用直接调接口之后直接处理数据
+            this.sometags = [];
+            if (data && data.length) {
+                this.sometags = data.map((item, index) => {
+                    return item.tagTxt;
+                });
+            }
+        }
+    },
+    filters: {
+        timerFormat(vaule) {
+            return Moment(vaule).format("YYYY-MM-DD");
+        }
+    }
+};
+</script>
+<style>
+    .indexSeach .el-input-group__append button {
+        margin: -10px -21px;
+    }
+    .indexSeach1 {
+        position: relative;
+    }
+    .typecon .el-input:after {
+        content: " ";
+        position: absolute;
+        right: 0;
+        top: 27%;
+        width: 1px;
+        height: 20px;
+        background: #ccc;
+    }
+    .indexSeach .el-input__inner {
+        border: none;
+    }
+</style>
+<style lang='less' scoped >
+@import "../../../assets/css/mixin";
+
+.banner_index {
+    position: relative;
+    height: 500px;
+    overflow: hidden;
+    .banner_bg {
+        height: 100%;
+        background: url("../../../assets/parkSearch.jpeg") no-repeat center;
+        .bgSize(cover);
+    }
+    .indexSeach {
+        position: absolute;
+        left: 50%;
+        top: 265px;
+        padding: 12px 16px 0;
+        background-color: rgba(0,0,0,0.7);
+        margin-left: -450px;
+        width: 900px;
+        .typecon {
+            //被傻逼全局污染了 只能打补丁了
+            width: 80px;
+            font-size: 16px;
+            background: #fff;
+        }
+        .el-input-group__append {
+            border: 1px solid @essp_nav_bg;
+        }
+        .el-input-group__append button.el-button {
+            background-color: @essp_nav_bg;
+            border: 1px solid @essp_nav_bg;
+            color: #fff;
+            .esspborder-radius(0);
+            width: 118px;
+            padding-left: 0;
+            padding-right: 0;
+        }
+        .esspborder-radius(10px);
+        .local {
+            /*padding: 10px;*/
+            padding-top: 5px;
+            padding-bottom: 2px;
+            span {
+                float: left;
+                height: 20px;
+                line-height: 20px;
+                color: #fff;
+                font-size: 12px;
+                margin-right: 10px;
+                cursor: pointer;
+            }
+            .sel {
+                color: @essp_nav_bg;
+            }
+        }
+    }
+}
+//列表区域
+@con_bg: #fff;
+.ffbox {
+    position: relative;
+    z-index: 1;
+    margin-bottom: 20px;
+    .listbox {
+        .essp_width_auto();
+        min-height: 100px;
+        margin-top: -110px;
+        background: @con_bg;
+        border: 1px solid #ccc;
+    }
+    .toollist {
+        padding: 20px 40px;
+        .tit-toolcon {
+            margin-bottom: 20px;
+            .tit-tool {
+                float: left;
+                margin-bottom: 20px;
+                font-size: 20px;
+                font-weight: normal;
+                color: #444444;
+            }
+            .reset-tool {
+                float: right;
+                font-size: 16px;
+            }
+            }
+            .tdcon {
+            margin-bottom: 15px;
+            .inline_span {
+                float: left;
+                margin-right: 15px;
+                font-size: 16px;
+                line-height: 40px;
+                color: #666666;
+                text-align: right;
+            }
+            .inline_select {
+                float: left;
+                width: 250px;
+                background-color: #fff !important;
+                .el-input {
+                float: left;
+                width: 100%;
+                }
+            }
+        }
+    }
+    .resultlist {
+        padding: 20px 40px;
+        .tit-tool {
+        margin-bottom: 9px;
+        font-size: 20px;
+        font-weight: normal;
+        color: #444444;
+        }
+        .rescon {
+        border-top: 1px solid #ccc;
+        }
+    }
+}
+//分页器
+.pageList {
+    background: #fff;
+    text-align: right;
+    padding: 83px 40px 77px;
+}
+//具体内容区域
+.itemli {
+    padding: 0 20px;
+    /*margin-bottom: 15px;*/
+
+    .itemli_wrap_div {
+        padding: 24px 0;
+        border-bottom: 1px solid #ccc;
+    }
+    .imgcon {
+        float: left;
+        margin-right: 15px;
+        height: 100px;
+        width: 170px;
+        .imgdetail {
+        display: block;
+        width: 100%;
+        height: 100%;
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
+    .maincon {
+        float: left;
+        margin-right: 10px;
+        .tit_main {
+            width: 784px;
+            .esspellipsis();
+            margin-bottom: 15px;
+            font-size: 20px;
+            font-weight: normal;
+            color: #444444;
+            &:hover {
+                cursor: pointer;
+            }
+        }
+        .time_main {
+            width: 100%;
+            font-size: 14px;
+            line-height: 26px;
+            margin-bottom: 15px;
+            color: #777777;
+        }
+        .btncon {
+            span {
+                float: left;
+                margin-right: 15px;
+                color:#ccc;
+                i{
+                    margin-right: 5px;
+                    font-size: 14px;
+                }
+                .icon-collect2,.icon-pinglun {
+                    font-size: 12px;
+                }
+
+            }
+        }
+    }
+    .funbtncn {
+        float: left;
+        /*padding: 0 10px 0px;*/
+        padding-left: 20px;
+        i{
+            font-size: 16px;
+            margin-right: 8px;
+        }
+        .icon-aixin-xianxing {
+            color: #ccc;
+        }
+        .icon-collect2 {
+            color: #fc1878;
+        }
+        .btntext {
+            /*float: left;*/
+            font-size: 16px;
+            font-weight: normal;
+            color: #777777;
+        }
+
+    }
+    .btncon {
+        .icon-pinglun {
+            font-size: 14px;
+        }
+    }
+}
+//暂无数据样式
+.nothing {
+  padding: 20px 0px;
+  font-size: 18px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+}
+</style>

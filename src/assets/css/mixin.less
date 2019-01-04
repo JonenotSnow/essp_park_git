@@ -1,0 +1,446 @@
+/*
+ * @Author: Evan-lian
+ * @Date: 2018-07-11 09:32:11
+ * @LastEditors: Evan-lian
+ * @LastEditTime: 2018-12-25 10:11:18
+ * @Description: ESSP-WEB less 部分公共方法提取
+ */
+ @charset "utf-8";
+ /* 字体样式提取 */
+@essp_fz_10: 10px;
+@essp_fcolor_white:#fff;
+@essp_fcolor_black:#000;
+@essp_fcolor_gray:#ccc;
+@essp_fcolor_orange: #ff7210;
+
+//常量
+@essp_blue: #409EFF;
+@essp_bc: #e4e4e4;
+@essp_fc:#fff;
+@essp_width_auto: 1200px;
+@essp_con_bg: #fff;
+@essp_font: 14px;
+
+//导航全局配置
+@essp_nav_color: #222;      // 字体颜色
+@essp_nav_bg: #00a0e9;      // 背景颜色
+@essp_nav_selcolor: #00a0e9;   // 导航选择样式
+
+//字体
+.essp_fz(@fz){
+	font-size: @fz;
+}
+.essp_bg(@bg:#fff){
+	background-color:@bg;
+}
+.essp_width_auto(@width:@essp_width_auto) {
+    width:@width;
+    margin:0 auto;
+}
+*, input, textarea, select, button{
+    font-family: "Microsoft YaHei";
+}
+html,body {
+    min-width: @essp_width_auto;
+}
+ /* 浮动样式提取 */
+//清浮动
+.esspclearfix:after{
+    display: block;
+    clear: both;
+    content: "";
+    visibility: hidden;
+    height: 0;
+}
+.esspclearfix{
+    zoom:1;
+}
+
+//左浮动右浮动(默认左浮动)
+.esspfloat(@float:left){
+    float: @float;
+}
+// 背景图片地址和大小
+.esspbis(@url) {
+	background-image: url(@url);
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+}
+.bgSize(@size:100%) {
+    -webkit-background-size: @size;
+    -moz-background-size: @size;
+    -o-background-size: @size;
+    -ms-background-size: @size;
+    background-size: @size;
+}
+
+///定位上下左右居中
+.esspctp(@width, @height) {
+	position: absolute;
+	top: 50%;
+    left: 50%;
+    margin-top: -@height/2;
+    margin-left: -@width/2;
+}
+// 设置padding值
+.padding(@pad:10px) {
+    padding: @pad;
+}
+.padding_l(@pad:10px) {
+    padding-left: @pad;
+}
+.padding_r(@pad:10px) {
+    padding-right: @pad;
+}
+.padding_t(@pad:10px) {
+    padding-top: @pad;
+}
+.padding_b(@pad:10px) {
+    padding-bottom: @pad;
+}
+
+//宽高
+.esspwh(@width, @height){
+	width: @width;
+	height: @height;
+}
+//字体大小、行高、字体
+.esspft(@size, @line-height,@color) {
+	font-size: @size;
+	line-height:@line-height;
+	color:@color;
+}
+//字体大小，颜色
+.esspsc(@size:@essp_font, @color:@essp_nav_bg){
+	font-size: @size;
+	color: @color;
+}
+
+//截断文本并显示省略号的混入类
+.esspellipsis() {
+    overflow:       hidden;
+    white-space:    nowrap;
+    text-overflow:  -o-ellipsis-lastline;
+    text-overflow:  ellipsis;
+}
+//显示两行，截断文本并显示省略号的混入类
+.esspellipsitwo(@value:2) {
+    overflow:       hidden;
+    text-overflow:  -o-ellipsis-lastline;
+    text-overflow:  ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp:@value;
+    -webkit-box-orient: vertical;
+}
+//透明度混入类
+.esspopacity(@value:0) {
+	@ie6_value: (@value * 100);
+	-khtml-opacity:@value;
+	-moz-opacity: @value;
+	opacity: @value;
+	filter: ~'alpha(opacity=@{ie6_value})';
+}
+//强制缓行
+.esspword-wrap(){
+    white-space: pre;
+    white-space: pre-wrap;
+    white-space: pre-line;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -hp-pre-wrap;
+    word-wrap: break-word;
+}
+//用于设置单行文本垂直居中
+.esspline-height(@height:20px,@lineheight:20px){
+    height: @height;
+    line-height: @lineheight
+}
+
+//设置圆形
+.esspball(@width) {
+	width: @width;
+	padding-top: @width;
+	-webkit-border-radius: 50%;
+	-moz-border-radius: 50%;
+	border-radius: 50%;
+}
+//设置三角形
+.esspsanjiao(top,@w:5px,@c:#f00){
+    border-width: @w;
+    border-color: transparent transparent @c transparent;
+    border-style: dashed dashed solid dashed;
+}
+.esspsanjiao(bottom,@w:5px,@c:#f00){
+    border-width: @w;
+    border-color: @c transparent transparent transparent;
+    border-style: solid dashed dashed dashed;
+}
+.esspsanjiao(left,@w:5px,@c:#f00){
+    border-width: @w;
+    border-color:  transparent @c transparent transparent;
+    border-style:  dashed solid dashed dashed;
+}
+.esspsanjiao(right,@w:5px,@c:#f00){
+    border-width: @w;
+    border-color: transparent transparent transparent @c;
+    border-style:  dashed dashed dashed solid;
+}
+.esspsanjiao(@_,@w:5px,@c:#f00){
+    width: 0px;
+    height: 0px;
+    overflow: hidden;
+}
+//圆角
+.esspborder-radius(@radius:5px){
+    -wekit-border-radius: @radius;
+    -moz-border-radius: @radius;
+    -ms-border-radius: @radius;
+    -o-border-radius: @radius;
+    border-radius: @radius;
+}
+//边框
+.esspborder(@border-color:black;@border_width:1px;@bstyle:solid){
+    border: @border-color @border_width @bstyle;
+}
+//阴影
+.esspbox-shadow(){
+-moz-box-shadow:2px 2px 5px #e3e3e3;/*firefox*/
+-webkit-box-shadow:2px 2px 5px #e3e3e3;/*webkit*/
+box-shadow:2px 2px 5px #e3e3e3;/*opera或ie9*/
+}
+//园区取消关注的弹窗提示的样式抽离，勿动谢谢
+.quguanbox{
+    .el-dialog__body{
+        padding:0px 15px;
+    }
+    .icon-tishi{
+        color:#00a0e9;
+        font-size:24px;
+        margin-right:16px;
+    }
+    .quguan{
+        font-family: "微软雅黑";
+        font-size: 18px;
+        font-weight: normal;
+        font-stretch: normal;
+        line-height: 30px;
+        letter-spacing: 0px;
+        color: #333333;
+    }
+
+}
+
+//-ele input、textarea控件placeholder修改
+.el-input__inner::-webkit-input-placeholder,.el-textarea__inner::-webkit-input-placeholder{   /* Chrome */
+    color:#ccc;
+}
+.el-input__inner::-moz-placeholder,.el-textarea__inner::-moz-placeholder{   /* Mozilla Firefox 19+ */
+    color:#666;
+}
+.el-input__inner:-moz-placeholder,.el-textarea__inner:-moz-placeholder{    /* Mozilla Firefox 4 to 18 */
+    color:#666;
+}
+.el-input__inner:-ms-input-placeholder,.el-textarea__inner:-ms-input-placeholder{  /* Internet Explorer 10-11 */
+    color:#ccc;
+}
+
+//服务详情
+.main-photo {
+    text-align: left;
+    height: 360px;
+    img {
+        width: 100%;
+        height: 100%
+    }
+}
+// -ele上传文件达到限制后隐藏上传组件
+.disabled{
+    .el-upload--picture-card{
+        display: none;
+    }
+}
+// -修改图片以及上传按钮宽度
+.upWid{
+    .el-upload-list__item{
+        width: 85%;
+    }
+    .el-upload--picture-card{
+        width: 85%;
+    }
+}
+.slides{
+   .el-upload-list__item{
+        display: none;
+    }
+}
+.cc_slides{
+    img{
+        width: 100%;
+        height: 100%;
+    }
+    .el-icon-error{
+        position: absolute;
+        top: 0;
+        right: 0;
+        z-index: 99;
+    }
+}
+// ------首页ele样式修改
+.home{
+    .el-carousel__item{
+        .bgImg {
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    .el-button{
+        padding: 9px 20px;
+    }
+    .classify-bottom{
+        .el-tabs__item{
+            color: #FFFFFF;
+            height: 52px;
+            line-height: 52px;
+            padding: 0 44px;
+        }
+        .el-tabs__item.is-active{
+            color: #45a8ff;
+        }
+        .el-tabs--left .el-tabs__active-bar.is-left{
+            top: 10px;
+            height: 32px !important;
+            width: 4px;
+        }
+
+        .el-tabs__nav-wrap::after{
+            background-color:#707887;
+            margin-right: 1px;
+        }
+    }
+    .pag-content{
+        .el-row{
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+        }
+        .el-col-6{
+            width: 25%;
+        }
+        .el-col-5{
+            width: 20.2%;
+        }
+        .el-input__inner{
+            border: 1px solid #cdcdcd;
+            padding: 0 10px;
+            font-size: 12px;
+            height: 32px;
+            line-height: 32px;
+        }
+        .el-form-item{
+            padding-top: 9px;
+        }
+        .el-button{
+            margin-left: 15px;
+            margin-top: 12px;
+        }
+    }
+
+    .el_partner{
+        .el-tabs__nav{
+            float: none;
+            text-align: center;
+        }
+        .el-tabs__item{
+            line-height: 28px;
+            margin: 0 20px;
+            padding: 0;
+            position: relative;
+            text-align: center;
+            width: 230px;
+            color: #999999;
+            font-size: 18px;
+            letter-spacing: 1px;
+        }
+        .el-tabs__item.is-active{
+            color: #0075ff;
+        }
+        .el-tabs__item.is-active:after{
+            position: absolute;
+            top: 37px;
+            width: 180px;
+            left: 20px;
+            height: 3px;
+            background: #0075ff;
+            content: "";
+        }
+        .el-tabs__active-bar{
+            display: none;
+        }
+        .el-tabs__content{
+            margin-top: 100px;
+        }
+        .el-tabs__nav-wrap::after{
+            height: 1px;
+        }
+    }
+
+    .el-tabs--left .el-tabs__header.is-left{
+        height: 459px;
+    }
+    .el-carousel{
+        height: 100%;
+    }
+    .el-carousel__container{
+        height: 100%;
+    }
+}
+// -荣誉资质部分修改ele样式
+.honor{
+    .el-input{
+        width: 85%;
+    }
+    .el-col-6{
+        width: 20%;
+    }
+    .el-upload--picture-card{
+        display: none;
+    }
+}
+.upload-honor{
+     width: 20%;
+    .honor-input{
+        width: 85% !important;
+        margin-top: 10px;
+    }
+    .el-upload-list{
+        display: none;
+    }
+
+}
+
+.vue-file-upload input[type=file]{
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    opacity: 0;
+    -ms-filter: alpha(opacity=0);
+    cursor: pointer;
+    width: 148px;
+    height: 148px;
+}
+.el-carousel{
+    overflow-y: hidden;
+}
+.customNm{
+    .el-input__inner{
+        height: 32px;
+    }
+}
+.essp-base-info {
+    width: 93%;
+    // height: 900px;
+    margin: 10px 35px;
+}
+
