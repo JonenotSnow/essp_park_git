@@ -82,7 +82,7 @@
             return {
                 breadlist: [
                     {
-                        path: "/parkIndex/park/all",
+                        path: "/parkHall/manage/baseInfo",
                         name: "园区管理"
                     },
                     {
@@ -195,6 +195,9 @@
     #manageZXAuditing .noAccess .el-dialog__body p:nth-of-type(2) {
         margin-top: 20px;
     }
+    .line_area p {
+        word-break: break-all;
+    }
 </style>
 <style lang='less' scoped>
     @import "../../../assets/css/mixin";
@@ -290,7 +293,7 @@
             float: left;
             width: 600px;
             padding: 10px;
-            height: 100px;
+            min-height: 100px;
             border: 1px solid #ccc;
         }
 
