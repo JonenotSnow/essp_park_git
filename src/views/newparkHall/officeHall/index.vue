@@ -12,7 +12,7 @@
         <div class="main-wrap">
             <ul class="link">
                 <li class="link__li link__li--01">
-                    <p @click="linkTo01()">科技计划项目申报</p>
+                    <p @click="linkTo01()">科技计划项目申报111</p>
                 </li>
                 <li class="link__li link__li--02">
                     <p @click="linkTo02()">技术合同登记</p>
