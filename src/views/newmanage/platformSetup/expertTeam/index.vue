@@ -1,21 +1,16 @@
 <template>
  <div class="achievementSetHead">
     <!--  成果管理已发布 -->
-    <achievementSetHead></achievementSetHead>
-    <achievementSetCondition v-if="list"></achievementSetCondition>
+    <achievementSetHead :type='专家团队'></achievementSetHead>
     <listOnlyStatus :list='list'></listOnlyStatus>
  </div>
 </template>
 
 <script>
-// import outRoute from '../components/outRoute'
-
 import achievementSetHead from './../../components/common/head'
-import achievementSetCondition from './../../components/common/condition'
 import listOnlyStatus from './../../components/listOwnImg'
  export default {
    components: {
-    // outRoute,/
     achievementSetHead,
     achievementSetCondition,
     listOnlyStatus

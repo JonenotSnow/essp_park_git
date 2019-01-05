@@ -1,7 +1,7 @@
 <template>
  <div class="achievementSetHead">
     <!--  成果管理已发布 -->
-    <achievementSetHead></achievementSetHead>
+    <achievementSetHead :type="成果管理"></achievementSetHead>
     <achievementSetCondition v-if="list"></achievementSetCondition>
     <listOnlyStatus :list='list'></listOnlyStatus>
  </div>

@@ -47,15 +47,15 @@
                 <span class="require">*</span>
                 <span class="title">专家简介：</span>
                 <textarea placeholder="请输入专家简介"></textarea>
-                <div class="moduleContent"  @click="getCurType('content')" v-for="(it,moudelIndex) in moduleList" :key="moudelIndex">
+                <div class="moduleContent"  @click="getCurType('content')" v-for="(it,moudelIndex) in 2" :key="moudelIndex">
                     <div class="title">
-                        <el-input type="text" :placeholder="`请输入模块${moudelIndex+1}标题`" v-model="it.title"></el-input>
+                        <input type="text" :placeholder="`请输入模块${moudelIndex+1}标题`" v-model="it.title">
                         <div class="titleRight">
                             <span>选择模块类型：</span>
-                            <el-select v-model="it.isPic">
-                                <el-option label="无配图" value="0"></el-option>
-                                <el-option label="可配图" value="1"></el-option>
-                            </el-select>
+                            <select v-model="it.isPic">
+                                <option label="无配图" value="0"></option>
+                                <option label="可配图" value="1"></option>
+                            </select>
                         </div>
                     </div>
                     <div class="noPic">
@@ -77,12 +77,10 @@
                             </div>
                         </div>
                     </div>
-                    <p class="picDetail" v-if="it.isPic == '1'">注：可上传1-3张图片，支持jpg/jpeg/gif/png等格式上传，图片尺寸宽：高为2：1，建议尺寸800*400像素、大小2M内、尺寸一致。</p>
-                    <hr class="divider">
+                    <p class="picDetail">注：可上传1-3张图片，支持jpg/jpeg/gif/png等格式上传，图片尺寸宽：高为2：1，建议尺寸800*400像素、大小2M内、尺寸一致。</p>
                 </div>
             </li>
-            
-            <li>
+            <li class="saveBtn">
                 <span class="add">添加新模块</span>
                 <span class="scan">预 览</span>
             </li>
@@ -115,7 +113,8 @@ export default {
                     name: "发布专家团队"
                 }
             ],
-            moduleList:[]
+            moduleList:[],
+            moudelIndex:0
         }
     },
     created() {
@@ -151,7 +150,7 @@ export default {
 </script>
 
 <style lang='less' scoped>
-#publishAchievement{
+#publishExpertTeam{
     width:1200px;
     background:#fff;
     margin: 0 auto;
@@ -178,13 +177,12 @@ export default {
             .require{
                 color:#ff9900;
             }
-            .title,.title1{
+            &>.title,&>.title1{
                 font-size: 14px;
                 font-weight: normal;
                 letter-spacing: 0.4px;
                 color: #666666;
                 display: inline-block;
-                width:72px;
                 text-align: right;
                 margin-right:10px;
             }
@@ -278,12 +276,44 @@ export default {
                     padding:10px;
                 }
                 .moduleContent{
-                    width:100%;
-                    margin-bottom:40px;
+                    width:720px;
+                    float: left;
+                    margin-left: 96px;
+                    min-height: 305px;
+                    margin-top:15px;
                     &>.title{
                         font-size: 16px;
                         color: #444444;
-
+                        overflow: hidden;
+                        input{
+                            float:left;
+                            width: 380px;
+                            height: 35px;
+                            border-radius: 3px;
+                            border: solid 1px #cccccc;
+                        }
+                        .titleRight{
+                            float:right;
+                            overflow: hidden;
+                            span{
+                                float: left;
+                                line-height: 35px;
+                            }
+                            select{
+                                float: right;
+                                width: 100px;
+                                height: 35px;
+                                border-radius: 3px;
+                                border: solid 1px #cccccc
+                            }
+                        }
+                    }
+                    .noPic{
+                        width: 720px;
+                        height: 240px;
+                        border-radius: 3px;
+                        border: solid 1px #cccccc;
+                        margin-top:14px;
                     }
                     .picList{
                         width:780px;
@@ -324,11 +354,36 @@ export default {
                             }
                         }
                     }
-                    &:nth-last-of-type(1){
-                        &>div{
-                            border-bottom: none;
-                        }
+                    .picDetail{
+                        font-size: 12px;
+                        font-weight: normal;
+                        font-stretch: normal;
+                        line-height: 30px;
+                        letter-spacing: 0px;
+                        color: #999999;
                     }
+                }
+            }
+            &.saveBtn{
+                width:720px;
+                float: left;
+                margin-left: 96px;   
+                margin-top: -12px;
+                overflow:hidden;
+                .add{
+                    display: inline-block;
+                    text-align: center;
+                    line-height:35px;
+                    float:left;
+                    width: 100px;
+                    height: 35px;
+                    border-radius: 3px;
+                    border: solid 1px #cccccc;
+                    cursor: pointer;
+                }
+                .scan{
+                    float: right;
+                    cursor: pointer;
                 }
             }
             &.editor{
@@ -356,7 +411,7 @@ export default {
         padding-bottom: 60px;
         text-align: center;
         width: 884px;
-        margin: 40px auto 20px;
+        margin: 65px auto 20px;
         span{
             display: inline-block;
             width: 180px;
