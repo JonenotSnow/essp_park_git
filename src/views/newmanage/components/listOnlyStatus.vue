@@ -20,22 +20,23 @@
                 <div class="ListTop">
                     <i class="el-icon-circle-plus"></i>
                     <span class="time">保存时间：2018-10-22  10：24：00</span>
-                    <span class="create">发布人：孔乙己</span>
-                    <span class="classifyC">状态：<span>待审核</span></span>
+                    <span class="create">发布人：孔乙fdsaf己</span>
+                    <span class="classifyC">状态：<span>待审fdsfdfagdfsgfdsgfdsgdfsafsda核</span></span>
                     <i class="el-icon-delete remove"></i>
                 </div>
                 <div class="listBottom">
-                    <div class="contentTitle">保定市科技服务机构备案名单</div>
+                    <div class="contentTitle">保定市科技服务机构备案名单保定市科技服务机构备案名单保定市科技服务机构备案名单保定市科技服务机构备案名单保定市科技服务机构备案名单保定市科技服务机构备案名单保定市科技服务机构备案名单保定市科技服务机构备案名单保定市科技服务机构备案名单保定市科技服务机构备案名单保定市科技服务机构备案名单</div>
                     <!-- <div class='editorBtn2'>
                         <span>发布</span>
                         <span>编辑</span>
                     </div> -->
-                    <div class='editorBtn1'>
+                    <div class='editorBtn2'>
                         <span>查看</span>
-                    </div>
-                    <div class='editorBtn1'>
                         <span>编辑</span>
                     </div>
+                    <!-- <div class='editorBtn1'>
+                        <span>编辑</span>
+                    </div> -->
                 </div>
             </li>
         </ul> 
@@ -146,7 +147,7 @@ export default {
             width:876px;
             background-color: #f5f5f5;
             padding:0 16px;
-            line-height:40px;
+            line-height:25px;
             margin:0 auto;
             overflow: hidden;
             .time{
@@ -154,14 +155,21 @@ export default {
                 width:230px;
                 margin-left:8px;
             }
+            .create,.classifyC{
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                position: relative;
+                top: 7px;
+            }
             .create{
                 display: inline-block;
-                width:120px;
+                width:100px;
                 margin-left:50px;
             }
             .classifyC{
                 display: inline-block;
-                width:150px;
+                // width:150px;
                 margin-left:42px;
                 span{
                     color: #10b5ff;
@@ -209,6 +217,9 @@ export default {
                 letter-spacing: 0px;
                 color: #222222;
                 line-height:60px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
             }
             .editorBtn1{
                 float: right;

@@ -8,14 +8,14 @@
 </template>
 
 <script>
-import outRoute from '../components/outRoute'
+// import outRoute from '../components/outRoute'
 
 import achievementSetHead from './common/head'
 import achievementSetCondition from './common/condition'
-import listOnlyStatus from '../components/listStatusAndClassify'
+import listOnlyStatus from '../../components/listOnlyStatus'
  export default {
    components: {
-    outRoute,
+    // outRoute,
     achievementSetHead,
     achievementSetCondition,
     listOnlyStatus
