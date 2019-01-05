@@ -26,7 +26,7 @@
         props: {
             outsource: {
                 type: Array,
-                default: {}
+                default: []
             }
         },
         created() {

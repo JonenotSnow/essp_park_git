@@ -3,7 +3,7 @@
         <essp-bread-crumb :breadList="breadlist"></essp-bread-crumb>
         <p class='Otitle'>
             <i></i>
-            发布成果
+            详情
             <i></i>
         </p>
         <ul class="content">
@@ -50,7 +50,7 @@
                 <input type="text" placeholder="请输入所属单位">
                 <span class="sub">（注：发明人与所属单位至少填一项）</span>
             </li>
-            
+
             <li>
                 <span class="scan">预 览</span>
             </li>
@@ -116,7 +116,7 @@ export default {
         }
     },
     created() {
-        
+
     },
     methods: {
         //图片上传
@@ -137,7 +137,7 @@ export default {
             param.append('model', 'manageModuleOne');
             var _this = this;
             this.$post(this.$apiUrl.upload.upload,param).then(response => {
-                
+
             },err=>{
                 this.$message.error("接口异常")
             })
@@ -305,8 +305,8 @@ export default {
             display: inline-block;
             width: 180px;
             height: 40px;
-            background-image: linear-gradient(31deg, 
-                #22a2fa 0%, 
+            background-image: linear-gradient(31deg,
+                #22a2fa 0%,
                 #10b5ff 100%);
             border-radius: 5px;
             cursor: pointer;

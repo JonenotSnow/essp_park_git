@@ -35,8 +35,16 @@ const publishAchievement = resolve => require(['@/views/newmanage/platformSetup/
 
 
 //园区管理-发布管理
+
 //科技政策列表
 const sciAndTechPolicy = resolve => require(['@/views/newmanage/publishManage/sciAndTechPolicy'], resolve);
+
+//科技政策列表---政策法规
+const policieAndRegulation = resolve => require(['@/views/newmanage/publishManage/sciAndTechPolicy/policieAndRegulation'], resolve);
+
+//科技政策列表---科技服务
+const sciAndTechService = resolve => require(['@/views/newmanage/publishManage/sciAndTechPolicy/sciAndTechService'], resolve);
+
 //发布科技政策
 const publishSciAndTechPolicy = resolve => require(['@/views/newmanage/publishManage/sciAndTechPolicy/publishSciAndTechPolicy'], resolve);
 //科技政策审核
@@ -55,37 +63,37 @@ export default {
             path: '/parkHall/manage/publishAchievement',
             name: "park-publishAchievement",
             component: publishAchievement,
-           
+
         },
         {
             path: '/parkHall/manage/scanModelOne',
             name: "park-scanModelOne",
             component: scanModelOne,
-           
+
         },
         {
             path: '/parkHall/manage/scanModelTwo',
             name: "park-scanModelTwo",
             component: scanModelTwo,
-           
+
         },
         {
             path: '/parkHall/manage/publishExpertTeam',
             name: "park-publishExpertTeam",
             component: publishExpertTeam,
-           
+
         },
         {
             path: '/parkHall/manage/publishSciAndTechPolicy',
             name: "park-publishSciAndTechPolicy",
             component: publishSciAndTechPolicy,
-           
+
         },
         {
             path: '/parkHall/manage/sciAndTechPolicyAuditDetail',
             name: "park-sciAndTechPolicyAuditDetail",
             component: sciAndTechPolicyAuditDetail,
-           
+
         },
         {
             path: "/parkHall/manage/baseInfo",
@@ -133,7 +141,20 @@ export default {
                 {
                     path: "/parkHall/manage/sciAndTechPolicy",
                     name: "park-sciAndTechPolicy",
-                    component: sciAndTechPolicy
+                    component: sciAndTechPolicy,
+                    redirect: '/parkHall/manage/sciAndTechPolicy/policieAndRegulation',
+                    children: [
+                        {
+                            path: "/parkHall/manage/sciAndTechPolicy/policieAndRegulation",
+                            name: "park-policieAndRegulation",
+                            component: policieAndRegulation
+                        },
+                        {
+                            path: "/parkHall/manage/sciAndTechPolicy/sciAndTechService",
+                            name: "park-sciAndTechService",
+                            component: sciAndTechService
+                        }
+                    ]
                 },
                 //成员管理
                 {
