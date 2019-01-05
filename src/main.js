@@ -221,10 +221,10 @@ function loginCtrl(data) {
     sessionStorageHandler.setItem("menuList", data.menuList);
     sessionStorageHandler.setItem("localAddr", data.localAddr);
     sessionStorageHandler.setItem("menuResource", data.routerResMap);
-    sessionStorageHandler.setItem(
-        "menuResourceTmp",
-        utils.getMenuResource(data.menuList)
-    );
+    // sessionStorageHandler.setItem(
+    //     "menuResourceTmp",
+    //     utils.getMenuResource(data.menuList)
+    // );
     sessionStorageHandler.setItem("cstBscInfVo", data.cstBscInfVo);
     sessionStorageHandler.setItem("loginFlag", true);
     store.state.chat.user = data.esspUserLoginVo;
