@@ -85,7 +85,6 @@ export default {
             path: '/parkHall/manage/sciAndTechPolicyAuditDetail',
             name: "park-sciAndTechPolicyAuditDetail",
             component: sciAndTechPolicyAuditDetail,
-           
         },
         {
             path: "/parkHall/manage/baseInfo",

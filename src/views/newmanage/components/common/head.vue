@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- 成果管理头部 -->
-        <p class="title">成果管理</p>
+        <p class="title">{{type}}</p>
         <div class="searchWrap">
             <div class="search">
                 <div class="left">
@@ -24,6 +24,7 @@
 
 <script>
 export default {
+prop:['type'],
 data() {
     return {
         searchContent:''
