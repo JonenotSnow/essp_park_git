@@ -1,7 +1,7 @@
 <template>
     <div class="el-main" id="baseInfo">
             <div class="baseInfo">
-                <p>基本信息fdsa</p>
+                <p>基本信息</p>
                 <ul v-if='writeInfoDis.startDate'>
                     <li>
                         <span><em>*</em>园区名称：</span>

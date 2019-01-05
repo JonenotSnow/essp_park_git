@@ -24,6 +24,8 @@ const occupancyApplication = resolve => require(['@/views/newmanage/platformSetu
 const bannerSet = resolve => require(['@/views/newmanage/platformSetup/bannerSet/bannerSet'], resolve);
 //数据管理
 const dataManage = resolve => require(['@/views/newmanage/platformSetup/dataManage/dataManage'], resolve);
+//成果管理
+const resultManage = resolve => require(['@/views/newmanage/platformSetup/resultManage'], resolve);
 //发布成果
 const publishAchievement = resolve => require(['@/views/newmanage/platformSetup/resultManage/publishAchievement'], resolve);
 
@@ -85,6 +87,11 @@ export default {
                     path: "/parkHall/manage/dataManage",
                     name: "park-dataManage",
                     component: dataManage
+                },
+                {
+                    path: "/parkHall/manage/resultManage",
+                    name: "park-resultManage",
+                    component: resultManage
                 },
                 //成员管理
                 {
