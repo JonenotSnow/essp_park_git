@@ -40,14 +40,13 @@
                 LoginUserRol: '',
                 headMenu: [],
                 curParkId: sessionStorage.getItem("parkId") || "",
-                myList: sessionStorage.getItem("myList") || []
             };
         },
         watch: {
             $route() {
                 //路由变化获取最新选择的园区
                 this.curParkId = sessionStorage.getItem("parkId");
-                this.myList = sessionStorage.getItem("myList");
+
                 var menuList = this.SSH.getItem("menuList");
                 this.headMenu = (menuList && menuList.children) ||this.defaultNav;
             }

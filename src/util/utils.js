@@ -346,59 +346,7 @@ const utils = {
                 })
         }
     },
-    /**
-     *  登录后调用接口封装
-     */
-    // loginCtrl(data,type){
-    //     if(type!=='getUserSSH'){
-    //         SSH.setItem('token', data.access_token)
-    //     }
-    //     SSH.setItem('userInfo', data.esspUserLoginVo)
-    //     LSH.setItem('userInfo', data.esspUserLoginVo);
-    //     SSH.setItem('freezeFlag', data.freeze)
-    //     SSH.setItem('applyTag', data.applyTag)
-    //     SSH.delItem('menuList')
-    //     SSH.setItem('menuList', data.menuList)
-    //     SSH.setItem('localAddr', data.localAddr)
-    //     setTimeout(function () {
-    //         SSH.setItem('menuResource', data.routerResMap)
-    //         SSH.delItem('menuResourceTmp')
-    //         SSH.setItem('menuResourceTmp', utils.getMenuResource(data.menuList))
-    //         store.state.chat.user = data.esspUserLoginVo;
-    //         SSH.setItem('cstBscInfVo', data.cstBscInfVo)
-    //
-    //         if (data.esspUserLoginVo.userType !== '01') {
-    //             SSH.setItem('loginFlag', true)
-    //             // 进行个人实名认证判断
-    //             // -1：异常   0：未认证   >1：已认证    2：认证开通  3：审核开通  4：刷脸认证开通
-    //             let userAuthFlagTmp = parseInt(data.userAuthFlag)
-    //             if (userAuthFlagTmp > 1) {
-    //                 SSH.setItem('cetificateFlag', true)
-    //             } else if (userAuthFlagTmp === 0) {
-    //                 Message.info('该用户未进行实名认证')
-    //                 SSH.setItem('cetificateFlag', false)
-    //             } else if (userAuthFlagTmp === 1) {
-    //                 Message.info('该用户个人实名认证中')
-    //                 SSH.setItem('cetificateFlag', false)
-    //             } else {
-    //                 Message.info('该用户实名认证异常')
-    //                 SSH.setItem('cetificateFlag', false)
-    //             }
-    //             // 进行企业实名认证判断
-    //             //  -1：异常   0：未认证   1：认证中    2：已认证通过  3：已认证不通过
-    //             let entAuthFlagTmp = parseInt(data.entAuthFlag)
-    //             if (entAuthFlagTmp === 2) {
-    //                 SSH.setItem('enterpriseFlag', true)
-    //             } else {
-    //                 SSH.setItem('enterpriseFlag', false)
-    //             }
-    //         } else {
-    //             SSH.setItem('loginFlag', true)
-    //             SSH.setItem('cetificateFlag', true)
-    //             SSH.setItem('enterpriseFlag', true)
-    //         }
-    //     }, 10)
-    // },
+
     /**
      *  清除缓存
      */
@@ -419,7 +367,6 @@ const utils = {
             store.state.chat.ws.close();
         } catch (e) {
         }
-        console.log('logout', SSH.getItem('oldParkId'))
         SSH.delItem('oldParkId')
         SSH.delItem('friendList');
         SSH.delItem('messageList');
@@ -429,25 +376,15 @@ const utils = {
         SSH.delItem('applyTag')
         SSH.delItem('freezeFlag')
         SSH.delItem('localAddr');
-        SSH.delItem('menuList')
         SSH.setItem('menuList', SSH.getItem('initMenuList'))
-        setTimeout(function () {
-            SSH.delItem('menuResource')
-            SSH.setItem('menuResource', SSH.getItem('initMenuResource'))
-            SSH.delItem('loginMenuResource')
-            SSH.delItem('menuResourceTmp')
-            SSH.setItem('menuResourceTmp', utils.getMenuResource(SSH.getItem('initMenuList')))
-            SSH.setItem('menuResource', SSH.getItem('initMenuResource'))
-            SSH.delItem('loginFlag')
-            SSH.delItem('cetificateFlag')
-            SSH.delItem('enterpriseFlag')
-            SSH.delItem('grayFlag')
 
-            // Message.info('退出登录成功')
-            // router.push({
-            //     path: '/userIndex/login',
-            // });
-        }, 10)
+        SSH.delItem('loginMenuResource')
+        // SSH.setItem('menuResourceTmp', utils.getMenuResource(SSH.getItem('initMenuList')))
+        SSH.setItem('menuResource', SSH.getItem('initMenuResource'))
+        SSH.delItem('loginFlag')
+        SSH.delItem('cetificateFlag')
+        SSH.delItem('enterpriseFlag')
+        SSH.delItem('grayFlag')
     },
     /**
      *  比较菜单id，获取菜单层级
