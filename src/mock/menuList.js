@@ -478,7 +478,7 @@ export const menuListData = {
                     "id": "04160004",
                     "menu": "专家团队",
                     "parentId": "041600",
-                    "name": "park-experteamSet",
+                    "name": "park-expertTeam",
                     "ismenu": "1",
                     "isshow": "1",
                     "loginflag": "1",
@@ -518,7 +518,7 @@ export const menuListData = {
                 "children": [{
                     "id": "04160100",
                     "menu": "科技政策",
-                    "name": "park-technologyPolicySet",
+                    "name": "park-sciAndTechPolicy",
                     "parentId": "041601",
                     "ismenu": "1",
                     "isshow": "1",

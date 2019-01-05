@@ -3,25 +3,25 @@
         <essp-bread-crumb :breadList="breadlist"></essp-bread-crumb>
         <p class='Otitle'>
             <i></i>
-            发布专家团队
+            发布成果
             <i></i>
         </p>
         <ul class="content">
             <li>
                 <span class="require">*</span>
-                <span class="title">专家姓名：</span>
-                <input type="text" placeholder="请输入专家姓名">
+                <span class="title">成果名称：</span>
+                <input type="text" placeholder="请输入成果名称">
             </li>
             <li>
                 <span class="require">*</span>
-                <span class="title">专家职称：</span>
-                <select placeholder="请输入专家职称">
+                <span class="title">所属领域：</span>
+                <select placeholder="请输入所属领域">
                     <option :value="item.id" :label="item.name" v-for="(item,index) in searchList" :key="index">{{item.name}}</option>
                 </select>
             </li>
             <li class="pic">
                 <span class="require">*</span>
-                <span class="title">专家头像：</span>
+                <span class="title">成果配图：</span>
                 <el-upload
                     class="avater-uploader"
                     :before-upload="beforeUpload"
@@ -31,26 +31,27 @@
                 </el-upload>
                 <span class="sub1">（图片高宽7：4，每张最大2M,建议分辨率为840*480像素，支持jpg/jpeg/png格式。）</span>
             </li>
-            
-            <li>
-                <span class="require">*</span>
-                <span class="title">联系电话：</span>
-                <input type="text" placeholder="请输入联系电话">
-            </li>
-            
-            <li>
-                <span class="require">*</span>
-                <span class="title">联系邮箱：</span>
-                <input type="text" placeholder="请输入联系邮箱">
-            </li>
             <li class="resume">
                 <span class="require">*</span>
-                <span class="title">专家简介：</span>
-                <textarea placeholder="请输入专家简介"></textarea>
+                <span class="title">成果简介：</span>
+                <textarea placeholder="请输入成果简介"></textarea>
+            </li>
+            <li class="editor">
+                <span class="require">*</span>
+                <span class="title">成果详情：</span>
+                <div></div>
+            </li>
+            <li>
+                <span class="title1">发明人：</span>
+                <input type="text" placeholder="请输入发明人">
+            </li>
+            <li>
+                <span class="title1">所属单位：</span>
+                <input type="text" placeholder="请输入所属单位">
+                <span class="sub">（注：发明人与所属单位至少填一项）</span>
             </li>
             
             <li>
-                <span class="add"></span>
                 <span class="scan">预 览</span>
             </li>
         </ul>

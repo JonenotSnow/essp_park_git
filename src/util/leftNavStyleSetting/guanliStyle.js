@@ -12,5 +12,6 @@ export const guanliStyle = {
     "park-activeSet": "guanliStyle",//平台活动管理
     "park-newsInfoSet": "guanliStyle",//资讯公告管理
     "park-releaseAuditSet": "guanliStyle",//发布审核管理
-    "park-experteamSet": "guanliStyle",//专家团队管理
+    "park-expertTeam": "guanliStyle",//专家团队管理
+    "park-sciAndTechPolicy": "guanliStyle",//科技政策
 }

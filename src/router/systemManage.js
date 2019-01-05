@@ -26,8 +26,21 @@ const bannerSet = resolve => require(['@/views/newmanage/platformSetup/bannerSet
 const dataManage = resolve => require(['@/views/newmanage/platformSetup/dataManage/dataManage'], resolve);
 //成果管理
 const resultManage = resolve => require(['@/views/newmanage/platformSetup/resultManage'], resolve);
+//专家团队
+const expertTeam = resolve => require(['@/views/newmanage/platformSetup/expertTeam'], resolve);
+//发布专家团队
+const publishExpertTeam = resolve => require(['@/views/newmanage/platformSetup/expertTeam/publishExpertTeam'], resolve);
 //发布成果
 const publishAchievement = resolve => require(['@/views/newmanage/platformSetup/resultManage/publishAchievement'], resolve);
+
+
+//园区管理-发布管理
+//科技政策列表
+const sciAndTechPolicy = resolve => require(['@/views/newmanage/publishManage/sciAndTechPolicy'], resolve);
+//发布科技政策
+const publishSciAndTechPolicy = resolve => require(['@/views/newmanage/publishManage/sciAndTechPolicy/publishSciAndTechPolicy'], resolve);
+//科技政策审核
+const sciAndTechPolicyAuditDetail = resolve => require(['@/views/newmanage/publishManage/sciAndTechPolicy/sciAndTechPolicyAuditDetail'], resolve);
 
 //园区管理-成员管理
 //成员管理
@@ -54,6 +67,24 @@ export default {
             path: '/parkHall/manage/scanModelTwo',
             name: "park-scanModelTwo",
             component: scanModelTwo,
+           
+        },
+        {
+            path: '/parkHall/manage/publishExpertTeam',
+            name: "park-publishExpertTeam",
+            component: publishExpertTeam,
+           
+        },
+        {
+            path: '/parkHall/manage/publishSciAndTechPolicy',
+            name: "park-publishSciAndTechPolicy",
+            component: publishSciAndTechPolicy,
+           
+        },
+        {
+            path: '/parkHall/manage/sciAndTechPolicyAuditDetail',
+            name: "park-sciAndTechPolicyAuditDetail",
+            component: sciAndTechPolicyAuditDetail,
            
         },
         {
@@ -92,6 +123,17 @@ export default {
                     path: "/parkHall/manage/resultManage",
                     name: "park-resultManage",
                     component: resultManage
+                },
+                {
+                    path: "/parkHall/manage/expertTeam",
+                    name: "park-expertTeam",
+                    component: expertTeam
+                },
+                //发布管理
+                {
+                    path: "/parkHall/manage/sciAndTechPolicy",
+                    name: "park-sciAndTechPolicy",
+                    component: sciAndTechPolicy
                 },
                 //成员管理
                 {
