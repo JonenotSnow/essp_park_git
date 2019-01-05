@@ -1,5 +1,5 @@
 <template>
-    <div id="publishAchievement">
+    <div id="publishExpertTeam">
         <essp-bread-crumb :breadList="breadlist"></essp-bread-crumb>
         <p class='Otitle'>
             <i></i>
@@ -47,10 +47,43 @@
                 <span class="require">*</span>
                 <span class="title">专家简介：</span>
                 <textarea placeholder="请输入专家简介"></textarea>
+                <div class="moduleContent"  @click="getCurType('content')" v-for="(it,moudelIndex) in moduleList" :key="moudelIndex">
+                    <div class="title">
+                        <el-input type="text" :placeholder="`请输入模块${moudelIndex+1}标题`" v-model="it.title"></el-input>
+                        <div class="titleRight">
+                            <span>选择模块类型：</span>
+                            <el-select v-model="it.isPic">
+                                <el-option label="无配图" value="0"></el-option>
+                                <el-option label="可配图" value="1"></el-option>
+                            </el-select>
+                        </div>
+                    </div>
+                    <div class="noPic">
+                        <quillEditor :options="editorOption" v-model="it.content"></quillEditor>
+                    </div>
+                    <div class="picList" v-if="it.isPic == '1'">
+                        <div v-for="(is,itemindex) in imgBoxA[moudelIndex]" :key="itemindex" @click="getCurPicOrder(itemindex,moudelIndex)"
+                        v-loading='loading' element-loading-text="正在上传图片..." element-loading-spinner="el-icon-loading" element-loading-background="rgba(0, 0, 0, 0.8)">
+                            <el-upload v-if="is.length==0"
+                                class="avater-uploader"
+                                :before-upload="beforeUpload"
+                                :action='uploads'>
+                                <i class="icon iconfont icon-tianjia-" style="font-size:30px;display:block;margin-top:35px;"></i>
+                                <p style="font-size:18px;color:#4d4d4d;margin-top: 9px;">模块配图</p>
+                                <!-- <p style="font-size:12px;color:#999;">建议尺寸500*250像素/不大于5M</p> -->
+                            </el-upload>
+                            <div class="alterPic" v-if="is" @click="delitemClick(it,itemindex)">
+                                <img :src="is" alt="">
+                            </div>
+                        </div>
+                    </div>
+                    <p class="picDetail" v-if="it.isPic == '1'">注：可上传1-3张图片，支持jpg/jpeg/gif/png等格式上传，图片尺寸宽：高为2：1，建议尺寸800*400像素、大小2M内、尺寸一致。</p>
+                    <hr class="divider">
+                </div>
             </li>
             
             <li>
-                <span class="add"></span>
+                <span class="add">添加新模块</span>
                 <span class="scan">预 览</span>
             </li>
         </ul>
@@ -75,43 +108,14 @@ export default {
                 },
                 {
                     path: "",
-                    name: "成果管理"
+                    name: "专家团队"
                 },
                 {
                     path: "",
-                    name: "发布成果"
+                    name: "发布专家团队"
                 }
             ],
-            searchList:[
-                {
-                    id:'0',
-                    name:'电子信息'
-                },{
-                    id:'1',
-                    name:'生物与新医药'
-                },{
-                    id:'2',
-                    name:'新材料'
-                },{
-                    id:'3',
-                    name:'高新技术服务'
-                },{
-                    id:'4',
-                    name:'新能源与节能'
-                },{
-                    id:'5',
-                    name:'资源与环境'
-                },{
-                    id:'6',
-                    name:'现代农业'
-                },{
-                    id:'7',
-                    name:'高端装备制造'
-                },{
-                    id:'8',
-                    name:'其他'
-                }
-            ]
+            moduleList:[]
         }
     },
     created() {
@@ -272,6 +276,59 @@ export default {
                     float: left;
                     margin-left:8px;
                     padding:10px;
+                }
+                .moduleContent{
+                    width:100%;
+                    margin-bottom:40px;
+                    &>.title{
+                        font-size: 16px;
+                        color: #444444;
+
+                    }
+                    .picList{
+                        width:780px;
+                        margin-bottom:40px;
+                        // background: red;
+                        .one{
+                            width:100%;
+                            text-align: center;
+                            margin-top:20px;
+                            img{
+                                width: 520px;
+                                height:250px;
+                                text-align: center;
+                            }
+                        }
+                        .two{
+                            width:100%;
+                            margin-top:20px;
+                            text-align: center;
+                            overflow: hidden;
+                            img{
+                                width: 320px;
+                                margin-left:45px;
+                                height:160px;
+                                float:left;
+                            }
+                        }
+                        .three{
+                            width:100%;
+                            margin-top:20px;
+                            text-align: center;
+                            overflow: hidden;
+                            img{
+                                width: 240px;
+                                margin-left:15px;
+                                float:left;
+                                height:120px;
+                            }
+                        }
+                    }
+                    &:nth-last-of-type(1){
+                        &>div{
+                            border-bottom: none;
+                        }
+                    }
                 }
             }
             &.editor{
