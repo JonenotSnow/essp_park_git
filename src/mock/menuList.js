@@ -463,7 +463,7 @@ export const menuListData = {
                 }, {
                     "id": "04160003",
                     "menu": "数据管理",
-                    "name": "park-sciGraphicaSet",
+                    "name": "park-dataManage",
                     "parentId": "041600",
                     "ismenu": "1",
                     "isshow": "1",
@@ -491,7 +491,7 @@ export const menuListData = {
                 }, {
                     "id": "04160005",
                     "menu": "成果管理",
-                    "name": "park-achievementSet",
+                    "name": "park-resultManage",
                     "parentId": "041600",
                     "ismenu": "1",
                     "isshow": "1",

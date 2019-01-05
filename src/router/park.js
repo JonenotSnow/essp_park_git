@@ -89,14 +89,14 @@ const infoDetail = resolve => require(['@/views/parkHall/information/infoDetail'
 
 // 园区管理
 const parkManage = resolve => require(['@/views/parkHall/manage/index'],resolve);
-//园区管理 概览设置
-const baseInfo = resolve => require(['@/views/parkHall/manage/baseInfo'],resolve);
-//园区管理 概览设置 模板选择
-const selectModule = resolve => require(['@/views/parkHall/manage/selectModule'],resolve);
-//园区管理 概览设置 模板1
-const scanModelOne = resolve => require(['@/views/parkHall/manage/scanModelOne'],resolve);
-//园区管理 概览设置 模板2
-const scanModelTwo = resolve => require(['@/views/parkHall/manage/scanModelTwo'],resolve);
+// //园区管理 概览设置
+// const baseInfo = resolve => require(['@/views/parkHall/manage/baseInfo'],resolve);
+// //园区管理 概览设置 模板选择
+// const selectModule = resolve => require(['@/views/parkHall/manage/selectModule'],resolve);
+// //园区管理 概览设置 模板1
+// const scanModelOne = resolve => require(['@/views/parkHall/manage/scanModelOne'],resolve);
+// //园区管理 概览设置 模板2
+// const scanModelTwo = resolve => require(['@/views/parkHall/manage/scanModelTwo'],resolve);
 //园区管理 申请入驻园区
 const requestAddPark = resolve => require(['@/views/parkHall/manage/requestAddPark'],resolve);
 // 园区通知公告
@@ -115,7 +115,7 @@ const activityPoolZX = resolve => require(['@/views/parkHall/manage/activityPool
 // 园区管理活动设置
 const activityPoolActivityAditing = resolve => require(['@/views/parkHall/manage/activityPoolActivityAditing'],resolve);
 // 园区管理入驻申请表
-const occupancyApplication = resolve => require(['@/views/parkHall/manage/occupancyApplication'],resolve);
+// const occupancyApplication = resolve => require(['@/views/parkHall/manage/occupancyApplication'],resolve);
 // 园区管理 成员管理 邀请入园
 const sendRequest = resolve => require(['@/views/parkHall/manage/sendRequest'],resolve);
 // 园区管理 成员管理 智能推荐
@@ -186,14 +186,14 @@ const newIndex =  resolve => require(['@/views/parkHall/needHall/newIndex.vue'],
 
 //新的管理模块
 //园区管理 banner设置
-const bannerSet = resolve => require(['@/views/parkHall/manage/firstPageSet/bannerSet.vue'],resolve);
-const achievementSet = resolve => require(['@/views/newmanage/achievementSet'], resolve);// 新园区-成果管理
-const experteamSet = resolve => require(['@/views/newmanage/experteamSet'], resolve);// 新园区-专家团队管理
-const sciGraphicaSet = resolve => require(['@/views/newmanage/sciGraphicaSet'], resolve);// 新园区-数据管理
-const technologyPolicySet = resolve => require(['@/views/newmanage/technologyPolicySet'], resolve);// 新园区-科技政策
-const activeSet = resolve => require(['@/views/newmanage/activeSet'], resolve);// 新园区-平台活动
+// const bannerSet = resolve => require(['@/views/parkHall/manage/firstPageSet/bannerSet.vue'],resolve);
+// const achievementSet = resolve => require(['@/views/newmanage/platformSetup/resultManage'], resolve);// 新园区-成果管理
+// const experteamSet = resolve => require(['@/views/newmanage/experteamSet'], resolve);// 新园区-专家团队管理
+// const sciGraphicaSet = resolve => require(['@/views/newmanage/sciGraphicaSet'], resolve);// 新园区-数据管理
+// const technologyPolicySet = resolve => require(['@/views/newmanage/technologyPolicySet'], resolve);// 新园区-科技政策
+// const activeSet = resolve => require(['@/views/newmanage/activeSet'], resolve);// 新园区-平台活动
 
-const releaseAuditSet = resolve => require(['@/views/newmanage/releaseAuditSet'], resolve);// 新园区-发布审核
+// const releaseAuditSet = resolve => require(['@/views/newmanage/releaseAuditSet'], resolve);// 新园区-发布审核
 export const parkRouter1 = {
     path: '/',
     name: "parkHome",
@@ -474,133 +474,133 @@ export const parkRouter1 = {
             component: infoDetail,
             
         },
-        {
-            path: '/parkHall/manage/baseInfo',
-            name: "park-manage",
-            component: asideComRoot,
-            redirect: '/parkHall/manage/baseInfo',
-            children: [
-                {
-                    path: '/parkHall/manage/baseInfo',
-                    name: "park-baseInfo",
-                    component: baseInfo,
+        // {
+        //     path: '/parkHall/manage/baseInfo',
+        //     name: "park-manage",
+        //     component: asideComRoot,
+        //     redirect: '/parkHall/manage/baseInfo',
+        //     children: [
+        //         {
+        //             path: '/parkHall/manage/baseInfo',
+        //             name: "park-baseInfo",
+        //             component: baseInfo,
                     
-                },
-                {
-                    path: '/parkHall/manage/selectModule',
-                    name: "park-selectModule",
-                    component: selectModule,
+        //         },
+        //         {
+        //             path: '/parkHall/manage/selectModule',
+        //             name: "park-selectModule",
+        //             component: selectModule,
                     
-                },
-                {
-                    path: '/parkHall/manage/auditSetting',
-                    name: "park-auditSetting",
-                    component: auditSetting,
+        //         },
+        //         {
+        //             path: '/parkHall/manage/auditSetting',
+        //             name: "park-auditSetting",
+        //             component: auditSetting,
                     
-                },
-                {
-                    path: '/parkHall/manage/noticeAndAD',
-                    name: "park-noticeAndAD",
-                    component: noticeAndAD,
+        //         },
+        //         {
+        //             path: '/parkHall/manage/noticeAndAD',
+        //             name: "park-noticeAndAD",
+        //             component: noticeAndAD,
                     
-                },
-                {
-                    path: '/parkHall/manage/publishAD',
-                    name: "park-publishAD",
-                    component: publishAD,
+        //         },
+        //         {
+        //             path: '/parkHall/manage/publishAD',
+        //             name: "park-publishAD",
+        //             component: publishAD,
                    
-                },
-                {
-                    path: '/parkHall/manage/userManage',
-                    name: "park-userManage",
-                    component: userManage,
+        //         },
+        //         {
+        //             path: '/parkHall/manage/userManage',
+        //             name: "park-userManage",
+        //             component: userManage,
                     
-                },
-                {
-                    path: '/parkHall/manage/activityPoolAddPark',
-                    name: "park-activityPoolAddPark",
-                    component: activityPoolAddPark,
+        //         },
+        //         {
+        //             path: '/parkHall/manage/activityPoolAddPark',
+        //             name: "park-activityPoolAddPark",
+        //             component: activityPoolAddPark,
                     
-                },
-                {
-                    path: '/parkHall/manage/activityPoolZX',
-                    name: "park-activityPoolZX",
-                    component: activityPoolZX,
+        //         },
+        //         {
+        //             path: '/parkHall/manage/activityPoolZX',
+        //             name: "park-activityPoolZX",
+        //             component: activityPoolZX,
                     
-                },
-                {
-                    path: '/parkHall/manage/activityPoolGover',
-                    name: "park-activityPoolGover",
-                    component: activityPoolGover,
+        //         },
+        //         {
+        //             path: '/parkHall/manage/activityPoolGover',
+        //             name: "park-activityPoolGover",
+        //             component: activityPoolGover,
                     
-                },
-                {
-                    path: '/parkHall/manage/manageGoverAuditing',
-                    name: "park-manageGoverAuditing",
-                    component: manageGoverAuditing,
+        //         },
+        //         {
+        //             path: '/parkHall/manage/manageGoverAuditing',
+        //             name: "park-manageGoverAuditing",
+        //             component: manageGoverAuditing,
                     
-                },
-                {
-                    path: '/parkHall/manage/manageGoverAuditingDetail',
-                    name: "park-manageGoverAuditingDetail",
-                    component: manageGoverAuditingDetail,
+        //         },
+        //         {
+        //             path: '/parkHall/manage/manageGoverAuditingDetail',
+        //             name: "park-manageGoverAuditingDetail",
+        //             component: manageGoverAuditingDetail,
                     
-                },
-                {
-                    path: '/parkHall/manage/activityPoolActivityAditing',
-                    name: "park-activityPoolActivityAditing",
-                    component: activityPoolActivityAditing,
+        //         },
+        //         {
+        //             path: '/parkHall/manage/activityPoolActivityAditing',
+        //             name: "park-activityPoolActivityAditing",
+        //             component: activityPoolActivityAditing,
                     
-                },
-                {
-                    path: '/parkHall/manage/occupancyApplication',
-                    name: "park-occupancyApplication",
-                    component: occupancyApplication,
+        //         },
+        //         {
+        //             path: '/parkHall/manage/occupancyApplication',
+        //             name: "park-occupancyApplication",
+        //             component: occupancyApplication,
                   
-                },
-                //招商管理（新版）
-                {
-                    path: '/parkHall/manage/myInvestment',
-                    name: "park-myInvestment",
-                    component: myInvestment,
-                    redirect: '/parkHall/manage/myInvestment/reserveInvestment',
-                    children: [
-                        {
-                            path: '/parkHall/manage/myInvestment/reserveInvestment',
-                            name: "park-reserveInvestment",
-                            component: reserveInvestment
-                        },
-                        {
-                            path: '/parkHall/manage/myInvestment/followupInvestment',
-                            name: "park-followupInvestment",
-                            component: followupInvestment
-                        },
-                        {
-                            path: '/parkHall/manage/myInvestment/finishedInvestment',
-                            name: "park-finishedInvestment",
-                            component: finishedInvestment
-                        },
-                        {
-                            path: '/parkHall/manage/myInvestment/shelveInvestment',
-                            name: "park-shelveInvestment",
-                            component: shelveInvestment
-                        },
+        //         },
+        //         //招商管理（新版）
+        //         {
+        //             path: '/parkHall/manage/myInvestment',
+        //             name: "park-myInvestment",
+        //             component: myInvestment,
+        //             redirect: '/parkHall/manage/myInvestment/reserveInvestment',
+        //             children: [
+        //                 {
+        //                     path: '/parkHall/manage/myInvestment/reserveInvestment',
+        //                     name: "park-reserveInvestment",
+        //                     component: reserveInvestment
+        //                 },
+        //                 {
+        //                     path: '/parkHall/manage/myInvestment/followupInvestment',
+        //                     name: "park-followupInvestment",
+        //                     component: followupInvestment
+        //                 },
+        //                 {
+        //                     path: '/parkHall/manage/myInvestment/finishedInvestment',
+        //                     name: "park-finishedInvestment",
+        //                     component: finishedInvestment
+        //                 },
+        //                 {
+        //                     path: '/parkHall/manage/myInvestment/shelveInvestment',
+        //                     name: "park-shelveInvestment",
+        //                     component: shelveInvestment
+        //                 },
 
-                    ]
-                },
-                {
-                    path: '/parkHall/manage/myInvestment/promotionInvest.vue',
-                    name: "park-promotionInvest",
-                    component: promotionInvest
-                },
-                {
-                    path: '/parkHall/manage/taskLose',
-                    name: "park-taskLose",
-                    component: resolve => require(['@/views/parkHall/attrForeInve/enterprise/businessManager/index'], resolve),
+        //             ]
+        //         },
+        //         {
+        //             path: '/parkHall/manage/myInvestment/promotionInvest.vue',
+        //             name: "park-promotionInvest",
+        //             component: promotionInvest
+        //         },
+        //         {
+        //             path: '/parkHall/manage/taskLose',
+        //             name: "park-taskLose",
+        //             component: resolve => require(['@/views/parkHall/attrForeInve/enterprise/businessManager/index'], resolve),
                     
-                },
-            ]
-        },
+        //         },
+        //     ]
+        // },
 
         {
             path: '/parkHall/manage/noAndADDetail',
@@ -608,12 +608,12 @@ export const parkRouter1 = {
             component: noAndADDetail,
             
         },
-        {
-            path: '/parkHall/manage/scanModelTwo',
-            name: "park-scanModelTwo",
-            component: scanModelTwo,
+        // {
+        //     path: '/parkHall/manage/scanModelTwo',
+        //     name: "park-scanModelTwo",
+        //     component: scanModelTwo,
             
-        },
+        // },
         {
             path: '/parkHall/manage/sendRequest',
             name: "park-sendRequest",
@@ -656,12 +656,12 @@ export const parkRouter1 = {
             component: activityAuditDetail,
             
         },
-        {
-            path: '/parkHall/manage/scanModelOne',
-            name: "park-scanModelOne",
-            component: scanModelOne,
+        // {
+        //     path: '/parkHall/manage/scanModelOne',
+        //     name: "park-scanModelOne",
+        //     component: scanModelOne,
             
-        },
+        // },
         {
             path: '/parkHall/manage/requestAddPark',
             name: "park-requestAddPark",
@@ -718,48 +718,48 @@ export const parkRouter1 = {
                 },
 
                 
-                {
-                    path: '/parkHall/manage/bannerSet',
-                    name: "park-bannerSet",
-                    component: bannerSet,
+                // {
+                //     path: '/parkHall/manage/bannerSet',
+                //     name: "park-bannerSet",
+                //     component: bannerSet,
                    
-                },
-                {
-                    path: '/parkHall/manage/achievementSet',
-                    name: "park-achievementSet",
-                    component: achievementSet,
+                // },
+                // {
+                //     path: '/parkHall/manage/achievementSet',
+                //     name: "park-achievementSet",
+                //     component: achievementSet,
                    
-                },
-                {
-                    path: '/parkHall/manage/experteamSet',
-                    name: "park-experteamSet",
-                    component: experteamSet,
+                // },
+                // {
+                //     path: '/parkHall/manage/experteamSet',
+                //     name: "park-experteamSet",
+                //     component: experteamSet,
                    
-                },
-                {
-                    path: '/parkHall/manage/sciGraphicaSet',
-                    name: "park-sciGraphicaSet",
-                    component: sciGraphicaSet,
+                // },
+                // {
+                //     path: '/parkHall/manage/sciGraphicaSet',
+                //     name: "park-sciGraphicaSet",
+                //     component: sciGraphicaSet,
                    
-                },
-                {
-                    path: '/parkHall/manage/activeSet',
-                    name: "park-activeSet",
-                    component: activeSet,
+                // },
+                // {
+                //     path: '/parkHall/manage/activeSet',
+                //     name: "park-activeSet",
+                //     component: activeSet,
                    
-                },
-                {
-                    path: '/parkHall/manage/releaseAuditSet',
-                    name: "park-releaseAuditSet",
-                    component: releaseAuditSet,
+                // },
+                // {
+                //     path: '/parkHall/manage/releaseAuditSet',
+                //     name: "park-releaseAuditSet",
+                //     component: releaseAuditSet,
                    
-                },
-                {
-                    path: '/parkHall/manage/technologyPolicySet',
-                    name: "park-technologyPolicySet",
-                    component: technologyPolicySet,
+                // },
+                // {
+                //     path: '/parkHall/manage/technologyPolicySet',
+                //     name: "park-technologyPolicySet",
+                //     component: technologyPolicySet,
                    
-                },
+                // },
                
                 {
                     path: '/parkHall/manage/modulesSet',

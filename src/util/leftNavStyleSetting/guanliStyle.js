@@ -6,8 +6,8 @@ export const guanliStyle = {
     "park-userManage": "guanliStyle",//成员管理
     "park-activityPoolAddPark": "guanliStyle",//入驻审核
     "park-activityPoolActivityAditing": "guanliStyle",//活动审核
-    "park-achievementSet": "guanliStyle",//成果管理
-    "park-sciGraphicaSet": "guanliStyle",//数据管理
+    "park-resultManage": "guanliStyle",//成果管理
+    "park-dataManage": "guanliStyle",//数据管理
     "park-technologyPolicySet": "guanliStyle",//科技政策管理
     "park-activeSet": "guanliStyle",//平台活动管理
     "park-newsInfoSet": "guanliStyle",//资讯公告管理

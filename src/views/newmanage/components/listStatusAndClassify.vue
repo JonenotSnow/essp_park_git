@@ -20,13 +20,13 @@
                 <div class="ListTopStatus">
                     <i class="el-icon-circle-plus"></i>
                     <span class="time">保存时间：2018-10-22  10：24：00</span>
-                    <span class="create">发布人：孔乙己</span>
+                    <span class="create">发布人：孔sfdasa乙己</span>
                     <span class="classify classifyA">状态：<span>审核不通过</span> </span>
-                    <span class="classify classifyB">类型：<span>审核不通是发发的撒过</span> </span>
+                    <span class="classify classifyB">类型：<span>审核不通是fdasa 告诉对方</span> </span>
                     <i class="el-icon-delete remove"></i>
                 </div>
                 <div class="listBottom">
-                    <div class="contentTitle">保定市科技服务机构备案名单</div>
+                    <div class="contentTitle">保定市科技服务机构备案名单保定市科技服务机构备案名单保定市科技服务机构备案名单保定市科技服务机构备案名单</div>
                     <!-- 科技服务-已审核-->
                     <!-- <div class='editorBtn2'>
                         <span>查看</span>
@@ -141,12 +141,12 @@ export default {
     .list{
         margin-bottom:20px;
         border: solid 1px #cccccc;
-        .ListTop,.ListTopStatus{
+        .ListTopStatus{
             height: 40px;
             width:876px;
             background-color: #f5f5f5;
             padding:0 16px;
-            line-height:40px;
+            line-height:25px;
             margin:0 auto;
             overflow: hidden;
             .time{
@@ -154,44 +154,37 @@ export default {
                 width:230px;
                 margin-left:8px;
             }
+            .create,.classifyA,.classifyB{
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                position: relative;
+                top: 7px;
+            }
             .create{
                 display: inline-block;
-                width:120px;
+                width:100px;
                 margin-left:50px;
             }
-            .classifyC{
+            .classify{
                 display: inline-block;
-                width:150px;
-                margin-left:100px;
                 span{
                     color: #10b5ff;
                 }
+            }
+            .classifyA{
+                width:100px;
+                margin-left:42px;
+            }
+            .classifyB{
+                width:126px;
+                margin-left:48px;
             }
             .remove{
                 float: right;
                 margin-top:13px;
                 color:#999;
                 cursor: pointer;
-            }
-        }
-        .ListTopStatus{
-            .create{
-                display: inline-block;
-                width:120px;
-                margin-left:50px;
-            }
-            .classify{
-                display: inline-block;
-                width:150px;
-                span{
-                    color: #10b5ff;
-                }
-            }
-            .classifyA{
-                margin-left:42px;
-            }
-            .classifyB{
-                margin-left:62px;
             }
         }
         .listBottom{
@@ -209,6 +202,9 @@ export default {
                 letter-spacing: 0px;
                 color: #222222;
                 line-height:60px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
             }
             .editorBtn1{
                 float: right;
