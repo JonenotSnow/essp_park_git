@@ -245,7 +245,7 @@
                         },
                         {
                             name: "普惠金融",
-                            path: "",
+                            path: "/parkHall/manage/inclusiveFinance",
                             src: require("@/assets/imgs/icon6.png"),
                             isShow: true,
                             query: {}
@@ -254,7 +254,7 @@
                             name: "入驻审核",
                             path: "/parkHall/manage/activityPoolAddPark",
                             src: require("@/assets/imgs/icon4.png"),
-                            isShow: false,
+                            isShow: true,
                             query: {
                                 type: 1
                             }
