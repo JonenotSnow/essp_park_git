@@ -11,14 +11,14 @@
         <div>
             <!--<div class="essp-card" v-for="(item, mcCardIndex) in mcCardList" :key="mcCardIndex">-->
             <div class="essp-card" v-for="(item, index) in 5" :key="index">
-                <div class="imgcon">
+                <div class="imgcon" @click="goToDetail(item)">
                     <img :src="defaultimg" alt="">
                     <div class="tiptext">
                         <span>2019-01-01</span>
                     </div>
                 </div>
                 <div class="textcon">
-                    <div class="destit">全部新闻的标题全部新闻的标题全部新闻的标题全部新闻的标题全部新闻的标题全部新闻的标题全部新闻的标题全部新闻的标题全部新闻的标题全部新闻的标题全部新闻的标题全部新闻的标题全部新闻的标题全部新闻的标题全部新闻的标题全部新闻的标题全部新闻的标题全部新闻的标题全部新闻的标题全部新闻的标题</div>
+                    <div class="destit" @click="goToDetail(item)">全部新闻的标题全部新闻的标题全部新闻的标题全部新闻的标题全部新闻的标题全部新闻的标题全部新闻的标题全部新闻的标题全部新闻的标题全部新闻的标题全部新闻的标题全部新闻的标题全部新闻的标题全部新闻的标题全部新闻的标题全部新闻的标题全部新闻的标题全部新闻的标题全部新闻的标题全部新闻的标题</div>
                     <div class="desbrf">简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容</div>
                     <div class="descion">
                         <span><i :class="icons[0]"></i>222</span>
@@ -26,7 +26,7 @@
                         <span><i :class="icons[2]"></i>444</span>
                     </div>
                     <div class="btntool">
-                        <a class="mycusbtn">查看详情</a>
+                        <a class="mycusbtn" @click="goToDetail(item)">查看详情</a>
                     </div>
                 </div>
             </div>
@@ -62,7 +62,6 @@
                     "icon iconfont icon-liulan",
                     "icon iconfont icon-collect2",
                     'icon iconfont icon-pinglun'
-
                 ],
             }
         },
@@ -71,7 +70,11 @@
                 return Moment(vaule).format("YYYY-MM-DD")
             }
         },
-        methods: {}
+        methods: {
+            goToDetail(item){
+                this.$router.push({path: "/news/newsdetail",query: {id: item}});
+            }
+        }
     }
 </script>
 
