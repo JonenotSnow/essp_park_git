@@ -64,10 +64,19 @@ const manageActivityAudit = resolve => require(['@/views/newmanage/auditManage/a
 //活动发布审核历史详情
 const manageActivityAuditDetail = resolve => require(['@/views/newmanage/auditManage/activityPublishAudit/manageActivityAuditDetail'], resolve);
 
+// 发布审核------
+const publishAudit = resolve => require(['@/views/newmanage/auditManage/publishAudit'], resolve);
+
+//科技政策审核列表
+const sciAndTechPolicyAudit = resolve => require(['@/views/newmanage/auditManage/publishAudit/sciAndTechPolicyAudit/index.vue'], resolve);
+//科技政策审核列表---政策法规
+const policieAndRegulationAudit = resolve => require(['@/views/newmanage/auditManage/publishAudit/sciAndTechPolicyAudit/policieAndRegulation.vue'], resolve);
+//科技政策审核列表---科技服务
+const sciAndTechServiceAudit = resolve => require(['@/views/newmanage/auditManage/publishAudit/sciAndTechPolicyAudit/sciAndTechService.vue'], resolve);
+
 //资讯公告审核列表
 const informationAndNoticeAudit = resolve => require(['@/views/newmanage/auditManage/informationAndNoticeAudit'], resolve);
-//科技政策审核列表
-const sciAndTechPolicyAudit = resolve => require(['@/views/newmanage/auditManage/sciAndTechPolicyAudit'], resolve);
+
 
 //园区管理-成员管理
 //成员管理
@@ -147,13 +156,13 @@ export default {
             path: '/parkHall/manage/IntelligentInvestment',
             name: "park-IntelligentInvestment",
             component: IntelligentInvestment,
-            
+
         },
         {
             path: '/parkHall/manage/requestEnterprice',
             name: "park-requestEnterprice",
             component: requestEnterprice,
-            
+
         },
         {
             path: '/parkHall/manage/sendRequest',
@@ -233,14 +242,35 @@ export default {
                     component: activityPublishAudit
                 },
                 {
-                    path: "/parkHall/manage/informationAndNoticeAudit",
-                    name: "park-informationAndNoticeAudit",
-                    component: informationAndNoticeAudit
-                },
-                {
-                    path: "/parkHall/manage/sciAndTechPolicyAudit",
-                    name: "park-sciAndTechPolicyAudit",
-                    component: sciAndTechPolicyAudit
+                    path: "/parkHall/manage/publishAudit",
+                    name: "park-publishAudit",
+                    component: publishAudit,
+                    redirect: '/parkHall/manage/sciAndTechPolicyAudit',
+                    children: [
+                        {
+                            path: "/parkHall/manage/sciAndTechPolicyAudit",
+                            name: "park-sciAndTechPolicyAudit",
+                            component: sciAndTechPolicyAudit,
+                            redirect: '/parkHall/manage/sciAndTechPolicyAudit/policieAndRegulationAudit',
+                            children: [
+                                {
+                                    path: "/parkHall/manage/sciAndTechPolicyAudit/policieAndRegulationAudit",
+                                    name: "park-policieAndRegulationAudit",
+                                    component: policieAndRegulationAudit,
+                                },
+                                {
+                                    path: "/parkHall/manage/sciAndTechPolicyAudit/sciAndTechServiceAudit",
+                                    name: "park-sciAndTechServiceAudit",
+                                    component: sciAndTechServiceAudit,
+                                }
+                            ]
+                        },
+                        {
+                            path: "/parkHall/manage/informationAndNoticeAudit",
+                            name: "park-informationAndNoticeAudit",
+                            component: informationAndNoticeAudit,
+                        }
+                    ]
                 },
                 //成员管理
                 {
@@ -253,7 +283,7 @@ export default {
                     path: "/parkHall/manage/needManage",
                     name: "park-needManage",
                     component: needManage
-                   
+
                 }
             ]
         }
