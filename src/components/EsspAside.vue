@@ -20,7 +20,7 @@
                             <!-- 做一个判断如果有路径显示 如果没有不显示，做权限控制 -->
                             <li @click="ziXunLinkto({faterindex:i,childrenindex:j,item:is})" v-if="is.isshow"
                                 v-for="(is,j) in it.children" :key="j"
-                                :class="j==active.childrenindex&&i==active.faterindex?'span-link':''">{{is.name}}
+                                :class="j==active.childrenindex&&i==active.faterindex?'span-link':''">{{is.menu}}
                             </li>
                         </ul>
                     </li>
