@@ -10,6 +10,7 @@
                 <div class="right-div search-wrap">
                     <div class="searchBox">
                         <input type="text" placeholder="请输入搜索内容" v-model="searchContent">
+                        <i class="icon iconfont icon-sousuo" @click="search()"></i>
                     </div>
                 </div>
                 <div class="right-div publish-btn-wrap">
@@ -45,15 +46,21 @@
         data() {
             return {
                 msg: '政策法规',
-                status: '0',
-                searchContent: '',
-                type: 'sciAndTechPolicy',
+                status: '0',                // 状态值
+                searchContent: '',          // 查询字段
+                type: 'sciAndTechPolicy',   //
                 dataList: 2
             }
         },
         methods: {
+            // 状态切换
             switchStatus(status) {
                 this.status = status;
+            },
+
+            // 查询事件
+            search() {
+                alert('查询事件');
             }
         },
         mounted() {
@@ -66,8 +73,8 @@
     .policie-and-regulation-wrap {
         .policie-and-regulation-head {
             margin-top: 22px;
-            margin-left: 40px;
-            margin-right: 40px;
+            padding-left: 40px;
+            padding-right: 40px;
             padding-bottom: 30px;
             border-bottom: 1px solid #ccc;
             .head-div {
@@ -114,22 +121,42 @@
 
                 .search-wrap {
                     .searchBox {
-                        float: right;
-                        line-height: 30px;
-                        .notice {
+                        width: 198px;
+                        height: 35px;
+                        line-height: 35px;
+                        border-radius: 17.5px;
+                        border: solid 1px #cccccc;
+                        input {
+                            margin-left: 18px;
+                            width: 150px;
+                            height: 35px;
+                            line-height: 35px;
                             font-size: 14px;
                             font-weight: normal;
+                            font-stretch: normal;
                             letter-spacing: 0px;
-                            color: #999999;
-                            margin-right: 20px;
-                        }
-                        input {
-                            width: 158px;
-                            height: 33px;
-                            border-radius: 17.5px;
-                            border: solid 1px #cccccc;
+                            color: #ccc;
                             outline: none;
-                            padding: 0 20px;
+                            border: none;
+                        }
+                        input::-webkit-input-placeholder {
+                            color: #ccc;
+                        }
+                        input::-moz-placeholder { /* Mozilla Firefox 19+ */
+                            color: #ccc;
+                        }
+                        input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+                            color: #ccc;
+                        }
+                        input:-ms-input-placeholder { /* Internet Explorer 10-11 */
+                            color: #ccc;
+                        }
+
+                        i {
+                            width: 17px;
+                            height: 17px;
+                            color: #ccc;
+                            cursor: pointer;
                         }
                     }
                 }
