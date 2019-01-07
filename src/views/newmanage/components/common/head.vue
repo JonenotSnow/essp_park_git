@@ -1,7 +1,8 @@
 <template>
     <div>
         <!-- 成果管理头部 -->
-        <p class="title">{{type}}</p>
+        <p class="title">{{
+            }}</p>
         <div class="searchWrap">
             <div class="search">
                 <div class="left">
@@ -38,7 +39,7 @@ data() {
     width:910px;
     margin:0 auto;
   }
-  .title{    
+  .title{
     margin: 0 auto 27px;
     padding-top: 48px;
     font-size: 18px;
@@ -62,13 +63,13 @@ data() {
         display:inline-block;
         width: 90px;
         height: 30px;
-        background-image: linear-gradient(21deg, 
-          #22a2fa 0%, 
-          #10b5ff 100%), 
+        background-image: linear-gradient(21deg,
+          #22a2fa 0%,
+          #10b5ff 100%),
         linear-gradient(
-          #00a0e9, 
+          #00a0e9,
           #00a0e9);
-        background-blend-mode: normal, 
+        background-blend-mode: normal,
           normal;
         border-radius: 3px;
         font-size: 12px;
@@ -105,8 +106,8 @@ data() {
       width: 130px;
       display: inline-block;
       height: 30px;
-      background-image: linear-gradient(0deg, 
-        #22a2fa 0%, 
+      background-image: linear-gradient(0deg,
+        #22a2fa 0%,
         #10b5ff 100%);
       border-radius: 3px;
       font-size: 14px;
