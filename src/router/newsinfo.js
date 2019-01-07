@@ -2,11 +2,7 @@
  * @Author: Evanlian
  * @Date: 20181204 08:50:37
  * @LastEditors: Evan-lian
-<<<<<<< HEAD
- * @LastEditTime: 2019-01-07 09:47:58
-=======
- * @LastEditTime: 2019-01-07 12:26:21
->>>>>>> 123a64cdd186faac092b4a32ad0d92da569f101f
+ * @LastEditTime: 2019-01-07 16:20:14
  * @Description: 新闻公告模块核心文件，请统一风格，谢谢！！！
  */
 // 园区侧边栏公共路口
@@ -21,6 +17,8 @@ const myfcsnews = resolve => require(['@/views/newparkHall/News/allNews/myfcsnew
 const allnotice = resolve => require(['@/views/newparkHall/News/notice/allnotice'],resolve);//全部通告
 const newsdetail = resolve => require(['@/views/newparkHall/News/allNews/newsdetail'],resolve);//新闻详情页
 const noticedetail = resolve => require(['@/views/newparkHall/News/notice/noticedetail'],resolve);//通知公告详情页
+const addNews = resolve => require(['@/views/newmanage/publishManage/newsInfoSet/addNews'],resolve);//新闻发布页
+const addNotice = resolve => require(['@/views/newmanage/publishManage/newsInfoSet/addNotice'],resolve);//通知公告详发布页
 export default {
     path: '/',
     name: "parkHome",
@@ -72,13 +70,24 @@ export default {
          path: "/news/newsdetail",
          name: "park-newsdetail",
          component: newsdetail,
-      },{
+      },
+      {
       
          path: "/news/noticedetail",
          name: "park-noticedetail",
          component: noticedetail,
           
        
+      },
+      {
+         path: "/news/addNews",
+         name: "park-addNews",
+         component: addNews,
+      },
+      {
+         path: "/news/addNotice",
+         name: "park-addNotice",
+         component: addNotice,
       }
    ]
  };

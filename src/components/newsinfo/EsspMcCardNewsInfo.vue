@@ -18,6 +18,7 @@
                     </div>
                 </div>
                 <div class="textcon">
+                    <div class="destit" @click="goToDetail(item)">标题区域</div>
                     <div class="desbrf">简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容</div>
                     <div class="descion">
                         <span><i :class="icons[0]"></i>222</span>
@@ -123,7 +124,7 @@
         .essp-card {
             margin-top: 25px;
             margin-left: 40px;
-            width: 690px;
+            width: 722px;
             height: 172px;
             &:hover{
                  box-shadow: 0px 0px 14.2px 0.8px
@@ -155,11 +156,12 @@
             .textcon{
                 position: relative;
                 margin-left:10px;
+                width:400px;
                 padding:20px 5px 10px;
                 .destit{
                     cursor: pointer;
                     width:100%;
-                    height:50px;
+                    // height:50px;
                     font-family: "MicrosoftYaHei";
                     font-size: 16px;
                     font-weight: normal;
@@ -193,7 +195,7 @@
                 }
                 .btntool{
                     position:absolute;
-                    right:5px;
+                    right:10px;
                     bottom: 20px;
                     .mycusbtn{
                         cursor: pointer;
