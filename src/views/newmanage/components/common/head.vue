@@ -13,9 +13,9 @@
                         <input type="text" placeholder="请输入搜索内容" v-model="searchContent">
                     </div>
                 </div>
-                <div class="publishBtn">
+                <div class="publishBtn" @click="getPageType">
                     <i class="el-icon-circle-plus"></i>
-                    <span @click="$router.push('/parkHall/manage/publishAchievement')">立即发布</span>
+                    <span>{{publishTitle}}</span>
                 </div>
             </div>
         </div>
@@ -24,12 +24,44 @@
 
 <script>
 export default {
-prop:['type'],
-data() {
-    return {
-        searchContent:''
+  props: {
+      type: {
+          type: String,
+          default: ''
+      },
+      publishTitle:{
+          type: String,
+          default: ''
+      }
+  },
+  data() {
+      return {
+          searchContent:'',
+          pageType:[ //根据此数据判断发布页面跳转，和props里type一直，新调用需新增 
+            {
+              type:'成果管理',
+              url:'/parkHall/manage/publishAchievement'
+            },
+            {
+              type:'专家团队',
+              url:'/parkHall/manage/publishExpertTeam'
+            }
+          ]
+      }
+  },
+  created() {
+    
+  },
+  methods: {
+    getPageType(){
+      this.pageType.forEach(element => {
+        if (element.type == this.type) {
+          this.$router.push(element.url)
+          return;
+        }
+      });
     }
-},
+  },
 }
 </script>
 
