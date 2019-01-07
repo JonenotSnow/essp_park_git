@@ -1,8 +1,7 @@
 <template>
     <div>
         <!-- 成果管理头部 -->
-        <p class="title">{{
-            }}</p>
+        <p class="title">{{type}}</p>
         <div class="searchWrap">
             <div class="search">
                 <div class="left">
