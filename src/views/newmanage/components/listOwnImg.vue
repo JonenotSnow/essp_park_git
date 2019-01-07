@@ -48,11 +48,7 @@
             </div>
         </div>
         <div v-else class="noData">
-<<<<<<< HEAD
-            <span>尚未{{type}}，点击右上方发布按钮立即发布吧！</span>
-=======
             <span>尚未发布{{type}}，点击右上方发布按钮立即发布吧！</span>
->>>>>>> 123a64cdd186faac092b4a32ad0d92da569f101f
             <img src="@assets/newparkimg/newmanage/achievementSet/no_list.png" alt="">
         </div>
     </div>

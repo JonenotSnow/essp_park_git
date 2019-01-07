@@ -50,6 +50,22 @@ const publishSciAndTechPolicy = resolve => require(['@/views/newmanage/publishMa
 //科技政策审核
 const sciAndTechPolicyAuditDetail = resolve => require(['@/views/newmanage/publishManage/sciAndTechPolicy/sciAndTechPolicyAuditDetail'], resolve);
 
+//园区管理-审核管理
+//入园审核列表
+const activityPoolAddPark = resolve => require(['@/views/newmanage/auditManage/addParkAudit/activityPoolAddPark'], resolve);
+//入园审核详情
+const manageAuditing = resolve => require(['@/views/newmanage/auditManage/addParkAudit/manageAuditing'], resolve);
+//入园审核历史详情
+const manageParkAuditDetail = resolve => require(['@/views/newmanage/auditManage/addParkAudit/manageParkAuditDetail'], resolve);
+//活动报名审核列表
+const activityErollAudit = resolve => require(['@/views/newmanage/auditManage/activityErollAudit'], resolve);
+//活动发布审核列表
+const activityPublishAudit = resolve => require(['@/views/newmanage/auditManage/activityPublishAudit'], resolve);
+//资讯公告审核列表
+const informationAndNoticeAudit = resolve => require(['@/views/newmanage/auditManage/informationAndNoticeAudit'], resolve);
+//科技政策审核列表
+const sciAndTechPolicyAudit = resolve => require(['@/views/newmanage/auditManage/sciAndTechPolicyAudit'], resolve);
+
 //园区管理-成员管理
 //成员管理
 const userManage = resolve => require(['@/views/newmanage/userManage/userManage/userManage'], resolve);
@@ -97,6 +113,16 @@ export default {
             path: '/parkHall/manage/sciAndTechPolicyAuditDetail',
             name: "park-sciAndTechPolicyAuditDetail",
             component: sciAndTechPolicyAuditDetail,
+        },
+        {
+            path: '/parkHall/manage/manageAuditing',
+            name: "park-manageAuditing",
+            component: manageAuditing,
+        },
+        {
+            path: '/parkHall/manage/manageParkAuditDetail',
+            name: "park-manageParkAuditDetail",
+            component: manageParkAuditDetail,
         },
         {
             path: "/parkHall/manage/baseInfo",
@@ -158,6 +184,37 @@ export default {
                             component: sciAndTechService
                         }
                     ]
+                },
+                //审核管理
+                {
+                    path: "/parkHall/manage/activityPoolAddPark",
+                    name: "park-activityPoolAddPark",
+                    component: activityPoolAddPark
+                },
+                {
+                    path: "/parkHall/manage/activityErollAudit",
+                    name: "park-activityErollAudit",
+                    component: activityErollAudit
+                },
+                {
+                    path: "/parkHall/manage/activityPublishAudit",
+                    name: "park-activityPublishAudit",
+                    component: activityPublishAudit
+                },
+                {
+                    path: "/parkHall/manage/activityPublishAudit",
+                    name: "park-activityPublishAudit",
+                    component: activityPublishAudit
+                },
+                {
+                    path: "/parkHall/manage/informationAndNoticeAudit",
+                    name: "park-informationAndNoticeAudit",
+                    component: informationAndNoticeAudit
+                },
+                {
+                    path: "/parkHall/manage/sciAndTechPolicyAudit",
+                    name: "park-sciAndTechPolicyAudit",
+                    component: sciAndTechPolicyAudit
                 },
                 //成员管理
                 {
