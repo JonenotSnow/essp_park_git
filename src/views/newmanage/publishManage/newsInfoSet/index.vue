@@ -2,7 +2,7 @@
  * @Author: Evan-lian
  * @Date: 2018-12-05 09:20:36
  * @LastEditors: Evan-lian
- * @LastEditTime: 2019-01-04 16:50:28
+ * @LastEditTime: 2019-01-07 09:51:50
  * @Description: 新闻资讯发布管理页
  -->
 
@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import outRoute from "../components/outRoute.vue";
+import outRoute from "../../components/outRoute";
  export default {
    data () {
      return {

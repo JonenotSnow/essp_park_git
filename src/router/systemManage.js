@@ -2,7 +2,7 @@
  * @Author: Evanlian
  * @Date: 20181204 08:50:37
  * @LastEditors: Evan-lian
- * @LastEditTime: 2019-01-03 10:10:39
+ * @LastEditTime: 2019-01-07 09:34:09
  * @Description: 系统模块核心文件，请统一风格，谢谢！！！
  */
 // 园区侧边栏公共路口
@@ -96,7 +96,7 @@ export default {
         },
         {
             path: "/parkHall/manage/baseInfo",
-            name: "park-park-manage",
+            name: "park-manage",
             component: asideComRoot,
             redirect: '/parkHall/manage/baseInfo',
             children: [
