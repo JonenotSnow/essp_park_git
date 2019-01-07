@@ -1,40 +1,27 @@
 <template>
  <div class="achievementSetHead">
     <!--  成果管理已发布 -->
-    <achievementSetHead :type="成果管理"></achievementSetHead>
-    <achievementSetCondition v-if="list"></achievementSetCondition>
-    <listOnlyStatus :list='list'></listOnlyStatus>
+    <achievementSetHead :type=type :publishTitle="publishTitle"></achievementSetHead>
+    <achievementSetCondition v-if="list.length>0"></achievementSetCondition>
+    <listOnlyStatus :list='list' :type=type></listOnlyStatus>
  </div>
 </template>
 
 <script>
-// import outRoute from '../components/outRoute'
-
 import achievementSetHead from './../../components/common/head'
 import achievementSetCondition from './../../components/common/condition'
 import listOnlyStatus from './../../components/listOwnImg'
  export default {
    components: {
-    // outRoute,/
     achievementSetHead,
     achievementSetCondition,
     listOnlyStatus
    },
    data () {
      return {
-      list:2,
-      outsource: [
-          {
-              id:1,
-              name:"新闻动态",
-              path:'/parkHall/manage/publicNews'
-          },
-          {
-              id:2,
-              name:"通知通告",
-              path:'/parkHall/manage/publicNotice'
-          }
-      ]
+      publishTitle:'立即发布',
+      type:'成果管理',
+      list:[]
      }
    },
    created () {
