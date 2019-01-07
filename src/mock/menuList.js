@@ -657,22 +657,8 @@ export const menuListData = {
                     "children": []
                 },{
                     "id": "04160303",
-                    "menu": "平台活动发布审核",
+                    "menu": "活动发布审核",
                     "name": "park-activityPublishAudit",
-                    "parentId": "041603",
-                    "ismenu": "1",
-                    "isshow": "1",
-                    "loginflag": "1",
-                    "cetificateflag": "1",
-                    "enterpriseflag": "1",
-                    "authorityflag": "1",
-                    "isclick": "1",
-                    "message": "园区功能正在内测中，敬请期待!",
-                    "children": []
-                },  {
-                    "id": "04160304",
-                    "menu": "平台活动报名审核",
-                    "name": "park-activityErollAudit",
                     "parentId": "041603",
                     "ismenu": "1",
                     "isshow": "1",

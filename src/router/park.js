@@ -117,11 +117,11 @@ const activityPoolActivityAditing = resolve => require(['@/views/parkHall/manage
 // 园区管理入驻申请表
 // const occupancyApplication = resolve => require(['@/views/parkHall/manage/occupancyApplication'],resolve);
 // 园区管理 成员管理 邀请入园
-const sendRequest = resolve => require(['@/views/parkHall/manage/sendRequest'],resolve);
+// const sendRequest = resolve => require(['@/views/parkHall/manage/sendRequest'],resolve);
 // 园区管理 成员管理 智能推荐
-const IntelligentInvestment = resolve => require(['@/views/parkHall/manage/IntelligentInvestment'],resolve);
+// const IntelligentInvestment = resolve => require(['@/views/parkHall/manage/IntelligentInvestment'],resolve);
 // 园区管理 成员管理 邀请企业加入园区
-const requestEnterprice =  resolve => require(['@/views/parkHall/manage/requestEnterprice'],resolve);
+// const requestEnterprice =  resolve => require(['@/views/parkHall/manage/requestEnterprice'],resolve);
 // 园区管理 入园审核详情
 const manageAuditing =  resolve => require(['@/views/parkHall/manage/manageAuditing'],resolve);
 // 园区管理 咨询审核详情
@@ -614,24 +614,24 @@ export const parkRouter1 = {
         //     component: scanModelTwo,
             
         // },
-        {
-            path: '/parkHall/manage/sendRequest',
-            name: "park-sendRequest",
-            component: sendRequest,
+        // {
+        //     path: '/parkHall/manage/sendRequest',
+        //     name: "park-sendRequest",
+        //     component: sendRequest,
             
-        },
-        {
-            path: '/parkHall/manage/IntelligentInvestment',
-            name: "park-IntelligentInvestment",
-            component: IntelligentInvestment,
+        // },
+        // {
+        //     path: '/parkHall/manage/IntelligentInvestment',
+        //     name: "park-IntelligentInvestment",
+        //     component: IntelligentInvestment,
             
-        },
-        {
-            path: '/parkHall/manage/requestEnterprice',
-            name: "park-requestEnterprice",
-            component: requestEnterprice,
+        // },
+        // {
+        //     path: '/parkHall/manage/requestEnterprice',
+        //     name: "park-requestEnterprice",
+        //     component: requestEnterprice,
             
-        },
+        // },
         {
             path: '/parkHall/manage/manageAuditing',
             name: "park-manageAuditing",

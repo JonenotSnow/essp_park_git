@@ -1,26 +1,37 @@
+<!--
+ * @Author: Evan-lian
+ * @Date: 2018-12-05 09:20:36
+ * @LastEditors: Evan-lian
+ * @LastEditTime: 2019-01-07 09:51:50
+ * @Description: 新闻资讯发布管理页
+ -->
+
 <template>
-    <div>
-        {{msg}}
-    </div>
+  <div>
+      科技政策table切换
+ </div>
 </template>
 
 <script>
-    export default {
-        name: 'sci-and-tech-policy',
-        props: {},
-        components: {},
-        data() {
-            return {
-                msg: '科技政策审核页面',
-            }
-        },
-        methods: {},
-        mounted() {
-        }
-    }
+import outRoute from "../../components/outRoute";
+ export default {
+   data () {
+     return {
+     }
+   },
+   created () {
+
+   },
+   computed: {
+
+   },
+   components: {
+       outRoute
+   }
+ }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style lang='less' scoped >
 
+ 
 </style>

@@ -1,6 +1,6 @@
 <template>
     <div>
-        {{msg}}
+        政策法规审核列表页面
     </div>
 </template>
 

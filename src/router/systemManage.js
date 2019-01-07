@@ -57,10 +57,13 @@ const activityPoolAddPark = resolve => require(['@/views/newmanage/auditManage/a
 const manageAuditing = resolve => require(['@/views/newmanage/auditManage/addParkAudit/manageAuditing'], resolve);
 //入园审核历史详情
 const manageParkAuditDetail = resolve => require(['@/views/newmanage/auditManage/addParkAudit/manageParkAuditDetail'], resolve);
-//活动报名审核列表
-const activityErollAudit = resolve => require(['@/views/newmanage/auditManage/activityErollAudit'], resolve);
 //活动发布审核列表
-const activityPublishAudit = resolve => require(['@/views/newmanage/auditManage/activityPublishAudit'], resolve);
+const activityPublishAudit = resolve => require(['@/views/newmanage/auditManage/activityPublishAudit/activityPublishAudit'], resolve);
+//活动发布审核详情
+const manageActivityAudit = resolve => require(['@/views/newmanage/auditManage/activityPublishAudit/manageActivityAudit'], resolve);
+//活动发布审核历史详情
+const manageActivityAuditDetail = resolve => require(['@/views/newmanage/auditManage/activityPublishAudit/manageActivityAuditDetail'], resolve);
+
 //资讯公告审核列表
 const informationAndNoticeAudit = resolve => require(['@/views/newmanage/auditManage/informationAndNoticeAudit'], resolve);
 //科技政策审核列表
@@ -69,6 +72,12 @@ const sciAndTechPolicyAudit = resolve => require(['@/views/newmanage/auditManage
 //园区管理-成员管理
 //成员管理
 const userManage = resolve => require(['@/views/newmanage/userManage/userManage/userManage'], resolve);
+//立即邀请
+const requestEnterprice = resolve => require(['@/views/newmanage/userManage/userManage/requestEnterprice'], resolve);
+//智能推荐
+const IntelligentInvestment = resolve => require(['@/views/newmanage/userManage/userManage/IntelligentInvestment'], resolve);
+//编辑，发送邀请函
+const sendRequest = resolve => require(['@/views/newmanage/userManage/userManage/sendRequest'], resolve);
 
 //园区管理-需求管理
 const needManage = resolve => require(['@/views/newmanage/needManage/needManage'], resolve);
@@ -123,6 +132,33 @@ export default {
             path: '/parkHall/manage/manageParkAuditDetail',
             name: "park-manageParkAuditDetail",
             component: manageParkAuditDetail,
+        },
+        {
+            path: '/parkHall/manage/manageActivityAudit',
+            name: "park-manageActivityAudit",
+            component: manageActivityAudit,
+        },
+        {
+            path: '/parkHall/manage/manageActivityAuditDetail',
+            name: "park-manageActivityAuditDetail",
+            component: manageActivityAuditDetail,
+        },
+        {
+            path: '/parkHall/manage/IntelligentInvestment',
+            name: "park-IntelligentInvestment",
+            component: IntelligentInvestment,
+            
+        },
+        {
+            path: '/parkHall/manage/requestEnterprice',
+            name: "park-requestEnterprice",
+            component: requestEnterprice,
+            
+        },
+        {
+            path: '/parkHall/manage/sendRequest',
+            name: "park-sendRequest",
+            component: sendRequest,
         },
         {
             path: "/parkHall/manage/baseInfo",
@@ -190,16 +226,6 @@ export default {
                     path: "/parkHall/manage/activityPoolAddPark",
                     name: "park-activityPoolAddPark",
                     component: activityPoolAddPark
-                },
-                {
-                    path: "/parkHall/manage/activityErollAudit",
-                    name: "park-activityErollAudit",
-                    component: activityErollAudit
-                },
-                {
-                    path: "/parkHall/manage/activityPublishAudit",
-                    name: "park-activityPublishAudit",
-                    component: activityPublishAudit
                 },
                 {
                     path: "/parkHall/manage/activityPublishAudit",
