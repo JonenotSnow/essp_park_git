@@ -9,7 +9,7 @@
  export default {
    data () {
      return {
-         msg:"数据管理"
+         msg:"资讯公告审核"
      }
    },
    created () {

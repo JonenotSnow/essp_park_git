@@ -9,7 +9,7 @@
  export default {
    data () {
      return {
-         msg:"数据管理"
+         msg:"活动报名审核"
      }
    },
    created () {
