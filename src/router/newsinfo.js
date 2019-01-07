@@ -2,7 +2,7 @@
  * @Author: Evanlian
  * @Date: 20181204 08:50:37
  * @LastEditors: Evan-lian
- * @LastEditTime: 2019-01-07 09:47:58
+ * @LastEditTime: 2019-01-07 12:26:21
  * @Description: 新闻公告模块核心文件，请统一风格，谢谢！！！
  */
 // 园区侧边栏公共路口
@@ -15,12 +15,15 @@ const newsIndex = resolve => require(['@/views/newparkHall/News/index'],resolve)
 const alllistnews = resolve => require(['@/views/newparkHall/News/allNews/alllistnews'],resolve);//全部新闻
 const myfcsnews = resolve => require(['@/views/newparkHall/News/allNews/myfcsnews'],resolve);//我关注的新闻
 const allnotice = resolve => require(['@/views/newparkHall/News/notice/allnotice'],resolve);//全部通告
- export default {
+const newsdetail = resolve => require(['@/views/newparkHall/News/allNews/newsdetail'],resolve);//新闻详情页
+const noticedetail = resolve => require(['@/views/newparkHall/News/notice/noticedetail'],resolve);//通知公告详情页
+export default {
     path: '/',
     name: "parkHome",
     component: parkIndex,
     redirect: '/parkHome',
-    children:[{
+    children:[
+       {
         path: "/newsinfo",
         name: "park-newsinfo",
         component: asideComRoot,
@@ -60,5 +63,18 @@ const allnotice = resolve => require(['@/views/newparkHall/News/notice/allnotice
                ]    
             },
          ]
-    }]
+      },
+      {
+         path: "/news/newsdetail",
+         name: "park-newsdetail",
+         component: newsdetail,
+      },{
+      
+         path: "/news/noticedetail",
+         name: "park-noticedetail",
+         component: noticedetail,
+          
+       
+      }
+   ]
  };
