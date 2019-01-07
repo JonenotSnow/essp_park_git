@@ -8,10 +8,12 @@
 
 <template>
     <div class="outroute">
-        <router-link v-for="(item,index) in outsource" :key="index" :to="item.path">
-            <span class="outlinkstyle">{{item.name}}</span>
-            <span class="separator" v-if="index<outsource.length-1">|</span>
-        </router-link>
+        <div class="router__link">
+            <router-link v-for="(item,index) in outsource" :key="index" :to="item.path">
+                <span class="outlinkstyle">{{item.name}}</span>
+                <span class="separator" v-if="index<outsource.length-1">|</span>
+            </router-link>
+        </div>
         <div>
             <router-view></router-view>
         </div>
@@ -41,14 +43,31 @@
     .outroute {
         background: #fff;
 
-        .outlinkstyle {
-            display: inline-block;
-            font-family: "MicrosoftYaHei";
-            font-size: 18px;
-            font-weight: normal;
-            font-stretch: normal;
-            letter-spacing: 0px;
-            color: #666666;
+        .router__link {
+            padding-top: 45px;
+            padding-left: 40px;
+
+            .outlinkstyle {
+                display: inline-block;
+                font-size: 18px;
+                font-weight: normal;
+                font-stretch: normal;
+                letter-spacing: 0px;
+                color: #666666;
+                cursor: pointer;
+                &:hover {
+                    color: #00a0e9;
+                }
+            }
+
+            .separator {
+                display: inline-block;
+                margin-left: 25px;
+                margin-right: 30px;
+                vertical-align: top;
+                font-size: 18px;
+                color: #ccc;
+            }
 
             .router-link-active .outlinkstyle {
                 color: #409EFF;

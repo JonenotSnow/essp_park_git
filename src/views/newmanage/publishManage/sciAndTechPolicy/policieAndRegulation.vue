@@ -1,6 +1,5 @@
 <template>
     <div>
-        {{msg}}
         <p>sciAndTechPolicy</p>
         <span @click="$router.push('/parkHall/manage/publishSciAndTechPolicy')">去发布</span>
         <span @click="$router.push('/parkHall/manage/sciAndTechPolicyAuditDetail')">审核详情</span>
