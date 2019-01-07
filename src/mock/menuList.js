@@ -660,6 +660,7 @@ export const menuListData = {
                 "id": "041604",
                 "menu": "需求管理",
                 "parentId": "0416",
+                "name":"",
                 "ismenu": "1",
                 "isshow": "1",
                 "loginflag": "1",
@@ -668,7 +669,22 @@ export const menuListData = {
                 "authorityflag": "1",
                 "isclick": "1",
                 "message": "园区功能正在内测中，敬请期待!",
-                "children": []
+                "children": [
+                    {
+                        "id": "041604",
+                        "menu": "需求管理",
+                        "parentId": "0416",
+                        "name":"park-needManage",
+                        "ismenu": "1",
+                        "isshow": "1",
+                        "loginflag": "1",
+                        "cetificateflag": "1",
+                        "enterpriseflag": "1",
+                        "authorityflag": "1",
+                        "isclick": "1",
+                        "message": "园区功能正在内测中，敬请期待!"
+                    }
+                ]
             }]
         }]
     }]
