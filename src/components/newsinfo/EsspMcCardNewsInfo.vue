@@ -11,15 +11,23 @@
         <div>
             <!--<div class="essp-card" v-for="(item, mcCardIndex) in mcCardList" :key="mcCardIndex">-->
             <div class="essp-card" v-for="(item, index) in 5" :key="index">
-                <div class="card__head">
-                    <p class="head__title">保定市科技创新三年行动计划（2018-2020年）</p>
-                    <p class="head__time">2018-06-11</p>
+                <div class="imgcon" @click="goToDetail(item)">
+                    <img :src="defaultimg" alt="">
+                    <div class="tiptext">
+                        <span>2019-01-01</span>
+                    </div>
                 </div>
-                <div class="card__dest">
-                    <p>
-                        为贯彻落实习近平新时代中国特色社会主义思想和党的十九大精神，深入落实省委省政府的决策部署，实施创新驱动发展战略，加快保定创
-                        为贯彻落实习近平新时代中国特色社会主义思想和党的十九大精神，深入落实省委省政府的决策部署，实施创新驱动发展战略，加快保定创···
-                    </p>
+                <div class="textcon">
+                    <div class="destit" @click="goToDetail(item)">全部新闻的标题全部新闻的标题全部新闻的标题全部新闻的标题全部新闻的标题全部新闻的标题全部新闻的标题全部新闻的标题全部新闻的标题全部新闻的标题全部新闻的标题全部新闻的标题全部新闻的标题全部新闻的标题全部新闻的标题全部新闻的标题全部新闻的标题全部新闻的标题全部新闻的标题全部新闻的标题</div>
+                    <div class="desbrf">简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容</div>
+                    <div class="descion">
+                        <span><i :class="icons[0]"></i>222</span>
+                        <span><i :class="icons[1]"></i>333</span>
+                        <span><i :class="icons[2]"></i>444</span>
+                    </div>
+                    <div class="btntool">
+                        <a class="mycusbtn" @click="goToDetail(item)">查看详情</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -49,6 +57,12 @@
         data() {
             return {
                 msg: 'EsspMcCard',
+                defaultimg:require("@assets/newparkimg/newmanage/newsInfoSet/hydt2.jpg"),
+                icons: [
+                    "icon iconfont icon-liulan",
+                    "icon iconfont icon-collect2",
+                    'icon iconfont icon-pinglun'
+                ],
             }
         },
         filters: {
@@ -56,7 +70,11 @@
                 return Moment(vaule).format("YYYY-MM-DD")
             }
         },
-        methods: {}
+        methods: {
+            goToDetail(item){
+                this.$router.push({path: "/news/newsdetail",query: {id: item}});
+            }
+        }
     }
 </script>
 
@@ -107,52 +125,99 @@
             margin-top: 25px;
             margin-left: 40px;
             width: 690px;
-            height: 110px;
-            .card__head {
+            height: 172px;
+            &:hover{
+                 box-shadow: 0px 0px 14.2px 0.8px 
+		rgba(0, 0, 0, 0.08);
+            }
+            display: flex;
+            .imgcon{
+                width: 288px;
+                height: 172px;
                 position: relative;
-                height: 49px;
-                line-height: 50px;
-                border-bottom: 1px solid #ccc;
-                p {
-                    display: inline-block;
-                    font-family: MicrosoftYaHei;
-                    font-weight: normal;
-                    font-stretch: normal;
-                    letter-spacing: 0px;
+                cursor: pointer;
+                img{
+                    display: block;
+                    width: 288px;
+                    height: 172px;
                 }
-                .head__title {
-                    font-size: 16px;
-                    color: #222222;
-                    &:hover {
-                        color: #00a0e9;
-                        cursor: pointer;
-                    }
-                }
-                .head__time {
-                    position: absolute;
-                    top: 0;
-                    right: 0;
-                    font-size: 14px;
-                    color: #999999;
+                .tiptext{
+                    position:absolute;
+                    bottom: 0;
+                    padding:0 5px;
+                    width: 278px;
+                    height: 20px;
+                    line-height: 20px;
+                    color:#fff;
+                    background-color: #000000;
+                    .esspopacity(0.7);
                 }
             }
-            .card__dest {
-                margin-top: 10px;
-                p {
-                    height: 40px;
-                    line-height: 20px;
-                    font-family: MicrosoftYaHei;
+            .textcon{
+                position: relative;
+                margin-left:10px;
+                padding:20px 5px 10px;
+                .destit{
+                    cursor: pointer;
+                    width:100%;
+                    height:50px;
+                    font-family: "MicrosoftYaHei";
+                    font-size: 16px;
+                    font-weight: normal;
+                    font-stretch: normal;
+                    line-height: 24px;
+                    letter-spacing: 0px;
+                    color: #444444;
+                    .esspellipsitwo(@value:2);
+                    margin-bottom: 15px;
+                }
+                .desbrf{
+                    width: 318px;
+                    height: 39px;
+                    font-family: "MicrosoftYaHei";
                     font-size: 14px;
                     font-weight: normal;
                     font-stretch: normal;
                     letter-spacing: 0px;
                     color: #999999;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    display: -webkit-box;
-                    -webkit-line-clamp: 2;
-                    -webkit-box-orient: vertical;
+                    .esspellipsitwo(@value:2);
+                    margin-bottom: 15px;
                 }
+                .descion{
+                     width: 318px;
+                     span{
+                         margin-left:20px;
+                         i{
+                             margin-right:5px;
+                         }
+                     }
+                }
+                .btntool{
+                    position:absolute;
+                    right:5px;
+                    bottom: 20px;
+                    .mycusbtn{
+                        cursor: pointer;
+                        display: block;
+                        outline: none;
+                        width: 80px;
+                        height: 28px;
+                        line-height: 28px;
+                        text-align: center;
+                        color:#fff;
+                        background-image: linear-gradient(21deg, 
+                            #22a2fa 0%, 
+                            #10b5ff 100%), 
+                        linear-gradient(
+                            #00a0e9, 
+                            #00a0e9);
+                        background-blend-mode: normal, 
+                            normal;
+                        border-radius: 14px;
+                    }
+
+                }
+
             }
 
         }

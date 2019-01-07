@@ -12,7 +12,7 @@
             <!--<div class="essp-card" v-for="(item, mcCardIndex) in mcCardList" :key="mcCardIndex">-->
             <div class="essp-card" v-for="(item, index) in 5" :key="index">
                 <div class="card__head">
-                    <p class="head__title">保定市科技创新三年行动计划（2018-2020年）</p>
+                    <p class="head__title" @click="goToDetail(item)">保定市科技创新三年行动计划（2018-2020年）</p>
                     <p class="head__time">2018-06-11</p>
                 </div>
                 <div class="card__dest">
@@ -56,7 +56,11 @@
                 return Moment(vaule).format("YYYY-MM-DD")
             }
         },
-        methods: {}
+        methods: {
+            goToDetail(item){
+                this.$router.push({path: "/news/noticedetail",query: {id: item}});
+            }
+        }
     }
 </script>
 
