@@ -376,7 +376,7 @@
                         this.$message.info(response.resultMsg);
                     }
                 }, (err) => {
-                        this.$message.error(response.resultMsg);
+                        this.$message.error(err.resultMsg);
                 })
             },
         },

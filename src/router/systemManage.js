@@ -53,6 +53,10 @@ const sciAndTechPolicyAuditDetail = resolve => require(['@/views/newmanage/publi
 //园区管理-成员管理
 //成员管理
 const userManage = resolve => require(['@/views/newmanage/userManage/userManage/userManage'], resolve);
+
+//园区管理-需求管理
+const needManage = resolve => require(['@/views/newmanage/needManage/needManage'], resolve);
+
 export default {
     path: '/',
     name: "parkHome",
@@ -161,6 +165,13 @@ export default {
                     name: "park-userManage",
                     component: userManage
                 },
+                //需求管理
+                {
+                    path: "/parkHall/manage/needManage",
+                    name: "park-needManage",
+                    component: needManage
+                   
+                }
             ]
         }
     ]

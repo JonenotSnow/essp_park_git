@@ -11,14 +11,13 @@
         <div>
             <!--<div class="essp-card" v-for="(item, mcCardIndex) in mcCardList" :key="mcCardIndex">-->
             <div class="essp-card" v-for="(item, index) in 5" :key="index">
-                <div class="imgcon">
+                <div class="imgcon" @click="goToDetail(item)">
                     <img :src="defaultimg" alt="">
                     <div class="tiptext">
                         <span>2019-01-01</span>
                     </div>
                 </div>
                 <div class="textcon">
-                    <div class="destit">全部新闻的标题全部新闻的标题全部新闻的标题全部新闻的标题全部新闻的标题全部新闻的标题全部新闻的标题全部新闻的标题全部新闻的标题全部新闻的标题全部新闻的标题全部新闻的标题全部新闻的标题全部新闻的标题全部新闻的标题全部新闻的标题全部新闻的标题全部新闻的标题全部新闻的标题全部新闻的标题</div>
                     <div class="desbrf">简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容</div>
                     <div class="descion">
                         <span><i :class="icons[0]"></i>222</span>
@@ -26,7 +25,7 @@
                         <span><i :class="icons[2]"></i>444</span>
                     </div>
                     <div class="btntool">
-                        <a class="mycusbtn">查看详情</a>
+                        <a class="mycusbtn" @click="goToDetail(item)">查看详情</a>
                     </div>
                 </div>
             </div>
@@ -62,7 +61,6 @@
                     "icon iconfont icon-liulan",
                     "icon iconfont icon-collect2",
                     'icon iconfont icon-pinglun'
-
                 ],
             }
         },
@@ -71,7 +69,11 @@
                 return Moment(vaule).format("YYYY-MM-DD")
             }
         },
-        methods: {}
+        methods: {
+            goToDetail(item){
+                this.$router.push({path: "/news/newsdetail",query: {id: item}});
+            }
+        }
     }
 </script>
 
@@ -124,7 +126,7 @@
             width: 690px;
             height: 172px;
             &:hover{
-                 box-shadow: 0px 0px 14.2px 0.8px 
+                 box-shadow: 0px 0px 14.2px 0.8px
 		rgba(0, 0, 0, 0.08);
             }
             display: flex;
@@ -202,13 +204,13 @@
                         line-height: 28px;
                         text-align: center;
                         color:#fff;
-                        background-image: linear-gradient(21deg, 
-                            #22a2fa 0%, 
-                            #10b5ff 100%), 
+                        background-image: linear-gradient(21deg,
+                            #22a2fa 0%,
+                            #10b5ff 100%),
                         linear-gradient(
-                            #00a0e9, 
+                            #00a0e9,
                             #00a0e9);
-                        background-blend-mode: normal, 
+                        background-blend-mode: normal,
                             normal;
                         border-radius: 14px;
                     }
