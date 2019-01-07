@@ -1,55 +1,66 @@
 <template>
-    <div id="publishAchievement">
+    <div class="publish-sciAnd-tech-policy-wrap" id="publishAchievement">
         <essp-bread-crumb :breadList="breadlist"></essp-bread-crumb>
-        <p class='Otitle'>
-            <i></i>
-            科技政策
-            <i></i>
-        </p>
-        <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="150px" class="demo-ruleForm">
-            <el-form-item label="科技服务标题：" prop="name">
-                <el-input v-model="ruleForm.name"></el-input>
-            </el-form-item>
-            <el-form-item label="科技服务类型：" prop="type">
-                <el-select v-model="ruleForm.type" placeholder="请选择科技服务类型">
-                    <el-option label="科技创新" value="01"></el-option>
-                    <el-option label="技术合同登记" value="02"></el-option>
-                    <el-option label="高企认定" value="03"></el-option>
-                    <el-option label="科小认定" value="04"></el-option>
-                    <el-option label="知识产权" value="05"></el-option>
-                    <el-option label="科技服务机构" value="06"></el-option>
-                    <el-option label="风险投资" value="07"></el-option>
-                    <el-option label="天使投资" value="08"></el-option>
-                </el-select>
-            </el-form-item>
-            <el-form-item label="科技服务简介：" prop="desc">
-                <el-input type="textarea" v-model="ruleForm.desc"></el-input>
-            </el-form-item>
-            <el-form-item label="科技服务详情：" prop="detail">
-                等编辑器
-            </el-form-item>
-            <el-form-item label="科技服务标签：" prop="tags">
-                标签组件
-            </el-form-item>
-            <el-form-item label="发布人：" prop="issuer">
-                <el-input v-model="ruleForm.issuer"></el-input>
-            </el-form-item>
-            <el-form-item>
-                <p class="scan">预览</p>
-            </el-form-item>
-            <el-form-item>
-                <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
-                <el-button @click="resetForm('ruleForm')">重置</el-button>
-            </el-form-item>
-        </el-form>
+        <div class="publish-title">
+            <i></i>发布科技服务<i></i>
+        </div>
+        <div class="publist-form">
+            <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="125px" class="demo-ruleForm">
+                <el-form-item label="科技服务标题：" prop="name">
+                    <el-input v-model="ruleForm.name"
+                              placeholder="请输入科技服务标题"
+                              style="width: 500px;"
+                    ></el-input>
+                </el-form-item>
+                <el-form-item label=" 科技服务类型：
+                    " prop="type">
+                    <el-select v-model="ruleForm.type" placeholder="请选择科技服务类型">
+                        <el-option label="科技创新" value="01"></el-option>
+                        <el-option label="技术合同登记" value="02"></el-option>
+                        <el-option label="高企认定" value="03"></el-option>
+                        <el-option label="科小认定" value="04"></el-option>
+                        <el-option label="知识产权" value="05"></el-option>
+                        <el-option label="科技服务机构" value="06"></el-option>
+                        <el-option label="风险投资" value="07"></el-option>
+                        <el-option label="天使投资" value="08"></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="科技服务简介：" prop="desc">
+                    <!--<el-input type="textarea" v-model="ruleForm.desc"></el-input>-->
+                    <textarea
+                        placeholder="请输入科技服务简介"
+                        style="padding: 10px; width: 720px; height: 140px; font-size: 14px; color: #999; border-radius: 3px; border: solid 1px #cccccc;"/>
+                </el-form-item>
+                <el-form-item label="科技服务详情：" prop="detail">
+                    等编辑器
+                </el-form-item>
+                <el-form-item label="科技服务标签：" prop="tags">
+                    标签组件
+                </el-form-item>
+                <el-form-item label="发布人：" prop="issuer">
+                    <el-input v-model="ruleForm.issuer" placeholder="请输入发布人" style="width: 210px"></el-input>
+                </el-form-item>
+                <el-form-item>
+                    <p class="scan"><span class="scan-1">预</span><span>览</span></p>
+                </el-form-item>
+                <el-form-item>
+                    <div class="btn-group">
+                        <button class="my-btn btn_zc" @click="temporaryStorage('ruleForm')">暂存</button>
+                        <button class="my-btn btn_cj" @click="submitForm('ruleForm')">创建</button>
+                    </div>
+                </el-form-item>
+            </el-form>
+        </div>
     </div>
 </template>
 
 <script>
     import EsspBreadCrumb from "@/components/EsspBreadCrumb";
+    import Index from "../../../parkHall/property/propertyManager/equitmentInput/index";
 
     export default {
         components: {
+            Index,
             EsspBreadCrumb
         },
         data() {
@@ -128,20 +139,44 @@
                 })
                 return false // 返回false不会自动上传
             },
+
+            // 创建事件
+            submitForm(formName) {
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        alert('submit!');
+                    } else {
+                        console.log('error submit!!');
+                        return false;
+                    }
+                });
+            },
+
+            // 暂存事件
+            temporaryStorage(formName) {
+                // this.$refs[formName].resetFields();
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        alert('暂存事件');
+                    } else {
+                        console.log('error submit!!');
+                        return false;
+                    }
+                });
+            }
         },
     }
 </script>
 
 <style lang='less' scoped>
-    #publishAchievement {
+    .publish-sciAnd-tech-policy-wrap {
         width: 1200px;
         background: #fff;
-        margin: 0 auto;
-        .Otitle {
+        margin: 0 auto 20px;
+        .publish-title {
+            margin-top: 66px;
+            margin-bottom: 95px;
             font-size: 24px;
-            line-height: 36px;
-            margin-bottom: 20px;
-            margin-top: 60px;
             color: #333333;
             text-align: center;
             i {
@@ -150,6 +185,53 @@
                 border: 1px solid #ddd;
                 position: relative;
                 top: -6px;
+            }
+        }
+
+        .publist-form {
+            padding: 0 125px 60px;
+            .el-input__inner {
+                height: 35px;
+                line-height: 35px;
+            }
+            .scan {
+                width: 100px;
+                height: 35px;
+                line-height: 35px;
+                text-align: center;
+                font-size: 14px;
+                font-weight: normal;
+                font-stretch: normal;
+                letter-spacing: 0px;
+                color: #00a0e9;
+                border-radius: 3px;
+                background-color: #e6f4ff;
+                cursor: pointer;
+                span {
+                    display: inline-block;
+                }
+                .scan-1 {
+                    margin-right: 5px;
+                }
+            }
+            .btn-group {
+                text-align: center;
+                .my-btn {
+                    width: 100px;
+                    height: 40px;
+                    line-height: 40px;
+                    font-size: 16px;
+                    font-weight: normal;
+                    font-stretch: normal;
+                    letter-spacing: 0px;
+                    color: #fff;
+                    border: none;
+                    border-radius: 5px;
+                    background-color: #00a0e9;
+                }
+                .btn_zc {
+                    margin-right: 125px;
+                }
             }
         }
     }
