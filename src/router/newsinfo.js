@@ -2,15 +2,15 @@
  * @Author: Evanlian
  * @Date: 20181204 08:50:37
  * @LastEditors: Evan-lian
- * @LastEditTime: 2019-01-04 16:52:32
+ * @LastEditTime: 2019-01-07 09:47:58
  * @Description: 新闻公告模块核心文件，请统一风格，谢谢！！！
  */
 // 园区侧边栏公共路口
 const parkIndex = resolve => require(['@/views/parkHall/index'],resolve);
 const asideComRoot = resolve => require(['@/views/parkHall/asideComRoot/index'],resolve);
-const newsInfoSet = resolve => require(['@/views/newmanage/newsInfoSet'], resolve);// 新园区-资讯公告管理
-const publicNews = resolve => require(['@/views/newmanage/newsInfoSet/publicNews'], resolve);// 新园区-新闻管理页
-const publicNotice = resolve => require(['@/views/newmanage/newsInfoSet/publicNotice'], resolve);// 新园区-新闻管理页
+const newsInfoSet = resolve => require(['@/views/newmanage/publishManage/newsInfoSet'], resolve);// 新园区-资讯公告管理
+const publicNews = resolve => require(['@/views/newmanage/publishManage/newsInfoSet/publicNews'], resolve);// 新园区-新闻管理页
+const publicNotice = resolve => require(['@/views/newmanage/publishManage/newsInfoSet/publicNotice'], resolve);// 新园区-新闻管理页
 const newsIndex = resolve => require(['@/views/newparkHall/News/index'],resolve);//新闻公告模块首页
 const alllistnews = resolve => require(['@/views/newparkHall/News/allNews/alllistnews'],resolve);//全部新闻
 const myfcsnews = resolve => require(['@/views/newparkHall/News/allNews/myfcsnews'],resolve);//我关注的新闻
