@@ -10,7 +10,7 @@
     <div class="outroute">
         <router-link v-for="(item,index) in outsource" :key="index" :to="item.path">
             <span class="outlinkstyle">{{item.name}}</span>
-            <span v-if="index<outsource.length-1">|</span>
+            <span class="separator" v-if="index<outsource.length-1">|</span>
         </router-link>
         <div>
             <router-view></router-view>
@@ -40,22 +40,20 @@
 <style lang='less' scoped>
     .outroute {
         background: #fff;
-    }
 
-    .outlinkstyle {
-        display: inline-block;
-        padding: 10px;
-        margin: 0px 2px;
-        font-family: "MicrosoftYaHei";
-        font-size: 18px;
-        font-weight: normal;
-        font-stretch: normal;
-        letter-spacing: 0px;
-        color: #666666;
-    }
+        .outlinkstyle {
+            display: inline-block;
+            font-family: "MicrosoftYaHei";
+            font-size: 18px;
+            font-weight: normal;
+            font-stretch: normal;
+            letter-spacing: 0px;
+            color: #666666;
 
-    .router-link-active .outlinkstyle {
-        color: #409EFF;
+            .router-link-active .outlinkstyle {
+                color: #409EFF;
+            }
+        }
     }
 
 </style>
