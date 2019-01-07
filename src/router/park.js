@@ -183,6 +183,8 @@ const expertDetail = resolve => require(['@/views/newparkHall/experteam/expertTe
 const needHall =  resolve => require(['@/views/parkHall/needHall/index.vue'], resolve);// 园区-需求大厅
 // 需求大厅
 const newIndex =  resolve => require(['@/views/parkHall/needHall/newIndex.vue'], resolve);// 园区-需求大厅
+// 保定园区发布需求界面
+const publishNeed =  resolve => require(['@/views/parkHall/needHall/publishNeed/index'], resolve);// 园区-需求大厅
 
 //新的管理模块
 //园区管理 banner设置
@@ -204,6 +206,12 @@ export const parkRouter1 = {
             path: '/parkHome',
             name: "park-home",
             component: parkHome,
+            
+        },
+        {
+            path: '/publishNeed',
+            name: "park-publishNeed",
+            component: publishNeed,
             
         },
         {
