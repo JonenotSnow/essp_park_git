@@ -22,26 +22,23 @@
             </div>
         </div>
         <div class="policie-and-regulation-main">
-            <list-only-status :list="dataList" :type="type" v-if="status=='0'"/>
-            <list-no-status-and-classify :list="dataList" :type="type" v-if="status=='1'"/>
-            <list-status-and-classify :list="dataList" :type="type" v-if="status=='2'"/>
+            <list-only-status :list="dataList" :type="type" v-if="status=='0' || status=='2'"/>
+            <list-no-status-and-classify :list="dataList" v-if="status=='1'"/>
         </div>
     </div>
 </template>
 
 <script>
 
-    import listOnlyStatus from './../../components/listOnlyStatus.vue';
-    import listNoStatusAndClassify from './../../components/listNoStatusAndClassify.vue';
-    import listStatusAndClassify from './../../components/listStatusAndClassify.vue';
+    import listOnlyStatus from './common/listOnlyStatus';
+    import listNoStatusAndClassify from './common/listNoStatusAndClassify';
 
     export default {
         name: 'policie-and-regulation',
         props: {},
         components: {
             listOnlyStatus,
-            listNoStatusAndClassify,
-            listStatusAndClassify
+            listNoStatusAndClassify
         },
         data() {
             return {
@@ -53,13 +50,13 @@
                 // 返回的数据
                 total: 0,
                 dataList: []
-
             }
         },
         methods: {
             // 状态切换
             switchStatus(status) {
                 this.status = status;
+                this.type = status;
             },
 
             // 查询事件

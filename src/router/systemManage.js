@@ -2,7 +2,7 @@
  * @Author: Evanlian
  * @Date: 20181204 08:50:37
  * @LastEditors: Evan-lian
- * @LastEditTime: 2019-01-07 09:34:09
+ * @LastEditTime: 2019-01-08 11:15:55
  * @Description: 系统模块核心文件，请统一风格，谢谢！！！
  */
 // 园区侧边栏公共路口
@@ -35,20 +35,20 @@ const publishAchievement = resolve => require(['@/views/newmanage/platformSetup/
 
 
 //园区管理-发布管理
-
 //科技政策列表
 const sciAndTechPolicy = resolve => require(['@/views/newmanage/publishManage/sciAndTechPolicy'], resolve);
-
 //科技政策列表---政策法规
 const policieAndRegulation = resolve => require(['@/views/newmanage/publishManage/sciAndTechPolicy/policieAndRegulation'], resolve);
-
 //科技政策列表---科技服务
 const sciAndTechService = resolve => require(['@/views/newmanage/publishManage/sciAndTechPolicy/sciAndTechService'], resolve);
-
 //发布科技政策
 const publishSciAndTechPolicy = resolve => require(['@/views/newmanage/publishManage/sciAndTechPolicy/publishSciAndTechPolicy'], resolve);
 //科技政策审核
 const sciAndTechPolicyAuditDetail = resolve => require(['@/views/newmanage/publishManage/sciAndTechPolicy/sciAndTechPolicyAuditDetail'], resolve);
+//平台活动
+const platformAtivity = resolve => require(['@/views/newmanage/publishManage/platformAtivity'], resolve);
+//发布平台活动
+const publishPlatformAtivity = resolve => require(['@/views/newmanage/publishManage/platformAtivity/publishPlatformAtivity'], resolve);
 
 //园区管理-审核管理
 //入园审核列表
@@ -63,19 +63,13 @@ const activityPublishAudit = resolve => require(['@/views/newmanage/auditManage/
 const manageActivityAudit = resolve => require(['@/views/newmanage/auditManage/activityPublishAudit/manageActivityAudit'], resolve);
 //活动发布审核历史详情
 const manageActivityAuditDetail = resolve => require(['@/views/newmanage/auditManage/activityPublishAudit/manageActivityAuditDetail'], resolve);
-
 // 发布审核------
 const publishAudit = resolve => require(['@/views/newmanage/auditManage/publishAudit'], resolve);
 
 //科技政策审核列表
 const sciAndTechPolicyAudit = resolve => require(['@/views/newmanage/auditManage/publishAudit/sciAndTechPolicyAudit/index.vue'], resolve);
-//科技政策审核列表---政策法规
-const policieAndRegulationAudit = resolve => require(['@/views/newmanage/auditManage/publishAudit/sciAndTechPolicyAudit/policieAndRegulation.vue'], resolve);
-//科技政策审核列表---科技服务
-const sciAndTechServiceAudit = resolve => require(['@/views/newmanage/auditManage/publishAudit/sciAndTechPolicyAudit/sciAndTechService.vue'], resolve);
-
-//资讯公告审核列表
-const informationAndNoticeAudit = resolve => require(['@/views/newmanage/auditManage/informationAndNoticeAudit'], resolve);
+//资讯新闻审核列表
+const newsNoticeAudit = resolve => require(['@/views/newmanage/auditManage/publishAudit/newsNoticeAudit/index.vue'], resolve);
 
 
 //园区管理-成员管理
@@ -170,6 +164,11 @@ export default {
             component: sendRequest,
         },
         {
+            path: "/parkHall/manage/publishPlatformAtivity",
+            name: "park-publishPlatformAtivity",
+            component: publishPlatformAtivity
+        },
+        {
             path: "/parkHall/manage/baseInfo",
             name: "park-manage",
             component: asideComRoot,
@@ -212,6 +211,7 @@ export default {
                     component: expertTeam
                 },
                 //发布管理
+                //科技政策
                 {
                     path: "/parkHall/manage/sciAndTechPolicy",
                     name: "park-sciAndTechPolicy",
@@ -229,6 +229,13 @@ export default {
                             component: sciAndTechService
                         }
                     ]
+                },
+                //平台活动
+                {
+                    path: "/parkHall/manage/platformAtivity",
+                    name: "park-platformAtivity",
+                    component: platformAtivity
+                    
                 },
                 //审核管理
                 {
@@ -249,29 +256,18 @@ export default {
                     children: [
                         {
                             path: "/parkHall/manage/sciAndTechPolicyAudit",
-                            name: "park-sciAndTechPolicyAudit",
-                            component: sciAndTechPolicyAudit,
-                            redirect: '/parkHall/manage/sciAndTechPolicyAudit/policieAndRegulationAudit',
-                            children: [
-                                {
-                                    path: "/parkHall/manage/sciAndTechPolicyAudit/policieAndRegulationAudit",
-                                    name: "park-policieAndRegulationAudit",
-                                    component: policieAndRegulationAudit,
-                                },
-                                {
-                                    path: "/parkHall/manage/sciAndTechPolicyAudit/sciAndTechServiceAudit",
-                                    name: "park-sciAndTechServiceAudit",
-                                    component: sciAndTechServiceAudit,
-                                }
-                            ]
+                            name: "park-policieAndRegulationAudit",
+                            component: sciAndTechPolicyAudit
+                           
                         },
                         {
-                            path: "/parkHall/manage/informationAndNoticeAudit",
-                            name: "park-informationAndNoticeAudit",
-                            component: informationAndNoticeAudit,
+                            path: "/parkHall/manage/newsNoticeAudit",
+                            name:"park-newsNoticeAudit",
+                            component: newsNoticeAudit
                         }
                     ]
                 },
+                
                 //成员管理
                 {
                     path: "/parkHall/manage/userManage",

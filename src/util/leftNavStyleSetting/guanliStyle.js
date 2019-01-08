@@ -2,7 +2,6 @@ export const guanliStyle = {
     "park-baseInfo": "guanliStyle",//关于我们
     "park-occupancyApplication": "guanliStyle",//入驻申请表
     "park-bannerSet": "guanliStyle",//banner图设置
-    "park-noticeAndAD": "guanliStyle",//通知公告管理
     "park-userManage": "guanliStyle",//成员管理
     "park-activityPoolAddPark": "guanliStyle",//入驻审核
     "park-activityPoolActivityAditing": "guanliStyle",//活动审核
@@ -15,7 +14,6 @@ export const guanliStyle = {
     "park-expertTeam": "guanliStyle",//专家团队管理
     "park-sciAndTechPolicy": "guanliStyle",//科技政策
     "park-needManage": "guanliStyle",//需求管理
-    "park-sciAndTechPolicyAudit": "guanliStyle",//科技政策审核
-    "park-informationAndNoticeAudit": "guanliStyle",//资讯公告审核
+    "park-publishAudit": "guanliStyle",//发布审核
     "park-activityPublishAudit": "guanliStyle",//平台活动发布审核
 }

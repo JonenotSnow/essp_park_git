@@ -27,13 +27,11 @@
                 </div>
                 <div class="listBottom">
                     <div class="contentTitle">保定市科技服务机构备案名单保定市科技服务机构备案名单保定市科技服务机构备案名单保定市科技服务机构备案名单</div>
-                    <!-- 科技服务-已审核-->
-                    <!-- <div class='editorBtn2'>
+                    <div class='editorBtn2' v-if="type == 2">
                         <span>查看</span>
                         <span>编辑</span>
-                    </div> -->
-                    <div class='editorBtn2'>
-                        <span>发布</span>
+                    </div>
+                    <div class='editorBtn1' v-if="type == 0">
                         <span>编辑</span>
                     </div>
                 </div>
@@ -41,7 +39,7 @@
         </ul> 
         <div v-else class="noData">
             <span>尚未发布成果，点击右上方发布按钮立即发布吧！</span>
-            <img src="../../../assets/newparkimg/newmanage/achievementSet/no_list.png" alt="">
+            <img src="@assets/newparkimg/newmanage/achievementSet/no_list.png" alt="">
         </div>
         <div class="pageList" v-if="list">
             <el-pagination
