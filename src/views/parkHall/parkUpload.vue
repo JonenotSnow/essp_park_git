@@ -665,11 +665,9 @@
                 }
 
                 this.isMaskShow = false;
+                this.isUpload =false;
                 this.$emit("changeImgUrl",this.activityPhoto);
             }
-        },
-        created(){
-            console.log(this.parkUploadData);
         }
     }
 </script>
