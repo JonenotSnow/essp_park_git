@@ -35,20 +35,20 @@ const publishAchievement = resolve => require(['@/views/newmanage/platformSetup/
 
 
 //园区管理-发布管理
-
 //科技政策列表
 const sciAndTechPolicy = resolve => require(['@/views/newmanage/publishManage/sciAndTechPolicy'], resolve);
-
 //科技政策列表---政策法规
 const policieAndRegulation = resolve => require(['@/views/newmanage/publishManage/sciAndTechPolicy/policieAndRegulation'], resolve);
-
 //科技政策列表---科技服务
 const sciAndTechService = resolve => require(['@/views/newmanage/publishManage/sciAndTechPolicy/sciAndTechService'], resolve);
-
 //发布科技政策
 const publishSciAndTechPolicy = resolve => require(['@/views/newmanage/publishManage/sciAndTechPolicy/publishSciAndTechPolicy'], resolve);
 //科技政策审核
 const sciAndTechPolicyAuditDetail = resolve => require(['@/views/newmanage/publishManage/sciAndTechPolicy/sciAndTechPolicyAuditDetail'], resolve);
+//平台活动
+const platformAtivity = resolve => require(['@/views/newmanage/publishManage/platformAtivity'], resolve);
+//发布平台活动
+const publishPlatformAtivity = resolve => require(['@/views/newmanage/publishManage/platformAtivity/publishPlatformAtivity'], resolve);
 
 //园区管理-审核管理
 //入园审核列表
@@ -63,7 +63,6 @@ const activityPublishAudit = resolve => require(['@/views/newmanage/auditManage/
 const manageActivityAudit = resolve => require(['@/views/newmanage/auditManage/activityPublishAudit/manageActivityAudit'], resolve);
 //活动发布审核历史详情
 const manageActivityAuditDetail = resolve => require(['@/views/newmanage/auditManage/activityPublishAudit/manageActivityAuditDetail'], resolve);
-
 // 发布审核------
 const publishAudit = resolve => require(['@/views/newmanage/auditManage/publishAudit'], resolve);
 
@@ -73,9 +72,6 @@ const sciAndTechPolicyAudit = resolve => require(['@/views/newmanage/auditManage
 const policieAndRegulationAudit = resolve => require(['@/views/newmanage/auditManage/publishAudit/sciAndTechPolicyAudit/policieAndRegulation.vue'], resolve);
 //科技政策审核列表---科技服务
 const sciAndTechServiceAudit = resolve => require(['@/views/newmanage/auditManage/publishAudit/sciAndTechPolicyAudit/sciAndTechService.vue'], resolve);
-
-//资讯公告审核列表
-const informationAndNoticeAudit = resolve => require(['@/views/newmanage/auditManage/informationAndNoticeAudit'], resolve);
 
 
 //园区管理-成员管理
@@ -170,6 +166,11 @@ export default {
             component: sendRequest,
         },
         {
+            path: "/parkHall/manage/publishPlatformAtivity",
+            name: "park-publishPlatformAtivity",
+            component: publishPlatformAtivity
+        },
+        {
             path: "/parkHall/manage/baseInfo",
             name: "park-manage",
             component: asideComRoot,
@@ -212,6 +213,7 @@ export default {
                     component: expertTeam
                 },
                 //发布管理
+                //科技政策
                 {
                     path: "/parkHall/manage/sciAndTechPolicy",
                     name: "park-sciAndTechPolicy",
@@ -227,6 +229,20 @@ export default {
                             path: "/parkHall/manage/sciAndTechPolicy/sciAndTechService",
                             name: "park-sciAndTechService",
                             component: sciAndTechService
+                        }
+                    ]
+                },
+                //平台活动
+                {
+                    path: "/parkHall/manage/platformAtivity",
+                    name: "park-platformAtivity",
+                    component: platformAtivity,
+                    redirect: '/parkHall/manage/platformAtivity',
+                    children: [
+                        {
+                            path: "/parkHall/manage/platformAtivity",
+                            name: "park-platformAtivity",
+                            component: platformAtivity
                         }
                     ]
                 },
@@ -264,11 +280,6 @@ export default {
                                     component: sciAndTechServiceAudit,
                                 }
                             ]
-                        },
-                        {
-                            path: "/parkHall/manage/informationAndNoticeAudit",
-                            name: "park-informationAndNoticeAudit",
-                            component: informationAndNoticeAudit,
                         }
                     ]
                 },

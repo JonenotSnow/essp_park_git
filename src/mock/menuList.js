@@ -546,7 +546,7 @@ export const menuListData = {
                 }, {
                     "id": "04160102",
                     "menu": "平台活动",
-                    "name": "park-activeSet",
+                    "name": "park-platformAtivity",
                     "parentId": "041601",
                     "ismenu": "1",
                     "isshow": "1",
@@ -556,21 +556,23 @@ export const menuListData = {
                     "authorityflag": "1",
                     "isclick": "1",
                     "message": "园区功能正在内测中，敬请期待!",
-                    "children": []
-                }, {
-                    "id": "04160103",
-                    "menu": "通知公告",
-                    "name": "park-noticeAndAD",
-                    "parentId": "041601",
-                    "ismenu": "1",
-                    "isshow": "1",
-                    "loginflag": "1",
-                    "cetificateflag": "1",
-                    "enterpriseflag": "1",
-                    "authorityflag": "1",
-                    "isclick": "1",
-                    "message": "园区功能正在内测中，敬请期待!",
-                    "children": []
+                    "children": [
+                        {
+                            "id": "0416010200",
+                            "menu": "成员管理",
+                            "name": "park-publishPlatformAtivity",
+                            "parentId": "04160102",
+                            "ismenu": "0",
+                            "isshow": "0",
+                            "loginflag": "1",
+                            "cetificateflag": "1",
+                            "enterpriseflag": "1",
+                            "authorityflag": "1",
+                            "isclick": "1",
+                            "message": "园区功能正在内测中，敬请期待!",
+                            "children": []
+                        }
+                        ]
                 }]
             }, {
                 "id": "041602",
@@ -615,6 +617,20 @@ export const menuListData = {
                 "message": "园区功能正在内测中，敬请期待!",
                 "children": [{
                     "id": "04160300",
+                    "menu": "发布审核",
+                    "name": "park-publishAudit",
+                    "parentId": "041603",
+                    "ismenu": "1",
+                    "isshow": "1",
+                    "loginflag": "1",
+                    "cetificateflag": "1",
+                    "enterpriseflag": "1",
+                    "authorityflag": "1",
+                    "isclick": "1",
+                    "message": "园区功能正在内测中，敬请期待!",
+                    "children": []
+                },{
+                    "id": "04160301",
                     "menu": "入驻审核",
                     "name": "park-activityPoolAddPark",
                     "parentId": "041603",
@@ -628,35 +644,7 @@ export const menuListData = {
                     "message": "园区功能正在内测中，敬请期待!",
                     "children": []
                 },{
-                    "id": "04160301",
-                    "menu": "科技政策审核",
-                    "name": "park-sciAndTechPolicyAudit",
-                    "parentId": "041603",
-                    "ismenu": "1",
-                    "isshow": "1",
-                    "loginflag": "1",
-                    "cetificateflag": "1",
-                    "enterpriseflag": "1",
-                    "authorityflag": "1",
-                    "isclick": "1",
-                    "message": "园区功能正在内测中，敬请期待!",
-                    "children": []
-                },{
                     "id": "04160302",
-                    "menu": "资讯公告审核",
-                    "name": "park-informationAndNoticeAudit",
-                    "parentId": "041603",
-                    "ismenu": "1",
-                    "isshow": "1",
-                    "loginflag": "1",
-                    "cetificateflag": "1",
-                    "enterpriseflag": "1",
-                    "authorityflag": "1",
-                    "isclick": "1",
-                    "message": "园区功能正在内测中，敬请期待!",
-                    "children": []
-                },{
-                    "id": "04160303",
                     "menu": "活动发布审核",
                     "name": "park-activityPublishAudit",
                     "parentId": "041603",
