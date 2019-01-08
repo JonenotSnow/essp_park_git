@@ -41,6 +41,7 @@
         data() {
             return {
                 msg: '政策法规',
+                
                 status: '0',                // 状态值
                 searchContent: '',          // 查询字段
                 type: '0',   //

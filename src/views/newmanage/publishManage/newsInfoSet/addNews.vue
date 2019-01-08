@@ -2,7 +2,7 @@
  * @Author: Evan-lian
  * @Date: 2019-01-07 16:14:17
  * @LastEditors: Evan-lian
- * @LastEditTime: 2019-01-08 17:05:47
+ * @LastEditTime: 2019-01-08 18:48:08
  * @Description: 发布新闻
  -->
 <template>
@@ -318,7 +318,7 @@
              lookfinalData() {
                 var parkId = sessionStorage.getItem("parkId") || "";
                 var msg = "您是否发布新闻动态？";
-                var goto = "/parkHall/manage/publicNews?status=0";
+                var goto = "/parkHall/manage/publicNews?status=1";
                 if (!this.checkInfo()) {
                     return;
                 }
@@ -351,7 +351,7 @@
                 var parkId = sessionStorage.getItem("parkId") || "";
                 var type = 0;
                 var msg = "<p><i class='icon iconfont icon-queren' style='font-size: 45px;color: #00a0e9;'></i></p><p style='padding: 25px 0 30px;'>您发布的新闻动态已保存至草稿箱</p>";
-                var url = "/parkHall/manage/publicNews?status=1";
+                var url = "/parkHall/manage/publicNews?status=0";
                 var maskConfig = {
                     confirmButtonText: "返回草稿箱查看",
                     center: true,

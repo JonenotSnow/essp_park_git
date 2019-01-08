@@ -2,7 +2,7 @@
     <div class="policie-and-regulation-wrap">
         <div class="policie-and-regulation-head">
             <div class="head-div head-left">
-              <span v-for="(item,index) in itemsouces" :key="index" :class="{'span-click': status==index}" @click="switchStatus(index)">{{item.fnName}}</span>
+              <span v-for="(item,index) in itemsouces" :key="index" :class="{'span-click': status==item.status}" @click="switchStatus(item)">{{item.fnName}}</span>
             </div>
             <div class="head-div head-right">
                 <div class="right-div search-wrap">
@@ -20,8 +20,19 @@
             </div>
         </div>
         <div class="policie-and-regulation-main">
-            <list-only-status :list="dataList" :type="type" v-if="status=='0' || status=='2'"/>
-            <list-no-status-and-classify :list="dataList" v-if="status=='1'"/>
+            <list-only-status :dataList="dataList" :allTotal="allTotal" v-if="status=='1' || status=='2'"/>
+            <list-no-status-and-classify :list="dataList" :allTotal="allTotal" v-if="status=='0'"/>
+        </div>
+        <div class="pageList">
+            <el-pagination
+                @size-change="handleSizeChange"
+                @current-change="handleCurrentChange"
+                :current-page="pageNum"
+                :page-sizes="pageRanges"
+                :page-size="pageSize"
+                layout="total, sizes, prev, pager, next, jumper"
+                :total="allTotal">
+            </el-pagination>
         </div>
     </div>
 </template>
@@ -40,19 +51,24 @@
         },
         data() {
             return {
-                msg: '政策法规',
-                status: this.$route.query.status||'0',                // 状态值
+                msg: '新闻发布',
+                currentTime:[],
+                parkId:sessionStorage.getItem("parkId")||"",
+                pageRanges: [5, 10, 20],//默认每页10条数区间
+                pageNum: 1,//当前页码
+                pageSize: 5,//每页条数
+                allTotal: 0,//总条数
+                status: this.$route.query.status||'1',                // 状态值
                 searchContent: '',          // 查询字段
-                type: '0',   //
-                dataList: 2,
+                dataList: [],
                 itemsouces:[
                 {
                   fnName:"已发布",
-                  status:0
+                  status:1
                 },
                 {
                   fnName:"草稿箱",
-                   status:1
+                   status:0
 
                 },
                 {
@@ -63,16 +79,45 @@
                 ]
             }
         },
+        created(){
+          this.getPublicedNews();
+        },
         methods: {
+             getPublicedNews(){
+                var url = this.$apiUrl.newsinfo.getMyPubInfo;
+                var pop = {
+                  pageNum:this.pageNum,
+                  pageSize:this.pageSize,
+                  startDate : this.currentTime[0]||"",
+                  endDate : this.currentTime[1]||"",
+                  title:this.title,
+                  parkId:this.parkId,
+                  status:this.status
+                }
+                this.$post(url,pop).then(res=>{
+                  this.dataList = res.resultData.informationList;
+                  this.allTotal = res.resultData.total;
+                },err=>{
+                  console.log(err)
+                })
+            },
+            handleSizeChange(val) {
+                this.pageSize = val;
+                this.getPublicedNews();
+            },
+            handleCurrentChange(val) {
+                this.pageNum = val;
+                this.getPublicedNews();
+            },
             // 状态切换
-            switchStatus(status) {
-                this.status = status;
-                this.type = status;
+            switchStatus(item) {
+                this.status = item.status;
+                this.getPublicedNews();
             },
 
             // 查询事件
             search() {
-                alert('查询事件');
+                this.getPublicedNews();
             },
             goToPublish(){
               this.$router.push('/news/addNews')
@@ -203,5 +248,11 @@
         .policie-and-regulation-main {
 
         }
+    }
+    .pageList{
+      width: 910px;
+      margin: 45px auto 57px;
+      text-align: right;
+      padding-bottom: 57px;
     }
 </style>
