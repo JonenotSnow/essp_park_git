@@ -2,7 +2,7 @@
  * @Author: Evan-lian
  * @Date: 2019-01-07 16:14:17
  * @LastEditors: Evan-lian
- * @LastEditTime: 2019-01-07 19:18:35
+ * @LastEditTime: 2019-01-08 20:07:44
  * @Description: 发布新闻
  -->
 <template>
@@ -15,34 +15,13 @@
             <span></span>
         </div>
         <div>
-            <!-- <div class="common_titwrap esspclearfix noborder">
-                <div>
-                    <h3 class="common_titdes" style="margin-left:130px;font-weight: normal;">基本信息</h3>
-                </div>
-            </div> -->
             <div class="base_tablecon">
                 <div class="tdcon">
                     <span class="inline_span">
                         <em>*</em>通知公告标题 :
                     </span>
                     <el-input class="el_input_left" v-model="informationTitle" placeholder="必填"></el-input>
-                </div>
-                <!-- <div class="tdcon esspclearfix">
-                    <span class="inline_span">
-                        <em>*</em>资讯类型 :
-                    </span>
-                    <el-select v-model="classtType" placeholder="请选择" class="inline_select">
-                        <el-option
-                            v-for="(item,index) in typeitems"
-                            :key="index"
-                            :label="item.name"
-                            v-if="index>0"
-                            :value="item.id"
-                        ></el-option>
-                    </el-select>
-                </div> -->
-                <!-- <ParkUpload :parkUploadData="parkUploadData" @changeImgUrl="showImgUrl"></ParkUpload> -->
-                
+                </div> 
                 <div class="tdcon">
                     <span class="inline_span">
                         <em>*</em>通知公告简介 :
@@ -60,7 +39,6 @@
                         <em>*</em>通知公告详情 :
                     </span>
                     <div class="inline-box wrap" id="publishNewInfo">
-                        <!-- <essp-editor ref="childEditor"></essp-editor> -->
                         <quill-editor v-model="content" :options="editorOption">
                             <div id="toolbar" slot="toolbar"></div>
                         </quill-editor>
@@ -98,30 +76,20 @@
                         ></el-input>
                     </div>
                 </div>
+                <div class="tdcon">
+                    <div class="inline-box uploadbtndes">
+                      <el-upload class="uploadbtn upload-demo"
+                            action="#"
+                            :file-list="listFile"
+                            :before-upload="beforeup">
+                            <el-button size="small" slot="trigger">附件上传</el-button>
+                        </el-upload>
+                        <span class="destips">（支持pdf/word/excel等类型文件，大小10M内）</span>
+                    </div>
+                </div>
                 
             </div>
         </div>
-        <!-- <div class="base_tablecon border-top"> -->
-            <!-- <div class="tdcon">
-                <span class="inline_span">
-                    <em>*</em>是否需要公司内部审核 :
-                </span>
-                <div class="inline_div">
-                    <el-radio v-model="approveType" label="1">是</el-radio>
-                    <el-radio v-model="approveType" label="0">否</el-radio>
-                    <div class="tips_div">提示：选择公司内部审核，则需经过企业管理员先行审核，后转至园区管理员审核生效</div>
-                </div>
-            </div> -->
-            <!-- <div class="tdcon">
-                <span class="inline_span">备注 :</span>
-                <el-input
-                    class="inline-textarea"
-                    type="textarea"
-                    :rows="5"
-                    placeholder="请输入内容"
-                    v-model="pubComment"
-                ></el-input>
-            </div> -->
             <div class="tdcon">
                 <span class="inline_yulan">
                     <button @click="infoPrint">预览</button>
@@ -228,17 +196,6 @@
                 contentbrif: "", //资讯简介
                 saveType: "0", //暂存草稿箱
                 tags: [], //标签
-                //新版上传图片
-                // parkUploadData: {
-                //     title: "新闻动态配图 :",
-                //     src: "", //资讯配图
-                //     isPic:
-                //         "（该图片以资讯主图进行展示,每张最大2M，图片宽高比为7：4，建议分辨率建议为840*480，支持jpg/jpeg/gif/png格式。）",
-                //     imgItemType: "information", // 图片图库类型 资讯
-                //     styleClass: "inline_span_my"
-                // },
-                pubComment: "", //备注
-                approveType: "1", //是否需要公司内部审核
                 informationId: "", //资讯id，供后台去重功能
                 visible: false,
                 tagprops: {
@@ -253,14 +210,12 @@
             EsspBreadCrumb,
             EsspTag,
             EsspAddTag,
-            // ParkUpload,
+          
             quillEditor
         },
         created() {
-            this.getDraftResource();
-            // if (this.SSH.getItem("userInfo").cstNm) {
-            //     this.initiatorWay = this.SSH.getItem("userInfo").cstNm;
-            // }
+            // this.getDraftResource();
+            
         },
         filters: {
             timerFormat(vaule) {
@@ -366,13 +321,11 @@
                 }
                 return true;
             },
-            // 保持发布
-            lookfinalData(type) {
+            //新闻发布功能
+            lookfinalData() {
                 var parkId = sessionStorage.getItem("parkId") || "";
-                var type = 1;
-                var msg = "您是否发布资讯？";
-                var url = "/parkIndex/parkInformation/myPublishedInfo?type=0";
-
+                var msg = "您是否发布新闻动态？";
+                var goto = "/parkHall/manage/publicNews?status=1";
                 if (!this.checkInfo()) {
                     return;
                 }
@@ -381,65 +334,54 @@
                     cancelButtonText: "否",
                     center: true
                 };
-
                 this.$confirm(msg, maskConfig).then(() => {
-                    this.$post("information/saveInformation", {
-                        parkId: parkId,
-                        classtType: this.classtType,
-                        informationTitle: this.informationTitle,
-                        titleImg: this.parkUploadData.src,
+                    var url = "information/saveNews";
+                    var pop = {
+                        parkId,
+                        informationTitle:this.informationTitle,
+                        informationId:this.informationId,
+                        infoDetail:this.content ? this.content.replace(/\s/g, "&nbsp") : "",
+                        tags:this.tags.join(","),
+                        saveType:1,
                         content: this.contentbrif,
-                        approveType: this.approveType,
-                        saveType: type,
-                        tags: this.tags.join(","),
-                        pubComment: this.pubComment,
-                        infoDetail: this.content ? this.content.replace(/\s/g, "&nbsp") : "",
-                        informationId: this.informationId
-                    }).then(response => {
-                        if (response.resultCode == "CLT000000000") {
-                            this.$router.push({path: url});
-                        } else {
-                            // this.$message.error(response.resultMsg);
-                        }
+                        titleImg: this.parkUploadData.src,
+                    }
+                    this.$post(url, pop).then(response => {
+                        this.$message.success("新闻动态发布成功")
+                        this.$router.push({path: goto});
                     });
                     this.$refs.eat.saveTags();
                 });
             },
+            //暂存新闻
             submitInfo() {
                 var parkId = sessionStorage.getItem("parkId") || "";
                 var type = 0;
-                var msg = "<p><i class='icon iconfont icon-queren' style='font-size: 45px;color: #00a0e9;'></i></p><p style='padding: 25px 0 30px;'>您发布的资讯已保存至草稿箱</p>";
-                var url = "/parkIndex/parkInformation/myPublishedInfo?type=1";
+                var msg = "<p><i class='icon iconfont icon-queren' style='font-size: 45px;color: #00a0e9;'></i></p><p style='padding: 25px 0 30px;'>您发布的新闻动态已保存至草稿箱</p>";
+                var url = "/parkHall/manage/publicNews?status=0";
                 var maskConfig = {
                     confirmButtonText: "返回草稿箱查看",
                     center: true,
                     showCancelButton: false,
                     dangerouslyUseHTMLString: true
                 };
-                if (!this.checkInfo()) {
-                    return;
-                }
-                this.$post("information/saveInformation", {
+                
+                this.$post("information/saveNews", {
                     parkId: parkId,
-                    classtType: this.classtType,
                     informationTitle: this.informationTitle,
                     titleImg: this.parkUploadData.src,
                     content: this.contentbrif,
-                    approveType: this.approveType,
                     saveType: type,
                     tags: this.tags.join(","),
-                    pubComment: this.pubComment,
                     infoDetail: this.content ? this.content.replace(/\s/g, "&nbsp") : "",
                     informationId: this.informationId
                 }).then(response => {
-                    if (response.resultCode == "CLT000000000") {
-                        this.$confirm(msg, maskConfig).then(() => {
-                            this.$refs.eat.saveTags();
-                            this.$router.push({path: url});
-                        });
-                    } else {
-                        // this.$message.error(response.resultMsg);
-                    }
+                    this.$confirm(msg, maskConfig).then(() => {
+                        this.$refs.eat.saveTags();
+                        this.$message.success("新闻动态暂存成功")
+                        this.$router.push({path: url});
+                    });
+                   
                 });
             }
         }
@@ -534,7 +476,25 @@
             color: #666666;
         }
     }
-
+    .uploadbtndes{
+        overflow: hidden;
+        margin-left: 22%;
+        .uploadbtn{
+            float: left;
+        }
+        .destips{
+            float: left;
+            margin-left:5px;
+            font-family: "MicrosoftYaHei";
+            font-size: 14px;
+            font-weight: normal;
+            font-stretch: normal;
+            height: 40px;
+            line-height: 40px;
+            letter-spacing: 0.4px;
+            color: #999999;
+        }
+    }
     //基本信息布局
     .tdcon {
         overflow: hidden;

@@ -14,7 +14,7 @@
                 <div class="right-div publish-btn-wrap">
                     <p class="publish-btn">
                         <i class="el-icon-circle-plus"></i>
-                        <span @click="goToPublish">立即发布</span>
+                        <span @click="goToPublish()">立即发布</span>
                     </p>
                 </div>
             </div>
