@@ -38,17 +38,6 @@
             <span>尚未发布成果，点击右上方发布按钮立即发布吧！</span>
             <img src="@assets/newparkimg/newmanage/achievementSet/no_list.png" alt="">
         </div>
-        <div class="pageList" v-if="list">
-            <el-pagination
-                @size-change="handleSizeChange"
-                @current-change="handleCurrentChange"
-                :current-page="pageNum"
-                :page-sizes="[5, 10, 15, 20]"
-                :page-size="pageSize"
-                layout="total, sizes, prev, pager, next, jumper"
-                :total="totalCount">
-            </el-pagination>
-        </div>
     </div>
 </template>
 
@@ -66,20 +55,11 @@
         },
         data() {
             return {
-                totalCount: 0,
-                pageNum: 1,
-                pageSize: 5
             }
         },
         created() {
         },
         methods: {
-            handleSizeChange(val) {
-                this.pageSize = val;
-            },
-            handleCurrentChange(val) {
-                this.pageNum = val;
-            }
         },
     }
 </script>

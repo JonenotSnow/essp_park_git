@@ -1,53 +1,44 @@
 <template>
     <div>
         <!-- 列表只有类型-->
-        <div class="selectTitle" v-if="list">
-            <span class="all"><i class="el-icon-circle-plus"></i>全选</span>
-            共<span class="total">4</span>条，已选<span class="total">1</span>条
-            <span class="removeBtn">删除</span>
-            <span class="selectStatus">状态：
-                <select>
-                    <option value=""></option>
-                </select>
-            </span>
+        <div  v-if="list.length>0">
+            <div class="selectTitle">
+                <span class="all"><i class="el-icon-circle-plus"></i>全选</span>
+                共<span class="total">4</span>条，已选<span class="total">1</span>条
+                <span class="removeBtn">删除</span>
+                <span class="selectStatus">状态：
+                    <select>
+                        <option value=""></option>
+                    </select>
+                </span>
+            </div>
+            <ul class="listWrap">
+                <li class="list" v-for="item in list" :key="item">
+                    <div class="ListTop">
+                        <i class="el-icon-circle-plus"></i>
+                        <span class="time">保存时间：2018-10-22  10：24：00</span>
+                        <span class="create">发布人：孔乙己</span>
+                        <span class="classifyC">状态：<span>状态值</span></span>
+                        <i class="el-icon-delete remove"></i>
+                    </div>
+                    <div class="listBottom">
+                        <div class="contentTitle">
+                            保定市科技服务机构备案名单保定市科技服务机构备案名单保定市科技服务机构备案名单保定市科技服务机构备案名单保定市科技服务机构备案名单保定市科技服务机构备案名单保定市科技服务机构备案名单保定市科技服务机构备案名单保定市科技服务机构备案名单保定市科技服务机构备案名单保定市科技服务机构备案名单
+                        </div>
+                        <div class='editorBtn2' v-if="type == 2">
+                            <span>查看</span>
+                            <span>编辑</span>
+                        </div>
+                        <div class='editorBtn1' v-if="type == 0">
+                            <span>编辑</span>
+                        </div>
+                    </div>
+                </li>
+            </ul>
         </div>
-        <ul class="listWrap" v-if="list">
-            <li class="list" v-for="item in list" :key="item">
-                <div class="ListTop">
-                    <i class="el-icon-circle-plus"></i>
-                    <span class="time">保存时间：2018-10-22  10：24：00</span>
-                    <span class="create">发布人：孔乙己</span>
-                    <span class="classifyC">状态：<span>状态值</span></span>
-                    <i class="el-icon-delete remove"></i>
-                </div>
-                <div class="listBottom">
-                    <div class="contentTitle">
-                        保定市科技服务机构备案名单保定市科技服务机构备案名单保定市科技服务机构备案名单保定市科技服务机构备案名单保定市科技服务机构备案名单保定市科技服务机构备案名单保定市科技服务机构备案名单保定市科技服务机构备案名单保定市科技服务机构备案名单保定市科技服务机构备案名单保定市科技服务机构备案名单
-                    </div>
-                    <div class='editorBtn2' v-if="type == 2">
-                        <span>查看</span>
-                        <span>编辑</span>
-                    </div>
-                    <div class='editorBtn1' v-if="type == 0">
-                        <span>编辑</span>
-                    </div>
-                </div>
-            </li>
-        </ul>
         <div v-else class="noData">
             <span>尚未发布成果，点击右上方发布按钮立即发布吧！</span>
             <img src="@assets/newparkimg/newmanage/achievementSet/no_list.png" alt="">
-        </div>
-        <div class="pageList" v-if="list">
-            <el-pagination
-                @size-change="handleSizeChange"
-                @current-change="handleCurrentChange"
-                :current-page="pageNum"
-                :page-sizes="[5, 10, 15, 20]"
-                :page-size="pageSize"
-                layout="total, sizes, prev, pager, next, jumper"
-                :total="totalCount">
-            </el-pagination>
         </div>
     </div>
 </template>
@@ -66,20 +57,11 @@
         },
         data() {
             return {
-                totalCount: 0,
-                pageNum: 1,
-                pageSize: 5
             }
         },
         created() {
         },
         methods: {
-            handleSizeChange(val) {
-                this.pageSize = val;
-            },
-            handleCurrentChange(val) {
-                this.pageNum = val;
-            }
         },
     }
 </script>

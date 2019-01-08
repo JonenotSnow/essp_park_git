@@ -1,40 +1,41 @@
 <template>
     <div>
         <!-- 列表只有类型-->
-       
-        <div class="selectTitle" v-if="dataList.length">
-            <span class="all"><i class="el-icon-circle-plus"></i>全选</span>
-            共<span class="total">{{allTotal}}</span>条，已选<span class="total">1</span>条
-            <span class="removeBtn">删除</span>
-            <span class="selectStatus">状态：
-                <select>
-                    <option value=""></option>
-                </select>
-            </span>
+        <div v-if="dataList.length">
+            <div class="selectTitle">
+                <span class="all"><i class="el-icon-circle-plus"></i>全选</span>
+                共<span class="total">{{allTotal}}</span>条，已选<span class="total">1</span>条
+                <span class="removeBtn">删除</span>
+                <span class="selectStatus">状态：
+                    <select>
+                        <option value=""></option>
+                    </select>
+                </span>
+            </div>
+            <ul class="listWrap" v-if="dataList.length">
+                <li class="list" v-for="(item,index) in dataList" :key="index">
+                    <div class="ListTop">
+                        <i class="el-icon-circle-plus"></i>
+                        <span class="time">保存时间：{{item.createTime|timerFormat(item.createTime)}}</span>
+                        <span class="create">发布人：{{item.userName}}</span>
+                        <span class="classifyC">状态：<span>{{item.status|statusFilter(item.status)}}</span></span>
+                        <i class="el-icon-delete remove"></i>
+                    </div>
+                    <div class="listBottom">
+                        <div class="contentTitle">
+                            {{item.informationTitle}}
+                        </div>
+                        <div class='editorBtn2' v-if="type == 2">
+                            <span>查看</span>
+                            <span>编辑</span>
+                        </div>
+                        <div class='editorBtn1' v-if="type == 0">
+                            <span>编辑</span>
+                        </div>
+                    </div>
+                </li>
+            </ul>
         </div>
-        <ul class="listWrap" v-if="dataList.length">
-            <li class="list" v-for="(item,index) in dataList" :key="index">
-                <div class="ListTop">
-                    <i class="el-icon-circle-plus"></i>
-                    <span class="time">保存时间：{{item.createTime|timerFormat(item.createTime)}}</span>
-                    <span class="create">发布人：{{item.userName}}</span>
-                    <span class="classifyC">状态：<span>{{item.status|statusFilter(item.status)}}</span></span>
-                    <i class="el-icon-delete remove"></i>
-                </div>
-                <div class="listBottom">
-                    <div class="contentTitle">
-                        {{item.informationTitle}}
-                    </div>
-                    <div class='editorBtn2' v-if="type == 2">
-                        <span>查看</span>
-                        <span>编辑</span>
-                    </div>
-                    <div class='editorBtn1' v-if="type == 0">
-                        <span>编辑</span>
-                    </div>
-                </div>
-            </li>
-        </ul>
         <div v-else class="noData">
             <span>尚未发布成果，点击右上方发布按钮立即发布吧！</span>
             <img src="@assets/newparkimg/newmanage/achievementSet/no_list.png" alt="">

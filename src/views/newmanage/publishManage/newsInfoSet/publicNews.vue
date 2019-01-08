@@ -21,7 +21,7 @@
         </div>
         <div class="policie-and-regulation-main">
             <list-only-status :dataList="dataList" :allTotal="allTotal" v-if="status=='1' || status=='2'"/>
-            <list-no-status-and-classify :list="dataList" :allTotal="allTotal" v-if="status=='0'"/>
+            <list-no-status-and-classify :dataList="dataList" :allTotal="allTotal" v-if="status=='0'"/>
         </div>
         <div class="pageList">
             <el-pagination
