@@ -209,8 +209,8 @@ export const parkRouter1 = {
             
         },
         {
-            path: '/parkHall/inclusiveFinance',
-            name: "inclusive-finance",
+            path: '/parkHall/manage/inclusiveFinance',
+            name: "park-inclusiveFinance",
             component: inclusiveFinance,
             
         },

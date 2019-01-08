@@ -254,7 +254,7 @@
                             name: "入驻审核",
                             path: "/parkHall/manage/activityPoolAddPark",
                             src: require("@/assets/imgs/icon4.png"),
-                            isShow: true,
+                            isShow: false,
                             query: {
                                 type: 1
                             }
