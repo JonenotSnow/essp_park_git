@@ -62,21 +62,21 @@
                 searchContent: '',          // 查询字段
                 dataList: [],
                 itemsouces:[
-                {
-                  fnName:"已发布",
-                  status:1
-                },
-                {
-                  fnName:"草稿箱",
-                   status:0
+                    {
+                    fnName:"已发布",
+                    status:1
+                    },
+                    {
+                    fnName:"草稿箱",
+                    status:0
 
-                },
-                {
-                  fnName:"已审核",
-                   status:2
+                    },
+                    {
+                    fnName:"已审核",
+                    status:2
 
-                }
-                ]
+                    }
+                ],
             }
         },
         created(){
