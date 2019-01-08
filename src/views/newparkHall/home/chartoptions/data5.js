@@ -1,7 +1,7 @@
-export const secondData = {
+export const data5 = {
 
     title: {
-        text: '企业研究与发展（R&D）经费支出（亿元）',
+        text: '高新技术企业数量',
         textStyle:{
             color:"#10b5ff",
             fontWeight:'normal'
@@ -39,7 +39,7 @@ export const secondData = {
         type: 'line',
         smooth: 0.2,
         color:['#66AEDE'],
-        data: [42.3, 46.6, 51.5, 57, 61.3]
+        data: [126, 154, 190, 252, 429]
     }]
 };
 

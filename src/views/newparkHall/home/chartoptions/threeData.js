@@ -2,7 +2,7 @@
     export const threeData = {
         // backgroundColor: '#FBFBFB',
         title: {
-            text: '高新技术企业数量(家)',
+            text: '专利申请量',
             textStyle:{
                 color:"#10b5ff",
                 fontWeight:'normal'
@@ -56,7 +56,7 @@
                 symbol:'none',
                 smooth: 0.2,
                 color:['#66AEDE'],
-                data:[600, 300, 400, 200, 300, 300,200,400]
+                data:[4740, 4650, 5281, 7266, 8511]
             }
         ]
     }
