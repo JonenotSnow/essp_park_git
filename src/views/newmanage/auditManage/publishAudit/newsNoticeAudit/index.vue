@@ -1,29 +1,32 @@
 <template>
-    <div>
-        <out-route :outsource="outsource"/>
+    <div class="sci-and-tech-policy-audit-wrap">
+        <div class="policie-and-regulation-head">
+            <div class="head-switch">
+                <span :class="{'span-click': status=='0'}" @click="switchStatus('0')">新闻动态</span>
+                <span :class="{'span-click': status=='1'}" @click="switchStatus('1')">通知公告</span>
+            </div>
+        </div>
+        <div class="policie-and-regulation-main">
+            <policies-and-regulations v-if="status=='0'"/>
+            <technology-service v-if="status=='1'"/>
+        </div>
     </div>
 </template>
 
 <script>
-    import outRoute from './../../components/outRoute.vue';
+    import policiesAndRegulations from "./policieAndRegulation.vue";
+    import technologyService from "./sciAndTechService.vue";
 
     export default {
+        name: 'vue-temp',
+        props: {},
         components: {
-            outRoute,
+            policiesAndRegulations,
+            technologyService
         },
         data() {
             return {
-                msg: '审核页面',
-                outsource: [
-                    {
-                        name: '科技政策',
-                        path: '/parkHall/manage/sciAndTechPolicyAudit'
-                    },
-                    {
-                        name: '资讯公告',
-                        path: '/parkHall/manage/newsNoticeAudit'
-                    }
-                ],
+                msg: 'vue-temp',
                 status: '0'
             }
         },
@@ -32,17 +35,18 @@
                 this.status = status;
             }
         },
-        created() {
-
+        mounted() {
         }
     }
 </script>
 
+<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang='less'>
     .sci-and-tech-policy-audit-wrap {
         background-color: #fff;
         .policie-and-regulation-head {
-            padding: 48px 40px 30px 40px;
+            margin-top: 22px;
+            padding: 0px 40px 30px 40px;
             border-bottom: 1px solid #ccc;
             .head-switch {
                 span {
