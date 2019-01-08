@@ -1,6 +1,6 @@
 <!--<script src="../../../video_admin/config/index.js"></script>-->
 <template>
-    <quill-editor ref="myTextEditor" v-model="editorCon" :options="editorOption" v-if="!IEshow">
+    <quill-editor ref="myTextEditor"  @keyup.tabprevent="onEditorTab" v-model="editorCont" @blur="onEditorBlur($event)" @change="onEditorChange($event)" :options="editorOption">
         <div id="toolbar" slot="toolbar">
          </div>
     </quill-editor>
@@ -8,41 +8,55 @@
 
 <script>
 
+    import {quillEditor} from 'vue-quill-editor'
     import 'quill/dist/quill.core.css'
     import 'quill/dist/quill.snow.css'
     import 'quill/dist/quill.bubble.css'
-    import {quillEditor} from 'vue-quill-editor'
-
 
     export default {
         name: 'editor',
         components: {
             quillEditor
         },
+        props: ["editorCont"],
+        created(){
+            console.log(this.editorCont);
+        },
         data() {
             return {
-            	editorCon: "",
-                IEshow: false,
+            	editorCon: this.editorCon || '',
                 editorOption: {
                 	editorCon: '',
                     readOnly: 'true',
-                    placeholder: `请输入内容`,
-                    modules:{
-                        toolbar:[
-                          	['bold', 'italic', 'underline', 'strike'],
-                        ]
-                    }
+                    placeholder: `请输入内容`
                 },
             }
         },
         methods: {
-
+            // tab键
+            onEditorTab(event){
+                console.log(event);
+            },
+            // 失去焦点
+            onEditorBlur(editor){
+//                console.log("失去焦点",this.editorCon);
+                var htmlStr = this.editorCon.replace(/\s/g, "&nbsp;&nbsp");
+                this.$emit("onEditorChange", htmlStr);
+            },
+            // change事件
+            onEditorChange({editor,html,text}){
+                this.editorCon = html;
+                this.$emit("onEditorChange", this.editorCon);
+            }
         },
+        computed:{
+            editor() {
+                return this.$refs.myTextEditor.quill
+            }
+        }
     }
 </script>
 <style lang="less">
-
-
     .ql-container {
         background: #fff;
     }

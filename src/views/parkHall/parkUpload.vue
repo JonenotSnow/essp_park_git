@@ -667,6 +667,9 @@
                 this.isMaskShow = false;
                 this.$emit("changeImgUrl",this.activityPhoto);
             }
+        },
+        created(){
+            console.log(this.parkUploadData);
         }
     }
 </script>

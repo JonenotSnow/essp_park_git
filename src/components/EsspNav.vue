@@ -72,14 +72,14 @@
                                 var menuChildChild = menuChild.menuChild[z];
                                 if(menuChildChild.name == routerName) {
                                     this.active = i;
-                                    sessionStorage.setItem('navIndex',i); 
+                                    sessionStorage.setItem('navIndex',i);
                                     break
                                 }
                             }
                         } else {
                             if(menuChild.name == routerName) {
                                 this.active = i;
-                                sessionStorage.setItem('navIndex',i); 
+                                sessionStorage.setItem('navIndex',i);
                                 break
                             }
                         }
@@ -87,17 +87,17 @@
                 } else {
                     if(this.headMenu[i].name == routerName) {
                         this.active = i;
-                        sessionStorage.setItem('navIndex',i); 
+                        sessionStorage.setItem('navIndex',i);
                         break
                     }
                 }
             }
-           
+
         },
         methods: {
             toLink(item,index) {
                 this.active = index;
-                sessionStorage.setItem('navIndex',index); 
+                sessionStorage.setItem('navIndex',index);
                 this.$router.push({
                     name: item.name
                 })

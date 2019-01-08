@@ -108,14 +108,10 @@
             <i class="imicon">*</i>活动详情：
           </span>
                     <div class="inline-box wraps">
-                        <quill-editor
-                            ref="myTextEditor"
-                            v-model="editorOption.editorCon"
-                            :options="editorOption"
-                        >
-                            <div id="toolbar" slot="toolbar"></div>
-                        </quill-editor>
+                        <essp-editor :editorCont="editorOption.editorCon" @onEditorChange="onEditorChange"></essp-editor>
                     </div>
+                    <!--使用展示的时候，必须用ql-editor这个class，这个是官网提供的方法-->
+                    <!--<div class="ql-editor" style="float: left;background: #ccc;" v-html="this.editorOption.editorCon"></div>-->
                 </div>
                 <ParkUpload :parkUploadData="parkUploadData" @changeImgUrl="showImgUrl"></ParkUpload>
                 <div class="tdcon">
@@ -671,11 +667,6 @@
     import EsspAddTag from "@/components/EsspAddTag";
     import ParkUpload from "@/views/parkHall/parkUpload"; // 上传图片控件
 
-    import "quill/dist/quill.core.css";
-    import "quill/dist/quill.snow.css";
-    import "quill/dist/quill.bubble.css";
-    import {quillEditor} from "vue-quill-editor";
-
     export default {
         name: "",
         data() {
@@ -896,7 +887,7 @@
                 ticketLen: 0,  // 初始化票的长度
                 t_invitings: "", // 邀请对象名称
                 // t_concatvalue:'',  // 邀请对象id
-                isCharge: "",
+                isCharge: "0",
                 chargeInfo: "",
                 enterNeedAudit: "0", //报名是否需审核
                 activityDetails: "",
@@ -956,8 +947,7 @@
             EsspEditor,
             EsspTag,
             EsspAddTag,
-            ParkUpload,
-            quillEditor
+            ParkUpload
         },
         created() {
             this.uploads = this.$apiUrl.upload.upload;
@@ -977,6 +967,11 @@
         },
 
         methods: {
+            // 编辑器的值获取
+            onEditorChange(val){
+                this.editorOption.editorCon = val;
+                console.log(this.editorOption.editorCon);
+            },
             // 改变图片路径
             showImgUrl(url) {
                 this.activityPhoto = url;
@@ -1151,20 +1146,20 @@
                             var codestatus = response.resultCode;
                             if (codestatus == "CLT000000000") {
                                 let data = response.resultData;
-                                this.activityTheme = data.activityTheme;
+                                this.activityTheme = data.activityTheme || '';
                                 this.activityType = data.activityType;
-                                this.activityStarttime = data.activityStarttime;
-                                this.activityDays = data.activityDays;
-                                this.activityPlace = data.activityPlace;
-                                this.isCharge = data.isCharge;
-                                this.chargeInfo = data.chargeInfo;
-                                this.editorOption.editorCon = data.activityDetails;
-                                this.enterNeedAudit = data.enterNeedAudit;
-                                this.activityPhoto = data.activityPhoto;
-                                this.parkUploadData.src = data.activityPhoto;
-                                this.initiateUnits = data.initiateUnits;
-                                this.initiatorWay = data.initiatorWay;
-                                this.enterType = data.enterType;
+                                this.activityStarttime = data.activityStarttime || '';
+                                this.activityDays = data.activityDays || '';
+                                this.activityPlace = data.activityPlace || '';
+                                this.isCharge = data.isCharge || '';
+                                this.chargeInfo = data.chargeInfo || '';
+                                this.editorOption.editorCon = data.activityDetails || '';
+                                this.enterNeedAudit = data.enterNeedAudit|| '';
+                                this.activityPhoto = data.activityPhoto || '';
+                                this.parkUploadData.src = data.activityPhoto || '';
+                                this.initiateUnits = data.initiateUnits || '';
+                                this.initiatorWay = data.initiatorWay || '';
+                                this.enterType = data.enterType || '';
                                 this.enterForm = JSON.parse(data.enterForm);
                                 this.ticketForm = JSON.parse(data.ticketForm);
                                 this.ticketLen = this.ticketForm.length;
@@ -1386,7 +1381,7 @@
             },
             checkInfo() {
                 if (this.ticketForm.length == 0) {
-                    this.$message.error("票务信息或者活动人数不能为空！");
+                    this.$message.error("票种不能为空！");
                     return;
                 } else {
                     var arr = [];
@@ -1406,6 +1401,7 @@
                         }
                     }
                 }
+                console.log("this.activityTheme",this.activityTheme);
                 if (this.activityTheme == "") {
                     this.$message.error("活动主题不能为空！");
                     return;
@@ -1432,11 +1428,6 @@
                     this.$message.error("活动详情必填！");
                     return;
                 }
-
-                if (this.enterEndtime == "") {
-                    this.$message.error("报名开始时间必填！");
-                    return;
-                }
                 if (this.activityPhoto == "") {
                     this.$message.error("图片必传！");
                     return;
@@ -1445,12 +1436,16 @@
                     this.$message.error("发布单位必填！");
                     return;
                 }
+                if (this.enterEndtime == "") {
+                    this.$message.error("报名开始时间必填！");
+                    return;
+                }
                 if (this.enterStarttime == "") {
                     this.$message.error("报名开始时间必填！");
                     return;
                 }
                 if (this.enterEndtime == "") {
-                    this.$message.error("报名开始时间必填！");
+                    this.$message.error("报名结束时间必填！");
                     return;
                 }
                 return true;
@@ -1462,140 +1457,137 @@
             },
             //暂存
             goToBox() {
-                if (this.checkInfo()) {
-                    var type = 0;
-                    var msg =
-                        "<p><i class='icon iconfont icon-queren' style='font-size: 45px;color: #00a0e9;'></i></p><p style='padding: 25px 0 30px;'>您发布的活动已保存至草稿箱</p>";
-                    var url = "/parkIndex/park/launch?type=1";
-                    var maskConfig = {
-                        confirmButtonText: "返回草稿箱查看",
-                        center: true,
-                        showCancelButton: false,
-                        dangerouslyUseHTMLString: true
-                    };
-
-                    var activeId = this.$route.query.activityId || "";
-
-                    this.$post(this.$apiUrl.active.addActivity, {
-                        parkId: window.sessionStorage.getItem("parkId"), //'20180816101609002'
-                        activityId: activeId,
-                        activityTheme: this.activityTheme,
-                        activityType: this.activityType,
-                        topLimit: this.enrolTopNum,
-                        activityStarttime: this.activityStarttime,
-                        activityDays: this.activityDays,
-                        isPlatform: 0, //在园区内的传0，平台传1
-                        activityPlace: this.activityPlace,
-                        isCharge: this.isCharge,
-                        chargeInfo: this.chargeInfo,
-                        activityDetails: this.editorOption.editorCon
-                            ? this.editorOption.editorCon.replace(/\s/g, "&nbsp")
-                            : "",
-                        enterNeedAudit: this.enterNeedAudit,
-                        activityPhoto: this.activityPhoto,
-                        activityLabel: this.tags.join(","),
-                        initiateUnits: this.initiateUnits, //发布方
-                        initiatorWay: this.initiatorWay, //发布方
-                        enterType: this.enterType, //个人与公司
-                        enterForm: this.enterForm, //大表
-                        ticketForm: this.ticketForm, //票务表
-                        openScope: this.openScope, //活动开放范围
-                        enterStarttime: this.enterStarttime,
-                        enterEndtime: this.enterEndtime,
-                        invitings: this.t_concatvalue.join(","),
-                        needCompanyAudit: this.needCompanyAudit,
-                        activityRemarks: this.activityRemarks, //活动备注
-                        status: type
-                    }).then(
-                        response => {
-                            if (response.resultCode == "CLT000000000") {
-                                this.$confirm(msg, maskConfig).then(() => {
-                                    this.$router.push(url);
-                                });
-                            } else {
-                                this.$message.error(response.resultMsg);
-                            }
-                        },
-                        response => {
-                            this.$message.error(response.resultMsg);
-                        }
-                    );
-                }
-            },
-            // 活动发布提交
-            lookfinalData() {
-                if(this.ticketForm.length>1){
-                    var arr = [];
-                    for(let i=0; i<this.ticketForm.length; i++){
-                        arr.push(this.ticketForm[i].ticketType);
-                    }
-                    var brr = Array.from(new Set(arr));
-                    if(arr.length > brr.length){
-                        this.$message.error("不能有相同的票种名称");
-                        return;
-                    }
-                }
-                var type = 1;
-                var msg = "您是否发布活动？";
-                var url = "/parkIndex/park/launch?type=0";
-
+                var type = 0;
+                var msg =
+                    "<p><i class='icon iconfont icon-queren' style='font-size: 45px;color: #00a0e9;'></i></p><p style='padding: 25px 0 30px;'>您发布的活动已保存至草稿箱</p>";
+                var url = "/parkIndex/park/launch?type=1";
                 var maskConfig = {
-                    confirmButtonText: "是",
-                    cancelButtonText: "否",
-                    center: true
+                    confirmButtonText: "返回草稿箱查看",
+                    center: true,
+                    showCancelButton: false,
+                    dangerouslyUseHTMLString: true
                 };
 
-                this.$confirm(msg, maskConfig).then(() => {
-                    var activeId = this.$route.query.activityId || "";
+                var activeId = this.$route.query.activityId || "";
 
-                    this.$post(this.$apiUrl.active.addActivity, {
-                        parkId: window.sessionStorage.getItem("parkId"), //'20180816101609002'
-                        activityId: activeId,
-                        activityTheme: this.activityTheme,
-                        activityType: this.activityType,
-                        topLimit: this.enrolTopNum,
-                        activityStarttime: this.activityStarttime,
-                        activityDays: this.activityDays,
-                        isPlatform: 0, //在园区内的传0，平台传1
-                        activityPlace: this.activityPlace,
-                        isCharge: this.isCharge,
-                        chargeInfo: this.chargeInfo,
-                        activityDetails: this.editorOption.editorCon
-                            ? this.editorOption.editorCon.replace(/\s/g, "&nbsp")
-                            : "",
-                        enterNeedAudit: this.enterNeedAudit,
-                        activityPhoto: this.activityPhoto,
-                        activityLabel: this.tags.join(","),
-                        initiateUnits: this.initiateUnits, //发布方
-                        initiatorWay: this.initiatorWay, //活动发起的渠道
-                        enterType: this.enterType, //个人与公司
-                        enterForm: this.enterForm, //大表
-                        ticketForm: this.ticketForm, //票务表
-                        openScope: this.openScope, //活动开放范围
-                        enterStarttime: this.enterStarttime,
-                        enterEndtime: this.enterEndtime,
-                        invitings: this.t_concatvalue.join(","),
-                        needCompanyAudit: this.needCompanyAudit,
-                        activityRemarks: this.activityRemarks, //活动备注
-                        status: type
-                    }).then(
-                        response => {
-                            if (response.resultCode == "CLT000000000") {
-                                this.$alert(response.resultMsg, {
-                                    confirmButtonText: "确定",
-                                    callback: action => {
-                                        this.$router.push(url);
-                                    }
-                                });
-                            } else {
-                                this.$message.error(response.resultMsg);
-                            }
-                        },
-                        response => {
+                this.$post(this.$apiUrl.active.addActivity, {
+                    parkId: window.sessionStorage.getItem("parkId"), //'20180816101609002'
+                    activityId: activeId,
+                    activityTheme: this.activityTheme,
+                    activityType: this.activityType,
+                    topLimit: this.enrolTopNum,
+                    activityStarttime: this.activityStarttime,
+                    activityDays: this.activityDays,
+                    isPlatform: 0, //在园区内的传0，平台传1
+                    activityPlace: this.activityPlace,
+                    isCharge: this.isCharge,
+                    chargeInfo: this.chargeInfo,
+                    activityDetails: this.editorOption.editorCon,
+                    enterNeedAudit: this.enterNeedAudit,
+                    activityPhoto: this.activityPhoto,
+                    activityLabel: this.tags.join(","),
+                    initiateUnits: this.initiateUnits, //发布方
+                    initiatorWay: this.initiatorWay, //发布方
+                    enterType: this.enterType, //个人与公司
+                    enterForm: this.enterForm, //大表
+                    ticketForm: this.ticketForm, //票务表
+                    openScope: this.openScope, //活动开放范围
+                    enterStarttime: this.enterStarttime,
+                    enterEndtime: this.enterEndtime,
+                    invitings: this.t_concatvalue.join(","),
+                    needCompanyAudit: this.needCompanyAudit,
+                    activityRemarks: this.activityRemarks, //活动备注
+                    status: type
+                }).then(
+                    response => {
+                        if (response.resultCode == "CLT000000000") {
+                            this.$confirm(msg, maskConfig).then(() => {
+                                this.$router.push(url);
+                            });
+                        } else {
                             this.$message.error(response.resultMsg);
                         }
-                    );
-                });
+                    },
+                    response => {
+                        this.$message.error(response.resultMsg);
+                    }
+                );
+            },
+
+            // 活动发布提交
+            lookfinalData() {
+                if (this.checkInfo()) {
+                    if (this.ticketForm.length > 1) {
+                        var arr = [];
+                        for (let i = 0; i < this.ticketForm.length; i++) {
+                            arr.push(this.ticketForm[i].ticketType);
+                        }
+                        var brr = Array.from(new Set(arr));
+                        if (arr.length > brr.length) {
+                            this.$message.error("不能有相同的票种名称");
+                            return;
+                        }
+                    }
+                    var type = 1;
+                    var msg = "您是否发布活动？";
+                    var url = "/parkIndex/park/launch?type=0";
+
+                    var maskConfig = {
+                        confirmButtonText: "是",
+                        cancelButtonText: "否",
+                        center: true
+                    };
+
+                    this.$confirm(msg, maskConfig).then(() => {
+                        var activeId = this.$route.query.activityId || "";
+
+                        this.$post(this.$apiUrl.active.addActivity, {
+                            parkId: window.sessionStorage.getItem("parkId"), //'20180816101609002'
+                            activityId: activeId,
+                            activityTheme: this.activityTheme,
+                            activityType: this.activityType,
+                            topLimit: this.enrolTopNum,
+                            activityStarttime: this.activityStarttime,
+                            activityDays: this.activityDays,
+                            isPlatform: 0, //在园区内的传0，平台传1
+                            activityPlace: this.activityPlace,
+                            isCharge: this.isCharge,
+                            chargeInfo: this.chargeInfo,
+                            activityDetails: this.editorOption.editorCon,
+                            enterNeedAudit: this.enterNeedAudit,
+                            activityPhoto: this.activityPhoto,
+                            activityLabel: this.tags.join(","),
+                            initiateUnits: this.initiateUnits, //发布方
+                            initiatorWay: this.initiatorWay, //活动发起的渠道
+                            enterType: this.enterType, //个人与公司
+                            enterForm: this.enterForm, //大表
+                            ticketForm: this.ticketForm, //票务表
+                            openScope: this.openScope, //活动开放范围
+                            enterStarttime: this.enterStarttime,
+                            enterEndtime: this.enterEndtime,
+                            invitings: this.t_concatvalue.join(","),
+                            needCompanyAudit: this.needCompanyAudit,
+                            activityRemarks: this.activityRemarks, //活动备注
+                            status: type
+                        }).then(
+                            response => {
+                                if (response.resultCode == "CLT000000000") {
+                                    this.$alert(response.resultMsg, {
+                                        confirmButtonText: "确定",
+                                        callback: action => {
+                                            this.$router.push(url);
+                                        }
+                                    });
+                                } else {
+                                    this.$message.error(response.resultMsg);
+                                }
+                            },
+                            response => {
+                                this.$message.error(response.resultMsg);
+                            }
+                        );
+                    });
+                }
             },
             showTagWin() {
                 this.visible = true;
