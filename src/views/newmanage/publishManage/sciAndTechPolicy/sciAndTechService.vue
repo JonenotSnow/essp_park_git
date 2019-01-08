@@ -16,7 +16,7 @@
                 <div class="right-div publish-btn-wrap">
                     <p class="publish-btn">
                         <i class="el-icon-circle-plus"></i>
-                        <span @click="$router.push('/parkHall/manage/publishSciAndTechPolicy')">立即发布</span>
+                        <span @click="linkToPublish()">立即发布</span>
                     </p>
                 </div>
             </div>
@@ -60,7 +60,18 @@
             // 查询事件
             search() {
                 alert('查询事件');
+            },
+
+            // 跳转发布页面
+            linkToPublish() {
+                this.$router.push({
+                    path: '/parkHall/manage/publishSciAndTechPolicy',
+                    query: {
+                        applyType: '02'
+                    }
+                });
             }
+
         },
         mounted() {
         }

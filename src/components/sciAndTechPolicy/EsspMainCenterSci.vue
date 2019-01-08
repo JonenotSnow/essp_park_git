@@ -3,7 +3,6 @@
 
         <EsspMcCardSci
             :mcCardList="mcCardDataList"
-            :chilrPageType="pageType"
             :temeTitle="temeTitle"/>
 
         <div class="essp-aside-right-cont">
@@ -57,21 +56,33 @@
 </template>
 
 <script>
-    // pageType 1. 咨询全部 2.我咨询的活动 ……
     import EsspMcCardSci from '@/components/sciAndTechPolicy/EsspMcCardSci';
-    // 引入获取列表的公共的js
-    import {newsinfo} from '@/fetch/api/newsinfo/newsinfo'
     import Moment from "moment";
 
     export default {
         name: 'EsspMainCenterInfo',
-        props: ['pageType', "temeTitle"],
+        props: {
+            temeTitle: {
+                type: String,
+                default: ''
+            },
+            satpType: {
+                type: String,
+                default: ''
+            },
+            classtType: {
+                type: String,
+                default: ''
+            }
+        },
         components: {
             EsspMcCardSci
         },
         data() {
             return {
-                msg: "全部资讯",
+                msg: "科技政策",
+                parkId: sessionStorage.getItem("parkId") || "",
+
                 currentKeytime: "",//默认不选择时间区间
                 currentKeyname: "",//默认不选择关键字
                 currentTime: [],//默认不选择时间
@@ -82,21 +93,58 @@
                     {name: "最近一周", code: "week"},
                     {name: "最近一个月", code: "month"}
                 ],
+
+                // 分页
                 pageRanges: [5, 10, 20, 50, 100],//默认每页10条数区间
                 pageNum: 1,//当前页码
                 pageSize: 10,//每页条数
-                allTotal: 1000,//总条数
+                allTotal: 0,//总条数
                 startDate: "",//起始时间
                 endDate: "",//结束时间
                 title: "",//搜索关键词
                 times: '',
                 tagTxt: "",//通过标签搜索
-                mcCardDataList: []
+                mcCardDataList: [
+                    {
+                        id: '123456',                       // 政策id
+                        createTime: '1546928463894',        // 发布时间
+                        cstNm: '建行',                      // 发布机构
+                        policyTitle: '政策法规标题1',       // 标题
+                        userName: '行长',                   // 发布人
+                        status: '已发布',                   // 发布状态
+                        applyType: '01',                    // 政策01，或科技服务02
+                        classtType: "高企认定",              // 类型【服务类型】
+                        desc: '政策简介政策简介政策简介政策简介'
+                    },
+                    {
+                        id: '123456',                       // 政策id
+                        createTime: '1546928463894',        // 发布时间
+                        cstNm: '交行',                      // 发布机构
+                        policyTitle: '政策法规标题2',       // 标题
+                        userName: '行长',                   // 发布人
+                        status: '已审核',                   // 发布状态
+                        applyType: '01',                    // 政策01，或科技服务02
+                        classtType: "科小认定",              // 类型【服务类型】
+                        desc: '政策简介政策简介政策简介政策简介政策简介政策简介政策简介政策简介政策简介政策简介'
+                    },
+                    {
+                        id: '123456',                       // 政策id
+                        createTime: '1546928463894',        // 发布时间
+                        cstNm: '交行',                      // 发布机构
+                        policyTitle: '政策法规标题3',       // 标题
+                        userName: '行长',                   // 发布人
+                        status: '未审核',                   // 发布状态
+                        applyType: '01',                    // 政策01，或科技服务02
+                        classtType: "风险投资",              // 类型【服务类型】
+                        desc: '政策简介政策简介政策简介政策简介政策简介政策简介政策简介政策简介政策简介政策简介'
+                    }
+                ]
             }
         },
         created() {
-            this.getParkInfoList();
-            this.getListInfoTags();
+            // this.getParkInfoList();
+            // this.getListInfoTags();
+            this.getSciAndTechPolicy();
         },
         methods: {
             //聚焦右侧搜索栏的清空
@@ -158,6 +206,7 @@
                         this.$message.error("接口异常");
                     })
             },
+
             handleSizeChange(val) {
                 this.pageSize = val;
                 this.getParkInfoList();
@@ -171,29 +220,39 @@
                 this.currentKeyname = '';
                 this.getParkInfoList();
             },
-            getParkInfoList() {
-                var parkId = sessionStorage.getItem("parkId") || "";
-                var url = newsinfo[this.pageType] || " ";
-                this.$post(url, {
-                    pageNum: this.pageNum,
-                    pageSize: this.pageSize,
-                    startDate: this.startDate,
-                    endDate: this.endDate,
-                    title: '',
-                    parkId,
-                    tagTxt: this.tagTxt,//根据标签搜索
+
+            /**
+             * 获取“科技政策”的数据
+             */
+            getSciAndTechPolicy() {
+                let params = {
+                    parkId: this.parkId,            // 园区ID
+                    pageNum: this.pageNum,          // 页码
+                    pageSize: this.pageSize,        // 每页显示数量
+                    startDate: this.startDate,      // 信息发布时间---开始时间
+                    endDate: this.endDate,          // 信息发布时间---结束时间
+                    title: '',                       // 标题,
+                    type: this.satpType,            // 政策01，或科技服务02
+                    classtType: this.classtType     // 科技服务才会有这个字段---
+                };
+
+                // “政策法规”不需要“classtType”这个字段
+                if (this.satpType === '01') {
+                    delete params.classtType;
+                }
+
+                this.$post(" /policy/getAllPolicy", params).then(response => {
+                    let codestatus = response.resultCode;
+                    if (codestatus == "CLT000000000") {
+                        let resultData = response.resultData;
+                        this.allTotal = resultData.total;
+                        this.mcCardDataList = resultData.policyList;
+                    } else {
+                        this.$message.info(response.resultMsg);
+                    }
+                }, err => {
+                    this.$message.error("接口异常");
                 })
-                    .then(response => {
-                        var codestatus = response.resultCode;
-                        if (codestatus == "CLT000000000") {
-                            this.mcCardDataList = response.resultData.informationList;//数据源
-                            this.allTotal = response.resultData.total;//总条数
-                        } else {
-                            this.$message.info(response.resultMsg);
-                        }
-                    }, err => {
-                        this.$message.info(err.resultMsg);
-                    })
             }
         },
     }

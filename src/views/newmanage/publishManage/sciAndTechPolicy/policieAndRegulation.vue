@@ -16,7 +16,7 @@
                 <div class="right-div publish-btn-wrap">
                     <p class="publish-btn">
                         <i class="el-icon-circle-plus"></i>
-                        <span @click="$router.push('/parkHall/manage/publishSciAndTechPolicy')">立即发布</span>
+                        <span @click="linkToPublish()">立即发布</span>
                     </p>
                 </div>
             </div>
@@ -49,7 +49,11 @@
                 status: '0',                // 状态值
                 searchContent: '',          // 查询字段
                 type: 'sciAndTechPolicy',   //
-                dataList: 2
+
+                // 返回的数据
+                total: 0,
+                dataList: []
+
             }
         },
         methods: {
@@ -61,6 +65,72 @@
             // 查询事件
             search() {
                 alert('查询事件');
+            },
+
+            // 跳转发布页面
+            linkToPublish() {
+                this.$router.push({
+                    path: '/parkHall/manage/publishSciAndTechPolicy',
+                    query: {
+                        applyType: '01'
+                    }
+                });
+            },
+
+            // 获取全部政策法规
+            getPolicieAndRegulation() {
+                let params = {}
+                this.$post(" /policy/getAllPolicy", params).then(response => {
+                    let codestatus = response.resultCode;
+                    if (codestatus == "CLT000000000") {
+
+                        // 接通时用
+                        // let resultData = response.resultData;
+                        // this.total = resultData.total;
+                        // this.dataList = resultData.policyList;
+
+                        this.dataList = [
+                            {
+                                id: '123456',                       // 政策id
+                                createTime: '1546928463894',        // 发布时间
+                                cstNm: '建行',                      // 发布机构
+                                policyTitle: '政策法规标题1',       // 标题
+                                userName: '行长',                   // 发布人
+                                status: '已发布',                   // 发布状态
+                                applyType: '01',                    // 政策01，或科技服务02
+                                classtType: "高企认定"              // 类型【服务类型】
+                            },
+
+                            {
+                                id: '123456',                       // 政策id
+                                createTime: '1546928463894',        // 发布时间
+                                cstNm: '交行',                      // 发布机构
+                                policyTitle: '政策法规标题2',       // 标题
+                                userName: '行长',                   // 发布人
+                                status: '已审核',                   // 发布状态
+                                applyType: '01',                    // 政策01，或科技服务02
+                                classtType: "科小认定"              // 类型【服务类型】
+                            },
+
+                            {
+                                id: '123456',                       // 政策id
+                                createTime: '1546928463894',        // 发布时间
+                                cstNm: '交行',                      // 发布机构
+                                policyTitle: '政策法规标题3',       // 标题
+                                userName: '行长',                   // 发布人
+                                status: '未审核',                   // 发布状态
+                                applyType: '01',                    // 政策01，或科技服务02
+                                classtType: "风险投资"              // 类型【服务类型】
+                            }
+                        ]
+                        ;
+
+                    } else {
+                        this.$message.info(response.resultMsg);
+                    }
+                }, err => {
+                    this.$message.error("接口异常");
+                })
             }
         },
         mounted() {
