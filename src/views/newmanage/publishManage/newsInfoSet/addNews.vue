@@ -2,7 +2,7 @@
  * @Author: Evan-lian
  * @Date: 2019-01-07 16:14:17
  * @LastEditors: Evan-lian
- * @LastEditTime: 2019-01-07 19:18:11
+ * @LastEditTime: 2019-01-08 17:05:47
  * @Description: 发布新闻
  -->
 <template>
@@ -15,11 +15,6 @@
             <span></span>
         </div>
         <div>
-            <!-- <div class="common_titwrap esspclearfix noborder">
-                <div>
-                    <h3 class="common_titdes" style="margin-left:130px;font-weight: normal;">基本信息</h3>
-                </div>
-            </div> -->
             <div class="base_tablecon">
                 <div class="tdcon">
                     <span class="inline_span">
@@ -27,20 +22,6 @@
                     </span>
                     <el-input class="el_input_left" v-model="informationTitle" placeholder="必填"></el-input>
                 </div>
-                <!-- <div class="tdcon esspclearfix">
-                    <span class="inline_span">
-                        <em>*</em>资讯类型 :
-                    </span>
-                    <el-select v-model="classtType" placeholder="请选择" class="inline_select">
-                        <el-option
-                            v-for="(item,index) in typeitems"
-                            :key="index"
-                            :label="item.name"
-                            v-if="index>0"
-                            :value="item.id"
-                        ></el-option>
-                    </el-select>
-                </div> -->
                 <ParkUpload :parkUploadData="parkUploadData" @changeImgUrl="showImgUrl"></ParkUpload>
                 
                 <div class="tdcon">
@@ -57,7 +38,7 @@
                 </div>
                 <div class="tdcon">
                     <span class="inline_span">
-                        <em>*</em>详细内容 :
+                        <em>*</em>新闻动态详情 :
                     </span>
                     <div class="inline-box wrap" id="publishNewInfo">
                         <!-- <essp-editor ref="childEditor"></essp-editor> -->
@@ -101,27 +82,6 @@
                 
             </div>
         </div>
-        <!-- <div class="base_tablecon border-top"> -->
-            <!-- <div class="tdcon">
-                <span class="inline_span">
-                    <em>*</em>是否需要公司内部审核 :
-                </span>
-                <div class="inline_div">
-                    <el-radio v-model="approveType" label="1">是</el-radio>
-                    <el-radio v-model="approveType" label="0">否</el-radio>
-                    <div class="tips_div">提示：选择公司内部审核，则需经过企业管理员先行审核，后转至园区管理员审核生效</div>
-                </div>
-            </div> -->
-            <!-- <div class="tdcon">
-                <span class="inline_span">备注 :</span>
-                <el-input
-                    class="inline-textarea"
-                    type="textarea"
-                    :rows="5"
-                    placeholder="请输入内容"
-                    v-model="pubComment"
-                ></el-input>
-            </div> -->
             <div class="tdcon">
                 <span class="inline_yulan">
                     <button @click="infoPrint">预览</button>
@@ -142,7 +102,6 @@
             >提&nbsp;&nbsp;&nbsp;&nbsp;交
             </el-button>
         </div>
-
         <el-dialog title="资讯发布预览功能（仅提供预览功能）" :visible.sync="infoDialog" width="90%">
             <div class="inlookInfo">
                 <h2 class="inlookTit">{{informationTitle}}</h2>
@@ -232,8 +191,8 @@
                 parkUploadData: {
                     title: "新闻动态配图 :",
                     src: "", //资讯配图
-                    isPic:
-                        "（该图片以资讯主图进行展示,每张最大2M，图片宽高比为7：4，建议分辨率建议为840*480，支持jpg/jpeg/gif/png格式。）",
+                    isPic:"",
+                        // "（该图片以资讯主图进行展示,每张最大2M，图片宽高比为7：4，建议分辨率建议为840*480，支持jpg/jpeg/gif/png格式。）",
                     imgItemType: "information", // 图片图库类型 资讯
                     styleClass: "inline_span_my"
                 },
@@ -257,10 +216,7 @@
             quillEditor
         },
         created() {
-            this.getDraftResource();
-            // if (this.SSH.getItem("userInfo").cstNm) {
-            //     this.initiatorWay = this.SSH.getItem("userInfo").cstNm;
-            // }
+            // this.getDraftResource();
         },
         filters: {
             timerFormat(vaule) {
@@ -293,10 +249,6 @@
                     this.$message.warning("资讯内容不能为空");
                     return;
                 }
-                // if(this.stillUpdateImg){
-                //     this.$message.warning('正在处理标题配图');
-                //     return;
-                // }
                 return true;
             },
             //获取资讯暂存的草稿数据
@@ -345,34 +297,28 @@
 
             checkInfo() {
                 if (this.informationTitle == "") {
-                    this.$message.warning("资讯主题不能为空");
+                    this.$message.warning("新闻动态标题不能为空");
                     return false;
                 }
                 if (this.informationTitle.length > 50) {
-                    this.$message.warning("资讯主题长度不能大于50个字");
+                    this.$message.warning("新闻动态标题长度不能大于50个字");
                     return false;
                 }
                 if (this.content == "") {
-                    this.$message.warning("资讯内容不能为空");
+                    this.$message.warning("新闻动态内容不能为空");
                     return false;
                 }
                 if (this.parkUploadData.src == "") {
                     this.$message.warning("标题配图不能为空");
                     return false;
                 }
-                if (this.classtType == "") {
-                    this.$message.warning("请您选择资讯类型");
-                    return false;
-                }
                 return true;
             },
-            // 保持发布
-            lookfinalData(type) {
+            //新闻发布功能
+             lookfinalData() {
                 var parkId = sessionStorage.getItem("parkId") || "";
-                var type = 1;
-                var msg = "您是否发布资讯？";
-                var url = "/parkIndex/parkInformation/myPublishedInfo?type=0";
-
+                var msg = "您是否发布新闻动态？";
+                var goto = "/parkHall/manage/publicNews?status=0";
                 if (!this.checkInfo()) {
                     return;
                 }
@@ -381,65 +327,54 @@
                     cancelButtonText: "否",
                     center: true
                 };
-
                 this.$confirm(msg, maskConfig).then(() => {
-                    this.$post("information/saveInformation", {
-                        parkId: parkId,
-                        classtType: this.classtType,
-                        informationTitle: this.informationTitle,
-                        titleImg: this.parkUploadData.src,
+                    var url = "information/saveNews";
+                    var pop = {
+                        parkId,
+                        informationTitle:this.informationTitle,
+                        informationId:this.informationId,
+                        infoDetail:this.content ? this.content.replace(/\s/g, "&nbsp") : "",
+                        tags:this.tags.join(","),
+                        saveType:1,
                         content: this.contentbrif,
-                        approveType: this.approveType,
-                        saveType: type,
-                        tags: this.tags.join(","),
-                        pubComment: this.pubComment,
-                        infoDetail: this.content ? this.content.replace(/\s/g, "&nbsp") : "",
-                        informationId: this.informationId
-                    }).then(response => {
-                        if (response.resultCode == "CLT000000000") {
-                            this.$router.push({path: url});
-                        } else {
-                            // this.$message.error(response.resultMsg);
-                        }
+                        titleImg: this.parkUploadData.src,
+                    }
+                    this.$post(url, pop).then(response => {
+                        this.$message.success("新闻动态发布成功")
+                        this.$router.push({path: goto});
                     });
                     this.$refs.eat.saveTags();
                 });
             },
-            submitInfo() {
+            //暂存新闻
+             submitInfo() {
                 var parkId = sessionStorage.getItem("parkId") || "";
                 var type = 0;
-                var msg = "<p><i class='icon iconfont icon-queren' style='font-size: 45px;color: #00a0e9;'></i></p><p style='padding: 25px 0 30px;'>您发布的资讯已保存至草稿箱</p>";
-                var url = "/parkIndex/parkInformation/myPublishedInfo?type=1";
+                var msg = "<p><i class='icon iconfont icon-queren' style='font-size: 45px;color: #00a0e9;'></i></p><p style='padding: 25px 0 30px;'>您发布的新闻动态已保存至草稿箱</p>";
+                var url = "/parkHall/manage/publicNews?status=1";
                 var maskConfig = {
                     confirmButtonText: "返回草稿箱查看",
                     center: true,
                     showCancelButton: false,
                     dangerouslyUseHTMLString: true
                 };
-                if (!this.checkInfo()) {
-                    return;
-                }
-                this.$post("information/saveInformation", {
+                
+                this.$post("information/saveNews", {
                     parkId: parkId,
-                    classtType: this.classtType,
                     informationTitle: this.informationTitle,
                     titleImg: this.parkUploadData.src,
                     content: this.contentbrif,
-                    approveType: this.approveType,
                     saveType: type,
                     tags: this.tags.join(","),
-                    pubComment: this.pubComment,
                     infoDetail: this.content ? this.content.replace(/\s/g, "&nbsp") : "",
                     informationId: this.informationId
                 }).then(response => {
-                    if (response.resultCode == "CLT000000000") {
-                        this.$confirm(msg, maskConfig).then(() => {
-                            this.$refs.eat.saveTags();
-                            this.$router.push({path: url});
-                        });
-                    } else {
-                        // this.$message.error(response.resultMsg);
-                    }
+                    this.$confirm(msg, maskConfig).then(() => {
+                        this.$refs.eat.saveTags();
+                        this.$message.success("新闻动态暂存成功")
+                        this.$router.push({path: url});
+                    });
+                   
                 });
             }
         }
