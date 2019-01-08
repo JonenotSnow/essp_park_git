@@ -43,21 +43,28 @@ export default {
                     title:'完善模板'
                 }
             ],
-            stepType:'1',
+            stepType:'1', 
+            firstSetModel: '1',
         }
     },
     created() {
+        this.getParkById(id);
     },
     methods: {
         //获取当前步骤
         getCurStepId(id){
-            this.stepType = id;
-            if (id != 1) {
-                this.getParkById(id);
+            //如果没完善园区信息
+            if (id != 1 && !this.writeInfo.setUpTime) {
+                this.$message({
+                    type: 'warning',
+                    message: "请先完善园区信息"
+                });
+                return;
             }
+            this.stepType = id;
         },
         
-        getParkById(id){
+        getParkById(i){
             this.$post(this.$apiUrl.manage.getParkById,{
                 parkId : window.sessionStorage.getItem("parkId")
             })
@@ -66,9 +73,25 @@ export default {
                 //如果没完善园区信息
                 if (response.resultData && !response.resultData.setUpTime) {
                     this.$message({
-                        type: 'success',
+                        type: 'warning',
                         message: "请先完善园区信息"
                     });
+                    return;
+                };
+                //如果第一次设置模板，直接跳过模板选择，默认模板一
+                if (response.resultData && (response.resultData.parkSet2 == "default2" || response.resultData.parkSet == "default1") ) {
+                    this.firstSetModel = '1';
+                    return;
+                };
+                //如果非第一次设置模板，上次设置模板一
+                if (response.resultData && response.resultData.parkService == "1") {
+                    this.firstSetModel = '1';
+                    return;
+                };
+                //如果非第一次设置模板，上次设置模板二
+                if (response.resultData && response.resultData.parkService == "2" ) {
+                    this.firstSetModel = '2';
+                    return;
                 };
             },(err)=>{
                 this.$message({
@@ -81,9 +104,11 @@ export default {
     watch: {
         stepType(){
             if (this.stepType == 3) {
-                this.$router.push('/parkHall/manage/scanModelOne');
-            }else{
-                // this.$router.push('/parkHall/manage/scanModelTwo');
+                if (this.firstSetModel == '1') {
+                    this.$router.push({path:'/parkHall/manage/scanModelOne',query:{moduleType:1}});
+                }else{
+                    this.$router.push({path:'/parkHall/manage/scanModelTwo',query:{moduleType:2}});
+                }
             }
         }
     },
