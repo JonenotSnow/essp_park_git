@@ -1,7 +1,7 @@
-export const firstData= {
+export const data4= {
     // backgroundColor: '#FBFBFB',
         title: {
-            text: '研究与发展（R&D）人员数（万人）',
+            text: '发明专利申请量',
             textStyle:{
                 color:"#10b5ff",
                 fontWeight:'normal'
@@ -52,7 +52,7 @@ export const firstData= {
                 symbol:'none',
                 smooth: 0.2,
                 color:['#66AEDE'],
-                data:[1.9, 2.3, 2.2, 2.5, 2.2]
+                data:[1522,1439,1547,2043,2182]
             }
         ]
 };
