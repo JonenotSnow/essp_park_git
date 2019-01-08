@@ -1,6 +1,6 @@
 <template>
     <div>
-        <!-- 列表有状态和类型 -->
+        <!-- 列表只有类型-->
         <div class="selectTitle" v-if="list">
             <span class="all"><i class="el-icon-circle-plus"></i>全选</span>
             共
@@ -9,29 +9,18 @@
             <span class="total">1</span>
             条
             <span class="removeBtn">删除</span>
-            <span class="selectStatus">状态：
-                <select>
-                    <option value=""></option>
-                </select>
-            </span>
         </div>
         <ul class="listWrap" v-if="list">
             <li class="list" v-for="item in list" :key="item">
-                <div class="ListTopStatus">
+                <div class="ListTop">
                     <i class="el-icon-circle-plus"></i>
                     <span class="time">保存时间：2018-10-22  10：24：00</span>
-                    <span class="create">发布人：孔sfdasa乙己</span>
-                    <span class="classify classifyA">状态：<span>审核不通过</span> </span>
-                    <span class="classify classifyB">类型：<span>审核不通是fdasa 告诉对方</span> </span>
+                    <span class="create">发布人：孔乙fdsadfsa己</span>
+                    <span class="classifyC">类型：<span>科技服务fdsafdsa机构</span></span>
                     <i class="el-icon-delete remove"></i>
                 </div>
                 <div class="listBottom">
                     <div class="contentTitle">保定市科技服务机构备案名单保定市科技服务机构备案名单保定市科技服务机构备案名单保定市科技服务机构备案名单</div>
-                    <!-- 科技服务-已审核-->
-                    <!-- <div class='editorBtn2'>
-                        <span>查看</span>
-                        <span>编辑</span>
-                    </div> -->
                     <div class='editorBtn2'>
                         <span>发布</span>
                         <span>编辑</span>
@@ -41,7 +30,7 @@
         </ul> 
         <div v-else class="noData">
             <span>尚未发布成果，点击右上方发布按钮立即发布吧！</span>
-            <img src="../../../assets/newparkimg/newmanage/achievementSet/no_list.png" alt="">
+            <img src="@assets/newparkimg/newmanage/achievementSet/no_list.png" alt="">
         </div>
         <div class="pageList" v-if="list">
             <el-pagination
@@ -63,10 +52,6 @@ export default {
         list: {
             type: Array,
             default: []
-        },
-        type: {
-            type: String,
-            default: ''
         }
     },
     data() {
@@ -132,17 +117,6 @@ export default {
         cursor: pointer;
         margin-left:14px;
     }
-    .selectStatus{
-        margin-left:14px;
-        select{
-          width: 100px;
-          height: 30px;
-          border-radius: 3px;
-          border: solid 1px #cccccc;
-          outline: none;
-          padding:0 10px;
-        }
-    }
 }
 .listWrap{
     // width: 910px;
@@ -150,7 +124,7 @@ export default {
     .list{
         margin-bottom:20px;
         border: solid 1px #cccccc;
-        .ListTopStatus{
+        .ListTop{
             height: 40px;
             width:876px;
             background-color: #f5f5f5;
@@ -163,7 +137,7 @@ export default {
                 width:230px;
                 margin-left:8px;
             }
-            .create,.classifyA,.classifyB{
+            .create,.classifyC{
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
@@ -175,19 +149,13 @@ export default {
                 width:100px;
                 margin-left:50px;
             }
-            .classify{
+            .classifyC{
                 display: inline-block;
+                width:112px;
+                margin-left:138px;
                 span{
                     color: #10b5ff;
                 }
-            }
-            .classifyA{
-                width:100px;
-                margin-left:42px;
-            }
-            .classifyB{
-                width:126px;
-                margin-left:48px;
             }
             .remove{
                 float: right;

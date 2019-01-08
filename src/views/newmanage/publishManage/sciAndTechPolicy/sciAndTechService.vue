@@ -22,24 +22,20 @@
             </div>
         </div>
         <div class="sci-a1nd-tech-service-main">
-            <list-only-status :list="dataList" :type="type" v-if="status=='0'"/>
-            <list-no-status-and-classify :list="dataList" :type="type" v-if="status=='1'"/>
-            <list-status-and-classify :list="dataList" :type="type" v-if="status=='2'"/>
+            <listStatusAndClassify :list="dataList" :type="type" v-if="status=='0' || status=='2'"/>
+            <listOnlyClassify :list="dataList" v-if="status=='1'"/>
         </div>
     </div>
 </template>
 
 <script>
-    import listOnlyStatus from './../../components/listOnlyStatus.vue';
-    import listNoStatusAndClassify from './../../components/listNoStatusAndClassify.vue';
-    import listStatusAndClassify from './../../components/listStatusAndClassify.vue';
-
+    import listOnlyClassify from './common/listOnlyClassify';
+    import listStatusAndClassify from './common/listStatusAndClassify';
     export default {
         name: 'sci-and-tech-service',
         props: {},
         components: {
-            listOnlyStatus,
-            listNoStatusAndClassify,
+            listOnlyClassify,
             listStatusAndClassify
         },
         data() {
@@ -47,7 +43,7 @@
                 msg: '科技服务',
                 status: '0',                // 状态值
                 searchContent: '',          // 查询字段
-                type: 'sciAndTechPolicy',   //
+                type: '0',   //
                 dataList: 2
             }
         },
@@ -55,6 +51,7 @@
             // 状态切换
             switchStatus(status) {
                 this.status = status;
+                this.type = status;
             },
 
             // 查询事件
