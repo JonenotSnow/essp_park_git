@@ -7,22 +7,22 @@
             </div>
         </div>
         <div class="policie-and-regulation-main">
-            <policies-and-regulations v-if="status=='0'"/>
-            <technology-service v-if="status=='1'"/>
+            <newsAuditList v-if="status=='0'"></newsAuditList>
+            <noticeAuditList v-if="status=='1'"></noticeAuditList>
         </div>
     </div>
 </template>
 
 <script>
-    import policiesAndRegulations from "./policieAndRegulation.vue";
-    import technologyService from "./sciAndTechService.vue";
+    import newsAuditList from "./newsAuditList.vue";
+    import noticeAuditList from "./noticeAuditList.vue";
 
     export default {
         name: 'vue-temp',
         props: {},
         components: {
-            policiesAndRegulations,
-            technologyService
+            newsAuditList,
+            noticeAuditList
         },
         data() {
             return {
