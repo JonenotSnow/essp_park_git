@@ -1,6 +1,6 @@
 <template>
     <div class="policie-and-regulation-wrap">
-        <essp-main-center-sci :pageType="aipStyle" :temeTitle="temeTitle"/>
+        <essp-main-center-sci :temeTitle="temeTitle" :satpType="satpType"/>
     </div>
 </template>
 
@@ -15,9 +15,9 @@
         },
         data() {
             return {
-                msg: '政策法规',
+                msg: '政策法规页面',
                 temeTitle: "政策法规",
-                aipStyle: "getAllInformation",//获取政策法规接口
+                satpType: '01'  // 政策法规01，或科技服务02
             }
         },
         methods: {},

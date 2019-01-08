@@ -52,7 +52,16 @@
 
 <script>
 export default {
-    props:['list'],
+    props: {
+        list: {
+            type: Array,
+            default: []
+        },
+        type: {
+            type: String,
+            default: ''
+        }
+    },
     data() {
         return {
             totalCount:0,

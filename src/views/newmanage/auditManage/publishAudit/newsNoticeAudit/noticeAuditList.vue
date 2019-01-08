@@ -1,5 +1,6 @@
 <template>
     <div id="noOpenNeed">
+         <!-- 通知公告发布审核页 -->
         <div class="baseInfo">
             <div class="searchAdd">
                 <ul>
@@ -45,26 +46,21 @@
             <div class="tabList">
                 <el-table :data="list" @row-click="getDetail" style="width: 100%">
                     <el-table-column align="center" type="index" label="全部" width="85"></el-table-column>
-                    <el-table-column show-overflow-tooltip align="center" prop="cstNm" label="标题名称"
+                    <el-table-column show-overflow-tooltip align="center" prop="cstNm" label="需求标题"
                                      width="200"></el-table-column>
-                    <el-table-column show-overflow-tooltip align="center" prop="idyTpcd" label="发布人">
+                    <el-table-column show-overflow-tooltip align="center" prop="idyTpcd" label="公司名称">
                         <template slot-scope="scope">
                             {{scope.row.idyTpcd | idType(scope.row.idyTpcd)}}
                         </template>
                     </el-table-column>
-                    <el-table-column align="center" prop="status" label="提交时间" width="130">
-                        <template slot-scope="scope">
-                            {{scope.row.status | statusFormat(scope.row.status)}}
-                        </template>
-                    </el-table-column>
-                    <el-table-column align="center" prop="status" label="状态" width="130">
+                    <el-table-column align="center" prop="status" label="发布时间" width="130">
                         <template slot-scope="scope">
                             {{scope.row.status | statusFormat(scope.row.status)}}
                         </template>
                     </el-table-column>
                     <el-table-column align="center" prop="" width="100" label="操作">
                         <template slot-scope="scope">
-                            <span class="look">领取并审核</span>
+                            <span class="look">查看</span>
                         </template>
                     </el-table-column>
                 </el-table>

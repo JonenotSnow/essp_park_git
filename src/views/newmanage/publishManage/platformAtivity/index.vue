@@ -23,28 +23,25 @@
             </div>
         </div>
         <div class="policie-and-regulation-main">
-            <list-only-status :list="dataList" :type="type" v-if="status=='0'"/>
-            <list-no-status-and-classify :list="dataList" :type="type" v-if="status=='1'"/>
-            <list-status-and-classify :list="dataList" :type="type" v-if="status=='2'"/>
+            <list-only-status :list="dataList" :type="type" v-if="status=='0' || status=='2'"/>
+            <list-no-status-and-classify :list="dataList" v-if="status=='1'"/>
         </div>
     </div>
 </template>
 
 <script>
-    import listOnlyStatus from './../../components/listOnlyStatus';
-    import listNoStatusAndClassify from './../../components/listNoStatusAndClassify';
-    import listStatusAndClassify from './../../components/listStatusAndClassify';
+    import listOnlyStatus from './common/listOnlyStatus';
+    import listNoStatusAndClassify from './common/listNoStatusAndClassify';
     export default {
         components: {
             listOnlyStatus,
-            listNoStatusAndClassify,
-            listStatusAndClassify
+            listNoStatusAndClassify
         },
         data() {
             return {
                 status: '0',                // 状态值
                 searchContent: '',          // 查询字段
-                type: 'platformAtivity',   //
+                type: '0',   //
                 dataList: 2
             }
         },
@@ -59,6 +56,7 @@
             // 状态切换
             switchStatus(status) {
                 this.status = status;
+                this.type = status;
             },
 
             // 查询事件

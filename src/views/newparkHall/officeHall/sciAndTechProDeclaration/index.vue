@@ -3,28 +3,30 @@
         <div class="list-wrap">
             <div class="list__main">
                 <ul>
-                    <li :class="{'list__list--select' : type==0}" @click="switchDetail(0)">科技部火炬计划调查信息系统</li>
-                    <li :class="{'list__list--select' : type==1}" @click="switchDetail(1)">河北省高新技术统计信息网</li>
-                    <li :class="{'list__list--select' : type==2}" @click="switchDetail(2)">河北省高新技术企业认定管理系统</li>
+                    <li :class="{'list__list--select' : type==0}" @click="switchDetail(0)">保定市科技项目申报</li>
+                    <li :class="{'list__list--select' : type==1}" @click="switchDetail(1)">河北省科技项目申报</li>
                 </ul>
             </div>
         </div>
         <div class="detail-wrap">
             <div class="detail__main">
                 <div class="main__head">
-                    <h3>科技型小企业认定</h3>
+                    <h3 v-if="type==0">保定市科技项目申报</h3>
+                    <h3 v-if="type==1">河北省科技项目申报</h3>
                 </div>
-                <div class="main__body">
+                <div class="main__body" v-if="type==0">
                     <p>
-                        关于科技型小企业认定的流程介绍字段。关于科技型小企业认定的流程介绍字段。关于科技型小企业认定的流程介绍字段。关于科技型小企业认定的流程介绍字段。关于科技型小企业认定的流程介绍字段。关于科技型小企业认定的流程介绍字段。关于科技型小企业认定的流程介绍字段。关于科技型小企业认定的流程介绍字段。关于科技型小企业认定的流程介绍字段。关于科技型小企业认定的流程介绍字段。关于科技型小企业认定的流程介绍字段。关于科技型小企业认定的流程介绍字段。关于科技型小企业认定的流程介绍字段。关于科技型小企业认定的流程介绍字段。关于科技型小企业认定的流程介绍字段。关于科技型小企业认定的流程介绍字段。关于科技型小企业认定的流程介绍字段。
+                        保定市市级科学技术研究与发展计划项目是根据经济、社会和科技发展需求，在市科技计划中安排的，由市级财政资金支持的科学技术研究开发活动。
                     </p>
+                </div>
+                <div class="main__body" v-if="type==1">
                     <p>
-                        关于科技型小企业认定的流程介绍字段。关于科技型小企业认定的流程介绍字段。关于科技型小企业认定的流程介绍字段。关于科技型小企业认定的流程介绍字段。关于科技型小企业认定的流程介绍字段。关于科技型小企业认定的流程介绍字段。关于科技型小企业认定的流程介绍字段。关于科技型小企业认定的流程介绍字段。关于科技型小企业认定的流程介绍字段。关于科技型小企业认定的流程介绍字段。关于科技型小企业认定的流程介绍字段。
+                        河北省省级科学技术研究与发展计划项目是根据经济、社会和科技发展需求，在市科技计划中安排的，由市级财政资金支持的科学技术研究开发活动。
                     </p>
                 </div>
                 <div class="main__foot">
-                    <button class="btn__deal-with">立即办理</button>
-                    <button class="btn__see-policy">查看政策</button>
+                    <button class="btn__deal-with" @click.stop="dealWith()">立即办理</button>
+                    <button class="btn__see-policy" @click.stop="linkToPolicie()">查看政策</button>
                 </div>
             </div>
         </div>
@@ -40,12 +42,30 @@
             return {
                 msg: '科技计划项目申报',
                 type: 0,
-                isSelect: false
             }
         },
         methods: {
             switchDetail(type) {
                 this.type = type;
+            },
+
+            // 立即处理
+            dealWith() {
+                let url;
+                if (this.type == '0') {
+                    url = 'http://121.18.64.248:81/bdkjjh/index/index!index.do';
+                }
+                if (this.type == '1') {
+                    url = 'http://jhpt.hebstd.gov.cn:81/index/index!index.do';
+                }
+                window.open(url);
+            },
+
+            // 查看政策
+            linkToPolicie() {
+                this.$router.push({
+                    path: '/sciIndex/sciAndTechService/technologyServiceOrganization'
+                });
             }
         },
         mounted() {
@@ -140,8 +160,9 @@
                         border-radius: 5px;
                         border: none;
                         background-color: #00a0e9;
+                        cursor: pointer;
                     }
-                    .btn__see-policy{
+                    .btn__see-policy {
                         margin-left: 140px;
                     }
                 }

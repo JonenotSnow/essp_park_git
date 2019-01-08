@@ -34,6 +34,12 @@ const technologyServiceOrganization = () => import ('@/views/newparkHall/sciAndT
 const riskInvestment = () => import ('@/views/newparkHall/sciAndTechPolicy/sciAndTechService/riskInvestment/index').then(m => m.default)
 const angelInvestment = () => import ('@/views/newparkHall/sciAndTechPolicy/sciAndTechService/angelInvestment/index').then(m => m.default)
 
+/**
+ * 详情页面
+ */
+const detail = () => import ('@/views/newparkHall/sciAndTechPolicy/detail.vue').then(m => m.default)
+
+
 export default {
     path: '/',
     name: "parkHome",
@@ -105,6 +111,11 @@ export default {
                  * 科技服务---路由结束
                  */
             ]
+        },
+        {
+            path: "/sciIndex/sciAndTechPolicyDetail",
+            name: "park-sciAndTechPolicyDetail",
+            component: detail,
         }
     ]
 };

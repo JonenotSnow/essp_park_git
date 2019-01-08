@@ -20,7 +20,7 @@
                         <i class="el-icon-delete remove"></i>
                     </div>
                     <div class="listBottom">
-                        <img src="../../../assets//actlogo.png" alt="">
+                        <img src="@assets//actlogo.png" alt="">
                         <div class='display'>
                             <p class="title">成果名称</p>
                             <p class="content">这是关于成果的的介绍描述，这是关于成果的的介绍描述，
