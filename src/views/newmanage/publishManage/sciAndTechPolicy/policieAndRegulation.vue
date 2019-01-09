@@ -22,8 +22,15 @@
             </div>
         </div>
         <div class="policie-and-regulation-main">
-            <list-only-status :list="dataList" :type="type" v-if="status=='0' || status=='2'"/>
-            <list-no-status-and-classify :list="dataList" v-if="status=='1'"/>
+            <list-only-status
+                :list="dataList"
+                :type="status"
+                @childDeleted="childDeleted()"
+                @childSwitchStatus="childSwitchStatus()"
+                v-if="status=='0' || status=='2'"
+            />
+
+            <list-no-status-and-classify :list="dataList" :type="status" v-if="status=='1'"/>
         </div>
         <div class="pageList" v-if="dataList">
             <el-pagination
@@ -56,14 +63,46 @@
                 msg: '政策法规',
                 status: '0',                // 状态值
                 searchContent: '',          // 查询字段
-                type: 'sciAndTechPolicy',   //
 
                 // 返回的数据
-                total: 0,
-                dataList: [],
-                totalCount:0,
-                pageNum:1,
-                pageSize:5
+                dataList: [
+                    {
+                        id: '123456',                       // 政策id
+                        createTime: '1546928463894',        // 发布时间
+                        cstNm: '建行',                      // 发布机构
+                        policyTitle: '政策法规标题1',       // 标题
+                        userName: '行长',                   // 发布人
+                        status: '已发布',                   // 发布状态
+                        applyType: '01',                    // 政策01，或科技服务02
+                        classtType: "高企认定",              // 类型【服务类型】
+                        desc: '政策简介政策简介政策简介政策简介'
+                    },
+                    {
+                        id: '123456',                       // 政策id
+                        createTime: '1546928463894',        // 发布时间
+                        cstNm: '交行',                      // 发布机构
+                        policyTitle: '政策法规标题2',       // 标题
+                        userName: '行长',                   // 发布人
+                        status: '已审核',                   // 发布状态
+                        applyType: '01',                    // 政策01，或科技服务02
+                        classtType: "科小认定",              // 类型【服务类型】
+                        desc: '政策简介政策简介政策简介政策简介政策简介政策简介政策简介政策简介政策简介政策简介'
+                    },
+                    {
+                        id: '123456',                       // 政策id
+                        createTime: '1546928463894',        // 发布时间
+                        cstNm: '交行',                      // 发布机构
+                        policyTitle: '政策法规标题3',       // 标题
+                        userName: '行长',                   // 发布人
+                        status: '未审核',                   // 发布状态
+                        applyType: '01',                    // 政策01，或科技服务02
+                        classtType: "风险投资",              // 类型【服务类型】
+                        desc: '政策简介政策简介政策简介政策简介政策简介政策简介政策简介政策简介政策简介政策简介'
+                    }
+                ],
+                totalCount: 0,
+                pageNum: 1,
+                pageSize: 10
             }
         },
         methods: {
@@ -100,55 +139,36 @@
                 this.$post(" /policy/getAllPolicy", params).then(response => {
                     let codestatus = response.resultCode;
                     if (codestatus == "CLT000000000") {
-
-                        // 接通时用
-                        // let resultData = response.resultData;
-                        // this.total = resultData.total;
-                        // this.dataList = resultData.policyList;
-
-                        this.dataList = [
-                            {
-                                id: '123456',                       // 政策id
-                                createTime: '1546928463894',        // 发布时间
-                                cstNm: '建行',                      // 发布机构
-                                policyTitle: '政策法规标题1',       // 标题
-                                userName: '行长',                   // 发布人
-                                status: '已发布',                   // 发布状态
-                                applyType: '01',                    // 政策01，或科技服务02
-                                classtType: "高企认定"              // 类型【服务类型】
-                            },
-
-                            {
-                                id: '123456',                       // 政策id
-                                createTime: '1546928463894',        // 发布时间
-                                cstNm: '交行',                      // 发布机构
-                                policyTitle: '政策法规标题2',       // 标题
-                                userName: '行长',                   // 发布人
-                                status: '已审核',                   // 发布状态
-                                applyType: '01',                    // 政策01，或科技服务02
-                                classtType: "科小认定"              // 类型【服务类型】
-                            },
-
-                            {
-                                id: '123456',                       // 政策id
-                                createTime: '1546928463894',        // 发布时间
-                                cstNm: '交行',                      // 发布机构
-                                policyTitle: '政策法规标题3',       // 标题
-                                userName: '行长',                   // 发布人
-                                status: '未审核',                   // 发布状态
-                                applyType: '01',                    // 政策01，或科技服务02
-                                classtType: "风险投资"              // 类型【服务类型】
-                            }
-                        ]
-                        ;
-
+                        let resultData = response.resultData;
+                        this.totalCount = resultData.total;
+                        this.dataList = resultData.policyList;
                     } else {
                         this.$message.info(response.resultMsg);
                     }
                 }, err => {
                     this.$message.error("接口异常");
                 })
+            },
+
+            /**
+             * 子组件传递上来的事件------------开始
+             */
+            // 子组件执行删除事件后传递到父组件的事件
+            childDeleted() {
+                alert('childDeleted执行了~~~~');
+                // 重新获取数据
+                // this.getPolicieAndRegulation();
+            },
+
+            // 子组件里的状态切换事件
+            childSwitchStatus(status) {
+                alert('childSwitchStatus~~~~');
+                // 重新获取数据
+                // this.getPolicieAndRegulation();
             }
+            /**
+             * 子组件传递上来的事件------------结束
+             */
         },
         mounted() {
         }
@@ -275,11 +295,11 @@
 
         }
     }
-    
-.pageList{
-    width: 910px;
-    margin: 45px auto 57px;
-    text-align: right;
-    padding-bottom: 57px;
-}
+
+    .pageList {
+        width: 910px;
+        margin: 45px auto 57px;
+        text-align: right;
+        padding-bottom: 57px;
+    }
 </style>

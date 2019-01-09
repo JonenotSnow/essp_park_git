@@ -35,6 +35,8 @@ const publishAchievement = resolve => require(['@/views/newmanage/platformSetup/
 //园区管理-发布管理
 //科技政策列表
 const sciAndTechPolicy = resolve => require(['@/views/newmanage/publishManage/sciAndTechPolicy'], resolve);
+const sciAndTechPolicyReleaseDetail = resolve => require(['@/views/newmanage/publishManage/sciAndTechPolicy/detail'], resolve);
+
 //科技政策列表---政策法规
 const policieAndRegulation = resolve => require(['@/views/newmanage/publishManage/sciAndTechPolicy/policieAndRegulation'], resolve);
 //科技政策列表---科技服务
@@ -47,6 +49,7 @@ const sciAndTechPolicyAuditDetail = resolve => require(['@/views/newmanage/publi
 const platformAtivity = resolve => require(['@/views/newmanage/publishManage/platformAtivity'], resolve);
 //发布平台活动
 const publishPlatformAtivity = resolve => require(['@/views/newmanage/publishManage/platformAtivity/publishPlatformAtivity'], resolve);
+
 
 //园区管理-审核管理
 //入园审核列表
@@ -245,12 +248,17 @@ export default {
                         }
                     ]
                 },
+                {
+                    path: "/parkHall/manage/sciAndTechPolicy/publishDetail",
+                    name: "park-sciAndTechPolicyDetail",
+                    component: sciAndTechPolicyReleaseDetail,
+                },
                 //平台活动
                 {
                     path: "/parkHall/manage/platformAtivity",
                     name: "park-platformAtivity",
                     component: platformAtivity
-                    
+
                 },
                 //审核管理
                 {
@@ -273,16 +281,16 @@ export default {
                             path: "/parkHall/manage/sciAndTechPolicyAudit",
                             name: "park-policieAndRegulationAudit",
                             component: sciAndTechPolicyAudit
-                           
+
                         },
                         {
                             path: "/parkHall/manage/newsNoticeAudit",
-                            name:"park-newsNoticeAudit",
+                            name: "park-newsNoticeAudit",
                             component: newsNoticeAudit
                         }
                     ]
                 },
-                
+
                 //成员管理
                 {
                     path: "/parkHall/manage/userManage",

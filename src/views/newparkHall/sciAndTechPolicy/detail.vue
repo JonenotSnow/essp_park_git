@@ -33,7 +33,7 @@
                    v-for="(item, index) in satpDate.fileUrl"
                    :key="index"
                 >
-                    <a href="">·附件{{index+1}}：{{item.name}}</a>
+                    <a :href="item.url" download>·附件{{index+1}}：{{item.name}}</a>
                 </p>
             </div>
         </div>
@@ -198,6 +198,7 @@
                     a {
                         &:hover {
                             color: #00a0e9;
+                            cursor: pointer;
                         }
                     }
                 }
