@@ -35,17 +35,6 @@
                     </div>
                 </li>
             </ul> 
-            <div class="pageList">
-                <el-pagination
-                    @size-change="handleSizeChange"
-                    @current-change="handleCurrentChange"
-                    :current-page="pageNum"
-                    :page-sizes="[5, 10, 15, 20]"
-                    :page-size="pageSize"
-                    layout="total, sizes, prev, pager, next, jumper"
-                    :total="totalCount">
-                </el-pagination>
-            </div>
         </div>
         <div v-else class="noData">
             <span>尚未发布{{type}}，点击右上方发布按钮立即发布吧！</span>
@@ -68,20 +57,11 @@ export default {
   },
     data() {
         return {
-            totalCount:0,
-            pageNum:1,
-            pageSize:5
         }
     },
     created () {
     },
     methods: {
-        handleSizeChange(val) {
-            this.pageSize = val;
-        },
-        handleCurrentChange(val) {
-            this.pageNum = val;
-        }
     },
 }
 </script>
@@ -255,11 +235,5 @@ export default {
         letter-spacing: 0px;
         color: #666666;
     }
-}
-.pageList{
-    width: 910px;
-    margin: 45px auto 57px;
-    text-align: right;
-    padding-bottom: 57px;
 }
 </style>

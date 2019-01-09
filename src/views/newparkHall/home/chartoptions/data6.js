@@ -1,7 +1,8 @@
-export const firstData= {
-    // backgroundColor: '#FBFBFB',
+
+    export const data6 = {
+        // backgroundColor: '#FBFBFB',
         title: {
-            text: '研究与发展（R&D）人员数（万人）',
+            text: '技术合同登记额(亿)',
             textStyle:{
                 color:"#10b5ff",
                 fontWeight:'normal'
@@ -11,6 +12,7 @@ export const firstData= {
         tooltip : {
             trigger: 'axis'
         },
+        
         legend: {
             
         },
@@ -31,7 +33,8 @@ export const firstData= {
                 },
                 type : 'category',
                 boundaryGap : false,
-                data: ["2013","2014","2015","2016","2017"]
+                data: ["2013","2014","2015","2016","2017"],
+                
             }
         ],
         yAxis : [
@@ -46,13 +49,14 @@ export const firstData= {
             }
         ],
         series : [
+            
             {
                 name:'',
                 type:'line',
                 symbol:'none',
                 smooth: 0.2,
                 color:['#66AEDE'],
-                data:[1.9, 2.3, 2.2, 2.5, 2.2]
+                data:[6.3, 5.8, 7.1,9.3, 15.4]
             }
         ]
-};
+    }

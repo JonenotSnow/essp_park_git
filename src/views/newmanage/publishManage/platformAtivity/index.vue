@@ -26,6 +26,17 @@
             <list-only-status :list="dataList" :type="type" v-if="status=='0' || status=='2'"/>
             <list-no-status-and-classify :list="dataList" v-if="status=='1'"/>
         </div>
+        <div class="pageList" v-if="list.length>0">
+            <el-pagination
+                @size-change="handleSizeChange"
+                @current-change="handleCurrentChange"
+                :current-page="pageNum"
+                :page-sizes="[5, 10, 15, 20]"
+                :page-size="pageSize"
+                layout="total, sizes, prev, pager, next, jumper"
+                :total="totalCount">
+            </el-pagination>
+        </div>
     </div>
 </template>
 
@@ -42,7 +53,10 @@
                 status: '0',                // 状态值
                 searchContent: '',          // 查询字段
                 type: '0',   //
-                dataList: 2
+                dataList: 2,
+                totalCount:0,
+                pageNum:1,
+                pageSize:5
             }
         },
         created() {
@@ -52,6 +66,12 @@
 
         },
         methods: {
+            handleSizeChange(val) {
+                this.pageSize = val;
+            },
+            handleCurrentChange(val) {
+                this.pageNum = val;
+            },
             
             // 状态切换
             switchStatus(status) {

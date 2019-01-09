@@ -20,8 +20,8 @@
             </div>
         </div>
         <div class="policie-and-regulation-main">
-            <list-only-status :list="dataList" :type="type" v-if="status=='0' || status=='2'"/>
-            <list-no-status-and-classify :list="dataList" v-if="status=='1'"/>
+            <list-only-status :dataList="dataList" :type="type" v-if="status=='0' || status=='2'"/>
+            <list-no-status-and-classify :dataList="dataList" v-if="status=='1'"/>
         </div>
     </div>
 </template>

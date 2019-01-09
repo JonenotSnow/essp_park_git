@@ -343,9 +343,6 @@ export default {
     },
     async logout() {
       if (this.SSH.getItem("loginFlag")) {
-       
-        
-        
         this.loginShow = false;
         this.utils.logoutDelSSH();
         localStorage.clear();

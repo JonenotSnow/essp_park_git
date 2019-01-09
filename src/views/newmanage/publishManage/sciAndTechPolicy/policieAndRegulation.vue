@@ -25,6 +25,17 @@
             <list-only-status :list="dataList" :type="type" v-if="status=='0' || status=='2'"/>
             <list-no-status-and-classify :list="dataList" v-if="status=='1'"/>
         </div>
+        <div class="pageList" v-if="dataList">
+            <el-pagination
+                @size-change="handleSizeChange"
+                @current-change="handleCurrentChange"
+                :current-page="pageNum"
+                :page-sizes="[5, 10, 15, 20]"
+                :page-size="pageSize"
+                layout="total, sizes, prev, pager, next, jumper"
+                :total="totalCount">
+            </el-pagination>
+        </div>
     </div>
 </template>
 
@@ -49,10 +60,19 @@
 
                 // 返回的数据
                 total: 0,
-                dataList: []
+                dataList: [],
+                totalCount:0,
+                pageNum:1,
+                pageSize:5
             }
         },
         methods: {
+            handleSizeChange(val) {
+                this.pageSize = val;
+            },
+            handleCurrentChange(val) {
+                this.pageNum = val;
+            },
             // 状态切换
             switchStatus(status) {
                 this.status = status;
@@ -255,4 +275,11 @@
 
         }
     }
+    
+.pageList{
+    width: 910px;
+    margin: 45px auto 57px;
+    text-align: right;
+    padding-bottom: 57px;
+}
 </style>
