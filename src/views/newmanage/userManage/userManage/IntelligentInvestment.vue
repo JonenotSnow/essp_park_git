@@ -134,17 +134,17 @@ export default {
     },
     filters:{
         idType(value){
-            // let flag = false;
-            // let rzz = JSON.parse(window.localStorage.getItem('rzz'));
-            // for (let i = 0; i < rzz.length; i++) {
-            //     if (rzz[i].code == value) {
-            //         flag = true;
-            //         return rzz[i].name;
-            //     }
-            // }
-            // if(!flag){
-            //     return '其他行业';
-            // }
+            let flag = false;
+            let rzz = JSON.parse(window.localStorage.getItem('rzz'));
+            for (let i = 0; i < rzz.length; i++) {
+                if (rzz[i].code == value) {
+                    flag = true;
+                    return rzz[i].name;
+                }
+            }
+            if(!flag){
+                return '其他行业';
+            }
         }
     },
     methods: {

@@ -5,7 +5,7 @@
             <div class="wrap">
                 <p>
                     <i></i>
-                    邀请企业加入园区
+                    邀请企业加入中心
                     <i></i>
                 </p>
                 <div class="search">

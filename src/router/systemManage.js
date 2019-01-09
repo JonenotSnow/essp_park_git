@@ -12,8 +12,6 @@ const asideComRoot = resolve => require(['@/views/parkHall/asideComRoot/index'],
 //园区管理-关于我们
 //园区信息设置
 const baseInfo = resolve => require(['@/views/newmanage/platformSetup/aboutWe/baseInfo'], resolve);
-//模板选择
-const selectModule = resolve => require(['@/views/newmanage/platformSetup/aboutWe/selectModule'], resolve);
 //模板一
 const scanModelOne = resolve => require(['@/views/newmanage/platformSetup/aboutWe/scanModelOne'], resolve);
 //模板二
@@ -70,6 +68,10 @@ const publishAudit = resolve => require(['@/views/newmanage/auditManage/publishA
 const sciAndTechPolicyAudit = resolve => require(['@/views/newmanage/auditManage/publishAudit/sciAndTechPolicyAudit/index.vue'], resolve);
 //资讯新闻审核列表
 const newsNoticeAudit = resolve => require(['@/views/newmanage/auditManage/publishAudit/newsNoticeAudit/index.vue'], resolve);
+//发布审核详情
+const audit = resolve => require(['@/views/newmanage/auditManage/publishAudit/sciAndTechPolicyAudit/audit'], resolve);
+//发布审核历史详情
+const auditDetail = resolve => require(['@/views/newmanage/auditManage/publishAudit/sciAndTechPolicyAudit/auditDetail'], resolve);
 
 
 //园区管理-成员管理
@@ -84,6 +86,8 @@ const sendRequest = resolve => require(['@/views/newmanage/userManage/userManage
 
 //园区管理-需求管理
 const needManage = resolve => require(['@/views/newmanage/needManage/needManage'], resolve);
+//园区管理-需求管理详情
+const needManageDetail = resolve => require(['@/views/newmanage/needManage/needManage/needManageDetail'], resolve);
 
 export default {
     path: '/',
@@ -169,6 +173,22 @@ export default {
             component: publishPlatformAtivity
         },
         {
+            path: "/parkHall/manage/auditDetail",
+            name: "park-auditDetail",
+            component: auditDetail
+        },
+        {
+            path: "/parkHall/manage/audit",
+            name: "park-audit",
+            component: audit
+        },
+        {
+            path: "/parkHall/manage/needManageDetail",
+            name: "park-needManageDetail",
+            component: needManageDetail
+
+        },
+        {
             path: "/parkHall/manage/baseInfo",
             name: "park-manage",
             component: asideComRoot,
@@ -179,11 +199,6 @@ export default {
                     path: "/parkHall/manage/baseInfo",
                     name: "park-baseInfo",
                     component: baseInfo
-                },
-                {
-                    path: "/parkHall/manage/selectModule",
-                    name: "park-selectModule",
-                    component: selectModule
                 },
                 {
                     path: "/parkHall/manage/occupancyApplication",

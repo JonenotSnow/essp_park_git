@@ -13,6 +13,8 @@ export const guanliStyle = {
     "park-releaseAuditSet": "guanliStyle",//发布审核管理
     "park-expertTeam": "guanliStyle",//专家团队管理
     "park-sciAndTechPolicy": "guanliStyle",//科技政策
+    "park-policieAndRegulation": "guanliStyle",//科技政策
+    "park-sciAndTechService": "guanliStyle",//科技政策
     "park-needManage": "guanliStyle",//需求管理
     "park-publishAudit": "guanliStyle",//发布审核
     "park-activityPublishAudit": "guanliStyle",//平台活动发布审核
