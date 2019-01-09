@@ -17,5 +17,6 @@ export const guanliStyle = {
     "park-sciAndTechService": "guanliStyle",//科技政策
     "park-needManage": "guanliStyle",//需求管理
     "park-publishAudit": "guanliStyle",//发布审核
+    "park-platformAtivity":"guanliStyle",//平台活动
     "park-activityPublishAudit": "guanliStyle",//平台活动发布审核
 }
