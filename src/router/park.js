@@ -183,6 +183,8 @@ const expertDetail = resolve => require(['@/views/newparkHall/experteam/expertTe
 const needHall =  resolve => require(['@/views/parkHall/needHall/index.vue'], resolve);// 园区-需求大厅
 // 普惠金融
 const inclusiveFinance =  resolve => require(['@/views/parkHall/manage/inclusiveFinance'], resolve);// 普惠金融
+// 入驻企业
+const allEnterpriseList =  resolve => require(['@/views/parkHall/manage/allEnterpriseList'], resolve);// 入驻企业
 // 需求大厅
 const newIndex =  resolve => require(['@/views/parkHall/needHall/newIndex.vue'], resolve);// 园区-需求大厅
 // 保定园区发布需求界面
@@ -220,6 +222,12 @@ export const parkRouter1 = {
             path: '/parkHall/manage/inclusiveFinance',
             name: "park-inclusiveFinance",
             component: inclusiveFinance,
+            
+        },
+        {
+            path: '/parkHall/manage/allEnterpriseList',
+            name: "park-allEnterpriseList",
+            component: allEnterpriseList,
             
         },
         {

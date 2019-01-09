@@ -10,14 +10,15 @@
             <li>
                 <span class="require">*</span>
                 <span class="title">专家姓名：</span>
-                <input type="text" placeholder="请输入专家姓名">
+                <input type="text" placeholder="请输入专家姓名" v-model="submitUploadInfo.name">
             </li>
             <li>
                 <span class="require">*</span>
                 <span class="title">专家职称：</span>
-                <select placeholder="请输入专家职称">
+                <!-- <select placeholder="请输入专家职称">
                     <option :value="item.id" :label="item.name" v-for="(item,index) in searchList" :key="index">{{item.name}}</option>
-                </select>
+                </select> -->
+                <input type="text" placeholder="请输入专家职称" v-model="submitUploadInfo.title">
             </li>
             <li class="pic">
                 <span class="require">*</span>
@@ -35,18 +36,18 @@
             <li>
                 <span class="require">*</span>
                 <span class="title">联系电话：</span>
-                <input type="text" placeholder="请输入联系电话">
+                <input type="text" placeholder="请输入联系电话" v-model="submitUploadInfo.phone">
             </li>
             
             <li>
                 <span class="require">*</span>
                 <span class="title">联系邮箱：</span>
-                <input type="text" placeholder="请输入联系邮箱">
+                <input type="text" placeholder="请输入联系邮箱" v-model="submitUploadInfo.email">
             </li>
             <li class="resume">
                 <span class="require">*</span>
                 <span class="title">专家简介：</span>
-                <textarea placeholder="请输入专家简介"></textarea>
+                <textarea placeholder="请输入专家简介" v-model="submitUploadInfo.introduction"></textarea>
                 <div class="moduleContent"  @click="getCurType('content')" v-for="(it,moudelIndex) in 2" :key="moudelIndex">
                     <div class="title">
                         <input type="text" :placeholder="`请输入模块${moudelIndex+1}标题`" v-model="it.title">
@@ -86,7 +87,7 @@
             </li>
         </ul>
         <p class="save">
-            <span>保存上传</span>
+            <span @click="saveExpertInfo">保存上传</span>
         </p>
     </div>
 </template>
@@ -95,32 +96,65 @@
 import EsspBreadCrumb from "@/components/EsspBreadCrumb";
 export default {
     components: {
-        EsspBreadCrumb
+      EsspBreadCrumb
     },
     data() {
-        return {
-            breadlist: [
-                {
-                    path: "/parkHome",
-                    name: "系统管理"
-                },
-                {
-                    path: "",
-                    name: "专家团队"
-                },
-                {
-                    path: "",
-                    name: "发布专家团队"
-                }
-            ],
-            moduleList:[],
-            moudelIndex:0
-        }
+      return {
+        submitUploadInfo: {
+          id:'' ,
+          name: '',
+          title: '',
+          photo:'',
+          phone:'',
+          email:'',
+          introduction:'',
+          moduleData:'',
+          parkId:localStorage.parkId
+        },
+        breadlist: [
+          {
+            path: "/parkHome",
+            name: "系统管理"
+          },
+          {
+            path: "",
+            name: "专家团队"
+          },
+          {
+            path: "",
+            name: "发布专家团队"
+          }
+        ],
+        moduleList:[],
+        moudelIndex:0
+      }
     },
     created() {
         
     },
     methods: {
+        saveExpertInfo(){
+          this.$post('/expert/saveExpert ', {
+            id:this.submitUploadInfo.id,
+            name: this.submitUploadInfo.name,
+            title:this.submitUploadInfo.title ,
+            photo:this.submitUploadInfo.photo,
+            phone:this.submitUploadInfo.phone,
+            email:this.submitUploadInfo.email,
+            introduction:this.submitUploadInfo.introduction,
+            moduleData:this.submitUploadInfo.moduleData,
+            parkId:this.submitUploadInfo.parkId
+          }).then(      
+            response => {
+              if (response.resultCode == "CLT000000000") {
+                        
+              }
+            },
+            response => {
+              this.$message.error(response.resultMsg);
+            }
+          );
+        },
         //图片上传
         beforeUpload(file) {
             const isJPG = file.type === "image/jpeg" || file.type === "image/png"  || file.type === "image/gif";
