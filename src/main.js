@@ -104,7 +104,6 @@ router.beforeEach(async (to, from, next) => {
         await selectResMenu({ oneId, LoginUserRol });
         // router.push(to.path)
     } else if (!menuList && to.path !== "/parkList") {
-        // 没有菜单时，获取
 
         // 当路径中有parkId说明是别的地方直跳园区项目
         if (isUrlHasBd) {

@@ -185,6 +185,10 @@
 
                         let loginMenuResource = this.SSH.getItem("loginMenuResource");
                         let initMenuResource = this.SSH.getItem("initMenuResource");
+                        let tmpRes=response.resultData
+                        if(tmpRes&& tmpRes.menuList && tmpRes.menuList[0] && tmpRes.menuList[0].children ){
+                            this.SSH.setItem("menuList",tmpRes.menuList[0]);
+                        }
                         let menuList = this.SSH.getItem("menuList");
                         let loginFlag = this.SSH.getItem("loginFlag");
                         let curUserAllParkPower = {};
@@ -193,16 +197,13 @@
                         }else{
                             curUserAllParkPower = Object.assign({},initMenuResource,parkInitPower)
                         }
-                        menuList.forEach(el => {
-                            if (el.name == 'parkList' && response.resultData.menuList.length>0 && response.resultData.menuList[0].children) {
-                                el.children = response.resultData.menuList[0].children;
-                            }else{
-                                console.log('没有获取到权限资源');
-                            }
-                        });
-                        this.SSH.delItem("menuList");
-                        this.SSH.setItem("menuList",menuList);
-                        this.SSH.delItem("menuResource");
+                        // menuList.forEach(el => {
+                        //     if (el.name == 'parkList' && response.resultData.menuList.length>0 && response.resultData.menuList[0].children) {
+                        //         el.children = response.resultData.menuList[0].children;
+                        //     }else{
+                        //         console.log('没有获取到权限资源');
+                        //     }
+                        // });
                         this.SSH.setItem("menuResource",curUserAllParkPower);
 
                         console.log(this.curIs)
@@ -229,11 +230,14 @@
                         }
                         this.parkNm = item.parkNm;
                         this.SSH.delItem('oldParkId')
-                        localStorage.setItem("parkId", item.parkId);
-                        sessionStorage.setItem("parkId", item.parkId);
-                        localStorage.setItem("parkName", this.parkNm);
+                        ///01/09隐藏 请勿增加local维护字段 
+                        // localStorage.setItem("parkId", item.parkId);
                         this.SSH.setItem("parkId", item.parkId);
-                        this.SSH.setItem("parkFlag", item.bdParkId);
+                        //01/09 不要用local维护麻烦，谢谢
+                        this.SSH.setItem("parkName", this.parkNm);
+                        this.SSH.setItem("parkId", item.parkId);
+                        //请勿用parkFLag增加多余字段去维护
+                        this.SSH.setItem("bdParkId", item.bdParkId);
 
                         this.SSH.setItem("LoginUserRol",this.LoginUserRol);
                         this.getPower(this.parkId);
@@ -267,12 +271,10 @@
                         this.parkId = item.parkId;
                         this.parkNm = item.parkNm;
                         this.SSH.setItem("LoginUserRol",this.LoginUserRol);
-                        localStorage.setItem("parkId", item.parkId);
-                        sessionStorage.setItem("parkId", item.parkId);
-                        localStorage.setItem("parkName", this.parkNm);
                         this.SSH.setItem("parkId", item.parkId);
-                        this.SSH.setItem("parkFlag", item.bdParkId);
-                        this.getPower();
+                        this.SSH.setItem("parkName", this.parkNm);
+                        this.SSH.setItem("bdParkId", item.bdParkId);
+                        this.getPower(item.parkId);
                     }, (err) => {})
             },
             getCcbUser() {
