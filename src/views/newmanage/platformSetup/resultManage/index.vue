@@ -32,7 +32,7 @@ import listOwnImg from './../../components/listOwnImg'
      return {
       publishTitle:'立即发布',
       type:'成果管理',
-      list:[],
+      list:5,
       totalCount:0,
       pageNum:1,
       pageSize:5

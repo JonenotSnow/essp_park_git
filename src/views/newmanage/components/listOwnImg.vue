@@ -1,9 +1,10 @@
 <template>
     <div>
         <!-- 列表没有状态和类型 -->
-        <div v-if="list.length>0">
+        <div v-if="list">
             <div class="selectTitle">
-                <span class="all"><i class="el-icon-circle-plus"></i>全选</span>
+                <!-- <span class="all"><i class="el-icon-circle-plus"></i>全选</span> -->
+                <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox>
                 共
                 <span class="total">4</span>
                 条，已选
@@ -14,7 +15,9 @@
             <ul class="listWrap">
                 <li class="list" v-for="item in list" :key="item">
                     <div class="ListTop">
-                        <i class="el-icon-circle-plus"></i>
+                        <el-checkbox-group v-model="checkedCities" @change="handleCheckedCitiesChange">
+                            <el-checkbox :label="item"></el-checkbox>
+                        </el-checkbox-group>
                         <span class="time">保存时间：2018-10-22  10：24：00</span>
                         <span class="create">发布人：孔乙己</span>
                         <i class="el-icon-delete remove"></i>
@@ -44,6 +47,8 @@
 </template>
 
 <script>
+
+  const cityOptions = ['上海', '北京', '广州', '深圳'];
 export default {
   props: {
       type: {
@@ -57,11 +62,24 @@ export default {
   },
     data() {
         return {
+            checkAll: false,
+            checkedCities: ['上海', '北京'],
+            cities: cityOptions,
+            isIndeterminate: true
         }
     },
     created () {
     },
     methods: {
+        handleCheckAllChange(val) {
+            this.checkedCities = val ? cityOptions : [];
+            this.isIndeterminate = false;
+        },
+        handleCheckedCitiesChange(value) {
+            let checkedCount = value.length;
+            this.checkAll = checkedCount === this.cities.length;
+            this.isIndeterminate = checkedCount > 0 && checkedCount < this.cities.length;
+        }
     },
 }
 </script>
