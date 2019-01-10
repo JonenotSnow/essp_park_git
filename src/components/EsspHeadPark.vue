@@ -278,20 +278,20 @@ export default {
       this.windowHrefUrl('userIndex/login')
     },
     toRegister() {
-      this.$router.push("/userIndex/register");
+      this.windowHrefUrl('userIndex/register')
     },
     toPersonalCenter() {
-      this.$router.push("/personalCenter");
+      this.windowHrefUrl('/personalCenter')
     },
     toMessageCenter() {
       this.new_msg = false;
-      this.$router.push("/messageCenter");
+      this.windowHrefUrl('/messageCenter')
     },
     toCustomerService() {
-      this.$router.push("/helpCenter");
+      this.windowHrefUrl('/helpCenter')
     },
     toHelpCenter() {
-      this.$router.push("/aboutUs/aboutState");
+      this.windowHrefUrl('/aboutUs/aboutState')
     },
     isLogin() {
       let data = this.SSH.getItem("userInfo");
