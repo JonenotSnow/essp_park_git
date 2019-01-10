@@ -39,7 +39,7 @@
                 lodingMsg: "数据正在加载中",
                 msg: "成果展示",
                 total: 0,
-                parkId: localStorage.getItem("parkId") || "",
+                parkId: this.SSH.getItem("parkId") || "",
                 achievList: [
                     // {
                     //     createId: "1000180014",

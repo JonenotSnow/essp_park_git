@@ -115,8 +115,8 @@ export default {
   components: { EsspEditor, dialogAdd },
   data() {
     return {
-      parkId: sessionStorage.getItem("parkId") || "",
-      userInfo: localStorage.getItem("userInfo") || {},
+      parkId:  this.SSH.getItem("parkId") || "",
+      userInfo:  this.SSH.getItem("userInfo") || {},
       notab: this.$route.name == "park-view-innovation" ? true : false,
       activeName: "first",
       updateFlag: false,

@@ -112,7 +112,7 @@ export default {
             this.$post(this.$apiUrl.manage.inviteMember, {
                 cstId: this.$route.query.cstId,
                 parkId: sessionStorage.getItem("parkId"),
-                parkName: localStorage.getItem("parkName"),
+                parkName: this.SSH.getItem("parkName"),
                 mark:this.content
             }).then(response => {
                 if (response.resultCode == "CLT000000000") {

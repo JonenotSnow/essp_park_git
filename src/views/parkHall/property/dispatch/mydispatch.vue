@@ -179,7 +179,7 @@ export default {
   data() {
     return {
       parkId: sessionStorage.getItem("parkId") || "",
-      userInfo: JSON.parse(localStorage.getItem("userInfo") || '{}'),
+      userInfo: this.SSH.getItem("userInfo") || '{}',
       updateFlag:false,
       newCompaint: {},
       fileList: [],

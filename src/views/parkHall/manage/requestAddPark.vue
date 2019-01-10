@@ -131,7 +131,7 @@
                 rzz: [],
                 submitData: [],
                 access: false,
-                curCstId: JSON.parse(localStorage.getItem("ctData")).cstId,
+                curCstId: this.SSH.getItem("userInfo") && this.SSH.getItem("userInfo").cstId,
                 accessT: false,
                 adr: '',
                 bdFlag : this.SSH.getItem("bdFlag"),

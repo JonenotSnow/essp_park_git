@@ -109,7 +109,7 @@ export default {
           email:'',
           introduction:'',
           moduleData:'',
-          parkId:localStorage.parkId
+          parkId: this.SSH.getItem("parkId")
         },
         breadlist: [
           {
