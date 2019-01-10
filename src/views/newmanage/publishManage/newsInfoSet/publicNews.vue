@@ -20,8 +20,7 @@
             </div>
         </div>
         <div class="policie-and-regulation-main">
-            <list-only-status :dataList="dataList" :allTotal="allTotal" :status="status" v-if="status.includes('0','2')"/>
-            <list-no-status-and-classify :dataList="dataList" :status="status" :allTotal="allTotal" v-if="status.includes('1')"/>
+            <oneCardModel :list="list" :customopts={status,temeTit,allTotal}></oneCardModel>
         </div>
         <div class="pageList">
             <el-pagination
@@ -39,19 +38,18 @@
 
 <script>
 
-    import listOnlyStatus from './common/listOnlyStatus';
-    import listNoStatusAndClassify from './common/listNoStatusAndClassify';
+    import oneCardModel from "./common/oneCardModel"
 
     export default {
         name: 'policie-and-regulation',
         props: {},
         components: {
-            listOnlyStatus,
-            listNoStatusAndClassify
+            oneCardModel
         },
         data() {
             return {
                 msg: '新闻发布',
+                temeTit:"新闻动态",
                 currentTime:[],
                 parkId:sessionStorage.getItem("parkId")||"",
                 pageRanges: [5, 10, 20],//默认每页10条数区间
@@ -60,7 +58,7 @@
                 allTotal: 0,//总条数
                 status: this.$route.query.status||'1',                // 状态值
                 searchContent: '',          // 查询字段
-                dataList: [],
+                list: [{id:"00001",title:"我的"},{id:"00002",title:"你的"}],
                 itemsouces:[
                     {
                     fnName:"已发布",
@@ -80,7 +78,7 @@
             }
         },
         created(){
-          this.getPublicedNews();
+        //   this.getPublicedNews();
         },
         methods: {
              getPublicedNews(){
@@ -95,7 +93,7 @@
                   status:this.status
                 }
                 this.$post(url,pop).then(res=>{
-                  this.dataList = res.resultData.informationList;
+                  this.list = res.resultData.informationList;
                   this.allTotal = res.resultData.total;
                 },err=>{
                   console.log(err)
