@@ -175,8 +175,8 @@
                 this.$post(this.$apiUrl.home.selectResMenu, {
                         'sysType':"park",
                         'sysBsnAttr':parkId,
-                        'postIdList':this.LoginUserRol
-                        // 'postIdList':['31']
+                        // 'postIdList':this.LoginUserRol
+                        'postIdList':['32']
 					})
 					.then((response) => {
                         let parkInitPower = response.resultData.routerResMap;
@@ -207,11 +207,11 @@
                         this.SSH.setItem("menuResource",curUserAllParkPower);
 
                         console.log(this.curIs)
-                        if(this.curIs){
-                            this.$router.push('/parkHall/manage/requestAddPark')
-                        }else{
-                            this.$router.push("/parkHome");
-                        }
+                        // if(this.curIs){
+                        //     this.$router.push('/parkHall/manage/requestAddPark')
+                        // }else{
+                        //     this.$router.push("/parkHome");
+                        // }
 
                     }, (err) => {})
             },

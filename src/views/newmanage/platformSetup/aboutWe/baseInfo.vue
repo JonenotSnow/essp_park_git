@@ -48,7 +48,7 @@ export default {
         }
     },
     created() {
-        this.getParkById(id);
+        this.getParkById();
     },
     methods: {
         //获取当前步骤
