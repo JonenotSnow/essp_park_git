@@ -168,6 +168,17 @@ export default {
         
     },
     methods: {
+        beforeSaveExpertInfo(){
+            let flag = true;
+            if(!/^1[345678]\d{9}$/.test(this.submitUploadInfo.photo)){
+                flag = false;
+            }
+
+            if(this.submitUploadInfo.name.length === 0 || this.submitUploadInfo.title.length ){
+                flag = false;
+            }
+            
+        },
         saveExpertInfo(){
           this.$post('/expert/saveExpert ', {
             id:this.submitUploadInfo.id,
