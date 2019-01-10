@@ -1,5 +1,6 @@
 import {common} from './api/common'
 import {active} from './api/active/active'
+import {achievement} from './api/achievement/achievement'  // 成果管理
 import {goverBene} from './api/goverBene/goverBene'
 import {index} from './api/index'
 import {user} from './api/user/user'
@@ -40,6 +41,7 @@ export const apiUrl = {
     common,
     index,
     active,
+    achievement,
     goverBene,
     user,
     rqmList,
