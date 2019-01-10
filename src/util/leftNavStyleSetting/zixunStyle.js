@@ -5,4 +5,6 @@ export const zixunStyle = {
     "park-allnotice": "zixunStyle",//全部通知公告
     "park-publicNotice": "zixunStyle",//通知公告管理
     "park-publicNews": "zixunStyle",//新闻管理
+    
+    "park-active":"zixunStyle",//全部活动
 }

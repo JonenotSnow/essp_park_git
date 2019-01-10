@@ -308,77 +308,8 @@ export const menuListData = {
                 }
                 ]
             }]
-        }, {
-            "id": "0415",
-            "menu": "平台活动",
-            "name": "park-active",
-            "parentId": "04",
-            "ismenu": "1",
-            "isshow": "1",
-            "loginflag": "0",
-            "cetificateflag": "0",
-            "enterpriseflag": "0",
-            "authorityflag": "1",
-            "isclick": "1",
-            "message": "园区功能正在内测中，敬请期待!",
-            "children": [{
-                "id": "04150000",
-                "menu": "全部活动",
-                "name": "park-allActive",
-                "parentId": "0415",
-                "ismenu": "1",
-                "isshow": "1",
-                "loginflag": "0",
-                "cetificateflag": "0",
-                "enterpriseflag": "0",
-                "authorityflag": "1",
-                "isclick": "1",
-                "message": "园区功能正在内测中，敬请期待!",
-                "children": []
-            }, {
-                "id": "04150001",
-                "menu": "我报名的活动",
-                "name": "park-enrollActive",
-                "parentId": "0415",
-                "ismenu": "1",
-                "isshow": "1",
-                "loginflag": "1",
-                "cetificateflag": "1",
-                "enterpriseflag": "1",
-                "authorityflag": "1",
-                "isclick": "1",
-                "message": "园区功能正在内测中，敬请期待!",
-                "children": []
-            }, {
-                "id": "04150002",
-                "menu": "我发起的活动",
-                "name": "park-launchActive",
-                "parentId": "0415",
-                "ismenu": "1",
-                "isshow": "1",
-                "loginflag": "1",
-                "cetificateflag": "1",
-                "enterpriseflag": "1",
-                "authorityflag": "1",
-                "isclick": "1",
-                "message": "园区功能正在内测中，敬请期待!",
-                "children": []
-            }, {
-                "id": "04150003",
-                "menu": "我关注的活动",
-                "name": "park-followActive",
-                "parentId": "0415",
-                "ismenu": "1",
-                "isshow": "1",
-                "loginflag": "1",
-                "cetificateflag": "1",
-                "enterpriseflag": "1",
-                "authorityflag": "1",
-                "isclick": "1",
-                "message": "园区功能正在内测中，敬请期待!",
-                "children": []
-            }]
-        }, {
+        },
+         {
             "id": "0416",
             "menu": "系统管理",
             "name": "park-manage",

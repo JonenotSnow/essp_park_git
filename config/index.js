@@ -24,8 +24,6 @@ module.exports = {
                 // target: 'https://want.ccb.com',
                 // target: 'http://128.196.221.144:8082',
                 target: 'http://128.196.235.131:1345', //测试
-
-
                 pathRewrite: {
                     '^/api': '/'
                     // 与后端进行数据交互的格式：/api/ + 接口路径

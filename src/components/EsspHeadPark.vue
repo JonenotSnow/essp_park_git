@@ -50,7 +50,7 @@
              :class="searchBarFixed == true ? 'isFixed' :''">
           <div class="auto padding esspclearfix">
             <div class="logocon" >
-              <img 
+              <img
                    :src="isBdPark?logoUrl:logoUrl1"
                    alt=""
                    :class="isBdPark?'bdlogo':''" @click="tolink();">
@@ -58,7 +58,7 @@
 
             <div class="header_nav">
 
-              <EsspNav 
+              <EsspNav
                        :routerType="routerTypeNum" ></EsspNav>
             </div>
 
@@ -91,7 +91,7 @@
         </div>
       </div>
     </div>
-    
+
     </div>
 </template>
 <script>
@@ -132,7 +132,7 @@ export default {
       msgNum: 0,
       isNum: true,
       isuplevel: false,
-      isBdPark: this.utils.isBdPark(),
+      isBdPark: this.utils.isBdPark() || "",
       logoUrl:require('@/assets/newparkimg/home/logo.png'),
       logoUrl1:require('@/assets/essp_logo.png')
     };
@@ -145,7 +145,7 @@ export default {
   },
   created() {
     let vm = this;
-    
+
     // alert("正版的isBdPark"+this.isBdPark);
     this.isLogin();
     this.getNewMsg();

@@ -1,6 +1,6 @@
 <!--<script src="../../../video_admin/config/index.js"></script>-->
 <template>
-    <quill-editor ref="myTextEditor"  @keyup.tabprevent="onEditorTab" v-model="editorCont" @blur="onEditorBlur($event)" @change="onEditorChange($event)" :options="editorOption">
+    <quill-editor ref="myTextEditor" style="height: 400px;"  @keyup.tabprevent="onEditorTab" v-model="editorCont" @blur="onEditorBlur($event)" @change="onEditorChange($event)" :options="editorOption">
         <div id="toolbar" slot="toolbar">
          </div>
     </quill-editor>
