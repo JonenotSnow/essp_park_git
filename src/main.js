@@ -55,6 +55,11 @@ Vue.prototype.utils = utils;
 Vue.prototype.constants = constants;
 Vue.prototype.$echarts = echarts; // 图表库
 
+import Moment from "moment";
+Vue.filter("timerFormat", function(value){
+    return Moment(value).format("YYYY-MM-DD HH:mm");
+})
+
 // Vue.prototype.$uploadCommom = uploadCommom;
 let openUlr = "http://128.196.235.131:1345/essp_vue1/#";
 console.log(process.env.NODE_ENV);
@@ -79,11 +84,11 @@ let oneId = "";
 router.beforeEach(async (to, from, next) => {
     // 获取当前园区的权限
     // 没有token的时候，直接假数据
-    // if (!to.token) {
-    //     var mockdata = menuListData.menuList[0];
-    //     sessionStorage.setItem("menuList", JSON.stringify(mockdata));
-    //     next();
-    // }
+    if (!to.token) {
+        var mockdata = menuListData.menuList[0];
+        sessionStorage.setItem("menuList", JSON.stringify(mockdata));
+        next();
+    }
 
     // let query  = getQueryObjuect()
     let menuList = sessionStorageHandler.getItem("menuList");

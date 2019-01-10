@@ -1,8 +1,10 @@
 <template>
     <div class="achievementSetHead">
         <!--  成果管理已发布 -->
-        <achievementSetHead :type=type :publishTitle="publishTitle"></achievementSetHead>
-        <achievementSetCondition v-if="list.length>0"></achievementSetCondition>
+        <!--头部-->
+        <achievementSetHead :type="componentType" :publishTitle="publishTitle"></achievementSetHead>
+        <!--列表-->
+        <!--<achievementSetCondition v-if="list.length>0" :componentTit="componentTit"></achievementSetCondition>-->
         <div class="seach_items esspclearfix">
             <div class="seach_item">
                 <span>成果名称:</span>
@@ -40,7 +42,7 @@
                 </el-input>
             </div>
         </div>
-        <listOwnImg :list='list' :type=type></listOwnImg>
+        <listOwnImg :list='list' :componentType="componentType"></listOwnImg>
         <div class="pageList">
             <el-pagination
                 @size-change="handleSizeChange"
@@ -57,13 +59,13 @@
 
 <script>
     import achievementSetHead from '@/views/newmanage/components/common/head'
-    import achievementSetCondition from '@/views/newmanage/components/common/condition'
+//    import achievementSetCondition from '@/views/newmanage/components/common/condition'
     import listOwnImg from '@/views/newmanage/components/listOwnImg'
 
     export default {
         components: {
             achievementSetHead,
-            achievementSetCondition,
+//            achievementSetCondition,
             listOwnImg
         },
         data() {
@@ -78,11 +80,12 @@
                     unit:'',        // 所属单位
                 },
                 publishTitle: '立即发布',
-                type: '成果管理',
+                componentTit: '成果管理',
+                componentType: 'achievement',
                 list: 5,
                 totalCount: 0,
                 pageNum: 1,
-                pageSize: 5,
+                pageSize: 10,
                 searchList: [
                     {
                         id: '0',
@@ -116,10 +119,32 @@
             }
         },
         created() {
-
+            this.getAllAchiev();
         },
         computed: {},
         methods: {
+            // 获取成果列表
+            getAllAchiev(){
+                this.$post(this.$apiUrl.achievement.getAllAchiev, {
+                    pageNum:this.pageNum,   // 页码
+                    pageSize: this.pageSize,    // 每页显示数量
+                    name: this.form.name, // 成果标题
+                    field: this.form.field,  // 所属领域
+                    photo: this.form.photo,   // 上传图片
+                    title: this.form.title,  // 简介
+                    detail: this.form.detail, //编辑器内容
+                    inventor: this.form.inventor,   //发明人
+                    unit:this.form.unit        // 所属单位
+                }).then(
+                    response => {
+                        console.log(response);
+                        this.list = response.resultData.achievList;
+                    },
+                    err => {
+                        this.$message.error(err.resultMsg);
+                    }
+                );
+            },
             handleSizeChange(val) {
                 this.pageSize = val;
             },
