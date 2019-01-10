@@ -25,11 +25,11 @@
                         <div class="contentTitle">
                             {{item.informationTitle}}
                         </div>
-                        <div class='editorBtn2' v-if="type == 2">
+                        <div class='editorBtn2' v-if="status == 2">
                             <span>查看</span>
                             <span>编辑</span>
                         </div>
-                        <div class='editorBtn1' v-if="type == 0">
+                        <div class='editorBtn1' v-if="status == 0">
                             <span>编辑</span>
                         </div>
                     </div>
@@ -55,6 +55,10 @@
                 //返回总条数
                 type: Number,
                 default: 0
+            },
+            status:{
+                //返回判断模块类型
+                type: String
             }
             
         },

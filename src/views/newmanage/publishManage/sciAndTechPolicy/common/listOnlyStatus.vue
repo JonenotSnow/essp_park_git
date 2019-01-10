@@ -1,36 +1,53 @@
 <template>
     <div>
         <!-- 列表只有类型-->
-        <div  v-if="list.length>0">
+        <div v-if="list.length>0">
             <div class="selectTitle">
-                <span class="all"><i class="el-icon-circle-plus"></i>全选</span>
-                共<span class="total">4</span>条，已选<span class="total">1</span>条
-                <span class="removeBtn">删除</span>
+                <span class="all">
+                    <el-checkbox
+                        :indeterminate="isIndeterminate"
+                        v-model="selectAll"
+                        @change="handleSelectAll"
+                    >全选</el-checkbox>
+                </span>
+                共<span class="total">{{list.length}}</span>条，
+                已选<span class="total">{{selectedCount}}</span>条
+                <span class="removeBtn" @click.stop="showDialog()">删除</span>
                 <span class="selectStatus">状态：
-                    <select>
-                        <option value=""></option>
+
+                    <select v-model="status" v-if="type == 0" @change="switchStatus()">
+                        <option value="">全部</option>
+                        <option value="12">审核不通过</option>
+                        <option value="13">待审核</option>
+                        <option value="02">发布中</option>
+                    </select>
+
+                    <select v-model="status" v-if="type == 2" @change="switchStatus()">
+                        <option value="">全部</option>
+                        <option value="12">审核不通过</option>
+                        <option value="02">审核通过</option>
                     </select>
                 </span>
             </div>
             <ul class="listWrap">
-                <li class="list" v-for="item in list" :key="item">
+                <li class="list" v-for="(item, index) in list" :key="index">
                     <div class="ListTop">
-                        <i class="el-icon-circle-plus"></i>
-                        <span class="time">保存时间：2018-10-22  10：24：00</span>
-                        <span class="create">发布人：孔乙己</span>
-                        <span class="classifyC">状态：<span>状态值</span></span>
-                        <i class="el-icon-delete remove"></i>
+                        <el-checkbox name="selectOne" :checked="checkedStatus" @change="selectOrUnSelect(item.id)"/>
+                        <span class="time">保存时间：{{item.createTime}}</span>
+                        <span class="create">发布人：{{item.userName}}</span>
+                        <span class="classifyC">状态：<span>{{item.status}}</span></span>
+                        <i class="el-icon-delete remove" @click="showDialog(item.id)"></i>
                     </div>
                     <div class="listBottom">
                         <div class="contentTitle">
-                            保定市科技服务机构备案名单保定市科技服务机构备案名单保定市科技服务机构备案名单保定市科技服务机构备案名单保定市科技服务机构备案名单保定市科技服务机构备案名单保定市科技服务机构备案名单保定市科技服务机构备案名单保定市科技服务机构备案名单保定市科技服务机构备案名单保定市科技服务机构备案名单
+                            {{item.policyTitle}}
                         </div>
                         <div class='editorBtn2' v-if="type == 2">
-                            <span>查看</span>
-                            <span>编辑</span>
+                            <span @click.stop="linkToDetail(item.id)">查看</span>
+                            <span @click.stop="linkToPublish(item.id)">编辑</span>
                         </div>
                         <div class='editorBtn1' v-if="type == 0">
-                            <span>编辑</span>
+                            <span @click.stop="linkToPublish(item.id)">编辑</span>
                         </div>
                     </div>
                 </li>
@@ -40,6 +57,24 @@
             <span>尚未发布成果，点击右上方发布按钮立即发布吧！</span>
             <img src="@assets/newparkimg/newmanage/achievementSet/no_list.png" alt="">
         </div>
+
+        <!-- 删除事件对话框start -->
+        <el-dialog
+            class="quguanbox"
+            title="提示"
+            :visible.sync="dialogVisible"
+            width="30%"
+            :before-close="handleClose"
+        >
+            <div>
+                <i class="icon iconfont icon-tishi"></i><span class="quguan">是否删除该信息</span>
+            </div>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="dialogVisible = false">取 消</el-button>
+                <el-button type="primary" @click="dealWithDelete">确 认</el-button>
+            </span>
+        </el-dialog>
+        <!-- 删除事件对话框end -->
     </div>
 </template>
 
@@ -52,16 +87,114 @@
             },
             type: {
                 type: String,
-                default: ''
+                default: '0'
             }
         },
         data() {
             return {
+                selectedCount: 15,      // 已选择条数
+                status: '',             // 状态
+
+                // 删除事件相关字段
+                dialogVisible: false,
+                deleteId: '',
+                allSelectDelete: [],
+
+                // 选中事件相关字段
+                checkedStatus: false,
+                selectAll: [],
+                isIndeterminate: true
             }
         },
         created() {
         },
         methods: {
+
+            /**
+             *  状态切换事件
+             * */
+            switchStatus() {
+                this.$emit('childSwitchStatus', this.status);
+            },
+
+            /**
+             * 删除操作相关事件---开始
+             * @param followId
+             * @param index
+             */
+            // 弹窗
+            showDialog(deleteId) {
+
+                this.dialogVisible = true;
+
+                // 删除单个
+                if (deleteId) {
+                    this.deleteId = deleteId;
+                    return false;
+                }
+
+                // 全部删除
+                let allSelectDelete = this.allSelectDelete.join(',');
+                this.deleteId = allSelectDelete;
+
+            },
+            dealWithDelete() {
+                let params = {
+                    id: this.deleteId
+                };
+                this.$post('/policy/delBatchPol', params).then(response => {
+                    var codestatus = response.resultCode;
+                    if (codestatus == "CLT000000000") {
+                        this.dialogVisible = false;
+                        this.$message.success(response.resultMsg);
+
+                        // 通知父组件，重新获取数据
+                        this.$emit("childDeleted", {});
+
+                    } else {
+                        this.$message.error(response.resultMsg);
+                    }
+                }, err => {
+                    this.$message.error(err.resultMsg);
+                });
+            },
+            /**
+             * 删除操作相关事件---结束
+             */
+
+            // 跳转编辑【发布】页面
+            linkToPublish(id) {
+                this.$router.push({
+                    path: '/parkHall/manage/publishSciAndTechPolicy',
+                    query: {
+                        applyType: '01',
+                        id: id
+                    }
+                });
+            },
+
+            // 跳转发布详情页面
+            linkToDetail(id) {
+                this.$router.push({
+                    path: '/parkHall/manage/sciAndTechPolicy/publishDetail',
+                    query: {
+                        applyType: '01',
+                        id: id
+                    }
+                });
+            },
+
+
+            /**
+             *  单选/全选相关事件
+             */
+            // 全选按钮事件
+            handleSelectAll() {
+            },
+
+            // 单选按钮事件
+            selectOrUnSelect() {
+            }
         },
     }
 </script>

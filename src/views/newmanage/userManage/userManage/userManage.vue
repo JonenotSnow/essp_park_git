@@ -4,12 +4,12 @@
             <div class="userHeader">
                 <span>
                     <i class="el-icon-circle-plus-outline"></i>
-                    还没企业没加入园区？立即邀请TA
+                    还没企业没加入中心？立即邀请TA
                     <span @click="$router.push('/parkHall/manage/requestEnterprice')"><span>点击立即邀请</span></span>
                 </span>
                 <span>
                     <i class="iconfont icon-tuijianren"></i>试一试系统为你推荐企业>>
-                    <span @click="$router.push('/parkHall/manage/IntelligentInvestment')"><span>点击立即推荐</span></span>
+                    <span @click="$router.push('/parkHall/manage/IntelligentInvestment')"><span>点击查看推荐</span></span>
                 </span>
             </div>
             <div class="search">
@@ -22,7 +22,7 @@
                     <span v-for="(it,i) in hotTagList.slice(0,6)" :key="i" :class="{'active':curSelectTag == it.tagId}" @click="getMemByTblTxt(it)" >{{it.tagTxt}}&nbsp;({{it.tagCount}})</span>
                 </div>
             </div>
-            <div class="userList">
+            <div class="userList" v-if="getMemInfoList.length>0">
                 <ul>
                     <li v-for="(it,i) in getMemInfoList" :key="i">
                         <div>
@@ -371,12 +371,11 @@ export default {
     }
 </style>
 <style lang='less' scoped>
-
-    .el-main{
-        /*margin-left: 10px;*/
+    #userManage{
         width:990px;
         background: #fff;
         padding:0;
+        min-height:540px;
         .userManage{
             .userHeader{
                 height:50px;
@@ -431,6 +430,7 @@ export default {
                 position:relative!important;
                 height:100px!important;
                 width:990px!important;
+                border-bottom: 1px solid #ccc;
                 &>div{
                     // min-height:54px;
                     &>input{

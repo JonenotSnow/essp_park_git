@@ -1,5 +1,5 @@
 
-    export const threeData = {
+    export let data2 = {
         // backgroundColor: '#FBFBFB',
         title: {
             text: '专利申请量',

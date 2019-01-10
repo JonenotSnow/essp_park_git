@@ -1,4 +1,4 @@
-export const data5 = {
+export let data4 = {
 
     title: {
         text: '高新技术企业数量',

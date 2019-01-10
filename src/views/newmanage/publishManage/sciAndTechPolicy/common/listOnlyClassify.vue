@@ -28,7 +28,7 @@
                         </div>
                     </div>
                 </li>
-            </ul> 
+            </ul>
         </div>
         <div v-else class="noData">
             <span>尚未发布成果，点击右上方发布按钮立即发布吧！</span>
@@ -84,8 +84,8 @@ export default {
         display:inline-block;
         width: 48px;
         height: 28px;
-        background-image: linear-gradient(0deg, 
-            #f5f5f5 0%, 
+        background-image: linear-gradient(0deg,
+            #f5f5f5 0%,
             #ffffff 100%);
         border-radius: 5px;
         border: solid 1px #cccccc;

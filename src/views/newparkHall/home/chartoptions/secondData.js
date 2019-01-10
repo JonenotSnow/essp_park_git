@@ -1,4 +1,4 @@
-export const secondData = {
+export let data1 = {
 
     title: {
         text: '企业研究与发展（R&D）经费支出（亿元）',

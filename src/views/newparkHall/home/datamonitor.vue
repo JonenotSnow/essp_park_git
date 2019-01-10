@@ -42,8 +42,8 @@ export default {
       }
     };
   },
-  created() {
-    this.getData()
+  async created() {
+    await this.getData()
     this.$nextTick(function() {
       this.initChart();
     });
@@ -71,21 +71,40 @@ export default {
       this.list.chartf = this.$echarts.init(
         document.getElementById("homechartf")
       );
-      this.list.charta.setOption(newParkHomeChartData.firstData);
-      this.list.chartb.setOption(newParkHomeChartData.secondData);
-      this.list.chartc.setOption(newParkHomeChartData.threeData);
-      this.list.chartd.setOption(newParkHomeChartData.data4);
-      this.list.charte.setOption(newParkHomeChartData.data5);
-      this.list.chartf.setOption(newParkHomeChartData.data6);
+      this.list.charta.setOption(newParkHomeChartData.data0);
+      this.list.chartb.setOption(newParkHomeChartData.data1);
+      this.list.chartc.setOption(newParkHomeChartData.data2);
+      this.list.chartd.setOption(newParkHomeChartData.data3);
+      this.list.charte.setOption(newParkHomeChartData.data4);
+      this.list.chartf.setOption(newParkHomeChartData.data5);
     },
-    getData() {
-      this.$post("/dataIndex/getIndexData",{parkId:sessionStorage.getItem('parkId')}).then(res=>{
-        console.log(res)
+    async getData() {
+      let that = this
+
+      await this.$post("/dataIndex/getIndexData",{parkId:sessionStorage.getItem('parkId')}).then(res=>{
+        if(res.resultData){
+          let dataList = []
+          res.resultData.forEach(el => {
+            if(el.type<6){
+                if(!Array.isArray(dataList[el.type])){
+                  dataList[el.type]=[]
+                }
+                dataList[el.type].push(el)
+              }
+          });
+          dataList.forEach((element,index) => {
+            element= element.reverse()
+            newParkHomeChartData['data'+index].xAxis.data=[]
+            newParkHomeChartData['data'+index].series.data=[]
+            element.forEach(element => {
+              newParkHomeChartData['data'+index].xAxis.data.push(element.year)
+
+              newParkHomeChartData['data'+index].series.data.push(element.dataNum)
+            });
+          });
+        }
       });
     },
-    setData() {
-
-    }
   }
 };
 </script>
