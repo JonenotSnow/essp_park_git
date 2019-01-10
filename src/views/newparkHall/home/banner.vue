@@ -9,7 +9,7 @@
              -->
             <el-carousel indicator-position="none" height="500px">
                 <el-carousel-item v-for="item in bannerDisList" :key="item.id">
-                    <div class="banner_bg" :style="'background-image:url('+item+')'"></div>
+                    <div class="banner_bg" :style="'background-image:url('+item.img_url+')'" @click="swiperLink(item,index)"></div>
                 </el-carousel-item>
             </el-carousel>
             <div class="swiper-button-next2" tabindex="0" role="button" aria-label="Next slide"></div>
@@ -101,6 +101,13 @@
             }
         },
         methods: {
+            // banner图跳转方法
+            swiperLink(item,index){
+                if(item.link_url == "") {
+                    return;
+                }
+                window.location.href=item.link_url;
+            },
             goSearchPage() {
                 let _this = this;
                 var type = this.typeselect; //类型
