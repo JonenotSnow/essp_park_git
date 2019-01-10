@@ -12,6 +12,7 @@ const utils = {
      *  非空判断
      *  value: 需要判断的值
      */
+
     isEmpty: function (value) {
         if (value == '' || value == 'null' || value == null || typeof value == 'undefined' || JSON.stringify(value) == '{}') {
             return true;
@@ -41,7 +42,7 @@ const utils = {
             }
         }
     },
-    /**
+    /**c
      *  冻结后无法访问url判断
      *  postUrl：访问后台url
      */
@@ -517,7 +518,7 @@ const utils = {
         let bdParkId = sessionStorage.getItem("bdParkId")
         let bdFlag =  bdParkId && bdParkId.indexOf('bd')>-1
         let parkName = sessionStorage.getItem("parkName")
-        if (parkName) {         
+        if (parkName) {
             var falg = parkName.indexOf("保定") > -1;
             isParkNameHasBd = falg;
         }
