@@ -1,4 +1,4 @@
-export const firstData= {
+export let data0= {
     // backgroundColor: '#FBFBFB',
         title: {
             text: '研究与发展（R&D）人员数（万人）',

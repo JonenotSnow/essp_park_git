@@ -79,11 +79,11 @@ let oneId = "";
 router.beforeEach(async (to, from, next) => {
     // 获取当前园区的权限
     // 没有token的时候，直接假数据
-    if (!to.token) {
-        var mockdata = menuListData.menuList[0];
-        sessionStorage.setItem("menuList", JSON.stringify(mockdata));
-        next();
-    }
+    // if (!to.token) {
+    //     var mockdata = menuListData.menuList[0];
+    //     sessionStorage.setItem("menuList", JSON.stringify(mockdata));
+    //     next();
+    // }
 
     // let query  = getQueryObjuect()
     let menuList = sessionStorageHandler.getItem("menuList");
@@ -104,7 +104,6 @@ router.beforeEach(async (to, from, next) => {
         await selectResMenu({ oneId, LoginUserRol });
         // router.push(to.path)
     } else if (!menuList && to.path !== "/parkList") {
-        // 没有菜单时，获取
 
         // 当路径中有parkId说明是别的地方直跳园区项目
         if (isUrlHasBd) {

@@ -19,7 +19,7 @@ const constants = {
         'parkList',
         'park-home',
         'requ-requSearch', // 撮合平台搜索
-        'park-activityDetail' //  园区的邀请函列表  -  林河钦
+        'park-requestPage' //  园区的邀请函列表  -  林河钦
         // '/',
         // '/home', // 首页
         // '/userIndex/login', // 登录页

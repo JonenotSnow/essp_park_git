@@ -11,7 +11,7 @@
              -->
             <div class="hasenters" v-if="enterprises.length">
                 <img class="enter_child" v-for="(item,index) in enterprises.slice(0,5)" :key="index" :src="item.src" >
-                <span class="enter_child entermore" v-if="enterprises.length>5">View More ></span>
+                <span class="enter_child entermore" v-if="enterprises.length>5" @click="linkToPage">View More ></span>
             </div>
                <div v-else class="nobox"><i class="myicon"></i><span class="tipspan">暂无数据</span></div>
         </div>
@@ -55,6 +55,11 @@
    },
    components: {
 
+   },
+   methods:{
+    linkToPage() {
+      this.$router.push("/parkHall/manage/allEnterpriseList");
+    }
    }
  }
 </script>

@@ -1,4 +1,4 @@
-export const data4= {
+export let data3= {
     // backgroundColor: '#FBFBFB',
         title: {
             text: '发明专利申请量',

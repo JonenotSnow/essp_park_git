@@ -13,13 +13,13 @@
                 <span>*</span>年份：
               </span>
               <!-- <el-date-picker
-                v-model="is.time"
+                v-model="is.year"
                 type="date"
                 placeholder="选择日期"
                 format="yyyy 年"
                 value-format="yyyy"
               ></el-date-picker>-->
-              <el-select v-model="is.time" placeholder="请选择">
+              <el-select v-model="is.year" placeholder="请选择">
                 <el-option
                   v-for="dataItem in dataSelect"
                   :key="dataItem.value"
@@ -34,13 +34,13 @@
                 {{is.subTitle}}
               </span>
               <div>
-                <input type="text" v-model="is.value">
+                <input type="number" v-model="is.dataNum">
                 <span class="sub1" v-if="is.sub && is.sub.length == 1">{{is.sub}}</span>
                 <span class="sub2" v-if="is.sub && is.sub.length == 2">{{is.sub}}</span>
               </div>
             </li>
             <span class="addYear" v-if="j == item.content.length-1" @click="addItem(i,j)">
-              <i class="el-icon-plus" ></i>添加年份
+              <i class="el-icon-plus"></i>添加年份
             </span>
           </ul>
         </div>
@@ -62,11 +62,12 @@ export default {
           title: "研究与发展（R&D）人员数（万人）",
           content: [
             {
-              id: "0",
-              time: "",
-              value: "",
+              id: 0,
+              year: "",
+              dataNum: "",
               sub: "万人",
-              subTitle: "R&D人员："
+              subTitle: "R&D人员：",
+              type:0
             }
           ]
         },
@@ -74,11 +75,12 @@ export default {
           title: "企业研究与发展（R&D）经费支出（亿元）",
           content: [
             {
-              id: "0",
-              time: "",
-              value: "",
+              id: 0,
+              year: "",
+              dataNum: "",
               sub: "亿元",
-              subTitle: "R&D投入："
+              subTitle: "R&D投入：",
+              type:1
             }
           ]
         },
@@ -86,11 +88,12 @@ export default {
           title: "专利申请量",
           content: [
             {
-              id: "0",
-              time: "",
-              value: "",
+              id: 0,
+              year: "",
+              dataNum: "",
               sub: "项",
-              subTitle: "专利申请量："
+              subTitle: "专利申请量：",
+              type:2
             }
           ]
         },
@@ -98,11 +101,12 @@ export default {
           title: "发明专利申请量",
           content: [
             {
-              id: "0",
-              time: "",
-              value: "",
+              id: 0,
+              year: "",
+              dataNum: "",
               sub: "项",
-              subTitle: "发明专利申请量："
+              subTitle: "发明专利申请量：",
+              type:3
             }
           ]
         },
@@ -110,11 +114,12 @@ export default {
           title: "高新技术企业数量",
           content: [
             {
-              id: "0",
-              time: "",
-              value: "",
+              id: 0,
+              year: "",
+              dataNum: "",
               sub: "项",
-              subTitle: "高新技术企业数量："
+              subTitle: "高新技术企业数量：",
+              type:4
             }
           ]
         },
@@ -122,43 +127,55 @@ export default {
           title: "技术合同登记额",
           content: [
             {
-              id: "0",
-              time: "",
-              value: "",
+              id: 0,
+              year: "",
+              dataNum: "",
               sub: "亿",
-              subTitle: "技术合同登记额："
+              subTitle: "技术合同登记额：",
+              type:5
             }
           ]
         }
       ],
       dataSelect: [
-        { value: '2013' },
-        { value: '2014' },
-        { value: '2015' },
-        { value: '2016' },
-        { value: '2017' },
-        { value: '2018' },
-        { value: '2019' }
+        { value: "2013" },
+        { value: "2014" },
+        { value: "2015" },
+        { value: "2016" },
+        { value: "2017" },
+        { value: "2018" },
+        { value: "2019" }
       ]
     };
   },
-  mounted() {
-
+  mounted() {},
+  created() {
+    this.getData()
   },
-  created() {},
   methods: {
     getData() {
-      let params = this.list;
-      this.$post("/dataIndex/saveData", params).then(res => {
-        console.log("设置数据");
+      this.list.forEach(item=>{
+        item.content=[]
+      })
+      console.log(this.list)
+      this.$post("/dataIndex/getIndexData", {
+        parkId: sessionStorage.getItem("parkId")
+      }).then(res => {
+        if(res.resultCode === 'CLT000000000'){
+          res.resultData.forEach(item=>{
+            let index = item.type
+            if(index>5)return false
+            this.list[index].content.push(item)
+          })
+          console.log(this.list)
+        }
       });
     },
     addItem(index, jIndex) {
-  
-      let obj = this.switchFn(index, jIndex)
-      console.log(index, jIndex,obj)
+      let obj = this.switchFn(index, jIndex);
+      console.log(index, jIndex, obj);
       this.list[index].content.push(obj);
-      console.log(this.list)
+      console.log(this.list);
     },
     switchFn(index, jIndex) {
       let tmp = {};
@@ -166,8 +183,8 @@ export default {
         case 0:
           tmp = {
             id: 1 + jIndex,
-            time: "",
-            value: "",
+            year: "",
+            dataNum: "",
             sub: "亿元",
             subTitle: "R&D人员："
           };
@@ -175,8 +192,8 @@ export default {
         case 1:
           tmp = {
             id: 1 + jIndex,
-            time: "",
-            value: "",
+            year: "",
+            dataNum: "",
             sub: "亿元",
             subTitle: "R&D投入："
           };
@@ -184,8 +201,8 @@ export default {
         case 2:
           tmp = {
             id: 1 + jIndex,
-            time: "",
-            value: "",
+            year: "",
+            dataNum: "",
             sub: "项",
             subTitle: "专利申请量："
           };
@@ -193,8 +210,8 @@ export default {
         case 3:
           tmp = {
             id: 1 + jIndex,
-            time: "",
-            value: "",
+            year: "",
+            dataNum: "",
             sub: "项",
             subTitle: "发明专利申请量："
           };
@@ -202,8 +219,8 @@ export default {
         case 4:
           tmp = {
             id: 1 + jIndex,
-            time: "",
-            value: "",
+            year: "",
+            dataNum: "",
             sub: "项",
             subTitle: "高新技术企业数量："
           };
@@ -211,8 +228,8 @@ export default {
         case 5:
           tmp = {
             id: 1 + jIndex,
-            time: "",
-            value: "",
+            year: "",
+            dataNum: "",
             sub: "亿",
             subTitle: "技术合同登记额："
           };
@@ -221,10 +238,25 @@ export default {
         default:
           break;
       }
-      return tmp
+      return tmp;
     },
-    saveUp(){
-        console.log(1)
+    saveUp() {
+      let parkId = this.SSH.getItem("parkId");
+      let params = [];
+      this.list.forEach((item, index) => {
+        if (item.content.length > 0) {
+          item.content.forEach(items => {
+            let obj = Object.assign({}, items, {
+              parkId: parkId,
+              type: index
+            });
+            params.push(obj);
+          });
+        }
+      });
+      this.$post("/dataIndex/saveData", params).then(res => {
+        this.$message.success("数据上传成功");
+      });
     }
   }
 };
