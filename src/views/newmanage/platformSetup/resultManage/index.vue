@@ -58,32 +58,9 @@
 </template>
 
 <script>
-<<<<<<< HEAD
-import achievementSetHead from './../../components/common/head'
-import achievementSetCondition from './../../components/common/condition'
-import listOwnImg from './../../components/listOwnImg'
- export default {
-   components: {
-    achievementSetHead,
-    achievementSetCondition,
-    listOwnImg
-   },
-   data () {
-     return {
-      publishTitle:'立即发布',
-      type:'成果管理',
-      list:['0', '1', '2', '3'],
-      totalCount:0,
-      pageNum:1,
-      pageSize:5
-     }
-   },
-   created () {
-=======
     import achievementSetHead from '@/views/newmanage/components/common/head'
 //    import achievementSetCondition from '@/views/newmanage/components/common/condition'
     import listOwnImg from '@/views/newmanage/components/listOwnImg'
->>>>>>> 1326c56edebb49ceef04433d5625170c1442ae60
 
     export default {
         components: {
