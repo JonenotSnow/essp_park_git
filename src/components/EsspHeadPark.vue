@@ -22,7 +22,7 @@
                   @click="toRegister">注册</span>
           </div>
           <div class="desc"
-               v-if="!loginShow">
+               v-else>
             {{userName}} &nbsp;您好，欢迎来到企业智能撮合综合服务平台！
             <span @click="logout"
                   class="desclogout"> [退出]</span>
@@ -50,23 +50,20 @@
              :class="searchBarFixed == true ? 'isFixed' :''">
           <div class="auto padding esspclearfix">
             <div class="logocon" >
-              <img 
+              <img
                    :src="isBdPark?logoUrl:logoUrl1"
                    alt=""
                    :class="isBdPark?'bdlogo':''" @click="tolink();">
             </div>
 
-            <div class="header_nav"
-                 v-if="!isSearchPage">
-              <EsspJzfpNav v-if="type == 2"
-                           :getNavData="navBarData"
-                           :getActive="active" ></EsspJzfpNav>
-              <EsspNav v-else
+            <div class="header_nav">
+
+              <EsspNav
                        :routerType="routerTypeNum" ></EsspNav>
             </div>
 
             <!-- 全局搜索控件 -->
-            <div :class="isSearchPage?'search-list':'seachinput-dropdown'"
+            <!-- <div :class="isSearchPage?'search-list':'seachinput-dropdown'"
                  v-if="routerTypeNum != 1">
               <el-input placeholder="请输入服务/商品/需求名称或关键词"
                         v-model="search.keyword"
@@ -89,12 +86,12 @@
                   <span>搜索</span>
                 </div>
               </el-input>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
     </div>
-    
+
     </div>
 </template>
 <script>
@@ -135,7 +132,7 @@ export default {
       msgNum: 0,
       isNum: true,
       isuplevel: false,
-      isBdPark: this.utils.isBdPark(),
+      isBdPark: this.utils.isBdPark() || "",
       logoUrl:require('@/assets/newparkimg/home/logo.png'),
       logoUrl1:require('@/assets/essp_logo.png')
     };
@@ -148,11 +145,11 @@ export default {
   },
   created() {
     let vm = this;
-    
+
     // alert("正版的isBdPark"+this.isBdPark);
     this.isLogin();
     this.getNewMsg();
-    this.checkIsSearchPage();
+    // this.checkIsSearchPage();
     this.adminShow();
     bus.$on("isRefresh", function(val) {
       vm.getNewMsg();
@@ -165,7 +162,7 @@ export default {
   watch: {
     $route() {
       this.isLogin();
-      this.checkIsSearchPage();
+      // this.checkIsSearchPage();
       this.adminShow();
       this.isBdPark = this.utils.isBdPark()
     },
@@ -214,19 +211,6 @@ export default {
         this.$store.state.chat.unReadNum = 0;
       } else {
         this.windowHrefUrl('userIndex/login')
-      }
-    },
-
-    checkIsSearchPage() {
-      let path = this.$router.currentRoute.path;
-      if (path.indexOf("/requIndex/search") >= 0) {
-        this.isSearchPage = true;
-        this.search = {
-          type: localStorage.getItem("searchtype"),
-          keyword: localStorage.getItem("searchkeyword")
-        };
-      } else {
-        this.isSearchPage = false;
       }
     },
     getNewMsg() {
@@ -357,19 +341,47 @@ export default {
         });
       }
     },
-    logout() {
+    async logout() {
       if (this.SSH.getItem("loginFlag")) {
+        this.loginShow = false;
         this.utils.logoutDelSSH();
         localStorage.clear();
         this.$message.info("退出登录成功!");
+         this.SSH.setItem('loginFlag',false)
+        this.SSH.setItem('LoginUserRol',["11"])
+        await this.selectResMenu()
         this.$router.push({
             path: '/parkHome',
         });
       } else {
         this.$router.push({
-          path: "/userIndex/login"
+           path: '/parkHome',
         });
       }
+    },
+    // 获取菜单权限 需要传入 parkId, 角色权限
+    async selectResMenu() {
+        var urlapi = this.$apiUrl.home.selectResMenu;
+        var pop = {
+            sysType: "park",
+            sysBsnAttr: this.SSH.getItem('bdParkId'),
+            postIdList: ['11']
+        };
+        await this.$post(urlapi, pop).then(
+            response => {
+                console.log(4);
+                if (response.resultCode == "CLT000000000") {
+                    var menuList = response.resultData.menuList[0] || {};
+                    console.log(menuList)
+                    this.SSH.setItem("menuList", menuList);
+                } else {
+                    this.$message.info(response.resultMsg);
+                }
+            },
+            response => {
+                this.$message.info(response.data.resultMsg);
+            }
+        );
     },
     //  跳转搜索页面
     redirectToSearchPage() {

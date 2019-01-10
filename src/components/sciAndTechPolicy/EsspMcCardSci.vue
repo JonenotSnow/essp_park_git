@@ -7,25 +7,23 @@
                 <span class="descontool__title">{{temeTitle}}</span>
             </p>
         </div>
-        <!--<div v-if="mcCardList && mcCardList.length>0">-->
-        <div>
-            <!--<div class="essp-card" v-for="(item, mcCardIndex) in mcCardList" :key="mcCardIndex">-->
-            <div class="essp-card" v-for="(item, index) in 5" :key="index">
+        <div v-if="mcCardList && mcCardList.length>0">
+            <div class="essp-card" v-for="(item, mcCardIndex) in mcCardList" :key="mcCardIndex">
                 <div class="card__head">
-                    <p class="head__title">保定市科技创新三年行动计划（2018-2020年）</p>
-                    <p class="head__time">2018-06-11</p>
+                    <p class="head__title" @click.stop="linkToDetail(item)">{{item.policyTitle}}</p>
+                    <!--<p class="head__time">{{item.createTime | timerFormat(item.createTime)}}</p>-->
+                    <p class="head__time">{{item.createTime}}</p>
                 </div>
                 <div class="card__dest">
                     <p>
-                        为贯彻落实习近平新时代中国特色社会主义思想和党的十九大精神，深入落实省委省政府的决策部署，实施创新驱动发展战略，加快保定创
-                        为贯彻落实习近平新时代中国特色社会主义思想和党的十九大精神，深入落实省委省政府的决策部署，实施创新驱动发展战略，加快保定创···
+                        {{item.desc}}
                     </p>
                 </div>
             </div>
         </div>
-        <!--<div v-else>-->
-        <!--<div style="text-align: center">暂无数据</div>-->
-        <!--</div>-->
+        <div v-else>
+            <div style="text-align: center">暂无数据</div>
+        </div>
     </div>
 </template>
 
@@ -35,28 +33,35 @@
     export default {
         name: 'EsspMcCard',
         props: {
+            temeTitle: {
+                type: String
+            },
             mcCardList: {
                 type: Array,
                 default: []
-            },
-            chilrPageType: {
-                type: String
-            },
-            temeTitle: {
-                type: String
             }
         },
         data() {
             return {
-                msg: 'EsspMcCard',
+                msg: 'EsspMainCenterSci',
             }
         },
         filters: {
             timerFormat(vaule) {
+                console.log(vaule);
                 return Moment(vaule).format("YYYY-MM-DD")
             }
         },
-        methods: {}
+        methods: {
+            linkToDetail(item) {
+                this.$router.push({
+                    path: '/sciIndex/sciAndTechPolicyDetail',
+                    query: {
+                        id: item.id
+                    }
+                });
+            }
+        }
     }
 </script>
 

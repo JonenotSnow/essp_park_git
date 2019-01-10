@@ -22,7 +22,7 @@
                     </div>
                 </el-col>
             </el-row>
-            <p v-if="myParkList.length == 0 && endLoding" class="parkTip">您暂无加入园区！</p>
+            <p v-if="myParkList.length == 0 && endLoding" class="parkTip"></p>
         </div>
         <div class="parkItem">
             <div class="toolleft">
@@ -30,52 +30,51 @@
                 <span class="showDefault" :class="{'showblue': type == 1}" @click="changeType(1)">政企生态圈</span>
             </div>
             <div class="park_list_loading" v-if="isLoding">
-                <i class="el-icon-loading"></i>加载园区中~
-            </div>
-            <div v-if="type == 0">
-                <div class="parkCon" :class="changeHeight?'changeHeight':''">
-                    <el-row :gutter="120" v-if="endLoding">
-                        <el-col :span="8" style="margin-top:20px;" v-for="(item,index) in parkList" :key="index">
-                            <div class="grid_comp_logo">
-                                <div class="comp_logo">
-                                    <img v-if="item.imgUrl" :src="item.imgUrl" alt="">
-                                    <img v-else src="../../../assets/actlogo.png" alt="">
-                                </div>
-                                <p class="park_list_p">{{item.parkNm}}</p>
-                                <div class="mask" @click="linkTo(item,1)">
-                                    <p class="bg"></p>
-                                    <p class="wz">{{item.parkNm}}</p>
-                                </div>
-                                <p style="padding:10px 0;">
-                                    <el-button size="mini" class="join_park_btn" round @click="toApplyForm(item)">加入园区
-                                    </el-button>
-                                </p>
-                                <p @click="linkTo(item,1)" class="local_address">
-                                    <i class="el-icon-location" style="color:#00a0e9;"></i>
-                                    <span v-if="item.parkPosition" :title="item.parkPosition">{{item.parkPosition}}</span>
-                                    <span v-else>暂时还没有地址</span>
-                                </p>
-                            </div>
-                        </el-col>
-                    </el-row>
+                    <i class="el-icon-loading"></i>加载园区中~
                 </div>
-            </div>
-            <div v-if="type == 1">
-                <div class="parkCon" :class="changeHeight?'changeHeight':''">
-                    <el-row :gutter="120" v-if="endLoding">
-                        <el-col :span="8" style="margin-top:20px;">
-                            <div class="grid_comp_logo">
-                                <div class="comp_logo" @click="toGreen">
-                                    <img :src="require(`../../parkHall/home/green.png`)" alt="">
+                <div v-if="type == 0">
+                    <div class="parkCon" v-if="parkList.length > 0" :class="changeHeight?'changeHeight':''">
+                        <el-row :gutter="120" v-if="endLoding">
+                            <el-col :span="8" style="margin-top:20px;" v-for="(item,index) in parkList" :key="index"  >
+                                <div class="grid_comp_logo">
+                                    <div class="comp_logo">
+                                        <img v-if="item.imgUrl" :src="item.imgUrl" alt="">
+                                        <img v-else src="../../../assets/actlogo.png" alt="">
+                                    </div>
+                                    <p class="park_list_p">{{item.parkNm}}</p>
+                                    <div class="mask" @click="linkTo(item,1)">
+                                        <p class="bg"></p>
+                                        <p class="wz">{{item.parkNm}}</p>
+                                    </div>
+                                    <p style="padding:10px 0;">
+                                        <el-button size="mini" class="join_park_btn" round @click="toApplyForm(item)">加入园区</el-button>
+                                    </p>
+                                    <p @click="linkTo(item,1)"  class="local_address">
+                                        <i class="el-icon-location" style="color:#00a0e9;"></i>
+                                        <span v-if="item.parkPosition" :title="item.parkPosition">{{item.parkPosition}}</span>
+                                        <span v-else>暂时还没有地址</span>
+                                    </p>
+                                </div>
+                            </el-col>
+                        </el-row>
+                    </div>
+                </div>
+                <div v-if="type == 1">
+                    <div class="parkCon" v-if="parkList.length > 0" :class="changeHeight?'changeHeight':''">
+                        <el-row :gutter="120" v-if="endLoding">
+                            <el-col :span="8" style="margin-top:20px;">
+                                <div class="grid_comp_logo">
+                                    <div class="comp_logo" @click="toGreen">
+                                        <img :src="require(`../../parkHall/home/green.png`)" alt="">
 
+                                    </div>
+                                    <p class="park_list_p">绿色投融资项目库</p>
                                 </div>
-                                <p class="park_list_p">绿色投融资项目库</p>
-                            </div>
-                        </el-col>
-                    </el-row>
+                            </el-col>
+                        </el-row>
+                    </div>
                 </div>
-            </div>
-            <p v-if="parkList.length == 0 && endLoding" class="parkTip">暂无其他园区！</p>
+                <p v-if="parkList.length == 0 && endLoding" class="parkTip"></p>
         </div>
         <div style="text-align: center;padding-bottom: 30px;" v-if="endLoding">
             <el-button size="mini" round v-show="!changeHeight" @click="changeHeightFn">{{btnname[0]}}</el-button>
@@ -101,10 +100,10 @@
                 changeHeight: false,
                 isLoding: true,
                 endLoding: false,
-                LoginUserRol: [],
-                parkId: '',
-                parkNm: '',
-                curIs: false,
+                LoginUserRol:[],
+                parkId:'',
+                parkNm:'',
+                curIs:false,
                 userMobile: "",
                 type:0,
                 ccbUser:[],
@@ -120,12 +119,12 @@
             this.getCcbUser()
         },
         methods: {
-            changeType(type) {
+            changeType(type){
                 this.type = type;
             },
 
-            toGreen() {
-                let vm = this;
+            toGreen(){
+                let vm  = this;
                 if (this.SSH.getItem("userInfo")) {
                     this.userMobile = this.SSH.getItem("userInfo").mobile;
                 }
@@ -146,13 +145,13 @@
             getParkList() {
                 this.isLoding = true;
                 this.$post(this.$apiUrl.home.getParkList, {
-                    "channel": 'PC'
+                    "channel":'PC'
                 }).then(response => {
                     this.myParkList = response.resultData.myParkList;
                     this.parkList = response.resultData.parkList;
-                    if (this.myParkList && this.myParkList.length > 0) {
+                    if (this.myParkList && this.myParkList.length>0) {
                         let myList = [];
-                        myList = this.myParkList.map(x => x.parkId);
+                        myList = this.myParkList.map(x=>x.parkId);
                         sessionStorage.setItem("myList", myList);
                     }
                     setTimeout(() => {
@@ -162,81 +161,88 @@
                 });
             },
             //获取行业字典并保存
-            getCodeType() {
-                this.$post(this.$apiUrl.manage.getIdyInfo, {
-                    codeType: 'RZZL_00012'
-                })
-                    .then((response) => {
-                        if (response.resultData) {
-                            window.localStorage.setItem('rzz', JSON.stringify(response.resultData))
-                        }
-                    }, (err) => {
-                    })
+			getCodeType() {
+				this.$post(this.$apiUrl.manage.getIdyInfo, {
+						codeType: 'RZZL_00012'
+					})
+					.then((response) => {
+						if(response.resultData) {
+							window.localStorage.setItem('rzz', JSON.stringify(response.resultData))
+						}
+					}, (err) => {})
             },
-            getPower(parkId) {
+            getPower(parkId){
                 this.$post(this.$apiUrl.home.selectResMenu, {
-                    'sysType': "park",
-                    'sysBsnAttr': parkId,
-                    'postIdList': this.LoginUserRol
-                    // 'postIdList':['31']
-                })
-                    .then((response) => {
+                        'sysType':"park",
+                        'sysBsnAttr':parkId,
+                        'postIdList':this.LoginUserRol
+                        // 'postIdList':['31']
+					})
+					.then((response) => {
                         let parkInitPower = response.resultData.routerResMap;
                         //用于平台进入退出园区校验
-                        this.SSH.setItem(parkId, response.resultData.routerResMap);
+                        this.SSH.setItem(parkId,response.resultData.routerResMap);
 
                         let loginMenuResource = this.SSH.getItem("loginMenuResource");
                         let initMenuResource = this.SSH.getItem("initMenuResource");
-                        if (response.resultData && response.resultData.menuList && response.resultData.menuList.length > 0 && response.resultData.menuList[0].children) {
-                            this.SSH.setItem("menuList", response.resultData.menuList[0]);
+                        let tmpRes=response.resultData
+                        if(tmpRes&& tmpRes.menuList && tmpRes.menuList[0] && tmpRes.menuList[0].children ){
+                            this.SSH.setItem("menuList",tmpRes.menuList[0]);
                         }
-
                         let menuList = this.SSH.getItem("menuList");
                         let loginFlag = this.SSH.getItem("loginFlag");
                         let curUserAllParkPower = {};
-                        if (loginFlag) {
-                            curUserAllParkPower = Object.assign({}, loginMenuResource, parkInitPower)
-                        } else {
-                            curUserAllParkPower = Object.assign({}, initMenuResource, parkInitPower)
+                        if (loginFlag){
+                            curUserAllParkPower = Object.assign({},loginMenuResource,parkInitPower)
+                        }else{
+                            curUserAllParkPower = Object.assign({},initMenuResource,parkInitPower)
                         }
+                        // menuList.forEach(el => {
+                        //     if (el.name == 'parkList' && response.resultData.menuList.length>0 && response.resultData.menuList[0].children) {
+                        //         el.children = response.resultData.menuList[0].children;
+                        //     }else{
+                        //         console.log('没有获取到权限资源');
+                        //     }
+                        // });
+                        this.SSH.setItem("menuResource",curUserAllParkPower);
 
-                        this.SSH.setItem("menuList", menuList);
-                        this.SSH.setItem("menuResource", curUserAllParkPower);
-                        if (this.curIs) {
+                        console.log(this.curIs)
+                        if(this.curIs){
                             this.$router.push('/parkHall/manage/requestAddPark')
-                        } else {
+                        }else{
                             this.$router.push("/parkHome");
                         }
 
-                    }, (err) => {
-                    })
+                    }, (err) => {})
             },
             linkTo(item, type) {
                 this.curIs = false;
                 this.$post(this.$apiUrl.home.getLoginUserRole, {
-                    parkId: item.parkId,
-                    flag: item.bdParkId
-                })
-                    .then((response) => {
+                        parkId: item.parkId,
+                        flag:item.bdParkId
+					})
+					.then((response) => {
                         this.LoginUserRol = response.resultData;
                         if (item.bdParkId) {
                             this.parkId = item.bdParkId;
-                        } else {
+                        }else{
                             this.parkId = item.parkId;
                         }
                         this.parkNm = item.parkNm;
                         this.SSH.delItem('oldParkId')
-                        localStorage.setItem("parkId", item.parkId);
-                        sessionStorage.setItem("parkId", item.parkId);
-                        localStorage.setItem("parkName", this.parkNm);
+                        ///01/09隐藏 请勿增加local维护字段 
+                        // localStorage.setItem("parkId", item.parkId);
                         this.SSH.setItem("parkId", item.parkId);
+                        //01/09 不要用local维护麻烦，谢谢
                         this.SSH.setItem("parkName", this.parkNm);
-                        // this.SSH.setItem("parkFlag", item.bdParkId);
-                        this.SSH.setItem("bdParkId", item.bdParkId);//改变本地bgparkId
-                        this.SSH.setItem("LoginUserRol", this.LoginUserRol);
+                        this.SSH.setItem("parkId", item.parkId);
+                        //请勿用parkFLag增加多余字段去维护
+                        this.SSH.setItem("bdParkId", item.bdParkId);
+
+                        this.SSH.setItem("LoginUserRol",this.LoginUserRol);
                         this.getPower(this.parkId);
-                    }, (err) => {
-                    })
+
+                    }, (err) => {})
             },
             changeHeightFn() {
                 this.changeHeight = !this.changeHeight;
@@ -258,19 +264,17 @@
                 }
                 this.SSH.delItem('oldParkId')
                 this.$post(this.$apiUrl.home.getLoginUserRole, {
-                    parkId: item.parkId
-                })
-                    .then((response) => {
+						parkId: item.parkId
+					})
+					.then((response) => {
                         this.LoginUserRol = response.resultData;
                         this.parkId = item.parkId;
                         this.parkNm = item.parkNm;
-                        this.SSH.setItem("LoginUserRol", this.LoginUserRol);
-                        localStorage.setItem("parkId", item.parkId);
-                        sessionStorage.setItem("parkId", item.parkId);
-                        localStorage.setItem("parkName", this.parkNm);
+                        this.SSH.setItem("LoginUserRol",this.LoginUserRol);
                         this.SSH.setItem("parkId", item.parkId);
-                        this.SSH.setItem("parkFlag", item.bdParkId);
-                        this.getPower();
+                        this.SSH.setItem("parkName", this.parkNm);
+                        this.SSH.setItem("bdParkId", item.bdParkId);
+                        this.getPower(item.parkId);
                     }, (err) => {})
             },
             getCcbUser() {
@@ -312,6 +316,10 @@
     .parkTip {
         padding-left: 30px;
         text-align: center;
+        height: 205px;
+        margin: 10px 0 20px;
+        background: url("no_park_list.png") no-repeat center center;
+        background-size: 266px;
     }
 
     .parkList {
@@ -337,7 +345,7 @@
             text-overflow: ellipsis;
             white-space: nowrap;
             font-size: 18px;
-            padding: 24px 0 15px;
+            padding:  24px 0 15px;
         }
         .grid_comp_logo {
             position: relative;
@@ -347,40 +355,41 @@
             /*border: 1px solid #eee;*/
             cursor: pointer;
             /*height: 280px;*/
-            position: relative;
+            position:relative;
             // text-overflow: ellipsis;
             // white-space: nowrap;
-            & > p {
+            &>p {
                 text-align: center;
             }
 
-            & > .mask {
+            &>.mask{
                 position: absolute;
-                top: 5px;
+                top:5px;
                 left: 5px;
-                width: 95%;
-                height: 208px;
-                line-height: 208px;
+                width:95%;
+                height:208px;
+                line-height:208px;
                 text-align: center;
                 z-index: 90;
-                display: none;
-                & > .bg {
+                overflow: hidden;
+                display:none;
+                &>.bg{
                     position: absolute;
-                    top: 0;
+                    top:0;
                     width: 100%;
                     height: 100%;
                     background: #000;
                     opacity: 0.6;
                     z-index: 100;
                 }
-                & > .wz {
+                &>.wz{
                     position: absolute;
                     top: 0;
                     left: 55px;
                     z-index: 101;
                     left: 10px;
                     width: 170px;
-                    color: #fff;
+                    color:#fff;
                     text-align: center;
                 }
             }
@@ -412,7 +421,7 @@
             // -3px 0px 3px 0px @boxshowcolor;
             // -ms-box-shadow: 3px 0px 3px 0px @boxshowcolor,
             // -3px 0px 3px 0px @boxshowcolor;
-            & > .mask {
+            &>.mask{
                 display: block;
             }
         }
@@ -448,8 +457,7 @@
             }
         }
     }
-
-    .showDefault {
+    .showDefault{
         cursor: pointer;
         margin-bottom: 50px;
         padding-left: 28px;
@@ -460,7 +468,6 @@
         letter-spacing: 0px;
         color: #333333;
     }
-
     .showblue {
         color: #00a0e9 !important;
     }

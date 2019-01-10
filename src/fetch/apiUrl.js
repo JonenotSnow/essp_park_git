@@ -22,6 +22,7 @@ import {merchant} from './api/merchant/merchant'
 import {chat} from './api/chat/chat'
 import {property} from './api/parkProperty/index'
 import {newsinfo} from './api/newsinfo/newsinfo'//新园区通知公告接口
+/*import {allNeed} from './api/need/getAllNeed'//获取全部需求列表*/
 
 
 import {building} from './api/building/index'
@@ -63,6 +64,7 @@ export const apiUrl = {
     processTrack,
     building,
     newsinfo,
+    /*allNeed,*/
     sciAndTechPolicy
 
 }

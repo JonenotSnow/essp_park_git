@@ -1,7 +1,7 @@
-export const secondData = {
+export let data1 = {
 
     title: {
-        text: 'R&D投入(亿元)',
+        text: '企业研究与发展（R&D）经费支出（亿元）',
         textStyle:{
             color:"#10b5ff",
             fontWeight:'normal'
@@ -39,7 +39,7 @@ export const secondData = {
         type: 'line',
         smooth: 0.2,
         color:['#66AEDE'],
-        data: [5, 20, 36, 10, 10]
+        data: [42.3, 46.6, 51.5, 57, 61.3]
     }]
 };
 

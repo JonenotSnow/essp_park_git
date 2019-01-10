@@ -19,7 +19,7 @@
                     <i class="el-icon-delete remove"></i>
                 </div>
                 <div class="listBottom">
-                    <div class="contentTitle">保定市科技服务机构备案名单</div>
+                    <div class="contentTitle">保定市科技服务机构备案名单保定市科技服务机构备案名单保定市科技服务机构备案名单保定市科技服务机构备案名单</div>
                     <!-- 科技服务-已审核-->
                     <!-- <div class='editorBtn2'>
                         <span>查看</span>
@@ -52,7 +52,16 @@
 
 <script>
 export default {
-    props:['list'],
+    props: {
+        list: {
+            type: Array,
+            default: []
+        },
+        type: {
+            type: String,
+            default: ''
+        }
+    },
     data() {
         return {
             totalCount:0,
@@ -191,6 +200,9 @@ export default {
                 letter-spacing: 0px;
                 color: #222222;
                 line-height:60px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
             }
             .editorBtn1{
                 float: right;

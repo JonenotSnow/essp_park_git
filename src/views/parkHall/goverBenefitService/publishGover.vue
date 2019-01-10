@@ -31,10 +31,7 @@
                     <span class="inline_span">
                     <em>*</em>惠政内容：</span>
                     <div class="inline-box wrap">
-                        <quill-editor v-model="content" :options="editorOption">
-                            <div id="toolbar" slot="toolbar">
-                            </div>
-                        </quill-editor>
+                        <essp-editor :editorCont="this.content" @onEditorChange="onEditorChange"></essp-editor>
                     </div>
                 </div>
 
@@ -316,9 +313,9 @@
                     </div>
                 </div>
             </div>
-            <div class="final_tableconT" v-if="formTicketList.t_isOnlineApply =='0' && !LoginUserRol.includes('34')">
+            <div class="final_tablecon" v-show="formTicketList.t_isOnlineApply =='0' && !LoginUserRol.includes('34')">
                 <div class="tditem">
-                    <span class="inline_span">发布是否需高级管理员审核：</span>
+                    <span class="inline_span">是否高级管理员审核：</span>
                     <div class="inline_div">
                         <el-radio v-model="formTicketList.isReview" label="1">是</el-radio>
                         <el-radio v-model="formTicketList.isReview" label="0">否</el-radio>
@@ -326,7 +323,7 @@
                     </div>
                 </div>
             </div>
-            <div class="final_tableconA" v-if="formTicketList.t_isOnlineApply =='1' && !LoginUserRol.includes('34')">
+            <div class="final_tablecon" v-show="formTicketList.t_isOnlineApply =='1' && !LoginUserRol.includes('34')">
                 <div class="tditem">
                     <span class="inline_span">是否高级管理员审核 :</span>
                     <div class="inline_div">
@@ -389,15 +386,12 @@
 </template>
 
 <script>
-    import 'quill/dist/quill.core.css';
-    import 'quill/dist/quill.snow.css';
-    import 'quill/dist/quill.bubble.css';
-    import {quillEditor} from 'vue-quill-editor';
     import EsspBreadCrumb from "@/components/EsspBreadCrumb";
     import addTag from "@/views/parkHall/activity/addTag";
     import EsspTag from "@/components/EsspTag";
     import EsspAddTag from "@/components/EsspAddTag";
     import ParkUpload from "@/views/parkHall/parkUpload";
+    import EsspEditor from "@/components/EsspEditor";
     import Moment from "moment";
 
     export default {
@@ -433,28 +427,6 @@
                         name: "发布惠政"
                     }
                 ],
-                editorOption: {
-                    placeholder: `请您编辑惠政内容`,
-                    modules: {
-                        toolbar: [
-                            ['bold', 'italic', 'underline', 'strike'],
-                            ['blockquote', 'code-block'],
-                            [{'header': 1}, {'header': 2}],
-                            [{'list': 'ordered'}, {'list': 'bullet'}],
-                            [{'script': 'sub'}, {'script': 'super'}],
-                            [{'indent': '-1'}, {'indent': '+1'}],
-                            [{'direction': 'rtl'}],
-                            [{'size': ['small', false, 'large', 'huge']}],
-                            [{'header': [1, 2, 3, 4, 5, 6, false]}],
-                            [{'font': []}],
-                            [{'color': []}, {'background': []}],
-                            [{'align': []}],
-                            ['clean'],
-                            ['link', 'image']
-                        ]
-
-                    },
-                },
                 content: "",//惠政详情
                 demoTags: [],
 
@@ -687,7 +659,7 @@
         components: {
             EsspBreadCrumb,
             addTag,
-            quillEditor,
+            EsspEditor,
             EsspTag,
             ParkUpload,
             EsspAddTag
@@ -705,6 +677,11 @@
             }
         },
         methods: {
+            // 编辑器的值获取
+            onEditorChange(val){
+                this.content = val;
+                console.log(this.content);
+            },
             // 改变图片路径
             showImgUrl(url) {
                 this.imageUrl = url;
@@ -1046,7 +1023,7 @@
                         parkId: sessionStorage.getItem("parkId") || "",
                         policyTitle: this.formBaseList.action_theme,
                         titleImg: this.imageUrl,
-                        infoDetail: this.content ? this.content.replace(/\s/g, "&nbsp") : "",
+                        infoDetail: this.content,
                         pubCstName: this.formBaseList.fbjg,
                         tags: this.tags.join(","),
                         id: this.$route.query.draftId,
@@ -1582,7 +1559,7 @@
         background-color: #f5f5f5;
         // margin-bottom: 20px;
         line-height: 40px;
-        padding: 20px 50px;
+        padding: 20px 32px;
         .extendtit {
             overflow: hidden;
             font-size: 16px;
@@ -1627,7 +1604,7 @@
 
     //增加票种底部样式
     .ticket_extend {
-        padding-left: 75px;
+        padding-left: 23px;
         margin-left: 32px;
     }
 
@@ -1637,7 +1614,7 @@
         margin-bottom: 15px;
         .inline_span {
             float: left;
-            width: 12%;
+            width: 13%;
             text-align: right;
             line-height: 40px;
             margin-right: 15px;
@@ -1669,7 +1646,7 @@
     //最后部分的样式
     .final_tablecon, .final_tableconT {
         // padding: 0 55px;
-        padding-left: 75px;
+        padding-left:  23px;
         margin-left: 32px;
         .tditem {
             width: 100%;
@@ -1678,7 +1655,7 @@
 
             .inline_span {
                 float: left;
-                width: 12%;
+                width: 13%;
                 text-align: right;
                 line-height: 40px;
                 margin-right: 15px;
@@ -1733,7 +1710,7 @@
     .tditem {
         .inline_span {
             float: left;
-            width: 12%;
+            width: 13%;
             margin-right: 15px;
             font-size: 14px;
             line-height: 40px;

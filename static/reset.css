@@ -40,7 +40,7 @@ body {
     background: #fff;
     color: #555;
     font-size: 14px;
-    
+
 }
 
 /*td, th, caption {*/
@@ -268,12 +268,12 @@ html {
 }
 .tip_off_mask_head strong {
     margin-right: 10px;
-	/*font-family: PingFangSC-Regular;*/
-	font-size: 18px;
-	font-weight: normal;
-	font-stretch: normal;
-	line-height: 30px;
-	letter-spacing: 0.5px;
+    /*font-family: PingFangSC-Regular;*/
+    font-size: 18px;
+    font-weight: normal;
+    font-stretch: normal;
+    line-height: 30px;
+    letter-spacing: 0.5px;
 }
 .tip_off_mask_head span {
     font-size: 12px;
@@ -283,12 +283,12 @@ html {
     font-size: 14px;
     color: #666;
     line-height: 50px;
-	/*font-family: PingFangSC-Light;*/
-	font-weight: normal;
-	font-stretch: normal;
-	line-height: 30px;
-	letter-spacing: 0.1px;
-	color: #666666;
+    /*font-family: PingFangSC-Light;*/
+    font-weight: normal;
+    font-stretch: normal;
+    line-height: 30px;
+    letter-spacing: 0.1px;
+    color: #666666;
     padding: 15px 0;
 }
 .tip_off_mask_body ul li {

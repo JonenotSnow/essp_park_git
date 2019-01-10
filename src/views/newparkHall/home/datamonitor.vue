@@ -5,24 +5,19 @@
       <div class="com-tit">数据监测</div>
       <div class="com-brf">保定市近五年规模以上工业企业科技统计主要指标</div>
       <div class="chartbox">
-        <el-carousel
-          indicator-position="outside"
-          class="resultbox"
-          :interval="50000"
-          arrow="never"
-        >
+        <el-carousel indicator-position="outside" class="resultbox" :interval="50000" arrow="never">
           <el-carousel-item>
             <div id="homecharta" class="conchart"></div>
-          
+
             <div id="homechartb" class="conchart"></div>
-          
+
             <div id="homechartc" class="conchart"></div>
           </el-carousel-item>
           <el-carousel-item>
             <div id="homechartd" class="conchart"></div>
-          
+
             <div id="homecharte" class="conchart"></div>
-          
+
             <div id="homechartf" class="conchart"></div>
           </el-carousel-item>
         </el-carousel>
@@ -47,7 +42,8 @@ export default {
       }
     };
   },
-  created() {
+  async created() {
+    await this.getData()
     this.$nextTick(function() {
       this.initChart();
     });
@@ -75,13 +71,40 @@ export default {
       this.list.chartf = this.$echarts.init(
         document.getElementById("homechartf")
       );
-      this.list.charta.setOption(newParkHomeChartData.firstData);
-      this.list.chartb.setOption(newParkHomeChartData.secondData);
-      this.list.chartc.setOption(newParkHomeChartData.threeData);
-      this.list.chartd.setOption(newParkHomeChartData.firstData);
-      this.list.charte.setOption(newParkHomeChartData.secondData);
-      this.list.chartf.setOption(newParkHomeChartData.threeData);
-    }
+      this.list.charta.setOption(newParkHomeChartData.data0);
+      this.list.chartb.setOption(newParkHomeChartData.data1);
+      this.list.chartc.setOption(newParkHomeChartData.data2);
+      this.list.chartd.setOption(newParkHomeChartData.data3);
+      this.list.charte.setOption(newParkHomeChartData.data4);
+      this.list.chartf.setOption(newParkHomeChartData.data5);
+    },
+    async getData() {
+      let that = this
+
+      await this.$post("/dataIndex/getIndexData",{parkId:sessionStorage.getItem('parkId')}).then(res=>{
+        if(res.resultData){
+          let dataList = []
+          res.resultData.forEach(el => {
+            if(el.type<6){
+                if(!Array.isArray(dataList[el.type])){
+                  dataList[el.type]=[]
+                }
+                dataList[el.type].push(el)
+              }
+          });
+          dataList.forEach((element,index) => {
+            element= element.reverse()
+            newParkHomeChartData['data'+index].xAxis.data=[]
+            newParkHomeChartData['data'+index].series.data=[]
+            element.forEach(element => {
+              newParkHomeChartData['data'+index].xAxis.data.push(element.year)
+
+              newParkHomeChartData['data'+index].series.data.push(element.dataNum)
+            });
+          });
+        }
+      });
+    },
   }
 };
 </script>
@@ -106,7 +129,7 @@ export default {
     margin-right: 0px;
   }
 }
-.el-carousel__item h3{
-  color: #ffffff
+.el-carousel__item h3 {
+  color: #ffffff;
 }
 </style>

@@ -1,7 +1,7 @@
-export const firstData= {
+export let data0= {
     // backgroundColor: '#FBFBFB',
         title: {
-            text: 'R&D人员(万人)',
+            text: '研究与发展（R&D）人员数（万人）',
             textStyle:{
                 color:"#10b5ff",
                 fontWeight:'normal'
@@ -52,7 +52,7 @@ export const firstData= {
                 symbol:'none',
                 smooth: 0.2,
                 color:['#66AEDE'],
-                data:[800, 300, 500, 800, 300, 600,500,600]
+                data:[1.9, 2.3, 2.2, 2.5, 2.2]
             }
         ]
 };

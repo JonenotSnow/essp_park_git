@@ -99,9 +99,7 @@
           </span>
                     <div class="inline-box wrap" id="publishNewInfo">
                         <!-- <essp-editor ref="childEditor"></essp-editor> -->
-                        <quill-editor v-model="content" :options="editorOption">
-                            <div id="toolbar" slot="toolbar"></div>
-                        </quill-editor>
+                        <essp-editor :editorCont="this.content" @onEditorChange="onEditorChange"></essp-editor>
                     </div>
                 </div>
             </div>
@@ -173,22 +171,27 @@
 </template>
 
 <script>
-    import "quill/dist/quill.core.css";
-    import "quill/dist/quill.snow.css";
-    import "quill/dist/quill.bubble.css";
-    import {quillEditor} from "vue-quill-editor";
     import EsspBreadCrumb from "@/components/EsspBreadCrumb";
     import EsspTag from "@/components/EsspTag";
     import EsspAddTag from "@/components/EsspAddTag";
     import ParkUpload from "@/views/parkHall/parkUpload";
+    import EsspEditor from "@/components/EsspEditor";
     import {classtType} from "./../../../util/classtType";
+
     import Moment from "moment";
 
     export default {
         name: "",
         data() {
             return {
-                msg: "发布园区资讯",
+                //新版上传图片
+                parkUploadData: {
+                    title: '惠政主图：',
+                    src: '',
+                    isPic: '（该图片以资讯主图进行展示,每张最大2M，图片宽高比为7：4，建议分辨率建议为840*480，支持jpg/jpeg/gif/png格式。）',
+                    imgItemType: 'information',
+                    styleClass:'inline_span_my'
+                },
                 breadlist: [
                     {
                         path: "/parkIndex/parkInformation/all",
@@ -202,44 +205,12 @@
                 initiatorWay: "",
                 typeitems: [], //类型明细
                 infoDialog: false,
-                editorOption: {
-                    placeholder: `请您编辑资讯详情内容`,
-                    modules: {
-                        toolbar: [
-                            ["bold", "italic", "underline", "strike"],
-                            ["blockquote", "code-block"],
-                            [{header: 1}, {header: 2}],
-                            [{list: "ordered"}, {list: "bullet"}],
-                            [{script: "sub"}, {script: "super"}],
-                            [{indent: "-1"}, {indent: "+1"}],
-                            [{direction: "rtl"}],
-                            [{size: ["small", false, "large", "huge"]}],
-                            [{header: [1, 2, 3, 4, 5, 6, false]}],
-                            [{font: []}],
-                            [{color: []}, {background: []}],
-                            [{align: []}],
-                            ["clean"],
-                            ["link", "image"]
-                        ]
-                    }
-                },
                 content: "", //资讯详情
                 classtType: "", //资讯明细分类
                 informationTitle: "", //资讯标题
                 contentbrif: "", //资讯简介
                 saveType: "0", //暂存草稿箱
                 tags: [], //标签
-                //新版上传图片
-                parkUploadData: {
-                    title: "资讯配图 :",
-                    src: "", //资讯配图
-                    isPic:
-                        "（该图片以资讯主图进行展示,每张最大2M，图片宽高比为7：4，建议分辨率建议为840*480，支持jpg/jpeg/gif/png格式。）",
-                    imgItemType: "information", // 图片图库类型 资讯
-                    styleClass: "inline_span_my"
-                },
-                // titleImg:"",//资讯图片，已废弃
-                // stillUpdateImg:false,//默认图片上传标记位，初始值为false，上传成功后设置为false，已废弃
                 pubComment: "", //备注
                 approveType: "1", //是否需要公司内部审核
                 informationId: "", //资讯id，供后台去重功能
@@ -249,7 +220,7 @@
                     entId: ""
                 },
                 createTime: "",
-                cstNm: JSON.parse(sessionStorage.getItem("ctData")).userInfo.cstNm
+                cstNm: JSON.parse(sessionStorage.getItem("userInfo")).cstNm || ''
             };
         },
         components: {
@@ -257,12 +228,13 @@
             EsspTag,
             EsspAddTag,
             ParkUpload,
-            quillEditor
+            EsspEditor
         },
         created() {
             this.getDraftResource();
-            if (this.SSH.getItem("userInfo").cstNm) {
-                this.initiatorWay = this.SSH.getItem("userInfo").cstNm;
+            console.log();
+            if (JSON.parse(sessionStorage.getItem("userInfo")).cstNm) {
+                this.initiatorWay = JSON.parse(sessionStorage.getItem("userInfo")).cstNm;
             }
         },
         filters: {
@@ -271,6 +243,11 @@
             }
         },
         methods: {
+            // 编辑器的值获取
+            onEditorChange(val){
+                this.content = val;
+                console.log(this.content);
+            },
             // 改变图片路径
             showImgUrl(url) {
                 this.parkUploadData.src = url;
@@ -396,7 +373,7 @@
                         saveType: type,
                         tags: this.tags.join(","),
                         pubComment: this.pubComment,
-                        infoDetail: this.content ? this.content.replace(/\s/g, "&nbsp") : "",
+                        infoDetail: this.content,
                         informationId: this.informationId
                     }).then(response => {
                         if (response.resultCode == "CLT000000000") {
@@ -432,7 +409,7 @@
                     saveType: type,
                     tags: this.tags.join(","),
                     pubComment: this.pubComment,
-                    infoDetail: this.content ? this.content.replace(/\s/g, "&nbsp") : "",
+                    infoDetail: this.content,
                     informationId: this.informationId
                 }).then(response => {
                     if (response.resultCode == "CLT000000000") {
@@ -448,17 +425,6 @@
         }
     };
 </script>
-<style>
-    #publishNewInfo .ql-container {
-        min-height: 0;
-    }
-
-    .ql-toolbar .ql-formats .ql-link,
-    .ql-toolbar .ql-formats .ql-image,
-    .ql-toolbar .ql-formats .ql-video {
-        display: none;
-    }
-</style>
 
 
 <style lang='less' scoped>

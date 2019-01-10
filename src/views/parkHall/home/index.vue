@@ -1,16 +1,16 @@
 <script src="../../../../config/index.js"></script>
 <template>
     <div>
-        <fix-part :userDetail="userDetail" ></fix-part> 
+        <fix-part :userDetail="userDetail"></fix-part>
 
-        <component :is="item" v-for="item in modulesList" :key="item.id"  :bannerDisList="bannerDisList"></component>
+        <component :is="item" v-for="item in modulesList" :key="item.id" :bannerDisList="bannerDisList"></component>
         <!-- <banner :bannerDisList="bannerDisList"></banner>
 
         <order-menu></order-menu>
          <service-hall></service-hall>
          <hot-center></hot-center>
          <notice></notice>
-       
+
         <parkActive :activity_hot="activity_hot" :activity_newest="activity_newest"></parkActive>
          <park-policy :huizheng_hot="huizheng_hot" :huizheng_newest="huizheng_newest"></park-policy>
          <datamonitor></datamonitor>
@@ -19,7 +19,7 @@
          <joinenterprise></joinenterprise>
          <more-news></more-news>-->
         <!-- 发布区快速通道权限弹窗 -->
-        
+
     </div>
 </template>
 
@@ -35,7 +35,7 @@
     import resultsdisplay from '@/views/newparkHall/home/resultsdisplay';//成果展示
     import joinenterprise from '@/views/newparkHall/home/joinenterprise';//加入团队
     import banner from "@/views/newparkHall/home/banner.vue";
-    
+
     import orderMenu from "@/views/newparkHall/home/menu.vue"; //菜单
     import serviceHall from '@/views/newparkHall/home/serviceHall.vue'; //大厅服务
     import parkActive from '@/views/newparkHall/home/parkActive.vue'; //园区活动（旧园区，淮安）
@@ -80,83 +80,83 @@
                 timer: null,
                 userrole: "",
                 btnText: 0,
-                userDetail:{
-                    email:''
+                userDetail: {
+                    email: ''
                 },
-                modulesList:[],
-                modulesAllList:[
+                modulesList: [],
+                modulesAllList: [
                     {
                         label: "banner模块",
                         key: 1,
-                        name:'banner'
+                        name: 'banner'
                     },
                     {
                         label: "快捷菜单",
                         key: 2,
-                        name:'orderMenu'
+                        name: 'orderMenu'
                     },
                     {
-                        label:"办事大厅",
+                        label: "办事大厅",
                         key: 3,
-                        name:'serviceHall'
+                        name: 'serviceHall'
                     },
                     {
-                        label:"中心热门需求",
+                        label: "中心热门需求",
                         key: 4,
-                        name:'hotCenter'
+                        name: 'hotCenter'
                     },
                     {
-                        label:"资讯公告",
+                        label: "资讯公告",
                         key: 5,
-                        name:'notice'
+                        name: 'notice'
                     },
                     {
-                        label:"旧园区活动",
+                        label: "旧园区活动",
                         key: 6,
-                        name:'parkActive'
+                        name: 'parkActive'
                     },
                     {
-                        label:"数据监测",
+                        label: "数据监测",
                         key: 7,
-                        name:'datamonitor'
+                        name: 'datamonitor'
                     },
                     {
-                        label:"专家服务团队",
+                        label: "专家服务团队",
                         key: 8,
-                        name:'expertteam'
+                        name: 'expertteam'
                     },
                     {
-                        label:"成果展示",
+                        label: "成果展示",
                         key: 9,
-                        name:'resultsdisplay'
+                        name: 'resultsdisplay'
                     },
                     {
-                        label:"入驻企业",
+                        label: "入驻企业",
                         key: 10,
-                        name:'joinenterprise'
+                        name: 'joinenterprise'
                     },
                     {
-                        label:"新版园区活动",
+                        label: "新版园区活动",
                         key: 11,
-                        name:'newparkActive'
+                        name: 'newparkActive'
                     },
                     {
-                        label:"园区惠政",
+                        label: "园区惠政",
                         key: 12,
-                        name:'parkPolicy'
+                        name: 'parkPolicy'
                     },
                     {
-                        label:"最新资讯",
+                        label: "最新资讯",
                         key: 13,
-                        name:'MoreNews'
+                        name: 'MoreNews'
                     }
-                   
+
                 ],
-                defaultModules:[
-                    1,2,6,12,13
+                defaultModules: [
+                    1, 2, 6, 12, 13
                 ],
-                bdModules:[
-                    1,2,3,4,5,11,7,8,9,10
+                bdModules: [
+                    1, 2, 3, 4, 5, 11, 7, 8, 9, 10
                 ]
             };
         },
@@ -165,16 +165,16 @@
         created() {
             this.getAllData();
             // this.getInfo();
-             if(this.isBdPark){
-                 this.bdModules.forEach(item=>{
-                    this.modulesList.push(this.modulesAllList[item-1].name) 
-                 })
-             } else{
-                 this.defaultModules.forEach(item=>{
-                    this.modulesList.push(this.modulesAllList[item-1].name) 
-                 })
-             }
-          
+            if (this.isBdPark) {
+                this.bdModules.forEach(item => {
+                    this.modulesList.push(this.modulesAllList[item - 1].name)
+                })
+            } else {
+                this.defaultModules.forEach(item => {
+                    this.modulesList.push(this.modulesAllList[item - 1].name)
+                })
+            }
+
 
         },
         destroyed() {
@@ -203,25 +203,24 @@
             getAllData() {
                 this.$post("/parkManage/getParkById", {
                     parkId: window.sessionStorage.getItem("parkId")
-                    
+
                 }).then(res => {
                     if (res.resultCode == "CLT000000000") {
-                        if( res.resultData.slidesImage){
-                        let list = res.resultData.slidesImage.split(',')
-                        this.bannerDisList.push(...list)
+                        if (res.resultData.slidesImage) {
+                            let list = JSON.parse(res.resultData.slidesImage)
+                            this.bannerDisList = list;
+                            console.log( this.bannerDisList);
                         }
-                        if(res.resultData){
+                        if (res.resultData) {
                             this.userDetail.email = res.resultData.email
-                            this.userDetail.parkPosition =res.resultData.parkPosition
-                            this.userDetail.parkAdminTel =res.resultData.parkAdminTel
+                            this.userDetail.parkPosition = res.resultData.parkPosition
+                            this.userDetail.parkAdminTel = res.resultData.parkAdminTel
                         }
                     }
                 });
             }
         },
-        computed: {
-
-        }
+        computed: {}
     };
 </script>
 

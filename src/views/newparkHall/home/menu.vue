@@ -28,13 +28,12 @@
                         ></div>
                     </marquee>
                     <div class="swiper_inner2" v-if="infoList && infoList[0].createTime">
-                        {{infoList[0].createTime |
-                        timerFormat}}
+                        {{infoList[0].createTime | timerFormat}}
                     </div>
                     <span
                         class="more"
                         v-if="LoginUserRole.includes('33') || LoginUserRole.includes('34')"
-                        @click="$router.push('/parkHall/manage/activityPoolAddPark')"
+                        @click="$router.push('/parkHall/manage/noticeAndAD')"
                     >More&gt;</span>
                 </div>
                 <div v-else class="noData">暂无通知通告~~</div>
@@ -44,7 +43,7 @@
                  v-if="LoginUserRole.includes('33') || LoginUserRole.includes('34')">
                 <div class="swiper_inner">任务池：</div>
                 <div class="esspclearfix" v-if="lastApplyParkFlag">
-                    <div class="swiper_inner3" @click="linkToPage">{{lastApplyPark.cstNm}}申请入园</div>
+                    <div class="swiper_inner3" @click="cancelAudit(lastApplyPark.id)">{{lastApplyPark.cstNm}}申请入园</div>
                     <div class="swiper_inner2"> {{lastApplyPark.joinTime | timerFormat}}</div>
                     <span
                         class="more"
@@ -245,7 +244,7 @@
                         },
                         {
                             name: "普惠金融",
-                            path: "/parkHall/manage/inclusiveFinance",
+                            path: "",
                             src: require("@/assets/imgs/icon6.png"),
                             isShow: true,
                             query: {}
@@ -254,7 +253,7 @@
                             name: "入驻审核",
                             path: "/parkHall/manage/activityPoolAddPark",
                             src: require("@/assets/imgs/icon4.png"),
-                            isShow: true,
+                            isShow: false,
                             query: {
                                 type: 1
                             }

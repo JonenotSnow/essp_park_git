@@ -40,14 +40,13 @@
                 LoginUserRol: '',
                 headMenu: [],
                 curParkId: sessionStorage.getItem("parkId") || "",
-                myList: sessionStorage.getItem("myList") || []
             };
         },
         watch: {
             $route() {
                 //路由变化获取最新选择的园区
                 this.curParkId = sessionStorage.getItem("parkId");
-                this.myList = sessionStorage.getItem("myList");
+
                 var menuList = this.SSH.getItem("menuList");
                 this.headMenu = (menuList && menuList.children) ||this.defaultNav;
             }
@@ -73,14 +72,14 @@
                                 var menuChildChild = menuChild.menuChild[z];
                                 if(menuChildChild.name == routerName) {
                                     this.active = i;
-                                    sessionStorage.setItem('navIndex',i); 
+                                    sessionStorage.setItem('navIndex',i);
                                     break
                                 }
                             }
                         } else {
                             if(menuChild.name == routerName) {
                                 this.active = i;
-                                sessionStorage.setItem('navIndex',i); 
+                                sessionStorage.setItem('navIndex',i);
                                 break
                             }
                         }
@@ -88,17 +87,17 @@
                 } else {
                     if(this.headMenu[i].name == routerName) {
                         this.active = i;
-                        sessionStorage.setItem('navIndex',i); 
+                        sessionStorage.setItem('navIndex',i);
                         break
                     }
                 }
             }
-           
+
         },
         methods: {
             toLink(item,index) {
                 this.active = index;
-                sessionStorage.setItem('navIndex',index); 
+                sessionStorage.setItem('navIndex',index);
                 this.$router.push({
                     name: item.name
                 })

@@ -665,6 +665,7 @@
                 }
 
                 this.isMaskShow = false;
+                this.isUpload =false;
                 this.$emit("changeImgUrl",this.activityPhoto);
             }
         }

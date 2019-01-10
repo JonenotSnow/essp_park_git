@@ -1,75 +1,84 @@
 <template>
     <div>
         <!-- 列表没有状态和类型 -->
-        <div class="selectTitle" v-if="list">
-            <span class="all"><i class="el-icon-circle-plus"></i>全选</span>
-            共
-            <span class="total">4</span>
-            条，已选
-            <span class="total">1</span>
-            条
-            <span class="removeBtn">删除</span>
+        <div v-if="list">
+            <div class="selectTitle">
+                <!-- <span class="all"><i class="el-icon-circle-plus"></i>全选</span> -->
+                <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox>
+                共
+                <span class="total">4</span>
+                条，已选
+                <span class="total">1</span>
+                条
+                <span class="removeBtn">删除</span>
+            </div>
+            <ul class="listWrap">
+                <li class="list" v-for="item in list" :key="item">
+                    <div class="ListTop">
+                        <el-checkbox-group v-model="checkedCities" @change="handleCheckedCitiesChange">
+                            <el-checkbox :label="item"></el-checkbox>
+                        </el-checkbox-group>
+                        <span class="time">保存时间：2018-10-22  10：24：00</span>
+                        <span class="create">发布人：孔乙己</span>
+                        <i class="el-icon-delete remove"></i>
+                    </div>
+                    <div class="listBottom">
+                        <img src="@assets//actlogo.png" alt="">
+                        <div class='display'>
+                            <p class="title">成果名称</p>
+                            <p class="content">这是关于成果的的介绍描述，这是关于成果的的介绍描述，
+                                这是关于成果的的介绍描述，这是关于成果的的介绍描述，这是
+                                关于成果的的介绍描...，这是关于成果的的介绍描述，这是关于成
+                                果的的介绍描述，这是关于成果的的介绍描述，这是关于成
+                                果的的介绍描述，这是关于成···</p>
+                        </div>
+                        <div class='editorBtn'>
+                            <span>编辑</span>
+                        </div>
+                    </div>
+                </li>
+            </ul> 
         </div>
-        <ul class="listWrap" v-if="list">
-            <li class="list" v-for="item in list" :key="item">
-                <div class="ListTop">
-                    <i class="el-icon-circle-plus"></i>
-                    <span class="time">保存时间：2018-10-22  10：24：00</span>
-                    <span class="create">发布人：孔乙己</span>
-                    <i class="el-icon-delete remove"></i>
-                </div>
-                <div class="listBottom">
-                    <img src="../../../assets/actlogo.png" alt="">
-                    <div class='display'>
-                        <p class="title">成果名称</p>
-                        <p class="content">这是关于成果的的介绍描述，这是关于成果的的介绍描述，
-                            这是关于成果的的介绍描述，这是关于成果的的介绍描述，这是
-                            关于成果的的介绍描...，这是关于成果的的介绍描述，这是关于成
-                            果的的介绍描述，这是关于成果的的介绍描述，这是关于成
-                            果的的介绍描述，这是关于成···</p>
-                    </div>
-                    <div class='editorBtn'>
-                        <span>编辑</span>
-                    </div>
-                </div>
-            </li>
-        </ul> 
         <div v-else class="noData">
-            <span>尚未发布成果，点击右上方发布按钮立即发布吧！</span>
+            <span>尚未发布{{type}}，点击右上方发布按钮立即发布吧！</span>
             <img src="@assets/newparkimg/newmanage/achievementSet/no_list.png" alt="">
-        </div>
-        <div class="pageList" v-if="list">
-            <el-pagination
-                @size-change="handleSizeChange"
-                @current-change="handleCurrentChange"
-                :current-page="pageNum"
-                :page-sizes="[5, 10, 15, 20]"
-                :page-size="pageSize"
-                layout="total, sizes, prev, pager, next, jumper"
-                :total="totalCount">
-            </el-pagination>
         </div>
     </div>
 </template>
 
 <script>
+
+  const cityOptions = ['上海', '北京', '广州', '深圳'];
 export default {
-    props:['list'],
+  props: {
+      type: {
+          type: String,
+          default: ''
+      },
+      list:{
+          type: [],
+          default: ''
+      }
+  },
     data() {
         return {
-            totalCount:0,
-            pageNum:1,
-            pageSize:5
+            checkAll: false,
+            checkedCities: ['上海', '北京'],
+            cities: cityOptions,
+            isIndeterminate: true
         }
     },
     created () {
     },
     methods: {
-        handleSizeChange(val) {
-            this.pageSize = val;
+        handleCheckAllChange(val) {
+            this.checkedCities = val ? cityOptions : [];
+            this.isIndeterminate = false;
         },
-        handleCurrentChange(val) {
-            this.pageNum = val;
+        handleCheckedCitiesChange(value) {
+            let checkedCount = value.length;
+            this.checkAll = checkedCount === this.cities.length;
+            this.isIndeterminate = checkedCount > 0 && checkedCount < this.cities.length;
         }
     },
 }
@@ -244,11 +253,5 @@ export default {
         letter-spacing: 0px;
         color: #666666;
     }
-}
-.pageList{
-    width: 910px;
-    margin: 45px auto 57px;
-    text-align: right;
-    padding-bottom: 57px;
 }
 </style>

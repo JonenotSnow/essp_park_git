@@ -200,6 +200,7 @@ export const menuListData = {
         }, {
             "id": "0412",
             "menu": "办事大厅",
+            "name": "park-officeHall",
             "parentId": "04",
             "ismenu": "1",
             "isshow": "1",
@@ -307,77 +308,8 @@ export const menuListData = {
                 }
                 ]
             }]
-        }, {
-            "id": "0415",
-            "menu": "平台活动",
-            "name": "park-active",
-            "parentId": "04",
-            "ismenu": "1",
-            "isshow": "1",
-            "loginflag": "0",
-            "cetificateflag": "0",
-            "enterpriseflag": "0",
-            "authorityflag": "1",
-            "isclick": "1",
-            "message": "园区功能正在内测中，敬请期待!",
-            "children": [{
-                "id": "04150000",
-                "menu": "全部活动",
-                "name": "park-allActive",
-                "parentId": "0415",
-                "ismenu": "1",
-                "isshow": "1",
-                "loginflag": "0",
-                "cetificateflag": "0",
-                "enterpriseflag": "0",
-                "authorityflag": "1",
-                "isclick": "1",
-                "message": "园区功能正在内测中，敬请期待!",
-                "children": []
-            }, {
-                "id": "04150001",
-                "menu": "我报名的活动",
-                "name": "park-enrollActive",
-                "parentId": "0415",
-                "ismenu": "1",
-                "isshow": "1",
-                "loginflag": "1",
-                "cetificateflag": "1",
-                "enterpriseflag": "1",
-                "authorityflag": "1",
-                "isclick": "1",
-                "message": "园区功能正在内测中，敬请期待!",
-                "children": []
-            }, {
-                "id": "04150002",
-                "menu": "我发起的活动",
-                "name": "park-launchActive",
-                "parentId": "0415",
-                "ismenu": "1",
-                "isshow": "1",
-                "loginflag": "1",
-                "cetificateflag": "1",
-                "enterpriseflag": "1",
-                "authorityflag": "1",
-                "isclick": "1",
-                "message": "园区功能正在内测中，敬请期待!",
-                "children": []
-            }, {
-                "id": "04150003",
-                "menu": "我关注的活动",
-                "name": "park-followActive",
-                "parentId": "0415",
-                "ismenu": "1",
-                "isshow": "1",
-                "loginflag": "1",
-                "cetificateflag": "1",
-                "enterpriseflag": "1",
-                "authorityflag": "1",
-                "isclick": "1",
-                "message": "园区功能正在内测中，敬请期待!",
-                "children": []
-            }]
-        }, {
+        },
+         {
             "id": "0416",
             "menu": "系统管理",
             "name": "park-manage",
@@ -462,7 +394,7 @@ export const menuListData = {
                 }, {
                     "id": "04160003",
                     "menu": "数据管理",
-                    "name": "park-sciGraphicaSet",
+                    "name": "park-dataManage",
                     "parentId": "041600",
                     "ismenu": "1",
                     "isshow": "1",
@@ -477,7 +409,7 @@ export const menuListData = {
                     "id": "04160004",
                     "menu": "专家团队",
                     "parentId": "041600",
-                    "name": "park-experteamSet",
+                    "name": "park-expertTeam",
                     "ismenu": "1",
                     "isshow": "1",
                     "loginflag": "1",
@@ -490,7 +422,7 @@ export const menuListData = {
                 }, {
                     "id": "04160005",
                     "menu": "成果管理",
-                    "name": "park-achievementSet",
+                    "name": "park-resultManage",
                     "parentId": "041600",
                     "ismenu": "1",
                     "isshow": "1",
@@ -517,7 +449,7 @@ export const menuListData = {
                 "children": [{
                     "id": "04160100",
                     "menu": "科技政策",
-                    "name": "park-technologyPolicySet",
+                    "name": "park-sciAndTechPolicy",
                     "parentId": "041601",
                     "ismenu": "1",
                     "isshow": "1",
@@ -545,7 +477,7 @@ export const menuListData = {
                 }, {
                     "id": "04160102",
                     "menu": "平台活动",
-                    "name": "park-activeSet",
+                    "name": "park-platformAtivity",
                     "parentId": "041601",
                     "ismenu": "1",
                     "isshow": "1",
@@ -555,21 +487,23 @@ export const menuListData = {
                     "authorityflag": "1",
                     "isclick": "1",
                     "message": "园区功能正在内测中，敬请期待!",
-                    "children": []
-                }, {
-                    "id": "04160103",
-                    "menu": "通知公告",
-                    "name": "park-noticeAndAD",
-                    "parentId": "041601",
-                    "ismenu": "1",
-                    "isshow": "1",
-                    "loginflag": "1",
-                    "cetificateflag": "1",
-                    "enterpriseflag": "1",
-                    "authorityflag": "1",
-                    "isclick": "1",
-                    "message": "园区功能正在内测中，敬请期待!",
-                    "children": []
+                    "children": [
+                        {
+                            "id": "0416010200",
+                            "menu": "成员管理",
+                            "name": "park-publishPlatformAtivity",
+                            "parentId": "04160102",
+                            "ismenu": "0",
+                            "isshow": "0",
+                            "loginflag": "1",
+                            "cetificateflag": "1",
+                            "enterpriseflag": "1",
+                            "authorityflag": "1",
+                            "isclick": "1",
+                            "message": "园区功能正在内测中，敬请期待!",
+                            "children": []
+                        }
+                        ]
                 }]
             }, {
                 "id": "041602",
@@ -615,7 +549,7 @@ export const menuListData = {
                 "children": [{
                     "id": "04160300",
                     "menu": "发布审核",
-                    "name": "park-releaseAuditSet",
+                    "name": "park-publishAudit",
                     "parentId": "041603",
                     "ismenu": "1",
                     "isshow": "1",
@@ -626,7 +560,7 @@ export const menuListData = {
                     "isclick": "1",
                     "message": "园区功能正在内测中，敬请期待!",
                     "children": []
-                }, {
+                },{
                     "id": "04160301",
                     "menu": "入驻审核",
                     "name": "park-activityPoolAddPark",
@@ -640,10 +574,10 @@ export const menuListData = {
                     "isclick": "1",
                     "message": "园区功能正在内测中，敬请期待!",
                     "children": []
-                }, {
+                },{
                     "id": "04160302",
-                    "menu": "活动报名审核",
-                    "name": "park-activityPoolActivityAditing",
+                    "menu": "活动发布审核",
+                    "name": "park-activityPublishAudit",
                     "parentId": "041603",
                     "ismenu": "1",
                     "isshow": "1",
@@ -659,6 +593,7 @@ export const menuListData = {
                 "id": "041604",
                 "menu": "需求管理",
                 "parentId": "0416",
+                "name":"",
                 "ismenu": "1",
                 "isshow": "1",
                 "loginflag": "1",
@@ -667,7 +602,22 @@ export const menuListData = {
                 "authorityflag": "1",
                 "isclick": "1",
                 "message": "园区功能正在内测中，敬请期待!",
-                "children": []
+                "children": [
+                    {
+                        "id": "041604",
+                        "menu": "需求管理",
+                        "parentId": "0416",
+                        "name":"park-needManage",
+                        "ismenu": "1",
+                        "isshow": "1",
+                        "loginflag": "1",
+                        "cetificateflag": "1",
+                        "enterpriseflag": "1",
+                        "authorityflag": "1",
+                        "isclick": "1",
+                        "message": "园区功能正在内测中，敬请期待!"
+                    }
+                ]
             }]
         }]
     }]
