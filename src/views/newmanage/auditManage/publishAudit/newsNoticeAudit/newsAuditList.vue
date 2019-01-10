@@ -149,9 +149,13 @@
             }
         },
         created() {
-
+            this.getNewsAudit();
         },
         methods: {
+            getNewsAudit(){
+                var url = "/audit/information";
+                
+            },
             handleSizeChange(val) {
                 this.pageSize = val;
             },

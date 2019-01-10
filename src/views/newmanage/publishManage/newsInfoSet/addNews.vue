@@ -2,7 +2,7 @@
  * @Author: Evan-lian
  * @Date: 2019-01-07 16:14:17
  * @LastEditors: Evan-lian
- * @LastEditTime: 2019-01-08 20:07:04
+ * @LastEditTime: 2019-01-10 18:33:28
  * @Description: 发布新闻
  -->
 <template>
@@ -216,7 +216,7 @@
             quillEditor
         },
         created() {
-            // this.getDraftResource();
+            this.getDraftResource();
         },
         filters: {
             timerFormat(vaule) {
@@ -251,32 +251,28 @@
                 }
                 return true;
             },
-            //获取资讯暂存的草稿数据
+            //获取新闻暂存的草稿数据
             getDraftResource() {
-                this.typeitems = classtType.infoType;
-                var informationId = this.$route.query.informationId; //parkIndex/launchForm?draftId=1
+                // this.typeitems = classtType.infoType;
+             
+                var informationId = this.$route.query.informationId;
                 if (informationId) {
                     var pop = {informationId};
                     this.$post(this.$apiUrl.parkInfo.infoById, pop).then(
                         response => {
-                            var codestatus = response.resultCode;
-                            if (codestatus == "CLT000000000") {
                                 let data = response.resultData;
                                 this.informationTitle = data.informationTitle; //资讯标题
                                 this.contentbrif = data.content; //资讯简介
-                                this.classtType = data.classtType; //资讯明细分类
                                 this.approveType = data.approveType; //是否需要公司内部审核1是0否
                                 this.content = data.infoDetail; //资讯详情
                                 this.pubComment = data.pubComment; //资讯备注
                                 this.informationId = data.informationId; //资讯id
                                 this.parkUploadData.src = data.titleImg ? data.titleImg : ""; //资讯配图
                                 this.tags = data.tagsTxt ? data.tagsTxt.split(",") : [];
-                            } else {
-                                this.$message.info(response.resultMsg);
-                            }
+                            
                         },
                         err => {
-                            this.$message.error("接口异常");
+                            this.$message.error(err.resultMsg);
                         }
                     );
                 }

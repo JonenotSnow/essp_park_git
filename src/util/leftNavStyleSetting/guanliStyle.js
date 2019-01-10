@@ -20,4 +20,5 @@ export const guanliStyle = {
     "park-platformAtivity":"guanliStyle",//平台活动总入口
     "park-policieAndRegulationAudit":"guanliStyle",//科技政策发布审核
     "park-activityPublishAudit": "guanliStyle",//平台活动发布审核
+    "park-newsNoticeAudit":"guanliStyle",//通知公告发布审核
 }
