@@ -39,7 +39,9 @@
             <li class="editor">
                 <span class="require">*</span>
                 <span class="title">成果详情：</span>
-                <div></div>
+                <div class="editor_wrap esspclearfix">
+                    <essp-editor :editorCont="editorCon" @onEditorChange="onEditorChange"></essp-editor>
+                </div>
             </li>
             <li>
                 <span class="title1">发明人：</span>
@@ -50,7 +52,7 @@
                 <input type="text" placeholder="请输入所属单位">
                 <span class="sub">（注：发明人与所属单位至少填一项）</span>
             </li>
-            
+
             <li>
                 <span class="scan">预 览</span>
             </li>
@@ -63,12 +65,15 @@
 
 <script>
 import EsspBreadCrumb from "@/components/EsspBreadCrumb";
+import EsspEditor from "@/components/EsspEditor";
 export default {
     components: {
-        EsspBreadCrumb
+        EsspBreadCrumb,
+        EsspEditor
     },
     data() {
         return {
+            editorCon:'', //编辑器内容
             breadlist: [
                 {
                     path: "/parkHome",
@@ -116,7 +121,7 @@ export default {
         }
     },
     created() {
-        
+
     },
     methods: {
         //图片上传
@@ -137,7 +142,7 @@ export default {
             param.append('model', 'manageModuleOne');
             var _this = this;
             this.$post(this.$apiUrl.upload.upload,param).then(response => {
-                
+
             },err=>{
                 this.$message.error("接口异常")
             })
@@ -280,18 +285,12 @@ export default {
                 span{
                     float: left;
                 }
-                div{
+                .editor_wrap{
                     float: left;
                     margin-left:8px;
-                    width: 700px;
-                    height: 400px;
-                    max-width: 700px;
-                    max-height:400px;
-                    min-width: 700px;
+                    width: 720px;
                     min-height:400px;
                     border-radius: 3px;
-                    border: solid 1px #cccccc;
-                    padding:10px;
                 }
             }
         }
@@ -305,8 +304,8 @@ export default {
             display: inline-block;
             width: 180px;
             height: 40px;
-            background-image: linear-gradient(31deg, 
-                #22a2fa 0%, 
+            background-image: linear-gradient(31deg,
+                #22a2fa 0%,
                 #10b5ff 100%);
             border-radius: 5px;
             cursor: pointer;

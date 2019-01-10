@@ -514,13 +514,16 @@ const utils = {
     isBdPark: function () {
         //暂时依靠两种方案判断，（parkname 有保定 ，或者登陆带了 bdFlag 任意一个都算保定园区）
         var isParkNameHasBd = false;
-        let bdFlag = sessionStorage.getItem("bdParkId").indexOf('bd')>-1
-        let parkName = sessionStorage.getItem("parkName")
-        if (parkName) {         
-            var falg = parkName.indexOf("保定") > -1;
-            isParkNameHasBd = falg;
+        if(sessionStorage.getItem("bdParkId")) {
+
+            let bdFlag = sessionStorage.getItem("bdParkId").indexOf('bd')>-1
+            let parkName = sessionStorage.getItem("parkName")
+            if (parkName) {
+                var falg = parkName.indexOf("保定") > -1;
+                isParkNameHasBd = falg;
+            }
+            return isParkNameHasBd || bdFlag;
         }
-        return isParkNameHasBd || bdFlag;
     }
 
 }
