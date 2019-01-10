@@ -10,14 +10,19 @@
             <li>
                 <span class="require">*</span>
                 <span class="title">成果名称：</span>
-                <input type="text" placeholder="请输入成果名称">
+                <input type="text" v-model="form.name" placeholder="请输入成果名称">
             </li>
             <li>
                 <span class="require">*</span>
                 <span class="title">所属领域：</span>
-                <select placeholder="请输入所属领域">
-                    <option :value="item.id" :label="item.name" v-for="(item,index) in searchList" :key="index">{{item.name}}</option>
-                </select>
+                <el-select class="form_input_height" v-model="form.field" placeholder="请输入所属领域">
+                    <el-option
+                        v-for="(item,index) in searchList"
+                        :key="index"
+                        :label="item.name"
+                        :value="item.id">
+                    </el-option>
+                </el-select>
             </li>
             <li class="pic">
                 <span class="require">*</span>
@@ -26,6 +31,7 @@
                     class="avater-uploader"
                     :before-upload="beforeUpload"
                     :action='uploads'>
+                    <img :src="form.photo" v-if="form.photo" class="showUpload">
                     <i class="icon iconfont icon-tianjia- tianjia"></i>
                     <p class="detil">上传图片</p>
                 </el-upload>
@@ -34,13 +40,13 @@
             <li class="resume">
                 <span class="require">*</span>
                 <span class="title">成果简介：</span>
-                <textarea placeholder="请输入成果简介"></textarea>
+                <textarea placeholder="请输入成果简介" v-model="form.title"></textarea>
             </li>
             <li class="editor">
                 <span class="require">*</span>
                 <span class="title">成果详情：</span>
                 <div class="editor_wrap esspclearfix">
-                    <essp-editor :editorCont="editorCon" @onEditorChange="onEditorChange"></essp-editor>
+                    <essp-editor :editorCont="form.detail" @onEditorChange="onEditorChange"></essp-editor>
                 </div>
             </li>
             <li>
@@ -62,261 +68,305 @@
         </p>
     </div>
 </template>
+<style>
+    .form_input_height input {
+        height: 35px !important;
+        line-height: 35px !important;
+        border: 1px solid #ccc;
+    }
 
+    .form_input_height .el-input__icon {
+        line-height: 35px !important;
+    }
+</style>
 <script>
-import EsspBreadCrumb from "@/components/EsspBreadCrumb";
-import EsspEditor from "@/components/EsspEditor";
-export default {
-    components: {
-        EsspBreadCrumb,
-        EsspEditor
-    },
-    data() {
-        return {
-            editorCon:'', //编辑器内容
-            breadlist: [
-                {
-                    path: "/parkHome",
-                    name: "系统管理"
-                },
-                {
-                    path: "",
-                    name: "成果管理"
-                },
-                {
-                    path: "",
-                    name: "发布成果"
-                }
-            ],
-            searchList:[
-                {
-                    id:'0',
-                    name:'电子信息'
-                },{
-                    id:'1',
-                    name:'生物与新医药'
-                },{
-                    id:'2',
-                    name:'新材料'
-                },{
-                    id:'3',
-                    name:'高新技术服务'
-                },{
-                    id:'4',
-                    name:'新能源与节能'
-                },{
-                    id:'5',
-                    name:'资源与环境'
-                },{
-                    id:'6',
-                    name:'现代农业'
-                },{
-                    id:'7',
-                    name:'高端装备制造'
-                },{
-                    id:'8',
-                    name:'其他'
-                }
-            ]
-        }
-    },
-    created() {
+    import EsspBreadCrumb from "@/components/EsspBreadCrumb";
+    import EsspEditor from "@/components/EsspEditor";
 
-    },
-    methods: {
-        //图片上传
-        beforeUpload(file) {
-            const isJPG = file.type === "image/jpeg" || file.type === "image/png"  || file.type === "image/gif";
-            const isLt5M = file.size / 1024 / 1024 < 5;
-            if (!isJPG) {
-                this.$message.error("图片只支持jpg、png、gif等格式上传");
-                return isJPG;
-            }
-            if (!isLt5M) {
-                this.$message.error("上传图片大小不能超过 5MB!");
-                return isLt5M;
-            }
-            let param = new FormData();  // 创建form对象
-            param.append('file', file);
-            param.append('type', 'park');
-            param.append('model', 'manageModuleOne');
-            var _this = this;
-            this.$post(this.$apiUrl.upload.upload,param).then(response => {
-
-            },err=>{
-                this.$message.error("接口异常")
-            })
-            return false // 返回false不会自动上传
+    export default {
+        components: {
+            EsspBreadCrumb,
+            EsspEditor
         },
-    },
-}
+        data() {
+            return {
+                form: {
+                    name: '', // 成果标题
+                    field: '',  // 所属领域
+                    photo:'',   // 上传图片
+                    title: '',  // 简介
+                    detail: '', //编辑器内容
+                    inventor: '',   //发明人
+                    unit:'',        // 所属单位
+                },
+
+                breadlist: [
+                    {
+                        path: "/parkHome",
+                        name: "系统管理"
+                    },
+                    {
+                        path: "",
+                        name: "成果管理"
+                    },
+                    {
+                        path: "",
+                        name: "发布成果"
+                    }
+                ],
+                searchList: [
+                    {
+                        id: '0',
+                        name: '电子信息'
+                    }, {
+                        id: '1',
+                        name: '生物与新医药'
+                    }, {
+                        id: '2',
+                        name: '新材料'
+                    }, {
+                        id: '3',
+                        name: '高新技术服务'
+                    }, {
+                        id: '4',
+                        name: '新能源与节能'
+                    }, {
+                        id: '5',
+                        name: '资源与环境'
+                    }, {
+                        id: '6',
+                        name: '现代农业'
+                    }, {
+                        id: '7',
+                        name: '高端装备制造'
+                    }, {
+                        id: '8',
+                        name: '其他'
+                    }
+                ]
+            }
+        },
+        created() {
+
+        },
+        methods: {
+            // 编辑器的值获取
+            onEditorChange(val) {
+                this.form.detail = val;
+                console.log(this.form.detail);
+            },
+            //图片上传
+            beforeUpload(file) {
+                const isJPG = file.type === "image/jpeg" || file.type === "image/png" || file.type === "image/gif";
+                const isLt5M = file.size / 1024 / 1024 < 5;
+                if (!isJPG) {
+                    this.$message.error("图片只支持jpg、png、gif等格式上传");
+                    return isJPG;
+                }
+                if (!isLt5M) {
+                    this.$message.error("上传图片大小不能超过 5MB!");
+                    return isLt5M;
+                }
+                let param = new FormData();  // 创建form对象
+                param.append('file', file);
+                param.append('type', 'park');
+                param.append('model', 'manageModuleOne');
+                this.$post(this.$apiUrl.upload.upload, param).then(
+                    response => {
+                        if (response.resultCode == 'CLT000000000') {
+
+                        } else {
+                            this.$message.error(response.resultMsg);
+                        }
+                    },
+                    err => {
+                        this.$message.error(err.resultMsg);
+                    }
+                );
+                return false // 返回false不会自动上传
+            },
+            // 提交数据验证
+            ruleData() {
+
+            },
+            // 提交数据
+            uploadAchievement() {
+
+            }
+        },
+    }
 </script>
 
 <style lang='less' scoped>
-#publishAchievement{
-    width:1200px;
-    background:#fff;
-    margin: 0 auto;
-    .Otitle{
-        font-size: 24px;
-        line-height: 36px;
-        margin-bottom:20px;
-        margin-top:60px;
-        color: #333333;
-        text-align: center;
-        i {
-            display: inline-block;
-            width: 70px;
-            border: 1px solid #ddd;
-            position: relative;
-            top: -6px;
+
+
+    #publishAchievement {
+        width: 1200px;
+        background: #fff;
+        margin: 0 auto;
+        .form_input_height {
+            width: 210px;
         }
-    }
-    .content{
-        width:884px;
-        margin: 76px auto 0;
-        li{
-            margin-bottom:20px;
-            .require{
-                color:#ff9900;
-            }
-            .title,.title1{
-                font-size: 14px;
-                font-weight: normal;
-                letter-spacing: 0.4px;
-                color: #666666;
+        .Otitle {
+            font-size: 24px;
+            line-height: 36px;
+            margin-bottom: 20px;
+            margin-top: 60px;
+            color: #333333;
+            text-align: center;
+            i {
                 display: inline-block;
-                width:72px;
-                text-align: right;
-                margin-right:10px;
+                width: 70px;
+                border: 1px solid #ddd;
+                position: relative;
+                top: -6px;
             }
-            input,select{
-                width: 198px;
-                height: 35px;
-                padding: 0 5px;
-                border-radius: 3px;
-                border: solid 1px #cccccc;
-            }
-            select{
-                width: 210px;
-            }
-            textarea{
-                width: 700px;
-                height: 120px;
-                max-width: 700px;
-                max-height:120px;
-                min-width: 700px;
-                min-height:120px;
-                border-radius: 3px;
-                border: solid 1px #cccccc;
-            }
-            .sub,.sub1{
-                font-size: 14px;
-                font-weight: normal;
-                font-stretch: normal;
-                letter-spacing: 0.1px;
-                color: #999999
-            }
-            .sub1{
-                margin-top:100px;
-                margin-left:14px;
-            }
-            .title1{
-                margin-left:10px;
-            }
-            .scan{
-                display: inline-block;
-                width: 100px;
-                height: 35px;
-                background-color: #e6f4ff;
-                border-radius: 3px;
-                font-size: 14px;
-                font-weight: normal;
-                font-stretch: normal;
-                line-height: 35px;
-                letter-spacing: 0px;
-                color: #00a0e9;
-                text-align: center;
-                margin-left:95px;
-                cursor: pointer;
-            }
-            &.pic{
-                overflow: hidden;
-                &>span{
-                    float: left;
+        }
+        .content {
+            width: 884px;
+            margin: 76px auto 0;
+            li {
+                margin-bottom: 20px;
+                .require {
+                    color: #ff9900;
                 }
-                .avater-uploader{
-                    float: left;
+                .title, .title1 {
+                    font-size: 14px;
+                    font-weight: normal;
+                    letter-spacing: 0.4px;
+                    color: #666666;
+                    display: inline-block;
+                    width: 72px;
+                    text-align: right;
+                    margin-right: 10px;
+                }
+                input, select {
+                    width: 198px;
+                    height: 35px;
+                    padding: 0 5px;
+                    border-radius: 3px;
+                    border: solid 1px #cccccc;
+                }
+                select {
                     width: 210px;
+                }
+                textarea {
+                    width: 700px;
                     height: 120px;
+                    max-width: 700px;
+                    max-height: 120px;
+                    min-width: 700px;
+                    min-height: 120px;
                     border-radius: 3px;
-                    border: dashed 1px #cccccc;
-                    margin-left:8px;
-                    .tianjia{
-                        display:block;
-                        font-size: 40px;
-                        margin-left:80px;
-                        margin-top:36px;
-                    }
-                    .detil{
-                        font-size: 14px;
-                        font-weight: normal;
-                        font-stretch: normal;
-                        line-height: 30px;
-                        letter-spacing: 0px;
-                        color: #cccccc;
-                        margin-left:80px;
-                    }
+                    border: solid 1px #cccccc;
                 }
-            }
-            &.resume{
-                overflow: hidden;
-                span{
-                    float: left;
+                .sub, .sub1 {
+                    font-size: 14px;
+                    font-weight: normal;
+                    font-stretch: normal;
+                    letter-spacing: 0.1px;
+                    color: #999999
                 }
-                textarea{
-                    float: left;
-                    margin-left:8px;
-                    padding:10px;
+                .sub1 {
+                    margin-top: 100px;
+                    margin-left: 14px;
                 }
-            }
-            &.editor{
-                overflow: hidden;
-                span{
-                    float: left;
+                .title1 {
+                    margin-left: 10px;
                 }
-                .editor_wrap{
-                    float: left;
-                    margin-left:8px;
-                    width: 720px;
-                    min-height:400px;
+                .scan {
+                    display: inline-block;
+                    width: 100px;
+                    height: 35px;
+                    background-color: #e6f4ff;
                     border-radius: 3px;
+                    font-size: 14px;
+                    font-weight: normal;
+                    font-stretch: normal;
+                    line-height: 35px;
+                    letter-spacing: 0px;
+                    color: #00a0e9;
+                    text-align: center;
+                    margin-left: 95px;
+                    cursor: pointer;
+                }
+                &.pic {
+                    overflow: hidden;
+                    & > span {
+                        float: left;
+                    }
+                    .avater-uploader {
+                        float: left;
+                        width: 210px;
+                        height: 120px;
+                        border-radius: 3px;
+                        border: dashed 1px #cccccc;
+                        margin-left: 8px;
+                        .tianjia {
+                            display: block;
+                            font-size: 40px;
+                            margin-left: 80px;
+                            margin-top: 36px;
+                        }
+                        .detil {
+                            font-size: 14px;
+                            font-weight: normal;
+                            font-stretch: normal;
+                            line-height: 30px;
+                            letter-spacing: 0px;
+                            color: #cccccc;
+                            margin-left: 80px;
+                        }
+                    }
+                }
+                &.resume {
+                    overflow: hidden;
+                    span {
+                        float: left;
+                    }
+                    textarea {
+                        float: left;
+                        margin-left: 8px;
+                        padding: 10px;
+                    }
+                }
+                &.editor {
+                    overflow: hidden;
+                    span {
+                        float: left;
+                    }
+                    .editor_wrap {
+                        float: left;
+                        margin-left: 8px;
+                        width: 720px;
+                        min-height: 400px;
+                        border-radius: 3px;
+                    }
                 }
             }
         }
-    }
-    .save{
-        padding-bottom: 60px;
-        text-align: center;
-        width: 884px;
-        margin: 40px auto 20px;
-        span{
-            display: inline-block;
-            width: 180px;
-            height: 40px;
-            background-image: linear-gradient(31deg,
+        .save {
+            padding-bottom: 60px;
+            text-align: center;
+            width: 884px;
+            margin: 40px auto 20px;
+            span {
+                display: inline-block;
+                width: 180px;
+                height: 40px;
+                background-image: linear-gradient(31deg,
                 #22a2fa 0%,
                 #10b5ff 100%);
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: normal;
-            font-stretch: normal;
-            line-height: 40px;
-            letter-spacing: 0px;
-            color: #ffffff;
-            text-align: center;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 16px;
+                font-weight: normal;
+                font-stretch: normal;
+                line-height: 40px;
+                letter-spacing: 0px;
+                color: #ffffff;
+                text-align: center;
+            }
         }
     }
-}
 </style>
