@@ -176,7 +176,7 @@
             // 跳转发布详情页面
             linkToDetail(id) {
                 this.$router.push({
-                    path: '/parkHall/manage/sciAndTechPolicy/publishDetail',
+                    path: '/parkHall/manage/sciAndTechPolicyAuditDetail',
                     query: {
                         applyType: '01',
                         id: id
