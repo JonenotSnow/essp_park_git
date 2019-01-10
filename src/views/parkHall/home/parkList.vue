@@ -84,7 +84,7 @@
 </template>
 
 <script>
-    import EsspHead from "@/components/EsspHead";
+    import EsspHead from "@/components/EsspHeadPark";
 
     export default {
         name: "",
@@ -113,7 +113,7 @@
         created() {
             // alert("是否登陆"+this.utils.isLoginMode())
             // alert("是否游客模式"+this.utils.isVisitorMode())
-            this.userName = localStorage.getItem("userName");
+            this.userName = this.SSH.getItem("userName");
             this.getParkList();
             this.getCodeType()
             this.getCcbUser()

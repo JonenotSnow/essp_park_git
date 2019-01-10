@@ -89,7 +89,7 @@ export default {
             value1: '',
             startDate:'',
             writeInfo:{
-                parkName:window.localStorage.getItem('parkName') != null ? window.localStorage.getItem('parkName') : '',
+                parkName:this.SSH.getItem('parkName') != null ? this.SSH.getItem('parkName') : '',
                 startDate:'',
                 phoneNumber:'',
                 ownArea:'',
