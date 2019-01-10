@@ -31,6 +31,7 @@
                     <p class="detil">上传图片</p>
                 </el-upload>
                 <span class="sub1">（图片高宽7：4，每张最大2M,建议分辨率为840*480像素，支持jpg/jpeg/png格式。）</span>
+                <img :src="submitUploadInfo.photo">
             </li>
             
             <li>
@@ -83,12 +84,45 @@
             </li>
             <li class="saveBtn">
                 <span class="add">添加新模块</span>
-                <span class="scan">预 览</span>
+                <span class="scan" @click="showExpertInfo">预 览</span>
             </li>
         </ul>
         <p class="save">
             <span @click="saveExpertInfo">保存上传</span>
         </p>
+        <div class="viewexpertinfo" v-if="isShowOverview">
+            <div class="btn_close" @click="hideDetail"><i class="iconfont icon-butongguo"></i></div>
+            <ul class="infodetail">
+                <li>
+                    <span class="title">专家姓名：</span>
+                    <span>{{submitUploadInfo.name}}</span>
+                </li>
+                <li>
+                    <span class="title">专家职称：</span>
+                    <span>{{submitUploadInfo.title}}</span>
+                </li>
+                <li class="pic">
+                    <span class="title">专家头像：</span>
+                    <img :src="submitUploadInfo.photo" alt="">
+                </li>
+                
+                <li>
+                    <span class="title">联系电话：</span>
+                    <span>{{submitUploadInfo.phone}}</span>
+                </li>
+                
+                <li>
+                    <span class="title">联系邮箱：</span>
+                    <span>{{submitUploadInfo.email}}</span>
+                </li>
+                <li class="resume">
+                    <span class="title">专家简介：</span>
+                    <span>{{submitUploadInfo.introduction}}</span>
+                </li>
+            </ul>
+        </div>
+        <!-- 遮罩层 -->
+        <div class="img-layer" v-if="isShowOverview"></div>
     </div>
 </template>
 
@@ -100,6 +134,7 @@ export default {
     },
     data() {
       return {
+        isShowOverview:false,
         submitUploadInfo: {
           id:'' ,
           name: '',
@@ -147,7 +182,7 @@ export default {
           }).then(      
             response => {
               if (response.resultCode == "CLT000000000") {
-                        
+                  this.$message.success("保存成功")      
               }
             },
             response => {
@@ -173,12 +208,26 @@ export default {
             param.append('model', 'manageModuleOne');
             var _this = this;
             this.$post(this.$apiUrl.upload.upload,param).then(response => {
-                
+                this.$message.success("上传成功")
+                console.log(response.resultData)
+                this.submitUploadInfo.photo = response.resultData[0].url
             },err=>{
                 this.$message.error("接口异常")
             })
             return false // 返回false不会自动上传
         },
+        showExpertInfo() {
+            let that = this;
+            if(!that.isShowOverview){   
+                that.isShowOverview = true;
+            }
+        },
+        hideDetail(){
+            let that = this;
+            if(that.isShowOverview){   
+                that.isShowOverview = false;
+            }
+        }
     },
 }
 </script>
@@ -462,6 +511,35 @@ export default {
             letter-spacing: 0px;
             color: #ffffff;
             text-align: center;
+        }
+    }
+
+    .img-layer {
+        position: fixed;
+        z-index: 999;
+        top: 0;
+        left: 0;
+        background: rgba(0, 0, 0, 0.7);
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+    }
+    .viewexpertinfo{
+        z-index: 1000;
+        width:750px;
+        background:#fff;
+        font-size: 16px;
+        position: fixed;
+        left: 50%;
+        top: 100px;
+        margin-left: -25%;
+        .btn_close{
+            float:right;
+            margin: 10px;
+            cursor: pointer;
+        }
+        .infodetail{
+            padding:30px;
         }
     }
 }
