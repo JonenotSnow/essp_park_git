@@ -35,7 +35,6 @@ const publishAchievement = resolve => require(['@/views/newmanage/platformSetup/
 //园区管理-发布管理
 //科技政策列表
 const sciAndTechPolicy = resolve => require(['@/views/newmanage/publishManage/sciAndTechPolicy'], resolve);
-const sciAndTechPolicyReleaseDetail = resolve => require(['@/views/newmanage/publishManage/sciAndTechPolicy/detail'], resolve);
 
 //科技政策列表---政策法规
 const policieAndRegulation = resolve => require(['@/views/newmanage/publishManage/sciAndTechPolicy/policieAndRegulation'], resolve);
@@ -73,6 +72,7 @@ const sciAndTechPolicyAudit = resolve => require(['@/views/newmanage/auditManage
 const newsNoticeAudit = resolve => require(['@/views/newmanage/auditManage/publishAudit/newsNoticeAudit/index.vue'], resolve);
 //发布审核详情
 const audit = resolve => require(['@/views/newmanage/auditManage/publishAudit/sciAndTechPolicyAudit/audit'], resolve);
+
 //发布审核历史详情
 const auditDetail = resolve => require(['@/views/newmanage/auditManage/publishAudit/sciAndTechPolicyAudit/auditDetail'], resolve);
 
@@ -247,11 +247,6 @@ export default {
                             component: sciAndTechService
                         }
                     ]
-                },
-                {
-                    path: "/parkHall/manage/sciAndTechPolicy/publishDetail",
-                    name: "park-sciAndTechPolicyDetail",
-                    component: sciAndTechPolicyReleaseDetail,
                 },
                 //平台活动
                 {

@@ -22,15 +22,20 @@
             </div>
         </div>
         <div class="sci-a1nd-tech-service-main">
+
             <list-status-and-classify
+                v-if="status=='0' || status=='2'"
                 :list="dataList"
                 :type="status"
-                v-if="status=='0' || status=='2'"
             />
 
-            <list-only-classify :list="dataList" :type="status" v-if="status=='1'"/>
+            <list-only-classify
+                v-if="status=='1'"
+                :list="dataList"
+            />
 
         </div>
+
         <div class="pageList" v-if="dataList">
             <el-pagination
                 @size-change="handleSizeChange"

@@ -111,6 +111,13 @@ export default {
         },
         goAudit(item){
             this.$message.warning('功能待开发，查看审核详情界面')
+            this.$router.push({
+                name: 'park-lookNoticeAudit',
+                query: {
+                    informationId: item.informationId,
+                    
+                }
+            })
         },
         goEdit(item){
             this.$router.push({

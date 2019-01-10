@@ -24,14 +24,14 @@
                         <el-checkbox-group v-model="checkedIds" class="checktop" @change="handleCheckedCitiesChange">
                             <el-checkbox :label="item.id" :key="index"></el-checkbox>
                         </el-checkbox-group>
-                        <div class="tdcn timecn"><span>保存时间：2018-10-22  10：24：00</span></div>
-                        <div class="tdcn pbcn"><span>发布人:孔乙己</span></div>
+                        <div class="tdcn timecn"><span>保存时间：{{item.createTime|timerFormatDetail(item.createTime)}}</span></div>
+                        <div class="tdcn pbcn"><span>发布人:{{item.userName}}</span></div>
                         <!-- 草稿屏蔽 -->
-                        <div class="tdcn statusdes" v-if="!customopts.status==0"><span>状态:<span class="detail">审核通过</span></span></div>
+                        <div class="tdcn statusdes" v-if="!customopts.status==0"><span>状态:<span class="detail">{{item.status|statusFormat(item.status)}}</span></span></div>
                         <div class="tdcn handeltool"><i class="el-icon-delete remove" @click="delNew(item)"></i></div>
                     </div>
                     <div class="maintext esspclearfix">
-                        <div class="textTit">新闻内容哈哈哈新闻内容哈哈哈新闻内容哈哈哈新闻内容哈哈哈新闻内容哈哈哈新闻内容哈哈哈新闻内容哈哈哈新闻内容哈哈哈新闻内容哈哈哈新闻内容哈哈哈新闻内容哈哈哈</div>
+                        <div class="textTit">{{item.informationTitle}}</div>
                         <div class="btnArea">
                             <!--已审核的操作按钮 -->
                             <div class="btncons" v-if="customopts.status==2">
@@ -61,7 +61,7 @@
 
 <script>
 
-
+import Moment from "moment";
 export default {
   props: {
       customopts: {
@@ -98,7 +98,7 @@ export default {
     },
     methods: {
         init(){
-            this.list =[{id:"00001"},{id:"00002"}]
+            // this.list =[{id:"00001"},{id:"00002"}]
         },
         delNew(item){
             this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
@@ -113,13 +113,20 @@ export default {
             })
         },
         goAudit(item){
-            this.$message.warning('功能待开发，查看审核详情界面')
+            this.$message.warning('功能待开发，查看审核详情界面');
+            this.$router.push({
+                name: 'park-lookNewsAudit',
+                query: {
+                    informationId: item.informationId,
+                    
+                }
+            })
         },
         goEdit(item){
             this.$router.push({
                 path: '/news/addNews',
                 query: {
-                    id: item.id,
+                    informationId: item.informationId,
                     
                 }
             })
@@ -136,6 +143,28 @@ export default {
         }
         
     },
+    filters: {
+            timerFormat(vaule) {
+                return Moment(vaule).format("YYYY-MM-DD")
+            },
+            timerFormatDetail(vaule) {
+                return Moment(vaule).format("YYYY-MM-DD HH:mm:ss")
+            },
+            statusFormat(value){
+                let statusList={
+                    "10":"园区待审核",
+                    "01":"园区审核中",
+                    "02":"发布中",
+                    "12":"园区审核未通过",
+                    "21":"企业待审核",
+                    "05":"企业审核中",
+                    "03":"企业审核未通过",
+                    "13": "高级管理员待审核",
+                    "14": "高级管理员审核中"
+                }
+                return statusList[value]?statusList[value]:''
+            }
+        },
     computed:{
         //可以选择的id
         allListIds(){

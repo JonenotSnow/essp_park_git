@@ -1,12 +1,20 @@
+<!--
+ * @Author: Evan-lian
+ * @Date: 2019-01-10 18:48:25
+ * @LastEditors: Evan-lian
+ * @LastEditTime: 2019-01-10 20:03:53
+ * @Description: 新闻审核详情页展示
+ -->
+
 <template>
     <div class="publish-sciAnd-tech-policy-wrap" id="publishAchievement">
-        <essp-bread-crumb :breadList="breadlist_01" v-if="applyType === '01'"/>
-        <essp-bread-crumb :breadList="breadlist_02" v-if="applyType === '02'"/>
+        <essp-bread-crumb :breadList="breadlist_01"/>
+     
         <div class="publish-title">
             <i></i>审核详情<i></i>
         </div>
         <!--！！！！！！政策法规表格！！！！！！-->
-        <div class="publist-form" v-if="applyType === '01'">
+        <div class="publist-form">
             <el-form :rules="rules_01" label-width="125px" class="demo-ruleForm">
                 <el-form-item label="政策法规标题：" prop="policyTitle">
                     <div class="my-style">{{satpDate.policyTitle}}</div>
@@ -47,48 +55,7 @@
 
         </div>
 
-        <!--！！！！！！科技服务表格！！！！！！-->
-        <div class="publist-form" v-if="applyType === '02'">
-            <el-form :rules="rules_02" label-width="125px" class="demo-ruleForm">
-                <el-form-item label="科技服务标题：" prop="policyTitle">
-                    <div class="my-style">{{satpDate.policyTitle}}</div>
-                </el-form-item>
-                <el-form-item label=" 科技服务类型：" prop="classtType">
-                    <div class="my-style">{{satpDate.classtType}}</div>
-                </el-form-item>
-                <el-form-item label="科技服务简介：" prop="desc">
-                    <div class="my-style">{{satpDate.desc}}</div>
-                </el-form-item>
-                <el-form-item label="科技服务详情：" prop="infoDetail">
-                    <div class="my-style">
-                        <div v-html="satpDate.infoDetail"></div>
-                    </div>
-                </el-form-item>
-                <el-form-item label="科技服务标签：" prop="tags">
-                    <div class="my-style">
-                        <span class="my-tag" v-for="(item, index) in satpDate.tagsTxt" :key="index">{{item}}</span>
-                    </div>
-                </el-form-item>
-                <el-form-item label="发布人：">
-                    <div class="my-style">发布人</div>
-                </el-form-item>
-                <el-form-item label="附件：">
-                    <div class="my-style" v-for="(item, index) in satpDate.fileUrl" :key="index">{{item.name}}</div>
-                </el-form-item>
-            </el-form>
-            <div class="audit-line"></div>
-            <el-form :rules="rules_02" label-width="125px" class="demo-ruleForm demo-ruleForm-Next">
-                <el-form-item label="审核结果：">
-                    <i class="icon iconfont icon-butongguo"
-                       style="margin-right:10px; color: #fe696c;"></i><span>不通过</span>
-                    <i class="icon iconfont icon-zhengque"
-                       style="margin-right:10px; color: #6bde73"></i><span>正确</span>
-                </el-form-item>
-                <el-form-item label="审核意见：">
-                    <div class="my-style audit-opinion">同意发布</div>
-                </el-form-item>
-            </el-form>
-        </div>
+      
     </div>
 </template>
 
