@@ -175,8 +175,8 @@
                 this.$post(this.$apiUrl.home.selectResMenu, {
                         'sysType':"park",
                         'sysBsnAttr':parkId,
-                        // 'postIdList':this.LoginUserRol
-                        'postIdList':['32']
+                        'postIdList':this.LoginUserRol
+                        // 'postIdList':['32']
 					})
 					.then((response) => {
                         let parkInitPower = response.resultData.routerResMap;
