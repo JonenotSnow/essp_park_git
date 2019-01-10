@@ -207,11 +207,11 @@
                         this.SSH.setItem("menuResource",curUserAllParkPower);
 
                         console.log(this.curIs)
-                        // if(this.curIs){
-                        //     this.$router.push('/parkHall/manage/requestAddPark')
-                        // }else{
-                        //     this.$router.push("/parkHome");
-                        // }
+                        if(this.curIs){
+                            this.$router.push('/parkHall/manage/requestAddPark')
+                        }else{
+                            this.$router.push("/parkHome");
+                        }
 
                     }, (err) => {})
             },
