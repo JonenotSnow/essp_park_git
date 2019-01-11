@@ -65,12 +65,43 @@
             </li>
 
             <li>
-                <span class="scan">预 览</span>
+                <span class="scan" @click="showExpertInfo">预 览</span>
             </li>
         </ul>
         <p class="save" @click="uploadAchievement">
             <span>保存上传</span>
         </p>
+        <div class="viewexpertinfo" v-if="isShowOverview">
+            <div class="btn_close" @click="hideDetail"><i class="iconfont icon-butongguo"></i></div>
+            <div class="pic">
+                <img :src="form.photo" >
+            </div>
+            <ul class="infodetail">
+                <li>
+                    <span class="title">成果标题</span>
+                    <span class="infocont">{{form.name}}</span>
+                </li>
+                <li>
+                    <span class="title">所属领域</span>
+                    <span class="infocont">{{form.field}}</span>
+                </li>                
+                <li>
+                    <span class="title">简介</span>
+                    <span class="infocont">{{form.title}}</span>
+                </li>
+                
+                <li>
+                    <span class="title">详情</span>
+                    <span class="infocont" v-html="form.detail"></span>
+                </li>
+                <li class="resume">
+                    <span class="title">发明人</span>
+                    <span class="infocont">{{form.inventor}}</span>
+                </li>
+            </ul>
+        </div>
+        <!-- 遮罩层 -->
+        <div class="img-layer" v-if="isShowOverview"></div>
     </div>
 </template>
 
@@ -84,15 +115,20 @@
             EsspEditor
         },
         data() {
+            let _type = this.$route.query.type,
+                _info = this.$route.query.achievInfo;
             return {
+                isShowOverview:false,
+                type:_type,
+                info:_info,
                 form: {
-                    name: '', // 成果标题
-                    field: '',  // 所属领域
-                    photo:'',   // 上传图片
-                    title: '',  // 简介
-                    detail: '', //编辑器内容
-                    inventor: '',   //发明人
-                    unit:'',        // 所属单位
+                    name: (_type === 1) ? _info.name : '', // 成果标题
+                    field: (_type === 1) ? _info.field : '',  // 所属领域
+                    photo: (_type === 1) ? _info.photo :'',   // 上传图片
+                    title: (_type === 1) ? _info.title : '',  // 简介
+                    detail: (_type === 1) ? _info.detail : '', //编辑器内容
+                    inventor: (_type === 1) ? _info.inventor : '',   //发明人
+                    unit: (_type === 1) ? _info.unit :''        // 所属单位
                 },
 
                 breadlist: [
@@ -140,6 +176,7 @@
                     }
                 ]
             }
+                console.log(this.$route.query)
         },
         created() {
 
@@ -225,7 +262,18 @@
                         }
                     );
                 }
-
+            },
+            showExpertInfo() {
+                let that = this;
+                if(!that.isShowOverview){   
+                    that.isShowOverview = true;
+                }
+            },
+            hideDetail(){
+                let that = this;
+                if(that.isShowOverview){   
+                    that.isShowOverview = false;
+                }
             }
         },
     }
@@ -435,6 +483,50 @@
                 color: #ffffff;
                 text-align: center;
             }
+        }
+        .viewexpertinfo{
+            z-index: 1000;
+            width:750px;
+            background:#fff;
+            font-size: 16px;
+            position: fixed;
+            left: 50%;
+            top: 100px;
+            margin-left: -25%;
+            border-radius:3px;
+            font-size: 14px;
+            .btn_close{
+                float:right;
+                margin: 10px;
+                cursor: pointer;
+            }
+            .infodetail{
+                padding:30px;
+                float: left;
+                .infocont{
+                    max-width: 400px;
+                    display: inline-block;
+                    vertical-align: top;
+                }
+            }
+            .pic{
+                float:left;
+                width:100px;
+                height: 100px;
+                margin:30px 0 30px 30px;
+                border:1px solid #ccc;
+                border-radius:3px;
+            }
+        }
+        .img-layer {
+            position: fixed;
+            z-index: 999;
+            top: 0;
+            left: 0;
+            background: rgba(0, 0, 0, 0.7);
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
         }
     }
 </style>

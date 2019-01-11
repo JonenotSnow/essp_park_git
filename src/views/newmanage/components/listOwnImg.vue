@@ -5,34 +5,30 @@
             <div class="selectTitle">
                 <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox>
                 共
-                <span class="total">4</span>
+                <span class="total">{{list.total}}</span>
                 条，已选
                 <span class="total">1</span>
                 条
                 <span class="removeBtn">删除</span>
             </div>
             <ul class="listWrap">
-                <li class="list" v-for="item in list" :key="item">
+                <li class="list" v-for="(item,index) in list.achievList" :key="index">
                     <div class="ListTop">
-                        <el-checkbox-group v-model="checkedCities" @change="handleCheckedCitiesChange">
+                        <el-checkbox-group v-model="checkedCities" @change="handleCheckedCitiesChange" class="selectitem">
                             <el-checkbox :label="cities[item]"></el-checkbox>
                         </el-checkbox-group>
-                        <span class="time">保存时间：2018-10-22  10：24：00</span>
-                        <span class="create">发布人：孔乙己</span>
+                        <span class="time">保存时间：{{item.modifyTime|timerFormat(item.modifyTime)}}</span>
+                        <span class="create">发布人：{{item.modifyName}}</span>
                         <i class="el-icon-delete remove"></i>
                     </div>
                     <div class="listBottom">
-                        <img src="@assets//actlogo.png" alt="">
+                        <img :src="item.photo"><!-- @assets//actlogo.png -->
                         <div class='display'>
-                            <p class="title">成果名称</p>
-                            <p class="content">这是关于成果的的介绍描述，这是关于成果的的介绍描述，
-                                这是关于成果的的介绍描述，这是关于成果的的介绍描述，这是
-                                关于成果的的介绍描...，这是关于成果的的介绍描述，这是关于成
-                                果的的介绍描述，这是关于成果的的介绍描述，这是关于成
-                                果的的介绍描述，这是关于成···</p>
+                            <p class="title">{{item.name}}</p>
+                            <p class="content">{{item.title}}</p>
                         </div>
                         <div class='editorBtn'>
-                            <span>编辑</span>
+                            <span @click="editAchievementInfo(item,1)">编辑</span>
                         </div>
                     </div>
                 </li>
@@ -46,6 +42,11 @@
 </template>
 
 <script>
+<<<<<<< HEAD
+=======
+import Moment from "moment";
+const cityOptions = ['上海', '北京', '广州', '深圳'];
+>>>>>>> ccj/01/10
 export default {
   props: {
       type: {
@@ -53,22 +54,40 @@ export default {
           default: ''
       },
       list:{
+<<<<<<< HEAD
           type: [],
           default: []
+=======
+          type: {},
+          default: null
+>>>>>>> ccj/01/10
       }
   },
     data() {
+
         return {
             checkAll: false,
+<<<<<<< HEAD
             checkedCities: [],
             cities: [],
             isIndeterminate: false
+=======
+            checkedCities: ['上海', '北京'],
+            cities: cityOptions,
+            isIndeterminate: true,
+            isSelectedItem:[]
+>>>>>>> ccj/01/10
         }
+        console.log(this.list.achievList)
     },
     created () {
+<<<<<<< HEAD
         this.getAllData();
     },
     computed: {
+=======
+
+>>>>>>> ccj/01/10
     },
     methods: {
         getAllData(){
@@ -84,9 +103,18 @@ export default {
             this.isIndeterminate = false;
         },
         handleCheckedCitiesChange(value) {
-            let checkedCount = value.length;
+            console.log(value)
+            /*let checkedCount = value.length;
             this.checkAll = checkedCount === this.cities.length;
-            this.isIndeterminate = checkedCount > 0 && checkedCount < this.cities.length;
+            this.isIndeterminate = checkedCount > 0 && checkedCount < this.cities.length;*/
+        },
+        editAchievementInfo(info,_type){
+            this.$router.push({path:'/parkHall/manage/publishAchievement',query:{achievInfo:info,type:_type}})
+        }
+    },
+    filters:{
+        timerFormat(vaule){
+            return Moment(vaule).format("YYYY-MM-DD")
         }
     },
 }
@@ -118,6 +146,9 @@ export default {
         .all{
             i{
                 margin-right:6px;
+            }
+            .selectitem{
+                display: inline-block;
             }
         }
         .total{
