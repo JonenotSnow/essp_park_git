@@ -23,15 +23,29 @@
             <li class="pic">
                 <span class="require">*</span>
                 <span class="title">专家头像：</span>
+                <!-- <el-upload
+                    class="avatar-uploader avatar-uploader-chengguo esspclearfix"
+                    action="https://jsonplaceholder.typicode.com/posts/"
+                    :show-file-list="false"
+                    :before-upload="beforeAvatarUpload">
+                    <img v-if="submitUploadInfo.photo" :src="submitUploadInfo.photo" class="avatar">
+                    <div class="upload_pic_icon" v-else>
+                        <i class="el-icon-plus avatar-uploader-icon"></i>
+                        <span>上传图片</span>
+                    </div>
+                </el-upload> -->
                 <el-upload
-                    class="avater-uploader"
-                    :before-upload="beforeUpload"
-                    :action='uploads'>
-                    <i class="icon iconfont icon-tianjia- tianjia"></i>
-                    <p class="detil">上传图片</p>
+                    class="avatar-uploader avatar-uploader-chengguo esspclearfix"
+                    action="https://jsonplaceholder.typicode.com/posts/"
+                    :show-file-list="false"
+                    :before-upload="beforeAvatarUpload">
+                    <img v-if="submitUploadInfo.photo" :src="submitUploadInfo.photo" class="avatar">
+                    <div class="upload_pic_icon" v-else>
+                        <i class="el-icon-plus avatar-uploader-icon"></i>
+                        <span>上传图片</span>
+                    </div>
                 </el-upload>
                 <span class="sub1">（图片高宽7：4，每张最大2M,建议分辨率为840*480像素，支持jpg/jpeg/png格式。）</span>
-                <img :src="submitUploadInfo.photo">
             </li>
             
             <li>
@@ -92,32 +106,30 @@
         </p>
         <div class="viewexpertinfo" v-if="isShowOverview">
             <div class="btn_close" @click="hideDetail"><i class="iconfont icon-butongguo"></i></div>
+            <div class="pic">
+                <img :src="submitUploadInfo.photo" >
+            </div>
             <ul class="infodetail">
                 <li>
                     <span class="title">专家姓名：</span>
-                    <span>{{submitUploadInfo.name}}</span>
+                    <span class="infocont">{{submitUploadInfo.name}}</span>
                 </li>
                 <li>
                     <span class="title">专家职称：</span>
-                    <span>{{submitUploadInfo.title}}</span>
-                </li>
-                <li class="pic">
-                    <span class="title">专家头像：</span>
-                    <img :src="submitUploadInfo.photo" alt="">
-                </li>
-                
+                    <span class="infocont">{{submitUploadInfo.title}}</span>
+                </li>                
                 <li>
                     <span class="title">联系电话：</span>
-                    <span>{{submitUploadInfo.phone}}</span>
+                    <span class="infocont">{{submitUploadInfo.phone}}</span>
                 </li>
                 
                 <li>
                     <span class="title">联系邮箱：</span>
-                    <span>{{submitUploadInfo.email}}</span>
+                    <span class="infocont">{{submitUploadInfo.email}}</span>
                 </li>
                 <li class="resume">
                     <span class="title">专家简介：</span>
-                    <span>{{submitUploadInfo.introduction}}</span>
+                    <span class="infocont">{{submitUploadInfo.introduction}}</span>
                 </li>
             </ul>
         </div>
@@ -173,59 +185,69 @@ export default {
             if(!/^1[345678]\d{9}$/.test(this.submitUploadInfo.photo)){
                 flag = false;
             }
-
-            if(this.submitUploadInfo.name.length === 0 || this.submitUploadInfo.title.length ){
+            if(!/^[A-Za-zd]+([-_.][A-Za-zd]+)*@([A-Za-zd]+[-.])+[A-Za-zd]{2,5}$/.test(this.submitUploadInfo.email)){
                 flag = false;
             }
-            
+            if(this.submitUploadInfo.name.length === 0 || this.submitUploadInfo.title.length === 0 || this.submitUploadInfo.introduction.length === 0 /*|| this.submitUploadInfo.photo.length === 0 */){
+                flag = false;
+            }else{
+                flag = true
+            }
+            return flag
         },
         saveExpertInfo(){
-          this.$post('/expert/saveExpert ', {
-            id:this.submitUploadInfo.id,
-            name: this.submitUploadInfo.name,
-            title:this.submitUploadInfo.title ,
-            photo:this.submitUploadInfo.photo,
-            phone:this.submitUploadInfo.phone,
-            email:this.submitUploadInfo.email,
-            introduction:this.submitUploadInfo.introduction,
-            moduleData:this.submitUploadInfo.moduleData,
-            parkId:this.submitUploadInfo.parkId
-          }).then(      
-            response => {
-              if (response.resultCode == "CLT000000000") {
-                  this.$message.success("保存成功")      
-              }
-            },
-            response => {
-              this.$message.error(response.resultMsg);
+            if(this.beforeSaveExpertInfo()){
+                this.$post('/expert/saveExpert ', {
+                    id:this.submitUploadInfo.id,
+                    name: this.submitUploadInfo.name,
+                    title:this.submitUploadInfo.title ,
+                    photo:this.submitUploadInfo.photo,
+                    phone:this.submitUploadInfo.phone,
+                    email:this.submitUploadInfo.email,
+                    introduction:this.submitUploadInfo.introduction,
+                    moduleData:this.submitUploadInfo.moduleData,
+                    parkId:this.submitUploadInfo.parkId
+                }).then(      
+                    response => {
+                      if (response.resultCode == "CLT000000000") {
+                          this.$message.success("保存成功")      
+                      }
+                    },
+                    response => {
+                      this.$message.error(response.resultMsg);
+                    }
+                );
+            }else{
+                this.$message.error("请正确填写信息！");
             }
-          );
         },
         //图片上传
-        beforeUpload(file) {
-            const isJPG = file.type === "image/jpeg" || file.type === "image/png"  || file.type === "image/gif";
-            const isLt5M = file.size / 1024 / 1024 < 5;
+        beforeAvatarUpload(file) {
+            const isJPG = file.type === "image/jpeg" || file.type === "image/png";
+            const isLt5M = file.size / 1024 / 1024 < 2;
             if (!isJPG) {
-                this.$message.error("图片只支持jpg、png、gif等格式上传");
+                this.$message.error("上传头像图片只能是 JPG或者PNG 格式!");
                 return isJPG;
             }
             if (!isLt5M) {
-                this.$message.error("上传图片大小不能超过 5MB!");
+                this.$message.error("上传头像图片大小不能超过 2MB!");
                 return isLt5M;
             }
-            let param = new FormData();  // 创建form对象
-            param.append('file', file);
-            param.append('type', 'park');
-            param.append('model', 'manageModuleOne');
+            let param = new FormData(); // 创建form对象
+            param.append("file", file); // 通过append向form对象添加数据
+            param.append("type", "park"); // 通过append向form对象添加数据
+            param.append("model", "active"); // 通过append向form对象添加数据
             var _this = this;
-            this.$post(this.$apiUrl.upload.upload,param).then(response => {
-                this.$message.success("上传成功")
-                console.log(response.resultData)
-                this.submitUploadInfo.photo = response.resultData[0].url
-            },err=>{
-                this.$message.error("接口异常")
-            })
-            return false // 返回false不会自动上传
+            this.$post(this.$apiUrl.upload.upload, param).then(
+                response => {
+                    _this.submitUploadInfo.photo = response.resultData[0].url;
+                    this.$message.success(response.resultMsg);
+                },
+                err => {
+                    this.$message.error(err.resultMsg);
+                }
+            );
+            return false; // 返回false不会自动上传
         },
         showExpertInfo() {
             let that = this;
@@ -331,7 +353,9 @@ export default {
                 cursor: pointer;
             }
             &.pic{
-                overflow: hidden;
+                /*overflow: hidden;*/
+                position:relative;
+                height: 140px;
                 &>span{
                     float: left;
                 }
@@ -358,6 +382,72 @@ export default {
                         margin-left:80px;
                     }
                 }
+                /*图片样式*/
+                .avatar-uploader-chengguo{
+                    position: absolute;
+                    left: 98px;
+                    top: 0;
+                    width: 198px;
+                    padding: 0 5px;
+                    border-radius: 3px;
+                    border: 1px solid #ccc;
+                    height: 140px;
+                    text-align: center;
+                    line-height: 140px;
+                    overflow: hidden;
+                    .upload_pic_icon{
+                        position: absolute;
+                        left: 0px;
+                        top: 0;
+                        width: 198px;
+                        height: 140px;
+                        padding: 0 5px;
+                        border-radius: 3px;
+                        i{
+                            display: block;
+                            margin: 40px auto -48px;
+                        }
+                    }
+                }
+                .sub1 {
+                    position: absolute;
+                    left: 33%;
+                    top: 17%;
+                    color: #999;
+                    width: 63%;
+                }
+                .avatar-uploader-chengguo .el-upload {
+                    border: 1px dashed #d9d9d9;
+                    border-radius: 6px;
+                    cursor: pointer;
+                    position: relative;
+                    overflow: hidden;
+                     width: 285px;
+                     height: 120px;
+                    line-height: 120px;
+                }
+                .avatar-uploader-chengguo.el-upload:hover {
+                    border-color: #409EFF;
+                }
+                .avatar-uploader-chengguo .avatar-uploader-icon {
+                    font-size: 28px;
+                    color: #fff;
+                    width: 40px;
+                    height: 40px;
+                    line-height: 40px;
+                    text-align: center;
+                    background: #ccc;
+                    -webkit-border-radius: 50%;
+                    -moz-border-radius: 50%;
+                    border-radius: 50%;
+
+                }
+                .avatar-uploader-chengguo .avatar {
+                    width: 100%;
+                    min-height: 100%;
+                    display: block;
+                }
+
             }
             &.resume{
                 overflow: hidden;
@@ -544,6 +634,8 @@ export default {
         left: 50%;
         top: 100px;
         margin-left: -25%;
+        border-radius:3px;
+        font-size: 14px;
         .btn_close{
             float:right;
             margin: 10px;
@@ -551,6 +643,20 @@ export default {
         }
         .infodetail{
             padding:30px;
+            float: left;
+            .infocont{
+                max-width: 400px;
+                display: inline-block;
+                vertical-align: top;
+            }
+        }
+        .pic{
+            float:left;
+            width:100px;
+            height: 100px;
+            margin:30px 0 30px 30px;
+            border:1px solid #ccc;
+            border-radius:3px;
         }
     }
 }
