@@ -84,11 +84,11 @@ let oneId = "";
 router.beforeEach(async (to, from, next) => {
     // 获取当前园区的权限
     // 没有token的时候，直接假数据
-    if (!to.token) {
-        var mockdata = menuListData.menuList[0];
-        sessionStorage.setItem("menuList", JSON.stringify(mockdata));
-        next();
-    }
+    // if (!to.token) {
+    //     var mockdata = menuListData.menuList[0];
+    //     sessionStorage.setItem("menuList", JSON.stringify(mockdata));
+    //     next();
+    // }
 
     // let query  = getQueryObjuect()
     let menuList = sessionStorageHandler.getItem("menuList");
@@ -97,6 +97,11 @@ router.beforeEach(async (to, from, next) => {
         sessionStorageHandler.setItem("parkId", parkId);
     }
     let isUrlHasBd = window.location.origin.indexOf("bdppc") > -1;
+    oneId = sessionStorageHandler.getItem("bdParkId")
+    console.log(oneId)
+        if(!oneId){
+            oneId = sessionStorageHandler.getItem("parkId")
+        }
     if (to.query.token) {
         sessionStorageHandler.setItem("token", to.query.token);
         if(to.query.label){
@@ -106,11 +111,9 @@ router.beforeEach(async (to, from, next) => {
         }
         await refreshAuthToken(to.query.token);
         // bdParkId 有此字段优先返回
-        let ParkIdTmp = sessionStorageHandler.getItem("bdParkId")
-        if(!ParkIdTmp){
-            ParkIdTmp = sessionStorageHandler.getItem("parkId")
-        }
-        await getLoginUserRole({ parkId: ParkIdTmp });
+        
+        console.log(oneId)
+        await getLoginUserRole({ parkId: oneId });
         await selectResMenu({ oneId, LoginUserRol });
         // router.push(to.path)
     } else if (!menuList && to.path !== "/parkList") {
@@ -126,7 +129,7 @@ router.beforeEach(async (to, from, next) => {
             //没有parkId时
             return router.push("/parkList");
         }
-        await getLoginUserRole({ parkId: sessionStorageHandler.getItem("parkId") });
+        await getLoginUserRole({ parkId: oneId});
         await selectResMenu({ oneId, LoginUserRol });
     }
 
@@ -209,6 +212,8 @@ async function getParkById(parkId) {
         if (res.resultCode == "CLT000000000") {
             console.log(res.resultData);
             if (res.resultData) {
+
+
                 sessionStorageHandler.setItem("parkId", res.resultData.parkId);
                 sessionStorageHandler.setItem(
                     "parkName",
@@ -218,6 +223,8 @@ async function getParkById(parkId) {
                     "bdParkId",
                     res.resultData.bdParkId
                 );
+                bdParkId = res.resultData.bdParkId
+                oneId = bdParkId ? bdParkId : sessionStorageHandler.getItem('parkId');
             }
         }
     });

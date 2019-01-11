@@ -24,7 +24,7 @@ module.exports = {
                 // target: 'https://want.ccb.com',
                 // target: 'http://128.196.221.144:8082',
 
-                target: 'http://128.196.235.131:1345', //测试
+                target: 'http://128.196.235.129:1345', //测试
                 // target: 'http://128.196.235.129:1345', //测试
 
                 pathRewrite: {
