@@ -61,7 +61,7 @@ Vue.filter("timerFormat", function(value){
 })
 
 // Vue.prototype.$uploadCommom = uploadCommom;
-let openUlr = "http://128.196.235.131:1345/essp_vue1/#";
+let openUlr = "http://128.196.235.129:1345/essp_vue1/#";
 console.log(process.env.NODE_ENV);
 // if (process.env.NODE_ENV === "production") {
 //     openUlr = "http://want.bbc.com/essp/#";
@@ -84,11 +84,11 @@ let oneId = "";
 router.beforeEach(async (to, from, next) => {
     // 获取当前园区的权限
     // 没有token的时候，直接假数据
-    if (!to.token) {
-        var mockdata = menuListData.menuList[0];
-        sessionStorage.setItem("menuList", JSON.stringify(mockdata));
-        next();
-    }
+    // if (!to.token) {
+    //     var mockdata = menuListData.menuList[0];
+    //     sessionStorage.setItem("menuList", JSON.stringify(mockdata));
+    //     next();
+    // }
 
     // let query  = getQueryObjuect()
     let menuList = sessionStorageHandler.getItem("menuList");
@@ -105,7 +105,12 @@ router.beforeEach(async (to, from, next) => {
             await getParkById(to.query.parkId)
         }
         await refreshAuthToken(to.query.token);
-        await getLoginUserRole({ parkId: sessionStorageHandler.getItem("parkId") });
+        // bdParkId 有此字段优先返回
+        let ParkIdTmp = sessionStorageHandler.getItem("bdParkId")
+        if(!ParkIdTmp){
+            ParkIdTmp = sessionStorageHandler.getItem("parkId")
+        }
+        await getLoginUserRole({ parkId: ParkIdTmp });
         await selectResMenu({ oneId, LoginUserRol });
         // router.push(to.path)
     } else if (!menuList && to.path !== "/parkList") {
