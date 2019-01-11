@@ -33,11 +33,9 @@
             </el-form>
             <div class="audit-line"></div>
             <div class="audit-opinion">
-                <button class="audit-btn audit-success" @click="auditSuccess()">通过</button>
-                <button class="audit-btn audit-reject" @click="auditReject()">不通过</button>
+                <button class="audit-btn audit-success" @click="showDialog('02')">通过</button>
+                <button class="audit-btn audit-reject" @click="showDialog('12')">不通过</button>
             </div>
-
-
         </div>
 
         <!--！！！！！！科技服务表格！！！！！！-->
@@ -71,10 +69,32 @@
             </el-form>
             <div class="audit-line"></div>
             <div class="audit-opinion">
-                <button class="audit-btn audit-success" @click="auditSuccess()">通过</button>
-                <button class="audit-btn audit-reject" @click="auditReject()">不通过</button>
+                <button class="audit-btn audit-success" @click="showDialog('02')">通过</button>
+                <button class="audit-btn audit-reject" @click="showDialog('12')">不通过</button>
             </div>
         </div>
+
+        <!--填写审核意见对话框---开始-->
+        <el-dialog
+            class="my-audit-opinion-dialog"
+            :visible.sync="dialogVisible"
+            width="670px"
+            height="350px"
+            :before-close="handleClose"
+        >
+            <div slot="title">
+                <h3 class="my-audit-title">填写审核意见</h3>
+            </div>
+            <div class="my-audit-opinion">
+                <textarea placeholder="请输入审核意见">
+                </textarea>
+            </div>
+            <div class="btn-submit-wrap">
+                <button class="btn-submit" @click="submit()">提&nbsp;&nbsp;&nbsp;交</button>
+            </div>
+        </el-dialog>
+        <!--填写审核意见对话框---开始-->
+
     </div>
 </template>
 
@@ -177,6 +197,10 @@
                         {required: true, message: '请填写科技服务标签', trigger: 'blur'}
                     ]
                 },
+
+                // 填写审核意见事件相关字段
+                dialogVisible: false,
+                status: '',
             }
         },
         methods: {
@@ -200,31 +224,20 @@
                 })
             },
 
-            // 通过事件
-            auditSuccess() {
-                let params = {
-                    parkId: this.parkId,
-                    entityId: this.id,
-                    status: '02'
-                };
-                this.$post("/audit/policy", params).then(response => {
-                    let codestatus = response.resultCode;
-                    if (codestatus == "CLT000000000") {
-                        this.satpDate = response.resultData;
-                    } else {
-                        this.$message.info(response.resultMsg);
-                    }
-                }, err => {
-                    this.$message.error("接口异常");
-                })
+            /**
+             * 填写审核意见操作相关事件---开始
+             */
+            // 弹窗
+            showDialog(status) {
+                this.dialogVisible = true;
+                this.status = status
             },
-
-            // 不通过事件
-            auditReject() {
+            // 提交事件
+            submit() {
                 let params = {
                     parkId: this.parkId,
                     entityId: this.id,
-                    status: '12'
+                    status: this.status
                 };
                 this.$post("/audit/policy", params).then(response => {
                     let codestatus = response.resultCode;
@@ -237,6 +250,9 @@
                     this.$message.error("接口异常");
                 })
             }
+            /**
+             * 填写审核意见操作相关事件---结束
+             */
 
         },
         created() {
@@ -312,5 +328,67 @@
                 }
             }
         }
+
+        .my-audit-opinion-dialog {
+            .my-audit-title {
+                margin-left: 13px;
+                font-size: 20px;
+                font-weight: normal;
+                font-stretch: normal;
+                letter-spacing: 0px;
+                color: #333;
+            }
+            .my-audit-opinion {
+                margin-top: -30px;
+                margin-left: 15px;
+                textarea {
+                    padding: 10px 15px;
+                    width: 570px;
+                    height: 180px;
+                    font-size: 14px;
+                    font-weight: normal;
+                    font-stretch: normal;
+                    letter-spacing: 0px;
+                    color: #ccc;
+                    border-radius: 3px;
+                    border: solid 1px #00a0e9;
+                    background-color: #ffffff;
+                    &::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+                        color: #ccc;
+                    }
+                    &:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+                        color: #ccc;
+                    }
+                    &::-moz-placeholder { /* Mozilla Firefox 19+ */
+                        color: #ccc;
+                    }
+                    &:-ms-input-placeholder { /* Internet Explorer 10-11 */
+                        color: #ccc;
+                    }
+                }
+            }
+
+            .btn-submit-wrap {
+                margin-top: 20px;
+                margin-right: 13px;
+                text-align: right;
+                .btn-submit {
+                    width: 100px;
+                    height: 35px;
+                    line-height: 35px;
+                    text-align: center;
+                    font-size: 18px;
+                    font-weight: normal;
+                    font-stretch: normal;
+                    letter-spacing: 0px;
+                    color: #ffffff;
+                    border: none;
+                    background-color: #00a0e9;
+                    cursor: pointer;
+                }
+            }
+
+        }
+
     }
 </style>
