@@ -67,7 +67,7 @@ export default {
               dataNum: "",
               sub: "万人",
               subTitle: "R&D人员：",
-              type:0
+              type: 0
             }
           ]
         },
@@ -80,7 +80,7 @@ export default {
               dataNum: "",
               sub: "亿元",
               subTitle: "R&D投入：",
-              type:1
+              type: 1
             }
           ]
         },
@@ -93,7 +93,7 @@ export default {
               dataNum: "",
               sub: "项",
               subTitle: "专利申请量：",
-              type:2
+              type: 2
             }
           ]
         },
@@ -106,7 +106,7 @@ export default {
               dataNum: "",
               sub: "项",
               subTitle: "发明专利申请量：",
-              type:3
+              type: 3
             }
           ]
         },
@@ -119,7 +119,7 @@ export default {
               dataNum: "",
               sub: "项",
               subTitle: "高新技术企业数量：",
-              type:4
+              type: 4
             }
           ]
         },
@@ -132,7 +132,7 @@ export default {
               dataNum: "",
               sub: "亿",
               subTitle: "技术合同登记额：",
-              type:5
+              type: 5
             }
           ]
         }
@@ -150,24 +150,26 @@ export default {
   },
   mounted() {},
   created() {
-    this.getData()
+    this.getData();
   },
   methods: {
     getData() {
-      this.list.forEach(item=>{
-        item.content=[]
-      })
-      console.log(this.list)
+      console.log(this.list);
       this.$post("/dataIndex/getIndexData", {
         parkId: sessionStorage.getItem("parkId")
       }).then(res => {
-        if(res.resultCode === 'CLT000000000'){
-          res.resultData.forEach(item=>{
-            let index = item.type
-            if(index>5)return false
-            this.list[index].content.push(item)
-          })
-          console.log(this.list)
+        if (res.resultCode === "CLT000000000") {
+          if (res.resultData.length > 0) {
+            this.list.forEach(item => {
+              item.content = [];
+            });
+          }
+
+          res.resultData.forEach(item => {
+            let index = item.type;
+            if (index > 5) return false;
+            this.list[index].content.push(item);
+          });
         }
       });
     },
