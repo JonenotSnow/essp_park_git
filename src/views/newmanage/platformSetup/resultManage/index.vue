@@ -161,7 +161,7 @@
                     field: this.form.field,  // 所属领域
                     inventor: this.form.inventor,   //发明人
                     unit:this.form.unit,       // 所属单位
-                    userId:sessionStorage.userInfo.id || '' 
+                    userId:this.SSH.getItem('userInfo').id || '' 
                 }).then(
                     response => {
                         this.list = response.resultData
