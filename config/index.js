@@ -20,7 +20,7 @@ module.exports = {
                 changeOrigin: true,
                 // target: 'http://128.64.216.95:8088/',
                 // target: 'http://128.64.200.74:8088/',
-				// target: 'http://128.64.219.134:8088/',//景龙
+                // target: 'http://128.64.219.134:8088/',//景龙
                 // target: 'https://want.ccb.com',
                 // target: 'http://128.196.221.144:8082',
                 target: 'http://128.196.235.131:1345', //测试

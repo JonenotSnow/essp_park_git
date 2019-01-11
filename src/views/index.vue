@@ -938,13 +938,13 @@
             special(url) {
                 if (url.indexOf('parkHome') > -1) {
                     this.SSH.delItem('oldParkId')
-                    localStorage.setItem("parkId", this.constants.haParkData.parkId);
+                    this.SSH.setItem("parkId", this.constants.haParkData.parkId);
                     sessionStorage.setItem("parkId", this.constants.haParkData.parkId);
                     // localStorage.setItem("parkName", this.parkNm);
                     this.SSH.setItem("parkId", this.constants.haParkData.parkId);
                     // this.SSH.setItem("parkFlag", this.constants.haParkData.parkFlag);
                     this.SSH.setItem("bdFlag", false);
-                    localStorage.setItem("parkName", this.constants.haParkData.parkName);
+                    this.SSH.setItem("parkName", this.constants.haParkData.parkName);
                 }
                 this.utils.advUrlturn(url)
 

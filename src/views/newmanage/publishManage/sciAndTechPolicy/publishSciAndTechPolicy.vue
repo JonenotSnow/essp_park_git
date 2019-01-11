@@ -98,7 +98,6 @@
                         v-model="ruleForm.infoDetail"
                         placeholder="请输入科技服务详情"
                         style="padding: 10px; width: 720px; height: 140px; font-size: 14px; color: #999; border-radius: 3px; border: solid 1px #cccccc;"/>
-
                 </el-form-item>
                 <el-form-item label="科技服务标签：" prop="ruleForm.tags">
                     标签组件暂无

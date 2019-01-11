@@ -81,7 +81,7 @@
                 params: {
                     title: '',
                     content: '',
-                    userName: localStorage.getItem('userName')
+                    userName: this.SSH.getItem('userName')
                 },
                 editorOption: {
                     readOnly: true,

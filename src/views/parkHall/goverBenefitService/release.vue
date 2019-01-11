@@ -399,7 +399,7 @@
             // 判断是不是自己发布的
             checkActivityOperateAuth(recordOwner) {
                 let defautlFlag = false;
-                let currentUser = localStorage.getItem("userName");
+                let currentUser = this.SSH.getItem("userName");
 
                 if (currentUser === recordOwner) {
                     defautlFlag = true;

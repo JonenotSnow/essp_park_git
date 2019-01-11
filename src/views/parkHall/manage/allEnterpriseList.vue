@@ -95,7 +95,7 @@ export default {
   methods:{
     queryEnterpriseList(){
     	this.$post('/memberManage/getMemInfo', {
-        parkId: localStorage.parkId,
+        parkId: this.SSH.getItem('parkId'),
         pageSize:this.pageSize,
         pageNum:this.pageNum
       }).then(    	
