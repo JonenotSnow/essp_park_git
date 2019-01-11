@@ -83,8 +83,7 @@ let bdParkId = "";
 let oneId = "";
 router.beforeEach(async (to, from, next) => {
     // 获取当前园区的权限
-    // 没有token的时候，直接假数据
-    // if (!to.token) {
+    // 没有token的时候，直接假数    // if (!to.token) {
     //     var mockdata = menuListData.menuList[0];
     //     sessionStorage.setItem("menuList", JSON.stringify(mockdata));
     //     next();
@@ -244,7 +243,7 @@ function loginCtrl(data) {
     sessionStorageHandler.setItem("cstBscInfVo", data.cstBscInfVo);
     sessionStorageHandler.setItem("loginFlag", true);
     store.state.chat.user = data.esspUserLoginVo;
-    if (data && data.esspUserLoginVo && data.esspUserLoginVo.userType) {
+    if(data && data.esspUserLoginVo && data.esspUserLoginVo.userType){
         if (data.esspUserLoginVo.userType !== "01") {
             // 进行个人实名认证判断，
             // -1：异常   0：未认证   >1：已认证    2：认证开通  3：审核开通  4：刷脸认证开通
@@ -255,17 +254,14 @@ function loginCtrl(data) {
                 case 4:
                     sessionStorageHandler.setItem("cetificateFlag", true);
                     break;
-
                 case 0:
                     Message.info("该用户未进行实名认证");
                     sessionStorageHandler.setItem("cetificateFlag", false);
                     break;
-
                 case 1:
                     Message.info("该用户个人实名认证中");
                     sessionStorageHandler.setItem("cetificateFlag", false);
                     break;
-
                 default:
                     Message.info("该用户实名认证异常");
                     sessionStorageHandler.setItem("cetificateFlag", false);
@@ -280,6 +276,7 @@ function loginCtrl(data) {
             sessionStorageHandler.setItem("enterpriseFlag", true);
         } 
     }
+    
 }
 function getQueryObjuect(url) {
     url = url == null ? window.location.href : url;
