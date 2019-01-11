@@ -21,21 +21,21 @@
                 <el-form-item label="政策法规简介：" prop="desc">
                     <!--<el-input type="textarea" v-model="ruleForm.desc"></el-input>-->
                     <textarea
+                        v-model="ruleForm.desc"
                         placeholder="请输入政策法规简介"
                         style="padding: 10px; width: 720px; height: 140px; font-size: 14px; color: #999; border-radius: 3px; border: solid 1px #cccccc;"/>
                 </el-form-item>
                 <el-form-item label="政策法规详情：" prop="infoDetail">
                     <textarea
-                        v-model="infoDetail"
+                        v-model="ruleForm.infoDetail"
                         placeholder="请输入政策法规详情"
                         style="padding: 10px; width: 720px; height: 140px; font-size: 14px; color: #999; border-radius: 3px; border: solid 1px #cccccc;"/>
-
                 </el-form-item>
-                <el-form-item label="政策法规标签：" prop="tags">
-                    标签组件
+                <el-form-item label="政策法规标签：">
+                    标签组件暂无
                 </el-form-item>
                 <el-form-item label="发布人：">
-                    发布人
+                    {{userInfo.truename}}
                 </el-form-item>
                 <el-form-item>
                     <el-upload
@@ -86,30 +86,31 @@
                         <el-option label="天使投资" value="08"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="科技服务简介：" prop="desc">
+                <el-form-item label="科技服务简介：" prop="ruleForm.desc">
                     <!--<el-input type="textarea" v-model="ruleForm.desc"></el-input>-->
                     <textarea
+                        v-model="ruleForm.desc"
                         placeholder="请输入科技服务简介"
                         style="padding: 10px; width: 720px; height: 140px; font-size: 14px; color: #999; border-radius: 3px; border: solid 1px #cccccc;"/>
                 </el-form-item>
-                <el-form-item label="科技服务详情：" prop="infoDetail">
+                <el-form-item label="科技服务详情：" prop="ruleForm.infoDetail">
                     <textarea
-                        v-model="infoDetail"
+                        v-model="ruleForm.infoDetail"
                         placeholder="请输入科技服务详情"
                         style="padding: 10px; width: 720px; height: 140px; font-size: 14px; color: #999; border-radius: 3px; border: solid 1px #cccccc;"/>
 
                 </el-form-item>
-                <el-form-item label="科技服务标签：" prop="tags">
-                    标签组件
+                <el-form-item label="科技服务标签：" prop="ruleForm.tags">
+                    标签组件暂无
                 </el-form-item>
                 <el-form-item label="发布人：">
-                    发布人
+                    {{userInfo.truename}}
                 </el-form-item>
 
                 <el-form-item>
                     <el-upload
                         class="upload-demo"
-                        action="uploadUrl"
+                        :action="uploadUrl"
                         :on-preview="handlePreview"
                         :on-remove="handleRemove"
                         :before-remove="beforeRemove"
@@ -138,16 +139,13 @@
 
 <script>
     import EsspBreadCrumb from "@/components/EsspBreadCrumb";
-    import Index from "../../../parkHall/property/propertyManager/equitmentInput/index";
 
     export default {
         components: {
-            Index,
-            EsspBreadCrumb
+            EsspBreadCrumb,
         },
         data() {
             return {
-                applyType: this.$route.query.applyType,
                 breadlist_01: [
                     {
                         path: "/parkHome",
@@ -176,14 +174,18 @@
                         name: "发布科技服务"
                     }
                 ],
+
                 parkId: sessionStorage.getItem("parkId") || "",
+                applyType: this.$route.query.applyType,
                 id: this.$route.query.id || "",
+                userInfo: this.SSH.getItem("userInfo"), // 获取用户信息
+
                 ruleForm: {
                     policyTitle: '',
                     classtType: '',
                     desc: '',
                     infoDetail: '',
-                    tags: []
+                    tags: ['科政标签1', '科政标签2', '科政标签3']
                 },
                 rules_01: {
                     policyTitle: [
@@ -231,6 +233,21 @@
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
 
+                        this.ruleForm.parkId = this.parkId;
+
+                        // 区分政策或者法规
+                        this.ruleForm.applyType = this.applyType;
+
+                        // 处理标签
+                        let tags = '';
+                        for (let i = 0; i < this.ruleForm.tags.length; i++) {
+                            tags += this.ruleForm.tags[i];
+                            if (i !== this.ruleForm.tags.length - 1) {
+                                tags += ',';
+                            }
+                        }
+                        this.ruleForm.tags = tags;
+
                         // 处理附件上传
                         let fileUrl = '';
                         for (let i = 0; i < this.fileList.length; i++) {
@@ -245,6 +262,10 @@
                         if (this.applyType === '01') {
                             delete this.ruleForm.classtType;
                         }
+
+
+                        console.log('this.ruleForm=========');
+                        console.log(this.ruleForm);
 
                         this.$post("/policy/savePolicyTech", this.ruleForm).then(response => {
                             let codestatus = response.resultCode;
@@ -281,6 +302,14 @@
                     }
                 });
             },
+
+            /**
+             * 标签相关方法---开始
+             */
+
+            /**
+             * 标签相关方法---结束
+             */
 
             /**
              * 附件上传事件---开始
@@ -397,5 +426,6 @@
                 }
             }
         }
+
     }
 </style>

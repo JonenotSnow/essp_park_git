@@ -84,53 +84,12 @@
         components: {},
         data() {
             return {
+                parkId: sessionStorage.getItem("parkId") || "",
                 totalCount: 0,
                 pageNum: 1,
                 pageSize: 5,
                 list: [],
-                rzz: JSON.parse(window.localStorage.getItem('rzz')),
-                statusList: [
-                    {
-                        id: '',
-                        name: '全部'
-                    },
-                    {
-                        id: '10',
-                        name: '园区待审核'
-                    },
-                    {
-                        id: '01',
-                        name: '园区审核中'
-                    },
-                    {
-                        id: '02',
-                        name: '审核通过'
-                    },
-                    {
-                        id: '12',
-                        name: '园区审核未通过'
-                    },
-                    {
-                        id: '21',
-                        name: '企业待审核'
-                    },
-                    {
-                        id: '05',
-                        name: '企业审核中'
-                    },
-                    {
-                        id: '03',
-                        name: '企业审核未通过'
-                    },
-                    {
-                        id: '13',
-                        name: '高级管理员待审核'
-                    },
-                    {
-                        id: '14',
-                        name: '高级管理员审核中'
-                    }
-                ],
+                satpType: '02',     // 科技服务
                 searchCondition: {   //查询条件
                     parkId: sessionStorage.getItem("parkId"),
                     type: '01',         //查询条件

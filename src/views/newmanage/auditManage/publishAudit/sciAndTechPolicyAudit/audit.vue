@@ -149,23 +149,8 @@
                 ],
 
 
-                satpDate: {
-                    policyTitle: '科技政策标题1',
-                    classtType: '01',
-                    desc: '科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介',
-                    infoDetail: '科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情',
-                    tagsTxt: ['测试标签1', '测试标签2', '测试标签3'],
-                    fileUrl: [
-                        {
-                            name: 'xxxxxx',
-                            url: ''
-                        },
-                        {
-                            name: 'qqqqqqqqq',
-                            url: ''
-                        }
-                    ]
-                },
+                // 详情数据
+                satpDate: {},
                 rules_01: {
                     policyTitle: [
                         {required: true, message: '请输入政策法规标题', trigger: 'blur'},
@@ -243,6 +228,9 @@
                     let codestatus = response.resultCode;
                     if (codestatus == "CLT000000000") {
                         this.satpDate = response.resultData;
+                        this.$router.push({
+                            path: '/sciIndex/policieAndRegulation/policieAndRegulation'
+                        });
                     } else {
                         this.$message.info(response.resultMsg);
                     }
@@ -256,6 +244,7 @@
 
         },
         created() {
+            this.getSatpDate();
         },
     }
 </script>
