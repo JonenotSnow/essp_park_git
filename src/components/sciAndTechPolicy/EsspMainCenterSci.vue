@@ -104,41 +104,9 @@
                 title: "",//搜索关键词
                 times: '',
                 tagTxt: "",//通过标签搜索
-                mcCardDataList: [
-                    {
-                        id: '123456',                       // 政策id
-                        createTime: '1546928463894',        // 发布时间
-                        cstNm: '建行',                      // 发布机构
-                        policyTitle: '政策法规标题1',       // 标题
-                        userName: '行长',                   // 发布人
-                        status: '已发布',                   // 发布状态
-                        applyType: '01',                    // 政策01，或科技服务02
-                        classtType: "高企认定",              // 类型【服务类型】
-                        desc: '政策简介政策简介政策简介政策简介'
-                    },
-                    {
-                        id: '123456',                       // 政策id
-                        createTime: '1546928463894',        // 发布时间
-                        cstNm: '交行',                      // 发布机构
-                        policyTitle: '政策法规标题2',       // 标题
-                        userName: '行长',                   // 发布人
-                        status: '已审核',                   // 发布状态
-                        applyType: '01',                    // 政策01，或科技服务02
-                        classtType: "科小认定",              // 类型【服务类型】
-                        desc: '政策简介政策简介政策简介政策简介政策简介政策简介政策简介政策简介政策简介政策简介'
-                    },
-                    {
-                        id: '123456',                       // 政策id
-                        createTime: '1546928463894',        // 发布时间
-                        cstNm: '交行',                      // 发布机构
-                        policyTitle: '政策法规标题3',       // 标题
-                        userName: '行长',                   // 发布人
-                        status: '未审核',                   // 发布状态
-                        applyType: '01',                    // 政策01，或科技服务02
-                        classtType: "风险投资",              // 类型【服务类型】
-                        desc: '政策简介政策简介政策简介政策简介政策简介政策简介政策简介政策简介政策简介政策简介'
-                    }
-                ]
+
+                // 列表数据
+                mcCardDataList: []
             }
         },
         created() {
@@ -241,7 +209,7 @@
                     delete params.classtType;
                 }
 
-                this.$post(" /policy/getAllPolicy", params).then(response => {
+                this.$post("/policy/getAllPolicy", params).then(response => {
                     let codestatus = response.resultCode;
                     if (codestatus == "CLT000000000") {
                         let resultData = response.resultData;

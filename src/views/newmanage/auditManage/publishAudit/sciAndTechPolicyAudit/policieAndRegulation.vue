@@ -48,7 +48,7 @@
                 <p>采取先到先得的任务领取审核方式</p>
             </div>
             <div class="tabList">
-                <el-table :data="list" @row-click="getDetail" style="width: 100%">
+                <el-table :data="policieAndRegulationData" @row-click="getDetail" style="width: 100%">
                     <el-table-column align="center" type="index" label="全部" width="85"></el-table-column>
                     <el-table-column show-overflow-tooltip align="center" prop="policyTitle" label="标题名称"
                                      width="200"></el-table-column>
@@ -91,46 +91,14 @@
         components: {},
         data() {
             return {
+                parkId: sessionStorage.getItem("parkId") || "",
                 totalCount: 0,
                 pageNum: 1,
                 pageSize: 10,
-                list: [
-                    {
-                        id: '123456',                       // 政策id
-                        createTime: '1546928463894',        // 发布时间
-                        cstNm: '建行',                      // 发布机构
-                        policyTitle: '政策法规标题1',       // 标题
-                        userName: '行长',                   // 发布人
-                        status: '已发布',                   // 发布状态
-                        applyType: '01',                    // 政策01，或科技服务02
-                        classtType: "高企认定",              // 类型【服务类型】
-                        desc: '政策简介政策简介政策简介政策简介'
-                    },
-                    {
-                        id: '123456',                       // 政策id
-                        createTime: '1546928463894',        // 发布时间
-                        cstNm: '交行',                      // 发布机构
-                        policyTitle: '政策法规标题2',       // 标题
-                        userName: '行长',                   // 发布人
-                        status: '已审核',                   // 发布状态
-                        applyType: '01',                    // 政策01，或科技服务02
-                        classtType: "科小认定",              // 类型【服务类型】
-                        desc: '政策简介政策简介政策简介政策简介政策简介政策简介政策简介政策简介政策简介政策简介'
-                    },
-                    {
-                        id: '123456',                       // 政策id
-                        createTime: '1546928463894',        // 发布时间
-                        cstNm: '交行',                      // 发布机构
-                        policyTitle: '政策法规标题3',       // 标题
-                        userName: '行长',                   // 发布人
-                        status: '未审核',                   // 发布状态
-                        applyType: '01',                    // 政策01，或科技服务02
-                        classtType: "风险投资",              // 类型【服务类型】
-                        desc: '政策简介政策简介政策简介政策简介政策简介政策简介政策简介政策简介政策简介政策简介'
-                    }
-                ],
+                satpType: '01',     // 政策法规
+                policieAndRegulationData: [],
                 searchCondition: {   //查询条件
-                    parkId: sessionStorage.getItem("parkId"),
+                    parkId: sessionStorage.getItem("parkId") || "",
                     policyTitle: '',
                     userName: '',
                     status: '',
@@ -140,7 +108,7 @@
             }
         },
         created() {
-
+            this.getSciAndTechPolicy();
         },
         methods: {
 
@@ -176,8 +144,9 @@
                     startDate: this.startDate,      // 信息发布时间---开始时间
                     endDate: this.endDate,          // 信息发布时间---结束时间
                     title: '',                       // 标题,
-                    type: this.satpType,            // 政策01，或科技服务02
-                    classtType: this.classtType     // 科技服务才会有这个字段---
+                    entityType: this.satpType,      // 政策01，或科技服务02
+                    type: '04', //（ 必填）
+                    // classtType: this.classtType     // 科技服务才会有这个字段---
                 };
 
                 // “政策法规”不需要“classtType”这个字段
@@ -185,12 +154,12 @@
                     delete params.classtType;
                 }
 
-                this.$post(" /policy/getAllPolicy", params).then(response => {
+                this.$post("/audit/getAuditList", params).then(response => {
                     let codestatus = response.resultCode;
                     if (codestatus == "CLT000000000") {
                         let resultData = response.resultData;
-                        this.allTotal = resultData.total;
-                        this.mcCardDataList = resultData.policyList;
+                        this.totalCount = resultData.policyCount;
+                        this.policieAndRegulationData = resultData.policyList;
                     } else {
                         this.$message.info(response.resultMsg);
                     }

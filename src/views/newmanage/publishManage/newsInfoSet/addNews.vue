@@ -23,7 +23,7 @@
                     <el-input class="el_input_left" v-model="informationTitle" placeholder="必填"></el-input>
                 </div>
                 <ParkUpload :parkUploadData="parkUploadData" @changeImgUrl="showImgUrl"></ParkUpload>
-                
+
                 <div class="tdcon">
                     <span class="inline_span">
                         <em>*</em>新闻简介 :
@@ -47,7 +47,7 @@
                         </quill-editor>
                     </div>
                 </div>
-                
+
                 <div class="tdcon">
                     <span class="inline_span">
                         <!--<em>*</em>-->
@@ -79,7 +79,7 @@
                         ></el-input>
                     </div>
                 </div>
-                
+
             </div>
         </div>
             <div class="tdcon">
@@ -254,7 +254,7 @@
             //获取新闻暂存的草稿数据
             getDraftResource() {
                 // this.typeitems = classtType.infoType;
-             
+
                 var informationId = this.$route.query.informationId;
                 if (informationId) {
                     var pop = {informationId};
@@ -269,7 +269,7 @@
                                 this.informationId = data.informationId; //资讯id
                                 this.parkUploadData.src = data.titleImg ? data.titleImg : ""; //资讯配图
                                 this.tags = data.tagsTxt ? data.tagsTxt.split(",") : [];
-                            
+
                         },
                         err => {
                             this.$message.error(err.resultMsg);
@@ -277,7 +277,7 @@
                     );
                 }
             },
-            closetag({viewtags}) {
+            closetag({view}) {
                 this.visible = false;
                 this.tags = viewtags;
             },
@@ -354,7 +354,7 @@
                     showCancelButton: false,
                     dangerouslyUseHTMLString: true
                 };
-                
+
                 this.$post("information/saveNews", {
                     parkId: parkId,
                     informationTitle: this.informationTitle,
@@ -370,7 +370,7 @@
                         this.$message.success("新闻动态暂存成功")
                         this.$router.push({path: url});
                     });
-                   
+
                 });
             }
         }

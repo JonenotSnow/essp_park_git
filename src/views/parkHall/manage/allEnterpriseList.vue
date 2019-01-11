@@ -8,10 +8,10 @@
         <div class="enterlist">
           <div class="listcon">
           	<div class="listitem" v-for="(item,index) in enterprises" :key="index" @mouseenter="showDetail(item.isShowDetail,index)" @mouseleave="showDetail(item.isShowDetail,index)">
-          		<img class="enter_child" :src="item.src">
+          		<img class="enter_child" :src="item.cstLogo">
           		<div class="detailinfo" v-if="item.isShowDetail" >
-          			<P>{{item.name}}</P>
-          			<P>{{item.industryType}}</P>
+          			<P>{{item.cstNm}}</P>
+          			<P>{{item.idyTpcd}}</P>
           			<div class="checkenterprise">进入企业橱窗</div>          			
           		</div>
           	</div>
@@ -41,43 +41,44 @@ export default {
       pageNum: 1,
       pageSize: 5,
       enterprises:[
-				{
-					src: require('@/views/newparkHall/home/imgs/logo_b1.png'),
-					name:'德意志银行',
+				/*{
+					cstLogo: require('@/views/newparkHall/home/imgs/logo_b1.png'),
+					cstNm:'德意志银行',
 					isShowDetail:false,
-					industryType:'金融/IT'
+					idyTpcd:'金融/IT'
 				},
 				{
-					src: require('@/views/newparkHall/home/imgs/logo_b2.png'),
-					name:'德意志银行',
+					cstLogo: require('@/views/newparkHall/home/imgs/logo_b2.png'),
+					cstNm:'德意志银行',
 					isShowDetail:false,
-					industryType:'金融/IT'
+					idyTpcd:'金融/IT'
 				},
 				{
-				  src: require('@/views/newparkHall/home/imgs/logo_b3.png'),
-				  name:'德意志银行',
+				  cstLogo: require('@/views/newparkHall/home/imgs/logo_b3.png'),
+				  cstNm:'德意志银行',
 				  isShowDetail:false,
-					industryType:'金融/IT'
+					idyTpcd:'金融/IT'
 				},
 				{
-					src: require('@/views/newparkHall/home/imgs/logo_b4.png'),
-					name:'德意志银行',
+					cstLogo: require('@/views/newparkHall/home/imgs/logo_b4.png'),
+					cstNm:'德意志银行',
 					isShowDetail:false,
-					industryType:'金融/IT'
+					idyTpcd:'金融/IT'
 				},
 				{
-				  src: require('@/views/newparkHall/home/imgs/logo_b5.png'),
-				  name:'德意志银行',
+				  cstLogo: require('@/views/newparkHall/home/imgs/logo_b5.png'),
+				  cstNm:'德意志银行',
 				  isShowDetail:false,
-					industryType:'金融/IT'
+					idyTpcd:'金融/IT'
 				},
 				{
-				  src: require('@/views/newparkHall/home/imgs/logo_b6.png'),
-				  name:'德意志银行',
+				  cstLogo: require('@/views/newparkHall/home/imgs/logo_b6.png'),
+				  cstNm:'德意志银行',
 				  isShowDetail:false,
-					industryType:'金融/IT'
-				}
-			]      
+					idyTpcd:'金融/IT'
+				}*/
+			]      ,
+      rzzMap:new Map()
     }
    
   },
@@ -102,7 +103,17 @@ export default {
         response => {
           if (response.resultCode == "CLT000000000") {
           	if(response.resultData.memInfoCount > 0){
-							this.enterprises = response.resultData
+							this.enterprises = response.resultData.memberList
+              let rzz = JSON.parse(localStorage.rzz);
+              this.rzzMap = new Map()
+              for (let i = 0; i < rzz.length; i++) {
+                this.rzzMap.set(rzz[i].code,rzz[i].name)
+              }               
+              for (let i = 0; i < this.enterprises.length; i++) {
+                this.$set(this.enterprises[i],'isShowDetail',false)
+                let type = this.rzzMap.get(this.enterprises[i].idyTpcd)
+                this.enterprises[i].idyTpcd = type ? type : '其他行业'
+              }
           	}else{
 
           	}           
@@ -122,7 +133,6 @@ export default {
     showDetail(isTrue,index){
     	let that = this;
       that.enterprises[index].isShowDetail = !isTrue;
-      console.log(that.enterprises)
     }
   }
 };
@@ -156,10 +166,10 @@ export default {
 					margin:50px auto;
 					/*margin-left: 100px;
 					margin-top: 50px;*/
-					border-top:1px solid #ccc;
-					border-left:1px solid #ccc;
-					overflow: hidden;
-					.listitem{
+          border-left:1px solid #ccc;
+          overflow: hidden;
+          .listitem{
+					  border-top:1px solid #ccc;
 						float: left;
 		        cursor: pointer;
 		        width: 200px;
@@ -185,12 +195,13 @@ export default {
 							width:100%;
 							height: 100%;
 							p{
-								margin-bottom: 14px;
+								margin: 14px 0;
 							}
 							.checkenterprise{
 								border:1px solid #fff;
 								width: 120px;
 						    height: 30px;
+                line-height:30px;
 						    margin: 0 auto;
 							}
 						}
