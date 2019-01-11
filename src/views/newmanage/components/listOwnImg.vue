@@ -42,11 +42,8 @@
 </template>
 
 <script>
-<<<<<<< HEAD
-=======
 import Moment from "moment";
 const cityOptions = ['上海', '北京', '广州', '深圳'];
->>>>>>> ccj/01/10
 export default {
   props: {
       type: {
@@ -54,40 +51,29 @@ export default {
           default: ''
       },
       list:{
-<<<<<<< HEAD
-          type: [],
-          default: []
-=======
           type: {},
           default: null
->>>>>>> ccj/01/10
+
       }
   },
     data() {
 
         return {
             checkAll: false,
-<<<<<<< HEAD
             checkedCities: [],
             cities: [],
-            isIndeterminate: false
-=======
-            checkedCities: ['上海', '北京'],
-            cities: cityOptions,
+            isIndeterminate: false,
             isIndeterminate: true,
             isSelectedItem:[]
->>>>>>> ccj/01/10
+
         }
         console.log(this.list.achievList)
     },
     created () {
-<<<<<<< HEAD
         this.getAllData();
     },
     computed: {
-=======
 
->>>>>>> ccj/01/10
     },
     methods: {
         getAllData(){
@@ -116,7 +102,7 @@ export default {
         timerFormat(vaule){
             return Moment(vaule).format("YYYY-MM-DD")
         }
-    },
+    }   
 }
 </script>
 <style>
