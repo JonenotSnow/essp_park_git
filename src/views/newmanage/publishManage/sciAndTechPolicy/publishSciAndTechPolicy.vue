@@ -256,10 +256,6 @@
                             delete this.ruleForm.classtType;
                         }
 
-
-                        console.log('this.ruleForm=========');
-                        console.log(this.ruleForm);
-
                         this.$post("/policy/savePolicyTech", this.ruleForm).then(response => {
                             let codestatus = response.resultCode;
                             if (codestatus == "CLT000000000") {
@@ -296,6 +292,23 @@
                 });
             },
 
+            // 获取详情，编辑页面使用
+            getDateForEdit() {
+                let params = {
+                    id: this.id
+                };
+                this.$post("/policy/getPolById", params).then(response => {
+                    let codestatus = response.resultCode;
+                    if (codestatus == "CLT000000000") {
+                        this.ruleForm = response.resultData;
+                    } else {
+                        this.$message.info(response.resultMsg);
+                    }
+                }, err => {
+                    this.$message.error("接口异常");
+                })
+            },
+
             /**
              * 标签相关方法---开始
              */
@@ -324,6 +337,9 @@
              */
         },
         created() {
+            if (this.id) {
+                this.getDateForEdit();
+            }
         },
     }
 </script>
