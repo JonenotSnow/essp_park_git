@@ -625,6 +625,8 @@ export default {
                         }else{
                             this.displayList = this.requireList;
                         }
+                    }else{
+                        this.displayList = this.requireList;
                     }
                 },
                 err => {
