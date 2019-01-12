@@ -96,7 +96,7 @@
         <el-button type="primary" size="small" @click="toRequestAddParK">立即申请</el-button>
       </p>
     </el-dialog>
-    <el-dialog :visible.sync="showNeedRange" width="720px" height="400px" class="needRange">
+    <!-- <el-dialog :visible.sync="showNeedRange" width="720px" height="400px" class="needRange">
       <p class="title">请选择需求发布范围</p>
       <div class="title-border"></div>
       <div class="select-radio">
@@ -111,13 +111,14 @@
         {{NeedRangeRadio==='1'?
         '点击确认后系统将自动跳转至建融智合需求发布页面':''}}
       </div>
-    </el-dialog>
+    </el-dialog> -->
+    <dialog-need :showNeedRange.sync="showNeedRange" ></dialog-need>
   </div>
 </template>
 
 <script>
 import Moment from "moment";
-
+import DialogNeed from '@/components/DialogNeedRange.vue'
 export default {
   data() {
     return {
@@ -226,15 +227,8 @@ export default {
             linkSrc: sessionStorage.getItem("parkId")
           }
         : {};
-      console.log(isInPark);
       if (item.name === "需求发布") {
-        this.showNeedRange =true
-        let routerData = this.$router.resolve({
-          path: item.path,
-          query: query
-        });
-        window.open(routerData.href, "_blank");
-        return false;
+        return (this.showNeedRange = true);
       }
 
       if (item.name === "入驻申请") {
@@ -383,8 +377,25 @@ export default {
         },
         err => {}
       );
+    },
+    publishNeed() {
+      let isInPark = !(this.SSH.getItem("LoginUserRol").indexOf("11") > -1);
+      this.showNeedRange = false;
+      if (this.NeedRangeRadio === "2" && !isInPark) {
+        return this.$message("请先入驻园区");
+      }
+      if (this.NeedRangeRadio === "2") {
+        return this.$router.push({ path: "/publishNeed" });
+      }
+      let query = isInPark ? { linkSrc: this.SSH.getItem("parkId") } : {};
+      let token = this.SSH.getItem("token");
+        token= token? "&token=" + token: ""
+      window.location.href =
+        this.$openUrl + "/requIndex/publish?" + query +token;
+      return false;
     }
   },
+  components:{DialogNeed},
   filters: {
     timerFormat(vaule) {
       return Moment(vaule).format("YYYY-MM-DD");
@@ -556,6 +567,66 @@ export default {
   /*font-size: 16px;*/
 }
 
+.more {
+  font-size: 14px;
+  color: #999;
+  margin-left: 20px;
+  &:hover {
+    color: #00a0e9;
+  }
+}
+.needRange {
+  border-radius: 6px;
+  .title {
+    text-align: center;
+    font-size: 18px;
+    color: #333;
+    margin: 0px auto 28px;
+    text-align: center;
+  }
+  .title-border {
+    width: 620px;
+    height: 2px;
+    background-color: #f5f5f5;
+    margin: 0 auto;
+  }
+  .select-radio {
+    margin: 50px auto 30px;
+    text-align: center;
+  }
+  .btn-sure {
+    width: 277px;
+    height: 50px;
+    line-height: 50px;
+    background-image: linear-gradient(21deg, #22a2fa 0%, #10b5ff 100%),
+      linear-gradient(#00a0e9, #00a0e9);
+    background-blend-mode: normal, normal;
+    border-radius: 3px;
+    margin: 0 auto;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 18px;
+    color: #ffffff;
+    cursor: pointer;
+  }
+  .title-tip {
+    font-size: 18px;
+    line-height: 72px;
+    height: 72px;
+    color: #68bff7;
+    text-align: center;
+  }
+}
+.row_width_auto {
+  width: 1000px;
+  margin: 0 auto;
+  font-size: 16px;
+}
+.noData {
+  float: left;
+  margin-left: 90px;
+  width: 430px; /*font-size: 16px;*/
+}
 .more {
   font-size: 14px;
   color: #999;
