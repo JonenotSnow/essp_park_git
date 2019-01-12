@@ -35,7 +35,7 @@
                         <div class="btnArea">
                             <!--已审核的操作按钮 -->
                             <div class="btncons" v-if="customopts.status==2">
-                                <span class="btnitem"@click="goAudit(item)">查看</span>
+                                <span class="btnitem" @click="goAudit(item)">查看</span>
                                 <span class="btnitem" @click="goEdit(item)">编辑</span>
                             </div>
                             <!-- 已发布 -->

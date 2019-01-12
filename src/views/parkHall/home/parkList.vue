@@ -273,7 +273,7 @@
                         this.SSH.setItem("LoginUserRol",this.LoginUserRol);
                         this.SSH.setItem("parkId", item.parkId);
                         this.SSH.setItem("parkName", this.parkNm);
-                        this.SSH.setItem("bdParkId", item.bdParkId);
+                        this.SSH.setItem("bdParkId", item.bdParkId?item.bdParkId:'');
                         this.getPower(item.parkId);
                     }, (err) => {})
             },
