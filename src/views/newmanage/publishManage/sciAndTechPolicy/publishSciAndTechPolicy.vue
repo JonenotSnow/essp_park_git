@@ -174,7 +174,7 @@
                     }
                 ],
 
-                parkId: sessionStorage.getItem("parkId") || "",
+                parkId: sessionStorage.getItem("parkId") || "20181217093701001",
                 applyType: this.$route.query.applyType,
                 id: this.$route.query.id || "",
                 userInfo: this.SSH.getItem("userInfo"), // 获取用户信息
@@ -238,13 +238,7 @@
                         this.ruleForm.applyType = this.applyType;
 
                         // 处理标签
-                        let tags = '';
-                        for (let i = 0; i < this.ruleForm.tags.length; i++) {
-                            tags += this.ruleForm.tags[i];
-                            if (i !== this.ruleForm.tags.length - 1) {
-                                tags += ',';
-                            }
-                        }
+                        let tags = this.ruleForm.tags.join(',');
                         this.ruleForm.tags = tags;
 
                         // 处理附件上传
@@ -261,10 +255,6 @@
                         if (this.applyType === '01') {
                             delete this.ruleForm.classtType;
                         }
-
-
-                        console.log('this.ruleForm=========');
-                        console.log(this.ruleForm);
 
                         this.$post("/policy/savePolicyTech", this.ruleForm).then(response => {
                             let codestatus = response.resultCode;
@@ -302,6 +292,23 @@
                 });
             },
 
+            // 获取详情，编辑页面使用
+            getDateForEdit() {
+                let params = {
+                    id: this.id
+                };
+                this.$post("/policy/getPolById", params).then(response => {
+                    let codestatus = response.resultCode;
+                    if (codestatus == "CLT000000000") {
+                        this.ruleForm = response.resultData;
+                    } else {
+                        this.$message.info(response.resultMsg);
+                    }
+                }, err => {
+                    this.$message.error("接口异常");
+                })
+            },
+
             /**
              * 标签相关方法---开始
              */
@@ -330,6 +337,9 @@
              */
         },
         created() {
+            if (this.id) {
+                this.getDateForEdit();
+            }
         },
     }
 </script>
