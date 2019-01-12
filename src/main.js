@@ -241,40 +241,40 @@ function loginCtrl(data) {
     sessionStorageHandler.setItem("cstBscInfVo", data.cstBscInfVo);
     sessionStorageHandler.setItem("loginFlag", true);
     store.state.chat.user = data.esspUserLoginVo;
-    if (data.esspUserLoginVo.userType !== "01") {
-        // 进行个人实名认证判断，
-        // -1：异常   0：未认证   >1：已认证    2：认证开通  3：审核开通  4：刷脸认证开通
-        let userAuthFlagTmp = parseInt(data.userAuthFlag);
-        switch (userAuthFlagTmp) {
-            case 2:
-            case 3:
-            case 4:
-                sessionStorageHandler.setItem("cetificateFlag", true);
-                break;
-
-            case 0:
-                Message.info("该用户未进行实名认证");
-                sessionStorageHandler.setItem("cetificateFlag", false);
-                break;
-
-            case 1:
-                Message.info("该用户个人实名认证中");
-                sessionStorageHandler.setItem("cetificateFlag", false);
-                break;
-
-            default:
-                Message.info("该用户实名认证异常");
-                sessionStorageHandler.setItem("cetificateFlag", false);
-                break;
-        }
-        // 进行企业实名认证判断: -1：异常   0：未认证   1：认证中    2：已认证通过  3：已认证不通过
-        let entAuthFlagTmp = parseInt(data.entAuthFlag);
-        let enterpriseflagval = entAuthFlagTmp === 2 ? true : false;
-        sessionStorageHandler.setItem("enterpriseFlag", enterpriseflagval);
-    } else {
-        sessionStorageHandler.setItem("cetificateFlag", true);
-        sessionStorageHandler.setItem("enterpriseFlag", true);
+    if(data && data.esspUserLoginVo && data.esspUserLoginVo.userType){
+        if (data.esspUserLoginVo.userType !== "01") {
+            // 进行个人实名认证判断，
+            // -1：异常   0：未认证   >1：已认证    2：认证开通  3：审核开通  4：刷脸认证开通
+            let userAuthFlagTmp = parseInt(data.userAuthFlag);
+            switch (userAuthFlagTmp) {
+                case 2:
+                case 3:
+                case 4:
+                    sessionStorageHandler.setItem("cetificateFlag", true);
+                    break;
+                case 0:
+                    Message.info("该用户未进行实名认证");
+                    sessionStorageHandler.setItem("cetificateFlag", false);
+                    break;
+                case 1:
+                    Message.info("该用户个人实名认证中");
+                    sessionStorageHandler.setItem("cetificateFlag", false);
+                    break;
+                default:
+                    Message.info("该用户实名认证异常");
+                    sessionStorageHandler.setItem("cetificateFlag", false);
+                    break;
+            }
+            // 进行企业实名认证判断: -1：异常   0：未认证   1：认证中    2：已认证通过  3：已认证不通过
+            let entAuthFlagTmp = parseInt(data.entAuthFlag);
+            let enterpriseflagval = entAuthFlagTmp === 2 ? true : false;
+            sessionStorageHandler.setItem("enterpriseFlag", enterpriseflagval);
+        } else {
+            sessionStorageHandler.setItem("cetificateFlag", true);
+            sessionStorageHandler.setItem("enterpriseFlag", true);
+        } 
     }
+    
 }
 function getQueryObjuect(url) {
     url = url == null ? window.location.href : url;
