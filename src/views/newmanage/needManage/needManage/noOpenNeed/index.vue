@@ -6,11 +6,11 @@
                     <li>
                         <div>
                             <span>公司名称：</span>
-                            <input type="text" v-model="searchCondition.companyName" placeholder="请输入公司名称">
+                            <input type="text" v-model="searchCondition.createName" placeholder="请输入公司名称">
                         </div>
                         <div>
                             <span>发布人：</span>
-                            <input type="text" v-model="searchCondition.publisher" placeholder="请输入公司名称">
+                            <input type="text" v-model="searchCondition.cstName" placeholder="请输入公司名称">
                         </div>
                     </li>
                     <li>
@@ -24,35 +24,37 @@
                 </ul>
             </div>
             <p class="saveBtn">
-                <el-button type="primary" size='small' @click='getList'>查询</el-button>
+                <el-button type="primary" size='small' @click='getAllNeed'>查询</el-button>
                 <el-button type="info" size='small' @click='reset'>重置</el-button>
             </p>
             <div class="selectTitle">
-                <span class="all"><i class="el-icon-circle-plus"></i>全选</span>
+                <el-checkbox class="maincheck" :indeterminate="isIndeterminate" v-model="checkAll" @change="AllChange" >全选</el-checkbox>
                 共
-                <span class="total">4</span>
+                <span class="total">{{totalCount}}</span>
                 条，已选
-                <span class="total">1</span>
+                <span class="total">{{hascheckedNum}}</span>
                 条
-                <span class="removeBtn">需求导出</span>
+                <span class="removeBtn" @click="openDialog">需求导出</span>
             </div>
             <div class="tabList">
-                <el-table :data="list" @row-click="getDetail" style="width: 100%">
-                    <el-table-column align="center" type="index" label="全部" width="85"></el-table-column>
-                    <el-table-column show-overflow-tooltip align="center" prop="cstNm" label="需求标题" width="200"></el-table-column>
-                    <el-table-column show-overflow-tooltip align="center" prop="idyTpcd" label="公司名称">
+                <el-table :data="list" style="width: 100%">
+                    <el-table-column align="center" label="全部" width="85">
                         <template slot-scope="scope">
-                            {{scope.row.idyTpcd | idType(scope.row.idyTpcd)}}
+                            <el-checkbox-group v-model="checkedIds" class="checktop" @change="handleCheckedCitiesChange">
+                                <el-checkbox :label="scope.row.id"></el-checkbox>
+                            </el-checkbox-group>
                         </template>
                     </el-table-column>
-                    <el-table-column align="center" prop="status" label="发布时间" width="130">
+                    <el-table-column show-overflow-tooltip align="center" prop="title" label="需求标题" width="200"></el-table-column>
+                    <el-table-column show-overflow-tooltip align="center" prop="cstName" label="公司名称"></el-table-column>
+                    <el-table-column align="center" prop="status" label="发布时间" width="140">
                         <template slot-scope="scope">
-                            {{scope.row.status | statusFormat(scope.row.status)}}
+                            {{scope.row.createTime | timerFormat(scope.row.createTime)}}
                         </template>
                     </el-table-column>
                     <el-table-column align="center" prop="" width="100" label="操作">
                         <template slot-scope="scope">
-                            <span class="look">查看</span>
+                            <span class="look" @click="$router.push({path:'/parkHall/manage/needManageDetail',query:{'id':scope.row.id}})">查看</span>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -69,85 +71,165 @@
                 </el-pagination>
             </div>
         </div>
+        <downLoadExcel :show = 'show' @showDialog='showDialog' :checkedIds='checkedIds' :pageType="pageType"></downLoadExcel>
     </div>
 </template>
 
 <script>
+import downLoadExcel from "../../../components/downLoadExcel";
  export default {
    components:{
+       downLoadExcel
    },
-   data () {
-     return {
-        totalCount:0,
-        pageNum:1,
-        pageSize:5,
-        list:[],
-        rzz:JSON.parse(window.localStorage.getItem('rzz')),
-        statusList:[
-            {
-                id:'',
-                name:'全部'
+    data () {
+        return {
+            checkAll: false,
+            checkedIds: [],//选择的资源
+            isIndeterminate: false,
+            totalCount:0,
+            pageNum:1,
+            pageSize:5,
+            list:[],
+            rzz:JSON.parse(window.localStorage.getItem('rzz')),
+            statusList:[
+                {
+                    id:'',
+                    name:'全部'
+                },
+                {
+                    id:'10',
+                    name:'园区待审核'
+                },
+                {
+                    id:'01',
+                    name:'园区审核中'
+                },
+                {
+                    id:'02',
+                    name:'审核通过'
+                },
+                {
+                    id:'12',
+                    name:'园区审核未通过'
+                },
+                {
+                    id:'21',
+                    name:'企业待审核'
+                },
+                {
+                    id:'05',
+                    name:'企业审核中'
+                },
+                {
+                    id:'03',
+                    name:'企业审核未通过'
+                },
+                {
+                    id:'13',
+                    name:'高级管理员待审核'
+                },
+                {
+                    id:'14',
+                    name:'高级管理员审核中'
+                }
+            ],
+            searchCondition:{   //查询条件
+                startDate :'',  //开始时间
+                endDate : '',   //结束时间
+                cstName : '',    //发布人
+                createName : '',//公司名称
             },
-            {
-                id:'10',
-                name:'园区待审核'
-            },
-            {
-                id:'01',
-                name:'园区审核中'
-            },
-            {
-                id:'02',
-                name:'审核通过'
-            },
-            {
-                id:'12',
-                name:'园区审核未通过'
-            },
-            {
-                id:'21',
-                name:'企业待审核'
-            },
-            {
-                id:'05',
-                name:'企业审核中'
-            },
-            {
-                id:'03',
-                name:'企业审核未通过'
-            },
-            {
-                id:'13',
-                name:'高级管理员待审核'
-            },
-            {
-                id:'14',
-                name:'高级管理员审核中'
-            }
-        ],
-        searchCondition:{   //查询条件
-            parkId : sessionStorage.getItem("parkId"),
-            type : '01',  //查询条件
-            startDate :'',  //开始时间
-            endDate : '',   //结束时间
-            publisher : '',    //发布人
-            companyName : '',//公司名称
+            show:false,
+            pageType:'noOpenNeed'
         }
-     }
-   },
-   created () {
-     
-   },
+    },
+    created () {
+        this.getAllNeed();
+    },
+    computed:{
+        //可以选择的id
+        allListIds(){
+            var ids = this.list.map(item=>{
+                return item.id
+            })
+            return ids
+        },
+        //已选数量
+        hascheckedNum(){
+            return this.checkedIds.length;
+        }
+    },
    methods: {
         handleSizeChange(val) {
             this.pageSize = val;
         },
         handleCurrentChange(val) {
             this.pageNum = val;
+        },
+        // 获取非公开需求列表
+        getAllNeed(){
+            if (!this.SSH.getItem('parkId')) {
+                this.$message.error('园区id不能为空');
+                return;
+            }
+            this.$post(this.$apiUrl.manageNeed.getAllNeed, {
+                parkId:this.SSH.getItem('parkId'),
+                pageNum:this.pageNum, 
+                pageSize: this.pageSize, 
+                cstName: this.searchCondition.cstName,
+                createName: this.searchCondition.createName,  
+                startTime : this.searchCondition.startTime,  
+                endTime : this.searchCondition.endTime     
+            }).then(
+                response => {
+                    if (response.resultData && response.resultData.list) {
+                        this.list = response.resultData.list;
+                        this.totalCount = response.resultData.total;
+                    }
+                },
+                err => {
+                    this.$message.error(err.resultMsg);
+                }
+            );
+        },
+        //全选
+        AllChange(val) {
+            this.checkedIds = val ? this.allListIds : [];
+            this.isIndeterminate = false;
+        },
+        handleCheckedCitiesChange(value) {
+            let checkedCount = value.length;
+            this.checkAll = checkedCount === this.allListIds.length;
+            this.isIndeterminate = checkedCount > 0 && checkedCount < this.allListIds.length;//有选择但不是全部
+        },
+        //查询条件重置
+        reset(){
+            this.searchCondition = { 
+                startDate :'',  //开始时间
+                endDate : '',   //结束时间
+                cstName : '',    //发布人
+                createName : '',//公司名称
+            }
+        },
+        openDialog(){
+            if (this.checkedIds.length == 0) {
+                this.$message.error('请先选择要导出的内容');
+                return;
+            }
+            this.show = true;
+        },
+        //导出弹窗
+        showDialog(value){
+            this.show = value.show;
         }
-   },
+   }
  }
 </script>
+<style>
+#noOpenNeed .checktop .el-checkbox__label{
+    display: none;
+}
+</style>
 
 <style lang='less' scoped >
 #noOpenNeed{

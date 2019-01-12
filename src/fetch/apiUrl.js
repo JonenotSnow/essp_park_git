@@ -37,6 +37,8 @@ import {sciAndTechPolicy} from './api/sciAndTechPolicy/index.js'
  */
 import {processTrack} from './api/processTrack/processTrack'
 
+import {manageNeed} from './api/manageNeed/manageNeed'//系统管理--需求
+
 export const apiUrl = {
     common,
     index,
@@ -67,7 +69,8 @@ export const apiUrl = {
     building,
     newsinfo,
     /*allNeed,*/
-    sciAndTechPolicy
+    sciAndTechPolicy,
+    manageNeed
 
 }
 

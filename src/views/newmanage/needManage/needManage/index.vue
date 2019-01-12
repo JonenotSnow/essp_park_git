@@ -2,7 +2,7 @@
  <div>
     <div class="outroute">
         <div class="router__link">
-          <span class="Inlinkstyle" :class="{'outlinkstyle': type == 0 }" @click="getType(0)">公开需求</span>
+          <span class="Inlinkstyle" :class="{'outlinkstyle': type == 0 }" @click="getType(0)">公开需求{{type}}</span>
           <span class="separator">|</span>
           <span class="Inlinkstyle" :class="{'outlinkstyle': type == 1 }" @click="getType(1)">非公开需求</span>
         </div>
@@ -17,33 +17,24 @@ import openNeed from './openNeed/index'
 import noOpenNeed from './noOpenNeed/index'
  export default {
    components:{
-     openNeed,
-     noOpenNeed
+        openNeed,
+        noOpenNeed
    },
    data () {
      return {
-        outsource: [
-            {
-                id:1,
-                name:"公开需求",
-                path:'/parkHall/manage/publicNews'
-            },
-            {
-                id:2,
-                name:"通知通告",
-                path:'/parkHall/manage/publicNotice'
-            }
-        ],
         type:0
      }
    },
    created () {
-     
+       //详情页点击面包屑返回
+        if (this.$route.query.id) {
+            this.getType(this.$route.query.id)
+        }
    },
    methods: {
-    getType(type){
-      this.type = type;
-    }
+        getType(type){
+            this.type = type;
+        }
    },
  }
 </script>
