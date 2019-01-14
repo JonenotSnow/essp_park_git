@@ -150,24 +150,26 @@ export default {
   },
   mounted() {},
   created() {
-    this.getData()
+    this.getData();
   },
   methods: {
     getData() {
-      this.list.forEach(item=>{
-        item.content=[]
-      })
-      console.log(this.list)
+      console.log(this.list);
       this.$post("/dataIndex/getIndexData", {
         parkId: sessionStorage.getItem("parkId")
       }).then(res => {
-        if(res.resultCode === 'CLT000000000'){
-          res.resultData.forEach(item=>{
-            let index = item.type
-            if(index>5)return false
-            this.list[index].content.push(item)
-          })
-          console.log(this.list)
+        if (res.resultCode === "CLT000000000") {
+          if (res.resultData.length > 0) {
+            this.list.forEach(item => {
+              item.content = [];
+            });
+          }
+
+          res.resultData.forEach(item => {
+            let index = item.type;
+            if (index > 5) return false;
+            this.list[index].content.push(item);
+          });
         }
       });
     },

@@ -269,6 +269,9 @@ export default {
                 return;
             }
             this.$router.push({path:'/parkHall/manage/manageParkAuditDetail',query:{entityId:rows.id}});
+        },
+        getAllNeed(){
+            console.log('方法没写就不要再html上写出来，不知道这个会让项目崩？')
         }
     }
 };

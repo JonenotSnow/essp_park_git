@@ -61,7 +61,7 @@ Vue.filter("timerFormat", function(value){
 })
 
 // Vue.prototype.$uploadCommom = uploadCommom;
-let openUlr = "http://128.196.235.129:1345/essp_vue1/#";
+let openUlr = "http://128.196.235.129:1345/essp_vue/#";
 console.log(process.env.NODE_ENV);
 // if (process.env.NODE_ENV === "production") {
 //     openUlr = "http://want.bbc.com/essp/#";

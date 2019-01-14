@@ -5,91 +5,63 @@
         <el-row class="search-reset">
           <span>筛选条件</span>
           <span class="f-r">
-            <el-button type="text"
-                       @click="resetSeachOption">重置条件</el-button>
+            <el-button type="text" @click="resetSeachOption">重置条件</el-button>
           </span>
         </el-row>
-        <el-form ref="form"
-                 :model="searchForm"
-                 label-width="85px"
-                 size="mini"
-                 class="select-content">
-          <!-- <el-row class="select-wrapper">
-            <el-form-item label="服务区域：">
-              <el-col :span="3">
-                <el-select v-model="searchForm.areaCntyCd"
-                           filterable
-                           clearable
-                           placeholder="国家"
-                           v-if="searchForm.areaCntyCd != '-1'"
-                           @change="delete searchForm.areaProvCd;">
-                  <el-option v-for="item in dataSoure.COM_00004"
-                             :key="item.key"
-                             :label="item.value"
-                             :value="item.key">
-
-                  </el-option>
-                </el-select>
-                <el-select filterable
-                           placeholder="国家"
-                           v-else
-                           @change="delete searchForm.areaProvCd;">
-                </el-select>
-              </el-col>
-              <el-col :span="3">
-                <el-select v-model="searchForm.areaProvCd"
-                           filterable
-                           clearable
-                           placeholder="省份"
-                           @change="changeData(4)">
-                  <el-option v-for="item in dataSoure.COM_00001"
-                             :key="item.key"
-                             :label="item.value"
-                             :value="item.key"
-                             v-if="searchForm.areaCntyCd === '156'">
-                  </el-option>
-                </el-select>
-              </el-col>
-            </el-form-item>
-          </el-row> -->
+        <el-form
+          ref="form"
+          :model="searchForm"
+          label-width="85px"
+          size="mini"
+          class="select-content"
+        >
+          <el-row class="companyName">
+            <el-col>
+              <el-form-item label="公司名称：" size="mini">
+                <el-input v-model="searchForm.keyword"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
           <el-row class="select-wrapper">
             <el-col :span="5">
               <el-form-item label="撮合类型：">
-                <el-select v-model="searchForm.serviecTpCd"
-                           filterable
-                           clearable
-                           placeholder="请选择">
-                  <el-option v-for="item in serviecTpCdData"
-                             :key="item.codeKey"
-                             :label='item.codeName'
-                             :value="item.codeKey">
-                  </el-option>
+                <el-select v-model="searchForm.serviecTpCd" filterable clearable placeholder="请选择">
+                  <el-option
+                    v-for="item in serviecTpCdData"
+                    :key="item.codeKey"
+                    :label="item.codeName"
+                    :value="item.codeKey"
+                  ></el-option>
                 </el-select>
               </el-form-item>
             </el-col>
             <el-col :span="5">
               <el-form-item label="需求类型：">
-                <el-cascader :options="rqmTpCdData"
-                             :show-all-levels="false"
-                             :props="rqmTpCdProps"
-                             v-model="searchForm.rqmTpCd"
-                             filterable
-                             clearable
-                             change-on-select>
-                </el-cascader>
+                <el-cascader
+                  :options="rqmTpCdData"
+                  :show-all-levels="false"
+                  :props="rqmTpCdProps"
+                  v-model="searchForm.rqmTpCd"
+                  filterable
+                  clearable
+                  change-on-select
+                ></el-cascader>
               </el-form-item>
             </el-col>
             <el-col :span="5">
               <el-form-item label="需求角色：">
-                <el-select v-model="searchForm.rqmRole"
-                           clearable
-                           placeholder="请选择"
-                           no-data-text="请先选择撮合类型和需求类型">
-                  <el-option v-for="item in rqmRoleData"
-                             :key="item.codeKey"
-                             :label="item.codeName"
-                             :value="item.codeKey">
-                  </el-option>
+                <el-select
+                  v-model="searchForm.rqmRole"
+                  clearable
+                  placeholder="请选择"
+                  no-data-text="请先选择撮合类型和需求类型"
+                >
+                  <el-option
+                    v-for="item in rqmRoleData"
+                    :key="item.codeKey"
+                    :label="item.codeName"
+                    :value="item.codeKey"
+                  ></el-option>
                 </el-select>
               </el-form-item>
             </el-col>
@@ -97,26 +69,29 @@
           <el-row class="select-wrapper">
             <el-form-item label="发布日期：">
               <el-col :span="4">
-                <el-date-picker type="date"
-                                placeholder="选择日期"
-                                v-model="searchForm.ancDate_start"
-                                value-format="yyyy-MM-dd"
-                                format="yyyy-MM-dd"
-                                clearable
-                                @change="changeData(1)"
-                                class="time-select"></el-date-picker>
+                <el-date-picker
+                  type="date"
+                  placeholder="选择日期"
+                  v-model="searchForm.ancDate_start"
+                  value-format="yyyy-MM-dd"
+                  format="yyyy-MM-dd"
+                  clearable
+                  @change="changeData(1)"
+                  class="time-select"
+                ></el-date-picker>
               </el-col>
-              <el-col class="line"
-                      :span="1">-</el-col>
+              <el-col class="line" :span="1">-</el-col>
               <el-col :span="4">
-                <el-date-picker type="date"
-                                placeholder="选择日期"
-                                v-model="searchForm.ancDate_end"
-                                value-format="yyyy-MM-dd"
-                                format="yyyy-MM-dd"
-                                clearable
-                                @change="changeData(2)"
-                                class="time-select"></el-date-picker>
+                <el-date-picker
+                  type="date"
+                  placeholder="选择日期"
+                  v-model="searchForm.ancDate_end"
+                  value-format="yyyy-MM-dd"
+                  format="yyyy-MM-dd"
+                  clearable
+                  @change="changeData(2)"
+                  class="time-select"
+                ></el-date-picker>
               </el-col>
             </el-form-item>
           </el-row>
@@ -126,7 +101,6 @@
         </el-row>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -168,7 +142,8 @@ export default {
         startDate: "",
         endDate: "",
         city: "", //城市
-        customNm: ""
+        customNm: "",
+        keyword: ""
       },
       dataSoure: {},
       matchType: [],
@@ -360,7 +335,6 @@ export default {
         city: ""
       }),
         (this.customNm = ""),
-
         this.$emit("resetSeachOption");
     },
     getMatchType() {
@@ -416,6 +390,13 @@ export default {
     line-height: 32px;
     width: 120px;
   }
+  .companyName {
+    .el-input__inner {
+      height: 32px;
+      line-height: 32px;
+      width: 320px;
+    }
+  }
   .time-select {
     margin: 0;
     .el-input__inner {
@@ -436,7 +417,7 @@ export default {
 @import "../../../assets/css/common";
 
 .search-container {
-  margin-top:50px;
+  margin-top: 50px;
   .search-choose {
     padding: 12px 50px 0 50px;
     z-index: 10;
@@ -472,8 +453,8 @@ export default {
       border-bottom: 2px solid #f2f2f2;
     }
   }
-  .el-select-dropdown__empty{
-    padding:10px
+  .el-select-dropdown__empty {
+    padding: 10px;
   }
 }
 </style>
