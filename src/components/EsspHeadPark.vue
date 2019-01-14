@@ -13,7 +13,7 @@
       <div class="headinfo esspclearfix">
         <div class="auto">
           <div class="desc"
-               v-if="loginShow">
+               v-if="!loginShow">
             <span>亲，欢迎来到企业智能撮合综合服务平台（ESSP）！</span>
             <span class="login"
                   @click="toLogin">登录</span>
@@ -31,7 +31,7 @@
             <li @click="toHome">首页</li>
             <li @click="toPersonalCenter">个人中心</li>
             <li @click="toMessageCenter">消息中心<span class="msg"
-                    v-show="new_msg && !loginShow"
+                    v-show="new_msg && loginShow"
                     :class="{'msg-line': !isNum}">{{msgNum}}</span></li>
             <li @click="toHelpCenter">关于我们</li>
             <li @click="toCustomerService">帮助中心</li>
@@ -117,7 +117,7 @@ export default {
     return {
       seachVal: "",
       searchBarFixed: false,
-      loginShow: true,
+      loginShow: false,
       userName: "",
       search: {
         keyword: "",
@@ -216,7 +216,7 @@ export default {
     getNewMsg() {
       let vm = this;
       if (!this.utils.roleExist(this.constants.userRole.systemManager.key)) {
-        if (this.loginShow) {
+        if (!this.loginShow) {
           return;
         } else {
           this.$post(apiUrl.user.getNewMsg, {}).then(response => {
@@ -274,7 +274,6 @@ export default {
         this.$router.push("/parkHome");
     },
     toLogin() {
-      // this.$router.push("/userIndex/login");
       this.windowHrefUrl('userIndex/login')
     },
     toRegister() {
@@ -298,11 +297,9 @@ export default {
       let flag = this.SSH.getItem("loginFlag");
       if (flag) {
         this.userName = data.truename;
-        window.localStorage.setItem("userName", data.truename);
-        this.loginShow = false;
-      } else {
-        this.loginShow = true;
-      }
+        this.SSH.setItem("userName", data.truename);
+      } 
+      this.loginShow = flag;
     },
     toOAsys() {
       if (this.OApath) {
@@ -341,21 +338,16 @@ export default {
         });
       }
     },
+
     async logout() {
       if (this.SSH.getItem("loginFlag")) {
-        this.loginShow = false;
-        this.utils.logoutDelSSH();
-        localStorage.clear();
-        this.$message.info("退出登录成功!");
-         this.SSH.setItem('loginFlag',false)
+        this.loginShow=false;
         this.SSH.setItem('LoginUserRol',["11"])
         await this.selectResMenu()
+        await this.utils.logoutDelSSH();
+        this.$message.info("退出登录成功!");
         this.$router.push({
             path: '/parkHome',
-        });
-      } else {
-        this.$router.push({
-           path: '/parkHome',
         });
       }
     },
@@ -383,32 +375,6 @@ export default {
             }
         );
     },
-    //  跳转搜索页面
-    redirectToSearchPage() {
-      if (!this.search.type) {
-        this.$message({
-          type: "error",
-          message: "请输入完整信息!"
-        });
-        return;
-      }
-      this.search.date = Date.now();
-      localStorage.setItem("searchkeyword", this.search.keyword);
-      localStorage.setItem("searchtype", this.search.type);
-      this.$router.push({
-        path: "/requIndex/search",
-        query: this.search
-      });
-    },
-    getSearchOps() {
-      let path = this.$router.currentRoute.path;
-      if (path.indexOf("/requIndex/search") >= 0) {
-        this.search = {
-          type: localStorage.getItem("searchtype"),
-          keyword: localStorage.getItem("searchkeyword")
-        };
-      }
-    }
   }
 };
 </script>

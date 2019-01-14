@@ -1,66 +1,72 @@
 <template>
     <div id="noOpenNeed">
-         <!-- 通知公告发布审核页 -->
         <div class="baseInfo">
             <div class="searchAdd">
                 <ul>
                     <li>
                         <div>
                             <span>标题名称：</span>
-                            <input type="text" v-model="searchCondition.companyName">
+                            <input type="text" v-model="searchCondition.policyTitle">
                         </div>
                         <div>
                             <span>发布人：</span>
-                            <input type="text" v-model="searchCondition.publisher">
+                            <input type="text" v-model="searchCondition.userName">
                         </div>
                         <div>
                             <span>状态：</span>
-                            <select v-model="searchCondition.policiesStatus">
-                                <option value="01">01</option>
-                                <option value="02">02</option>
-                                <option value="03">03</option>
-                                <option value="04">04</option>
-                                <option value="05">05</option>
+                            <select v-model="searchCondition.status">
+                                <option value="">全部</option>
+                                <option value="02">发布中</option>
+                                <option value="13">待审核</option>
+                                <option value="12">审核不通过</option>
                             </select>
                         </div>
                     </li>
                     <li>
                         <div>
                             <span>提交时间：</span>
-                            <el-date-picker v-model="searchCondition.startDate" type="date" placeholder="选择日期"
-                                            value-format="yyyy-MM-dd"></el-date-picker>
+                            <el-date-picker
+                                v-model="searchCondition.startDate"
+                                type="date"
+                                placeholder="选择日期"
+                                value-format="yyyy-MM-dd"/>
                             -
-                            <el-date-picker v-model="searchCondition.endDate" type="date" placeholder="选择日期"
-                                            value-format="yyyy-MM-dd"></el-date-picker>
+                            <el-date-picker
+                                v-model="searchCondition.endDate"
+                                type="date"
+                                placeholder="选择日期"
+                                value-format="yyyy-MM-dd"/>
                         </div>
                     </li>
                 </ul>
             </div>
-            <p class="saveBtn">
-                <el-button type="primary" size='small' @click='getList'>查询</el-button>
-                <el-button type="info" size='small' @click='reset'>重置</el-button>
-            </p>
+            <div class="saveBtn">
+                <button class="my-btn btn-search" @click='search()'>查询</button>
+                <button class="my-btn btn-reset" @click='reset()'>重置</button>
+            </div>
             <div class="selectTitle">
                 <p>采取先到先得的任务领取审核方式</p>
             </div>
             <div class="tabList">
                 <el-table :data="list" @row-click="getDetail" style="width: 100%">
                     <el-table-column align="center" type="index" label="全部" width="85"></el-table-column>
-                    <el-table-column show-overflow-tooltip align="center" prop="cstNm" label="需求标题"
+                    <el-table-column show-overflow-tooltip align="center" prop="policyTitle" label="标题名称"
                                      width="200"></el-table-column>
-                    <el-table-column show-overflow-tooltip align="center" prop="idyTpcd" label="公司名称">
+                    <el-table-column show-overflow-tooltip align="center" prop="userName" label="发布人">
+                    </el-table-column>
+                    <el-table-column align="center" prop="createTime" label="提交时间" width="130">
                         <template slot-scope="scope">
-                            {{scope.row.idyTpcd | idType(scope.row.idyTpcd)}}
+                            {{scope.row.createTime | statusFormat(scope.row.createTime)}}
                         </template>
                     </el-table-column>
-                    <el-table-column align="center" prop="status" label="发布时间" width="130">
+                    <el-table-column align="center" prop="status" label="状态" width="130">
                         <template slot-scope="scope">
                             {{scope.row.status | statusFormat(scope.row.status)}}
                         </template>
                     </el-table-column>
                     <el-table-column align="center" prop="" width="100" label="操作">
                         <template slot-scope="scope">
-                            <span class="look">查看</span>
+                            <span class="operation" @click="linkToAuditDetail(scope.row.id)">领取并审核</span>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -87,59 +93,49 @@
             return {
                 totalCount: 0,
                 pageNum: 1,
-                pageSize: 5,
-                list: [],
-                rzz: JSON.parse(window.localStorage.getItem('rzz')),
-                statusList: [
+                pageSize: 10,
+                list: [
                     {
-                        id: '',
-                        name: '全部'
+                        id: '123456',                       // 政策id
+                        createTime: '1546928463894',        // 发布时间
+                        cstNm: '建行',                      // 发布机构
+                        policyTitle: '政策法规标题1',       // 标题
+                        userName: '行长',                   // 发布人
+                        status: '已发布',                   // 发布状态
+                        applyType: '01',                    // 政策01，或科技服务02
+                        classtType: "高企认定",              // 类型【服务类型】
+                        desc: '政策简介政策简介政策简介政策简介'
                     },
                     {
-                        id: '10',
-                        name: '园区待审核'
+                        id: '123456',                       // 政策id
+                        createTime: '1546928463894',        // 发布时间
+                        cstNm: '交行',                      // 发布机构
+                        policyTitle: '政策法规标题2',       // 标题
+                        userName: '行长',                   // 发布人
+                        status: '已审核',                   // 发布状态
+                        applyType: '01',                    // 政策01，或科技服务02
+                        classtType: "科小认定",              // 类型【服务类型】
+                        desc: '政策简介政策简介政策简介政策简介政策简介政策简介政策简介政策简介政策简介政策简介'
                     },
                     {
-                        id: '01',
-                        name: '园区审核中'
-                    },
-                    {
-                        id: '02',
-                        name: '审核通过'
-                    },
-                    {
-                        id: '12',
-                        name: '园区审核未通过'
-                    },
-                    {
-                        id: '21',
-                        name: '企业待审核'
-                    },
-                    {
-                        id: '05',
-                        name: '企业审核中'
-                    },
-                    {
-                        id: '03',
-                        name: '企业审核未通过'
-                    },
-                    {
-                        id: '13',
-                        name: '高级管理员待审核'
-                    },
-                    {
-                        id: '14',
-                        name: '高级管理员审核中'
+                        id: '123456',                       // 政策id
+                        createTime: '1546928463894',        // 发布时间
+                        cstNm: '交行',                      // 发布机构
+                        policyTitle: '政策法规标题3',       // 标题
+                        userName: '行长',                   // 发布人
+                        status: '未审核',                   // 发布状态
+                        applyType: '01',                    // 政策01，或科技服务02
+                        classtType: "风险投资",              // 类型【服务类型】
+                        desc: '政策简介政策简介政策简介政策简介政策简介政策简介政策简介政策简介政策简介政策简介'
                     }
                 ],
                 searchCondition: {   //查询条件
                     parkId: sessionStorage.getItem("parkId"),
-                    type: '01',         //查询条件
+                    policyTitle: '',
+                    userName: '',
+                    status: '',
                     startDate: '',      //开始时间
                     endDate: '',        //结束时间
-                    publisher: '',      //发布人
-                    companyName: '',    //公司名称
-                    policiesStatus: ''  // 状态
                 }
             }
         },
@@ -147,6 +143,66 @@
 
         },
         methods: {
+
+            // 查询事件
+            search() {
+
+            },
+
+            // 重置事件
+            reset() {
+
+            },
+
+            // 前往审核详情页面
+            linkToAuditDetail(id) {
+                this.$router.push({
+                    path: '/parkHall/manage/audit',
+                    query: {
+                        applyType: '01',
+                        id: id
+                    }
+                });
+            },
+
+            /**
+             * 获取“科技政策”的数据
+             */
+            getSciAndTechPolicy() {
+                let params = {
+                    parkId: this.parkId,            // 园区ID
+                    pageNum: this.pageNum,          // 页码
+                    pageSize: this.pageSize,        // 每页显示数量
+                    startDate: this.startDate,      // 信息发布时间---开始时间
+                    endDate: this.endDate,          // 信息发布时间---结束时间
+                    title: '',                       // 标题,
+                    type: this.satpType,            // 政策01，或科技服务02
+                    classtType: this.classtType     // 科技服务才会有这个字段---
+                };
+
+                // “政策法规”不需要“classtType”这个字段
+                if (this.satpType === '01') {
+                    delete params.classtType;
+                }
+
+                this.$post(" /policy/getAllPolicy", params).then(response => {
+                    let codestatus = response.resultCode;
+                    if (codestatus == "CLT000000000") {
+                        let resultData = response.resultData;
+                        this.allTotal = resultData.total;
+                        this.mcCardDataList = resultData.policyList;
+                    } else {
+                        this.$message.info(response.resultMsg);
+                    }
+                }, err => {
+                    this.$message.error("接口异常");
+                })
+            },
+
+            /**
+             * 分页相关事件
+             * @param val
+             */
             handleSizeChange(val) {
                 this.pageSize = val;
             },
@@ -162,22 +218,16 @@
         .baseInfo {
             width: 1000px;
             margin-bottom: 50px;
-            // min-height: 570px;
             padding-bottom: 20px;
             background-color: #ffffff;
             .searchAdd {
-                height: 135px;
-                & > ul {
-                    width: 885px;
-                    margin: 40px auto 0;
-                    padding: 0 0 10px;
+                margin: 40px auto 0;
+                width: 890px;
+                ul {
                     li {
-                        width: 100%;
-                        height: 30px;
-                        // line-height:50px;
-                        margin-top: 20px;
+                        margin-bottom: 20px;
                         & > div {
-                            float: left;
+                            display: inline-block;
                             margin-right: 35px;
                             & > span {
                                 font-size: 16px;
@@ -203,13 +253,11 @@
                                 padding: 0 5px;
                                 outline: none;
                                 height: 35px;
-                                background-color: #ffffff;
-                                border: solid 1px #cccccc;
-                                caret-color: #666;
                                 color: #606266;
                                 border: 1px solid #e4e7ed;
-                                background: #fff;
                                 border-radius: 4px;
+                                background-color: #ffffff;
+
                             }
                         }
                         &:nth-of-type(1) {
@@ -222,137 +270,61 @@
                     }
                 }
             }
-            & > p {
-                &:nth-of-type(1) {
-                    text-align: center;
-                    & > button {
-                        &:nth-of-type(1) {
-                            margin-right: 79px;
-                        }
-                    }
-                }
-            }
             .saveBtn {
-                button {
+                margin-top: 50px;
+                text-align: center;
+                .my-btn {
+                    width: 60px;
+                    height: 30px;
+                    line-height: 30px;
                     font-size: 16px;
+                    font-weight: normal;
+                    font-stretch: normal;
+                    letter-spacing: 0px;
+                    color: #ffffff;
+                    border: none;
+                    border-radius: 5px;
+                }
+                .btn-search {
+                    margin-right: 80px;
+                    background-color: #00a0e9;
+                }
+                .btn-reset {
+                    background-color: #999;
                 }
             }
-            & > ul, .tabList {
+            .selectTitle {
+                margin: 60px auto 0;
+                width: 890px;
+                text-align: right;
+                font-size: 14px;
+                font-weight: normal;
+                font-stretch: normal;
+                letter-spacing: 0.4px;
+                color: #00a0e9;
+            }
+
+            .tabList {
+                margin: 10px auto;
+                width: 890px;
                 border: 1px solid #ebeef5;
                 border-bottom: none;
-                width: 890px;
-                margin: 0 auto 20px;
-                li {
-                    height: 50px;
-                    line-height: 50px;
-                    border: 1px solid #ccc;
-                    & > span {
-                        display: inline-block;
-                        text-align: center;
-                        &:nth-of-type(1) {
-                            width: 110px;
-                        }
-                        &:nth-of-type(2) {
-                            width: 240px;
-                        }
-                        &:nth-of-type(3) {
-                            width: 120px;
-                        }
-                        &:nth-of-type(4) {
-                            width: 120px;
-                        }
-                        &:nth-of-type(5) {
-                            width: 120px;
-                        }
-                        &:nth-of-type(6) {
-                            width: 140px;
-                        }
-                    }
-                    &:nth-of-type(2n) {
-                        border-left: 1px solid #ccc;
-                        border-right: 1px solid #ccc;
-                        border-bottom: none;
-                        border-top: none;
-                    }
-                    &:nth-last-of-type(1) {
-                        border-bottom: 1px solid #ccc;
-                    }
-                    &:nth-of-type(1) {
-                        background-color: #f5f5f5;
-                        font-size: 16px;
-                        color: #333333;
-                    }
-                    &:not(:first-child) {
-                        font-size: 14px;
-                        color: #666666;
-                        & > span {
-                            &:nth-last-of-type(1) {
-                                i {
-                                    color: #00a0e9;
-                                    cursor: pointer;
-                                }
-                                .disabledClick {
-                                    color: #999;
-                                    cursor: not-allowed;
-                                }
-                            }
-                        }
-                    }
-                    &.noData {
-                        text-align: center;
-                    }
-                }
-                .look {
+                .operation {
                     font-size: 14px;
                     font-weight: normal;
                     font-stretch: normal;
-                    line-height: 40px;
-                    letter-spacing: 0.4px;
+                    line-height: 30px;
+                    letter-spacing: 0px;
                     color: #00a0e9;
-                    cursor: pointer;
                 }
             }
+
             .pageList {
                 width: 880px;
                 margin: 38px auto 53px;
                 text-align: right;
             }
         }
-        .selectTitle {
-            margin: 59px auto 19px;
-            font-size: 14px;
-            font-weight: normal;
-            font-stretch: normal;
-            line-height: 30px;
-            letter-spacing: 0px;
-            color: #666666;
-            width: 890px;
-            .all {
-                margin-left: 10px;
-                i {
-                    margin-right: 6px;
-                }
-            }
-            .total {
-                font-size: 14px;
-                font-weight: normal;
-                letter-spacing: 0px;
-                color: #00a0e9;
-            }
-            .removeBtn {
-                display: inline-block;
-                width: 100px;
-                height: 35px;
-                background-image: linear-gradient(0deg,
-                #f5f5f5 0%,
-                #ffffff 100%);
-                border-radius: 5px;
-                border: solid 1px #cccccc;
-                text-align: center;
-                cursor: pointer;
-                margin-left: 14px;
-                line-height: 35px;
-            }
-        }
+
     }
 </style>

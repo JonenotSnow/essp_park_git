@@ -7,9 +7,9 @@
                 <div class="left">
                     <span class="pulishedBtn">已发布</span>
                     <div class="searchBox">
-                        <span class="notice" v-if="searchContent">
-                            "{{searchContent}}"共找到4个搜索内容
-                        </span>
+                        <!-- <span class="notice" v-if="searchContent">
+                             "{{searchContent}}"共找到4个搜索内容 
+                        </span> -->
                         <el-input
                             placeholder="请输入搜索内容"
                             suffix-icon="el-icon-search"
@@ -40,15 +40,18 @@
         },
         data() {
             return {
+                type:0,
                 searchContent: '',
                 pageType: [ //根据此数据判断发布页面跳转，和props里type一直，新调用需新增
                     {
                         type: '成果管理',
-                        url: '/parkHall/manage/publishAchievement'
+                        url: '/parkHall/manage/publishAchievement',
+                        type:0
                     },
                     {
                         type: '专家团队',
-                        url: '/parkHall/manage/publishExpertTeam'
+                        url: '/parkHall/manage/publishExpertTeam',
+                        type:0
                     }
                 ]
             }
@@ -60,7 +63,7 @@
             getPageType() {
                 this.pageType.forEach(element => {
                     if (element.type == this.type) {
-                        this.$router.push(element.url)
+                        this.$router.push({path:element.url,query:{type:element.type}})
                         return;
                     }
                 });

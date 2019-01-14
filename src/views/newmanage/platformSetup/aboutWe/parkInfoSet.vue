@@ -70,10 +70,10 @@
         </ul>
         <p class="save hf" v-if='writeInfoDis.startDate'>
             <el-button type="primary" size="middle" @click="fz">修改</el-button>
-            <el-button type="primary" size="middle" @click="$router.push('/parkHall/manage/selectModule')">下一步</el-button>
+            <el-button type="primary" size="middle" @click="getCurStep">下一步</el-button>
         </p>
         <p class="save onlyNext" v-else>
-            <span type="primary" size="middle" @click="saveBaseInfo">下一步</span>
+            <span type="primary" size="middle" @click="toNext">下一步</span>
         </p>
     </div>
 </template>
@@ -89,7 +89,7 @@ export default {
             value1: '',
             startDate:'',
             writeInfo:{
-                parkName:window.localStorage.getItem('parkName') != null ? window.localStorage.getItem('parkName') : '',
+                parkName:this.SSH.getItem('parkName') != null ? this.SSH.getItem('parkName') : '',
                 startDate:'',
                 phoneNumber:'',
                 ownArea:'',
@@ -226,7 +226,6 @@ export default {
                     type: 'success',
                     message: response.resultMsg
                 });
-                this.$router.push('/parkHall/manage/selectModule')
             })
         },
         getParkById(){
@@ -272,6 +271,13 @@ export default {
             let aj = this.writeInfoDis;
             this.writeInfoDis = '';
             this.writeInfo = aj;
+        },
+        getCurStep(){
+            this.$emit('sendStepType','2')
+        },
+        toNext(){
+            this.saveBaseInfo();
+            this.getCurStep();
         }
     },
     watch: {

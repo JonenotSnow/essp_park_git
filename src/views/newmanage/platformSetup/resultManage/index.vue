@@ -41,8 +41,9 @@
                     v-model="form.unit">
                 </el-input>
             </div>
+            <div class="searchinfo" @click="searchInfo">查询</div>
         </div>
-        <listOwnImg :list='list' :componentType="componentType"></listOwnImg>
+        <listOwnImg :list='list' :totalCount='totalCount' :componentType="componentType"></listOwnImg>
         <div class="pageList">
             <el-pagination
                 @size-change="handleSizeChange"
@@ -58,32 +59,9 @@
 </template>
 
 <script>
-<<<<<<< HEAD
-import achievementSetHead from './../../components/common/head'
-import achievementSetCondition from './../../components/common/condition'
-import listOwnImg from './../../components/listOwnImg'
- export default {
-   components: {
-    achievementSetHead,
-    achievementSetCondition,
-    listOwnImg
-   },
-   data () {
-     return {
-      publishTitle:'立即发布',
-      type:'成果管理',
-      list:['0', '1', '2', '3'],
-      totalCount:0,
-      pageNum:1,
-      pageSize:5
-     }
-   },
-   created () {
-=======
     import achievementSetHead from '@/views/newmanage/components/common/head'
 //    import achievementSetCondition from '@/views/newmanage/components/common/condition'
     import listOwnImg from '@/views/newmanage/components/listOwnImg'
->>>>>>> 1326c56edebb49ceef04433d5625170c1442ae60
 
     export default {
         components: {
@@ -162,6 +140,7 @@ import listOwnImg from './../../components/listOwnImg'
                     response => {
                         console.log(response);
                         this.list = response.resultData.achievList;
+                        this.totalCount = response.resultData.total
                     },
                     err => {
                         this.$message.error(err.resultMsg);
@@ -173,6 +152,26 @@ import listOwnImg from './../../components/listOwnImg'
             },
             handleCurrentChange(val) {
                 this.pageNum = val;
+            },
+            searchInfo(){
+                this.$post('/achiev/getAllAchiev ', {
+                    parkId:localStorage.parkId,
+                    pageNum:this.pageNum,
+                    pageSize:this.pageSize,
+                    name: this.form.name, // 成果标题
+                    field: this.form.field,  // 所属领域
+                    inventor: this.form.inventor,   //发明人
+                    unit:this.form.unit,       // 所属单位
+                    userId:this.SSH.getItem('userInfo').id || '' 
+                }).then(
+                    response => {
+                        this.list = response.resultData.achievList
+                        this.$message.success(response.resultMsg);
+                    },
+                    err => {
+                        this.$message.error(err.resultMsg);
+                    }
+                );
             }
         },
     }
@@ -215,6 +214,28 @@ import listOwnImg from './../../components/listOwnImg'
             }
             .seach_item .seach_item_input {
                 width: 200px;
+            }
+            .searchinfo{
+                float: left;
+                display: inline-block;
+                width: 90px;
+                height: 30px;
+                background-image: linear-gradient(21deg,
+                #22a2fa 0%,
+                #10b5ff 100%),
+                linear-gradient(
+                    #00a0e9,
+                    #00a0e9);
+                background-blend-mode: normal,
+                normal;
+                border-radius: 3px;
+                font-size: 12px;
+                line-height: 30px;
+                font-weight: normal;
+                letter-spacing: 0px;
+                color: #ffffff;
+                text-align: center;
+                cursor: pointer;
             }
         }
 

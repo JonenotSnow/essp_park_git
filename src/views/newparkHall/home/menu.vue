@@ -244,7 +244,7 @@
                         },
                         {
                             name: "普惠金融",
-                            path: "",
+                            path: "/parkHall/manage/inclusiveFinance",
                             src: require("@/assets/imgs/icon6.png"),
                             isShow: true,
                             query: {}

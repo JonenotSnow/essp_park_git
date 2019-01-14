@@ -333,11 +333,11 @@ const utils = {
      *  退出操作清除缓存
      *  val: '401'时只清缓存不调用后端删token； 否则删除token
      */
-    logoutDelSSH: function (val) {
+    logoutDelSSH: async function (val) {
         if (val == 401) {
             utils.delSSH();
         } else if (router.currentRoute.name != 'login' && SSH.getItem('token')) {
-            del(apiUrl.user.getLogoutUrl, {
+            await del(apiUrl.user.getLogoutUrl, {
                 access_token: SSH.getItem('token')
             })
                 .then((response) => {
@@ -377,11 +377,11 @@ const utils = {
         SSH.delItem('applyTag')
         SSH.delItem('freezeFlag')
         SSH.delItem('localAddr');
-        SSH.setItem('menuList', SSH.getItem('initMenuList'))
+        // SSH.setItem('menuList', SSH.getItem('initMenuList'))
 
         SSH.delItem('loginMenuResource')
         // SSH.setItem('menuResourceTmp', utils.getMenuResource(SSH.getItem('initMenuList')))
-        SSH.setItem('menuResource', SSH.getItem('initMenuResource'))
+        // SSH.setItem('menuResource', SSH.getItem('initMenuResource'))
         SSH.delItem('loginFlag')
         SSH.delItem('cetificateFlag')
         SSH.delItem('enterpriseFlag')

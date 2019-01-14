@@ -13,7 +13,7 @@
                 </div>
             </div>
         </div>
-        <parkInfoSet v-if="stepType == 1"></parkInfoSet>
+        <parkInfoSet v-if="stepType == 1" @sendStepType = 'sendStepType'></parkInfoSet>
         <selectModule v-if="stepType == 2"></selectModule>
     </div>
 </template>
@@ -44,13 +44,16 @@ export default {
                 }
             ],
             stepType:'1', 
-            firstSetModel: '1',
+            firstSetModel: '1'
         }
     },
     created() {
         this.getParkById();
     },
     methods: {
+        sendStepType(value){
+            this.stepType = value;
+        },
         //获取当前步骤
         getCurStepId(id){
             //如果没完善园区信息
@@ -64,12 +67,13 @@ export default {
             this.stepType = id;
         },
         
-        getParkById(i){
+        getParkById(){
             this.$post(this.$apiUrl.manage.getParkById,{
                 parkId : window.sessionStorage.getItem("parkId")
             })
             .then((response) => {
                 this.writeInfo = Object.assign({},response.resultData);
+                console.log(response.resultData)
                 //如果没完善园区信息
                 if (response.resultData && !response.resultData.setUpTime) {
                     this.$message({
@@ -84,7 +88,7 @@ export default {
                     return;
                 };
                 //如果非第一次设置模板，上次设置模板一
-                if (response.resultData && response.resultData.parkService == "1") {
+                if (response.resultData.parkService == "1") {
                     this.firstSetModel = '1';
                     return;
                 };

@@ -330,7 +330,7 @@
                 dialogVisible: false,
                 flollowStatus: "", //资讯关注状态，非0 就是关注了,
                 LoginUserRol: this.SSH.getItem("LoginUserRol")?this.SSH.getItem("LoginUserRol").toString():'',
-                loginFlag: this.SSH.getItem("loginFlag") ? this.SSH.getItem("loginFlag") : false
+                loginFlag: this.SSH.getItem("loginFlag")
             }
         },
         created() {
@@ -449,7 +449,7 @@
                     return;
                 }
 
-                if (!this.loginFlag && enrollType == '0') {
+                if (this.loginFlag && enrollType == '0') {
                     this.$message.warning('本活动仅对本园区开放');
                     return;
                 }

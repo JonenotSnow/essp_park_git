@@ -9,7 +9,7 @@
                 <div class="head-info">
                     <p class="info-p release-time">
                         <span>发布时间：</span>
-                        <span>{{"2019-01-01" | timerFormat(satpDate.createTime)}}</span>
+                        <span>{{satpDate.createTime | timerFormat(satpDate.createTime)}}</span>
                     </p>
                     <p class="info-p view-total">
                         <span>浏览量：</span>
@@ -66,31 +66,7 @@
                     }
                 ],
 
-                satpDate: {
-                    policyTitle: '科技政策详情', // 标题
-                    creator: '科技政策发布用户', // 发布用户ID
-                    createTime: '1546999110933', // 发布时间
-                    status: '', // 状态
-                    cstNm: '科技政策发布机构', // 发布机构
-                    parkId: '', // 园区ID
-                    viewTime: '256', // 查阅数量
-                    infoDetail: '', // 详细信息
-                    tagsTxt: ['科技政策1', '科技政策2', '科技政策3'], // 标签
-                    countFollower: '', // 关注人数
-                    fileUrl: [
-                        {
-                            name: '·附件1：河北市（国家高新区）创新资金项目推荐汇总表）.xls',
-                            url: 'http://localhost:8080/static/img/essp_logo.7eeaf5d.png'
-                        },
-                        {
-                            name: '·附件1：河北市（国家高新区）创新资金项目推荐汇总表）.xls',
-                            url: 'http://localhost:8080/static/img/essp_logo.7eeaf5d.png'
-                        }
-                    ], // 附件URL
-                    userName: '', // 发布人
-                    classtType: '', // 类型
-                    applyType: '', // 政策01，或科技服务02
-                }
+                satpDate: {}
             }
         },
         methods: {
@@ -114,9 +90,8 @@
             }
         },
         created() {
-            // this.getSatpDate();
+            this.getSatpDate();
         },
-        computed: {},
         filters: {
             timerFormat(vaule) {
                 return Moment(vaule).format("YYYY-MM-DD");

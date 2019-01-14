@@ -1,323 +1,282 @@
 <template>
-    <div id="publishAchievement">
-        <essp-bread-crumb :breadList="breadlist"></essp-bread-crumb>
-        <p class='Otitle'>
-            <i></i>
-            详情
-            <i></i>
-        </p>
-        <ul class="content">
-            <li>
-                <span class="require">*</span>
-                <span class="title">成果名称：</span>
-                <input type="text" placeholder="请输入成果名称">
-            </li>
-            <li>
-                <span class="require">*</span>
-                <span class="title">所属领域：</span>
-                <select placeholder="请输入所属领域">
-                    <option :value="item.id" :label="item.name" v-for="(item,index) in searchList" :key="index">{{item.name}}</option>
-                </select>
-            </li>
-            <li class="pic">
-                <span class="require">*</span>
-                <span class="title">成果配图：</span>
-                <el-upload
-                    class="avater-uploader"
-                    :before-upload="beforeUpload"
-                    :action='uploads'>
-                    <i class="icon iconfont icon-tianjia- tianjia"></i>
-                    <p class="detil">上传图片</p>
-                </el-upload>
-                <span class="sub1">（图片高宽7：4，每张最大2M,建议分辨率为840*480像素，支持jpg/jpeg/png格式。）</span>
-            </li>
-            <li class="resume">
-                <span class="require">*</span>
-                <span class="title">成果简介：</span>
-                <textarea placeholder="请输入成果简介"></textarea>
-            </li>
-            <li class="editor">
-                <span class="require">*</span>
-                <span class="title">成果详情：</span>
-                <div></div>
-            </li>
-            <li>
-                <span class="title1">发明人：</span>
-                <input type="text" placeholder="请输入发明人">
-            </li>
-            <li>
-                <span class="title1">所属单位：</span>
-                <input type="text" placeholder="请输入所属单位">
-                <span class="sub">（注：发明人与所属单位至少填一项）</span>
-            </li>
+    <div class="publish-sciAnd-tech-policy-wrap" id="publishAchievement">
+        <essp-bread-crumb :breadList="breadlist_01" v-if="applyType === '01'"/>
+        <essp-bread-crumb :breadList="breadlist_02" v-if="applyType === '02'"/>
+        <div class="publish-title">
+            <i></i>审核详情<i></i>
+        </div>
+        <!--！！！！！！政策法规表格！！！！！！-->
+        <div class="publist-form" v-if="applyType === '01'">
+            <el-form :rules="rules_01" label-width="125px" class="demo-ruleForm">
+                <el-form-item label="政策法规标题：" prop="policyTitle">
+                    <div class="my-style">{{satpDate.policyTitle}}</div>
+                </el-form-item>
+                <el-form-item label="政策法规简介：" prop="desc">
+                    <div class="my-style">{{satpDate.desc}}</div>
+                </el-form-item>
+                <el-form-item label="政策法规详情：" prop="infoDetail">
+                    <div class="my-style">
+                        <div v-html="satpDate.infoDetail"></div>
+                    </div>
+                </el-form-item>
+                <el-form-item label="政策法规标签：" prop="tags">
+                    <div class="my-style">
+                        <span class="my-tag" v-for="(item, index) in satpDate.tagsTxt" :key="index">{{item}}</span>
+                    </div>
+                </el-form-item>
+                <el-form-item label="发布人：">
+                    <div class="my-style">发布人</div>
+                </el-form-item>
+                <el-form-item label="附件：">
+                    <div class="my-style" v-for="(item, index) in satpDate.fileUrl" :key="index">{{item.name}}</div>
+                </el-form-item>
+            </el-form>
+            <div class="audit-line"></div>
+            <el-form :rules="rules_01" label-width="125px" class="demo-ruleForm demo-ruleForm-Next">
+                <el-form-item label="审核结果：">
+                    <i class="icon iconfont icon-butongguo"
+                       style="margin-right:10px; color: #fe696c;"></i><span>不通过</span>
+                    <i class="icon iconfont icon-zhengque"
+                       style="margin-right:10px; color: #6bde73"></i><span>正确</span>
+                </el-form-item>
+                <el-form-item label="审核意见：">
+                    <div class="my-style audit-opinion">同意发布</div>
+                </el-form-item>
+            </el-form>
 
-            <li>
-                <span class="scan">预 览</span>
-            </li>
-        </ul>
-        <p class="save">
-            <span>保存上传</span>
-        </p>
+
+        </div>
+
+        <!--！！！！！！科技服务表格！！！！！！-->
+        <div class="publist-form" v-if="applyType === '02'">
+            <el-form :rules="rules_02" label-width="125px" class="demo-ruleForm">
+                <el-form-item label="科技服务标题：" prop="policyTitle">
+                    <div class="my-style">{{satpDate.policyTitle}}</div>
+                </el-form-item>
+                <el-form-item label=" 科技服务类型：" prop="classtType">
+                    <div class="my-style">{{satpDate.classtType}}</div>
+                </el-form-item>
+                <el-form-item label="科技服务简介：" prop="desc">
+                    <div class="my-style">{{satpDate.desc}}</div>
+                </el-form-item>
+                <el-form-item label="科技服务详情：" prop="infoDetail">
+                    <div class="my-style">
+                        <div v-html="satpDate.infoDetail"></div>
+                    </div>
+                </el-form-item>
+                <el-form-item label="科技服务标签：" prop="tags">
+                    <div class="my-style">
+                        <span class="my-tag" v-for="(item, index) in satpDate.tagsTxt" :key="index">{{item}}</span>
+                    </div>
+                </el-form-item>
+                <el-form-item label="发布人：">
+                    <div class="my-style">发布人</div>
+                </el-form-item>
+                <el-form-item label="附件：">
+                    <div class="my-style" v-for="(item, index) in satpDate.fileUrl" :key="index">{{item.name}}</div>
+                </el-form-item>
+            </el-form>
+            <div class="audit-line"></div>
+            <el-form :rules="rules_02" label-width="125px" class="demo-ruleForm demo-ruleForm-Next">
+                <el-form-item label="审核结果：">
+                    <i class="icon iconfont icon-butongguo"
+                       style="margin-right:10px; color: #fe696c;"></i><span>不通过</span>
+                    <i class="icon iconfont icon-zhengque"
+                       style="margin-right:10px; color: #6bde73"></i><span>正确</span>
+                </el-form-item>
+                <el-form-item label="审核意见：">
+                    <div class="my-style audit-opinion">同意发布</div>
+                </el-form-item>
+            </el-form>
+        </div>
     </div>
 </template>
 
 <script>
-import EsspBreadCrumb from "@/components/EsspBreadCrumb";
-export default {
-    components: {
-        EsspBreadCrumb
-    },
-    data() {
-        return {
-            breadlist: [
-                {
-                    path: "/parkHome",
-                    name: "系统管理"
-                },
-                {
-                    path: "",
-                    name: "成果管理"
-                },
-                {
-                    path: "",
-                    name: "发布成果"
-                }
-            ],
-            searchList:[
-                {
-                    id:'0',
-                    name:'电子信息'
-                },{
-                    id:'1',
-                    name:'生物与新医药'
-                },{
-                    id:'2',
-                    name:'新材料'
-                },{
-                    id:'3',
-                    name:'高新技术服务'
-                },{
-                    id:'4',
-                    name:'新能源与节能'
-                },{
-                    id:'5',
-                    name:'资源与环境'
-                },{
-                    id:'6',
-                    name:'现代农业'
-                },{
-                    id:'7',
-                    name:'高端装备制造'
-                },{
-                    id:'8',
-                    name:'其他'
-                }
-            ]
-        }
-    },
-    created() {
+    import EsspBreadCrumb from "@/components/EsspBreadCrumb";
 
-    },
-    methods: {
-        //图片上传
-        beforeUpload(file) {
-            const isJPG = file.type === "image/jpeg" || file.type === "image/png"  || file.type === "image/gif";
-            const isLt5M = file.size / 1024 / 1024 < 5;
-            if (!isJPG) {
-                this.$message.error("图片只支持jpg、png、gif等格式上传");
-                return isJPG;
-            }
-            if (!isLt5M) {
-                this.$message.error("上传图片大小不能超过 5MB!");
-                return isLt5M;
-            }
-            let param = new FormData();  // 创建form对象
-            param.append('file', file);
-            param.append('type', 'park');
-            param.append('model', 'manageModuleOne');
-            var _this = this;
-            this.$post(this.$apiUrl.upload.upload,param).then(response => {
-
-            },err=>{
-                this.$message.error("接口异常")
-            })
-            return false // 返回false不会自动上传
+    export default {
+        components: {
+            EsspBreadCrumb
         },
-    },
-}
+        data() {
+            return {
+                parkId: sessionStorage.getItem("parkId") || "",
+                applyType: this.$route.query.applyType,
+                id: this.$route.query.id || "",
+
+                breadlist_01: [
+                    {
+                        path: "/parkHome",
+                        name: "系统管理"
+                    },
+                    {
+                        path: "",
+                        name: "发布管理"
+                    },
+                    {
+                        path: "",
+                        name: "发布政策法规"
+                    },
+                    {
+                        path: "",
+                        name: "审核详情"
+                    }
+                ],
+                breadlist_02: [
+                    {
+                        path: "/parkHome",
+                        name: "系统管理"
+                    },
+                    {
+                        path: "",
+                        name: "发布管理"
+                    },
+                    {
+                        path: "",
+                        name: "发布科技服务"
+                    },
+                    {
+                        path: "",
+                        name: "审核详情"
+                    }
+                ],
+
+
+                satpDate: {
+                    policyTitle: '科技政策标题1',
+                    classtType: '01',
+                    desc: '科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介',
+                    infoDetail: '科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情',
+                    tagsTxt: ['测试标签1', '测试标签2', '测试标签3'],
+                    fileUrl: [
+                        {
+                            name: 'xxxxxx',
+                            url: ''
+                        },
+                        {
+                            name: 'qqqqqqqqq',
+                            url: ''
+                        }
+                    ]
+                },
+                rules_01: {
+                    policyTitle: [
+                        {required: true, message: '请输入政策法规标题', trigger: 'blur'},
+                    ],
+                    desc: [
+                        {required: true, message: '请填政策法规简介', trigger: 'blur'}
+                    ],
+                    infoDetail: [
+                        {required: true, message: '请填写政策法规详情', trigger: 'blur'}
+                    ],
+                    tags: [
+                        {required: true, message: '请填写政策法规标签', trigger: 'blur'}
+                    ]
+                },
+                rules_02: {
+                    policyTitle: [
+                        {required: true, message: '请输入科技服务标题', trigger: 'blur'},
+                    ],
+                    classtType: [
+                        {required: true, message: '请选择科技服务类型', trigger: 'change'}
+                    ],
+                    desc: [
+                        {required: true, message: '请填科技服务简介', trigger: 'blur'}
+                    ],
+                    infoDetail: [
+                        {required: true, message: '请填写科技服务详情', trigger: 'blur'}
+                    ],
+                    tags: [
+                        {required: true, message: '请填写科技服务标签', trigger: 'blur'}
+                    ]
+                },
+            }
+        },
+        methods: {
+            // 获取详情事件--- /policy/getPolById
+            /**
+             * 获取“科技政策”的详情数据
+             */
+            getSatpDate() {
+                let params = {
+                    id: this.id
+                };
+                this.$post("/policy/getPolById", params).then(response => {
+                    let codestatus = response.resultCode;
+                    if (codestatus == "CLT000000000") {
+                        this.satpDate = response.resultData;
+                    } else {
+                        this.$message.info(response.resultMsg);
+                    }
+                }, err => {
+                    this.$message.error("接口异常");
+                })
+            }
+        },
+        created() {
+        },
+    }
 </script>
 
 <style lang='less' scoped>
-#publishAchievement{
-    width:1200px;
-    background:#fff;
-    margin: 0 auto;
-    .Otitle{
-        font-size: 24px;
-        line-height: 36px;
-        margin-bottom:20px;
-        margin-top:60px;
-        color: #333333;
-        text-align: center;
-        i {
-            display: inline-block;
-            width: 70px;
-            border: 1px solid #ddd;
-            position: relative;
-            top: -6px;
-        }
-    }
-    .content{
-        width:884px;
-        margin: 76px auto 0;
-        li{
-            margin-bottom:20px;
-            .require{
-                color:#ff9900;
-            }
-            .title,.title1{
-                font-size: 14px;
-                font-weight: normal;
-                letter-spacing: 0.4px;
-                color: #666666;
+    .publish-sciAnd-tech-policy-wrap {
+        width: 1200px;
+        background: #fff;
+        margin: 0 auto 20px;
+        .publish-title {
+            margin-top: 66px;
+            margin-bottom: 95px;
+            font-size: 24px;
+            color: #333333;
+            text-align: center;
+            i {
                 display: inline-block;
-                width:72px;
-                text-align: right;
-                margin-right:10px;
+                width: 70px;
+                border: 1px solid #ddd;
+                position: relative;
+                top: -6px;
             }
-            input,select{
-                width: 198px;
-                height: 35px;
-                padding: 0 5px;
-                border-radius: 3px;
-                border: solid 1px #cccccc;
+        }
+
+        .publist-form {
+            .demo-ruleForm {
+                padding: 0 125px;
             }
-            select{
-                width: 210px;
+            .demo-ruleForm-Next {
+                padding-bottom: 60px;
             }
-            textarea{
-                width: 700px;
-                height: 120px;
-                max-width: 700px;
-                max-height:120px;
-                min-width: 700px;
-                min-height:120px;
-                border-radius: 3px;
-                border: solid 1px #cccccc;
-            }
-            .sub,.sub1{
+
+            .my-style {
                 font-size: 14px;
                 font-weight: normal;
                 font-stretch: normal;
                 letter-spacing: 0.1px;
-                color: #999999
+                color: #999;
+                .my-tag {
+                    margin-right: 20px;
+                    padding: 7px 16px;
+                    font-size: 14px;
+                    font-weight: normal;
+                    font-stretch: normal;
+                    letter-spacing: 0px;
+                    color: #fff;
+                    border-radius: 3px;
+                    background-color: #cccccc;
+                }
             }
-            .sub1{
-                margin-top:100px;
-                margin-left:14px;
+            .audit-line {
+                margin-bottom: 20px;
+                border-bottom: 1px solid #ccc;
             }
-            .title1{
-                margin-left:10px;
-            }
-            .scan{
-                display: inline-block;
-                width: 100px;
-                height: 35px;
-                background-color: #e6f4ff;
+            .audit-opinion {
+                padding: 0px 15px;
+                width: 570px;
+                height: 180px;
                 border-radius: 3px;
-                font-size: 14px;
-                font-weight: normal;
-                font-stretch: normal;
-                line-height: 35px;
-                letter-spacing: 0px;
-                color: #00a0e9;
-                text-align: center;
-                margin-left:95px;
-                cursor: pointer;
-            }
-            &.pic{
-                overflow: hidden;
-                &>span{
-                    float: left;
-                }
-                .avater-uploader{
-                    float: left;
-                    width: 210px;
-                    height: 120px;
-                    border-radius: 3px;
-                    border: dashed 1px #cccccc;
-                    margin-left:8px;
-                    .tianjia{
-                        display:block;
-                        font-size: 40px;
-                        margin-left:80px;
-                        margin-top:36px;
-                    }
-                    .detil{
-                        font-size: 14px;
-                        font-weight: normal;
-                        font-stretch: normal;
-                        line-height: 30px;
-                        letter-spacing: 0px;
-                        color: #cccccc;
-                        margin-left:80px;
-                    }
-                }
-            }
-            &.resume{
-                overflow: hidden;
-                span{
-                    float: left;
-                }
-                textarea{
-                    float: left;
-                    margin-left:8px;
-                    padding:10px;
-                }
-            }
-            &.editor{
-                overflow: hidden;
-                span{
-                    float: left;
-                }
-                div{
-                    float: left;
-                    margin-left:8px;
-                    width: 700px;
-                    height: 400px;
-                    max-width: 700px;
-                    max-height:400px;
-                    min-width: 700px;
-                    min-height:400px;
-                    border-radius: 3px;
-                    border: solid 1px #cccccc;
-                    padding:10px;
-                }
+                border: solid 1px #00a0e9;
+                background-color: #ffffff;
             }
         }
     }
-    .save{
-        padding-bottom: 60px;
-        text-align: center;
-        width: 884px;
-        margin: 40px auto 20px;
-        span{
-            display: inline-block;
-            width: 180px;
-            height: 40px;
-            background-image: linear-gradient(31deg,
-                #22a2fa 0%,
-                #10b5ff 100%);
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: normal;
-            font-stretch: normal;
-            line-height: 40px;
-            letter-spacing: 0px;
-            color: #ffffff;
-            text-align: center;
-        }
-    }
-}
 </style>

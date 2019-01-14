@@ -2,7 +2,7 @@
 <template>
     <div class="mycard">
         <div class="headImg">
-            <img :src="chat.user.photoUrl" class="avatar-chat">
+            <img v-if="chat && chat.user && chat.user.photoUrl" :src="chat.user.photoUrl" class="avatar-chat">
         </div>
         <div class="nav">
         	<div class="cont" :class="{active: chat.selectCard === 1}" @click="getChat(1)">

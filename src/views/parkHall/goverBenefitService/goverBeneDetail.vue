@@ -123,7 +123,7 @@
                 followId: "",
                 fileList: [], // 附件数据,
                 LoginUserRol:this.SSH.getItem("LoginUserRol").toString(),
-                loginFlag:this.SSH.getItem("loginFlag")?this.SSH.getItem("loginFlag"):false
+                loginFlag:this.SSH.getItem("loginFlag")
             };
         },
 

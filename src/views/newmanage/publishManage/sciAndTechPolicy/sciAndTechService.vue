@@ -22,15 +22,20 @@
             </div>
         </div>
         <div class="sci-a1nd-tech-service-main">
+
             <list-status-and-classify
+                v-if="status=='0' || status=='2'"
                 :list="dataList"
                 :type="status"
-                v-if="status=='0' || status=='2'"
             />
 
-            <list-only-classify :list="dataList" :type="status" v-if="status=='1'"/>
+            <list-only-classify
+                v-if="status=='1'"
+                :list="dataList"
+            />
 
         </div>
+
         <div class="pageList" v-if="dataList">
             <el-pagination
                 @size-change="handleSizeChange"
@@ -60,41 +65,7 @@
             return {
                 status: '0',                // 状态值
                 searchContent: '',          // 查询字段
-                dataList: [
-                    {
-                        id: '123456',                       // 政策id
-                        createTime: '1546928463894',        // 发布时间
-                        cstNm: '建行',                      // 发布机构
-                        policyTitle: '政策法规标题1',       // 标题
-                        userName: '行长',                   // 发布人
-                        status: '已发布',                   // 发布状态
-                        applyType: '01',                    // 政策01，或科技服务02
-                        classtType: "高企认定",              // 类型【服务类型】
-                        desc: '政策简介政策简介政策简介政策简介'
-                    },
-                    {
-                        id: '123456',                       // 政策id
-                        createTime: '1546928463894',        // 发布时间
-                        cstNm: '交行',                      // 发布机构
-                        policyTitle: '政策法规标题2',       // 标题
-                        userName: '行长',                   // 发布人
-                        status: '已审核',                   // 发布状态
-                        applyType: '01',                    // 政策01，或科技服务02
-                        classtType: "科小认定",              // 类型【服务类型】
-                        desc: '政策简介政策简介政策简介政策简介政策简介政策简介政策简介政策简介政策简介政策简介'
-                    },
-                    {
-                        id: '123456',                       // 政策id
-                        createTime: '1546928463894',        // 发布时间
-                        cstNm: '交行',                      // 发布机构
-                        policyTitle: '政策法规标题3',       // 标题
-                        userName: '行长',                   // 发布人
-                        status: '未审核',                   // 发布状态
-                        applyType: '01',                    // 政策01，或科技服务02
-                        classtType: "风险投资",              // 类型【服务类型】
-                        desc: '政策简介政策简介政策简介政策简介政策简介政策简介政策简介政策简介政策简介政策简介'
-                    }
-                ],
+                dataList: [],
                 totalCount: 0,
                 pageNum: 1,
                 pageSize: 10

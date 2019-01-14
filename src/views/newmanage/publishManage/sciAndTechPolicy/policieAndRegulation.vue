@@ -60,10 +60,14 @@
         },
         data() {
             return {
+                totalCount: 0,
+                pageNum: 1,
+                pageSize: 10,
+                parkId: sessionStorage.getItem("parkId") || "",
                 msg: '政策法规',
                 status: '0',                // 状态值
                 searchContent: '',          // 查询字段
-
+                satpType:'01',
                 // 返回的数据
                 dataList: [
                     {
@@ -99,23 +103,23 @@
                         classtType: "风险投资",              // 类型【服务类型】
                         desc: '政策简介政策简介政策简介政策简介政策简介政策简介政策简介政策简介政策简介政策简介'
                     }
-                ],
-                totalCount: 0,
-                pageNum: 1,
-                pageSize: 10
+                ]
             }
         },
         methods: {
             handleSizeChange(val) {
                 this.pageSize = val;
+                this.getPolicieAndRegulation(status)
             },
             handleCurrentChange(val) {
                 this.pageNum = val;
+                this.getPolicieAndRegulation(status)
             },
             // 状态切换
             switchStatus(status) {
                 this.status = status;
                 this.type = status;
+                this.getPolicieAndRegulation(status)
             },
 
             // 查询事件
@@ -134,16 +138,27 @@
             },
 
             // 获取全部政策法规
-            getPolicieAndRegulation() {
-                let params = {}
-                this.$post(" /policy/getAllPolicy", params).then(response => {
+            getPolicieAndRegulation(status) {
+                let params = {
+                    parkId: this.parkId,            // 园区ID
+                    pageNum: this.pageNum,          // 页码
+                    pageSize: this.pageSize,        // 每页显示数量
+                    startDate: this.startDate,      // 信息发布时间---开始时间
+                    endDate: this.endDate,          // 信息发布时间---结束时间
+                    title: '',                       // 标题,
+                    entityType: this.satpType,      // 政策01，或科技服务02
+                    type: status, //（ 必填）
+                    classtType: this.classtType     // 科技服务才会有这个字段---
+                };
+                this.$post("/policy/getMyPubPol", params).then(response => {
                     let codestatus = response.resultCode;
                     if (codestatus == "CLT000000000") {
                         let resultData = response.resultData;
-                        this.totalCount = resultData.total;
+                        this.totalCount = resultData.policyCount;
                         this.dataList = resultData.policyList;
                     } else {
                         this.$message.info(response.resultMsg);
+                        this.totalCount = this.dataList.length;
                     }
                 }, err => {
                     this.$message.error("接口异常");
@@ -155,22 +170,23 @@
              */
             // 子组件执行删除事件后传递到父组件的事件
             childDeleted() {
-                alert('childDeleted执行了~~~~');
+                // alert('childDeleted执行了~~~~');
                 // 重新获取数据
-                // this.getPolicieAndRegulation();
+                this.getPolicieAndRegulation();
             },
 
             // 子组件里的状态切换事件
             childSwitchStatus(status) {
-                alert('childSwitchStatus~~~~');
+                // alert('childSwitchStatus~~~~');
                 // 重新获取数据
-                // this.getPolicieAndRegulation();
+                this.getPolicieAndRegulation(status);
             }
             /**
              * 子组件传递上来的事件------------结束
              */
         },
         mounted() {
+            this.getPolicieAndRegulation();
         }
     }
 </script>
@@ -245,6 +261,7 @@
                             color: #ccc;
                             outline: none;
                             border: none;
+                            vertical-align: top;
                         }
                         input::-webkit-input-placeholder {
                             color: #ccc;

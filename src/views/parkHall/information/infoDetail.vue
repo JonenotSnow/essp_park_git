@@ -139,7 +139,7 @@
                 followStatus: "", //资讯关注状态，非0 就是关注了
                 followId: "", // 关注id,
                 LoginUserRol:this.SSH.getItem("LoginUserRol").toString(),
-                loginFlag:this.SSH.getItem("loginFlag")?this.SSH.getItem("loginFlag"):false
+                loginFlag:this.SSH.getItem("loginFlag")
             };
         },
         created() {

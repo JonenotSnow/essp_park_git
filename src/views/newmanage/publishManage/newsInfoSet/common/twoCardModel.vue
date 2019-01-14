@@ -111,6 +111,13 @@ export default {
         },
         goAudit(item){
             this.$message.warning('功能待开发，查看审核详情界面')
+            this.$router.push({
+                name: 'park-lookNoticeAudit',
+                query: {
+                    informationId: item.informationId,
+                    
+                }
+            })
         },
         goEdit(item){
             this.$router.push({
@@ -129,7 +136,7 @@ export default {
         this.checkedIds = val ? this.allListIds : [];
         this.isIndeterminate = false;
         },
-        handleCheckedCitiesChange(value) {
+        handleCheckedCitiesChange(value) {console.log(value)
             let checkedCount = value.length;
             this.checkAll = checkedCount === this.allListIds.length;
             this.isIndeterminate = checkedCount > 0 && checkedCount < this.allListIds.length;//有选择但不是全部

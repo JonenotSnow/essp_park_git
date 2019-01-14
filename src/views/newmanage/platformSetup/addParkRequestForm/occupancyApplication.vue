@@ -604,7 +604,6 @@ export default {
     methods: {
         //获取初始模板
         getForm() {
-
             this.$post(this.$apiUrl.manage.applyParkForm, {
                 parkId: window.sessionStorage.getItem("parkId")
             }).then(
@@ -625,6 +624,8 @@ export default {
                         }else{
                             this.displayList = this.requireList;
                         }
+                    }else{
+                        this.displayList = this.requireList;
                     }
                 },
                 err => {
