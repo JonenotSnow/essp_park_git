@@ -37,10 +37,10 @@
                     </li>
                 </ul>
             </div>
-            <p class="saveBtn">
-                <el-button type="primary" size='small' @click='getList'>查询</el-button>
-                <el-button type="info" size='small' @click='reset'>重置</el-button>
-            </p>
+            <div class="saveBtn">
+                <button class="my-btn btn-search">查询</button>
+                <button class="my-btn btn-reset">重置</button>
+            </div>
             <div class="selectTitle">
                 <span class="all"><i class="el-icon-circle-plus"></i>全选</span>
                 共
@@ -267,9 +267,27 @@
                 }
             }
         }
-        .saveBtn{
-            button{
-                font-size:16px;
+        .saveBtn {
+            margin-top: 50px;
+            text-align: center;
+            .my-btn {
+                width: 60px;
+                height: 30px;
+                line-height: 30px;
+                font-size: 16px;
+                font-weight: normal;
+                font-stretch: normal;
+                letter-spacing: 0px;
+                color: #ffffff;
+                border: none;
+                border-radius: 5px;
+            }
+            .btn-search {
+                margin-right: 80px;
+                background-color: #00a0e9;
+            }
+            .btn-reset {
+                background-color: #999;
             }
         }
         &>ul,.tabList{

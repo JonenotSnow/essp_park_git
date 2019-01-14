@@ -2,11 +2,11 @@
  <div>
     <div class="outroute">
         <div class="router__link">
-          <span class="Inlinkstyle" :class="{'outlinkstyle': type == 0 }" @click="getType(0)">公开需求{{type}}</span>
-          <span class="separator">|</span>
-          <span class="Inlinkstyle" :class="{'outlinkstyle': type == 1 }" @click="getType(1)">非公开需求</span>
+          <!-- <span class="Inlinkstyle" :class="{'outlinkstyle': type == 0 }" @click="getType(0)">公开需求</span>
+          <span class="separator">|</span> -->
+          <span class="Inlinkstyle outlinkstyle" :class="{'outlinkstyle': type == 1 }" @click="getType(1)">非公开需求</span>
         </div>
-        <openNeed v-show="type == 0"></openNeed>
+        <!-- <openNeed v-show="type == 0"></openNeed> -->
         <noOpenNeed v-show="type == 1"></noOpenNeed>
     </div>
  </div>
@@ -22,7 +22,7 @@ import noOpenNeed from './noOpenNeed/index'
    },
    data () {
      return {
-        type:0
+        type:1
      }
    },
    created () {

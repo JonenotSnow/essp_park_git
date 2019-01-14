@@ -23,10 +23,10 @@
                     </li>
                 </ul>
             </div>
-            <p class="saveBtn">
-                <el-button type="primary" size='small' @click='getAllNeed'>查询</el-button>
-                <el-button type="info" size='small' @click='reset'>重置</el-button>
-            </p>
+            <div class="saveBtn">
+                <button class="my-btn btn-search" @click='getAllNeed'>查询</button>
+                <button class="my-btn btn-reset" @click='reset'>重置</button>
+            </div>
             <div class="selectTitle">
                 <el-checkbox class="maincheck" :indeterminate="isIndeterminate" v-model="checkAll" @change="AllChange" >全选</el-checkbox>
                 共
@@ -210,6 +210,7 @@ import downLoadExcel from "../../../components/downLoadExcel";
                 cstName : '',    //发布人
                 createName : '',//公司名称
             }
+            this.getAllNeed();
         },
         openDialog(){
             if (this.checkedIds.length == 0) {
@@ -306,9 +307,29 @@ import downLoadExcel from "../../../components/downLoadExcel";
                 }
             }
         }
-        .saveBtn{
-            button{
-                font-size:16px;
+        .saveBtn {
+            margin-top: 50px;
+            text-align: center;
+            .my-btn {
+                outline: none;
+                cursor: pointer;
+                width: 60px;
+                height: 30px;
+                line-height: 30px;
+                font-size: 16px;
+                font-weight: normal;
+                font-stretch: normal;
+                letter-spacing: 0px;
+                color: #ffffff;
+                border: none;
+                border-radius: 5px;
+            }
+            .btn-search {
+                margin-right: 80px;
+                background-color: #00a0e9;
+            }
+            .btn-reset {
+                background-color: #999;
             }
         }
         &>ul,.tabList{
