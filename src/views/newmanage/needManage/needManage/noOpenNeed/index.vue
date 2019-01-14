@@ -28,23 +28,11 @@
                 <button class="my-btn btn-reset" @click='reset'>重置</button>
             </div>
             <div class="selectTitle">
-                <el-checkbox class="maincheck" :indeterminate="isIndeterminate" v-model="checkAll" @change="AllChange" >全选</el-checkbox>
-                共
-                <span class="total">{{totalCount}}</span>
-                条，已选
-                <span class="total">{{hascheckedNum}}</span>
-                条
-                <span class="removeBtn" @click="openDialog">需求导出</span>
+                <span class="removeBtn" @click="getAllNeed(0)">需求导出</span>
             </div>
             <div class="tabList">
                 <el-table :data="list" style="width: 100%">
-                    <el-table-column align="center" label="全部" width="85">
-                        <template slot-scope="scope">
-                            <el-checkbox-group v-model="checkedIds" class="checktop" @change="handleCheckedCitiesChange">
-                                <el-checkbox :label="scope.row.id"></el-checkbox>
-                            </el-checkbox-group>
-                        </template>
-                    </el-table-column>
+                    <el-table-column align="center" label="全部" type="index" width="85"></el-table-column>
                     <el-table-column show-overflow-tooltip align="center" prop="title" label="需求标题" width="200"></el-table-column>
                     <el-table-column show-overflow-tooltip align="center" prop="cstName" label="公司名称"></el-table-column>
                     <el-table-column align="center" prop="status" label="发布时间" width="140">
@@ -147,17 +135,6 @@ import downLoadExcel from "../../../components/downLoadExcel";
         this.getAllNeed();
     },
     computed:{
-        //可以选择的id
-        allListIds(){
-            var ids = this.list.map(item=>{
-                return item.id
-            })
-            return ids
-        },
-        //已选数量
-        hascheckedNum(){
-            return this.checkedIds.length;
-        }
     },
    methods: {
         handleSizeChange(val) {
@@ -167,10 +144,14 @@ import downLoadExcel from "../../../components/downLoadExcel";
             this.pageNum = val;
         },
         // 获取非公开需求列表
-        getAllNeed(){
+        getAllNeed(type){
             if (!this.SSH.getItem('parkId')) {
                 this.$message.error('园区id不能为空');
                 return;
+            }
+            //用于批量导出
+            if (type == 0) {
+                this.pageNum = this.pageSize = '';
             }
             this.$post(this.$apiUrl.manageNeed.getAllNeed, {
                 parkId:this.SSH.getItem('parkId'),
@@ -436,8 +417,8 @@ import downLoadExcel from "../../../components/downLoadExcel";
         }
         .removeBtn{
             display:inline-block;
-            width: 100px;
-            height: 35px;
+            width: 98px;
+            height: 33px;
             background-image: linear-gradient(0deg, 
                 #f5f5f5 0%, 
                 #ffffff 100%);
@@ -445,8 +426,8 @@ import downLoadExcel from "../../../components/downLoadExcel";
             border: solid 1px #cccccc;
             text-align: center;
             cursor: pointer;
-            margin-left:14px;
-            line-height: 35px;
+            // margin-left:14px;
+            line-height: 33px;
         }
     }
 }
