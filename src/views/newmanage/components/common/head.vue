@@ -73,7 +73,7 @@
 </script>
 <style>
     .searchBox input {
-        width: 158px;
+        width: 198px;
         height: 33px;
         border-radius: 17.5px;
         border: solid 1px #cccccc;
