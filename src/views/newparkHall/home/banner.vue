@@ -18,7 +18,7 @@
         </div>
 
         <div class="indexSeach">
-            <el-input placeholder="请输入关键字" v-model="indexSeachKW">
+            <el-input placeholder="请输入搜索关键词" v-model="indexSeachKW">
                 <el-select
                     v-model="typeselect"
                     slot="prepend"
@@ -192,6 +192,13 @@
         -moz-border-radius: 0;
         border-radius: 0;
     }
+    .banner_index .indexSeach .el-input__inner{
+        height: 50px;
+        line-height: 50px;
+    }
+    .banner_index .indexSeach .el-input-group__prepend{
+        background: #fff;
+    }
 </style>
 <style lang="less" scoped>
     @import "../../../assets/css/mixin";
@@ -229,16 +236,15 @@
             position: absolute;
             left: 50%;
             top: 40px;
-            padding: 12px 16px 0;
-            background-color: rgba(0, 0, 0, 0.7);
+            padding: 12px 20px 0;
+            background-color: rgba(51, 51, 51, 0.7);
             margin-left: -450px;
-            width: 900px;
+            width: 860px;
             z-index: 10;
             .typecon {
                 //被傻逼全局污染了 只能打补丁了
                 width: 80px;
                 font-size: 16px;
-                background: #fff;
             }
 
             .el-input-group__append button.el-button {
@@ -250,11 +256,12 @@
                 padding-left: 0;
                 padding-right: 0;
             }
-            .esspborder-radius(10px);
+            .esspborder-radius(12px);
             .local {
                 /*padding: 10px;*/
                 padding-top: 5px;
                 padding-bottom: 2px;
+                height: 20px;
                 span {
                     float: left;
                     height: 20px;
