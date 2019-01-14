@@ -60,50 +60,20 @@
         },
         data() {
             return {
+                msg: '政策法规',
+                parkId: sessionStorage.getItem("parkId") || "",
+
+                status: '0',                // 状态值
+                searchContent: '',          // 查询字段
+                satpType: '01',
+
+                // 分页相关字段
                 totalCount: 0,
                 pageNum: 1,
                 pageSize: 10,
-                parkId: sessionStorage.getItem("parkId") || "",
-                msg: '政策法规',
-                status: '0',                // 状态值
-                searchContent: '',          // 查询字段
-                satpType:'01',
+
                 // 返回的数据
-                dataList: [
-                    {
-                        id: '123456',                       // 政策id
-                        createTime: '1546928463894',        // 发布时间
-                        cstNm: '建行',                      // 发布机构
-                        policyTitle: '政策法规标题1',       // 标题
-                        userName: '行长',                   // 发布人
-                        status: '已发布',                   // 发布状态
-                        applyType: '01',                    // 政策01，或科技服务02
-                        classtType: "高企认定",              // 类型【服务类型】
-                        desc: '政策简介政策简介政策简介政策简介'
-                    },
-                    {
-                        id: '123456',                       // 政策id
-                        createTime: '1546928463894',        // 发布时间
-                        cstNm: '交行',                      // 发布机构
-                        policyTitle: '政策法规标题2',       // 标题
-                        userName: '行长',                   // 发布人
-                        status: '已审核',                   // 发布状态
-                        applyType: '01',                    // 政策01，或科技服务02
-                        classtType: "科小认定",              // 类型【服务类型】
-                        desc: '政策简介政策简介政策简介政策简介政策简介政策简介政策简介政策简介政策简介政策简介'
-                    },
-                    {
-                        id: '123456',                       // 政策id
-                        createTime: '1546928463894',        // 发布时间
-                        cstNm: '交行',                      // 发布机构
-                        policyTitle: '政策法规标题3',       // 标题
-                        userName: '行长',                   // 发布人
-                        status: '未审核',                   // 发布状态
-                        applyType: '01',                    // 政策01，或科技服务02
-                        classtType: "风险投资",              // 类型【服务类型】
-                        desc: '政策简介政策简介政策简介政策简介政策简介政策简介政策简介政策简介政策简介政策简介'
-                    }
-                ]
+                dataList: []
             }
         },
         methods: {
@@ -145,9 +115,8 @@
                     pageSize: this.pageSize,        // 每页显示数量
                     startDate: this.startDate,      // 信息发布时间---开始时间
                     endDate: this.endDate,          // 信息发布时间---结束时间
-                    title: '',                       // 标题,
                     entityType: this.satpType,      // 政策01，或科技服务02
-                    type: status, //（ 必填）
+                    // type: '04', //（ 必填）
                     classtType: this.classtType     // 科技服务才会有这个字段---
                 };
                 this.$post("/policy/getMyPubPol", params).then(response => {

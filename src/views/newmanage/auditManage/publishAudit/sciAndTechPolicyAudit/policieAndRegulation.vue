@@ -54,14 +54,16 @@
                                      width="200"></el-table-column>
                     <el-table-column show-overflow-tooltip align="center" prop="userName" label="发布人">
                     </el-table-column>
-                    <el-table-column align="center" prop="createTime" label="提交时间" width="130">
+                    <el-table-column align="center" prop="createTime" label="提交时间" width="150">
                         <template slot-scope="scope">
-                            {{scope.row.createTime | statusFormat(scope.row.createTime)}}
+                            {{scope.row.createTime | timerFormat(scope.row.createTime)}}
                         </template>
                     </el-table-column>
                     <el-table-column align="center" prop="status" label="状态" width="130">
                         <template slot-scope="scope">
-                            {{scope.row.status | statusFormat(scope.row.status)}}
+                            <span v-if="scope.row.status == '02'">发布中</span>
+                            <span v-if="scope.row.status == '13'">待审核</span>
+                            <span v-if="scope.row.status == '12'">审核不通过</span>
                         </template>
                     </el-table-column>
                     <el-table-column align="center" prop="" width="100" label="操作">
@@ -92,19 +94,23 @@
         data() {
             return {
                 parkId: sessionStorage.getItem("parkId") || "",
-                totalCount: 0,
-                pageNum: 1,
-                pageSize: 10,
+
                 satpType: '01',     // 政策法规
                 policieAndRegulationData: [],
-                searchCondition: {   //查询条件
-                    parkId: sessionStorage.getItem("parkId") || "",
+
+                // 查询条件
+                searchCondition: {
                     policyTitle: '',
                     userName: '',
                     status: '',
                     startDate: '',      //开始时间
                     endDate: '',        //结束时间
-                }
+                },
+
+                // 分页相关字段
+                totalCount: 0,
+                pageNum: 1,
+                pageSize: 10,
             }
         },
         created() {
@@ -114,12 +120,17 @@
 
             // 查询事件
             search() {
-
+                this.getSciAndTechPolicy();
             },
 
             // 重置事件
             reset() {
-
+                this.searchCondition.policyTitle = '';
+                this.searchCondition.userName = '';
+                this.searchCondition.status = '';
+                this.searchCondition.startDate = '';
+                this.searchCondition.endDate = '';
+                this.getSciAndTechPolicy();
             },
 
             // 前往审核详情页面
@@ -138,21 +149,20 @@
              */
             getSciAndTechPolicy() {
                 let params = {
-                    parkId: this.parkId,            // 园区ID
-                    pageNum: this.pageNum,          // 页码
-                    pageSize: this.pageSize,        // 每页显示数量
-                    startDate: this.startDate,      // 信息发布时间---开始时间
-                    endDate: this.endDate,          // 信息发布时间---结束时间
-                    title: '',                       // 标题,
-                    entityType: this.satpType,      // 政策01，或科技服务02
-                    type: '04', //（ 必填）
-                    // classtType: this.classtType     // 科技服务才会有这个字段---
+                    parkId: this.parkId,              // 园区ID
+                    pageNum: this.pageNum,            // 页码
+                    pageSize: this.pageSize,          // 每页显示数量
+                    entityType: this.satpType,        // 政策01，或科技服务02
+                    type: '04', //（后台要求的【必填】）
+
+                    // 查询用到的字段
+                    title: this.searchCondition.policyTitle,  // 标题名称
+                    userName: this.searchCondition.userName,        // 发布人
+                    status: this.searchCondition.status,            // 状态
+                    startDate: this.searchCondition.startDate,      // 开始时间
+                    endDate: this.searchCondition.endDate,          // 结束时间
                 };
 
-                // “政策法规”不需要“classtType”这个字段
-                if (this.satpType === '01') {
-                    delete params.classtType;
-                }
 
                 this.$post("/audit/getAuditList", params).then(response => {
                     let codestatus = response.resultCode;
@@ -174,9 +184,11 @@
              */
             handleSizeChange(val) {
                 this.pageSize = val;
+                this.getSciAndTechPolicy();
             },
             handleCurrentChange(val) {
                 this.pageNum = val;
+                this.getSciAndTechPolicy();
             }
         },
     }
@@ -253,6 +265,8 @@
                     color: #ffffff;
                     border: none;
                     border-radius: 5px;
+                    cursor: pointer;
+                    outline: none;
                 }
                 .btn-search {
                     margin-right: 80px;
@@ -285,6 +299,7 @@
                     line-height: 30px;
                     letter-spacing: 0px;
                     color: #00a0e9;
+                    cursor: pointer;
                 }
             }
 

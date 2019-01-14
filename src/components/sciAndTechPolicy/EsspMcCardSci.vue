@@ -11,8 +11,7 @@
             <div class="essp-card" v-for="(item, mcCardIndex) in mcCardList" :key="mcCardIndex">
                 <div class="card__head">
                     <p class="head__title" @click.stop="linkToDetail(item)">{{item.policyTitle}}</p>
-                    <!--<p class="head__time">{{item.createTime | timerFormat(item.createTime)}}</p>-->
-                    <p class="head__time">{{item.createTime}}</p>
+                    <p class="head__time">{{item.createTime | timerFormat(item.createTime)}}</p>
                 </div>
                 <div class="card__dest">
                     <p>

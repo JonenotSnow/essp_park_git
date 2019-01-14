@@ -36,7 +36,11 @@
                         <el-checkbox name="selectOne" :checked="checkedStatus" @change="selectOrUnSelect(item.id)"/>
                         <span class="time">保存时间：{{item.createTimeitem | timerFormat(item.createTime)}}</span>
                         <span class="create">发布人：{{item.userName}}</span>
-                        <span class="classifyC">状态：<span>{{item.status}}</span></span>
+                        <span class="classifyC">状态：
+                        <span v-if="item.status == '02'">发布中</span>
+                            <span v-if="item.status == '13'">待审核</span>
+                            <span v-if="item.status == '12'">审核不通过</span>
+                        </span>
                         <span class="classify classifyB">类型：<span>{{item.classtType}}</span> </span>
                         <i class="el-icon-delete remove" @click="showDialog(item.id)"></i>
                     </div>
@@ -196,7 +200,7 @@
             timerFormat(vaule){
                 return Moment(vaule).format("YYYY-MM-DD HH:mm:ss")
             }
-        } 
+        }
     }
 </script>
 

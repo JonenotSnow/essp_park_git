@@ -101,7 +101,17 @@
 
             // 获取全部政策法规
             getPolicieAndRegulation() {
-                let params = {}
+                let params = {
+                    parkId: this.parkId,            // 园区ID
+                    pageNum: this.pageNum,          // 页码
+                    pageSize: this.pageSize,        // 每页显示数量
+                    startDate: this.startDate,      // 信息发布时间---开始时间
+                    endDate: this.endDate,          // 信息发布时间---结束时间
+                    title: '',                       // 标题,
+                    entityType: this.satpType,      // 政策01，或科技服务02
+                    type: status, //（ 必填）
+                    classtType: this.classtType     // 科技服务才会有这个字段---
+                };
                 this.$post(" /policy/getAllPolicy", params).then(response => {
                     let codestatus = response.resultCode;
                     if (codestatus == "CLT000000000") {
