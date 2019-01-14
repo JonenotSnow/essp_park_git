@@ -244,7 +244,7 @@
                         },
                         {
                             name: "普惠金融",
-                            path: "/parkHall/manage/inclusiveFinance",
+                            path: "",
                             src: require("@/assets/imgs/icon6.png"),
                             isShow: true,
                             query: {}
@@ -367,11 +367,11 @@
             margin-left: -400px;
             background: #fff;
             z-index: 2;
-            box-shadow: 2px 2px 5px 1px #ccf;
-            -webkit-box-shadow: 2px 2px 5px 1px #ccf;
-            -moz-box-shadow: 2px 2px 5px 1px #ccf;
-            -ms-box-shadow: 2px 2px 5px 1px #ccf;
-            -o-box-shadow: 2px 2px 5px 1px #ccf;
+            box-shadow: 2.5px 4.3px 4.8px 0.2px rgba(0, 0, 0, 0.2);
+            -webkit-box-shadow: 2.5px 4.3px 4.8px 0.2px rgba(0, 0, 0, 0.2);
+            -moz-box-shadow: 2.5px 4.3px 4.8px 0.2px rgba(0, 0, 0, 0.2);
+            -ms-box-shadow: 2.5px 4.3px 4.8px 0.2px rgba(0, 0, 0, 0.2);
+            -o-box-shadow: 2.5px 4.3px 4.8px 0.2px rgba(0, 0, 0, 0.2);
             .esspborder-radius(6px);
         }
 
@@ -402,6 +402,7 @@
             float: left;
             width: 80px;
             color: #333;
+            font-size: 14px;
             overflow: hidden;
             transition: all 0.5s;
             -webkit-transition: all 0.5s;
@@ -498,16 +499,18 @@
     }
 
     .row_width_auto {
-        width: 1000px;
+        width: 1100px;
         margin: 0 auto;
-        font-size: 16px;
+        font-size: 18px;
+        color: #666;
     }
 
     .noData {
         float: left;
         margin-left: 90px;
         width: 430px;
-        /*font-size: 16px;*/
+        font-size: 16px;
+        color: #444;
     }
 
     .more {

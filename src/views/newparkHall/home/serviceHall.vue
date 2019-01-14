@@ -20,7 +20,7 @@
                             <div class="title-s">
                                 <span :class="tmpcontent.title===cItem.title?'active':''" v-for="cItem in tmp.child" @click="changeDetail(cItem)">{{cItem.title}}</span>
                             </div>
-                            <div class="word" v-html="tmpcontent.detail"></div> 
+                            <div class="word" v-html="tmpcontent.detail"></div>
                         </div>
                         <div class="btn-group">
                             <div class="btn" @click="nowMake">立即办理</div>
@@ -28,7 +28,7 @@
                         </div>
                     </div>
                 </div>
-                
+
             </div>
         </div>
     </div>
@@ -228,7 +228,7 @@ export default {
     created() {
         this.changeTab(0)
     },
-        
+
 }
 </script>
 <style lang="less" scoped>
@@ -258,14 +258,14 @@ export default {
             height: 540px;
             margin-top:22px;
             background-image: linear-gradient(
-                #ffffff, 
-                #ffffff), 
+                #ffffff,
+                #ffffff),
             linear-gradient(
-                #f5f5f5, 
+                #f5f5f5,
                 #f5f5f5);
-            background-blend-mode: normal, 
+            background-blend-mode: normal,
                 normal;
-            box-shadow: 2.5px 4.3px 19.4px 0.6px 
+            box-shadow: 2.5px 4.3px 19.4px 0.6px
                 rgba(0, 0, 0, 0.15);
             border-radius: 12px;
             opacity: 0.9;
@@ -291,7 +291,7 @@ export default {
                             text-align: center;
                             width: 150px;
                             margin: 0 auto;
-                            -webkit-line-clamp: 2;                         
+                            -webkit-line-clamp: 2;
                             span{
                                 margin-top: 10px;
                                 display: block;
@@ -304,11 +304,11 @@ export default {
                                 width: 30px;
                                 height: 3px;
                                 background-color: #10b5ff;
-                                bottom: 0px;
+                                bottom: 15px;
                                 left: 58px;
                                 }
                             }
-                            
+
                         }
                     }
                     .right-aside{
@@ -321,22 +321,21 @@ export default {
                             font-stretch: normal;
                             letter-spacing: 0.6px;
                             color: #444444;
-                            padding: 83px 0 75px;
+                            padding: 73px 0 50px;
                             span{
-                                margin:0 12px;
+                                margin:0 26px 0 0;
                                 cursor:pointer;
                                 &.active{
-                                    
+
                                     color:#10b5ff;
                                 }
                             }
                         }
                         .word{
                             font-size: 16px;
-                            font-weight: normal;
-                            font-stretch: normal;
                             letter-spacing: 1.6px;
-                            color: #666666;
+                            color: #666;
+                            line-height: 30px;
                             &>p{
                                 text-indent: 30px;
                             }
@@ -352,8 +351,8 @@ export default {
                         line-height: 40px;
                         text-align: center;
                         vertical-align: middle;
-                        background-image: linear-gradient(21deg, 
-                            #22a2fa 0%, 
+                        background-image: linear-gradient(21deg,
+                            #22a2fa 0%,
                             #10b5ff 100%);
                         border-radius: 5px;
                         color: #fff;
