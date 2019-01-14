@@ -6,8 +6,8 @@ export default{
     }),
     methods: {
         windowOpenUrl(url){
-            let params = `?token=${this.token}&parkId=${this.parkId}&channel=PARK`
-            window.open(this.$openUrl+url+params)
+            // let params = `?token=${this.token}&parkId=${this.parkId}&channel=Park&returnUrl=`
+            window.open(this.$openUrl+url)
         },
         windowHrefUrl(url){
             // 判断 session里有没有bdparkId，否则从url中选择
@@ -18,8 +18,9 @@ export default{
         },
         windowHrefUrlNormal(url){
             // 判断 session里有没有bdparkId，否则从url中选择
+            // let label=sessionStorage.getItem('bdParkId') === 'bdPark2018'|| location.origin.indexOf('bdppc')>-1?'bdppc':'essp_park'
             let params = `?token=${this.token}&parkId=${this.parkId}&channel=PARK`
-
+            // let parkLabel = '&label='+label
             window.location.href=this.$openUrl+url+params
         }
     },

@@ -43,7 +43,7 @@
             </div>
             <div class="searchinfo" @click="searchInfo">查询</div>
         </div>
-        <listOwnImg :list='list' :componentType="componentType"></listOwnImg>
+        <listOwnImg :list='list' :totalCount='totalCount' :componentType="componentType"></listOwnImg>
         <div class="pageList">
             <el-pagination
                 @size-change="handleSizeChange"
@@ -140,6 +140,7 @@
                     response => {
                         console.log(response);
                         this.list = response.resultData.achievList;
+                        this.totalCount = response.resultData.total
                     },
                     err => {
                         this.$message.error(err.resultMsg);
@@ -164,8 +165,7 @@
                     userId:this.SSH.getItem('userInfo').id || '' 
                 }).then(
                     response => {
-                        this.list = response.resultData
-                        this.totalCount = response.resultData.total
+                        this.list = response.resultData.achievList
                         this.$message.success(response.resultMsg);
                     },
                     err => {

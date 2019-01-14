@@ -5,14 +5,14 @@
             <div class="selectTitle">
                 <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox>
                 共
-                <span class="total">{{list.total}}</span>
+                <span class="total">{{totalCount}}</span>
                 条，已选
                 <span class="total">1</span>
                 条
                 <span class="removeBtn">删除</span>
             </div>
             <ul class="listWrap">
-                <li class="list" v-for="(item,index) in list.achievList" :key="index">
+                <li class="list" v-for="(item,index) in list" :key="index">
                     <div class="ListTop">
                         <el-checkbox-group v-model="checkedCities" @change="handleCheckedCitiesChange" class="selectitem">
                             <el-checkbox :label="cities[item]"></el-checkbox>
@@ -51,9 +51,13 @@ export default {
           default: ''
       },
       list:{
-          type: {},
+          type: [],
           default: null
 
+      },
+      totalCount:{
+        type:Number,
+        defalut:0
       }
   },
     data() {
@@ -100,7 +104,7 @@ export default {
     },
     filters:{
         timerFormat(vaule){
-            return Moment(vaule).format("YYYY-MM-DD")
+            return Moment(vaule).format("YYYY-MM-DD HH:mm:ss")
         }
     }   
 }

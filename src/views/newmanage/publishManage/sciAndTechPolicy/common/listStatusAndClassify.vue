@@ -34,7 +34,7 @@
                 <li class="list" v-for="(item, index) in list" :key="index">
                     <div class="ListTopStatus">
                         <el-checkbox name="selectOne" :checked="checkedStatus" @change="selectOrUnSelect(item.id)"/>
-                        <span class="time">保存时间：{{item.createTime}}</span>
+                        <span class="time">保存时间：{{item.createTimeitem | timerFormat(item.createTime)}}</span>
                         <span class="create">发布人：{{item.userName}}</span>
                         <span class="classifyC">状态：<span>{{item.status}}</span></span>
                         <span class="classify classifyB">类型：<span>{{item.classtType}}</span> </span>
@@ -81,6 +81,7 @@
 </template>
 
 <script>
+    import Moment from "moment";
     export default {
         props: {
             list: {
@@ -191,6 +192,11 @@
             selectOrUnSelect() {
             }
         },
+        filters:{
+            timerFormat(vaule){
+                return Moment(vaule).format("YYYY-MM-DD HH:mm:ss")
+            }
+        } 
     }
 </script>
 

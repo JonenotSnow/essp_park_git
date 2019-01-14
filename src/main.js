@@ -98,22 +98,21 @@ router.beforeEach(async (to, from, next) => {
     }
     let isUrlHasBd = window.location.origin.indexOf("bdppc") > -1;
     oneId = sessionStorageHandler.getItem("bdParkId")
-
+    console.log(oneId)
         if(!oneId){
             oneId = sessionStorageHandler.getItem("parkId")
         }
     if (to.query.token) {
         sessionStorageHandler.setItem("token", to.query.token);
-        
-        await refreshAuthToken(to.query.token);
         if(to.query.label){
             await getParkByName(to.query.label);
         }else if(to.query.parkId){
             await getParkById(to.query.parkId)
-        }else {
-            //没有parkId时
-            return router.push("/parkList");
         }
+        await refreshAuthToken(to.query.token);
+        // bdParkId 有此字段优先返回
+        
+        console.log(oneId)
         await getLoginUserRole({ parkId: oneId });
         await selectResMenu({ oneId, LoginUserRol });
         // router.push(to.path)
@@ -143,10 +142,14 @@ async function getParkByName(name) {
     }).then(res => {
         if (res.resultData) {
             console.log(res.resultData)
-
-            res.resultData.parkId?sessionStorageHandler.setItem("parkId", res.resultData.parkId):'';
-            res.resultData.parkNm?sessionStorageHandler.setItem("parkName", res.resultData.parkNm):'';
-            res.resultData.bdParkId?sessionStorageHandler.setItem("bdParkId", res.resultData.bdParkId) && (oneId = bdParkId ? bdParkId : sessionStorageHandler.getItem('parkId')):'';
+            bdParkId = res.resultData.bdParkId
+            sessionStorageHandler.setItem("parkId", res.resultData.parkId);
+            sessionStorageHandler.setItem("parkName", res.resultData.parkNm);
+            sessionStorageHandler.setItem("bdParkId", res.resultData.bdParkId);
+            // 1/3去除多余参数不采用parkFlag
+            // sessionStorageHandler.setItem("parkFlag", res.resultData.bdParkId);
+            // 规则，如果有
+            oneId = bdParkId ? bdParkId : sessionStorageHandler.getItem('parkId');
         }
     });
 }

@@ -182,21 +182,35 @@ export default {
     methods: {
         beforeSaveExpertInfo(){
             let flag = true;
-            if(!/^1[345678]\d{9}$/.test(this.submitUploadInfo.photo)){
-                flag = false;
+            if(!/^1[345678]\d{9}$/.test(this.submitUploadInfo.phone)){
+                this.$message.error("请正确填写手机号！");
+                return flag = false;
             }
-            if(!/^[A-Za-zd]+([-_.][A-Za-zd]+)*@([A-Za-zd]+[-.])+[A-Za-zd]{2,5}$/.test(this.submitUploadInfo.email)){
-                flag = false;
+            if(!/^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/.test(this.submitUploadInfo.email)){
+                this.$message.error("请正确填写邮箱！");
+                return flag = false;
             }
-            if(this.submitUploadInfo.name.length === 0 || this.submitUploadInfo.title.length === 0 || this.submitUploadInfo.introduction.length === 0 /*|| this.submitUploadInfo.photo.length === 0 */){
-                flag = false;
-            }else{
-                flag = true
+            if(this.submitUploadInfo.name.length === 0){
+                this.$message.error("请正确填写姓名！");
+                return flag = false;
             }
-            return flag
+            if(this.submitUploadInfo.title.length === 0 ){
+                this.$message.error("请正确填写职称！");
+                return flag = false;
+            }
+            if(this.submitUploadInfo.introduction.length === 0){
+                this.$message.error("请正确填写简介！");
+                return flag = false;
+            }
+            /*if(this.submitUploadInfo.photo.length === 0){
+                this.$message.error("请正确上传头像！");
+                return flag = false;
+            }*/else{
+                return flag = true
+            }
         },
         saveExpertInfo(){
-            if(this.beforeSaveExpertInfo()){
+            if(this.beforeSaveExpertInfo()){debugger
                 this.$post('/expert/saveExpert ', {
                     id:this.submitUploadInfo.id,
                     name: this.submitUploadInfo.name,
@@ -218,7 +232,7 @@ export default {
                     }
                 );
             }else{
-                this.$message.error("请正确填写信息！");
+                //this.$message.error("请正确填写信息！");
             }
         },
         //图片上传
@@ -654,9 +668,16 @@ export default {
             float:left;
             width:100px;
             height: 100px;
+            line-height:100px;
             margin:30px 0 30px 30px;
             border:1px solid #ccc;
+            text-align: center;
             border-radius:3px;
+            img{
+                max-width: 100%;
+                max-height: 100%;
+                vertical-align: middle;
+            }
         }
     }
 }

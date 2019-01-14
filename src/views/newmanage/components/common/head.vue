@@ -40,6 +40,7 @@
         },
         data() {
             return {
+                type:0,
                 searchContent: '',
                 pageType: [ //根据此数据判断发布页面跳转，和props里type一直，新调用需新增
                     {
