@@ -207,7 +207,6 @@
 <script>
     import EsspBreadCrumb from "@/components/EsspBreadCrumb"
     import EsspInfoComment from "@/components/EsspInfoComment"
-    import ActivityBrief from "./activityBrief"
 
     import 'swiper/dist/css/swiper.css' ////这里注意具体看使用的版本是否需要引入样式，以及具体位置。
     import {swiper, swiperSlide} from 'vue-awesome-swiper'
@@ -217,7 +216,6 @@
     export default {
         components: {
             EsspBreadCrumb,
-            ActivityBrief,
             swiper,
             swiperSlide,
             EsspInfoComment,

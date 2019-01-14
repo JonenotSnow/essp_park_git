@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="twoCardModel">
         <!-- 通知公告管理专用 -->
         <div v-if="list.length">
             <div class="maintool esspclearfix">
@@ -158,175 +158,179 @@ export default {
     }
 }
 </script>
+<style>
+#twoCardModel .checktop .el-checkbox__label{
+    display: none;
+}
+</style>
 
 <style lang='less' scoped>
 @import "../../../../../assets/css/mixin.less";
-/deep/.checktop .el-checkbox__label{
-    display: none;
-}
 //全选工具条
-.maintool{
-    width: 910px;
-    padding:20px 0 0;
-    margin: 0 auto;
-    margin-bottom: 20px;
-    height:40px;
-    line-height: 40px;
-    .maincheck{
-        float: left;
-        margin-right: 16px;
-        font-family:" MicrosoftYaHei";
-        font-size: 14px;
-        font-weight: normal;
-        font-stretch: normal;
-        letter-spacing: 0px;
-        color: #666666;
-    }
-    .numdes{
-        float: left;
-        margin-right:10px;
-        font-family:" MicrosoftYaHei";
-        font-size: 14px;
-        font-weight: normal;
-        font-stretch: normal;
-        letter-spacing: 0px;
-        color: #666666;
+#twoCardModel{
+    .maintool{
+        width: 910px;
+        padding:20px 0 0;
+        margin: 0 auto;
+        margin-bottom: 20px;
         height:40px;
         line-height: 40px;
-        .detailnum{
-            color:#00a0e9;
-        }
-    }
-    .btntool{
-        float: left;
-        margin-right:15px;
-        height:40px;
-        line-height: 40px;
-        .delbtn{
+        .maincheck{
             float: left;
-            width: 50px;
-            margin-top:4px;
-            height: 28px;
-            line-height: 30px;
-            text-align: center;
-            cursor: pointer;
-            background-image: linear-gradient(0deg, 
-                #f5f5f5 0%, 
-                #ffffff 100%);
-            border-radius: 5px;
-            border: solid 1px #cccccc;
+            margin-right: 16px;
+            font-family:" MicrosoftYaHei";
+            font-size: 14px;
+            font-weight: normal;
+            font-stretch: normal;
+            letter-spacing: 0px;
+            color: #666666;
         }
+        .numdes{
+            float: left;
+            margin-right:10px;
+            font-family:" MicrosoftYaHei";
+            font-size: 14px;
+            font-weight: normal;
+            font-stretch: normal;
+            letter-spacing: 0px;
+            color: #666666;
+            height:40px;
+            line-height: 40px;
+            .detailnum{
+                padding:0 4px;
+                color:#00a0e9;
+            }
+        }
+        .btntool{
+            float: left;
+            margin-right:15px;
+            height:40px;
+            line-height: 40px;
+            .delbtn{
+                float: left;
+                width: 50px;
+                margin-top:4px;
+                height: 28px;
+                line-height: 30px;
+                text-align: center;
+                cursor: pointer;
+                background-image: linear-gradient(0deg, 
+                    #f5f5f5 0%, 
+                    #ffffff 100%);
+                border-radius: 5px;
+                border: solid 1px #cccccc;
+            }
 
-    }
-    .statustool{
-        float: left;
-        /deep/.el-input__inner{
-            height: 30px;
-            width:120px;
-            line-height: 30px;
         }
-    }
-}
-.listitem{
-    //每一层列表样式
-    width: 910px;
-    height: 100px;
-    margin: 0 auto;
-    margin-bottom: 20px;
-	background-color: #ffffff;
-    border: solid 1px #cccccc;
-}
-//第一层工具栏样式
-.listtop{
-    margin: 0 auto;
-    width: 910px;
-    height: 40px;
-    background-color: #f5f5f5;
-    border: solid 1px #cccccc;
-    line-height: 40px;
-    font-family: "MicrosoftYaHei";
-    font-size: 14px;
-    font-weight: normal;
-    font-stretch: normal;
-    letter-spacing: 0px;
-    color: #666666;
-    .tdcn{
-        float: left; 
-    }
-    .checktop{
-        float: left;
-        margin:0 12px;
-    }
-    .timecn{
-        margin-right:42px;
-    }
-    .pbcn{
-        margin-right:40px;
-    }
-    .statusdes{
-        .detail{
-            margin-left: 5px;
-            color:#00a0e9;
-        }
-    }
-    .handeltool{
-        float: right;
-        margin-right:20px;
-        .remove{
-            cursor: pointer;
-        }
-    }
-}
-//第二层内容区
-.maintext{
-    margin: 0 auto;
-    width: 910px;
-    height: 60px;
-    line-height: 60px;
-    .textTit{
-        float: left;
-        width: 650px;
-        font-family: "MicrosoftYaHei";
-        font-size: 16px;
-        font-weight: normal;
-        font-stretch: normal;
-        letter-spacing: 0px;
-        color: #444444;
-        .esspellipsis();
-    }
-    .btnArea{
-        //按钮的最外层样式
-        float: right;
-    }
-    .btncons{
-        float: right;
-        margin-top:15px;
-        .btnitem{
-            cursor: pointer;
+        .statustool{
             float: left;
-            width: 80px;
-            height: 28px;
-            margin-right:20px;
-            background-color: #10b5ff;
-            border-radius: 14px;
-            color: #fefefe;
-            line-height: 28px;
-            text-align: center;
+            /deep/.el-input__inner{
+                height: 30px;
+                width:120px;
+                line-height: 30px;
+            }
         }
     }
-}
-.noData{
-    position: relative;
-    margin:57px 137px 238px 237px;
-    text-align: center;
-    span{
-        position: absolute;
-        top: 90px;
-        font-size: 18px;
+    .listitem{
+        //每一层列表样式
+        width: 910px;
+        height: 100px;
+        margin: 0 auto;
+        margin-bottom: 20px;
+        background-color: #ffffff;
+        border: solid 1px #cccccc;
+    }
+    //第一层工具栏样式
+    .listtop{
+        margin: 0 auto;
+        width: 910px;
+        height: 40px;
+        background-color: #f5f5f5;
+        line-height: 40px;
+        font-family: "MicrosoftYaHei";
+        font-size: 14px;
         font-weight: normal;
         font-stretch: normal;
         letter-spacing: 0px;
         color: #666666;
+        .tdcn{
+            float: left; 
+        }
+        .checktop{
+            float: left;
+            margin:0 12px;
+        }
+        .timecn{
+            margin-right:42px;
+        }
+        .pbcn{
+            margin-right:40px;
+        }
+        .statusdes{
+            .detail{
+                margin-left: 5px;
+                color:#00a0e9;
+            }
+        }
+        .handeltool{
+            float: right;
+            margin-right:20px;
+            .remove{
+                cursor: pointer;
+            }
+        }
+    }
+    //第二层内容区
+    .maintext{
+        margin: 0 auto;
+        width: 910px;
+        height: 60px;
+        line-height: 60px;
+        .textTit{
+            float: left;
+            width: 650px;
+            font-family: "MicrosoftYaHei";
+            font-size: 16px;
+            font-weight: normal;
+            font-stretch: normal;
+            letter-spacing: 0px;
+            color: #444444;
+            .esspellipsis();
+        }
+        .btnArea{
+            //按钮的最外层样式
+            float: right;
+        }
+        .btncons{
+            float: right;
+            margin-top:15px;
+            .btnitem{
+                cursor: pointer;
+                float: left;
+                width: 80px;
+                height: 28px;
+                margin-right:20px;
+                background-color: #10b5ff;
+                border-radius: 14px;
+                color: #fefefe;
+                line-height: 28px;
+                text-align: center;
+            }
+        }
+    }
+    .noData{
+        position: relative;
+        margin:57px 137px 238px 237px;
+        text-align: center;
+        span{
+            position: absolute;
+            top: 90px;
+            font-size: 18px;
+            font-weight: normal;
+            font-stretch: normal;
+            letter-spacing: 0px;
+            color: #666666;
+        }
     }
 }
 </style>

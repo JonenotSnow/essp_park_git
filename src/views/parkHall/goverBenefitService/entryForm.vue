@@ -269,7 +269,6 @@
 </template>
 
 <script>
-    import activityBrief from "@/views/parkHall/activity/activityBrief"
     import EsspBreadCrumb from "@/components/EsspBreadCrumb"
     import Moment from "moment";
 
@@ -321,7 +320,6 @@
             }
         },
         components: {
-            activityBrief,
             EsspBreadCrumb
         },
         filters: {

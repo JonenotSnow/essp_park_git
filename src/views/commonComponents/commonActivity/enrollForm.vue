@@ -322,7 +322,6 @@
 </template>
 
 <script>
-    import activityBrief from "@/views/parkHall/activity/activityBrief"
     import EsspBreadCrumb from "@/components/EsspBreadCrumb"
 
     export default {
@@ -369,7 +368,6 @@
             }
         },
         components: {
-            activityBrief,
             EsspBreadCrumb
         },
         filters: {

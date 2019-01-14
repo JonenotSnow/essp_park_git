@@ -10,7 +10,7 @@
                         </div>
                         <div>
                             <span>发布人：</span>
-                            <input type="text" v-model="searchCondition.cstName" placeholder="请输入公司名称">
+                            <input type="text" v-model="searchCondition.cstName" placeholder="请输入发布人">
                         </div>
                     </li>
                     <li>
@@ -213,6 +213,12 @@ import downLoadExcel from "../../../components/downLoadExcel";
 }
 </style>
 
+<style>
+#noOpenNeed .el-input__inner{
+    border-radius:0;
+    height:35px;
+}
+</style>
 <style lang='less' scoped >
 #noOpenNeed{
     .baseInfo{
@@ -222,7 +228,7 @@ import downLoadExcel from "../../../components/downLoadExcel";
         padding-bottom: 20px;
         background-color: #ffffff;
         .searchAdd{
-            height:135px;
+            // height:135px;
             &>ul{
                 width:885px;
                 margin: 40px auto 0;
@@ -247,12 +253,11 @@ import downLoadExcel from "../../../components/downLoadExcel";
                             width: 208px;
                             padding:0 5px;
                             outline: none;
-                            height: 35px;
+                            height: 33px;
                             caret-color: #666;
                             color: #606266;
                             border: 1px solid #e4e7ed;
                             background: #fff;
-                            border-radius: 4px;
                         }
                         &>select{
                             width: 138px;
@@ -265,7 +270,6 @@ import downLoadExcel from "../../../components/downLoadExcel";
                             color: #606266;
                             border: 1px solid #e4e7ed;
                             background: #fff;
-                            border-radius: 4px;
                         }
                     }
                     &:nth-of-type(1){
@@ -288,9 +292,9 @@ import downLoadExcel from "../../../components/downLoadExcel";
                 }
             }
         }
-        .saveBtn {
-            margin-top: 50px;
-            text-align: center;
+        .saveBtn {    
+            width: 890px;
+            margin: 50px auto 0;
             .my-btn {
                 outline: none;
                 cursor: pointer;
@@ -306,11 +310,12 @@ import downLoadExcel from "../../../components/downLoadExcel";
                 border-radius: 5px;
             }
             .btn-search {
-                margin-right: 80px;
                 background-color: #00a0e9;
+                margin-left: 335px;
             }
             .btn-reset {
                 background-color: #999;
+                margin-left:75px;
             }
         }
         &>ul,.tabList{

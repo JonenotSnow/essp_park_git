@@ -9,13 +9,11 @@
 
 <script>
     import EsspPublishedCard from '@/components/EsspPublishedCard';
-    import ActivityBrief from '@/views/parkHall/goverBenefitService/ActivityBrief';
 
     export default {
         name: "",
         components:{
             EsspPublishedCard,
-            ActivityBrief
         },
         data() {
             return {

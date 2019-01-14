@@ -6,10 +6,10 @@ import newsinfo from './newsinfo.js'
 import sciAndTechPolicy from './sciAndTechPolicy.js'
 import officeHall from './officeHall.js'
 import systemManage from './systemManage.js'
-import platFormActivity from './platFormActivity.js'
+import commonComponents from './commonComponents.js'
 
 var parkToal = [];
-parkToal.push(parkRouter1,newsinfo, sciAndTechPolicy, officeHall, systemManage,platFormActivity);
+parkToal.push(parkRouter1,newsinfo, sciAndTechPolicy, officeHall, systemManage,commonComponents);
 
 
 export default new Router({

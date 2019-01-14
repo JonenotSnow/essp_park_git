@@ -661,7 +661,6 @@
 <script>
     import EsspBreadCrumb from "@/components/EsspBreadCrumb";
     import EsspEditor from "@/components/EsspEditor";
-    import addTag from "@/views/parkHall/activity/addTag";
     import Moment from "moment";
     import EsspTag from "@/components/EsspTag";
     import EsspAddTag from "@/components/EsspAddTag";
@@ -943,7 +942,6 @@
         },
         components: {
             EsspBreadCrumb,
-            addTag,
             EsspEditor,
             EsspTag,
             EsspAddTag,
