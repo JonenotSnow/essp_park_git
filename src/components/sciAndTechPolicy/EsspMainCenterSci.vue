@@ -11,7 +11,7 @@
                     <el-input
                         placeholder="请输入标签关键字"
                         v-model="tagTxt" @change="clearCurrentKeyname">
-                        <i slot="suffix" class="el-input__icon el-icon-search" @click="getParkInfoList"></i>
+                        <i slot="suffix" class="el-input__icon el-icon-search" @click="getSciAndTechPolicy"></i>
                     </el-input>
                 </div>
                 <div class="keyname">
@@ -110,7 +110,7 @@
             }
         },
         created() {
-            // this.getParkInfoList();
+            // this.getSciAndTechPolicy();
             // this.getListInfoTags();
             this.getSciAndTechPolicy();
         },
@@ -123,12 +123,12 @@
                 this.startDate = this.currentTime[0];
                 this.endDate = this.currentTime[1];
                 this.currentKeytime = "";
-                this.getParkInfoList();
+                this.getSciAndTechPolicy();
             },
             setKeyName(item, index) {
                 this.currentKeyname = index;
                 this.tagTxt = item.tagTxt;
-                this.getParkInfoList()
+                this.getSciAndTechPolicy()
             },
             setTime(item, index) {
                 this.currentKeytime = index;
@@ -151,7 +151,7 @@
                     this.endDate = Moment().format("YYYY-MM-DD");
                 }
                 this.currentTime = [this.startDate, this.endDate];
-                this.getParkInfoList();
+                this.getSciAndTechPolicy();
             },
             //获取列表的标签
             getListInfoTags() {
@@ -177,16 +177,16 @@
 
             handleSizeChange(val) {
                 this.pageSize = val;
-                this.getParkInfoList();
+                this.getSciAndTechPolicy();
             },
             handleCurrentChange(val) {
                 this.pageNum = val;
-                this.getParkInfoList();
+                this.getSciAndTechPolicy();
             },
             //点击右侧搜索栏的特殊处理
             getDataByKeyWord() {
                 this.currentKeyname = '';
-                this.getParkInfoList();
+                this.getSciAndTechPolicy();
             },
 
             /**
