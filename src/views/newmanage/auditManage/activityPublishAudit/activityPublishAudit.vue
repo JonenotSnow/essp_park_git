@@ -1,5 +1,5 @@
 <template>
-    <div class="el-main">
+    <div class="el-main" id='activityPublishAudit'>
         <div class='notice'>
             <p>
                 <i class="icon iconfont icon-guangbo" style="color: orange;"></i>【小秘书】您有
@@ -36,11 +36,14 @@
                     </li>
                 </ul>
             </div>
-            <p class="saveBtn">
-                <el-button type="primary" size='small' @click='getList'>查询</el-button>
-                <el-button type="info" size='small' @click='reset'>重置</el-button>
-            </p>
-            <p>采取先到先得的任务领取审核方式</p>
+            <div class="saveBtn">
+                <button class="my-btn btn-search" @click='getAllNeed'>查询</button>
+                <button class="my-btn btn-reset" @click='reset'>重置</button>
+            </div>
+            <!-- <p class="text">采取先到先得的任务领取审核方式</p> -->
+            <div class="select">
+                <div class="text">采取先到先得的任务领取审核方式</div>
+            </div>
             <div class="tabList">
                 <el-table :data="list" @row-click="getDetail" style="width: 100%">
                     <el-table-column align="center" type="index" label="全部" width="85"></el-table-column>
@@ -260,46 +263,50 @@ export default {
 };
 </script>
 
+<style>
+#activityPublishAudit .el-input__inner{
+    border-radius:0;
+    height:35px;
+}
+</style>
 <style lang='less' scoped>
-.el-main {
-    width: 1010px;
-    padding: 0;
-    .notice {
-        height: 50px;
-        width: 1000px;
-        // background: #f5f5f5;
-        p {
-            height: 50px;
-            line-height: 50px;
+#activityPublishAudit {
+    width:990px;
+    padding:0;
+    .notice{
+        height:50px;
+        width: 100%;
+        p{
+            height:50px;
+            line-height:50px;
             font-size: 16px;
             color: #00a0e9;
             background-color: #e6f4ff;
-            i {
+            i{
                 color: orange;
-                margin-left: 34px;
+                margin-left:34px;
+                margin-right:9px;
             }
         }
     }
-    .baseInfo {
-        width: 1000px;
+    .baseInfo{
+        width: 100%;
         margin-bottom:50px;
-        // height: 570px;
-        padding-bottom:20px;
+        padding-bottom: 20px;
         background-color: #ffffff;
-        .searchAdd {
-            height: 150px;
-            & > ul {
-                width: 885px;
+        .searchAdd{
+            height:150px;
+            &>ul{
+                width:890px;
                 margin: 0 auto;
-                padding: 25px 0 10px;
-                li {
-                    width: 100%;
-                    height: 30px;
-                    line-height: 50px;
-                    & > div {
-                        float: left;
-                        margin-right: 18px;
-                        & > span {
+                padding:65px 0 10px;
+                li{
+                    width:100%;
+                    height:60px;
+                    &>div{
+                        float:left;
+                        margin-right:18px;
+                        &>span{
                             font-size: 16px;
                             font-weight: normal;
                             font-stretch: normal;
@@ -307,23 +314,20 @@ export default {
                             letter-spacing: 0px;
                             color: #666666;
                         }
-                        & > input {
+                        &>input{
                             width: 208px;
-                            padding: 0 5px;
+                            padding:0 5px;
                             outline: none;
-                            height: 35px;
-                            background-color: #ffffff;
-                            border: 1px solid #dcdfe6;
+                            height: 33px;
                             caret-color: #666;
-                            border-radius:4px;
                             color: #606266;
                             border: 1px solid #e4e7ed;
                             background: #fff;
-                            border-radius: 4px;
+                            // border-radius: 4px;
                         }
-                        & > select {
-                            width: 164px;
-                            padding: 0 5px;
+                        &>select{
+                            width: 128px;
+                            padding:0 5px;
                             outline: none;
                             height: 35px;
                             background-color: #ffffff;
@@ -332,107 +336,133 @@ export default {
                             color: #606266;
                             border: 1px solid #e4e7ed;
                             background: #fff;
-                            border-radius: 4px;
+                            // border-radius: 4px;
+                        }
+                    }
+                    &:nth-of-type(1){
+                        &>div:nth-of-type(2){
+                            span{
+                                margin-left:36px;
+                            }
                         }
                     }
                 }
             }
         }
-        & > p {
-            &:nth-of-type(1) {
-                text-align: center;
-                margin-bottom:25px;
-                & > button {
-                    &:nth-of-type(1) {
-                        margin-right: 79px;
-                    }
-                }
+        .text{
+            width:890px;
+            margin:0 auto;
+            text-align: right;
+            font-size: 14px;
+            line-height: 40px;
+            color: #00a0e9;
+        }
+        .saveBtn {
+            margin-top: 55px;
+            text-align: center;
+            .my-btn {
+                outline: none;
+                cursor: pointer;
+                width: 60px;
+                height: 30px;
+                line-height: 30px;
+                font-size: 16px;
+                font-weight: normal;
+                font-stretch: normal;
+                letter-spacing: 0px;
+                color: #ffffff;
+                border: none;
+                border-radius: 5px;
             }
-            &:nth-of-type(2) {
-                width: 890px;
-                margin: 0 auto;
-                text-align: right;
-                font-size: 14px;
-                line-height: 40px;
+            .btn-search {
+                margin-right: 80px;
+                background-color: #00a0e9;
+            }
+            .btn-reset {
+                background-color: #999;
+            }
+        }
+        .select{
+            width:890px;
+            overflow: hidden;
+            margin: 59px auto 15px;
+            .text{
+                float:right;
+                line-height: 35px;
                 color: #00a0e9;
             }
         }
-        .saveBtn{
-            button{
-                font-size:16px;
-            }
-        }
-        & > ul,
-        .tabList {
-            border: 1px solid #ebeef5;
-            border-bottom: none;
-            width: 880px;
+        
+
+        &>ul,.tabList{
+            border:1px solid #ebeef5;
+            border-bottom:none;
+            width:890px;
             margin: 0 auto 20px;
-            li {
+            li{
                 height: 50px;
-                line-height: 50px;
-                border: 1px solid #ccc;
-                & > span {
-                    display: inline-block;
+                line-height:50px;
+                border:1px solid #ccc;
+                &>span{
+                    display:inline-block;
                     text-align: center;
-                    &:nth-of-type(1) {
-                        width: 110px;
+                    &:nth-of-type(1){
+                        width:110px;
                     }
-                    &:nth-of-type(2) {
-                        width: 240px;
+                    &:nth-of-type(2){
+                        width:240px;
                     }
-                    &:nth-of-type(3) {
-                        width: 120px;
+                    &:nth-of-type(3){
+                        width:120px;
                     }
-                    &:nth-of-type(4) {
-                        width: 120px;
+                    &:nth-of-type(4){
+                        width:120px;
                     }
-                    &:nth-of-type(5) {
-                        width: 120px;
+                    &:nth-of-type(5){
+                        width:120px;
                     }
-                    &:nth-of-type(6) {
-                        width: 140px;
+                    &:nth-of-type(6){
+                        width:140px;
                     }
                 }
-                &:nth-of-type(2n) {
-                    border-left: 1px solid #ccc;
-                    border-right: 1px solid #ccc;
-                    border-bottom: none;
-                    border-top: none;
+                &:nth-of-type(2n){
+                    border-left:1px solid #ccc;
+                    border-right:1px solid #ccc;
+                    border-bottom:none;
+                    border-top:none;
                 }
-                &:nth-last-of-type(1) {
-                    border-bottom: 1px solid #ccc;
+                &:nth-last-of-type(1){
+                    border-bottom:1px solid #ccc;
                 }
-                &:nth-of-type(1) {
+                &:nth-of-type(1){
                     background-color: #f5f5f5;
                     font-size: 16px;
                     color: #333333;
                 }
-                &:not(:first-child) {
-                    font-size: 14px;
-                    color: #666666;
-                    & > span {
-                        &:nth-last-of-type(1) {
-                            i {
-                                color: #00a0e9;
-                                cursor: pointer;
-                            }
-                            .disabledClick {
-                                color: #999;
-                                cursor: not-allowed;
+                &:not(:first-child){
+                        font-size: 14px;
+                        color: #666666;
+                        &>span{
+                            &:nth-last-of-type(1){
+                                i{
+                                    color:#00a0e9;
+                                    cursor: pointer;
+                                }
+                                .disabledClick{
+                                    color:#999;
+                                    cursor: not-allowed;
+                                }
                             }
                         }
-                    }
                 }
-                &.noData {
+                &.noData{
                     text-align: center;
                 }
             }
         }
-        .pageList {
-            margin:30px auto;
-            width: 880px;
-            margin: 0 auto;
+        .pageList{
+            width:880px;
+            margin:30 auto;
             text-align: right;
         }
     }

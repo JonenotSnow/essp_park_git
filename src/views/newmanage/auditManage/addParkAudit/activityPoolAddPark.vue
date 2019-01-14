@@ -1,5 +1,5 @@
 <template>
-    <div class="el-main">
+    <div class="el-main" id="activityPoolAddPark">
         <div class='notice'>
             <p><i class="icon iconfont icon-guangbo" style="color: orange;"></i>【小秘书】您有
                 <span>{{count.parkCount?count.parkCount:0}}</span>
@@ -30,11 +30,16 @@
                     </li>
                 </ul>
             </div>
-            <p class="saveBtn">
-                <el-button type="primary" size='small' @click='getList'>查询</el-button>
-                <el-button type="info" size='small' @click='reset'>重置</el-button>
-            </p>
-            <p>采取先到先得的任务领取审核方式</p>
+            <div class="saveBtn">
+                <button class="my-btn btn-search" @click='getAllNeed'>查询</button>
+                <button class="my-btn btn-reset" @click='reset'>重置</button>
+            </div>
+            <div class="select">
+                <div class="selectTitle">
+                    <span class="removeBtn" @click="getList(0)">申请表导出</span>
+                </div>
+                <div class="text">采取先到先得的任务领取审核方式</div>
+            </div>
             <div class="tabList">
                 <el-table :data="list" @row-click="getDetail" style="width: 100%">
                     <el-table-column align="center" type="index" label="全部" width="85"></el-table-column>
@@ -204,7 +209,12 @@ export default {
             })
         },
         //list列表
-        getList(){
+        getList(type){
+            //用于申请表导出查询
+            if (type == 0) {
+                this.pageNum = this.pageSize = '';
+            }
+
             this.$post(this.$apiUrl.manage.getAuditList,{
                 parkId : this.searchCondition.parkId,
                 type : this.searchCondition.type,
@@ -216,9 +226,7 @@ export default {
                 pageSize : this.pageSize
             })
             .then((response) => {
-                // if (response.resultData.applyParkList && response.resultData.applyParkList.length>0) {
-                    this.list = response.resultData.applyParkList;
-                // }
+                this.list = response.resultData.applyParkList;
                 this.totalCount = response.resultData.apParkCount;
             },(err)=>{
                 this.$message({
@@ -265,18 +273,20 @@ export default {
     }
 };
 </script>
+<style>
+#activityPoolAddPark .el-input__inner{
+    border-radius:0;
+    height:35px;
+}
+</style>
 
 <style lang='less' scoped>
-    .el-main{
-
-        width:1010px;
-        // min-height:730px;
-        // overflow-y: scroll;
+    #activityPoolAddPark{
+        width:990px;
         padding:0;
         .notice{
             height:50px;
-            width: 1000px;
-            // background: #f5f5f5;
+            width: 100%;
             p{
                 height:50px;
                 line-height:50px;
@@ -286,25 +296,24 @@ export default {
                 i{
                     color: orange;
                     margin-left:34px;
+                    margin-right:9px;
                 }
             }
         }
         .baseInfo{
-            width: 1000px;
+            width: 100%;
             margin-bottom:50px;
-            // min-height: 570px;
             padding-bottom: 20px;
             background-color: #ffffff;
             .searchAdd{
                 height:150px;
                 &>ul{
-                    width:885px;
+                    width:890px;
                     margin: 0 auto;
-                    padding:25px 0 10px;
+                    padding:65px 0 10px;
                     li{
                         width:100%;
-                        height:30px;
-                        line-height:50px;
+                        height:60px;
                         &>div{
                             float:left;
                             margin-right:18px;
@@ -320,15 +329,15 @@ export default {
                                 width: 208px;
                                 padding:0 5px;
                                 outline: none;
-                                height: 35px;
+                                height: 33px;
                                 caret-color: #666;
                                 color: #606266;
                                 border: 1px solid #e4e7ed;
                                 background: #fff;
-                                border-radius: 4px;
+                                // border-radius: 4px;
                             }
                             &>select{
-                                width: 164px;
+                                width: 128px;
                                 padding:0 5px;
                                 outline: none;
                                 height: 35px;
@@ -338,7 +347,14 @@ export default {
                                 color: #606266;
                                 border: 1px solid #e4e7ed;
                                 background: #fff;
-                                border-radius: 4px;
+                                // border-radius: 4px;
+                            }
+                        }
+                        &:nth-of-type(1){
+                            &>div:nth-of-type(2){
+                                span{
+                                    margin-left:36px;
+                                }
                             }
                         }
                     }
@@ -347,7 +363,8 @@ export default {
             &>p{
                 &:nth-of-type(1){
                     text-align: center;
-                    margin-bottom:25px;
+                    margin-bottom:15px;
+                    margin-top:59px;
                     &>button{
                         &:nth-of-type(1){
                             margin-right:79px;
@@ -363,9 +380,74 @@ export default {
                     color: #00a0e9;
                 }
             }
-            .saveBtn{
-                button{
-                    font-size:16px;
+            .saveBtn {
+                margin-top: 55px;
+                text-align: center;
+                .my-btn {
+                    outline: none;
+                    cursor: pointer;
+                    width: 60px;
+                    height: 30px;
+                    line-height: 30px;
+                    font-size: 16px;
+                    font-weight: normal;
+                    font-stretch: normal;
+                    letter-spacing: 0px;
+                    color: #ffffff;
+                    border: none;
+                    border-radius: 5px;
+                }
+                .btn-search {
+                    margin-right: 80px;
+                    background-color: #00a0e9;
+                }
+                .btn-reset {
+                    background-color: #999;
+                }
+            }
+            .select{
+                width:890px;
+                overflow: hidden;
+                margin: 59px auto 15px;
+                .selectTitle{    
+                    width:670px;
+                    float: left;
+                    font-size: 14px;
+                    font-weight: normal;
+                    font-stretch: normal;
+                    line-height: 30px;
+                    letter-spacing: 0px;
+                    color: #666666;
+                    .all{
+                        margin-left: 10px;
+                        i{
+                            margin-right:6px;
+                        }
+                    }
+                    .total{
+                        font-size: 14px;
+                        font-weight: normal;
+                        letter-spacing: 0px;
+                        color: #00a0e9;
+                    }
+                    .removeBtn{
+                        display:inline-block;
+                        width: 98px;
+                        height: 33px;
+                        background-image: linear-gradient(0deg, 
+                            #f5f5f5 0%, 
+                            #ffffff 100%);
+                        border-radius: 5px;
+                        border: solid 1px #cccccc;
+                        text-align: center;
+                        cursor: pointer;
+                        line-height: 33px;
+                    }
+                }
+                .text{
+                    float:right;
+                    line-height: 35px;
+                    color: #00a0e9;
                 }
             }
             &>ul,.tabList{
