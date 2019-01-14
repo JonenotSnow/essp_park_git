@@ -1,7 +1,7 @@
 
     <template>
   <div>
-    <el-dialog :visible.sync="showNeedRange" width="720px" height="400px" class="needRange">
+    <el-dialog :visible.sync="showNeedRange" width="720px" height="400px" class="needRange" :before-close="handleClose"> 
       <p class="title">请选择需求发布范围</p>
       <div class="title-border"></div>
       <div class="select-radio">
@@ -43,6 +43,9 @@ export default {
       window.location.href =
         this.$openUrl + "/requIndex/publish?" + query + token;
       return false;
+    },
+    handleClose(){
+        this.$emit("update:showNeedRange", false);
     }
   }
 };

@@ -85,15 +85,20 @@
                 </el-button>
             </p>
         </el-dialog>
+        <dialog-need-range :showNeedRange.sync="showNeedRange"></dialog-need-range>
     </div>
 </template>
 
 <script>
     import Moment from "moment";
-
+    import DialogNeedRange from '@/components/DialogNeedRange'
     export default {
+        components:{
+            DialogNeedRange
+        },
         data() {
             return {
+                showNeedRange:false,
                 infoList: [],
                 isBdPark: this.utils.isBdPark(),
                 showPower: false,
@@ -144,7 +149,7 @@
                     }
                 ],
                 LoginUserRole: this.SSH.getItem("LoginUserRol").toString(),
-                ccbUser: [],
+                ccbUser:this.SSH.getItem('LoginUserRol') || [],
 
                 // 首页任务池---最新申请入园消息
                 lastApplyPark: {},
@@ -153,7 +158,7 @@
         },
         created() {
             this.getNoticeList();
-            this.getCcbUser();
+            // this.getCcbUser();
 
             // 管理员身份登录才调用这个方法
             if (this.LoginUserRole.includes('33') || this.LoginUserRole.includes('34')) {
@@ -189,11 +194,7 @@
                 } : {}
                 console.log(isInPark);
                 if (item.name === "需求发布") {
-                    let routerData = this.$router.resolve({
-                        path: item.path,
-                        query: query
-                    });
-                    window.open(routerData.href, "_blank");
+                    this.showNeedRange =true
                     return false;
                 }
 
@@ -244,7 +245,7 @@
                         },
                         {
                             name: "普惠金融",
-                            path: "",
+                            path: "/parkHall/manage/inclusiveFinance",
                             src: require("@/assets/imgs/icon6.png"),
                             isShow: true,
                             query: {}
