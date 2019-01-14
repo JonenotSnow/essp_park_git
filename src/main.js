@@ -83,7 +83,8 @@ let bdParkId = "";
 let oneId = "";
 router.beforeEach(async (to, from, next) => {
     // 获取当前园区的权限
-    // 没有token的时候，直接假数    // if (!to.token) {
+    // 没有token的时候，直接假数据
+    // if (!to.token) {
     //     var mockdata = menuListData.menuList[0];
     //     sessionStorage.setItem("menuList", JSON.stringify(mockdata));
     //     next();

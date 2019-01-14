@@ -136,7 +136,7 @@ export default {
         this.checkedIds = val ? this.allListIds : [];
         this.isIndeterminate = false;
         },
-        handleCheckedCitiesChange(value) {
+        handleCheckedCitiesChange(value) {console.log(value)
             let checkedCount = value.length;
             this.checkAll = checkedCount === this.allListIds.length;
             this.isIndeterminate = checkedCount > 0 && checkedCount < this.allListIds.length;//有选择但不是全部
