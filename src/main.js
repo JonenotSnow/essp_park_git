@@ -111,7 +111,7 @@ router.beforeEach(async (to, from, next) => {
         }
         await refreshAuthToken(to.query.token);
         // bdParkId 有此字段优先返回
-        
+
         console.log(oneId)
         await getLoginUserRole({ parkId: oneId });
         await selectResMenu({ oneId, LoginUserRol });
@@ -275,9 +275,9 @@ function loginCtrl(data) {
         } else {
             sessionStorageHandler.setItem("cetificateFlag", true);
             sessionStorageHandler.setItem("enterpriseFlag", true);
-        } 
+        }
     }
-    
+
 }
 function getQueryObjuect(url) {
     url = url == null ? window.location.href : url;
