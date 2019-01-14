@@ -15,8 +15,84 @@
 		<search-head :search-form="searchForm"
                              :search-type="'2'"
                              @resetSeachOption="resetSeachOption"></search-head>
-
+      <!-- <div class="filtertitle">
+        <span class="filterconditions">筛选条件</span>
+        <span class="resetconditions">重置条件</span>
+      </div>
+      <div class="allconditions">
+        <el-form
+          :model="searchCondition"
+          ref="searchCondition"
+          label-width="120px"
+          label-position="left"
+          :inline="true"
+          class="demo-ruleFormSearch"
+        >
+          <el-form-item label="撮合类型：" prop="customerName">
+            <el-select
+              v-model="searchCondition.status"
+              placeholder="请选择"
+              @change="changeSearchType"
+            >
+              <el-option
+                v-for="item in matchType"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="需求类型：" prop="contactName">
+            <el-select
+              v-model="searchCondition.status"
+              placeholder="请选择"
+              @change="changeSearchType"
+            >
+              <el-option
+                v-for="item in matchType"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="需求角色：" prop="contactName">
+            <el-select
+              v-model="searchCondition.status"
+              placeholder="请选择"
+              @change="changeSearchType"
+            >
+              <el-option
+                v-for="item in matchType"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="发布日期：">
+            <el-date-picker
+              v-model="searchCondition.startDate"
+              type="date"
+              placeholder="选择日期"
+              value-format="yyyy-MM-dd"
+            ></el-date-picker>-
+            <el-date-picker
+              v-model="searchCondition.endDate"
+              type="date"
+              placeholder="选择日期"
+              value-format="yyyy-MM-dd"
+            ></el-date-picker>
+          </el-form-item>
+          <el-form-item style="width: 100%" :inline="true">
+            <el-button type="primary" @click="search">搜索</el-button>
+          </el-form-item>
+        </el-form>
+      </div> -->
       <div class="allfilterresult">
+        <!-- <div class="filter_result_title">
+          <span class="filter_result">筛选结果</span>
+        </div> -->
         <div class="result_list" v-if="totalCount>0">
           <div class="result_item"  v-for="(item,index) in hotRqmList" :key="index">
             <div class="result_item-cont">
@@ -65,7 +141,6 @@
 		</div>
 
 	</div>
-      <dialog-need :showNeedRange.sync="showNeedRange" ></dialog-need>
   </div>
   <!--筛选结果end-->
 </template>
@@ -73,7 +148,7 @@
 <script>
 import Moment from "moment";
 import searchHead from './head.vue'
-import DialogNeed from '@/components/DialogNeedRange.vue'
+
 export default {
   name: "",
   data() {
@@ -94,11 +169,10 @@ export default {
         rqmRole: "",
         ancDate_start: "",
         ancDate_end: ""
-      },
-      showNeedRange:false
+      }
     };
   },
-  components: {searchHead,DialogNeed},
+  components: {searchHead},
   created() {
     this.getSearchData();
   },
@@ -165,7 +239,6 @@ export default {
       );
     },
     myNeed() {
-
       let parkId = this.SSH.getItem('parkId')
       let routerData = this.$router.resolve({
                         path: 'requIndex/requMyrqm/all',
@@ -174,7 +247,14 @@ export default {
                     window.open(routerData.href, '_blank')
     },
     publish() {
-            this.showNeedRange = true
+      let parkId = this.SSH.getItem('parkId')
+      let isInpark =this.SSH.getItem('LoginUserRol').indexOf('11')>-1
+      let query = isInpark?{}:{linkSrc:parkId}
+      let routerData = this.$router.resolve({
+                        path: '/requIndex/publish',
+                        query: query
+                    });
+                    window.open(routerData.href, '_blank')
     },
     handleSizeChange(val) {
       this.pageSize = val;

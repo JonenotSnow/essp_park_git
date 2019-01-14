@@ -22,7 +22,7 @@
                 <div class="listitem" v-for="(item,index) in list" :key="index">
                     <div class="listtop esspclearfix">
                         <el-checkbox-group v-model="checkedIds" class="checktop" @change="handleCheckedCitiesChange">
-                            <el-checkbox :label="item.id" :key="index"></el-checkbox>
+                            <el-checkbox :label="item.informationId" :key="index"></el-checkbox>
                         </el-checkbox-group>
                         <div class="tdcn timecn"><span>保存时间：{{item.createTime|timerFormatDetail(item.createTime)}}</span></div>
                         <div class="tdcn pbcn"><span>发布人:{{item.userName}}</span></div>
@@ -35,7 +35,7 @@
                         <div class="btnArea">
                             <!--已审核的操作按钮 -->
                             <div class="btncons" v-if="customopts.status==2">
-                                <span class="btnitem" @click="goAudit(item)">查看</span>
+                                <span class="btnitem"@click="goAudit(item)">查看</span>
                                 <span class="btnitem" @click="goEdit(item)">编辑</span>
                             </div>
                             <!-- 已发布 -->
@@ -136,7 +136,7 @@ export default {
         this.checkedIds = val ? this.allListIds : [];
         this.isIndeterminate = false;
         },
-        handleCheckedCitiesChange(value) {
+        handleCheckedCitiesChange(value) {console.log(value)
             let checkedCount = value.length;
             this.checkAll = checkedCount === this.allListIds.length;
             this.isIndeterminate = checkedCount > 0 && checkedCount < this.allListIds.length;//有选择但不是全部

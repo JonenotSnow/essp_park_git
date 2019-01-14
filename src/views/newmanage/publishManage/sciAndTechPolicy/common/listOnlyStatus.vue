@@ -1,6 +1,6 @@
 <template>
     <div>
-        <!-- 列表只有类型-->
+        <!-- 列表只有类型 已发布、已审核-->
         <div v-if="list.length>0">
             <div class="selectTitle">
                 <span class="all">
@@ -11,7 +11,7 @@
                     >全选</el-checkbox>
                 </span>
                 共<span class="total">{{list.length}}</span>条，
-                已选<span class="total">{{selectedCount}}</span>条
+                已选<span class="total">{{hascheckedNum}}</span>条
                 <span class="removeBtn" @click.stop="showDialog()">删除</span>
                 <span class="selectStatus">状态：
 
@@ -32,8 +32,8 @@
             <ul class="listWrap">
                 <li class="list" v-for="(item, index) in list" :key="index">
                     <div class="ListTop">
-                        <el-checkbox name="selectOne" :checked="checkedStatus" @change="selectOrUnSelect(item.id)"/>
-                        <span class="time">保存时间：{{item.createTime}}</span>
+                        <el-checkbox name="selectOne" v-model="checkedIds"  :checked="checkedStatus" @change="selectOrUnSelect()"/>
+                        <span class="time">保存时间：{{item.createTimeitem | timerFormat(item.createTime)}}</span>
                         <span class="create">发布人：{{item.userName}}</span>
                         <span class="classifyC">状态：<span>{{item.status}}</span></span>
                         <i class="el-icon-delete remove" @click="showDialog(item.id)"></i>
@@ -79,6 +79,7 @@
 </template>
 
 <script>
+    import Moment from "moment";
     export default {
         props: {
             list: {
@@ -92,6 +93,10 @@
         },
         data() {
             return {
+                totalCount: 3,
+                pageNum: 1,
+                pageSize: 10,
+                checkedIds: [],//选择的资源
                 selectedCount: 15,      // 已选择条数
                 status: '',             // 状态
 
@@ -109,7 +114,6 @@
         created() {
         },
         methods: {
-
             /**
              *  状态切换事件
              * */
@@ -190,12 +194,33 @@
              */
             // 全选按钮事件
             handleSelectAll() {
+                this.checkedIds = val ? this.allListIds : [];
+                this.isIndeterminate = false;
             },
-
+            //全选
+            AllChange(val) {
+                this.checkedIds = val ? this.allListIds : [];
+                this.isIndeterminate = false;
+            },
             // 单选按钮事件
-            selectOrUnSelect() {
+            selectOrUnSelect(value) {
+                let checkedCount = value.length;
+                this.checkAll = checkedCount === this.allListIds.length;
+                this.isIndeterminate = checkedCount > 0 && checkedCount < this.allListIds.length;//有选择但不是全部
             }
         },
+        filters:{
+            timerFormat(vaule){
+                return Moment(vaule).format("YYYY-MM-DD HH:mm:ss")
+            }
+        },
+        computed:{
+            //已选数量
+            hascheckedNum(){
+                return this.checkedIds.length;
+            }
+        } 
+
     }
 </script>
 

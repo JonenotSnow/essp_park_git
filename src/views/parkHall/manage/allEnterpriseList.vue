@@ -103,6 +103,7 @@ export default {
         response => {
           if (response.resultCode == "CLT000000000") {
           	if(response.resultData.memInfoCount > 0){
+              this.totalCount =response.resultData.memInfoCount
 							this.enterprises = response.resultData.memberList
               let rzz = JSON.parse(localStorage.rzz);
               this.rzzMap = new Map()
