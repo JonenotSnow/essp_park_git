@@ -116,7 +116,7 @@
             dealWithDelete() {
 
                 let params = {
-                    id: this.deleteId
+                    ids: this.deleteId
                 };
                 this.$post('/policy/delBatchPol', params).then(response => {
                     var codestatus = response.resultCode;
@@ -125,8 +125,7 @@
                         this.$message.success(response.resultMsg);
 
                         // 通知父组件，重新获取数据
-                        this.$emit("childDeleted", {});
-
+                        this.$emit("childDeleted", this.type);
                     } else {
                         this.$message.error(response.resultMsg);
                     }

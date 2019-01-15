@@ -1,7 +1,8 @@
 <template>
     <div class="sci-and-tech-policy-detail">
         <div class="bread-crumb">
-            <essp-bread-crumb :breadList="breadlist"/>
+            <essp-bread-crumb :breadList="breadlist_01" v-if="applyType == '01'"/>
+            <essp-bread-crumb :breadList="breadlist_02" v-if="applyType == '02'"/>
         </div>
         <div class="main">
             <div class="main-head">
@@ -50,14 +51,29 @@
         },
         data() {
             return {
+                applyType: this.$route.query.applyType || '',
                 id: this.$route.query.id || '',
-                breadlist: [
+                breadlist_01: [
                     {
-                        path: "/newsinfo",
+                        path: "/sciIndex/policieAndRegulation/policieAndRegulation",
                         name: "科技政策",
                     },
                     {
-                        path: "/news/alllistnews",
+                        path: "/sciIndex/policieAndRegulation/policieAndRegulation",
+                        name: "政策法规",
+                    },
+                    {
+                        path: "",
+                        name: "政策法规详情"
+                    }
+                ],
+                breadlist_02: [
+                    {
+                        path: "/sciIndex/policieAndRegulation/policieAndRegulation",
+                        name: "科技政策",
+                    },
+                    {
+                        path: "/sciIndex/sciAndTechService/technInnoCertificate",
                         name: "科技服务",
                     },
                     {
@@ -65,7 +81,6 @@
                         name: "科技服务详情"
                     }
                 ],
-
                 satpDate: {}
             }
         },

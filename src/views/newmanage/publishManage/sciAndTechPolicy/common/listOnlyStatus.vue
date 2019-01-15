@@ -150,7 +150,7 @@
             },
             dealWithDelete() {
                 let params = {
-                    id: this.deleteId
+                    ids: this.deleteId
                 };
                 this.$post('/policy/delBatchPol', params).then(response => {
                     var codestatus = response.resultCode;

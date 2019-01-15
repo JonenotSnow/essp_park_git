@@ -43,7 +43,7 @@ export default {
             path: "/officeHall",
             name: "park-officeHall",
             component: officeHall,
-            redirect: '/officeHall/sciAndTechProDeclaration',
+            // redirect: '/officeHall/sciAndTechProDeclaration',
             children: [
                 {
                     path: "/officeHall/sciAndTechProDeclaration",    // 科技计划项目申报

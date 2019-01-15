@@ -54,19 +54,41 @@
                     <div :class="{'link__li--tag': active === '07'}"></div>
                 </li>
             </ul>
-            <router-view></router-view>
+            <SciAndTechProDeclaration v-if="active== '01'"/>
+            <TechContractRegistration v-if="active== '02'"/>
+            <ExamAndApprovalIdentified v-if="active== '03'"/>
+            <IntellectualPropertyDeclaration v-if="active== '04'"/>
+            <InnovativeSecuritiesManagement v-if="active== '05'"/>
+            <InnoAndEntreCompetition v-if="active== '06'"/>
+            <SohtEnterprisesManagementSystem v-if="active== '07'"/>
+
+            <!--需求更改，不使用子路由了，路由文件里的相应的子路由也相应的废弃了-->
+            <!--<router-view></router-view>-->
         </div>
     </div>
 </template>
 
 <script>
-    import EsspSelectTag from '@/components/officeHall/EsspSelectTag';
+    import SciAndTechProDeclaration from './sciAndTechProDeclaration/index';
+    import TechContractRegistration from './techContractRegistration/index';
+    import ExamAndApprovalIdentified from './examAndApprovalIdentified/index';
+    import IntellectualPropertyDeclaration from './intellectualPropertyDeclaration/index';
+    import InnovativeSecuritiesManagement from './innovativeSecuritiesManagement/index';
+    import InnoAndEntreCompetition from './innoAndEntreCompetition/index';
+    import SohtEnterprisesManagementSystem from './sohtEnterprisesManagementSystem/index';
+
 
     export default {
         name: 'office-hall',
         props: {},
         components: {
-            EsspSelectTag
+            SciAndTechProDeclaration,
+            TechContractRegistration,
+            ExamAndApprovalIdentified,
+            IntellectualPropertyDeclaration,
+            InnovativeSecuritiesManagement,
+            InnoAndEntreCompetition,
+            SohtEnterprisesManagementSystem
         },
         data() {
             return {
@@ -92,38 +114,38 @@
             },
             linkTo01(activeValue) {
                 this.active = activeValue;
-                let path = '/officeHall/sciAndTechProDeclaration';
-                this.linkTo(path);
+                // let path = '/officeHall/sciAndTechProDeclaration';
+                // this.linkTo(path);
             },
             linkTo02(activeValue) {
                 this.active = activeValue;
-                let path = '/officeHall/techContractRegistration';
-                this.linkTo(path);
+                // let path = '/officeHall/techContractRegistration';
+                // this.linkTo(path);
             },
             linkTo03(activeValue) {
                 this.active = activeValue;
-                let path = '/officeHall/examAndApprovalIdentified';
-                this.linkTo(path);
+                // let path = '/officeHall/examAndApprovalIdentified';
+                // this.linkTo(path);
             },
             linkTo04(activeValue) {
                 this.active = activeValue;
-                let path = '/officeHall/intellectualPropertyDeclaration';
-                this.linkTo(path);
+                // let path = '/officeHall/intellectualPropertyDeclaration';
+                // this.linkTo(path);
             },
             linkTo05(activeValue) {
                 this.active = activeValue;
-                let path = '/officeHall/innovativeSecuritiesManagement';
-                this.linkTo(path);
+                // let path = '/officeHall/innovativeSecuritiesManagement';
+                // this.linkTo(path);
             },
             linkTo06(activeValue) {
                 this.active = activeValue;
-                let path = '/officeHall/innoAndEntreCompetition';
-                this.linkTo(path);
+                // let path = '/officeHall/innoAndEntreCompetition';
+                // this.linkTo(path);
             },
             linkTo07(activeValue) {
                 this.active = activeValue;
-                let path = '/officeHall/sohtEnterprisesManagementSystem';
-                this.linkTo(path);
+                // let path = '/officeHall/sohtEnterprisesManagementSystem';
+                // this.linkTo(path);
             },
         },
         mounted() {
