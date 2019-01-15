@@ -37,11 +37,13 @@
         data() {
             return {
                 active: {
-                    faterindex: 0,
-                    childrenindex: 0
+                    //999999999为了防冲突
+                    faterindex: '99999999999',
+                    childrenindex: '9999999999999'
                 },
                 title: "",
                 asideList: [],
+                oldId:0,//横向导航切换时,左侧菜单第一个默认样式
                 routerName: this.$route.name,
                 //当前左侧菜单显示类型-多层子菜单 (保定园区-科技政策，资讯公告，系统管理，淮安园区-园区管理),
                 curLeftClass:['0421','0424','0426','0405'],
@@ -61,16 +63,15 @@
                     });
                 }
             },
+            //获取资源
             getRouteInfo() {
                 var navIndex = sessionStorage.getItem("navIndex");
                 var menuList = JSON.parse(sessionStorage.getItem("menuList"));
                 this.asideList = menuList.children[navIndex].children;
                 this.title = menuList.children[navIndex].menu;
+                //此值变化，表示横向导航一切换，默认左侧第一个可点击菜单入口
+                this.oldId = this.asideList[0].id;
             },
-            getParentId() {
-
-            },
-            //适用于资讯通告,科技政策的菜单切换
             linkto(it,is) {
                 this.active = {
                     faterindex: it.id,
@@ -83,6 +84,21 @@
             $route() {
                 this.routerName = this.$route.name;
                 this.getRouteInfo();
+            },
+            oldId(){
+                if (this.asideList && this.asideList.length>0) {
+                    if (this.asideList[0].children && this.asideList[0].children.length>0) {
+                        this.active = {
+                            faterindex: this.asideList[0].id,
+                            childrenindex: this.asideList[0].children[0].id
+                        };
+                    }
+                }else{
+                    this.active = {
+                        faterindex: this.asideList[0].id,
+                        childrenindex: ''
+                    };
+                }
             }
         },
         computed: {
