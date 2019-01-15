@@ -81,6 +81,8 @@
                     }
                 ],
                 bannerSetList: [],
+                pcBannerSetList:[],
+                appBannerSetList:[],
                 parkId : sessionStorage.getItem("parkId") || ""
 
             }
@@ -89,6 +91,15 @@
             this.getParkById()
         },
         methods: {
+            // 选择首页轮播图还是app轮播图
+            changeRadio(){
+                console.log(this.radio);
+                if(this.radio == "0") {
+                    this.bannerSetList = this.pcBannerSetList;
+                } else {
+                    this.bannerSetList = this.appBannerSetList;
+                }
+            },
             // 上传图片时需要先获取当前操作的第几个模块
             getBannerSetIndex(item,index){
                console.log(item,index);
@@ -205,7 +216,13 @@
                     parkId: this.parkId
                 }).then(res => {
                     if (res.resultCode == "CLT000000000") {
-                        this.bannerSetList = JSON.parse(res.resultData.slidesImage);
+                        if(res.resultData.slidesImage) {
+                            this.bannerSetList = JSON.parse(res.resultData.slidesImage);
+                            this.pcBannerSetList = JSON.parse(res.resultData.slidesImage);
+                        }
+                        if(res.resultData.appBanner) {
+                            this.appBannerSetList = JSON.parse(res.resultData.appBanner);
+                        }
                         console.log(this.bannerSetList);
                     }
                 });
