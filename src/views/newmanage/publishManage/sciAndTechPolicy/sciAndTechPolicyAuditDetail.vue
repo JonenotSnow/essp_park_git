@@ -25,7 +25,8 @@
                     </div>
                 </el-form-item>
                 <el-form-item label="发布人：">
-                    <div class="my-style">发布人</div>
+                    <!--<div class="my-style">{{userInfo.truename}}</div>-->
+                    <div class="my-style">{{satpDate.userName}}</div>
                 </el-form-item>
                 <el-form-item label="附件：">
                     <div class="my-style" v-for="(item, index) in satpDate.fileUrl" :key="index">{{item.name}}</div>
@@ -34,10 +35,14 @@
             <div class="audit-line"></div>
             <el-form :rules="rules_01" label-width="125px" class="demo-ruleForm demo-ruleForm-Next">
                 <el-form-item label="审核结果：">
-                    <i class="icon iconfont icon-butongguo"
-                       style="margin-right:10px; color: #fe696c;"></i><span>不通过</span>
-                    <i class="icon iconfont icon-zhengque"
-                       style="margin-right:10px; color: #6bde73"></i><span>正确</span>
+                    <p v-if="satpDate.status == '12'">
+                        <i class="icon iconfont icon-butongguo"
+                           style="margin-right:10px; color: #fe696c;"></i><span>不通过</span>
+                    </p>
+                    <p v-if="satpDate.status== '02'">
+                        <i class="icon iconfont icon-zhengque"
+                           style="margin-right:10px; color: #6bde73"></i><span>通过</span>
+                    </p>
                 </el-form-item>
                 <el-form-item label="审核意见：">
                     <div class="my-style audit-opinion">同意发布</div>
@@ -70,7 +75,8 @@
                     </div>
                 </el-form-item>
                 <el-form-item label="发布人：">
-                    <div class="my-style">发布人</div>
+                    <!--<div class="my-style">{{userInfo.truename}}</div>-->
+                    <div class="my-style">{{satpDate.userName}}</div>
                 </el-form-item>
                 <el-form-item label="附件：">
                     <div class="my-style" v-for="(item, index) in satpDate.fileUrl" :key="index">{{item.name}}</div>
@@ -79,10 +85,14 @@
             <div class="audit-line"></div>
             <el-form :rules="rules_02" label-width="125px" class="demo-ruleForm demo-ruleForm-Next">
                 <el-form-item label="审核结果：">
-                    <i class="icon iconfont icon-butongguo"
-                       style="margin-right:10px; color: #fe696c;"></i><span>不通过</span>
-                    <i class="icon iconfont icon-zhengque"
-                       style="margin-right:10px; color: #6bde73"></i><span>正确</span>
+                    <p v-if="satpDate.status == '12'">
+                        <i class="icon iconfont icon-butongguo"
+                           style="margin-right:10px; color: #fe696c;"></i><span>不通过</span>
+                    </p>
+                    <p v-if="satpDate.status== '02'">
+                        <i class="icon iconfont icon-zhengque"
+                           style="margin-right:10px; color: #6bde73"></i><span>通过</span>
+                    </p>
                 </el-form-item>
                 <el-form-item label="审核意见：">
                     <div class="my-style audit-opinion">同意发布</div>
@@ -104,6 +114,7 @@
                 parkId: sessionStorage.getItem("parkId") || "",
                 applyType: this.$route.query.applyType,
                 id: this.$route.query.id || "",
+                userInfo: this.SSH.getItem("userInfo"), // 获取用户信息
 
                 breadlist_01: [
                     {
@@ -143,23 +154,7 @@
                 ],
 
 
-                satpDate: {
-                    policyTitle: '科技政策标题1',
-                    classtType: '01',
-                    desc: '科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介',
-                    infoDetail: '科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情',
-                    tagsTxt: ['测试标签1', '测试标签2', '测试标签3'],
-                    fileUrl: [
-                        {
-                            name: 'xxxxxx',
-                            url: ''
-                        },
-                        {
-                            name: 'qqqqqqqqq',
-                            url: ''
-                        }
-                    ]
-                },
+                satpDate: {},
                 rules_01: {
                     policyTitle: [
                         {required: true, message: '请输入政策法规标题', trigger: 'blur'},
@@ -206,6 +201,10 @@
                     let codestatus = response.resultCode;
                     if (codestatus == "CLT000000000") {
                         this.satpDate = response.resultData;
+
+                        // 对标签进行处理
+                        this.satpDate.tagsTxt = this.satpDate.tagsTxt.split(',');
+
                     } else {
                         this.$message.info(response.resultMsg);
                     }
@@ -215,6 +214,7 @@
             }
         },
         created() {
+            this.getSatpDate();
         },
     }
 </script>

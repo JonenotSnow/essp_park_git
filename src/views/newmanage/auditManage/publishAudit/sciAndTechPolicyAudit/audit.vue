@@ -25,7 +25,7 @@
                     </div>
                 </el-form-item>
                 <el-form-item label="发布人：">
-                    <div class="my-style">发布人</div>
+                    <div class="my-style">{{satpDate.userName}}</div>
                 </el-form-item>
                 <el-form-item label="附件：">
                     <div class="my-style" v-for="(item, index) in satpDate.fileUrl" :key="index">{{item.name}}</div>
@@ -61,7 +61,7 @@
                     </div>
                 </el-form-item>
                 <el-form-item label="发布人：">
-                    <div class="my-style">发布人</div>
+                    <div class="my-style">{{satpDate.userName}}</div>
                 </el-form-item>
                 <el-form-item label="附件：">
                     <div class="my-style" v-for="(item, index) in satpDate.fileUrl" :key="index">{{item.name}}</div>
@@ -86,7 +86,7 @@
                 <h3 class="my-audit-title">填写审核意见</h3>
             </div>
             <div class="my-audit-opinion">
-                <textarea placeholder="请输入审核意见">
+                <textarea placeholder="请输入审核意见" v-model="mark">
                 </textarea>
             </div>
             <div class="btn-submit-wrap">
@@ -186,6 +186,7 @@
                 // 填写审核意见事件相关字段
                 dialogVisible: false,
                 status: '',
+                mark: '',
             }
         },
         methods: {
@@ -201,6 +202,10 @@
                     let codestatus = response.resultCode;
                     if (codestatus == "CLT000000000") {
                         this.satpDate = response.resultData;
+
+                        // 对标签进行处理
+                        this.satpDate.tagsTxt = this.satpDate.tagsTxt.split(',');
+
                     } else {
                         this.$message.info(response.resultMsg);
                     }
@@ -222,7 +227,8 @@
                 let params = {
                     parkId: this.parkId,
                     entityId: this.id,
-                    status: this.status
+                    status: this.status,
+                    mark: this.mark,
                 };
                 this.$post("/audit/policy", params).then(response => {
                     let codestatus = response.resultCode;

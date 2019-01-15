@@ -1,7 +1,6 @@
 <template>
     <div class="office-hall-wrap">
         <div class="carousel-wrap">
-            <img :src="bgImg" alt="bgImg">
             <!--<div class="carousel">-->
             <!--<el-carousel height="400px">-->
             <!--<el-carousel-item v-for="(item,index) in carouselImg" :key="index">-->
@@ -139,10 +138,7 @@
         .carousel-wrap {
             width: 100%;
             height: 400px;
-            img {
-                width: 100%;
-                height: 100%;
-            }
+            background: url("./../../../assets/newparkimg/officeHall/office-hall-bg.jpg") no-repeat 30%;
             /*.carousel {*/
             /*img {*/
             /*width: 100%;*/

@@ -15,11 +15,11 @@
                 <span class="removeBtn" @click.stop="showDialog()">删除</span>
                 <span class="selectStatus">状态：
 
-                    <select v-model="status" v-if="type == 0" @change="switchStatus()">
+                    <select v-model="status" v-if="type == 1" @change="switchStatus()">
                         <option value="">全部</option>
                         <option value="12">审核不通过</option>
                         <option value="13">待审核</option>
-                        <option value="02">发布中</option>
+                        <option value="02">审核通过</option>
                     </select>
 
                     <select v-model="status" v-if="type == 2" @change="switchStatus()">
@@ -41,7 +41,16 @@
                             <span v-if="item.status == '13'">待审核</span>
                             <span v-if="item.status == '12'">审核不通过</span>
                         </span>
-                        <span class="classify classifyB">类型：<span>{{item.classtType}}</span> </span>
+                        <span class="classify classifyB">类型：
+                            <span v-if="item.classtType=='01'">科技创新</span>
+                            <span v-if="item.classtType=='02'">技术合同登记</span>
+                            <span v-if="item.classtType=='03'">高企认定</span>
+                            <span v-if="item.classtType=='04'">科小认定</span>
+                            <span v-if="item.classtType=='05'">知识产权</span>
+                            <span v-if="item.classtType=='06'">科技服务机构</span>
+                            <span v-if="item.classtType=='07'">风险投资</span>
+                            <span v-if="item.classtType=='08'">天使投资</span>
+                        </span>
                         <i class="el-icon-delete remove" @click="showDialog(item.id)"></i>
                     </div>
                     <div class="listBottom">
@@ -52,7 +61,7 @@
                             <span @click.stop="linkToDetail(item.id)">查看</span>
                             <span @click.stop="linkToPublish(item.id)">编辑</span>
                         </div>
-                        <div class='editorBtn1' v-if="type == 0">
+                        <div class='editorBtn1' v-if="type == 1">
                             <span @click.stop="linkToPublish(item.id)">编辑</span>
                         </div>
                     </div>
@@ -86,6 +95,7 @@
 
 <script>
     import Moment from "moment";
+
     export default {
         props: {
             list: {
@@ -196,8 +206,8 @@
             selectOrUnSelect() {
             }
         },
-        filters:{
-            timerFormat(vaule){
+        filters: {
+            timerFormat(vaule) {
                 return Moment(vaule).format("YYYY-MM-DD HH:mm:ss")
             }
         }
@@ -334,9 +344,9 @@
                 }
                 .editorBtn1 {
                     float: right;
-                    margin-right: 5px;
-                    width: 106px;
                     margin-top: 15px;
+                    width: 106px;
+                    text-align: right;
                     span {
                         display: inline-block;
                         width: 80px;
@@ -357,6 +367,7 @@
                     float: right;
                     width: 180px;
                     margin-top: 16px;
+                    text-align: right;
                     span {
                         display: inline-block;
                         width: 80px;

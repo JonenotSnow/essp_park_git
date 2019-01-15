@@ -68,7 +68,7 @@
             width: 300px;
             vertical-align: top;
             .list__main {
-                margin-top: 50px;
+                /*margin-top: 50px;*/
                 background-color: #f8f8f8;
                 ul {
                     padding: 5px 10px 30px 10px;
@@ -120,6 +120,8 @@
                 }
 
                 .main__body {
+                    margin: 20px auto 0;
+                    width: 800px;
                     p {
                         font-size: 14px;
                         font-weight: normal;
@@ -132,7 +134,7 @@
                 }
 
                 .main__foot {
-                    margin-top: 50px;
+                    margin-top: 100px;
                     text-align: center;
                     button {
                         width: 145px;

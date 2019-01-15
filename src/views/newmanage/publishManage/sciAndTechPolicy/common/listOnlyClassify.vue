@@ -20,7 +20,16 @@
                         <el-checkbox name="selectOne" :checked="checkedStatus" @change="selectOrUnSelect(item.id)"/>
                         <span class="time">保存时间：{{item.createTimeitem | timerFormat(item.createTime)}}</span>
                         <span class="create">发布人：{{item.userName}}</span>
-                        <span class="classifyC">类型：<span>{{item.classtType}}</span></span>
+                        <span class="classifyC">类型：
+                            <span v-if="item.classtType=='01'">科技创新</span>
+                            <span v-if="item.classtType=='02'">技术合同登记</span>
+                            <span v-if="item.classtType=='03'">高企认定</span>
+                            <span v-if="item.classtType=='04'">科小认定</span>
+                            <span v-if="item.classtType=='05'">知识产权</span>
+                            <span v-if="item.classtType=='06'">科技服务机构</span>
+                            <span v-if="item.classtType=='07'">风险投资</span>
+                            <span v-if="item.classtType=='08'">天使投资</span>
+                        </span>
                         <i class="el-icon-delete remove" @click="showDialog(item.id)"></i>
                     </div>
                     <div class="listBottom">
@@ -63,6 +72,7 @@
 
 <script>
     import Moment from "moment";
+
     export default {
         props: {
             list: {
@@ -156,11 +166,11 @@
             selectOrUnSelect() {
             }
         },
-        filters:{
-            timerFormat(vaule){
+        filters: {
+            timerFormat(vaule) {
                 return Moment(vaule).format("YYYY-MM-DD HH:mm:ss")
             }
-        } 
+        }
     }
 </script>
 
@@ -298,8 +308,9 @@
                 }
                 .editorBtn2 {
                     float: right;
-                    width: 180px;
                     margin-top: 16px;
+                    width: 180px;
+                    text-align: right;
                     span {
                         display: inline-block;
                         width: 80px;
