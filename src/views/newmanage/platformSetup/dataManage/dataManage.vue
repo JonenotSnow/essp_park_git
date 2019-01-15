@@ -382,8 +382,8 @@ export default {
             display: inline-block;
             width: 30px;
             background: #fff;
-            height: 33px;
-            line-height: 33px;
+            height: 31px;
+            line-height: 31px;
             padding-left: 5px;
           }
           .sub1 {
