@@ -258,6 +258,9 @@ export default {
                 return;
             }
             this.$router.push({path: "/parkHall/manage/manageActivityAuditDetail",query: { entityId: rows.activityId, content: rows }});
+        },
+        getAllNeed(){
+            console.log('没有的方法不要写')
         }
     }
 };

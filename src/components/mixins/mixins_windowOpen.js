@@ -5,9 +5,9 @@ export default{
 
     }),
     methods: {
-        windowOpenUrl(url){
+        windowOpenUrl(url,params){
             // let params = `?token=${this.token}&parkId=${this.parkId}&channel=Park&returnUrl=`
-            window.open(this.$openUrl+url)
+            window.open(this.$openUrl+url+params)
         },
         windowHrefUrl(url){
             // 判断 session里有没有bdparkId，否则从url中选择

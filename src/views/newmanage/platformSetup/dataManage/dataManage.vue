@@ -166,9 +166,10 @@ export default {
           }
 
           res.resultData.forEach(item => {
-            let index = item.type;
-            if (index > 5) return false;
-            this.list[index].content.push(item);
+            let itemIndex = Number(item.type);
+            if (itemIndex > 5) return false;
+            let itemObj = Object.assign({},this.switchFn(itemIndex,0),item)
+            this.list[itemIndex].content.push(itemObj);
           });
         }
       });

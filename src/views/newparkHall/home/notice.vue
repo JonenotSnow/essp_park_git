@@ -42,7 +42,16 @@
         data: () => ({
             list: [{title: "标题"}],
             imgUrl: require('../../../assets/actlogo.png')
-        })
+        }),
+        methods:{
+            getNewsList(){
+                this.$post('/information/getAllInformation').then((result) => {
+                    console.log()
+                }).catch((err) => {
+                    
+                });
+            }
+        }
     };
 </script>
 <style lang="less" scoped>
