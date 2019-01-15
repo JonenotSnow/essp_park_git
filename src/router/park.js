@@ -134,7 +134,7 @@ const bannerSet1= resolve => require(['@/views/commonComponents/commonManage/ban
 
 const baseInfo2 = resolve => require(['@/views/newmanage/platformSetup/aboutWe/baseInfo'], resolve);
 const activityPoolAddPark2 = resolve => require(['@/views/newmanage/auditManage/addParkAudit/activityPoolAddPark'], resolve);
-const activityPoolActivityAditing2 = resolve => require(['@/views/newmanage/auditManage/activityPublishAudit/activityPublishAudit'], resolve);
+const activityPoolActivityAuditing2 = resolve => require(['@/views/newmanage/auditManage/activityPublishAudit/activityPublishAudit'], resolve);
 const userManage2 = resolve => require(['@/views/newmanage/userManage/userManage/userManage'], resolve);
 const occupancyApplication2 = resolve => require(['@/views/commonComponents/commonManage/occupancyApplication'],resolve);
 const bannerSet2 = resolve => require(['@/views/commonComponents/commonManage/bannerSet'],resolve);
@@ -606,9 +606,9 @@ export const parkRouter1 = {
                     component: activityPoolAddPark2
                 },
                 {
-                    path: "/parkHall/manage/activityPoolActivityAditing2",
-                    name: "park-activityPoolActivityAditing2",
-                    component: activityPoolActivityAditing2
+                    path: "/parkHall/manage/activityPoolActivityAuditing2",
+                    name: "park-activityPoolActivityAuditing2",
+                    component: activityPoolActivityAuditing2
                 },
                 {
                     path: "/parkHall/manage/publishAudit",
