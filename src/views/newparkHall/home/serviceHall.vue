@@ -175,7 +175,7 @@ export default {
                     btn_r:{
                         showFlag:true,
                         isRouerPush:true,
-                        path:'/sciIndex/policieAndRegulation/policieAndRegulation'
+                        path:'/sciIndex/policieAndRegulation/policieAndRegulatio'
                     }
                    }
                 ]
@@ -196,7 +196,7 @@ export default {
                     btn_r:{
                         showFlag:true,
                         isRouerPush:true,
-                        path:'/sciIndex/policieAndRegulation/policieAndRegulation'
+                        path:'/sciIndex/policieAndRegulation/policieAndRegulatio'
                     }
                    },
                    {
@@ -211,7 +211,7 @@ export default {
                     btn_r:{
                         showFlag:true,
                         isRouerPush:true,
-                        path:'/sciIndex/policieAndRegulation/policieAndRegulation'
+                        path:'/sciIndex/policieAndRegulation/policieAndRegulatio'
                     }
                    },
                    {
@@ -226,7 +226,7 @@ export default {
                     btn_r:{
                         showFlag:true,
                         isRouerPush:true,
-                        path:'/sciIndex/policieAndRegulation/policieAndRegulation'
+                        path:'/sciIndex/policieAndRegulation/policieAndRegulatio'
                     }
                    }
                 ]

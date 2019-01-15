@@ -115,8 +115,8 @@
             // alert("是否游客模式"+this.utils.isVisitorMode())
             this.userName = this.SSH.getItem("userName");
             this.getParkList();
-            this.getCodeType()
-            this.getCcbUser()
+            // this.getCodeType()
+            // this.getCcbUser()
         },
         methods: {
             changeType(type){
