@@ -42,8 +42,8 @@
                                     <span  @click="$router.push({path:'/centerIndex/showHome',query:{id:it.cstId}})">查看详情</span>
                                 </p>
                                 <p>
-                                    <span v-if="it.commandInd != '1'" @click="openDelPop(it.cstId)">移除园区</span>
-                                    <span v-if="it.commandInd == '1'" class="ts">移除园区</span>
+                                    <span v-if="it.commandInd != '1'" @click="openDelPop(it.cstId)">{{isBdPark?'移除中心':'移除园区'}}</span>
+                                    <span v-if="it.commandInd == '1'" class="ts">{{isBdPark?'移除中心':'移除园区'}}</span>
                                 </p>
                             </div>
                         </div>
@@ -124,7 +124,8 @@ export default {
             dynamicTags: [],//企业已有标签
             curSelectTag:'',
             info:'',
-            stop:false
+            stop:false,
+            isBdPark: this.utils.isBdPark(),//是否是保定园区
         }
     },
     async created () {

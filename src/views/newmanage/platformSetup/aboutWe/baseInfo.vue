@@ -136,6 +136,7 @@ export default {
                 border-left:8px solid #10b5ff;
                 text-indent:22px;
                 letter-spacing: 3.6px;
+                font-weight:700;
             }
             .step{
                 width:921px;

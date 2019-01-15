@@ -9,7 +9,7 @@ const parkSearch = resolve => require(['@/views/parkHall/home/parkSearch'],resol
 // 园区侧边栏公共路口
 const asideComRoot = resolve => require(['@/views/parkHall/asideComRoot/index'],resolve);
 // 园区预览
-const scanIndex = resolve => require(['@/views/parkHall/preview/scanIndex'],resolve);
+const scanIndex = resolve => require(['@/views/commonComponents/commonPreview/scanIndex'],resolve);
 
 // 惠政服务
 // 全部惠政
@@ -70,7 +70,7 @@ const publishAD = resolve => require(['@/views/parkHall/manage/publishAD'],resol
 const noAndADDetail = resolve => require(['@/views/parkHall/manage/noAndADDetail'],resolve);
 const auditSetting = resolve => require(['@/views/parkHall/manage/auditSetting'],resolve);
 // 园区成員管理
-const userManage = resolve => require(['@/views/parkHall/manage/userManage'],resolve);
+const userManage = resolve => require(['@/views/commonComponents/commonManage/userManage'],resolve);
 // 园区管理入园审核
 const activityPoolAddPark1 =resolve => require(['@/views/parkHall/manage/activityPoolAddPark'],resolve);
 // 园区管理资讯审核
@@ -132,10 +132,10 @@ const publishNeed =  resolve => require(['@/views/parkHall/needHall/publishNeed/
 const bannerSet= resolve => require(['@/views/commonComponents/commonManage/bannerSet'], resolve);
 //园区管理 banner设置
 
-const baseInfo2 = resolve => require(['@/views/newmanage/platformSetup/aboutWe/baseInfo'], resolve);
+// const baseInfo2 = resolve => require(['@/views/newmanage/platformSetup/aboutWe/baseInfo'], resolve);
 const activityPoolAddPark2 = resolve => require(['@/views/newmanage/auditManage/addParkAudit/activityPoolAddPark'], resolve);
 const activityPoolActivityAuditing2 = resolve => require(['@/views/newmanage/auditManage/activityPublishAudit/activityPublishAudit'], resolve);
-const userManage2 = resolve => require(['@/views/newmanage/userManage/userManage/userManage'], resolve);
+const userManage2 = resolve => require(['@/views/commonComponents/commonManage/userManage'], resolve);
 const occupancyApplication2 = resolve => require(['@/views/commonComponents/commonManage/occupancyApplication'],resolve);
 const bannerSet2 = resolve => require(['@/views/commonComponents/commonManage/bannerSet'],resolve);
 
@@ -491,62 +491,6 @@ export const parkRouter1 = {
                     component: occupancyApplication1,
                   
                 },
-                //招商管理（新版）
-                {
-                    path: '/parkHall/manage/myInvestment',
-                    name: "park-myInvestment",
-                    component: myInvestment,
-                    redirect: '/parkHall/manage/myInvestment/reserveInvestment',
-                    children: [
-                        {
-                            path: '/parkHall/manage/myInvestment/reserveInvestment',
-                            name: "park-reserveInvestment",
-                            component: reserveInvestment
-                        },
-                        {
-                            path: '/parkHall/manage/myInvestment/followupInvestment',
-                            name: "park-followupInvestment",
-                            component: followupInvestment
-                        },
-                        {
-                            path: '/parkHall/manage/myInvestment/finishedInvestment',
-                            name: "park-finishedInvestment",
-                            component: finishedInvestment
-                        },
-                        {
-                            path: '/parkHall/manage/myInvestment/shelveInvestment',
-                            name: "park-shelveInvestment",
-                            component: shelveInvestment
-                        },
-
-                    ]
-                },
-                {
-                    path: '/parkHall/manage/myInvestment/promotionInvest.vue',
-                    name: "park-promotionInvest",
-                    component: promotionInvest
-                },
-                {
-                    path: '/parkHall/manage/taskLose',
-                    name: "park-taskLose",
-                    component: resolve => require(['@/views/parkHall/attrForeInve/enterprise/businessManager/index'], resolve),
-                    
-                },
-            ]
-        },
-        //园区管理---保定园区
-        {
-            path: "/parkHall/manage/baseInfo2",
-            name: "park-manage",
-            component: asideComRoot,
-            redirect: '/parkHall/manage/baseInfo2',
-            children: [
-                //平台设置
-                {
-                    path: "/parkHall/manage/baseInfo2",
-                    name: "park-baseInfo2",
-                    component: baseInfo2
-                },
                 {
                     path: '/parkHall/manage/bannerSet2',
                     name: "park-bannerSet2",
@@ -637,9 +581,51 @@ export const parkRouter1 = {
                     name: "park-needManage",
                     component: needManage
 
-                }
+                },
+                //招商管理（新版）
+                {
+                    path: '/parkHall/manage/myInvestment',
+                    name: "park-myInvestment",
+                    component: myInvestment,
+                    redirect: '/parkHall/manage/myInvestment/reserveInvestment',
+                    children: [
+                        {
+                            path: '/parkHall/manage/myInvestment/reserveInvestment',
+                            name: "park-reserveInvestment",
+                            component: reserveInvestment
+                        },
+                        {
+                            path: '/parkHall/manage/myInvestment/followupInvestment',
+                            name: "park-followupInvestment",
+                            component: followupInvestment
+                        },
+                        {
+                            path: '/parkHall/manage/myInvestment/finishedInvestment',
+                            name: "park-finishedInvestment",
+                            component: finishedInvestment
+                        },
+                        {
+                            path: '/parkHall/manage/myInvestment/shelveInvestment',
+                            name: "park-shelveInvestment",
+                            component: shelveInvestment
+                        },
+
+                    ]
+                },
+                {
+                    path: '/parkHall/manage/myInvestment/promotionInvest.vue',
+                    name: "park-promotionInvest",
+                    component: promotionInvest
+                },
+                {
+                    path: '/parkHall/manage/taskLose',
+                    name: "park-taskLose",
+                    component: resolve => require(['@/views/parkHall/attrForeInve/enterprise/businessManager/index'], resolve),
+                    
+                },
             ]
-        },{
+        },
+        {
             path: '/parkHall/manage/publishAchievement',
             name: "park-publishAchievement",
             component: publishAchievement,
