@@ -118,15 +118,15 @@
 
                 breadlist_01: [
                     {
-                        path: "/parkHome",
+                        path: "/parkHall/manage/baseInfo1",
                         name: "系统管理"
                     },
                     {
-                        path: "",
+                        path: "/parkHall/manage/sciAndTechPolicy/policieAndRegulation",
                         name: "发布管理"
                     },
                     {
-                        path: "",
+                        path: "/parkHall/manage/sciAndTechPolicy/policieAndRegulation",
                         name: "发布政策法规"
                     },
                     {
@@ -136,15 +136,15 @@
                 ],
                 breadlist_02: [
                     {
-                        path: "/parkHome",
+                        path: "/parkHall/manage/baseInfo1",
                         name: "系统管理"
                     },
                     {
-                        path: "",
+                        path: "/parkHall/manage/sciAndTechPolicy/policieAndRegulation",
                         name: "发布管理"
                     },
                     {
-                        path: "",
+                        path: "/parkHall/manage/sciAndTechPolicy/sciAndTechService",
                         name: "发布科技服务"
                     },
                     {

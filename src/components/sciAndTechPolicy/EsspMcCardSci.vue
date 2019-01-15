@@ -56,6 +56,7 @@
                 this.$router.push({
                     path: '/sciIndex/sciAndTechPolicyDetail',
                     query: {
+                        applyType: item.applyType,
                         id: item.id
                     }
                 });

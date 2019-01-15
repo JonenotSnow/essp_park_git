@@ -14,6 +14,7 @@ import "./assets/icon/iconfont.css";
 Vue.use(ElementUI);
 // 兼容IE9
 import "babel-polyfill";
+
 Vue.config.productionTip = false;
 
 import VueLazyload from "vue-lazyload"; //引入这个懒加载插件
@@ -25,20 +26,20 @@ Vue.use(VueLazyload, {
     error: "./assets/error.png"
 });
 // ajax全局配置
-import { post, get, patch, put, del } from "./fetch/http";
-import { apiUrl } from "./fetch/apiUrl";
+import {post, get, patch, put, del} from "./fetch/http";
+import {apiUrl} from "./fetch/apiUrl";
 import sessionStorageHandler from "./util/sessionStorageHandler"; // sessionStorage管理类
 import localStorageHandler from "./util/localStorageHandler"; // localStorage管理类
 import utils from "./util/utils";
 import constants from "./util/constants";
 
 //服务器域名
-import { setting } from "./util/serveHttp";
+import {setting} from "./util/serveHttp";
 // 设置字体图库
 import fontIcon from "./assets/font/iconfont.css";
 // 引入公共的举报弹窗
 import commonJs from "./commonFun/commonJs";
-import { menuListData } from "./mock/menuList";
+import {menuListData} from "./mock/menuList";
 
 //定义全局变量
 Vue.prototype.$apiUrl = apiUrl;
@@ -56,7 +57,8 @@ Vue.prototype.constants = constants;
 Vue.prototype.$echarts = echarts; // 图表库
 
 import Moment from "moment";
-Vue.filter("timerFormat", function(value){
+
+Vue.filter("timerFormat", function (value) {
     return Moment(value).format("YYYY-MM-DD HH:mm");
 })
 
@@ -69,6 +71,7 @@ console.log(process.env.NODE_ENV);
 Vue.prototype.$openUrl = openUlr;
 
 import axios from "axios";
+
 Vue.prototype.$axios = axios;
 
 // store 状态管理
@@ -99,22 +102,22 @@ router.beforeEach(async (to, from, next) => {
     let isUrlHasBd = window.location.origin.indexOf("bdppc") > -1;
     oneId = sessionStorageHandler.getItem("bdParkId")
     console.log(oneId)
-        if(!oneId){
-            oneId = sessionStorageHandler.getItem("parkId")
-        }
+    if (!oneId) {
+        oneId = sessionStorageHandler.getItem("parkId")
+    }
     if (to.query.token) {
         sessionStorageHandler.setItem("token", to.query.token);
-        if(to.query.label){
+        if (to.query.label) {
             await getParkByName(to.query.label);
-        }else if(to.query.parkId){
+        } else if (to.query.parkId) {
             await getParkById(to.query.parkId)
         }
         await refreshAuthToken(to.query.token);
         // bdParkId 有此字段优先返回
 
         console.log(oneId)
-        await getLoginUserRole({ parkId: oneId });
-        await selectResMenu({ oneId, LoginUserRol });
+        await getLoginUserRole({parkId: oneId});
+        await selectResMenu({oneId, LoginUserRol});
         // router.push(to.path)
     } else if (!menuList && to.path !== "/parkList") {
 
@@ -129,8 +132,8 @@ router.beforeEach(async (to, from, next) => {
             //没有parkId时
             return router.push("/parkList");
         }
-        await getLoginUserRole({ parkId: oneId});
-        await selectResMenu({ oneId, LoginUserRol });
+        await getLoginUserRole({parkId: oneId});
+        await selectResMenu({oneId, LoginUserRol});
     }
 
     next();
@@ -153,9 +156,10 @@ async function getParkByName(name) {
         }
     });
 }
+
 async function getLoginUserRole(options) {
     var urlapi = apiUrl.home.getLoginUserRole;
-    var pop = { parkId: options.parkId };
+    var pop = {parkId: options.parkId};
     await post(urlapi, pop).then(
         response => {
             console.log(3);
@@ -171,6 +175,7 @@ async function getLoginUserRole(options) {
         }
     );
 }
+
 // 获取菜单权限 需要传入 parkId, 角色权限
 async function selectResMenu(options, next) {
     var urlapi = apiUrl.home.selectResMenu;
@@ -196,7 +201,7 @@ async function selectResMenu(options, next) {
 }
 
 async function refreshAuthToken(token) {
-    await post(apiUrl.user.getOtherTokenUrl, { access_token: token }).then(
+    await post(apiUrl.user.getOtherTokenUrl, {access_token: token}).then(
         response => {
             console.log(2);
             let data = response.resultData;
@@ -205,6 +210,7 @@ async function refreshAuthToken(token) {
         }
     );
 }
+
 async function getParkById(parkId) {
     await post("/parkManage/getParkById", {
         parkId: parkId
@@ -229,6 +235,7 @@ async function getParkById(parkId) {
         }
     });
 }
+
 function loginCtrl(data) {
     console.log(data.esspUserLoginVo);
     sessionStorageHandler.setItem("userInfo", data.esspUserLoginVo);
@@ -244,7 +251,7 @@ function loginCtrl(data) {
     sessionStorageHandler.setItem("cstBscInfVo", data.cstBscInfVo);
     sessionStorageHandler.setItem("loginFlag", true);
     store.state.chat.user = data.esspUserLoginVo;
-    if(data && data.esspUserLoginVo && data.esspUserLoginVo.userType){
+    if (data && data.esspUserLoginVo && data.esspUserLoginVo.userType) {
         if (data.esspUserLoginVo.userType !== "01") {
             // 进行个人实名认证判断，
             // -1：异常   0：未认证   >1：已认证    2：认证开通  3：审核开通  4：刷脸认证开通
@@ -279,12 +286,13 @@ function loginCtrl(data) {
     }
 
 }
+
 function getQueryObjuect(url) {
     url = url == null ? window.location.href : url;
     let search = url.substring(url.lastIndexOf("?") + 1);
     let obj = {};
     let reg = /([^?&=]+)=([^?&=]*)/g;
-    search.replace(reg, function(rs, $1, $2) {
+    search.replace(reg, function (rs, $1, $2) {
         let name = decodeURIComponent($1);
         let val = decodeURIComponent($2);
         val = String(val);
@@ -293,6 +301,7 @@ function getQueryObjuect(url) {
     });
     return obj;
 }
+
 function getCodeType() {
     post(apiUrl.manage.getIdyInfo, {
         codeType: "RZZL_00012"
@@ -305,15 +314,17 @@ function getCodeType() {
                 );
             }
         },
-        err => {}
+        err => {
+        }
     );
 }
+
 /* eslint-disable no-new */
 new Vue({
     el: "#app",
     router,
     store,
-    components: { App },
+    components: {App},
     template: "<App/>",
     created() {
         let rzz = localStorage.getItem("rzz");
