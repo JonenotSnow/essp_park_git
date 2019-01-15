@@ -265,6 +265,10 @@
                     this.$message.error("成果标题不能为空！");
                     return false;
                 }
+                if(this.form.name.length > 40) {
+                    this.$message.error("成果标题不能大于40个字");
+                    return false;
+                }
                 if(this.form.field == "") {
                     this.$message.error("所属领域不能为空！");
                     return false;
@@ -275,6 +279,10 @@
                 }
                 if(this.form.title == "") {
                     this.$message.error("简介不能为空！");
+                    return false;
+                }
+                if(this.form.title.length > 120) {
+                    this.$message.error("成果简介不能大于120个字");
                     return false;
                 }
                 if(this.form.detail == "") {
