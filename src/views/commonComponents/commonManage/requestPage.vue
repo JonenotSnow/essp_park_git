@@ -33,7 +33,6 @@
         },
         async created() {
             await this.getInviteByKey();
-            await this.getParkById();
         },
         filters: {
             markfike(value) {
@@ -54,6 +53,7 @@
                         this.content = response.resultData.content;
                         this.parkId = response.resultData.parkId;
                         this.mark = response.resultData.mark;
+                        this.getParkById(this.parkId)
                     }, (error) => {
                         this.$message({
                             type: "error",
@@ -79,9 +79,9 @@
                     })
                 this.$router.push('/messageCenter/sysMsg')
             },
-            getParkById() {
+            getParkById(park) {
                 this.$post(this.$apiUrl.manage.getParkById, {
-                    parkId: this.parkId
+                    parkId: parkId
                 }).then(
                     response => {
                         this.parkNm = response.resultData.parkNm
