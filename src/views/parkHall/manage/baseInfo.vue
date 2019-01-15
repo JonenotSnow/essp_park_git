@@ -1,91 +1,96 @@
 <template>
-    <div class="el-main" id="baseInfo">
-            <div class="baseInfo">
-                <p>基本信息</p>
-                <ul v-if='writeInfoDis.startDate'>
-                    <li>
-                        <span><em>*</em>园区名称：</span>
-                        <span>{{writeInfo.parkName}}</span>
-                    </li>
-                    <li>
-                        <span><em>*</em>成立时间：</span>
-                        <span>{{writeInfoDis.startDate.slice(0,10)}}</span>
-                    </li>
-                    <li>
-                        <span><em>*</em>联系电话：</span>
-                        <span>{{writeInfoDis.phoneNumber}}</span>
-                    </li>
-                    <li>
-                        <span><em>*</em>联系邮箱：</span>
-                        <span>{{writeInfoDis.email}}</span>
-                    </li>
-                    <li>
-                        <span><em>*</em>占地面积：</span>
-                        <span>{{writeInfoDis.ownArea}}</span>
-                        <span>平方米</span>
-                    </li>
-                    <li>
-                        <span><em>*</em>所在区域：</span>
-                        <span>{{writeInfoDis.city}}</span>
-                    </li>
-                    <li>
-                        <span><em>*</em>园区地址：</span>
-                        <span>{{writeInfoDis.detailAddress}}</span>
-                    </li>
-                </ul>
-                <ul v-else>
-                    <li>
-                        <span><em>*</em>园区名称：</span>
-                        <span>{{writeInfo.parkName}}</span>
-                    </li>
-                    <li>
-                        <span><em>*</em>成立时间：</span>
-                        <span v-if='writeInfoDis.startDate'>
-                            {{writeInfoDis.startDate.slice(0,10)}}
-                        </span>
-                        <span v-else>
-                            <el-date-picker  v-model="startDate" type="date" placeholder="成立时间只能设置一次"  value-format="yyyy-MM-dd"></el-date-picker>
-                        </span>
-                    </li>
-                    <li>
-                        <span><em>*</em>联系电话：</span>
-                        <input type="text" v-model="writeInfo.phoneNumber" placeholder="0000-0000000格式">
-                    </li>
-                    <li>
-                        <span><em>*</em>联系邮箱：</span>
-                        <input type="text" v-model="writeInfo.email" placeholder="请输入联系邮箱">
-                    </li>
-                    <li>
-                        <span><em>*</em>占地面积：</span>
-                        <input type="text" v-model="writeInfo.ownArea" placeholder=">=1">
-                        <span>平方米</span>
-                    </li>
-                    <li>
-                        <span><em>*</em>所在区域：</span>
-                        <input type="text" class="addrTS" v-model="writeInfo.city" v-if="!xg" @click="xg=true">
-                        <v-distpicker v-else @selected='selected'></v-distpicker>
-                    </li>
-                    <li>
-                        <span><em>*</em>园区地址：</span>
-                        <input type="text" v-model="writeInfo.detailAddress" placeholder="请输入详细地址">
-                    </li>
-                </ul>
-            </div>
-            <p class="save hf" v-if='writeInfoDis.startDate'>
-                <el-button type="primary" size="middle" @click="fz">修改</el-button>
-                <el-button type="primary" size="middle" @click="$router.push('/parkHall/manage/selectModule')">下一步</el-button>
-            </p>
-            <p class="save" v-else>
-                <el-button type="primary" size="middle" @click="saveBaseInfo">下一步</el-button>
-            </p>
+    <div>
+        <baseInfo v-if="isBdPark"></baseInfo>
+        <div v-else class="el-main" id="baseInfo">
+                <div class="baseInfo">
+                    <p>基本信息</p>
+                    <ul v-if='writeInfoDis.startDate'>
+                        <li>
+                            <span><em>*</em>园区名称：</span>
+                            <span>{{writeInfo.parkName}}</span>
+                        </li>
+                        <li>
+                            <span><em>*</em>成立时间：</span>
+                            <span>{{writeInfoDis.startDate.slice(0,10)}}</span>
+                        </li>
+                        <li>
+                            <span><em>*</em>联系电话：</span>
+                            <span>{{writeInfoDis.phoneNumber}}</span>
+                        </li>
+                        <li>
+                            <span><em>*</em>联系邮箱：</span>
+                            <span>{{writeInfoDis.email}}</span>
+                        </li>
+                        <li>
+                            <span><em>*</em>占地面积：</span>
+                            <span>{{writeInfoDis.ownArea}}</span>
+                            <span>平方米</span>
+                        </li>
+                        <li>
+                            <span><em>*</em>所在区域：</span>
+                            <span>{{writeInfoDis.city}}</span>
+                        </li>
+                        <li>
+                            <span><em>*</em>园区地址：</span>
+                            <span>{{writeInfoDis.detailAddress}}</span>
+                        </li>
+                    </ul>
+                    <ul v-else>
+                        <li>
+                            <span><em>*</em>园区名称：</span>
+                            <span>{{writeInfo.parkName}}</span>
+                        </li>
+                        <li>
+                            <span><em>*</em>成立时间：</span>
+                            <span v-if='writeInfoDis.startDate'>
+                                {{writeInfoDis.startDate.slice(0,10)}}
+                            </span>
+                            <span v-else>
+                                <el-date-picker  v-model="startDate" type="date" placeholder="成立时间只能设置一次"  value-format="yyyy-MM-dd"></el-date-picker>
+                            </span>
+                        </li>
+                        <li>
+                            <span><em>*</em>联系电话：</span>
+                            <input type="text" v-model="writeInfo.phoneNumber" placeholder="0000-0000000格式">
+                        </li>
+                        <li>
+                            <span><em>*</em>联系邮箱：</span>
+                            <input type="text" v-model="writeInfo.email" placeholder="请输入联系邮箱">
+                        </li>
+                        <li>
+                            <span><em>*</em>占地面积：</span>
+                            <input type="text" v-model="writeInfo.ownArea" placeholder=">=1">
+                            <span>平方米</span>
+                        </li>
+                        <li>
+                            <span><em>*</em>所在区域：</span>
+                            <input type="text" class="addrTS" v-model="writeInfo.city" v-if="!xg" @click="xg=true">
+                            <v-distpicker v-else @selected='selected'></v-distpicker>
+                        </li>
+                        <li>
+                            <span><em>*</em>园区地址：</span>
+                            <input type="text" v-model="writeInfo.detailAddress" placeholder="请输入详细地址">
+                        </li>
+                    </ul>
+                </div>
+                <p class="save hf" v-if='writeInfoDis.startDate'>
+                    <el-button type="primary" size="middle" @click="fz">修改</el-button>
+                    <el-button type="primary" size="middle" @click="$router.push('/parkHall/manage/selectModule')">下一步</el-button>
+                </p>
+                <p class="save" v-else>
+                    <el-button type="primary" size="middle" @click="saveBaseInfo">下一步</el-button>
+                </p>
+        </div>
     </div>
 </template>
 
 <script>
+import baseInfo from '../../newmanage/platformSetup/aboutWe/baseInfo'
 import VDistpicker from 'v-distpicker'
 export default {
     components:{
-        VDistpicker
+        VDistpicker,
+        baseInfo
     },
     data () {
         return {
@@ -112,7 +117,8 @@ export default {
             province:'',
             show:true,
             show1:true,
-            xg:false
+            xg:false,
+            isBdPark: this.utils.isBdPark(),
         }
     },
     created() {

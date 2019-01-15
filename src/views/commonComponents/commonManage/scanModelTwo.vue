@@ -152,19 +152,19 @@ export default {
         return {
             breadlist: [
                 {
-                    path: "/parkHall/manage/baseInfo",
+                    path:'/parkIndex/park/all',
                     name: this.utils.isBdPark()?"系统管理":"园区管理"
                 },
                 {
-                    path: "/parkHall/manage/baseInfo",
-                    name: "园区设置"
+                    path:this.utils.isBdPark()?'/parkHall/manage/baseInfo2':'/parkHall/manage/baseInfo1',
+                    name: this.utils.isBdPark()?"平台设置":"园区设置"
                 },
                 {
-                    path: "/parkHall/manage/baseInfo",
-                    name: "概览设置"
+                    path:this.utils.isBdPark()?'/parkHall/manage/baseInfo2':'/parkHall/manage/baseInfo1',
+                    name: this.utils.isBdPark()?"关于我们":"概览设置"
                 },
                 {
-                    path: "/",
+                    path:'/',
                     name: "模板编辑"
                 }
             ],
