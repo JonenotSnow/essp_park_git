@@ -15,11 +15,11 @@
                 <span class="removeBtn" @click.stop="showDialog()">删除</span>
                 <span class="selectStatus">状态：
 
-                    <select v-model="status" v-if="type == 0" @change="switchStatus()">
+                    <select v-model="status" v-if="type == 1" @change="switchStatus()">
                         <option value="">全部</option>
                         <option value="12">审核不通过</option>
                         <option value="13">待审核</option>
-                        <option value="02">发布中</option>
+                        <option value="02">审核通过</option>
                     </select>
 
                     <select v-model="status" v-if="type == 2" @change="switchStatus()">
@@ -32,11 +32,12 @@
             <ul class="listWrap">
                 <li class="list" v-for="(item, index) in list" :key="index">
                     <div class="ListTop">
-                        <el-checkbox name="selectOne" v-model="checkedIds"  :checked="checkedStatus" @change="selectOrUnSelect()"/>
+                        <el-checkbox name="selectOne" v-model="checkedIds" :checked="checkedStatus"
+                                     @change="selectOrUnSelect()"/>
                         <span class="time">保存时间：{{item.createTimeitem | timerFormat(item.createTime)}}</span>
                         <span class="create">发布人：{{item.userName}}</span>
                         <span class="classifyC">状态：
-                            <span v-if="item.status == '02'">发布中</span>
+                            <span v-if="item.status == '02'">审核通过</span>
                             <span v-if="item.status == '13'">待审核</span>
                             <span v-if="item.status == '12'">审核不通过</span>
                         </span>
@@ -50,7 +51,7 @@
                             <span @click.stop="linkToDetail(item.id)">查看</span>
                             <span @click.stop="linkToPublish(item.id)">编辑</span>
                         </div>
-                        <div class='editorBtn1' v-if="type == 0">
+                        <div class='editorBtn1' v-if="type == 1">
                             <span @click.stop="linkToPublish(item.id)">编辑</span>
                         </div>
                     </div>
@@ -84,6 +85,7 @@
 
 <script>
     import Moment from "moment";
+
     export default {
         props: {
             list: {
@@ -213,14 +215,14 @@
                 this.isIndeterminate = checkedCount > 0 && checkedCount < this.allListIds.length;//有选择但不是全部
             }
         },
-        filters:{
-            timerFormat(vaule){
+        filters: {
+            timerFormat(vaule) {
                 return Moment(vaule).format("YYYY-MM-DD HH:mm:ss")
             }
         },
-        computed:{
+        computed: {
             //已选数量
-            hascheckedNum(){
+            hascheckedNum() {
                 return this.checkedIds.length;
             }
         }
@@ -372,9 +374,9 @@
                 }
                 .editorBtn1 {
                     float: right;
-                    margin-right: 5px;
-                    width: 106px;
                     margin-top: 16px;
+                    width: 106px;
+                    text-align: right;
                     span {
                         display: inline-block;
                         width: 80px;

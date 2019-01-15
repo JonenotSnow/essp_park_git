@@ -27,7 +27,8 @@
                             {{item.policyTitle}}
                         </div>
                         <div class='editorBtn2'>
-                            <!--<span>发布</span>     // 业务更换，不需要这个按钮了-->
+                            <!--// 业务更换，不需要这个按钮了-->
+                            <!--<span>发布</span>-->
                             <span @click.stop="linkToPublish(item.id)">编辑</span>
                         </div>
                     </div>
@@ -61,6 +62,7 @@
 
 <script>
     import Moment from "moment";
+
     export default {
         props: {
             list: {
@@ -112,6 +114,7 @@
 
             },
             dealWithDelete() {
+
                 let params = {
                     id: this.deleteId
                 };
@@ -157,11 +160,11 @@
             selectOrUnSelect() {
             }
         },
-        filters:{
-            timerFormat(vaule){
+        filters: {
+            timerFormat(vaule) {
                 return Moment(vaule).format("YYYY-MM-DD HH:mm:ss")
             }
-        } 
+        }
     }
 </script>
 
@@ -312,8 +315,9 @@
                 }
                 .editorBtn2 {
                     float: right;
-                    width: 180px;
                     margin-top: 16px;
+                    width: 180px;
+                    text-align: right;
                     span {
                         display: inline-block;
                         width: 80px;

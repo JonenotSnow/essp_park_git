@@ -57,8 +57,8 @@
                 </el-form-item>
                 <el-form-item>
                     <div class="btn-group">
-                        <button class="my-btn btn_zc" @click="temporaryStorage('ruleForm')">暂存</button>
-                        <button class="my-btn btn_cj" @click="submitForm('ruleForm')">创建</button>
+                        <span class="my-btn btn_zc" @click="temporaryStorage('ruleForm', '0')">暂存</span>
+                        <span class="my-btn btn_cj" @click="submitForm('ruleForm', '1')">创建</span>
                     </div>
                 </el-form-item>
             </el-form>
@@ -127,8 +127,8 @@
                 </el-form-item>
                 <el-form-item>
                     <div class="btn-group">
-                        <button class="my-btn btn_zc" @click="temporaryStorage('ruleForm')">暂存</button>
-                        <button class="my-btn btn_cj" @click="submitForm('ruleForm')">创建</button>
+                        <span class="my-btn btn_zc" @click="temporaryStorage('ruleForm', '0')">暂存</span>
+                        <span class="my-btn btn_cj" @click="submitForm('ruleForm', '1')">创建</span>
                     </div>
                 </el-form-item>
             </el-form>
@@ -184,7 +184,7 @@
                     classtType: '',
                     desc: '',
                     infoDetail: '',
-                    tags: ['科政标签1', '科政标签2', '科政标签3']
+                    tags: ['占位标签1', '占位标签2', '占位标签3']
                 },
                 rules_01: {
                     policyTitle: [
@@ -228,11 +228,13 @@
         methods: {
 
             // 创建事件
-            submitForm(formName) {
+            submitForm(formName, saveType) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
 
                         this.ruleForm.parkId = this.parkId;
+
+                        this.ruleForm.saveType = saveType;
 
                         // 区分政策或者法规
                         this.ruleForm.applyType = this.applyType;
@@ -261,9 +263,15 @@
                             if (codestatus == "CLT000000000") {
                                 if (this.applyType === '01') {
                                     this.$message.success("创建政策法规成功！");
+                                    this.$router.push({
+                                        path: '/parkHall/manage/sciAndTechPolicy/policieAndRegulation'
+                                    });
                                 }
                                 if (this.applyType === '02') {
                                     this.$message.success("创建科技服务成功！");
+                                    this.$router.push({
+                                        path: '/parkHall/manage/sciAndTechPolicy/sciAndTechService'
+                                    });
                                 }
                             } else {
                                 this.$message.info(response.resultMsg);
@@ -280,11 +288,65 @@
             },
 
             // 暂存事件
-            temporaryStorage(formName) {
+            temporaryStorage(formName, saveType) {
                 // this.$refs[formName].resetFields();
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        alert('暂存事件');
+
+                        this.ruleForm.parkId = this.parkId;
+
+                        this.ruleForm.saveType = saveType;
+
+                        // 区分政策或者法规
+                        this.ruleForm.applyType = this.applyType;
+
+                        // 处理标签
+                        let tags = this.ruleForm.tags.join(',');
+                        this.ruleForm.tags = tags;
+
+                        // 处理附件上传
+                        let fileUrl = '';
+                        for (let i = 0; i < this.fileList.length; i++) {
+                            fileUrl += this.fileList[i].url;
+                            if (i !== this.fileList.length - 1) {
+                                fileUrl += ',';
+                            }
+                        }
+                        this.ruleForm.fileUrl = fileUrl;
+
+                        // 政策法规不需要服务类型这个字段
+                        if (this.applyType === '01') {
+                            delete this.ruleForm.classtType;
+                        }
+
+                        this.$post("/policy/savePolicyTech", this.ruleForm).then(response => {
+                            let codestatus = response.resultCode;
+                            if (codestatus == "CLT000000000") {
+                                if (this.applyType === '01') {
+                                    this.$message.success("政策法规暂存成功！");
+                                    this.$router.push({
+                                        path: '/parkHall/manage/sciAndTechPolicy/policieAndRegulation',
+                                        query: {
+                                            status: '0'
+                                        }
+                                    });
+                                }
+                                if (this.applyType === '02') {
+                                    this.$message.success("科技服务暂存成功！");
+                                    this.$router.push({
+                                        path: '/parkHall/manage/sciAndTechPolicy/sciAndTechService',
+                                        query: {
+                                            status: '0'
+                                        }
+                                    });
+                                }
+                            } else {
+                                this.$message.info(response.resultMsg);
+                            }
+                        }, err => {
+                            this.$message.error("接口异常");
+                        })
+
                     } else {
                         console.log('error submit!!');
                         return false;
@@ -417,6 +479,7 @@
             .btn-group {
                 text-align: center;
                 .my-btn {
+                    display: inline-block;
                     width: 100px;
                     height: 40px;
                     line-height: 40px;

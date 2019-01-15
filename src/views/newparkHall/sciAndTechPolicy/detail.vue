@@ -80,7 +80,12 @@
                 this.$post("/policy/getPolById", params).then(response => {
                     let codestatus = response.resultCode;
                     if (codestatus == "CLT000000000") {
+
                         this.satpDate = response.resultData;
+
+                        // 对标签进行处理
+                        this.satpDate.tagsTxt = this.satpDate.tagsTxt.split(',');
+
                     } else {
                         this.$message.info(response.resultMsg);
                     }

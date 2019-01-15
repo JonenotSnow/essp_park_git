@@ -2,8 +2,8 @@
     <div class="policie-and-regulation-wrap">
         <div class="policie-and-regulation-head">
             <div class="head-div head-left">
-                <span :class="{'span-click': status=='0'}" @click="switchStatus(0)">已发布</span>
-                <span :class="{'span-click': status=='1'}" @click="switchStatus(1)">草稿箱</span>
+                <span :class="{'span-click': status=='1'}" @click="switchStatus(1)">已发布</span>
+                <span :class="{'span-click': status=='0'}" @click="switchStatus(0)">草稿箱</span>
                 <span :class="{'span-click': status=='2'}" @click="switchStatus(2)">已审核</span>
             </div>
             <div class="head-div head-right">
@@ -25,14 +25,14 @@
             <list-only-status
                 :list="dataList"
                 :type="status"
-                @childDeleted="childDeleted()"
-                @childSwitchStatus="childSwitchStatus()"
-                v-if="status=='0' || status=='2'"
+                @childDeleted="childDeleted"
+                @childSwitchStatus="childSwitchStatus"
+                v-if="status=='1' || status=='2'"
             />
 
-            <list-no-status-and-classify :list="dataList" :type="status" v-if="status=='1'"/>
+            <list-no-status-and-classify :list="dataList" :type="status" v-if="status=='0'"/>
         </div>
-        <div class="pageList" v-if="dataList">
+        <div class="pageList" v-if="dataList.length > 0">
             <el-pagination
                 @size-change="handleSizeChange"
                 @current-change="handleCurrentChange"
@@ -63,8 +63,8 @@
                 msg: '政策法规',
                 parkId: sessionStorage.getItem("parkId") || "",
 
-                status: '0',                // 状态值
-                searchContent: '',          // 查询字段
+                status: this.$route.query.status || '1',    // 状态值
+                searchContent: '',                          // 查询字段
                 satpType: '01',
 
                 // 分页相关字段
@@ -79,22 +79,23 @@
         methods: {
             handleSizeChange(val) {
                 this.pageSize = val;
-                this.getPolicieAndRegulation(status)
+                this.getPolicieAndRegulation()
             },
             handleCurrentChange(val) {
                 this.pageNum = val;
-                this.getPolicieAndRegulation(status)
+                this.getPolicieAndRegulation()
             },
             // 状态切换
             switchStatus(status) {
                 this.status = status;
                 this.type = status;
+                this.searchContent = '';
                 this.getPolicieAndRegulation(status)
             },
 
             // 查询事件
             search() {
-                alert('查询事件');
+                this.getPolicieAndRegulation(this.status);
             },
 
             // 跳转发布页面
@@ -113,17 +114,16 @@
                     parkId: this.parkId,            // 园区ID
                     pageNum: this.pageNum,          // 页码
                     pageSize: this.pageSize,        // 每页显示数量
-                    startDate: this.startDate,      // 信息发布时间---开始时间
-                    endDate: this.endDate,          // 信息发布时间---结束时间
-                    entityType: this.satpType,      // 政策01，或科技服务02
-                    // type: '04', //（ 必填）
-                    classtType: this.classtType     // 科技服务才会有这个字段---
+                    type: this.satpType,            //
+                    status: status,
+                    title: this.searchContent,          // 查询事件字段
+                    // classtType: this.classtType     // 科技服务才会有这个字段---
                 };
                 this.$post("/policy/getMyPubPol", params).then(response => {
                     let codestatus = response.resultCode;
                     if (codestatus == "CLT000000000") {
                         let resultData = response.resultData;
-                        this.totalCount = resultData.policyCount;
+                        this.totalCount = resultData.total;
                         this.dataList = resultData.policyList;
                     } else {
                         this.$message.info(response.resultMsg);
@@ -139,14 +139,12 @@
              */
             // 子组件执行删除事件后传递到父组件的事件
             childDeleted() {
-                // alert('childDeleted执行了~~~~');
                 // 重新获取数据
                 this.getPolicieAndRegulation();
             },
 
             // 子组件里的状态切换事件
             childSwitchStatus(status) {
-                // alert('childSwitchStatus~~~~');
                 // 重新获取数据
                 this.getPolicieAndRegulation(status);
             }
@@ -155,7 +153,7 @@
              */
         },
         mounted() {
-            this.getPolicieAndRegulation();
+            this.getPolicieAndRegulation(this.status);
         }
     }
 </script>
