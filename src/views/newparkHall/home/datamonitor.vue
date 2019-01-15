@@ -117,11 +117,20 @@ export default {
 }
 .chartbox {
   padding-top: 50px;
+    .conchart{
+        &:nth-of-type(1){
+            margin-left: 10px;
+        }
+        &:nth-of-type(3){
+            margin-right: 10px;
+        }
+    }
   .conchart {
     float: left;
     width: 380px;
     height: 265px;
     margin-right: 20px;
+    margin-top: 10px;
     background-color: #ffffff;
     box-shadow: 2.5px 4.3px 19.4px 0.6px rgba(0, 0, 0, 0.15);
   }

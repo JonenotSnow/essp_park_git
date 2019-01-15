@@ -2,24 +2,24 @@
     export let data2 = {
         // backgroundColor: '#FBFBFB',
         title: {
-            text: '专利申请量',
+            text: '专利申请量(千)',
             textStyle:{
                 color:"#10b5ff",
                 fontWeight:'normal'
             },
-            padding:[15, 0, 0, 40 ]
+            padding:[15, 0, 0, 25 ]
         },
         tooltip : {
             trigger: 'axis'
         },
-        
+
         legend: {
-            
+
         },
-    
+
         calculable : true,
-    
-    
+
+
         xAxis : [
             {
                 axisLabel:{
@@ -34,12 +34,12 @@
                 type : 'category',
                 boundaryGap : false,
                 data: ["2013","2014","2015","2016","2017"],
-                
+
             }
         ],
         yAxis : [
             {
-    
+
                 type : 'value',
                 axisLine:{
                     lineStyle :{
@@ -49,14 +49,14 @@
             }
         ],
         series : [
-            
+
             {
                 name:'',
                 type:'line',
                 symbol:'none',
                 smooth: 0.2,
                 color:['#66AEDE'],
-                data:[4740, 4650, 5281, 7266, 8511]
+                data:[4.7, 4.7, 5.3, 7.3, 8.5]
             }
         ]
     }

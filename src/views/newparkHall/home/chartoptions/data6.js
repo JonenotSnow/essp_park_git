@@ -7,19 +7,19 @@
                 color:"#10b5ff",
                 fontWeight:'normal'
             },
-            padding:[15, 0, 0, 40 ]
+            padding:[15, 0, 0, 25 ]
         },
         tooltip : {
             trigger: 'axis'
         },
-        
+
         legend: {
-            
+
         },
-    
+
         calculable : true,
-    
-    
+
+
         xAxis : [
             {
                 axisLabel:{
@@ -34,12 +34,12 @@
                 type : 'category',
                 boundaryGap : false,
                 data: ["2013","2014","2015","2016","2017"],
-                
+
             }
         ],
         yAxis : [
             {
-    
+
                 type : 'value',
                 axisLine:{
                     lineStyle :{
@@ -49,7 +49,7 @@
             }
         ],
         series : [
-            
+
             {
                 name:'',
                 type:'line',

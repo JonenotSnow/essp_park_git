@@ -4,20 +4,20 @@ export let data3= {
             text: '发明专利申请量',
             textStyle:{
                 color:"#10b5ff",
-                fontWeight:'normal'
+                fontWeight:'normal',
             },
-            padding:[15, 0, 0, 40 ]
+            padding:[15, 0, 0, 25 ]
         },
         tooltip : {
             trigger: 'axis'
         },
         legend: {
-            
+
         },
-    
+
         calculable : true,
-    
-    
+
+
         xAxis : [
             {
                 axisLabel:{
@@ -36,7 +36,7 @@ export let data3= {
         ],
         yAxis : [
             {
-    
+
                 type : 'value',
                 axisLine:{
                     lineStyle :{

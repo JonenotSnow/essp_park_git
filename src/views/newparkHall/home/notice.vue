@@ -7,17 +7,19 @@
             <div class="content">
                 <div class="left-aside">
                     <div class="title-s">新闻动态</div>
-                    <div class="item" v-for="(item,index) in 2" :key="index">
-                        <div class="word-part">
-                            <div class="title-ss">2018年度河北省技术创新引导计划技中···~~``···小···企业技术创新和科技小巨人企业发展专项项目申报指南</div>
-                            <div class="detail">2018年度河北省技术创新引导计划技中···~~``···小···企业技术创新和科技小巨人企业发展专项项目申报指南</div>
-                            <div class="part-b">
-                                <div class="label"></div>
-                                <div class="time">2018-09-22</div>
+                    <ul>
+                        <li class="item" v-for="(item,index) in 2" :key="index">
+                            <div class="word-part">
+                                <div class="title-ss">2018年度河北省技术创新引导计划技中···~~``···小···企业技术创新和科技小巨人企业发展专项项目申报指南</div>
+                                <div class="detail">2018年度河北省技术创新引导计划技中···~~``···小···企业技术创新和科技小巨人企业发展专项项目申报指南</div>
+                                <div class="part-b">
+                                    <div class="label"></div>
+                                    <div class="time">2018-09-22</div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="img" :style="'background-image:url('+imgUrl+')'"></div>
-                    </div>
+                            <div class="img" :style="'background-image:url('+imgUrl+')'"></div>
+                        </li>
+                    </ul>
                     <div class="more">More ></div>
                 </div>
                 <div class="right-aside">
@@ -55,7 +57,8 @@
                 font-size: 28px;
                 letter-spacing: 2px;
                 color: #333333;
-                margin: 51px 0 22px;
+                margin-bottom: 20px;
+                padding-top: 44px;
                 text-align: center;
             }
             .introduce {
@@ -68,7 +71,7 @@
                 color: #999999;
                 justify-items: right;
                 float: right;
-                padding: 22px 0 30px;
+                padding: 16px 0 0;
                 cursor: pointer;
                 &:hover {
                     color: #00a0e9;
@@ -87,11 +90,14 @@
                 }
                 .left-aside {
                     width: 570px;
+                    ul{
+                        border-bottom: solid 1px #cccccc;
+                    }
                     .item {
                         height: 160px;
                         display: flex;
                         justify-content: space-around;
-                        border-bottom: solid 1px #cccccc;
+                        border-top: solid 1px #cccccc;
                         box-sizing: border-box;
                         align-items: center;
                         &:hover {
@@ -144,7 +150,6 @@
                         }
                         &:hover {
                             background-color: #fff;
-                            border-top: solid 1px #cccccc;
                         }
                     }
                 }
@@ -169,6 +174,8 @@
                                 overflow: hidden;
                                 text-overflow: ellipsis;
                                 white-space: nowrap;
+                                font-size: 16px;
+                                color: #333;
                                 &::before {
                                     content: " ";
                                     position: absolute;
@@ -185,6 +192,8 @@
                             }
                             .time {
                                 padding: 0 5px;
+                                font-size: 14px;
+                                color: #777;
                             }
                         }
 

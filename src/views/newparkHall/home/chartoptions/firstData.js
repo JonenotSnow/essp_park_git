@@ -6,18 +6,18 @@ export let data0= {
                 color:"#10b5ff",
                 fontWeight:'normal'
             },
-            padding:[15, 0, 0, 40 ]
+            padding:[15, 0, 0, 25 ]
         },
         tooltip : {
             trigger: 'axis'
         },
         legend: {
-            
+
         },
-    
+
         calculable : true,
-    
-    
+
+
         xAxis : [
             {
                 axisLabel:{
@@ -36,7 +36,7 @@ export let data0= {
         ],
         yAxis : [
             {
-    
+
                 type : 'value',
                 axisLine:{
                     lineStyle :{
