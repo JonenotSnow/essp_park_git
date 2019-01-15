@@ -166,7 +166,7 @@
                 breadlist: [
                     {
                         path: '/parkIndex/park/all',
-                        name: "园区活动"
+                        name: this.utils.isBdPark()?'平台活动':"园区活动"
                     },
                     {
                         path: `/parkIndex/park/auditing`,
