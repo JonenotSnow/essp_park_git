@@ -33,7 +33,7 @@ const publishAchievement = resolve => require(['@/views/newmanage/platformSetup/
 const sciAndTechPolicy = resolve => require(['@/views/newmanage/publishManage/sciAndTechPolicy'], resolve);
 
 //科技政策列表---政策法规
-const policieAndRegulation = resolve => require(['@/views/newmanage/publishManage/sciAndTechPolicy/policieAndRegulation'], resolve);
+const policieAndRegulatio = resolve => require(['@/views/newmanage/publishManage/sciAndTechPolicy/policieAndRegulation'], resolve);
 //科技政策列表---科技服务
 const sciAndTechService = resolve => require(['@/views/newmanage/publishManage/sciAndTechPolicy/sciAndTechService'], resolve);
 //发布科技政策
@@ -150,12 +150,12 @@ export default {
                     path: "/parkHall/manage/sciAndTechPolicy",
                     name: "park-sciAndTechPolicy",
                     component: sciAndTechPolicy,
-                    redirect: '/parkHall/manage/sciAndTechPolicy/policieAndRegulation',
+                    redirect: '/parkHall/manage/sciAndTechPolicy/policieAndRegulatio',
                     children: [
                         {
-                            path: "/parkHall/manage/sciAndTechPolicy/policieAndRegulation",
-                            name: "park-policieAndRegulation",
-                            component: policieAndRegulation
+                            path: "/parkHall/manage/sciAndTechPolicy/policieAndRegulatio",
+                            name: "park-policieAndRegulatio",
+                            component: policieAndRegulatio
                         },
                         {
                             path: "/parkHall/manage/sciAndTechPolicy/sciAndTechService",
