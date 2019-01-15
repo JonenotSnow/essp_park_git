@@ -71,37 +71,48 @@
         <p class="save" @click="uploadAchievement">
             <span>保存上传</span>
         </p>
-        <div class="viewexpertinfo" v-if="isShowOverview">
-            <div class="btn_close" @click="hideDetail"><i class="iconfont icon-butongguo"></i></div>
-            <div class="pic">
-                <img :src="form.photo" >
-            </div>
-            <ul class="infodetail">
-                <li>
-                    <span class="title">成果标题</span>
-                    <span class="infocont">{{form.name}}</span>
-                </li>
-                <li>
-                    <span class="title">所属领域</span>
-                    <span class="infocont">{{form.field}}</span>
-                </li>                
-                <li>
-                    <span class="title">简介</span>
-                    <span class="infocont">{{form.title}}</span>
-                </li>
-                
-                <li>
-                    <span class="title">详情</span>
-                    <span class="infocont" v-html="form.detail"></span>
-                </li>
-                <li class="resume">
-                    <span class="title">发明人</span>
-                    <span class="infocont">{{form.inventor}}</span>
-                </li>
-            </ul>
-        </div>
         <!-- 遮罩层 -->
-        <div class="img-layer" v-if="isShowOverview"></div>
+        <el-dialog
+            title="预览详情"
+            :visible.sync="dialogVisible"
+            width="80%"
+            :before-close="handleClose">
+            <div class="achievement-detail-wraps">
+                <!-- 成果详情页 -->
+                <div class="newscontainer">
+                    <div class="newstitle">
+                        <div class="firsttitle">
+                            <h3>{{form.name}}</h3>
+                        </div>
+                        <div class="secondtitle">
+                            <span>发布时间：</span>
+                            <div class="publishtime">
+                                {{ new Date() | timerFormat}}
+                            </div>
+                            <span>浏览量：</span>
+                            <div class="overviewnum">0</div>
+                        </div>
+                        <div class="remarks">
+                            <span>所属领域：</span>
+                            <div class="field">
+                                {{form.field | formatField}}
+                            </div>
+                            <span>发明人：</span>
+                            <div class="publisher">
+                                {{form.inventor}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="newscontent">
+                        <div v-html="form.detail" v-if="form.detail != null"></div>
+                        <div v-else>
+                            暂无详细内容
+                        </div>
+                    </div>
+                </div>
+                <!--成果名称end-->
+            </div>
+        </el-dialog>
     </div>
 </template>
 
@@ -115,22 +126,21 @@
             EsspEditor
         },
         data() {
-            let _type = this.$route.query.type,
-                _info = this.$route.query.achievInfo;
             return {
                 isShowOverview:false,
-                type:_type,
-                info:_info,
+                info:{},
+                id: this.$route.query.id, // 成果id
+                dialogVisible: false,
+                opMark: this.$route.query.opMark || "01",
                 form: {
-                    name: (_type === 1) ? _info.name : '', // 成果标题
-                    field: (_type === 1) ? _info.field : '',  // 所属领域
-                    photo: (_type === 1) ? _info.photo :'',   // 上传图片
-                    title: (_type === 1) ? _info.title : '',  // 简介
-                    detail: (_type === 1) ? _info.detail : '', //编辑器内容
-                    inventor: (_type === 1) ? _info.inventor : '',   //发明人
-                    unit: (_type === 1) ? _info.unit :''        // 所属单位
+                    name: '', // 成果标题
+                    field: '',  // 所属领域
+                    photo: '',   // 上传图片
+                    title: '',  // 简介
+                    detail: '', //编辑器内容
+                    inventor:  '',   //发明人
+                    unit: ''        // 所属单位
                 },
-
                 breadlist: [
                     {
                         path: "/parkHall/manage/baseInfo",
@@ -178,10 +188,44 @@
             }
                 console.log(this.$route.query)
         },
-        created() {
-
+        filters: {
+            formatField(vaule) {
+                let defaulT = "暂无";
+                let fieldMap = {
+                    "0": "电子信息",
+                    "1": "生物与新医药",
+                    "2": "新材料",
+                    "3": "高新技术服务",
+                    "4": "新能源与节流",
+                    "5": "资源与环境",
+                    "6": "现代农业",
+                    "7": "高端装备制造"
+                };
+                return fieldMap[vaule] || defaulT;
+            }
+        },
+        created(){
+            if(this.id) {
+                this.getAchievementDetail();
+            }
         },
         methods: {
+            // 获取成果详情情
+            getAchievementDetail() {
+                let url = this.$apiUrl.home.getAchievByKey;
+                let pop = {
+                    id: this.id,
+                    opMark: this.opMark
+                };
+                this.$post(url, pop).then(
+                    response => {
+                        this.form = response.resultData
+                    },
+                    err => {
+                        this.$message.error(response.resultMsg);
+                    }
+                );
+            },
             // 编辑器的值获取
             onEditorChange(val) {
                 this.form.detail = val;
@@ -264,14 +308,11 @@
                 }
             },
             showExpertInfo() {
-                let that = this;
-                if(!that.isShowOverview){   
-                    that.isShowOverview = true;
-                }
+               this.dialogVisible = !this.dialogVisible
             },
             hideDetail(){
                 let that = this;
-                if(that.isShowOverview){   
+                if(that.isShowOverview){
                     that.isShowOverview = false;
                 }
             }
@@ -331,8 +372,114 @@
         min-height: 100%;
         display: block;
     }
+    .newscontent img {
+        max-width: 97%!important;
+    }
 </style>
 <style lang='less' scoped>
+    @import "../../../../assets/css/mixin";
+
+    .achievement-detail-wraps {
+        margin: 0 auto;
+        /*width: 1200px;*/
+        .achievement-detail__nav {
+            margin-top: 32px;
+            margin-bottom: 5px;
+            height: 12px;
+            line-height: 12px;
+            font-size: 14px;
+            font-weight: normal;
+            font-stretch: normal;
+            letter-spacing: 0px;
+            color: #666;
+        }
+
+        .newscontainer {
+            margin-bottom: 20px;
+            background-color: #fff !important;
+            .newstitle {
+                color: #333333;
+                text-align: center;
+                .firsttitle {
+                    h3 {
+                        height: 23px;
+                        line-height: 23px;
+                        font-size: 24px;
+                        font-weight: normal;
+                        font-stretch: normal;
+                        letter-spacing: 0px;
+                        color: #333333;
+                        .esspellipsis()
+                    }
+                }
+
+                .secondtitle {
+                    margin-top: 26px;
+                    height: 11px;
+                    line-height: 11px;
+                    font-size: 12px;
+                    font-weight: normal;
+                    font-stretch: normal;
+                    letter-spacing: 0px;
+                    color: #999;
+                    .publishtime {
+                        display: inline-block;
+                        margin-right: 40px;
+                    }
+                    .overviewnum {
+                        display: inline-block;
+                    }
+                }
+
+                .remarks {
+                    margin-top: 54px;
+                    text-align: left;
+                    span {
+                        display: inline-block;
+                        height: 15px;
+                        line-height: 15px;
+                        font-size: 16px;
+                        font-weight: normal;
+                        font-stretch: normal;
+                        letter-spacing: 0.4px;
+                        color: #999;
+                    }
+                    .field {
+                        display: inline-block;
+                        margin-right: 108px;
+                        height: 16px;
+                        line-height: 16px;
+                        font-size: 16px;
+                        font-weight: normal;
+                        font-stretch: normal;
+                        letter-spacing: 0px;
+                        color: #666;
+                    }
+                    .publisher {
+                        display: inline-block;
+                        height: 16px;
+                        line-height: 16px;
+                        font-size: 16px;
+                        font-weight: normal;
+                        font-stretch: normal;
+                        letter-spacing: 0px;
+                        color: #666;
+                    }
+                }
+            }
+
+            .newscontent {
+                padding: 50px 0;
+                text-align: left;
+                text-indent: 28px;
+                font-size: 14px;
+                font-weight: normal;
+                font-stretch: normal;
+                color: #999;
+                letter-spacing: 0px;
+            }
+        }
+    }
     #publishAchievement {
         width: 1200px;
         background: #fff;

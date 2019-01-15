@@ -2,7 +2,7 @@
     <div class="achievementSetHead">
         <!--  成果管理已发布 -->
         <!--头部-->
-        <achievementSetHead :type="componentType" :publishTitle="publishTitle"></achievementSetHead>
+        <achievementSetHead :type="componentTit" :isSeachInput="isSeachInput" :publishTitle="publishTitle"></achievementSetHead>
         <!--列表-->
         <!--<achievementSetCondition v-if="list.length>0" :componentTit="componentTit"></achievementSetCondition>-->
         <div class="seach_items esspclearfix">
@@ -41,9 +41,9 @@
                     v-model="form.unit">
                 </el-input>
             </div>
-            <div class="searchinfo" @click="searchInfo">查询</div>
+            <div class="searchinfo" @click="getAllAchiev">查询</div>
         </div>
-        <listOwnImg :list='list' :totalCount='totalCount' :componentType="componentType"></listOwnImg>
+        <listOwnImg :list='list' @delectList="getAllAchiev" :ajaxTit="ajaxTit" :selectListNum="selectListNum" :totalCount='totalCount' :type="componentTit" :componentType="componentType"></listOwnImg>
         <div class="pageList">
             <el-pagination
                 @size-change="handleSizeChange"
@@ -80,13 +80,16 @@
                     inventor: '',   //发明人
                     unit:'',        // 所属单位
                 },
+                isSeachInput: false,  // 当前是否需要显示搜索框
+                ajaxTit:'数据加载中……',
                 publishTitle: '立即发布',
                 componentTit: '成果管理',
                 componentType: 'achievement',
-                list: 5,
+                list: [],
                 totalCount: 0,
                 pageNum: 1,
                 pageSize: 10,
+                selectListNum: 0,
                 searchList: [
                     {
                         id: '0',
@@ -126,6 +129,7 @@
         methods: {
             // 获取成果列表
             getAllAchiev(){
+                this.ajaxTit = "数据加载中……"
                 this.$post(this.$apiUrl.achievement.getAllAchiev, {
                     pageNum:this.pageNum,   // 页码
                     pageSize: this.pageSize,    // 每页显示数量
@@ -138,9 +142,19 @@
                     unit:this.form.unit        // 所属单位
                 }).then(
                     response => {
-                        console.log(response);
-                        this.list = response.resultData.achievList;
-                        this.totalCount = response.resultData.total
+                        var arr = response.resultData.achievList;
+                        arr.forEach((item,index) => {
+                            if(!item.isChecked) {
+                                this.$set(item,"isChecked", false);
+                            } else {
+                                item.isChecked = false;
+                            }
+                        })
+                        this.list = arr;
+                        console.log("this.list ",this.list );
+                        this.totalCount = response.resultData.total;
+                        console.log(this.totalCount);
+                        this.ajaxTit = "数据加载完毕"
                     },
                     err => {
                         this.$message.error(err.resultMsg);
@@ -149,29 +163,11 @@
             },
             handleSizeChange(val) {
                 this.pageSize = val;
+                this.getAllAchiev();
             },
             handleCurrentChange(val) {
                 this.pageNum = val;
-            },
-            searchInfo(){
-                this.$post('/achiev/getAllAchiev ', {
-                    parkId:localStorage.parkId,
-                    pageNum:this.pageNum,
-                    pageSize:this.pageSize,
-                    name: this.form.name, // 成果标题
-                    field: this.form.field,  // 所属领域
-                    inventor: this.form.inventor,   //发明人
-                    unit:this.form.unit,       // 所属单位
-                    userId:this.SSH.getItem('userInfo').id || '' 
-                }).then(
-                    response => {
-                        this.list = response.resultData.achievList
-                        this.$message.success(response.resultMsg);
-                    },
-                    err => {
-                        this.$message.error(err.resultMsg);
-                    }
-                );
+                this.getAllAchiev();
             }
         },
     }

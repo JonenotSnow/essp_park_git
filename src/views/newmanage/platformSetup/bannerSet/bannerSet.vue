@@ -105,8 +105,6 @@
                     link_url:''
                 }
                 this.bannerSetList.push(obj);
-
-
             },
             // 删除图片
             deletePic(item,index){

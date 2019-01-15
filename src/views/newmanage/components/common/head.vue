@@ -8,12 +8,13 @@
                     <span class="pulishedBtn">已发布</span>
                     <div class="searchBox">
                         <!-- <span class="notice" v-if="searchContent">
-                             "{{searchContent}}"共找到4个搜索内容 
+                             "{{searchContent}}"共找到4个搜索内容
                         </span> -->
                         <el-input
                             placeholder="请输入搜索内容"
-                            suffix-icon="el-icon-search"
-                            v-model="searchContent">
+                            v-show="isSeachInput"
+                            v-model="searchContent" @click="seachClick">
+                            <i slot="suffix" style="cursor: pointer;font-size: 16px;line-height: 34px;" class="el-icon-search"></i>
                         </el-input>
                     </div>
                 </div>
@@ -29,6 +30,10 @@
 <script>
     export default {
         props: {
+            isSeachInput: {
+                type: Boolean,
+                default: false
+            },
             type: {
                 type: String,
                 default: ''
@@ -45,13 +50,11 @@
                 pageType: [ //根据此数据判断发布页面跳转，和props里type一直，新调用需新增
                     {
                         type: '成果管理',
-                        url: '/parkHall/manage/publishAchievement',
-                        type:0
+                        url: '/parkHall/manage/publishAchievement'
                     },
                     {
                         type: '专家团队',
-                        url: '/parkHall/manage/publishExpertTeam',
-                        type:0
+                        url: '/parkHall/manage/publishExpertTeam'
                     }
                 ]
             }
@@ -60,6 +63,11 @@
 
         },
         methods: {
+            // 搜索方法， 需要绑定
+            seachClick(){
+                this.$emit("seachConFn");
+            },
+            // 发布跳转
             getPageType() {
                 this.pageType.forEach(element => {
                     if (element.type == this.type) {
