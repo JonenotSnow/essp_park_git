@@ -221,6 +221,7 @@
                         border-radius: 17.5px;
                         border: solid 1px #cccccc;
                         input {
+                            padding: 0;
                             margin-left: 18px;
                             width: 150px;
                             height: 35px;
