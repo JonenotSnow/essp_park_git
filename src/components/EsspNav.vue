@@ -4,7 +4,7 @@
             <ul class="esspclearfix">
                 <li v-for="(item,index) in headMenu"
                     :key="index">
-                    <span :class="index ==active?'span-link':'span-none'"
+                    <span :class="index == active?'span-link':'span-none'"
                           @click="toLink(item,index)"><span style="font-size: 18px;">{{item.menu}}</span></span>
                 </li>
             </ul>
@@ -16,58 +16,39 @@
     export default {
         name: "",
         props: ["routerType"],
-        // mixins: [baseLogin],
         data() {
             return {
-                // version: '1221',
                 //游客默认导航
-                defaultNav:[
-                    {authorityflag: "1",
-                    cetificateflag: "0",
-                    children: [],
-                    enterpriseflag: "0",
-                    id: "0400",
-                    isclick: "1",
-                    ismenu: "1",
-                    isshow: "1",
-                    loginflag: "0",
-                    menu: "园区首页",
-                    message: "园区功能正在内测中，敬请期待!",
-                    name: "park-home",
-                    parentId: "04"},
-                    ],
+                defaultNav:[],
                 active: sessionStorage.getItem('navIndex')||0,
-                LoginUserRol: '',
-                headMenu: [],
-                curParkId: sessionStorage.getItem("parkId") || "",
+                headMenu: []
             };
         },
         watch: {
             $route() {
                 //路由变化获取最新选择的园区
-                this.curParkId = sessionStorage.getItem("parkId");
-
                 var menuList = this.SSH.getItem("menuList");
-                this.headMenu = (menuList && menuList.children) ||this.defaultNav;
+                this.headMenu = (menuList && menuList.children) ||[];
             }
         },
-        created: function () {
+        created() {
             // 直接从本地获取菜单权限
             var menuList = this.SSH.getItem("menuList");
-            this.headMenu = (menuList && menuList.children) ||this.defaultNav;
+            this.headMenu = (menuList && menuList.children) || [];
             var routerName = this.$route.name;
             var munuLen = this.headMenu.length;
+            //定位当前激活的横向导航并存值对应的sessionStorage
             // 左侧一级导航的判断
             for(var i = 0 ;i < munuLen; i++ ){
                 // 判断菜单地下是否有存在子菜单，需要循环判断子菜单里的name
                 var menuChildLen = this.headMenu[i].children && this.headMenu[i].children.length;
+                // 左侧二级导航的判断
                 if(menuChildLen > 0) {
-                    // 左侧二级导航的判断
                     for(var j = 0; j < menuChildLen; j ++) {
                         var menuChild = this.headMenu[i].children[j];
                         var menuChildChildLen = menuChild.length;
+                        // 左侧三级导航的时候判断
                         if(menuChildChildLen > 0) {
-                            // 左侧三级导航的时候判断
                             for(var z = 0; z < menuChildChildLen; z ++ ) {
                                 var menuChildChild = menuChild.menuChild[z];
                                 if(menuChildChild.name == routerName) {
