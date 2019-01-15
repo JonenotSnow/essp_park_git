@@ -7,7 +7,7 @@
                 共
                 <span class="total">{{totalCount}}</span>
                 条，已选
-                <span class="total">{{selectListNum}}</span>
+                <span class="total">{{selectCheckItem.length}}</span>
                 条
                 <span class="removeBtn" @click="removeList">删除</span>
             </div>
