@@ -2,7 +2,7 @@
     <div id="parkInfoSet">
         <ul v-if='writeInfoDis.startDate' class="infoContent">
             <li>
-                <span><em>*</em>园区名称：</span>
+                <span><em>*</em>中心名称：</span>
                 <span>{{writeInfo.parkName}}</span>
             </li>
             <li>
@@ -16,11 +16,6 @@
             <li>
                 <span><em>*</em>联系邮箱：</span>
                 <span>{{writeInfoDis.email}}</span>
-            </li>
-            <li>
-                <span><em>*</em>占地面积：</span>
-                <span>{{writeInfoDis.ownArea}}</span>
-                <span>平方米</span>
             </li>
             <li>
                 <span><em>*</em>所在区域：</span>
@@ -52,11 +47,6 @@
             <li>
                 <span><em>*</em>联系邮箱：</span>
                 <input type="text" v-model="writeInfo.email" placeholder="请输入联系邮箱">
-            </li>
-            <li>
-                <span><em>*</em>占地面积：</span>
-                <input type="text" v-model="writeInfo.ownArea" placeholder=">=1">
-                <span>平方米</span>
             </li>
             <li>
                 <span><em>*</em>所在区域：</span>
@@ -92,7 +82,6 @@ export default {
                 parkName:this.SSH.getItem('parkName') != null ? this.SSH.getItem('parkName') : '',
                 startDate:'',
                 phoneNumber:'',
-                ownArea:'',
                 city: '',
                 detailAddress:'',
             },
@@ -101,7 +90,6 @@ export default {
                 startDate:'',
                 phoneNumber:'',
                 email:'',
-                ownArea:'',
                 city: '',
                 detailAddress:'',
             },
@@ -183,20 +171,6 @@ export default {
                     return;
                 }
             }
-            if (!this.writeInfo.ownArea) {
-                this.$message({
-                    message: '请输入园区占地面积',
-                    type: 'warning'
-                });
-                return;
-            }
-            if (this.writeInfo.ownArea<1) {
-                this.$message({
-                    message: '园区占地面积不能小于1平方米   ',
-                    type: 'warning'
-                });
-                return;
-            }
             if (!this.writeInfo.city) {
                 this.$message({
                     message: '请输入园区所在区域',
@@ -216,7 +190,6 @@ export default {
                 parkId : window.sessionStorage.getItem("parkId"),
                 finishTime:this.startDate.slice(0,10),
                 phone:this.writeInfo.phoneNumber,
-                parkSize:this.writeInfo.ownArea,
                 area:this.writeInfo.city +','+ this.writeInfo.detailAddress,
                 province:this.province,
                 email:this.writeInfo.email
@@ -247,9 +220,6 @@ export default {
                     }
                     if (j.parkAdminTel) {
                         this.writeInfoDis.phoneNumber = j.parkAdminTel
-                    }
-                    if (j.parkSize) {
-                        this.writeInfoDis.ownArea = j.parkSize
                     }
                     if (j.parkPosition) {
                         this.writeInfoDis.city = j.parkPosition.split(',')[0]
