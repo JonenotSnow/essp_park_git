@@ -205,7 +205,8 @@ export default {
             loading: false,
             bLoading: false,
             confirmSend:false,
-            title:this.utils.isBdPark()?"关于我们":"园区概览"
+            title:this.utils.isBdPark()?"关于我们":"园区概览",
+            isBdPark: this.utils.isBdPark(),
         };
     },
     async created() {
@@ -293,7 +294,11 @@ export default {
                     this.confirmSend = true;
                     setTimeout(() => {
                         _that.confirmSend = false;
-                        this.$router.push('/parkHall/manage/baseInfo');
+                        if (this.isBdPark) {
+                            this.$router.push('/parkHall/manage/baseInfo2');
+                        }else{
+                            this.$router.push('/parkHall/manage/baseInfo1');
+                        }
                     }, 2000);
                 },
                 err => {
