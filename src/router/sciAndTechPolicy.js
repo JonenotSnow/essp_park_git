@@ -17,7 +17,7 @@ const sciAndTechPolicyIndex = () => import ('@/views/newparkHall/sciAndTechPolic
  * 政策法规相关路由
  * @returns {Promise<T | never>}
  */
-const policieAndRegulation = () => import ('@/views/newparkHall/sciAndTechPolicy/policieAndRegulation/policieAndRegulation/index').then(m => m.default)
+const policieAndRegulatio = () => import ('@/views/newparkHall/sciAndTechPolicy/policieAndRegulation/policieAndRegulation/index').then(m => m.default)
 
 
 /**
@@ -50,15 +50,15 @@ export default {
             path: "/sciIndex",
             name: "park-sciAndTechPolicyIndex",
             component: asideComRoot,
-            redirect: '/sciIndex/policieAndRegulation/policieAndRegulation',
+            redirect: '/sciIndex/policieAndRegulation/policieAndRegulatio',
             children: [
                 /**
                  * 政策法规---路由开始
                  */
                 {
-                    path: "/sciIndex/policieAndRegulation/policieAndRegulation",    // 政策法规
-                    name: "park-policieAndRegulation",
-                    component: policieAndRegulation
+                    path: "/sciIndex/policieAndRegulation/policieAndRegulatio",    // 政策法规
+                    name: "park-policieAndRegulatio",
+                    component: policieAndRegulatio
                 },
                 /**
                  * 政策法规---路由结束

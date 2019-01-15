@@ -281,6 +281,7 @@ export default {
         .checktop{
             float: left;
             margin:0 12px;
+            height: 40px;
         }
         .timecn{
             margin-right:42px;
@@ -311,7 +312,7 @@ export default {
         .textTit{
             float: left;
             width: 650px;
-            font-family: "MicrosoftYaHei";
+
             font-size: 16px;
             font-weight: normal;
             font-stretch: normal;

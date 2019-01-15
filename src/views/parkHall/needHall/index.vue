@@ -74,8 +74,10 @@
 import Moment from "moment";
 import searchHead from './head.vue'
 import DialogNeed from '@/components/DialogNeedRange.vue'
+import mixins from '@/components/mixins/mixins_windowOpen.js'
 export default {
   name: "",
+  mixins:[mixins],
   data() {
     return {
       totalCount: 0,
@@ -167,11 +169,15 @@ export default {
     myNeed() {
 
       let parkId = this.SSH.getItem('parkId')
-      let routerData = this.$router.resolve({
-                        path: 'requIndex/requMyrqm/all',
-                        query: {linkSrc: parkId}
-                    });
-                    window.open(routerData.href, '_blank')
+      let token= this.SSH.getItem('token')
+      let params = '?linkSrc='+parkId+'&token='+token
+      this.windowOpenUrl('requIndex/requMyrqm/all',params)
+      // let routerData = this.$router.resolve({
+      //                   path: 'requIndex/requMyrqm/all',
+      //                   query: {linkSrc: parkId}
+      //               });
+      // window.open(routerData.href+'&token='+token, '_blank')
+      
     },
     publish() {
             this.showNeedRange = true

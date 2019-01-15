@@ -166,9 +166,10 @@ export default {
           }
 
           res.resultData.forEach(item => {
-            let index = item.type;
-            if (index > 5) return false;
-            this.list[index].content.push(item);
+            let itemIndex = Number(item.type);
+            if (itemIndex > 5) return false;
+            let itemObj = Object.assign({},this.switchFn(itemIndex,0),item)
+            this.list[itemIndex].content.push(itemObj);
           });
         }
       });
@@ -381,8 +382,8 @@ export default {
             display: inline-block;
             width: 30px;
             background: #fff;
-            height: 33px;
-            line-height: 33px;
+            height: 31px;
+            line-height: 31px;
             padding-left: 5px;
           }
           .sub1 {

@@ -160,17 +160,17 @@
                     }, 500);
                 });
             },
-            //获取行业字典并保存
-			getCodeType() {
-				this.$post(this.$apiUrl.manage.getIdyInfo, {
-						codeType: 'RZZL_00012'
-					})
-					.then((response) => {
-						if(response.resultData) {
-							window.localStorage.setItem('rzz', JSON.stringify(response.resultData))
-						}
-					}, (err) => {})
-            },
+            // //获取行业字典并保存
+			// getCodeType() {
+			// 	this.$post(this.$apiUrl.manage.getIdyInfo, {
+			// 			codeType: 'RZZL_00012'
+			// 		})
+			// 		.then((response) => {
+			// 			if(response.resultData) {
+			// 				window.localStorage.setItem('rzz', JSON.stringify(response.resultData))
+			// 			}
+			// 		}, (err) => {})
+            // },
             getPower(parkId){
                 this.$post(this.$apiUrl.home.selectResMenu, {
                         'sysType':"park",

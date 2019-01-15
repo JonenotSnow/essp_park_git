@@ -218,7 +218,8 @@ export default {
             scanImgList :[],
             loading:false,
             bLoading:false,
-            confirmSend:false
+            confirmSend:false,
+            isBdPark: this.utils.isBdPark(),
         }
     },
     created(){
@@ -299,7 +300,11 @@ export default {
                 _that.confirmSend = true;
                 setTimeout(() => {
                     _that.confirmSend = false;
-                    this.$router.push('/parkHall/manage/baseInfo');
+                    if (this.isBdPark) {
+                        this.$router.push('/parkHall/manage/baseInfo2');
+                    }else{
+                        this.$router.push('/parkHall/manage/baseInfo1');
+                    }
                 }, 2000);
             },(err)=>{
                 this.$message({
