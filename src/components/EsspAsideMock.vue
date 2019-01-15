@@ -3,23 +3,46 @@
         <div class="cont-body">
             <div class='aside'>
                 <p class="tTitle">{{title}}</p>
-                <ul class="fNav" v-if="asideList && asideList.length>0">
-                    <li v-for="(it, index) in asideList" :key="index" :class="noChildMenu?'guanliStyle':'huodongStyle'">
-                        <!-- 多层子菜单 -->
-                        <div v-if="noChildMenu">
-                            <p @click="togglechildren(it)" class="someli-p">{{it.menu}}</p>
-                            <ul v-if="it.children && it.children.length>0" class="someli-ul">
-                                <li @click="linkto(it,is)" v-if="is.isshow" v-for="(is,j) in it.children" :key="j"
-                                    :class="is.id == active.childrenindex && it.id == active.faterindex?'span-link':''">{{is.menu}}
-                                </li>
-                            </ul>
-                        </div>
-                        <!-- 无子菜单 -->
-                        <div v-else>
-                            <router-link :to="{name:it.name}" tag='p'>
-                                <span class="li-tag"></span>{{it.menu}}
-                            </router-link>
-                        </div>
+                <ul class="fNav">
+                    <!-- 风格1 适合活动，资讯，惠政 没有二级导航的 -->
+                    <li v-for="(item, index) in asideList" v-if="whichStyle=='huodongStyle'"
+                        class="huodongStyle"
+                        :key="index">
+                        <router-link :to="{name:item.name}"
+                                     tag='p'>
+                            <span class="li-tag"></span>{{item.menu}}
+                        </router-link>
+                    </li>
+                    <!-- 风格2 适合管理模块 多子菜单的 -->
+                    <li v-for="(it,i) in asideList" :key="i" v-if="whichStyle=='guanliStyle'" class="guanliStyle">
+                        <p @click="togglechildren(it)" class="someli-p">{{it.menu}}</p>
+                        <ul v-if="it.children && it.children.length>0" class="someli-ul">
+                            <!-- 做一个判断如果有路径显示 如果没有不显示，做权限控制 -->
+                            <li @click="ziXunLinkto({faterindex:i,childrenindex:j,item:is})" v-if="is.isshow"
+                                v-for="(is,j) in it.children" :key="j"
+                                :class="j==active.childrenindex&&i==active.faterindex?'span-link':''">{{is.menu}}
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- 风格3 通知公告模块 多子菜单的 -->
+                    <li v-for="(it,i) in asideList" :key="i" v-if="whichStyle=='zixunStyle'" class="zixunStyle">
+                        <p @click="togglechildren(it)" class="someli-p">{{it.menu}}</p>
+                        <ul v-if="it.children && it.children.length>0" class="someli-ul">
+                            <li @click="ziXunLinkto({faterindex:i,childrenindex:j,item:is})" v-if="is.isshow"
+                                v-for="(is,j) in it.children" :key="j"
+                                :class="j==active.childrenindex&&i==active.faterindex?'span-link':''">{{is.menu}}
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- 风格4 科技政策模块 多子菜单的 -->
+                    <li v-for="(it,i) in asideList" :key="i" v-if="whichStyle=='sciStyle'" class="sciStyle">
+                        <p @click="togglechildren(it)" class="someli-p">{{it.menu}}</p>
+                        <ul v-if="it.children && it.children.length>0" class="someli-ul">
+                            <li @click="ziXunLinkto({faterindex:i,childrenindex:j,item:is})" v-if="is.isshow"
+                                v-for="(is,j) in it.children" :key="j"
+                                :class="j==active.childrenindex&&i==active.faterindex?'span-link':''">{{is.menu}}
+                            </li>
+                        </ul>
                     </li>
                 </ul>
             </div>
@@ -36,24 +59,19 @@
         components: {},
         data() {
             return {
-                active: {
-                    faterindex: 0,
-                    childrenindex: 0
-                },
+                active: {faterindex: 0, childrenindex: 0},
                 title: "",
                 asideList: [],
-                routerName: this.$route.name,
-                //当前左侧菜单显示类型-多层子菜单 (保定园区-科技政策，资讯公告，系统管理，淮安园区-园区管理),
-                curLeftClass:['0421','0424','0426','0405'],
+                routerName: this.$route.name
             };
         },
 
         created() {
             this.getRouteInfo();
+
         },
         methods: {
             togglechildren(it) {
-                this.active.faterindex =  it.id;
                 if (it.children && it.children.length) {
                     var children = it.children;
                     children.forEach(element => {
@@ -71,31 +89,23 @@
 
             },
             //适用于资讯通告,科技政策的菜单切换
-            linkto(it,is) {
-                this.active = {
-                    faterindex: it.id,
-                    childrenindex: is.id
-                };
-                this.$router.push({name: is.name})
+            ziXunLinkto(options) {
+                var name = options.item.name;
+                this.active = {faterindex: options.faterindex, childrenindex: options.childrenindex}
+                this.$router.push({name: name})
             }
         },
         watch: {
             $route() {
+                console.log(this.whichStyle)
                 this.routerName = this.$route.name;
                 this.getRouteInfo();
             }
         },
         computed: {
-            noChildMenu() {
-                let curLeft = false;
-                if (this.asideList && this.asideList.length>0) {
-                    this.asideList.forEach((element,index) => {
-                        if (this.curLeftClass.includes(element.id.slice(0,4))) {
-                            curLeft = true;
-                        }
-                    });
-                }
-                return curLeft;
+            whichStyle() {
+                console.log(this.$route.name)
+                return leftNavStyleSetting[this.routerName] || "huodongStyle"
             }
         }
 

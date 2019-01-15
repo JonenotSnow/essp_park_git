@@ -40,7 +40,8 @@
             // 失去焦点
             onEditorBlur(editor){
 //                console.log("失去焦点",this.editorCon);
-                var htmlStr = this.editorCon.replace(/\s/g, "&nbsp;&nbsp");
+//                var htmlStr = this.editorCon.replace(/\s/g, "&nbsp;&nbsp");
+                var htmlStr = this.editorCon;
                 this.$emit("onEditorChange", htmlStr);
             },
             // change事件

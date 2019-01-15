@@ -70,7 +70,7 @@
             return {
                 breadlist: [
                     {
-                        path: '/parkIndex/manage/baseInfo',
+                        path: '/parkHall/manage/baseInfo',
                         name: "园区管理"
                     },
                     {

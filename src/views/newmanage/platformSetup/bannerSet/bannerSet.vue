@@ -11,11 +11,11 @@
                 <div class="body-form">
                     <div class="pt_type">
                         <el-radio-group v-model="radio" @change="changeRadio">
-                        <el-radio  label="0">PC首页轮播图</el-radio>
-                        <el-radio  label="1">手机首页轮播图</el-radio>
+                            <el-radio  label="0">PC首页轮播图</el-radio>
+                            <el-radio  label="1">手机首页轮播图</el-radio>
                         </el-radio-group>
                     </div>
-                    <div class="body-card" v-for="(item,index) in bannerSetList" :key="index" @click="getBannerSetIndex(item,index)">
+                    <div class="body-card" v-for="(item,index) in bannerSetList":key="index" @click="getBannerSetIndex(item,index)">
                         <div class="card__title">
                             <p class="card__title-desc">第{{index+1}}张banner</p>
                             <p class="card__title-operation"><i class="el-icon-delete" @click="deleteBannerList(item,index)"></i></p>
@@ -80,23 +80,18 @@
                         power: " 726 * 300"
                     }
                 ],
-                // banner图列表
-                bannerSetList:[
-                    {img_url: '',
-                    link_url:''}
-                ],
+                bannerSetList: [],
                 parkId : sessionStorage.getItem("parkId") || ""
 
             }
         },
+        created(){
+            this.getParkById()
+        },
         methods: {
-            changeRadio(){
-                console.log(1)
-                this.getParkById()
-            },
             // 上传图片时需要先获取当前操作的第几个模块
             getBannerSetIndex(item,index){
-               console.log(item,index);
+                console.log(item,index);
                 if(this.isClick) {
                     this.getBannerSetIndexNum = index;
                 }
@@ -104,12 +99,12 @@
             },
             // 添加列表
             addImg(){
+                console.log(this.bannerSetList);
                 var obj = {
                     img_url: '',
                     link_url:''
                 }
                 this.bannerSetList.push(obj);
-
             },
             // 删除图片
             deletePic(item,index){
@@ -148,12 +143,11 @@
                 }
 
 
-                let urlList =[]
-                this.bannerSetList.forEach(item=>{
-                    urlList.push(item.img_url)
-                })
-                let paramsObj = this.radio ==="0"?{slidesImage:urlList.join(",")}:{appBanner:urlList.join(",")}
-                paramsObj = Object.assign({},{parkId: this.parkId},paramsObj)
+                let urlList =[]; // 图片路径
+//                urlList= JSON.stringify(this.bannerSetList)
+                urlList= this.bannerSetList;
+                let paramsObj = this.radio ==="0"?{slidesImage:urlList,parkId: this.parkId}:{appBanner:urlList,parkId: this.parkId}
+
                 this.$post("/parkManage/updatePark", paramsObj).then((response) => {
                     if (response.resultCode == "CLT000000000") {
                         this.$message.success(response.resultMsg);
@@ -203,48 +197,18 @@
                 );
                 return false; // 返回false不会自动上传
             },
+            // 获取当前banner图数据
             getParkById(){
-
                 this.$post("/parkManage/getParkById", {
                     parkId: this.parkId
                 }).then(res => {
                     if (res.resultCode == "CLT000000000") {
-                         let that = this
-                        that.bannerSetList=[]
-                        if(this.radio === "0" ){
-                            let slidesImage =[]
-                            if(res.resultData.slidesImage){
-                                slidesImage = res.resultData.slidesImage.split(',')
-                            }
-                                if(slidesImage.length>0){
-
-                                    slidesImage.forEach((item,index)=>{
-                                    that.bannerSetList.push({img_url:item,link_url:''})
-                                    })
-                                    console.log(that.bannerSetList)
-                                }
-                        }
-                        else{
-                            let appBanner = []
-                            if(res.resultData.appBanner){
-                                appBanner = res.resultData.appBanner.split(',')
-                            }
-
-                                var that = this
-                                if( appBanner.length>0){
-                                    appBanner.forEach((item,index)=>{
-                                    that.bannerSetList.push({img_url:item,link_url:''})
-                                    })
-                                }
-
-                        }
+                        this.bannerSetList = JSON.parse(res.resultData.slidesImage);
+                        console.log(this.bannerSetList);
                     }
                 });
             }
 
-        },
-        mounted() {
-            this.getParkById()
         }
     }
 </script>
