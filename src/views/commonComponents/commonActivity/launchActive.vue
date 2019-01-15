@@ -124,7 +124,7 @@
                                   @selection-change="handleSelectionChange">
                             <el-table-column type="selection">
                             </el-table-column>
-                            <el-table-column prop="initiatorName" label="更新人" width="100" show-overflow-tooltip>
+                            <el-table-column prop="updatorName" label="更新人" width="100" show-overflow-tooltip>
                             </el-table-column>
                             <el-table-column label="保存时间" width="155" show-overflow-tooltip>
                                 <template slot-scope="scope">
@@ -196,7 +196,7 @@
                 allTotal: 0,
                 timeRange: [],
                 drafLists: [],
-
+                ids:'', // 草稿选已选择ids
                 dialogTableVisible: false,
                 curId: '',
                 type: 0,
@@ -354,6 +354,7 @@
                     activityId: this.curId,
                     parkId: sessionStorage.getItem("parkId")
                 };
+
                 var url = this.$apiUrl.active.delActivity;
                 this.$post(url, pop).then(
                     response => {
@@ -403,6 +404,7 @@
                     this.$message("您没有选择删除的项目！");
                     return;
                 }
+                console.log(this.ids);
                 var ids = this.ids;
                 var pop = {
                     activityId: ids,
@@ -475,7 +477,7 @@
             //author：米格   20181217
             checkActivityOperateAuth(recordOwner){
                 let defautlFlag = false;
-                let currentUser = this.SSH.getItem("userName");
+                let currentUser = localStorage.getItem("userName");
 
                 if(currentUser === recordOwner){
                     defautlFlag = true;
