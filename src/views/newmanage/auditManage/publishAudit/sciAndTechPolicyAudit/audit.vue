@@ -11,8 +11,8 @@
                 <el-form-item label="政策法规标题：" prop="policyTitle">
                     <div class="my-style">{{satpDate.policyTitle}}</div>
                 </el-form-item>
-                <el-form-item label="政策法规简介：" prop="desc">
-                    <div class="my-style">{{satpDate.desc}}</div>
+                <el-form-item label="政策法规简介：" prop="approveComment">
+                    <div class="my-style">{{satpDate.approveComment}}</div>
                 </el-form-item>
                 <el-form-item label="政策法规详情：" prop="infoDetail">
                     <div class="my-style">
@@ -45,10 +45,17 @@
                     <div class="my-style">{{satpDate.policyTitle}}</div>
                 </el-form-item>
                 <el-form-item label=" 科技服务类型：" prop="classtType">
-                    <div class="my-style">{{satpDate.classtType}}</div>
+                    <div class="my-style" v-if="satpDate.classtType == '01'">科技创新</div>
+                    <div class="my-style" v-if="satpDate.classtType == '02'">技术合同登记</div>
+                    <div class="my-style" v-if="satpDate.classtType == '03'">高企认定</div>
+                    <div class="my-style" v-if="satpDate.classtType == '04'">科小认定</div>
+                    <div class="my-style" v-if="satpDate.classtType == '05'">知识产权</div>
+                    <div class="my-style" v-if="satpDate.classtType == '06'">科技服务机构</div>
+                    <div class="my-style" v-if="satpDate.classtType == '07'">风险投资</div>
+                    <div class="my-style" v-if="satpDate.classtType == '08'">天使投资</div>
                 </el-form-item>
-                <el-form-item label="科技服务简介：" prop="desc">
-                    <div class="my-style">{{satpDate.desc}}</div>
+                <el-form-item label="科技服务简介：" prop="approveComment">
+                    <div class="my-style">{{satpDate.approveComment}}</div>
                 </el-form-item>
                 <el-form-item label="科技服务详情：" prop="infoDetail">
                     <div class="my-style">
@@ -86,7 +93,7 @@
                 <h3 class="my-audit-title">填写审核意见</h3>
             </div>
             <div class="my-audit-opinion">
-                <textarea placeholder="请输入审核意见" v-model="mark">
+                <textarea placeholder="请输入审核意见" v-model="remark">
                 </textarea>
             </div>
             <div class="btn-submit-wrap">
@@ -113,16 +120,20 @@
 
                 breadlist_01: [
                     {
-                        path: "/parkHome",
+                        path: "/parkHall/manage/baseInfo1",
                         name: "系统管理"
                     },
                     {
-                        path: "",
+                        path: "/parkHall/manage/sciAndTechPolicyAudit",
+                        name: "审核管理"
+                    },
+                    {
+                        path: "/parkHall/manage/sciAndTechPolicyAudit",
                         name: "发布管理"
                     },
                     {
-                        path: "",
-                        name: "发布政策法规"
+                        path: "/parkHall/manage/sciAndTechPolicyAudit",
+                        name: "政策法规"
                     },
                     {
                         path: "",
@@ -131,16 +142,20 @@
                 ],
                 breadlist_02: [
                     {
-                        path: "/parkHome",
+                        path: "/parkHall/manage/baseInfo1",
                         name: "系统管理"
                     },
                     {
-                        path: "",
+                        path: "/parkHall/manage/sciAndTechPolicyAudit",
+                        name: "审核管理"
+                    },
+                    {
+                        path: "/parkHall/manage/sciAndTechPolicyAudit",
                         name: "发布管理"
                     },
                     {
-                        path: "",
-                        name: "发布科技服务"
+                        path: "/parkHall/manage/sciAndTechPolicyAudit",
+                        name: "科技服务"
                     },
                     {
                         path: "",
@@ -155,7 +170,7 @@
                     policyTitle: [
                         {required: true, message: '请输入政策法规标题', trigger: 'blur'},
                     ],
-                    desc: [
+                    approveComment: [
                         {required: true, message: '请填政策法规简介', trigger: 'blur'}
                     ],
                     infoDetail: [
@@ -172,7 +187,7 @@
                     classtType: [
                         {required: true, message: '请选择科技服务类型', trigger: 'change'}
                     ],
-                    desc: [
+                    approveComment: [
                         {required: true, message: '请填科技服务简介', trigger: 'blur'}
                     ],
                     infoDetail: [
@@ -186,7 +201,7 @@
                 // 填写审核意见事件相关字段
                 dialogVisible: false,
                 status: '',
-                mark: '',
+                remark: '',
             }
         },
         methods: {
@@ -228,14 +243,16 @@
                     parkId: this.parkId,
                     entityId: this.id,
                     status: this.status,
-                    mark: this.mark,
+                    remark: this.remark,
                 };
                 this.$post("/audit/policy", params).then(response => {
                     let codestatus = response.resultCode;
                     if (codestatus == "CLT000000000") {
                         this.satpDate = response.resultData;
                         this.$router.push({
-                            path: '/sciIndex/policieAndRegulation/policieAndRegulation'
+                            // 本应该是这个路径，因为配置出错了，所以改用
+                            // path: '/sciIndex/policieAndRegulation/policieAndRegulation'
+                            path: '/sciIndex'
                         });
                     } else {
                         this.$message.info(response.resultMsg);
