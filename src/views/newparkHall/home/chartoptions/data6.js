@@ -12,31 +12,20 @@
         tooltip : {
             trigger: 'axis'
         },
-
         legend: {
-
         },
-
         calculable : true,
-
-
-        xAxis : [
+        xAxis : 
             {
-                axisLabel:{
-                    rotate: 0,
-                    interval:0
-                },
                 axisLine:{
                   lineStyle :{
                       color: '#CECECE'
                   }
                 },
-                type : 'category',
-                boundaryGap : false,
                 data: ["2013","2014","2015","2016","2017"],
 
             }
-        ],
+        ,
         yAxis : [
             {
 
@@ -49,11 +38,9 @@
             }
         ],
         series : [
-
             {
                 name:'',
                 type:'line',
-                symbol:'none',
                 smooth: 0.2,
                 color:['#66AEDE'],
                 data:[6.3, 5.8, 7.1,9.3, 15.4]

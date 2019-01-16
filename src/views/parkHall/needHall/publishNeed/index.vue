@@ -14,8 +14,11 @@
           </el-col>
         </el-form-item>
         <el-form-item label="需求详情" required>
-          <!-- <vue-u-editor v-model="form.detail" @ready="editorReady"></vue-u-editor> -->
-          <quillEditor :options="editorOption" v-model="form.detail"></quillEditor>
+
+          <div class="wrap" >
+                      <quillEditor :options="editorOption" v-model="form.detail"></quillEditor>
+          </div>
+
         </el-form-item>
         <el-form-item label="发布人" required>
           <el-col :span="12">
@@ -213,5 +216,14 @@ export default {
     }
   }
 }
+    //编辑器样式
+    .wrap {
+        width: 850px;
+        height: 600px;
+        // margin: 0 0 20px;
+        .quill-editor {
+            height: 400px;
+        }
+    }
 </style>
 

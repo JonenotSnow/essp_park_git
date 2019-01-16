@@ -91,7 +91,7 @@ export default {
               id: 0,
               year: "",
               dataNum: "",
-              sub: "项",
+              sub: "个",
               subTitle: "专利申请量：",
               type:2
             }
@@ -130,7 +130,7 @@ export default {
               id: 0,
               year: "",
               dataNum: "",
-              sub: "亿",
+              sub: "亿元",
               subTitle: "技术合同登记额：",
               type:5
             }

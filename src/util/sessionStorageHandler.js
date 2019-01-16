@@ -15,7 +15,7 @@ const sessionStorageHandler = {
       if (str  && (str.indexOf('{')>-1 || str.indexOf('[')>-1)){
         return JSON.parse(str)
       } else{
-        return str==='null'?null:str==='true'?true:str==='false'?false:str
+        return str==='null'?null:str==='true'?true:str==='false'?false:str==='undefined'?undefined:str
       }
     }else{
       return ''
