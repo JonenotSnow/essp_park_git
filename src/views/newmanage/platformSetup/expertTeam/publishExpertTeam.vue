@@ -137,6 +137,7 @@
         data() {
             return {
                 isShowOverview: false,
+                id: this.$route.query.id, // 专家id
                 submitUploadInfo: {
                     id: '',
                     name: '',
@@ -151,11 +152,11 @@
                 childIndex: 0,
                 breadlist: [
                     {
-                        path: "/parkHome",
+                        path: "/parkHall/manage/baseInfo2",
                         name: "系统管理"
                     },
                     {
-                        path: "",
+                        path: "/parkHall/manage/expertTeam",
                         name: "专家团队"
                     },
                     {
@@ -187,9 +188,27 @@
             }
         },
         created() {
-
+            if(this.id) {
+                this.getExpertById();
+            }
         },
         methods: {
+            // 获取专家详情情
+            getExpertById(){
+                let url = this.$apiUrl.home.getExpertById;
+                let pop = {
+                    id: this.id
+                };
+                this.$post(url, pop).then(
+                    response => {
+                        this.submitUploadInfo = response.resultData.expert;
+                        this.moduleList = JSON.parse(this.submitUploadInfo.moduleData);
+                    },
+                    err => {
+                        this.$message.error(response.resultMsg);
+                    }
+                );
+            },
             isTrueModule(){
                 var flag = true;
                 for(var i = 0 ; i < this.moduleList.length; i++) {
@@ -240,7 +259,8 @@
                     this.$message.error("请正确填写简介！");
                     return flag = false;
                 }
-                if(this.isTrueModule()) {
+                console.log(this.isTrueModule());
+                if(!this.isTrueModule()) {
                     return flag = false;
                 }else {
                     return flag = true
@@ -282,7 +302,8 @@
                     }).then(
                         response => {
                             if (response.resultCode == "CLT000000000") {
-                                this.$message.success("保存成功")
+                                this.$message.success("保存成功");
+                                this.$router.push("/parkHall/manage/expertTeam");
                             }
                         },
                         response => {

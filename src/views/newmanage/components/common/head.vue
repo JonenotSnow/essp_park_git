@@ -13,8 +13,8 @@
                         <el-input
                             placeholder="请输入搜索内容"
                             v-show="isSeachInput"
-                            v-model="searchContent" @click="seachClick">
-                            <i slot="suffix" style="cursor: pointer;font-size: 16px;line-height: 34px;" class="el-icon-search"></i>
+                            v-model="searchContent">
+                            <i slot="suffix"  @click="seachClick" style="cursor: pointer;font-size: 16px;line-height: 34px;" class="el-icon-search"></i>
                         </el-input>
                     </div>
                 </div>
@@ -65,13 +65,17 @@
         methods: {
             // 搜索方法， 需要绑定
             seachClick(){
-                this.$emit("seachConFn");
+                if(this.searchContent == "") {
+                    this.$message.error("请输入搜索关键字！");
+                    return;
+                }
+                this.$emit("f", this.searchContent);
             },
             // 发布跳转
             getPageType() {
                 this.pageType.forEach(element => {
                     if (element.type == this.type) {
-                        this.$router.push({path:element.url,query:{type:element.type}})
+                        this.$router.push({path:element.url})
                         return;
                     }
                 });

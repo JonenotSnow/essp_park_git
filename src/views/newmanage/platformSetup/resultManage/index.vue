@@ -43,7 +43,7 @@
             </div>
             <div class="searchinfo" @click="getAllAchiev">查询</div>
         </div>
-        <listOwnImg :list='list' @delectList="getAllAchiev" :ajaxTit="ajaxTit" :totalCount='totalCount' :type="componentTit" :componentType="componentType"></listOwnImg>
+        <listOwnImg :list='list' :allCheck="isAllChecked" @delectList="getAllAchiev" :ajaxTit="ajaxTit" :totalCount='totalCount' :type="componentTit" :componentType="componentType"></listOwnImg>
         <div class="pageList">
             <el-pagination
                 @size-change="handleSizeChange"
@@ -85,6 +85,7 @@
                 publishTitle: '立即发布',
                 componentTit: '成果管理',
                 componentType: 'achievement',
+                isAllChecked: false,  // 是否全选
                 list: [],
                 totalCount: 0,
                 pageNum: 1,
@@ -163,10 +164,12 @@
             },
             handleSizeChange(val) {
                 this.pageSize = val;
+                this.isAllChecked = false;
                 this.getAllAchiev();
             },
             handleCurrentChange(val) {
                 this.pageNum = val;
+                this.isAllChecked = false;
                 this.getAllAchiev();
             }
         },
