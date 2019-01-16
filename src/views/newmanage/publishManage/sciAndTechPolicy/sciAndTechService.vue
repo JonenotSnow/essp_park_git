@@ -34,6 +34,7 @@
             <list-only-classify
                 v-if="status=='0'"
                 :list="dataList"
+                @childDeleted="childDeleted"
             />
         </div>
 
@@ -68,6 +69,8 @@
                 parkId: sessionStorage.getItem("parkId") || "",
 
                 status: this.$route.query.status || '1',    // 状态值
+                approveType: '',                             // 审核状态
+
                 searchContent: '',                           // 查询字段
                 satpType: '02',
 
@@ -118,8 +121,9 @@
                     parkId: this.parkId,            // 园区ID
                     pageNum: this.pageNum,          // 页码
                     pageSize: this.pageSize,        // 每页显示数量
-                    type: this.satpType,            //
-                    status: status,
+                    type: this.satpType,            // 01 政策法规， 02 科技服务
+                    status: status,                 // 1 已发布， 0 草稿箱， 2 已审核
+                    approveType: this.approveType,  // 02 已通过，12 拒绝，13 待审核
                     title: this.searchContent,          // 查询事件字段
                     // classtType: this.classtType     // 科技服务才会有这个字段---
                 };
@@ -143,13 +147,15 @@
             // 子组件执行删除事件后传递到父组件的事件
             childDeleted() {
                 // 重新获取数据
-                // this.getPolicieAndRegulation();
+                this.getPolicieAndRegulation();
             },
 
             // 子组件里的状态切换事件
-            childSwitchStatus(status) {
+            childSwitchStatus(approveType) {
                 // 重新获取数据
-                // this.getPolicieAndRegulation(status);
+
+                // this.approveType = approveType;
+                this.getPolicieAndRegulation();
             }
             /**
              * 子组件传递上来的事件------------结束

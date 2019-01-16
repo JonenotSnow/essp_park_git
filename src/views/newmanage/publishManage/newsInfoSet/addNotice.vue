@@ -21,7 +21,7 @@
                         <em>*</em>通知公告标题 :
                     </span>
                     <el-input class="el_input_left" v-model="informationTitle" placeholder="必填"></el-input>
-                </div> 
+                </div>
                 <div class="tdcon">
                     <span class="inline_span">
                         <em>*</em>通知公告简介 :
@@ -44,7 +44,7 @@
                         </quill-editor>
                     </div>
                 </div>
-                
+
                 <div class="tdcon">
                     <span class="inline_span">
                         <em>*</em>
@@ -87,7 +87,7 @@
                         <span class="destips">（支持pdf/word/excel等类型文件，大小10M内）</span>
                     </div>
                 </div>
-                
+
             </div>
         </div>
             <div class="tdcon">
@@ -210,12 +210,12 @@
             EsspBreadCrumb,
             EsspTag,
             EsspAddTag,
-          
+
             quillEditor
         },
         created() {
             // this.getDraftResource();
-            
+
         },
         filters: {
             timerFormat(vaule) {
@@ -365,7 +365,7 @@
                     showCancelButton: false,
                     dangerouslyUseHTMLString: true
                 };
-                
+
                 this.$post("information/saveNews", {
                     parkId: parkId,
                     informationTitle: this.informationTitle,
@@ -381,7 +381,7 @@
                         this.$message.success("新闻动态暂存成功")
                         this.$router.push({path: url});
                     });
-                   
+
                 });
             }
         }
