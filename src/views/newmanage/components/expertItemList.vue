@@ -142,12 +142,12 @@
                 if(item.isChecked) {
                     this.selectCheckItem.push(item);
                 } else {
-                   if(this.selectCheckItem.length) {
-                       var index = this.selectCheckItem.indexOf(item);
-                       if(index >-1) {
-                           this.selectCheckItem.splice(index,1)
-                       }
-                   }
+                    if(this.selectCheckItem.length) {
+                        var index = this.selectCheckItem.indexOf(item);
+                        if(index >-1) {
+                            this.selectCheckItem.splice(index,1)
+                        }
+                    }
                 }
                 console.log("选一个",this.selectCheckItem);
             },
