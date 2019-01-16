@@ -37,7 +37,7 @@
                 </ul>
             </div>
             <div class="saveBtn">
-                <button class="my-btn btn-search" @click='getAllNeed'>查询</button>
+                <button class="my-btn btn-search" @click='getList'>查询</button>
                 <button class="my-btn btn-reset" @click='reset'>重置</button>
             </div>
             <!-- <p class="text">采取先到先得的任务领取审核方式</p> -->
@@ -258,9 +258,6 @@ export default {
                 return;
             }
             this.$router.push({path: "/parkHall/manage/manageActivityAuditDetail",query: { entityId: rows.activityId, content: rows }});
-        },
-        getAllNeed(){
-            console.log('没有的方法不要写')
         }
     }
 };

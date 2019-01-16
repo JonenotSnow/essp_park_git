@@ -60,15 +60,12 @@
                 </el-pagination>
             </div>
         </div>
-        <downLoadExcel :show = 'show' @showDialog='showDialog' :checkedIds='checkedIds' :pageType="pageType"></downLoadExcel>
     </div>
 </template>
 
 <script>
-import downLoadExcel from "../../../components/downLoadExcel";
  export default {
    components:{
-       downLoadExcel
    },
     data () {
         return {
@@ -128,7 +125,6 @@ import downLoadExcel from "../../../components/downLoadExcel";
                 cstName : '',    //发布人
                 createName : '',//公司名称
             },
-            show:false,
             pageType:'noOpenNeed'
         }
     },
@@ -152,7 +148,8 @@ import downLoadExcel from "../../../components/downLoadExcel";
             }
             //用于批量导出
             if (type == 0) {
-                this.pageNum = this.pageSize = '';
+                this.pageNum = 1;
+                this.pageSize = 99999999; //极大值用于导出上线
             }
             this.$post(this.$apiUrl.manageNeed.getAllNeed, {
                 parkId:this.SSH.getItem('parkId'),
@@ -167,6 +164,15 @@ import downLoadExcel from "../../../components/downLoadExcel";
                     if (response.resultData && response.resultData.list) {
                         this.list = response.resultData.list;
                         this.totalCount = response.resultData.total;
+                    }
+                    //打包需要导出数据的id
+                    if (type == 0) {
+                        if (this.list && this.list.length == 0) {
+                            this.$message.error('没有可导出的数据');
+                            return;
+                        }else{
+                            this.exportData();
+                        }
                     }
                 },
                 err => {
@@ -194,17 +200,26 @@ import downLoadExcel from "../../../components/downLoadExcel";
             }
             this.getAllNeed();
         },
-        openDialog(){
-            if (this.checkedIds.length == 0) {
-                this.$message.error('请先选择要导出的内容');
-                return;
-            }
-            this.show = true;
-        },
-        //导出弹窗
-        showDialog(value){
-            this.show = value.show;
-        }
+        //批量导出
+        exportData () {
+            let idList = this.list.map((el)=>{
+                return el.id;
+            })
+            let params = {
+                id: idList.toString()
+            };
+            this.$get(this.$apiUrl.manageNeed.exportNeedData, params)
+                .then(response => {
+                    let codestatus = response.resultCode;
+                    if (codestatus == "CLT000000000") {
+                        this.data = response.resultData;
+                    } else {
+                        this.$message.info(response.resultMsg);
+                    }
+                }, err => {
+                    this.$message.error("接口异常");
+                })
+            },
    }
  }
 </script>

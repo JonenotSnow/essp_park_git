@@ -158,7 +158,7 @@
         },
         created() {
             this.getNoticeList();
-            // this.getCcbUser();
+            this.getCcbUser();
 
             // 管理员身份登录才调用这个方法
             if (this.LoginUserRole.includes('33') || this.LoginUserRole.includes('34')) {

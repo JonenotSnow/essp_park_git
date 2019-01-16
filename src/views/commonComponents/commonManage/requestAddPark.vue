@@ -112,20 +112,6 @@
         },
         data() {
             return {
-                breadlist: [
-                    // {
-                    //     path:'/parkIndex/park/all',
-                    //     name: "园区管理"
-                    // },
-                    // {
-                    //     path:'/parkHall/manage/occupancyApplication',
-                    //     name: "入住园区申请"
-                    // },
-                    // {
-                    //     path:'',
-                    //     name: "申请加入园区"
-                    // }
-                ],
                 getFormList: [],
                 fxContent: {},
                 rzz: [],

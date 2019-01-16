@@ -113,6 +113,7 @@ export default {
                 }
             ],
             stepType:'1',
+            pass:fasle //验证是否已经是信息全部填写
         }
     },
     created() {
@@ -185,7 +186,6 @@ export default {
                 });
                 return;
             }
-
             this.$post(this.$apiUrl.manage.updatePark,{
                 parkId : window.sessionStorage.getItem("parkId"),
                 finishTime:this.startDate.slice(0,10),
@@ -199,6 +199,7 @@ export default {
                     type: 'success',
                     message: response.resultMsg
                 });
+                this.pass = true;
             })
         },
         getParkById(){
@@ -247,7 +248,11 @@ export default {
         },
         toNext(){
             this.saveBaseInfo();
-            this.getCurStep();
+            if (this.pass) {
+                this.getCurStep();
+                this.pass = false;
+            }
+            
         }
     },
     watch: {

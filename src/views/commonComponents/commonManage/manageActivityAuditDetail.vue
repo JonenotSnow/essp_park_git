@@ -138,7 +138,7 @@ export default {
                 },
                 {
                     path:`/parkHall/manage/activityPoolAddPark`,
-                    name: "任务池"
+                    name: this.utils.isBdPark() ? "审核管理" : "任务池"
                 },
                 {
                     path:'',
