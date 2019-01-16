@@ -30,12 +30,10 @@
                         </div>
                     </div>
                 </li>
-                <li v-if="list.length == 0" class="no_odata">尚未发布专家团队，点击右上方发布按钮立即发布吧!</li>
+                <li v-if="list.length == 0 && ajaxTit != '数据加载中……'" class="no_odata">尚未发布{{type}}，点击右上方发布按钮立即发布吧!</li>
+                <li v-if="list.length == 0 && ajaxTit == '数据加载中……'" class="data_tit">{{ajaxTit}}</li>
+
             </ul>
-        </div>
-        <div v-else class="noData">
-            <span>尚未发布{{type}}，点击右上方发布按钮立即发布吧！</span>
-            <img src="@assets/newparkimg/newmanage/achievementSet/no_list.png" alt="">
         </div>
     </div>
 </template>
@@ -59,6 +57,10 @@
                 type: [],
                 default: null
 
+            },
+            ajaxTit: {
+                type: String,
+                default: ''
             },
             selectListNum: {
                 type: Number,
@@ -186,6 +188,10 @@
 </style>
 
 <style lang='less' scoped>
+    .data_tit {
+        text-align: center;
+        line-height: 40px;
+    }
     .no_odata {
         text-align: center;
         height: 700px;

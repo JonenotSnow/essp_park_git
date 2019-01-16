@@ -3,7 +3,7 @@
         <!--  成果管理已发布 -->
         <achievementSetHead :type="componentTit" :isSeachInput="isSeachInput" :publishTitle='publishTitle' @seachConFn="seachConFn"></achievementSetHead>
         <listOwnImg :list='list' :allCheck="isAllChecked" @delectList="getAllAchiev" :ajaxTit="ajaxTit" :totalCount='totalCount' :type="componentTit" :componentType="componentType"></listOwnImg>
-        <div class="pageList">
+        <div class="pageList" v-if="list.length > 0">
             <el-pagination
                 @size-change="handleSizeChange"
                 @current-change="handleCurrentChange"
@@ -71,11 +71,13 @@
                                 item.isChecked = false;
                             }
                         })
+//
                         this.list = arr;
                         console.log("this.list ",this.list );
                         this.totalCount = response.resultData.total;
                         console.log(this.totalCount);
                         this.ajaxTit = "数据加载完毕"
+
                     },
                     err => {
                         this.$message.error(err.resultMsg);
