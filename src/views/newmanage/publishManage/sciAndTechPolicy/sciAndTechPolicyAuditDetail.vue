@@ -11,8 +11,8 @@
                 <el-form-item label="政策法规标题：" prop="policyTitle">
                     <div class="my-style">{{satpDate.policyTitle}}</div>
                 </el-form-item>
-                <el-form-item label="政策法规简介：" prop="desc">
-                    <div class="my-style">{{satpDate.desc}}</div>
+                <el-form-item label="政策法规简介：" prop="approveComment">
+                    <div class="my-style">{{satpDate.approveComment}}</div>
                 </el-form-item>
                 <el-form-item label="政策法规详情：" prop="infoDetail">
                     <div class="my-style">
@@ -59,10 +59,17 @@
                     <div class="my-style">{{satpDate.policyTitle}}</div>
                 </el-form-item>
                 <el-form-item label=" 科技服务类型：" prop="classtType">
-                    <div class="my-style">{{satpDate.classtType}}</div>
+                    <div class="my-style" v-if="satpDate.classtType == '01'">科技创新</div>
+                    <div class="my-style" v-if="satpDate.classtType == '02'">技术合同登记</div>
+                    <div class="my-style" v-if="satpDate.classtType == '03'">高企认定</div>
+                    <div class="my-style" v-if="satpDate.classtType == '04'">科小认定</div>
+                    <div class="my-style" v-if="satpDate.classtType == '05'">知识产权</div>
+                    <div class="my-style" v-if="satpDate.classtType == '06'">科技服务机构</div>
+                    <div class="my-style" v-if="satpDate.classtType == '07'">风险投资</div>
+                    <div class="my-style" v-if="satpDate.classtType == '08'">天使投资</div>
                 </el-form-item>
-                <el-form-item label="科技服务简介：" prop="desc">
-                    <div class="my-style">{{satpDate.desc}}</div>
+                <el-form-item label="科技服务简介：" prop="approveComment">
+                    <div class="my-style">{{satpDate.approveComment}}</div>
                 </el-form-item>
                 <el-form-item label="科技服务详情：" prop="infoDetail">
                     <div class="my-style">
@@ -159,7 +166,7 @@
                     policyTitle: [
                         {required: true, message: '请输入政策法规标题', trigger: 'blur'},
                     ],
-                    desc: [
+                    approveComment: [
                         {required: true, message: '请填政策法规简介', trigger: 'blur'}
                     ],
                     infoDetail: [
@@ -176,7 +183,7 @@
                     classtType: [
                         {required: true, message: '请选择科技服务类型', trigger: 'change'}
                     ],
-                    desc: [
+                    approveComment: [
                         {required: true, message: '请填科技服务简介', trigger: 'blur'}
                     ],
                     infoDetail: [

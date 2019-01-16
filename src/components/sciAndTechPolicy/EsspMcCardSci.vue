@@ -15,7 +15,7 @@
                 </div>
                 <div class="card__dest">
                     <p>
-                        {{item.desc}}
+                        {{item.approveComment}}
                     </p>
                 </div>
             </div>

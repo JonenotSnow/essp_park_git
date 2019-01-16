@@ -18,10 +18,10 @@
                               style="width: 500px;"
                     ></el-input>
                 </el-form-item>
-                <el-form-item label="政策法规简介：" prop="desc">
+                <el-form-item label="政策法规简介：" prop="approveComment">
                     <!--<el-input type="textarea" v-model="ruleForm.desc"></el-input>-->
                     <textarea
-                        v-model="ruleForm.desc"
+                        v-model="ruleForm.approveComment"
                         placeholder="请输入政策法规简介"
                         style="padding: 10px; width: 720px; height: 140px; font-size: 14px; color: #999; border-radius: 3px; border: solid 1px #cccccc;"/>
                 </el-form-item>
@@ -86,14 +86,14 @@
                         <el-option label="天使投资" value="08"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="科技服务简介：" prop="ruleForm.desc">
+                <el-form-item label="科技服务简介：" prop="approveComment">
                     <!--<el-input type="textarea" v-model="ruleForm.desc"></el-input>-->
                     <textarea
-                        v-model="ruleForm.desc"
+                        v-model="ruleForm.approveComment"
                         placeholder="请输入科技服务简介"
                         style="padding: 10px; width: 720px; height: 140px; font-size: 14px; color: #999; border-radius: 3px; border: solid 1px #cccccc;"/>
                 </el-form-item>
-                <el-form-item label="科技服务详情：" prop="ruleForm.infoDetail">
+                <el-form-item label="科技服务详情：" prop="infoDetail">
                     <textarea
                         v-model="ruleForm.infoDetail"
                         placeholder="请输入科技服务详情"
@@ -182,7 +182,7 @@
                 ruleForm: {
                     policyTitle: '',
                     classtType: '',
-                    desc: '',
+                    approveComment: '',
                     infoDetail: '',
                     tags: ['占位标签1', '占位标签2', '占位标签3']
                 },
@@ -191,7 +191,7 @@
                         {required: true, message: '请输入政策法规标题', trigger: 'blur'},
                         // {min: 10, max: 20, message: '长度在 10 到 20 个字符', trigger: 'blur'}
                     ],
-                    desc: [
+                    approveComment: [
                         {required: true, message: '请填政策法规简介', trigger: 'blur'}
                     ],
                     infoDetail: [
@@ -209,7 +209,7 @@
                     classtType: [
                         {required: true, message: '请选择科技服务类型', trigger: 'change'}
                     ],
-                    desc: [
+                    approveComment: [
                         {required: true, message: '请填科技服务简介', trigger: 'blur'}
                     ],
                     infoDetail: [
