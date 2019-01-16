@@ -115,8 +115,8 @@
                         <span>{{infoList.enterEndtime}}</span>
                     </p>
                     <!--<p>-->
-                    <!--<span>邀请对象：</span>-->
-                    <!--<span>xxxxxxxxxxx</span>-->
+                        <!--<span>邀请对象：</span>-->
+                        <!--<span>xxxxxxxxxxx</span>-->
                     <!--</p>-->
                 </div>
             </div>
@@ -250,29 +250,29 @@
                     parkId: sessionStorage.getItem("parkId"),
                     opMark: this.$route.query.opMark
                 })
-                    .then((response) => {
-                        if (response.resultCode == 'CLT000000000') {
+                .then((response) => {
+                    if (response.resultCode == 'CLT000000000') {
 
-                            this.infoList = Object.assign({}, response.resultData);
-                            this.items = JSON.parse(this.infoList.ticketForm);//票务信息
-                            var enterForm = JSON.parse(this.infoList.enterForm); //申报信息
+                        this.infoList = Object.assign({}, response.resultData);
+                        this.items = JSON.parse(this.infoList.ticketForm);//票务信息
+                        var enterForm = JSON.parse(this.infoList.enterForm); //申报信息
 
-                            this.formRqList = enterForm.formRqList.concat(enterForm.formTypeList);
-                            var number=0;
-                            for(var i=0;i<this.items.length;i++){
-                                number=number+this.items[i].ticketNum;
-                            }
-                            this.numberToplimit=number;
-                            this.radio=this.infoList.enterType;
-                            this.mark = this.infoList.reason || "";
-                            console.log(this.mark,this.infoList.reason);
-                        } else {
-                            this.$message.error(response.resultMsg)
+                        this.formRqList = enterForm.formRqList.concat(enterForm.formTypeList);
+                        var number=0;
+                        for(var i=0;i<this.items.length;i++){
+                            number=number+this.items[i].ticketNum;
                         }
-
-                    }, (response) => {
+                        this.numberToplimit=number;
+                        this.radio=this.infoList.enterType;
+                        this.mark = this.infoList.reason || "";
+                        console.log(this.mark,this.infoList.reason);
+                    } else {
                         this.$message.error(response.resultMsg)
-                    })
+                    }
+
+                }, (response) => {
+                    this.$message.error(response.resultMsg)
+                })
             },
             /* 点击通过或者不通过按钮操作触发 */
             auditFn(status) {
@@ -357,7 +357,7 @@
         line-height: 50px;
     }
     .markReason span, .markReason textarea {
-        float: left;
+       float: left;
     }
     .markReason span{
         width: 140px;

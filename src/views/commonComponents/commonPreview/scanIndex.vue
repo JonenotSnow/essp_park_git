@@ -97,7 +97,8 @@
                 scanImgList:[],
                 title:this.utils.isBdPark()?"关于我们":"园区概览",
                 ccbUser:[],
-                LoginUserRole: this.SSH.getItem("LoginUserRol").toString()
+                LoginUserRole: this.SSH.getItem("LoginUserRol").toString(),
+                parkId:sessionStorage.getItem("parkId")
             }
         },
         created() {
@@ -106,8 +107,13 @@
         },
         methods: {
             getParkById(){
+                if (this.$route.query.id) {
+                    this.park = this.$route.query.id;
+                }else{
+                    this.park = sessionStorage.getItem("parkId");
+                }
                 this.$post(this.$apiUrl.manage.getParkById,{
-                    parkId : window.sessionStorage.getItem("parkId")
+                    parkId : this.park
                 })
                 .then((response) => {
                     this.dataMap = Object.assign({},response.resultData);

@@ -1,5 +1,5 @@
 <template>
-    <div class="el-main" id="baseInfo">
+    <div class="el-main" id="baseInfo2">
         <div class="baseInfo">
             <p>关于我们</p>
             <div class="step">
@@ -121,7 +121,7 @@ export default {
 </script>
 
 <style lang='less' scoped>
-    .el-main{
+    #baseInfo2{
         margin-left: 10px;
         width:990px;
         background: #fff;
