@@ -53,7 +53,7 @@
                                 </div>
                                 <div class="infobtn esspclearfix">
                                     <div class="btnitem"
-                                         v-for="(item,index) in JSON.parse(activeDetailData.ticketForm)"
+                                         v-for="(item,index) in activeDetailData.ticketForm"
                                          v-if=" activeDetailData.ticketForm != null && index<10" :key="index">
                                         ￥{{item.ticketPirce || "0.00"}} {{item.ticketType}}
                                     </div>
@@ -212,8 +212,9 @@
     import {swiper, swiperSlide} from 'vue-awesome-swiper'
     import Moment from "moment";
     import EsspParkTag from "@/components/EsspParkTag";
-
+    import mixin from '@/components/mixins/mixins_windowOpen.js'
     export default {
+        mixins:[mixin],
         components: {
             EsspBreadCrumb,
             swiper,
@@ -393,7 +394,7 @@
                     var _this = this;
                     this.$message.warning("您尚未登陆，请您先登陆");
                     setTimeout(function () {
-                        _this.$router.push('/userIndex/login');
+                        _this.windowHrefUrl('/userIndex/login');
                     }, 2000);
                     return;
                 }
@@ -536,6 +537,7 @@
                     if (response.resultCode == "CLT000000000") {
 
                         this.activeDetailData = response.resultData;
+                        this.activeDetailData.ticketForm= JSON.parse(this.activeDetailData.ticketForm)
                         this.flollowStatus = response.resultData.currAttenStatus;
 
                         if (response.resultData.activityLabel) {

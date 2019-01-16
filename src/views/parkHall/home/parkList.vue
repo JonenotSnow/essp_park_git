@@ -270,7 +270,7 @@
                         this.LoginUserRol = response.resultData;
                         this.parkId = item.parkId;
                         this.parkNm = item.parkNm;
-                        this.SSH.setItem("LoginUserRol",this.LoginUserRol);
+                        this.SSH.setItem("LoginUserRol",response.resultData);
                         this.SSH.setItem("parkId", item.parkId);
                         this.SSH.setItem("parkName", this.parkNm);
                         this.SSH.setItem("bdParkId", item.bdParkId);

@@ -1,7 +1,7 @@
 export let data4 = {
 
     title: {
-        text: '高新技术企业数量',
+        text: '高新技术企业数量(个)',
         textStyle:{
             color:"#10b5ff",
             fontWeight:'normal'
@@ -24,8 +24,6 @@ export let data4 = {
         }
     },
     yAxis: {
-
-
             type : 'value',
             axisLine:{
                 lineStyle :{

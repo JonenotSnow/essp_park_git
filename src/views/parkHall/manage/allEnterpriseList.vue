@@ -12,7 +12,7 @@
           		<div class="detailinfo" v-if="item.isShowDetail" >
           			<P>{{item.cstNm}}</P>
           			<P>{{item.idyTpcd}}</P>
-          			<div class="checkenterprise">进入企业橱窗</div>          			
+          			<div class="checkenterprise" @click="enterBusiness(item)">进入企业橱窗</div>          			
           		</div>
           	</div>
           </div>
@@ -34,7 +34,9 @@
 </template>
 
 <script>
+import mixins_windowOpen from '@/components/mixins/mixins_windowOpen.js'
 export default {
+	mixins:[mixins_windowOpen],
   data () {
     return {
     	totalCount: 0,
@@ -134,7 +136,11 @@ export default {
     showDetail(isTrue,index){
     	let that = this;
       that.enterprises[index].isShowDetail = !isTrue;
-    }
+		},
+		enterBusiness(item){
+				let prams = "?cstId="+item.cstId
+				this.windowOpenUrl('/centerIndex/showHome',prams)
+		}
   }
 };
 </script>

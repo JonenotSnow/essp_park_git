@@ -13,6 +13,7 @@
                     <div class="left-aside">
                         <div class="item" v-for="(item,index) in list" :key='index' :class='currentIndex == index?"active":""' @click="changeTab(index)">
                             <span>{{item.title}}</span>
+                            <span class='span-label'></span>
                             </div>
                     </div>
                     <div>
@@ -185,9 +186,8 @@ export default {
                 child:[
                    {
                     title:'科技部火炬计划调查信息系统',
-                    detail:`<p>河北省高新技术企业认定管理系统：
-                            为全面掌握高新技术企业发展情况，进一步做好高新技术企业认定管理工作。省科技厅决定开展全省高新技术企业统计、分析工作。填报时间：季报为每年1月、4月、7月、10月的1号到10号。年报为每年3月份前。</p>
-                            `,
+                    detail:`火炬统计调查制度是经国家统计局审批备案的科技部门专项统计调查项目之一，
+                    是一项重要的基础性统计工作。填报时间：每年3月份前。`,
                     btn_l:{
                         showFlag:true,
                         isRouerPush:false,
@@ -201,7 +201,8 @@ export default {
                    },
                    {
                     title:'河北省高新技术企业认定管理系统',
-                    detail:`<p>科技部火炬统计调查信息系统：火炬统计调查制度是经国家统计局审批备案的科技部门专项统计调查项目之一，是一项重要的基础性统计工作。填报时间：每年3月份前。</p>
+                    detail:`<p>为全面掌握高新技术企业发展情况，进一步做好高新技术企业认定管理工作。
+                    省科技厅决定开展全省高新技术企业统计、分析工作。填报时间：季报为每年1月、4月、7月、10月的1号到10号。年报为每年3月份前。</p>
                             `,
                     btn_l:{
                         showFlag:true,
@@ -216,7 +217,7 @@ export default {
                    },
                    {
                     title:'河北省高新技术统计信息网',
-                    detail:`<p>河北省高新技术统计信息网季报：为及时掌握全省高新技术企业经营情况，省科技厅决定开展季度统计调查工作。
+                    detail:`<p>为及时掌握全省高新技术企业经营情况，省科技厅决定开展季度统计调查工作。
                             填报时间：每年1月、4月、7月、10月的1号到15号。</p>`,
                     btn_l:{
                         showFlag:true,
@@ -326,14 +327,14 @@ export default {
                             }
                             &.active{
                                 color:#10b5ff;
-                                &::before{
-                                position: absolute;
-                                content: ' ';
-                                width: 30px;
-                                height: 3px;
-                                background-color: #10b5ff;
-                                bottom: 15px;
-                                left: 58px;
+                                .span-label{
+                                    position: relative;
+                                    content: ' ';
+                                    width: 30px;
+                                    height: 3px;
+                                    background-color: #10b5ff;
+                                    margin: 10px auto 0;
+
                                 }
                             }
 
@@ -352,6 +353,7 @@ export default {
                             padding: 73px 0 50px;
                             span{
                                 margin:0 26px 0 0;
+                                line-height: 50px;
                                 cursor:pointer;
                                 &.active{
 

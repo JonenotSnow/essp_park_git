@@ -90,7 +90,6 @@
      .entermore{
         text-align: center;
         line-height: 50px;
-        font-family: ArialMT;
         font-size: 14px;
         font-weight: normal;
         font-stretch: normal;

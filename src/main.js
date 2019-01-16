@@ -96,23 +96,28 @@ router.beforeEach(async (to, from, next) => {
     // let query  = getQueryObjuect()
     let menuList = sessionStorageHandler.getItem("menuList");
     let parkId = to.query.parkId;
+    let token = to.query.token
+    let isUrlHasBd = window.location.href.indexOf("bdppc") > -1;
     if (parkId) {
         sessionStorageHandler.setItem("parkId", parkId);
     }
-    let isUrlHasBd = window.location.origin.indexOf("bdppc") > -1;
     oneId = sessionStorageHandler.getItem("bdParkId")
-    console.log(oneId)
-    if (!oneId) {
+    if (!oneId && oneId === 'undefined') {
         oneId = sessionStorageHandler.getItem("parkId")
     }
-    if (to.query.token) {
-        sessionStorageHandler.setItem("token", to.query.token);
+    
+    if(token && token!='null'){
+        sessionStorageHandler.setItem("token", token);
+        await refreshAuthToken(token);
+    }
+    if (token && token!='null' && to.path !== "/parkList") {
+        
         if (to.query.label) {
             await getParkByName(to.query.label);
-        } else if (to.query.parkId) {
-            await getParkById(to.query.parkId)
+        } else if (parkId) {
+            await getParkById(parkId)
         }
-        await refreshAuthToken(to.query.token);
+        
         // bdParkId 有此字段优先返回
 
         console.log(oneId)
@@ -125,12 +130,13 @@ router.beforeEach(async (to, from, next) => {
         if (isUrlHasBd) {
             //判断是否保定园区路径，否则淮安， 以下通过方法获取保定园区信息
             await getParkByName("bdppc");
-        } else if (to.query.parkId) {
+        } else if (parkId) {
             //获取淮安信息
-            await getParkById(to.query.parkId);
+            await getParkById(parkId);
         } else {
             //没有parkId时
-            return router.push("/parkList");
+            return router.push("/parkList") && next();
+
         }
         await getLoginUserRole({parkId: oneId});
         await selectResMenu({oneId, LoginUserRol});
@@ -138,6 +144,11 @@ router.beforeEach(async (to, from, next) => {
 
     next();
 });
+async function getBd() {
+    await getParkByName("bdppc");  
+    await getLoginUserRole({parkId: oneId});
+    await selectResMenu({oneId, LoginUserRol});    
+}
 
 async function getParkByName(name) {
     await post("/parkManage/getParkByRealmName", {
@@ -165,7 +176,7 @@ async function getLoginUserRole(options) {
             console.log(3);
             if (response.resultCode == "CLT000000000") {
                 LoginUserRol = response.resultData;
-                sessionStorage.setItem("LoginUserRol", LoginUserRol);
+                sessionStorageHandler.setItem("LoginUserRol", LoginUserRol);
             } else {
                 Message.info(response.resultMsg);
             }

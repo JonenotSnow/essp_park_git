@@ -104,7 +104,6 @@ import mixin from '@/components/mixins/mixins_windowOpen.js'
 // 如果type值等于2,那么加载精准扶贫导航,反之正常加载
 // navBarData 引入导航数据
 // active 告知精准扶贫导航现在哪个点亮
-console.log(mixin)
 export default {
   name: "",
   props: ["routerTypeNum", "type", "navBarData", "jzfpLogo", "active"],
@@ -210,7 +209,7 @@ export default {
         this.$store.dispatch("windowChat", true);
         this.$store.state.chat.unReadNum = 0;
       } else {
-        this.windowHrefUrl('userIndex/login')
+        this.windowHrefUrl('/userIndex/login')
       }
     },
     getNewMsg() {
@@ -268,29 +267,29 @@ export default {
     },
     login() {},
     toHome() {
-      this.windowHrefUrl('home')
+      this.windowOpenNoParams('/home')
     },
     tolink() {
         this.$router.push("/parkHome");
     },
     toLogin() {
-      this.windowHrefUrl('userIndex/login')
+      this.windowHrefUrl('/userIndex/login')
     },
     toRegister() {
-      this.windowHrefUrl('userIndex/register')
+      this.windowOpenNoParams('/userIndex/register')
     },
     toPersonalCenter() {
-      this.windowHrefUrl('/personalCenter')
+      this.windowOpenNoParams('/personalCenter')
     },
     toMessageCenter() {
       this.new_msg = false;
-      this.windowHrefUrl('/messageCenter')
+      this.windowOpenNoParams('/messageCenter')
     },
     toCustomerService() {
-      this.windowHrefUrl('/helpCenter')
+      this.windowOpenNoParams('/helpCenter')
     },
     toHelpCenter() {
-      this.windowHrefUrl('/aboutUs/aboutState')
+      this.windowOpenNoParams('/aboutUs/aboutState')
     },
     isLogin() {
       let data = this.SSH.getItem("userInfo");

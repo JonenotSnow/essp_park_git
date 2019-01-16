@@ -169,15 +169,9 @@ export default {
     myNeed() {
 
       let parkId = this.SSH.getItem('parkId')
-      let token= this.SSH.getItem('token')
-      let params = '?linkSrc='+parkId+'&token='+token
+      let token= this.SSH.getItem('token')?'&token='+token:''
+      let params = '?linkSrc='+parkId+token
       this.windowOpenUrl('requIndex/requMyrqm/all',params)
-      // let routerData = this.$router.resolve({
-      //                   path: 'requIndex/requMyrqm/all',
-      //                   query: {linkSrc: parkId}
-      //               });
-      // window.open(routerData.href+'&token='+token, '_blank')
-      
     },
     publish() {
             this.showNeedRange = true

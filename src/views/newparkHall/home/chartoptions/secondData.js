@@ -1,7 +1,7 @@
 export let data1 = {
 
     title: {
-        text: '企业研究与发展（R&D）经费支出（亿元）',
+        text: '企业研究与发展(R&D)经费支出(亿元)',
         textStyle:{
             color:"#10b5ff",
             fontWeight:'normal'
@@ -24,15 +24,12 @@ export let data1 = {
         }
     },
     yAxis: {
-
-
             type : 'value',
             axisLine:{
                 lineStyle :{
                     color: '#CECECE'
                 }
             }
-
     },
     series: [{
         name: '',

@@ -95,11 +95,10 @@ export default {
           dataList.forEach((element,index) => {
             element= element.reverse()
             newParkHomeChartData['data'+index].xAxis.data=[]
-            newParkHomeChartData['data'+index].series.data=[]
+            newParkHomeChartData['data'+index].series[0].data=[]
             element.forEach(element => {
               newParkHomeChartData['data'+index].xAxis.data.push(element.year)
-
-              newParkHomeChartData['data'+index].series.data.push(element.dataNum)
+              newParkHomeChartData['data'+index].series[0].data.push(element.dataNum)
             });
           });
         }
