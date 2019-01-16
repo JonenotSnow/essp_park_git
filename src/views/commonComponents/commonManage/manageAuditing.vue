@@ -71,11 +71,11 @@
                     },
                     {
                         path: `/parkHall/manage/activityPoolAddPark`,
-                        name: "任务池"
+                        name: this.utils.isBdPark() ? "审核管理" : "任务池"
                     },
                     {
                         path: '',
-                        name: "入园申请审核"
+                        name: this.utils.isBdPark() ? "入驻申请审核" : "入园申请审核"
                     }
                 ],
                 infoList: [],

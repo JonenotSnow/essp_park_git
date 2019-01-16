@@ -281,7 +281,7 @@ export default {
 </style>
 
 <style lang='less' scoped>
-    .el-main{
+    #baseInfo{
         margin-left: 10px;
         width:990px;
         background: #fff;

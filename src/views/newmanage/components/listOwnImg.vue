@@ -16,7 +16,7 @@
                     <div class="ListTop">
                         <el-checkbox v-model="item.isChecked" @change="changeChecked(item,index)">备选项</el-checkbox>
                         <span class="time">保存时间：{{item.modifyTime | timerFormat}}</span>
-                        <span class="create">发布人：{{item.modifyName}}</span>
+                        <span class="create">发布人：{{item.modifyName || item.createName}}</span>
                         <i class="el-icon-delete remove" @click="removeList('01',item)"></i>
                     </div>
                     <div class="listBottom">
@@ -26,16 +26,14 @@
                             <p class="content">{{item.title}}</p>
                         </div>
                         <div class='editorBtn'>
-                            <span @click="editAchievementInfo(item,1)">编辑</span>
+                            <span @click="editAchievementInfo(item)">编辑</span>
                         </div>
                     </div>
                 </li>
-                <li v-if="list.length == 0" class="no_odata">尚未发布专家团队，点击右上方发布按钮立即发布吧!</li>
+                <li v-if="list.length == 0 && ajaxTit != '数据加载中……'" class="no_odata">尚未发布{{type}}，点击右上方发布按钮立即发布吧!</li>
+                <li v-if="list.length == 0 && ajaxTit == '数据加载中……'" class="data_tit">{{ajaxTit}}</li>
+
             </ul>
-        </div>
-        <div v-else class="noData">
-            <span>尚未发布{{type}}，点击右上方发布按钮立即发布吧！</span>
-            <img src="@assets/newparkimg/newmanage/achievementSet/no_list.png" alt="">
         </div>
     </div>
 </template>
@@ -51,15 +49,24 @@
                 type: String,
                 default: ''
             },
+            allCheck: {
+                type: Boolean,
+                default: ''
+            },
             list: {
                 type: [],
                 default: null
 
             },
+            ajaxTit: {
+                type: String,
+                default: ''
+            },
             selectListNum: {
                 type: Number,
                 default: ''
             },
+
             totalCount: {
                 type: Number,
                 defalut: 0
@@ -68,26 +75,33 @@
         data() {
 
             return {
-                allCheck: false, // 全选默认值
                 selectCheckItem: [],  // 已选择项
             }
-            console.log(this.list.achievList)
+
         },
-        computed: {},
         methods: {
+            // 配置相应的删除接口
+            filterStatus(type,string) {
+                var string = string || "00";
+                let urlMap = {
+                    "achievement": string == "00" ? this.$apiUrl.achievement.delAchievByKey : '/parkHall/manage/publishAchievement',   // 成果管理
+                    "expertItem": string == "00" ? this.$apiUrl.achievement.delExpert : '/parkHall/manage/publishExpertTeam'    // 专家团队
+                }
+                return urlMap[type];
+            },
             // 删除列表  01 表示删除一条 其他表示删除多条
             removeList(type,item){
                 var type = type;
                 var id = '';
                 if(type == "01") {
                     if(!item.isChecked) {
-                        this.$message.error("您还未选择该项成果！");
+                        this.$message.error("您还未选择该项"+this.type + "信息！");
                         return;
                     }
                     id = item.id;
                 } else {
                     if(this.selectCheckItem.length < 1) {
-                        this.$message.error("您还未选择成果！");
+                        this.$message.error("您还未选择"+this.type + "信息！");
                         return;
                     }
                     var arrId = [];
@@ -96,7 +110,7 @@
                     })
                     id = arrId.join(",");
                 }
-                this.$confirm('此操作将永久删除该记录, 是否继续?', '提示', {
+                this.$confirm('此操作将永久删除该信息, 是否继续?', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                     type: 'warning'
@@ -112,11 +126,12 @@
             },
             // 删除成果列表
             delAchievByKey(id){
-                this.$post(this.$apiUrl.achievement.delAchievByKey, {
+                var url = this.filterStatus(this.componentType);
+                this.$post(url, {
                     id: id
                 }).then(
                     response => {
-                        this.$message.error(response.resultMsg);
+                        this.$message.success(response.resultMsg);
                         this.$emit("delectList");
                     },
                     err => {
@@ -141,6 +156,9 @@
             changeChecked(item,index) {
                 if(item.isChecked) {
                     this.selectCheckItem.push(item);
+                    if(this.selectCheckItem.length == this.list.length) {
+                        this.allCheck = true;
+                    }
                 } else {
                    if(this.selectCheckItem.length) {
                        var index = this.selectCheckItem.indexOf(item);
@@ -151,8 +169,9 @@
                 }
                 console.log("选一个",this.selectCheckItem);
             },
-            editAchievementInfo(info, _type) {
-                this.$router.push({path: '/parkHall/manage/publishAchievement', query: {id: info.id}})
+            editAchievementInfo(info) {
+                var url = this.filterStatus(this.componentType, "01");
+                this.$router.push({path: url, query: {id: info.id}})
             }
         }
     }
@@ -169,6 +188,10 @@
 </style>
 
 <style lang='less' scoped>
+    .data_tit {
+        text-align: center;
+        line-height: 40px;
+    }
     .no_odata {
         text-align: center;
         height: 700px;

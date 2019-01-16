@@ -5,7 +5,7 @@
                 <img src="../../../assets/request_bg.png" alt="">
                 <div v-html='content' class='scanContent'></div>
                 <p class="check">
-                    <span @click="$router.push('/parkIndex/scanIndex')">点击查看{{parkNm}}园区详情</span>
+                    <span @click="$router.push({path:'/parkIndex/scanIndex',query:{id:parkId}})">点击查看{{parkNm}}园区详情</span>
                 </p>
                 <p class="save">
                     <el-button type="primary" size='small' @click="agreeInvite" :disabled="mark|markfike(mark)">确认加入

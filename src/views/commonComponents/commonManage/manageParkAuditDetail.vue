@@ -56,11 +56,12 @@ export default {
                 },
                 {
                     path:`/parkHall/manage/activityPoolAddPark`,
-                    name: "任务池"
+                    name: this.utils.isBdPark() ? "审核管理" : "任务池"
                 },
                 {
                     path:'',
-                    name: "入园审核详情"
+                    name: "",
+                    name: this.utils.isBdPark() ? "入驻审核详情" : "入园审核详情"
                 }
             ],
             infoList:[],

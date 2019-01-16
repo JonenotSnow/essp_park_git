@@ -31,7 +31,7 @@
                 </ul>
             </div>
             <div class="saveBtn">
-                <button class="my-btn btn-search" @click='getAllNeed'>查询</button>
+                <button class="my-btn btn-search" @click='getList'>查询</button>
                 <button class="my-btn btn-reset" @click='reset'>重置</button>
             </div>
             <div class="select">
@@ -269,9 +269,6 @@ export default {
                 return;
             }
             this.$router.push({path:'/parkHall/manage/manageParkAuditDetail',query:{entityId:rows.id}});
-        },
-        getAllNeed(){
-            console.log('方法没写就不要再html上写出来，不知道这个会让项目崩？')
         }
     }
 };

@@ -108,10 +108,14 @@
             <i class="imicon">*</i>活动详情：
           </span>
                     <div class="inline-box wraps">
-                        <essp-editor :editorCont="editorOption.editorCon" @onEditorChange="onEditorChange"></essp-editor>
+                        <quill-editor
+                            ref="myTextEditor"
+                            v-model="editorOption.editorCon"
+                            :options="editorOption"
+                        >
+                            <div id="toolbar" slot="toolbar"></div>
+                        </quill-editor>
                     </div>
-                    <!--使用展示的时候，必须用ql-editor这个class，这个是官网提供的方法-->
-                    <!--<div class="ql-editor" style="float: left;background: #ccc;" v-html="this.editorOption.editorCon"></div>-->
                 </div>
                 <ParkUpload :parkUploadData="parkUploadData" @changeImgUrl="showImgUrl"></ParkUpload>
                 <div class="tdcon">
@@ -661,10 +665,15 @@
 <script>
     import EsspBreadCrumb from "@/components/EsspBreadCrumb";
     import EsspEditor from "@/components/EsspEditor";
+    import addTag from "@/views/commonComponents/commonActivity/addTag";
     import Moment from "moment";
-    import EsspTag from "@/components/EsspTag";
     import EsspAddTag from "@/components/EsspAddTag";
     import ParkUpload from "@/views/parkHall/parkUpload"; // 上传图片控件
+
+    import "quill/dist/quill.core.css";
+    import "quill/dist/quill.snow.css";
+    import "quill/dist/quill.bubble.css";
+    import {quillEditor} from "vue-quill-editor";
 
     export default {
         name: "",
@@ -693,7 +702,7 @@
                 breadlist: [
                     {
                         path: "/parkIndex/park/launch",
-                        name: this.utils.isBdPark()?'平台活动':"园区活动"
+                        name: "园区活动"
                     },
                     {
                         path: "/parkIndex/launchForm",
@@ -942,10 +951,11 @@
         },
         components: {
             EsspBreadCrumb,
+            addTag,
             EsspEditor,
-            EsspTag,
             EsspAddTag,
-            ParkUpload
+            ParkUpload,
+            quillEditor
         },
         created() {
             this.uploads = this.$apiUrl.upload.upload;
@@ -965,11 +975,6 @@
         },
 
         methods: {
-            // 编辑器的值获取
-            onEditorChange(val){
-                this.editorOption.editorCon = val;
-                console.log(this.editorOption.editorCon);
-            },
             // 改变图片路径
             showImgUrl(url) {
                 this.activityPhoto = url;
@@ -1480,7 +1485,9 @@
                     activityPlace: this.activityPlace,
                     isCharge: this.isCharge,
                     chargeInfo: this.chargeInfo,
-                    activityDetails: this.editorOption.editorCon,
+                    activityDetails: this.editorOption.editorCon
+                        ? this.editorOption.editorCon.replace(/\s/g, "&nbsp")
+                        : "",
                     enterNeedAudit: this.enterNeedAudit,
                     activityPhoto: this.activityPhoto,
                     activityLabel: this.tags.join(","),
@@ -1551,7 +1558,9 @@
                             activityPlace: this.activityPlace,
                             isCharge: this.isCharge,
                             chargeInfo: this.chargeInfo,
-                            activityDetails: this.editorOption.editorCon,
+                            activityDetails: this.editorOption.editorCon
+                                ? this.editorOption.editorCon.replace(/\s/g, "&nbsp")
+                                : "",
                             enterNeedAudit: this.enterNeedAudit,
                             activityPhoto: this.activityPhoto,
                             activityLabel: this.tags.join(","),

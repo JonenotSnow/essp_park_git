@@ -39,7 +39,7 @@
                             </div>
                             <div>
                                 <p>
-                                    <span  @click="$router.push({path:'/centerIndex/showHome',query:{id:it.cstId}})">查看详情</span>
+                                    <span  @click="toOut(it.cstId)">查看详情</span>
                                 </p>
                                 <p>
                                     <span v-if="it.commandInd != '1'" @click="openDelPop(it.cstId)">{{isBdPark?'移除中心':'移除园区'}}</span>
@@ -97,11 +97,12 @@
 
 <script>
 import EsspTag from '../../../components/EsspTag'
+import mixins from '@/components/mixins/mixins_windowOpen.js'
 export default {
     components:{
-    props:[],
         EsspTag
     },
+    mixins:[mixins],
     data(){
         return{
             totalCount:0,
@@ -323,7 +324,14 @@ export default {
                         message: response.resultMsg
                     })
                 })
-        }
+        },
+        toOut(cstId) {
+            let parkId = this.SSH.getItem('parkId');
+            let bdParkId= this.SSH.getItem('bdParkId');
+            let cur = bdParkId?bdParkId:parkId;
+            let params = '?label='+cur+'&id='+cstId;
+            this.windowOpenUrl('/centerIndex/showHome',params);
+        },
     }
 }
 </script>

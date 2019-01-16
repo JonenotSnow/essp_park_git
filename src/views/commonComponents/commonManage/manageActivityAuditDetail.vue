@@ -137,6 +137,10 @@ export default {
                     name: this.utils.isBdPark()?"系统管理":"园区管理"
                 },
                 {
+                    path:`/parkHall/manage/activityPoolAddPark`,
+                    name: this.utils.isBdPark() ? "审核管理" : "任务池"
+                },
+                {
                     path:'',
                     name: "活动发布审核详情"
                 }
