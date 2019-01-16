@@ -15,14 +15,15 @@
                 <span class="removeBtn" @click.stop="showDialog()">删除</span>
                 <span class="selectStatus">状态：
 
-                    <select v-model="status" v-if="type == 1" @change="switchStatus()">
+                    <select v-model="approveType" v-if="type == 1" @change="switchStatus()">
+                        <!--status-&ndash;&gt;approveType-->
                         <option value="">全部</option>
                         <option value="12">审核不通过</option>
                         <option value="13">待审核</option>
                         <option value="02">审核通过</option>
                     </select>
 
-                    <select v-model="status" v-if="type == 2" @change="switchStatus()">
+                    <select v-model="approveType" v-if="type == 2" @change="switchStatus()">
                         <option value="">全部</option>
                         <option value="12">审核不通过</option>
                         <option value="02">审核通过</option>
@@ -110,7 +111,9 @@
         data() {
             return {
                 selectedCount: 15,      // 已选择条数
-                status: '',             // 状态
+
+                // status: '',             // 状态
+                approveType: '',        // 状态更改换用这个字段
 
                 // 删除事件相关字段
                 dialogVisible: false,
@@ -126,6 +129,12 @@
         created() {
         },
         methods: {
+            /**
+             *  状态切换事件
+             * */
+            switchStatus() {
+                this.$emit('childSwitchStatus', this.approveType);
+            },
 
             /**
              * 删除操作相关事件---开始

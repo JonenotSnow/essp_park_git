@@ -32,28 +32,48 @@
                         style="padding: 10px; width: 720px; height: 140px; font-size: 14px; color: #999; border-radius: 3px; border: solid 1px #cccccc;"/>
                 </el-form-item>
                 <el-form-item label="政策法规标签：">
-                    标签组件暂无
+                    <div class="inline_div_tag">
+                        <essp-add-tag
+                            ref="eat"
+                            :showtags="this.ruleForm.tags"
+                            @showTagWin="showTagWin"
+                            @delTag="delTag"
+                            @initTag="initTag"
+                            :tagprops="tagprops"
+                        ></essp-add-tag>
+                    </div>
+                    <essp-tag @showtag="closetag" :centerDialogVisible="visible" :tagprops="tagprops"></essp-tag>
                 </el-form-item>
                 <el-form-item label="发布人：">
                     {{userInfo.truename}}
                 </el-form-item>
                 <el-form-item>
+                    <!--<el-upload-->
+                    <!--class="upload-demo"-->
+                    <!--:action="uploadUrl"-->
+                    <!--:on-preview="handlePreview"-->
+                    <!--:on-remove="handleRemove"-->
+                    <!--:before-remove="beforeRemove"-->
+                    <!--multiple-->
+                    <!--:limit="5"-->
+                    <!--:on-exceed="handleExceed"-->
+                    <!--:file-list="fileList">-->
+                    <!--<span class="btn-upload">附件上传</span>-->
+                    <!--<div slot="tip" class="el-upload__tip">（政策法规支持pdf/word/excel等类型文件，大小10M内）</div>-->
+                    <!--</el-upload>-->
                     <el-upload
                         class="upload-demo"
-                        :action="uploadUrl"
-                        :on-preview="handlePreview"
-                        :on-remove="handleRemove"
-                        :before-remove="beforeRemove"
-                        multiple
+                        action="#"
                         :limit="5"
-                        :on-exceed="handleExceed"
+                        :on-remove="removeList"
+                        :before-upload="beforeAvatarUploadFile"
                         :file-list="fileList">
-                        <button class="btn-upload">附件上传</button>
+                        <span class="btn-upload">附件上传</span>
                         <div slot="tip" class="el-upload__tip">（政策法规支持pdf/word/excel等类型文件，大小10M内）</div>
                     </el-upload>
                 </el-form-item>
                 <el-form-item>
-                    <p class="scan"><span class="scan-1">预</span><span>览</span></p>
+                    <p class="scan" @click="handleScan()"><span class="scan-1">预</span><span>览</span></p>
                 </el-form-item>
                 <el-form-item>
                     <div class="btn-group">
@@ -99,8 +119,18 @@
                         placeholder="请输入科技服务详情"
                         style="padding: 10px; width: 720px; height: 140px; font-size: 14px; color: #999; border-radius: 3px; border: solid 1px #cccccc;"/>
                 </el-form-item>
-                <el-form-item label="科技服务标签：" prop="ruleForm.tags">
-                    标签组件暂无
+                <el-form-item label="科技服务标签：">
+                    <div class="inline_div_tag">
+                        <essp-add-tag
+                            ref="eat"
+                            :showtags="this.ruleForm.tags"
+                            @showTagWin="showTagWin"
+                            @delTag="delTag"
+                            @initTag="initTag"
+                            :tagprops="tagprops"
+                        ></essp-add-tag>
+                    </div>
+                    <essp-tag @showtag="closetag" :centerDialogVisible="visible" :tagprops="tagprops"></essp-tag>
                 </el-form-item>
                 <el-form-item label="发布人：">
                     {{userInfo.truename}}
@@ -109,21 +139,17 @@
                 <el-form-item>
                     <el-upload
                         class="upload-demo"
-                        :action="uploadUrl"
-                        :on-preview="handlePreview"
-                        :on-remove="handleRemove"
-                        :before-remove="beforeRemove"
-                        multiple
+                        action="#"
                         :limit="5"
-                        :on-exceed="handleExceed"
+                        :on-remove="removeList"
+                        :before-upload="beforeAvatarUploadFile"
                         :file-list="fileList">
-                        <button class="btn-upload">附件上传</button>
-                        <div slot="tip" class="el-upload__tip">（科技服务支持pdf/word/excel等类型文件，大小10M内）</div>
+                        <span class="btn-upload">附件上传</span>
+                        <div slot="tip" class="el-upload__tip">（政策法规支持pdf/word/excel等类型文件，大小10M内）</div>
                     </el-upload>
                 </el-form-item>
-
                 <el-form-item>
-                    <p class="scan"><span class="scan-1">预</span><span>览</span></p>
+                    <p class="scan" @click="handleScan()"><span class="scan-1">预</span><span>览</span></p>
                 </el-form-item>
                 <el-form-item>
                     <div class="btn-group">
@@ -133,15 +159,50 @@
                 </el-form-item>
             </el-form>
         </div>
+
+        <!-- 预览弹窗start -->
+        <el-dialog
+            class="my-scan-dialog"
+            :visible.sync="dialogVisible"
+            width="1200px"
+            :before-close="handleClose"
+        >
+            <div class="my-scan-main">
+                <div class="main-head" v-if="this.ruleForm.policyTitle">
+                    <div class="head-title">{{this.ruleForm.policyTitle}}</div>
+                    <div class="head-tag" v-if="this.ruleForm.tags && this.ruleForm.tags.length > 0">
+                        <span v-for="(item, index) in this.ruleForm.tags" :key="index">{{item}}</span>
+                    </div>
+                </div>
+                <div class="main-body">
+                    <div v-html="this.ruleForm.infoDetail"></div>
+                </div>
+                <div class="main-foot" v-if="this.ruleForm.fileUrl && this.ruleForm.fileUrl.length > 0">
+                    <p class="attachment-p attachment-title">附件下载：</p>
+                    <p class="attachment-p attachment-main"
+                       v-for="(item, index) in this.ruleForm.fileUrl"
+                       :key="index"
+                    >
+                        <a :href="item.url" download>·附件{{index+1}}：{{item.name}}</a>
+                    </p>
+                </div>
+            </div>
+        </el-dialog>
+        <!-- 预览弹窗end -->
+
     </div>
 </template>
 
 <script>
     import EsspBreadCrumb from "@/components/EsspBreadCrumb";
+    import EsspTag from "@/components/EsspTag";
+    import EsspAddTag from "@/components/EsspAddTag";
 
     export default {
         components: {
             EsspBreadCrumb,
+            EsspTag,
+            EsspAddTag
         },
         data() {
             return {
@@ -184,7 +245,7 @@
                     classtType: '',
                     approveComment: '',
                     infoDetail: '',
-                    tags: ['占位标签1', '占位标签2', '占位标签3']
+                    tags: []
                 },
                 rules_01: {
                     policyTitle: [
@@ -220,12 +281,41 @@
                     ]
                 },
 
+                // 标签相关字段
+                visible: false,
+                tagprops: {
+                    lblTpCd: "3000003",
+                    entId: ""
+                },
+
                 // 附件上传路由
                 fileList: [],
-                uploadUrl: this.$apiUrl.upload.upload
+
+                // 预览事件相关字段
+                dialogVisible: false,
             }
         },
         methods: {
+
+            /**
+             * 标签相关字段---开始
+             *  */
+            closetag({viewtags}) {
+                this.visible = false;
+                this.ruleForm.tags = viewtags;
+            },
+            showTagWin() {
+                this.visible = true;
+            },
+            delTag(tag) {
+                this.ruleForm.tags.splice(this.tags.indexOf(tag), 1);
+            },
+            initTag(tmpTags) {
+                this.ruleForm.tags = tmpTags;
+            },
+            /**
+             * 标签相关字段---结束
+             *  */
 
             // 创建事件
             submitForm(formName, saveType) {
@@ -363,6 +453,21 @@
                     let codestatus = response.resultCode;
                     if (codestatus == "CLT000000000") {
                         this.ruleForm = response.resultData;
+                        this.ruleForm.tags = this.ruleForm.tagsTxt.split(",");
+
+                        console.log('this.ruleForm.fileUrl==================');
+                        console.log(this.ruleForm.fileUrl);
+                        // let fileList = JSON.parse(this.ruleForm.fileUrl);
+                        let fileList = this.ruleForm.fileUrl.split(",");
+
+                        fileList.forEach((item, index) => {
+                            var obj = {
+                                name: item.name,
+                                url: item.url
+                            };
+                            this.fileList.push(obj);
+                        })
+
                     } else {
                         this.$message.info(response.resultMsg);
                     }
@@ -382,21 +487,52 @@
             /**
              * 附件上传事件---开始
              */
-            handleRemove(file, fileList) {
-                console.log(file, fileList);
+            removeList(file, fileList) {
+                console.log(fileList);
+                this.fileList = fileList;
             },
-            handlePreview(file) {
-                console.log(file);
+            beforeAvatarUploadFile(file) {
+                let param = new FormData(); // 创建form对象
+                param.append("file", file); // 通过append向form对象添加数据
+
+                param.append("type", "park"); // 通过append向form对象添加数据
+                param.append("model", "fj"); // 通过append向form对象添加数据
+                console.log("上传文件格式：", file.type);
+                var flieName = file.name;
+                var fileType = flieName.substring(flieName.lastIndexOf(".") + 1).toLowerCase();
+                console.log(fileType);
+                const isFile = fileType === "docx" || fileType === "doc" || fileType === "rar" || fileType === "zip" || fileType === "xls" || fileType === "xlsx";
+                const isLt30M = file.size / 1024 / 1024 < 30;
+
+                if (!isFile) {
+                    this.$message.error('上传附件只能上传docx、doc、rar、zip、xls、xlsx格式文件');
+                    return isFile;
+                }
+
+                if (!isLt30M) {
+                    this.$message.error("附件总共不能超过30MB!");
+                    return isLt30M;
+                }
+                this.$post(this.$apiUrl.upload.upload, param).then(response => {
+                    var obj = {
+                        name: file.name,
+                        url: response.resultData[0].url
+                    };
+                    this.fileList.push(obj);
+                    console.log('this.fileList============================');
+                    console.log(this.fileList);
+                });
+                return false; // 返回false不会自动上传
             },
-            handleExceed(files, fileList) {
-                this.$message.warning(`当前限制选择 5 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
-            },
-            beforeRemove(file, fileList) {
-                return this.$confirm(`确定移除 ${ file.name }？`);
-            }
             /**
              * 附件上传事件---结束
              */
+
+            // 预览事件---开始
+            handleScan() {
+                this.dialogVisible = true;
+            }
+
         },
         created() {
             if (this.id) {
@@ -428,6 +564,12 @@
 
         .publist-form {
             padding: 0 125px 60px;
+            .inline_div_tag {
+                /*border: 1px solid red;*/
+                float: left;
+                width: 40%;
+                line-height: 40px;
+            }
             .upload-demo {
                 .btn-upload {
                     display: inline-block;
@@ -495,6 +637,77 @@
                 }
                 .btn_zc {
                     margin-right: 125px;
+                }
+            }
+        }
+
+        /*预览样式*/
+        .my-scan-dialog {
+            .my-scan-main {
+                .main-head {
+                    .head-title {
+                        height: 25px;
+                        line-height: 25px;
+                        text-align: center;
+                        font-size: 24px;
+                        font-weight: normal;
+                        font-stretch: normal;
+                        letter-spacing: 0px;
+                        color: #333;
+                    }
+                    .head-info {
+                        margin-top: 35px;
+                        text-align: center;
+                        .info-p {
+                            display: inline-block;
+                            font-size: 12px;
+                            font-weight: normal;
+                            font-stretch: normal;
+                            letter-spacing: 0px;
+                            color: #999;
+                        }
+                        .release-time {
+                            margin-right: 38px;
+                        }
+                    }
+
+                    .head-tag {
+                        margin-top: 30px;
+                        text-align: center;
+                        span {
+                            margin-right: 20px;
+                            padding: 5px 8px;
+                            width: 40px;
+                            color: #fff;
+                            background-color: #cccccc;
+                        }
+                    }
+                }
+                .main-body {
+                    padding: 40px 50px 0;
+                }
+                .main-foot {
+                    padding: 60px 50px 0;
+                    .attachment-p {
+                        font-size: 16px;
+                        font-weight: normal;
+                        font-stretch: normal;
+                        line-height: 30px;
+                        letter-spacing: 0px;
+                        color: #666666;
+                    }
+                    .attachment-title {
+
+                    }
+                    .attachment-main {
+                        text-indent: 1rem;
+                        a {
+                            &:hover {
+                                color: #00a0e9;
+                                cursor: pointer;
+                            }
+                        }
+                    }
                 }
             }
         }
