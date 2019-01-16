@@ -189,7 +189,7 @@
                         input {
                             padding: 0;
                             margin-left: 18px;
-                            width: 150px;
+                            width: 110px;
                             height: 33px;
                             line-height: 33px;
                             font-size: 14px;

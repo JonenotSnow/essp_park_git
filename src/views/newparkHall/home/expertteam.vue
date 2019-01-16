@@ -140,7 +140,6 @@
             this.expertList = res.expertList;
             this.total= res.total;
             this.lodingMsg = "暂无数据";
-
         },(err)=>{
             this.$message.error(err.resultMsg);
         })
@@ -228,7 +227,7 @@
         text-align: center;
         display: flex;
         justify-content: center;
-        padding-top:60px; 
+        padding-top:60px;
         .tipspan{
             display: inline-block;
 
