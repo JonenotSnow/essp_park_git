@@ -148,18 +148,14 @@
         }
 
     }
-
     /*专家详情start*/
-
     .expertcontainer {
         background-color: #fff !important;
 
     }
-
     .expertcontainer .experinfo {
         margin-bottom: 20px;
     }
-
     .expertcontainer .experinfo .brief_info {
         margin-top: 56px;
         margin-left: 54px;

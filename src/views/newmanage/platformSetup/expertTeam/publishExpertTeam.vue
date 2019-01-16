@@ -87,43 +87,59 @@
             </li>
             <li class="saveBtn">
                 <span class="add" @click="addModule">添加新模块</span>
-                <span class="scan" @click="showExpertInfo">预 览</span>
+                <span class="scan" @click="dialogVisible =true">预 览</span>
             </li>
         </ul>
         <p class="save">
             <span @click="saveExpertInfo">保存上传</span>
         </p>
-        <div class="viewexpertinfo" v-if="isShowOverview">
-            <div class="btn_close" @click="hideDetail"><i class="iconfont icon-butongguo"></i></div>
-            <div class="pic">
-                <img :src="submitUploadInfo.photo">
-            </div>
-            <ul class="infodetail">
-                <li>
-                    <span class="title">专家姓名：</span>
-                    <span class="infocont">{{submitUploadInfo.name}}</span>
-                </li>
-                <li>
-                    <span class="title">专家职称：</span>
-                    <span class="infocont">{{submitUploadInfo.title}}</span>
-                </li>
-                <li>
-                    <span class="title">联系电话：</span>
-                    <span class="infocont">{{submitUploadInfo.phone}}</span>
-                </li>
-
-                <li>
-                    <span class="title">联系邮箱：</span>
-                    <span class="infocont">{{submitUploadInfo.email}}</span>
-                </li>
-                <li class="resume">
-                    <span class="title">专家简介：</span>
-                    <span class="infocont">{{submitUploadInfo.introduction}}</span>
-                </li>
-            </ul>
-        </div>
         <!-- 遮罩层 -->
-        <div class="img-layer" v-if="isShowOverview"></div>
+        <el-dialog
+            title="预览详情"
+            :visible.sync="dialogVisible"
+            width="1000px"
+            :before-close="handleClose">
+            <div class="expertcontainers">
+                <div class="experinfo">
+                    <div class="brief_info">
+                        <div class="expertimg">
+                            <img :src="submitUploadInfo.photo" alt="专家头像">
+                        </div>
+                        <div class="contact_info">
+                            <div class="contact_tel">
+                                <span>联系电话：</span>
+                                <div class="tel_num">{{submitUploadInfo.phone || '暂无'}}</div>
+                            </div>
+                            <div class="contact_mail">
+                                <span>联系邮箱：</span>
+                                <div class="mail_num">{{submitUploadInfo.email || '暂无'}}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="detail_info">
+                        <div class="detail_item basic_info">
+                            <div class="expertname">{{submitUploadInfo.name || "建信金融"}}</div>
+                            <div class="expertlevel">{{submitUploadInfo.title || "平台"}}</div>
+                            <div class="basic_des detail_item_content">
+                                {{submitUploadInfo.introduction || "暂无"}}
+                            </div>
+                        </div>
+                        <div class="other_info second_title" v-for="(item,index) in moduleList" :key="index">
+                            <span class="second_title_name">{{item.title}}</span>
+                            <div class="detail_item_content">
+                                <div v-html="submitUploadInfo.introduction ||'暂无'"></div>
+                            </div>
+                            <div class="detail_item_imglist esspclearfix" v-if="item.isPic == '1'">
+                                <div class="img_items" v-for="(itemChild, indexChild) in item.photoList" :key="indexChild">
+                                    <img :src="itemChild.src" alt="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear-both" style="clear: both"></div>
+                </div>
+            </div>
+        </el-dialog>
     </div>
 </template>
 
@@ -136,7 +152,7 @@
         },
         data() {
             return {
-                isShowOverview: false,
+                dialogVisible: false,
                 id: this.$route.query.id, // 专家id
                 submitUploadInfo: {
                     id: '',
@@ -217,8 +233,18 @@
                         flag = false;
                         break;
                     }
+                    if(this.moduleList[i].title.length > 50) {
+                        this.$message.error("您的标题不能大于50个字！");
+                        flag = false;
+                        break;
+                    }
                     if(this.moduleList[i].info == "") {
                         this.$message.error("您的专家还有未填，请您填写！");
+                        flag = false;
+                        break;
+                    }
+                    if(this.moduleList[i].info.length > 200) {
+                        this.$message.error("您的专家详情不能大于200个字！");
                         flag = false;
                         break;
                     }
@@ -231,8 +257,16 @@
                     this.$message.error("请填写姓名！");
                     return flag = false;
                 }
+                if (this.submitUploadInfo.name.length > 5) {
+                    this.$message.error("您的姓名不能超过4个字！");
+                    return flag = false;
+                }
                 if (this.submitUploadInfo.title.length === 0) {
                     this.$message.error("请填写职称！");
+                    return flag = false;
+                }
+                if (this.submitUploadInfo.title.length > 20) {
+                    this.$message.error("您的姓名不能超过20个字！");
                     return flag = false;
                 }
                 if(this.submitUploadInfo.photo == ""){
@@ -243,23 +277,27 @@
                     this.$message.error("请填写手机号！");
                     return flag = false;
                 }
+                if (!/^1[345678]\d{9}$/.test(this.submitUploadInfo.phone)) {
+                    this.$message.error("请正确填写手机号！");
+                    return flag = false;
+                }
                 if(this.submitUploadInfo.email == ""){
                     this.$message.error("请填写邮箱");
                     return flag = false;
                 }
-//                if (!/^1[345678]\d{9}$/.test(this.submitUploadInfo.phone)) {
-//                    this.$message.error("请正确填写手机号！");
-//                    return flag = false;
-//                }
-//                if (!/^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/.test(this.submitUploadInfo.email)) {
-//                    this.$message.error("请正确填写邮箱！");
-//                    return flag = false;
-//                }
                 if (this.submitUploadInfo.introduction.length === 0) {
                     this.$message.error("请正确填写简介！");
                     return flag = false;
                 }
-                console.log(this.isTrueModule());
+                if (this.submitUploadInfo.introduction.length > 200) {
+                    this.$message.error("您的简介不能大于200个字！");
+                    return flag = false;
+                }
+                if (!/^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/.test(this.submitUploadInfo.email)) {
+                    this.$message.error("请正确填写邮箱！");
+                    return flag = false;
+                }
+
                 if(!this.isTrueModule()) {
                     return flag = false;
                 }else {
@@ -746,46 +784,123 @@
             height: 100%;
             overflow: hidden;
         }
-        .viewexpertinfo {
-            z-index: 1000;
-            width: 750px;
-            background: #fff;
-            font-size: 16px;
-            position: fixed;
-            left: 50%;
-            top: 100px;
-            margin-left: -25%;
-            border-radius: 3px;
-            font-size: 14px;
-            .btn_close {
-                float: right;
-                margin: 10px;
-                cursor: pointer;
-            }
-            .infodetail {
-                padding: 30px;
-                float: left;
-                .infocont {
-                    max-width: 400px;
-                    display: inline-block;
-                    vertical-align: top;
-                }
-            }
-            .pic {
-                float: left;
-                width: 100px;
-                height: 100px;
-                line-height: 100px;
-                margin: 30px 0 30px 30px;
-                border: 1px solid #ccc;
-                text-align: center;
-                border-radius: 3px;
-                img {
-                    max-width: 100%;
-                    max-height: 100%;
-                    vertical-align: middle;
-                }
-            }
+    }
+    /*专家详情start*/
+    .expertcontainers {
+        background-color: #fff !important;
+
+    }
+    .expertcontainers .experinfo {
+        margin-bottom: 20px;
+    }
+    .expertcontainers .experinfo .brief_info {
+        float: left;
+        width: 240px;
+    }
+
+    .expertcontainers .experinfo .brief_info .expertimg {
+        img {
+            width: 100%;
+            height: 100%;
         }
+    }
+
+    .expertcontainers .experinfo .brief_info .contact_info {
+        margin-top: 20px;
+        font-size: 14px;
+        line-height: 32px;
+        color: #999999;
+        text-align: left;
+    }
+    .expertcontainers .detail_item_imglist .img_items{
+        float: left;
+        width: 31%;
+        margin-right: 2%;
+        height: 130px;
+        overflow: hidden;
+        img {
+            display: block;
+            width: 100%;
+            min-height: 100%;
+        }
+    }
+    .expertcontainers .experinfo .brief_info .contact_info .tel_num {
+        display: inline;
+        color: #000;
+    }
+
+    .expertcontainers .experinfo .brief_info .contact_info .mail_num {
+        display: inline;
+        color: #000;
+    }
+
+    .expertcontainers .experinfo .detail_info {
+        float: left;
+        margin-left: 20px;
+        color: #999;
+        text-align: left;
+        width: 700px;
+    }
+
+    .expertcontainers .experinfo .basic_info .basic_des {
+        margin-top: 30px;
+        margin-bottom: 40px;
+        font-size: 14px;
+        font-weight: normal;
+        font-stretch: normal;
+        letter-spacing: 0px;
+        color: #999999;
+    }
+
+    .expertcontainers .experinfo .basic_info .expertname {
+        margin-top: 14px;
+        height: 19px;
+        line-height: 19px;
+        font-size: 20px;
+        font-weight: normal;
+        font-stretch: normal;
+        letter-spacing: 0px;
+        color: #333333;
+    }
+
+    .expertcontainers .experinfo .basic_info .expertlevel {
+        margin-top: 20px;
+        height: 12px;
+        line-height: 12px;
+        font-size: 14px;
+        font-weight: normal;
+        font-stretch: normal;
+        letter-spacing: 0px;
+        color: #777777;
+    }
+
+    .expertcontainers .experinfo .detail_info .second_title {
+        font-size: 16px;
+        border-top: 1px dashed #ccc;
+    }
+
+    .expertcontainers .experinfo .second_title_name {
+        font-size: 16px;
+        display: block;
+        padding-top: 39px;
+        color: #666;
+    }
+
+    .expertcontainers .experinfo .detail_item_content {
+        margin-top: 30px;
+        margin-bottom: 40px;
+        font-size: 14px;
+        font-weight: normal;
+        font-stretch: normal;
+        line-height: 24px;
+        letter-spacing: 0px;
+        color: #999999;
+        div {
+            word-break: break-all;
+        }
+    }
+
+    .expertcontainers .experinfo .program_experience {
+        margin-top: 40px;
     }
 </style>
