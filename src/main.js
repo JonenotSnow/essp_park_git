@@ -64,6 +64,7 @@ Vue.filter("timerFormat", function (value) {
 
 // Vue.prototype.$uploadCommom = uploadCommom;
 let openUlr = "http://128.196.235.129:1345/essp_vue/#";
+// let openUlr = "http://128.196.235.132:1345/essp_vue/#";
 console.log(process.env.NODE_ENV);
 // if (process.env.NODE_ENV === "production") {
 //     openUlr = "http://want.bbc.com/essp/#";
@@ -105,19 +106,19 @@ router.beforeEach(async (to, from, next) => {
     if (!oneId && oneId === 'undefined') {
         oneId = sessionStorageHandler.getItem("parkId")
     }
-    
+
     if(token && token!='null'){
         sessionStorageHandler.setItem("token", token);
         await refreshAuthToken(token);
     }
     if (token && token!='null' && to.path !== "/parkList") {
-        
+
         if (to.query.label) {
             await getParkByName(to.query.label);
         } else if (parkId) {
             await getParkById(parkId)
         }
-        
+
         // bdParkId 有此字段优先返回
 
         console.log(oneId)
@@ -145,9 +146,9 @@ router.beforeEach(async (to, from, next) => {
     next();
 });
 async function getBd() {
-    await getParkByName("bdppc");  
+    await getParkByName("bdppc");
     await getLoginUserRole({parkId: oneId});
-    await selectResMenu({oneId, LoginUserRol});    
+    await selectResMenu({oneId, LoginUserRol});
 }
 
 async function getParkByName(name) {

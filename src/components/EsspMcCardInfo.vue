@@ -131,13 +131,13 @@
                         _this.$router.push('/userIndex/login');
                     },2000);
                     return
-                } 
+                }
                 if(this.utils.isVisitorMode()){
                     this.$message.warning("您暂无权限进行关注/取消关注");
                     return;
                 }
                 this.dialogVisible = true;
-                this.followId = item.followId;
+                this.followId = item.informationId;
             },
             cancleFocus() {
                 this.cancelMyFocus(this.followId);
