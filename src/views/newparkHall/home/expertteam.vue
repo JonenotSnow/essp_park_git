@@ -7,7 +7,7 @@
          <div class="resultbox">
              <div class="hasbox" v-if="expertList.length">
                 <div class="scroll">
-                    <swiper :options="swiperOption" ref="mySwiper" id="myexpertbox">
+                    <swiper :options="swiperOption" ref="mySwiper" id="myexpertbox" style="width: 1100px;">
                     <!-- slides -->
                     <swiper-slide v-for="(item,index) in expertList" :key="index" >
                         <div class="eachexpert">
@@ -31,9 +31,9 @@
 
                     <!-- Optional controls -->
                     <!-- <div class="swiper-pagination"  slot="pagination"></div> -->
+                    </swiper>
                     <div class="swiper-button-prev" slot="button-prev"></div>
                     <div class="swiper-button-next" slot="button-next"></div>
-                    </swiper>
                 </div>
              </div>
              <div v-show="expertList.length==0" class="nobox" v-cloak><i class="myicon"></i><span class="tipspan">{{lodingMsg}}</span></div>
@@ -140,6 +140,7 @@
             this.expertList = res.expertList;
             this.total= res.total;
             this.lodingMsg = "暂无数据";
+
         },(err)=>{
             this.$message.error(err.resultMsg);
         })
@@ -201,11 +202,14 @@
      height: 260px;
      margin-bottom: 20px;
      .hasbox {
+         .scroll{
+             position: relative;
+         }
          .eachexpert{
             display: flex;
             width: 450px;
-            height: 180px;
-            padding:40px 70px;
+            height: 150px;
+            padding:55px 40px;
             background-color: #ffffff;
             box-shadow: 2.2px 2px 3px 0px
                 rgba(140, 140, 140, 0.15);
@@ -252,7 +256,7 @@
  .expertimgcon{
      width: 150px;
      height: 150px;
-     margin-right:15px;
+     margin-right:24px;
 
      img{
          display: block;
@@ -301,9 +305,6 @@
             float: left;
 
             font-size: 20px;
-            font-weight: normal;
-            font-stretch: normal;
-            letter-spacing: 0px;
             color: #333333;
          }
          .morebtn{
@@ -318,10 +319,7 @@
      .joblevel{
 
         font-size: 14px;
-        font-weight: normal;
-        font-stretch: normal;
-        letter-spacing: 0px;
-        color: #777777;
+        color: #777;
         margin-bottom: 25px;
      }
  }
@@ -329,26 +327,26 @@
      width:100%;
      .conmore{
         float: right;
+         margin-right: 66px;
         width: 46px;
         cursor: pointer;
 
         font-size: 14px;
-        font-weight: normal;
-        font-stretch: normal;
-        letter-spacing: 0px;
         color: #fefefe;
      }
  }
 
-#myexpertbox .swiper-button-prev{
-    width: 5%;
-    height: 15%;
-    background-image: url("../../../assets/newparkimg/home/experthomeprev.jpg")
+.scroll .swiper-button-prev{
+    width: 36px;
+    height: 36px;
+    background: url("../../../assets/newparkimg/home/experthomenext.png") no-repeat center center;
+    outline: none;
 }
-#myexpertbox .swiper-button-next{
-    width: 5%;
-    height: 15%;
-    background-image: url("../../../assets/newparkimg/home/experthomenext.jpg")
+.scroll .swiper-button-next{
+    width: 36px;
+    height: 36px;
+    background: url("../../../assets/newparkimg/home/experthomeprev.png") no-repeat center center;
+    outline: none;
 }
 .main_inter .com-brf{
     color:#ccc;
