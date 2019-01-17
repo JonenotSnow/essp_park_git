@@ -99,16 +99,18 @@ export default {
             newParkHomeChartData["data" + index].xAxis.data = [];
             newParkHomeChartData["data" + index].series[0].data = [];
             element.forEach(element => {
-              console.log(newParkHomeChartData["data" + index].xAxis.lenth)
-              if (newParkHomeChartData["data" + index].xAxis.lenth < 6) {
+              console.log(newParkHomeChartData["data" + index])
+              if (newParkHomeChartData["data" + index].xAxis.data.length < 5) {
                 newParkHomeChartData["data" + index].xAxis.data.push(
                   element.year
                 );
+                // console.log(newParkHomeChartData["data" + index].xAxis)
                 newParkHomeChartData["data" + index].series[0].data.push(
                   element.dataNum
                 );
               }
             });
+            console.log(newParkHomeChartData["data" + index].xAxis)
           });
         }
       });
