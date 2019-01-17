@@ -67,7 +67,7 @@ export default {
     margin: 0 auto;
   }
   .select-radio {
-    margin: 50px auto 30px;
+    margin: 50px auto 50px;
     text-align: center;
   }
   .btn-sure {
@@ -110,6 +110,18 @@ export default {
   &:hover {
     color: #00a0e9;
   }
+}
+.el-radio+.el-radio{
+  margin-left: 0;
+}
+.el-radio {
+  /deep/.el-radio__label{
+      font-size: 18px;
+  }
+  display: block;
+  text-align: left;
+  margin: 20px 0 10px;
+
 }
 </style>
     

@@ -20,11 +20,11 @@
           </div>
 
         </el-form-item>
-        <el-form-item label="发布人" required>
+        <!-- <el-form-item label="发布人" required>
           <el-col :span="12">
             <el-input v-model="form.people" disabled="true"></el-input>
           </el-col>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item>
           <el-upload
             class="upload-demo"
@@ -116,7 +116,7 @@ export default {
 
       if (!isFile) {
         this.$message.error(
-          "上传附件只能上传pdf、word、excel、xlsx、xls、docx格式文件"
+          "上传附件只能上传pdf/word/excel格式文件"
         );
         return isFile;
       }
@@ -130,6 +130,7 @@ export default {
           name: file.name,
           url: response.resultData[0].url
         };
+        this.fileList=[]
         this.fileList.push(obj);
       });
       return false; // 返回false不会自动上传

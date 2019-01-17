@@ -158,6 +158,7 @@
         },
         created() {
             this.getNoticeList();
+            // this.getCcbUser(); //不再需要这个接口，从本地获取当前状态
 
             // 管理员身份登录才调用这个方法
             if (this.LoginUserRole.includes('33') || this.LoginUserRole.includes('34')) {
@@ -297,6 +298,7 @@
              * 首页任务池---最新申请入园消息
              */
             getLastApplyPark() {
+                console.log(this.$apiUrl.manage.getLastApplyPark)
                 this.$post(this.$apiUrl.manage.getLastApplyPark, {
                     parkId: window.sessionStorage.getItem("parkId"),
                 }).then(response => {

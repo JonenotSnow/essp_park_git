@@ -1,7 +1,7 @@
 export const manage = {
     getCount: '/task/getCount', // 任务池待审核数量
     getAuditList: '/audit/getAuditList', // 任务池待审核列表 惠政04
-
+    getLastApplyPark:"/memberManage/getLastApplyPark", //获取园区任务池通知
     auditApplyPark: '/audit/applyPark  ', // 入园审核详情
     auditInformation: '/audit/infomation', // 资讯审核详情
     auditActivity: '/audit/activity  ', // 活动审核详情

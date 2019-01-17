@@ -171,10 +171,9 @@ async function getParkByName(name) {
 
 async function getLoginUserRole(options) {
     var urlapi = apiUrl.home.getLoginUserRole;
-    var pop = {parkId: options.parkId};
+    var pop = {flag: options.parkId,park:sessionStorageHandler.getItem('parkId')};
     await post(urlapi, pop).then(
         response => {
-            console.log(3);
             if (response.resultCode == "CLT000000000") {
                 LoginUserRol = response.resultData;
                 sessionStorageHandler.setItem("LoginUserRol", LoginUserRol);
@@ -215,7 +214,6 @@ async function selectResMenu(options, next) {
 async function refreshAuthToken(token) {
     await post(apiUrl.user.getOtherTokenUrl, {access_token: token}).then(
         response => {
-            console.log(2);
             let data = response.resultData;
             // 开发阶段没必要加，暂时注释
             loginCtrl(data)
@@ -249,7 +247,6 @@ async function getParkById(parkId) {
 }
 
 function loginCtrl(data) {
-    console.log(data.esspUserLoginVo);
     sessionStorageHandler.setItem("userInfo", data.esspUserLoginVo);
     sessionStorageHandler.setItem("freezeFlag", data.freeze);
     sessionStorageHandler.setItem("applyTag", data.applyTag);
