@@ -6,9 +6,9 @@
             <div class="tabletit">
                 <p class="title_p">系统正在为你导出表格，导出完毕可点击下载</p>
             </div>
-            <div class="downContent"></div>
+            <div class="downContent">{{checkedIds}}</div>
             <p class="downLoadBtn">
-                <a href="" download="true">点击下载</a>
+                <span @click="exportData">点击下载</span>
             </p>
         </el-dialog>
 
@@ -44,23 +44,8 @@
             
             //批量导出
             exportData () {
-                let idList = this.list.map((el)=>{
-                    return el.id;
-                })
-                axios.get(this.$apiUrl.manageNeed.exportNeedData, {
-                        params : {
-                            id: idList.toString()
-                        }
-                    }).then(response => {
-                        let codestatus = response.resultCode;
-                        if (codestatus == "CLT000000000") {
-                            this.data = response.resultData;
-                        } else {
-                            this.$message.info(response.resultMsg);
-                        }
-                    }, err => {
-                        this.$message.error("接口异常");
-                    })
+                window.location.href = 'http://128.196.235.129:1345/'+this.$apiUrl.manageNeed.exportNeedData+'?id='+this.checkedIds.toString();
+               
             },
             //关闭弹窗
             setVisible() {
@@ -103,7 +88,7 @@
     .downLoadBtn{
         margin:45px auto 30px;
         text-align: center;
-        a{
+        span{
             display: inline-block;
             width: 277px;
             height: 50px;
