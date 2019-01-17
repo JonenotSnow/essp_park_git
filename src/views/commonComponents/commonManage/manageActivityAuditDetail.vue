@@ -145,13 +145,14 @@ export default {
                     name: "活动发布审核详情"
                 }
             ],
-            infoList:this.$route.query.content,
+            infoList:{},
             rzz:JSON.parse(localStorage.getItem('rzz')),
             auditInfo:[]
         }
     },
     created () {
         this.getCommentList();
+        this.getByActivityId();
     },
     filters: {
         timerFormat(vaule){
@@ -200,6 +201,21 @@ export default {
         }
     },
     methods: {
+        getByActivityId(){
+            this.$post(this.$apiUrl.manage.getCommentList,{
+                parkId : window.sessionStorage.getItem("parkId"),
+                activityId : this.$route.query.entityId,
+                opMark :'01'
+            })
+            .then((response) => {
+                this.infoList = response.resultData;
+            },(response)=>{
+                this.$message({
+                    type: 'error',
+                    message: response.resultMsg
+                });
+            })
+        },
         getCommentList(){
             this.$post(this.$apiUrl.manage.getCommentList,{
                 parkId : window.sessionStorage.getItem("parkId"),
