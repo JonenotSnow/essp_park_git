@@ -57,5 +57,6 @@ export const manage = {
 
 
     checkAuth:'commom/checkAuth',  //flag:(1,0)
-    getByActivityId:'activity/getByActivityId'  //flag:(1,0)
+    getByActivityId:'activity/getByActivityId',  //flag:(1,0)
+    applyFormExport:'/memberManage/applyFormExport' //入驻申请表到导出
 }
