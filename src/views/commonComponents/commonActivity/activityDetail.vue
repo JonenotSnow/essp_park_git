@@ -66,7 +66,7 @@
                                     </button>
                                     <button
                                         v-else-if="activeDetailData.status == '02' && btnText==1">
-                                        <em class="btn_text_i" @click="signUp(activeDetailData.enterType)" v-if="activeDetailData.topLimit != 0">立即报名</em>
+                                        <em class="btn_text_i" :disabled="!loginFlag" @click="signUp(activeDetailData.enterType)" v-if="activeDetailData.topLimit != 0">立即报名</em>
                                         <em class="btn_text_i" v-else>人数已满</em>
                                     </button>
                                     <button
@@ -433,7 +433,7 @@
             },
             /* 立即报名 */
             signUp(enrollType) {
-                
+
                 if (!this.loginFlag) {
                     var _this = this;
                     this.$message.warning("您尚未登陆，请您先登陆");
@@ -668,14 +668,14 @@
 
 <style lang='less' scoped>
     @import "../../../assets/css/mixin";
-    //取关弹窗的样式
+    /*取关弹窗的样式*/
     .btn_text_i {
         color: #fff;
         display: inline-block;
         height: 100%;
         width: 100%;
         font-style: normal;
-    }
+    }f
     .jbnc {
         .essp_width_auto();
         height: 32px;
@@ -811,7 +811,7 @@
         .wrap {
             .headerItem {
                 width: 1151px;
-                // height: 302px;
+                height: 302px;
                 overflow: hidden;
                 margin: 0 22px 30px 27px;
                 overflow: hidden;

@@ -172,18 +172,18 @@
                                                    clearable placeholder="请选择">
                                             <el-option
                                                 v-for="(item,index) in formListItem.childrens"
-                                                :key="item.value"
-                                                :label="index"
+                                                :key="item.name"
+                                                :label="item.name"
                                                 :value="item.name">
                                             </el-option>
                                         </el-select>
                                         <!--复选框-->
-                                        <el-select multiple collapse-tags v-if="formListItem.type=='checkbox'"
+                                        <el-select multiple  v-if="formListItem.type=='checkbox'"
                                                    v-model="formListItem.tittext" clearable placeholder="请选择">
                                             <el-option
                                                 v-for="(item,index) in formListItem.childrens"
-                                                :key="item.value"
-                                                :label="index"
+                                                :key="item.name"
+                                                :label="item.name"
                                                 :value="item.name">
                                             </el-option>
                                         </el-select>
@@ -241,18 +241,18 @@
                             <el-select v-if="item.type=='radio'" v-model="item.tittext" clearable placeholder="请选择">
                                 <el-option
                                     v-for="(item,index) in item.childrens"
-                                    :key="item.value"
-                                    :label="index"
+                                    :key="item.name"
+                                    :label="item.name"
                                     :value="item.name">
                                 </el-option>
                             </el-select>
                             <!--复选框-->
-                            <el-select multiple collapse-tags v-if="item.type=='checkbox'" v-model="item.tittext"
+                            <el-select multiple v-if="item.type=='checkbox'" v-model="item.tittext"
                                        clearable placeholder="请选择">
                                 <el-option
                                     v-for="(item,index) in item.childrens"
-                                    :key="item.value"
-                                    :label="index"
+                                    :key="item.name"
+                                    :label="item.name"
                                     :value="item.name">
                                 </el-option>
                             </el-select>
