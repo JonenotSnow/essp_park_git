@@ -7,15 +7,15 @@ const state = {
 
 // mutations
 const mutations = {
-    adminParkList (state, products) {
-        state.navIndex = products
+    changeNavIndex (navIndex) {
+        return navIndex;
     },
 }
 
 // actions
 const actions = {
-    getAdminParkList ({ commit }) {
-        commit('adminParkList', products)
+    commitNavIndex ({ commit }) {
+        commit('changeNavIndex', products)
     }
 }
 
