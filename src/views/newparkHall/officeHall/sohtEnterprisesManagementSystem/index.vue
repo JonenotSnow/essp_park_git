@@ -76,7 +76,7 @@
             // 查看政策
             linkToPolicie() {
                 this.$router.push({
-                    path: '/sciIndex/policieAndRegulation/policieAndRegulation'
+                    path: '/sciIndex/policieAndRegulation/policieAndRegulatio'
                 });
             }
         },

@@ -215,7 +215,9 @@
                         this.satpDate = response.resultData;
 
                         // 对标签进行处理
-                        this.satpDate.tagsTxt = this.satpDate.tagsTxt.split(',');
+                        if (this.satpDate.tagsTxt) {
+                            this.satpDate.tagsTxt = this.satpDate.tagsTxt.split(',');
+                        }
 
                         // 对附件进行处理
                         if (this.satpDate.fileUrl) {

@@ -31,8 +31,8 @@
                     <div class="my-style" v-for="(item, index) in fileList" :key="index">{{item.name}}</div>
                 </el-form-item>
             </el-form>
-            <div class="audit-line"></div>
-            <div class="audit-opinion">
+            <div class="audit-line" v-if="auditStatus== '13'"></div>
+            <div class="audit-opinion" v-if="auditStatus== '13'">
                 <button class="audit-btn audit-success" @click="showDialog('02')">通过</button>
                 <button class="audit-btn audit-reject" @click="showDialog('12')">不通过</button>
             </div>
@@ -74,8 +74,8 @@
                     <div class="my-style" v-for="(item, index) in fileList" :key="index">{{item.name}}</div>
                 </el-form-item>
             </el-form>
-            <div class="audit-line"></div>
-            <div class="audit-opinion">
+            <div class="audit-line" v-if="auditStatus== '13'"></div>
+            <div class="audit-opinion" v-if="auditStatus== '13'">
                 <button class="audit-btn audit-success" @click="showDialog('02')">通过</button>
                 <button class="audit-btn audit-reject" @click="showDialog('12')">不通过</button>
             </div>
@@ -117,6 +117,7 @@
                 parkId: sessionStorage.getItem("parkId") || "",
                 applyType: this.$route.query.applyType,
                 id: this.$route.query.id || "",
+                auditStatus: this.$route.query.status || "",    // 02 已通过，12 拒绝，13 待审核
 
                 breadlist_01: [
                     {
@@ -220,7 +221,9 @@
                         this.satpDate = response.resultData;
 
                         // 对标签进行处理
-                        this.satpDate.tagsTxt = this.satpDate.tagsTxt.split(',');
+                        if (this.satpDate.tagsTxt) {
+                            this.satpDate.tagsTxt = this.satpDate.tagsTxt.split(',');
+                        }
 
                         // 对附件进行处理
                         if (this.satpDate.fileUrl) {
@@ -304,6 +307,7 @@
         }
 
         .publist-form {
+            padding-bottom: 60px;
             .demo-ruleForm {
                 padding: 0 125px;
             }
@@ -332,7 +336,6 @@
             }
             .audit-opinion {
                 margin: 60px auto 0;
-                padding-bottom: 60px;
                 text-align: center;
                 .audit-btn {
                     padding: 10px 30px;
