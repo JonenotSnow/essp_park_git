@@ -61,13 +61,13 @@
             // 立即处理
             dealWith() {
                 let url;
-                if(this.type=='0'){
+                if (this.type == '0') {
                     url = 'http://tj.ctp.gov.cn/tl/login.aspx';
                 }
-                if(this.type=='1'){
+                if (this.type == '1') {
                     url = 'http://gxtj.heinfo.gov.cn/Index/Main.asp';
                 }
-                if(this.type=='2'){
+                if (this.type == '2') {
                     url = 'http://gqrd.hebstd.gov.cn:81/';
                 }
                 window.open(url);
@@ -75,11 +75,11 @@
 
             // 查看政策
             linkToPolicie() {
-                sessionStorage.setItem('navIndex','1')
+                sessionStorage.setItem('navIndex', '1')
                 this.$router.push({
-                    path: '/sciIndex/policieAndRegulation/policieAndRegulation',
-                    query:{
-                        'navIndex':'1'
+                    path: '/sciIndex/policieAndRegulation/policieAndRegulatio',
+                    query: {
+                        'navIndex': '1'
                     }
                 });
             }
