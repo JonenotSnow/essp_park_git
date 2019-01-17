@@ -86,7 +86,7 @@ export default {
                     btn_l:{
                         showFlag:true,
                         isRouerPush:false,
-                        path:'http://www.ctmht.net.cn'
+                        path:'http://rd.hebtsn.gov.cn:8080'
                     },
                     btn_r:{
                         showFlag:true,
@@ -100,7 +100,7 @@ export default {
                     btn_l:{
                         showFlag:true,
                         isRouerPush:false,
-                        path:'http://www.ctmht.net.cn'
+                        path:'http://gqrd.hebstd.gov.cn:81'
                     },
                     btn_r:{
                         showFlag:true,
