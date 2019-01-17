@@ -6,11 +6,12 @@
                     <li>
                         <div>
                             <span>公司名称：</span>
-                            <input type="text" v-model="searchCondition.createName" placeholder="请输入公司名称">
+                            <input type="text" v-model="searchCondition.cstName" placeholder="请输入公司名称">
                         </div>
                         <div>
                             <span>发布人：</span>
-                            <input type="text" v-model="searchCondition.cstName" placeholder="请输入发布人">
+                            <input type="text" v-model="searchCondition.createName
+                            " placeholder="请输入发布人">
                         </div>
                     </li>
                     <li>
@@ -210,20 +211,7 @@
             let idList = this.list.map((el)=>{
                 return el.id;
             })
-            axios.get(this.$apiUrl.manageNeed.exportNeedData, {
-                    params : {
-                        id: idList.toString()
-                    }
-                }).then(response => {
-                    let codestatus = response.resultCode;
-                    if (codestatus == "CLT000000000") {
-                        this.data = response.resultData;
-                    } else {
-                        this.$message.info(response.resultMsg);
-                    }
-                }, err => {
-                    this.$message.error("接口异常");
-                })
+            window.location.href = this.$apiUrl.manageNeed.exportNeedData + "?id="+idList.toString();
         },
     }
  }
