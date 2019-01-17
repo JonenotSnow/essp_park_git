@@ -71,6 +71,8 @@ const noAndADDetail = resolve => require(['@/views/parkHall/manage/noAndADDetail
 const auditSetting = resolve => require(['@/views/parkHall/manage/auditSetting'],resolve);
 // 园区成員管理
 const userManage = resolve => require(['@/views/commonComponents/commonManage/userManage'],resolve);
+// 园区邀请函
+const requestPage = resolve => require(['@/views/commonComponents/commonManage/requestPage'],resolve);
 // 园区管理入园审核
 const activityPoolAddPark1 =resolve => require(['@/views/parkHall/manage/activityPoolAddPark'],resolve);
 // 园区管理资讯审核
@@ -194,6 +196,12 @@ export const parkRouter1 = {
             name: "park-home",
             component: parkHome,
             
+        },
+        {
+
+            path: '/requestPage',
+            name: "park-requestPage",
+            component: requestPage,
         },
         {
 
