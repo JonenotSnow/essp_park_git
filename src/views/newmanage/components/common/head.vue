@@ -73,9 +73,9 @@
             },
             // 发布跳转
             getPageType() {
-                this.pageType.forEach(element => {
-                    if (element.type == this.type) {
-                        this.$router.push({path:element.url})
+                this.pageType.forEach((item,index) => {
+                    if (item.type == this.type) {
+                        this.$router.push({path:item.url})
                         return;
                     }
                 });

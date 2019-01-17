@@ -1,5 +1,5 @@
 <template>
-    <div id="publishExpertTeam">
+    <div id="publishExpertTeams">
         <essp-bread-crumb :breadList="breadlist"></essp-bread-crumb>
         <p class='Otitle'>
             <i></i>
@@ -432,7 +432,7 @@
     }
 </style>
 <style lang='less' scoped>
-    #publishExpertTeam {
+    #publishExpertTeams {
         width: 1200px;
         background: #fff;
         margin: 0 auto;

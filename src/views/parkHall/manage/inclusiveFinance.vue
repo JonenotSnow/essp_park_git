@@ -8,11 +8,11 @@
       <div class="inclusive_cont">
         <div class="inclusive_cont_list cci_info" :class="{cur:detailShow[0]}"><!--建融智合-->
           <div class="cci_info_list" v-for="(item,index) in cciInfo">
-            <p class="cci_info_intro">{{item.content}}</p>
+            <p class="cci_info_intro" v-html="item.content"></p>
             <div class="list_bg">
               <img :src="item.img" alt="">
             </div>
-          </div>       
+          </div>
         </div>
         <div class="inclusive_cont_list sm_loan" :class="{cur:detailShow[1]}"><!--小微快贷-->
           <div class="sm_loan_list" v-for="(item,index) in smLoan" :key="index">
@@ -45,9 +45,9 @@
               </div>
             </div>
             <div class="iscase_fir_des" v-for="(item,index) in industrySolutions.slice(0,5)" :key="index" v-if="item.isCaseCur">
-              <p class="casehead"><b clss="casetitle">行业解决方案：</b><b class="casedectitle">方案简介：</b></p>
+              <p class="casehead"><b class="casetitle">行业解决方案：</b><b class="casedectitle">方案简介：</b></p>
               <div class="caseinfo" v-for="resCase in item.resolveCase">
-                <span class="casetitlename">{{resCase.caseSecName}}</span> 
+                <span class="casetitlename">{{resCase.caseSecName}}</span>
                 <span class="casedecinfo">{{resCase.caseSecInfo}}</span>
               </div>
             </div>
@@ -63,22 +63,23 @@
               </div>
             </div>
             <div class="iscase_sec_des" v-for="(item,index) in industrySolutions.slice(5,10)" :key="index" v-if="item.isCaseCur">
-              <p class="casehead"><b clss="casetitle">行业解决方案：</b><b class="casedectitle">方案简介：</b></p>
+              <p class="casehead"><b class="casetitle">行业解决方案：</b><b class="casedectitle">方案简介：</b></p>
               <div class="caseinfo" v-for="resCase in item.resolveCase">
-                <span class="casetitlename">{{resCase.caseSecName}}</span> 
+                <span class="casetitlename">{{resCase.caseSecName}}</span>
                 <span class="casedecinfo">{{resCase.caseSecInfo}}</span>
               </div>
             </div>
-          </div>       
+          </div>
+          <div class="checktowebsite">
+            <a href="http://www.ccb.com/cn/home/tysh/hyjjfa/tysh_case.html">点击进入建行官网办理>></a>
+          </div>
         </div>
       </div>
     </div>
     <div class="bankpoint">
-      <div class="checktowebsite">
-        <a href="">点击进入建行官网办理>></a>
-      </div>
+
       <div class="pointphoneinfo">
-        <div class="pointhead"><< 详询中国建设银行保定分行各网点 >></div>
+        <div class="pointhead"> <span><< </span>详询中国建设银行保定分行各网点 <span>>></span></div>
         <div class="pointtype">
           <div class="typelist" v-for="(item,index) in pointType" :class="{cur:item.isCur}" @click="showPointPhoneDetail(item,index)">{{item.name}}</div>
         </div>
@@ -94,7 +95,7 @@
               <div class="phoneitem" v-for="(telPhone,idx) in pointTypeItem.slice(10,15)" :key="idx">{{telPhone}}</div>
             </div>
           </div>
-          
+
         </div>
       </div>
     </div>
@@ -124,19 +125,19 @@ export default {
         {
           name:'平台简介',
           content:'“建融智合”企业智能撮合综合服务平台以中国建设银行作为服务第三方，打通线上与线下、境内与境外、系统内与外的对接渠道，为资金与资源需求双方提供智能撮合方案。',
-          img:require('../../../assets/newparkimg/inclusivefinance/platform_introduce.png')
+          img:require('@/assets/newparkimg/inclusivefinance/platform_introduce.png')
         },{
           name:'全领域撮合',
           content:'企业智能撮合综合服务平台目前已提供覆盖全行业全领域项目撮合，服务撮合、商品撮合，为公司客户提供贯穿企业生命周期各类产品、服务、项目等需求的一站式智能撮合服务，以打造建设银行服务下的企业需求智能撮合共享平台',
-          img:require('../../../assets/newparkimg/inclusivefinance/field_match.png')
+          img:require('@/assets/newparkimg/inclusivefinance/field_match.png')
         },{
           name:'智慧园区',
           content:'园区模块目前的采用标准化+定制的模式，现在已有的园区大厅通用模板包括“园区概览”，“园区活动”，“园区惠政”，“园区资讯”，“园区管理”五个栏目，园区客户也可以根据自身情况，加入新的栏目。',
-          img:require('../../../assets/newparkimg/inclusivefinance/smart_park.png')
+          img:require('@/assets/newparkimg/inclusivefinance/smart_park.png')
         },{
           name:'平台技术',
-          content:'知识图谱技术，整合企业需求服务、用户行为、企业信用评价等多维度信息，自然语言处理技术将多维度、多渠道的信息资源转化成结构化数据，并进行分析与预测客户画像技术与人工智能算法技术为企业客户进行智能撮合与商机推介，使企业客户跨越时间与空间的障碍，交换资源、拓展渠道。以信息共享为线索',
-          img:require('../../../assets/newparkimg/inclusivefinance/platform_tec.png')
+          content:'<span class="mark" style="color:#333">知识图谱技术，整合企业需求服务</span>、用户行为、企业信用评价等多维度信息，<br/><span class="mark" style="color:#333">自然语言处理技术将多维度</span>、多渠道的信息资源转化成结构化数据，并进行分析与预测<br/> <span class="mark" style="color:#333">客户画像技术与人工智能算法技术</span>为企业客户进行智能撮合与商机推介，使企业客户跨越时间与空间的障碍，交换资源、拓展渠道。以信息共享为线索',
+          img:require('@/assets/newparkimg/inclusivefinance/platform_tec.png')
         }
       ],
       smLoan:[
@@ -144,28 +145,28 @@ export default {
           name:'',
           isShow:true,
           linkTo:'http://www.ccb.com/cn/home/smallcompany/xw_quickLoan.html',
-          img:require('../../../assets/newparkimg/inclusivefinance/creditQuick Loan.png'),
+          img:require('@/assets/newparkimg/inclusivefinance/creditQuick Loan.png'),
           condition:['小微企业主:信用状况良好；','中国内地居民（不含港澳台）；','个人网银网银盾客户；','持有建行个人金融资产（包括存款、理财等）或诚信纳税企业。'],
           feature:['信用贷款，免抵押、免担保；','全流程线上办理；','自主支用，随借随还，按实际使用金额及天数计息。']
         },{
           name:'',
           isShow:true,
           linkTo:'http://www.ccb.com/cn/home/smallcompany/xw_quickLoan.html',
-          img:require('../../../assets/newparkimg/inclusivefinance/mortgageQuickLoan.png'),
+          img:require('@/assets/newparkimg/inclusivefinance/mortgageQuickLoan.png'),
           condition:['小微企业主:信用状况良好；','中国内地居民（不含港澳台）；','个人网银网银盾客户；','拥有优质房产或者在建设银行尚有个人住房贷款。'],
           feature:['线上审批，线下签约；','房产抵押或存量按揭贷款住房二次顺位抵押；','自主支用，随借随还，按实际使用金额及天数计息。']
         },{
           name:'',
           isShow:true,
           linkTo:'http://www.ccb.com/cn/home/smallcompany/xw_quickLoan.html',
-          img:require('../../../assets/newparkimg/inclusivefinance/hypothecation QuickLoan.png'),
+          img:require('@/assets/newparkimg/inclusivefinance/hypothecation QuickLoan.png'),
           condition:['小微企业主；','信用状况良好；','中国内地居民（不含港澳台）；','个人网银网银盾客户；','持有建行个人或企业金融资产（包括存款、理财等）。'],
           feature:['质押贷款；全流程线上办理；','自主支用，随借随还，按实际使用金额及天数计息。']
         },{
           name:'',
           isShow:true,
           linkTo:'http://www.ccb.com/cn/home/smallcompany/xw_quickLoan.html',
-          img:require('../../../assets/newparkimg/inclusivefinance/platformQuick Loan.png'),
+          img:require('@/assets/newparkimg/inclusivefinance/platformQuick Loan.png'),
           condition:['小微企业主；','信用状况良好；','中国内地居民（不含港澳台）；','个人网银网银盾客户；','电商、政府、供应链等合作平台上小微企业。'],
           feature:['特定客户群；全流程线上办理；','自主支用，随借随还，按实际使用金额及天数计息。']
         }
@@ -299,12 +300,12 @@ export default {
           "涞水支行 ：4517812"
         ]
       ],
-      pointType:[{name:'市区',isCur:true},{name:'县城',isCur:false}]       
+      pointType:[{name:'市区',isCur:true},{name:'县城',isCur:false}]
     }
     console.log(this.menuList)
   },
   async created(){
-     
+
   },
   computed: {
     curId(){
@@ -312,7 +313,7 @@ export default {
     }
   },
   filters: {
-    
+
   },
   methods:{
     showInclusiveDetail(item,index){
@@ -334,14 +335,14 @@ export default {
       for (let z = 0; z < that.industrySolutions.slice(0,5).length; z++) {
         that.industrySolutions[z].isCaseCur = false;
       }
-      that.industrySolutions[index].isCaseCur = true;  
+      that.industrySolutions[index].isCaseCur = true;
     },
     showCaseSecDetail(item,index){
       let that = this;
       for (let y = 0; y < that.industrySolutions.slice(5,10).length; y++) {
         that.industrySolutions.slice(5,10)[y].isCaseCur = false;
       }
-      that.industrySolutions.slice(5,10)[index].isCaseCur = true;  
+      that.industrySolutions.slice(5,10)[index].isCaseCur = true;
     },
     tebItem(isTrue,index){
       let that = this;
@@ -353,9 +354,9 @@ export default {
         that.phoneShow[i] = false;
         that.pointType[i].isCur = false;
       }
-      that.phoneShow[index] = true; 
-      that.pointType[index].isCur = true;         
-      console.log(that.phoneShow)     
+      that.phoneShow[index] = true;
+      that.pointType[index].isCur = true;
+      console.log(that.phoneShow)
     }
   }
 };
@@ -364,18 +365,20 @@ export default {
 <style lang='less' scoped>
   .inclusivefinance{
     background:#fff;
+    font-family: MicrosoftYaHei;
     .main_banner{
       height: 500px;
-      background: url(../../../assets/newparkimg/inclusivefinance/inclusiveFinance_banner.png) center no-repeat;
+      background: url(../../../assets/newparkimg/inclusivefinance/inclusiveFinance_banner2.png) center no-repeat;
     }
-    .inclusive_menu{     
+    .inclusive_menu{
       .menulist{
-        height: 34px;
+        height: 41px;
         width:520px;
         margin:54px auto 0;
+        color:#666;
         .listitem{
           font-size: 20px;
-          padding-bottom: 14px;
+          padding-bottom: 11px;
           float: left;
           width:120px;
           margin-right: 80px;
@@ -390,9 +393,13 @@ export default {
         }
       }
       .inclusive_cont{
+          border-top: 1px solid #ccc;
+          margin-top: -2px;
         .cci_info{
           width: 1200px;
           margin: 0 auto;
+          font-size: 18px;
+          line-height: 36px;
           .cci_info_list{
             position:relative;
             font-size: 18px;
@@ -401,6 +408,10 @@ export default {
               top: 152px;
               left: 41px;
               width: 414px;
+              color:#999;
+              span{
+                color:#333 !important;
+              }
             }
             .list_bg{
               img{
@@ -428,6 +439,7 @@ export default {
               top: 152px;
               left: 683px;
               width: 474px;
+
             }
           }
         }
@@ -438,7 +450,7 @@ export default {
           display: block;
         }
         .sm_loan{
-          width: 962px;
+          width: 1170px;
           margin:62px auto 0;
           .sm_loan_list{
             overflow: hidden;
@@ -455,7 +467,7 @@ export default {
             }
             .detail_right{
               float: left;
-              width:356px;
+              width:550px;
               .detail_checkin{
                 margin:48px 0 31px;
                 span{
@@ -472,12 +484,14 @@ export default {
               }
               .detail_checkin_info{
                 font-size: 16px;
-                line-height: 18px;
+                line-height:24px;
+                color:#666;
                 .check_condition{
-
+                  p{
+                  }
                 }
                 .check_characteristic{
-                  
+
                 }
               }
             }
@@ -490,10 +504,10 @@ export default {
               width: 1200px;
               margin:0 auto;
               .iscase_fir_box{
-                float: left;   
+                float: left;
                 cursor: pointer;
                 margin:60px 10px 30px;
-                text-align: center; 
+                text-align: center;
                 width:220px;
                 height: 220px;
                 box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.1);
@@ -509,6 +523,7 @@ export default {
                 .casename{
                   font-size: 18px;
                   line-height: 24px;
+                  color:#333;
                 }
                 .separate_l{
                   display: inline-block;
@@ -539,23 +554,25 @@ export default {
               background:#f5f5f5;
               font-size: 16px;
               line-height:20px;
-              .casehead{    
-                padding: 31px 175px;     
+              .casehead{
+                padding: 31px 175px;
                 .casetitle{
                   font-size:18px;
                   line-height:20px;
-                  margin:31px 0;
                   display: inline-block;
                   width:395px;
+                  color:#333;
                 }
               }
               .caseinfo{
                 font-size: 16px;
                 line-height: 20px;
                 padding:0 0 24px 175px;
+                color:#777;
                 .casetitlename{
                   display: inline-block;
                   width:390px;
+
                 }
               }
             }
@@ -566,10 +583,10 @@ export default {
               width:1200px;
               margin:0 auto;
               .iscase_sec_box{
-                float: left;   
+                float: left;
                 cursor: pointer;
                 margin:60px 10px 30px;
-                text-align: center; 
+                text-align: center;
                 width:220px;
                 height: 220px;
                 box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.1);
@@ -585,6 +602,7 @@ export default {
                 .casename{
                   font-size: 18px;
                   line-height: 24px;
+                  color:#333;
                 }
                 .separate_l{
                   display: inline-block;
@@ -618,20 +636,21 @@ export default {
               background:#f5f5f5;
               font-size: 16px;
               line-height:20px;
-              .casehead{    
-                padding: 31px 175px;     
+              .casehead{
+                padding: 31px 175px;
                 .casetitle{
                   font-size:18px;
                   line-height:20px;
-                  margin:31px 0;
                   display: inline-block;
                   width:395px;
+                  color:#333;
                 }
               }
               .caseinfo{
                 font-size: 16px;
                 line-height: 20px;
                 padding:0 0 24px 175px;
+                color:#777;
                 .casetitlename{
                   display: inline-block;
                   width:390px;
@@ -639,44 +658,56 @@ export default {
               }
             }
           }
+          .checktowebsite{
+            text-align: right;
+            padding-top:30px;
+            width: 1200px;
+            margin: 0 auto;
+            a{
+              color:#00a0e9;
+              font-size:16px;
+            }
+          }
         }
       }
     }
     .bankpoint{
       padding-bottom: 69px;
-      width:1200px;
-      .checktowebsite{
-        text-align: right;
-        a{
-          color:#00a0e9;
-          font-size:16px;
-        }
-      }
       .pointphoneinfo{
+        overflow: hidden;
         .pointhead{
           text-align: center;
           font-size: 24px;
-          margin-top: 64px; 
+          margin-top: 94px;
+          color:#333;
+          span{
+            color:#999999;
+            margin:0 32px;
+          }
         }
         .pointtype{
           overflow: hidden;
           width: 300px;
-          margin:35px auto 65px;
+          margin:35px auto 0;
           .typelist{
             float: left;
             width:120px;
-            padding-bottom:15px;
+            padding-bottom:11px;
             text-align: center;
             font-size: 20px;
             line-height: 24px;
             cursor: pointer;
             margin:0 15px;
+            color:#666;
           }
           .typelist.cur{
             border-bottom:solid 3px #00a0e9;
           }
         }
         .pointphone{
+          margin-top:-2px;
+          padding-top:65px;
+          border-top:1px solid #ccc;
           .typeinfo{
             display: none;
             overflow: hidden;
@@ -690,6 +721,7 @@ export default {
               line-height: 24px;
               .phoneitem{
                 margin-bottom: 42px;
+                color:#999;
               }
               .phoneitem:nth-child(5n){
                 margin-bottom: 0  !important;
