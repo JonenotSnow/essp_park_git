@@ -3,15 +3,9 @@
         <!-- 列表有状态和类型 -->
         <div v-if="list.length>0">
             <div class="selectTitle">
-                <span class="all">
-                   <el-checkbox
-                       :indeterminate="isIndeterminate"
-                       v-model="selectAll"
-                       @change="handleSelectAll"
-                   >全选</el-checkbox>
-                </span>
-                共<span class="total">{{list.length}}</span>条，
-                已选<span class="total">{{selectedCount}}</span>条
+                <el-checkbox v-model="allCheck" @change="changeAllChecked">全选</el-checkbox>
+                共<span class="total">{{totalCount}}</span>条，
+                已选<span class="total">{{selectCheckItem.length}}</span>条
                 <span class="removeBtn" @click.stop="showDialog()">删除</span>
                 <span class="selectStatus">状态：
 
@@ -34,7 +28,7 @@
             <ul class="listWrap">
                 <li class="list" v-for="(item, index) in list" :key="index">
                     <div class="ListTopStatus">
-                        <el-checkbox name="selectOne" :checked="checkedStatus" @change="selectOrUnSelect(item.id)"/>
+                        <el-checkbox v-model="item.isChecked" @change="changeChecked(item,index)">备选项</el-checkbox>
                         <span class="time">保存时间：{{item.createTimeitem | timerFormat(item.createTime)}}</span>
                         <span class="create">发布人：{{item.userName}}</span>
                         <span class="classifyC">状态：
@@ -106,24 +100,25 @@
             type: {
                 type: String,
                 default: ''
+            },
+            totalCount: {
+                type: String,
+                default: '0'
             }
         },
         data() {
             return {
-                selectedCount: 15,      // 已选择条数
+                pageNum: 1,
+                pageSize: 10,
 
                 // status: '',             // 状态
                 approveType: '',        // 状态更改换用这个字段
 
-                // 删除事件相关字段
+                // 选中事件---删除事件相关字段
                 dialogVisible: false,
                 deleteId: '',
-                allSelectDelete: [],
-
-                // 选中事件相关字段
-                checkedStatus: false,
-                selectAll: [],
-                isIndeterminate: true
+                allCheck: false,
+                selectCheckItem: [],  // 已选择项
             }
         },
         created() {
@@ -146,20 +141,25 @@
 
                 this.dialogVisible = true;
 
-                // 删除单个
                 if (deleteId) {
+                    // 删除单个
                     this.deleteId = deleteId;
-                    return false;
+                } else {
+                    // 全部删除
+                    let selectCheckList = [];
+                    let selectCheckIds = "";
+                    // 获取id
+                    for (let i = 0; i < this.selectCheckItem.length; i++) {
+                        selectCheckList[i] = this.selectCheckItem[i].id;
+                    }
+                    selectCheckIds = selectCheckList.join(',');
+                    this.deleteId = selectCheckIds;
                 }
-
-                // 全部删除
-                let allSelectDelete = this.allSelectDelete.join(',');
-                this.deleteId = allSelectDelete;
 
             },
             dealWithDelete() {
                 let params = {
-                    id: this.deleteId
+                    ids: this.deleteId
                 };
                 this.$post('/policy/delBatchPol', params).then(response => {
                     var codestatus = response.resultCode;
@@ -168,7 +168,7 @@
                         this.$message.success(response.resultMsg);
 
                         // 通知父组件，重新获取数据
-                        this.$emit("childDeleted", {});
+                        this.$emit("childDeleted", this.type);
 
                     } else {
                         this.$message.error(response.resultMsg);
@@ -207,13 +207,33 @@
             /**
              *  单选/全选相关事件
              */
-            // 全选按钮事件
-            handleSelectAll() {
-            },
+            // 全选选择项
+            changeAllChecked() {
+                this.selectCheckItem = [];
 
-            // 单选按钮事件
-            selectOrUnSelect() {
-            }
+                this.list.forEach((item, index) => {
+                    item.isChecked = this.allCheck;
+                    if (this.allCheck) {
+                        this.selectCheckItem.push(item);
+                    }
+                });
+            },
+            // 列表选择项
+            changeChecked(item, index) {
+                if (item.isChecked) {
+                    this.selectCheckItem.push(item);
+                    if (this.selectCheckItem.length == this.list.length) {
+                        this.allCheck = true;
+                    }
+                } else {
+                    if (this.selectCheckItem.length) {
+                        var index = this.selectCheckItem.indexOf(item);
+                        if (index > -1) {
+                            this.selectCheckItem.splice(index, 1)
+                        }
+                    }
+                }
+            },
         },
         filters: {
             timerFormat(vaule) {
