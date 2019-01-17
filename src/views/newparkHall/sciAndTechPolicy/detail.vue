@@ -30,11 +30,11 @@
             <div class="main-foot">
                 <p class="attachment-p attachment-title">附件下载：</p>
                 <p class="attachment-p attachment-main"
-                   v-if="satpDate.fileUrl && satpDate.fileUrl.length > 0"
-                   v-for="(item, index) in satpDate.fileUrl"
+                   v-if="fileList && fileList.length > 0"
+                   v-for="(item, index) in fileList"
                    :key="index"
                 >
-                    <a :href="item.url" download>·附件{{index+1}}：{{item.name}}</a>
+                    <a @click="linkToFile(item.url)">·附件{{index+1}}：{{item.name}}</a>
                 </p>
             </div>
         </div>
@@ -81,7 +81,8 @@
                         name: "科技服务详情"
                     }
                 ],
-                satpDate: {}
+                satpDate: {},
+                fileList: [],   // 附件字段
             }
         },
         methods: {
@@ -101,12 +102,30 @@
                         // 对标签进行处理
                         this.satpDate.tagsTxt = this.satpDate.tagsTxt.split(',');
 
+                        // 对附件进行处理
+                        if (this.satpDate.fileUrl) {
+                            let fileList = JSON.parse(this.satpDate.fileUrl);
+
+                            fileList.forEach((item, index) => {
+                                var obj = {
+                                    name: item.name,
+                                    url: item.url
+                                };
+                                this.fileList.push(obj);
+                            })
+                        }
+
                     } else {
                         this.$message.info(response.resultMsg);
                     }
                 }, err => {
                     this.$message.error("接口异常");
                 })
+            },
+
+            // 跳转出新窗口，看上传的附件
+            linkToFile(url) {
+                window.open(url)
             }
         },
         created() {
