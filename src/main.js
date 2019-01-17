@@ -63,7 +63,7 @@ Vue.filter("timerFormat", function (value) {
 })
 
 // Vue.prototype.$uploadCommom = uploadCommom;
-let openUlr = "http://128.196.235.129:1345/essp_vue/#";
+let openUlr = "http://128.196.235.129:1345/essp/#";
 // let openUlr = "http://128.196.235.132:1345/essp_vue/#";
 console.log(process.env.NODE_ENV);
 // if (process.env.NODE_ENV === "production") {
@@ -130,8 +130,11 @@ router.beforeEach(async (to, from, next) => {
         // 当路径中有parkId说明是别的地方直跳园区项目
         if (isUrlHasBd) {
             //判断是否保定园区路径，否则淮安， 以下通过方法获取保定园区信息
-            await getParkByName("bdppc");
-        } else if (parkId) {
+            await getParkByName("bdPark2018");
+        } else if (to.query.label) {
+            //获取淮安信息
+            await getParkByName(to.query.label);
+        }else if (parkId) {
             //获取淮安信息
             await getParkById(parkId);
         } else {

@@ -261,21 +261,21 @@
                         },
                         {
                             name: "发布政策",
-                            path: "parkIndex/publishGover",
+                            path: "/parkHall/manage/publishSciAndTechPolicy?applyType=01",
                             src: require("@/assets/imgs/icon2.png"),
                             isShow: false,
                             query: {}
                         },
                         {
                             name: "发布资讯",
-                            path: "/parkIndex/publishNewInfo",
+                            path: "/parkHall/manage/publicNews",
                             src: require("@/assets/imgs/icon3.png"),
                             isShow: false,
                             query: {}
                         },
                         {
                             name: "发布活动",
-                            path: "/parkIndex/launchForm",
+                            path: "/parkIndex/park/all",
                             src: require("@/assets/imgs/icon1.png"),
                             isShow: false,
                             query: {}

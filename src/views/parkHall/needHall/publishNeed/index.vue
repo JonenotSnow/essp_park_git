@@ -20,11 +20,11 @@
           </div>
 
         </el-form-item>
-        <!-- <el-form-item label="发布人" required>
+        <el-form-item label="发布人" required>
           <el-col :span="12">
             <el-input v-model="form.people" disabled="true"></el-input>
           </el-col>
-        </el-form-item> -->
+        </el-form-item>
         <el-form-item>
           <el-upload
             class="upload-demo"
@@ -53,7 +53,9 @@ import "quill/dist/quill.core.css";
 import "quill/dist/quill.snow.css";
 import "quill/dist/quill.bubble.css";
 import { quillEditor } from "vue-quill-editor";
+import mixin from '@/components/mixins/mixins_windowOpen.js'
 export default {
+  mixins:[mixin],
   components: {
     EsspBreadCrumb,
     quillEditor
@@ -73,7 +75,9 @@ export default {
       form: {
         title: "",
         detail: "",
-        people: ""
+        people: "",
+        cstId:'',
+        cstName:''
       },
       fileList: [],
       editorOption: {
@@ -149,6 +153,10 @@ export default {
           that.$post("/need/saveNeed", params).then(res => {
             if (res.resultCode === "CLT000000000") {
               that.$message.success("发布成功!");
+              // this.$router.push('/needHall')
+              let token = this.SSH.getItem('token')
+              token?'&token='+token:''
+              this.windowOpenUrl('requIndex/display-own?bsnRqmId='+res.resultData.id+token)
             } else {
               that.$message.warning("发布失败");
             }
@@ -158,7 +166,10 @@ export default {
     }
   },
   created() {
-    this.form.people = this.SSH.getItem("userInfo").truename;
+    let userInfo =this.SSH.getItem("userInfo")
+    this.form.people = userInfo.truename;
+    this.form.cstId = userInfo.cstId
+    this.form.cstNm = userInfo.cstNm
   }
 };
 </script>
