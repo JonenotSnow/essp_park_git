@@ -21,7 +21,7 @@
                 //游客默认导航
                 defaultNav:[],
                 active: sessionStorage.getItem('navIndex')||0,
-                headMenu: []
+                headMenu: [],
             };
         },
         watch: {
@@ -29,7 +29,8 @@
                 //路由变化获取最新选择的园区
                 var menuList = this.SSH.getItem("menuList");
                 this.headMenu = (menuList && menuList.children) ||[];
-            }
+            },
+            
         },
         created() {
             // 直接从本地获取菜单权限
@@ -73,7 +74,6 @@
                     }
                 }
             }
-
         },
         methods: {
             toLink(item,index) {

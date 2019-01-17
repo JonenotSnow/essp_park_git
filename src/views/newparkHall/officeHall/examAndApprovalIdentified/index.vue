@@ -63,6 +63,7 @@
 
             // 查看政策
             linkToPolicie() {
+                sessionStorage.setItem('navIndex','1')
                 let path;
                 if (this.type == '0') {
                     path = '/sciIndex/sciAndTechService/familyJuniorIdentify';
@@ -71,7 +72,10 @@
                     path = '/sciIndex/sciAndTechService/seniorEnterpriseIdentify';
                 }
                 this.$router.push({
-                    path: path
+                    path: path,
+                    query:{
+                        'navIndex':'1'
+                    }
                 });
             }
         },

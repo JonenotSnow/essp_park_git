@@ -56,5 +56,6 @@ export const manage = {
     getInfoByEntityId: '/audit/getInfoByEntityId', //资讯审核信息 idyCode address parkId
 
 
-    checkAuth:'commom/checkAuth'  //flag:(1,0)
+    checkAuth:'commom/checkAuth',  //flag:(1,0)
+    getByActivityId:'activity/getByActivityId'  //flag:(1,0)
 }

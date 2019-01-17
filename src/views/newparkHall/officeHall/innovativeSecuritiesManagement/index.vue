@@ -50,8 +50,12 @@
 
             // 查看政策
             linkToPolicie() {
+                sessionStorage.setItem('navIndex','1')
                 this.$router.push({
-                    path: '/sciIndex/sciAndTechService/technInnoCertificate'
+                    path: '/sciIndex/sciAndTechService/technInnoCertificate',
+                    query:{
+                        'navIndex':'1'
+                    }
                 });
             }
         },

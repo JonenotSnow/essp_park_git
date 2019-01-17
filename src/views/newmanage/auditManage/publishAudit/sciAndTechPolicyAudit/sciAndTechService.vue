@@ -67,9 +67,18 @@
                         </template>
                     </el-table-column>
                     <el-table-column align="center" prop="" width="100" label="操作">
+                        <!--<template slot-scope="scope">-->
+                        <!--<span class="operation" @click="linkToAuditDetail(scope.row.id)">领取并审核</span>-->
+                        <!--</template>-->
                         <template slot-scope="scope">
-                            <span class="operation" @click="linkToAuditDetail(scope.row.id)">领取并审核</span>
+                            <span v-if="scope.row.status == '02'" class="operation"
+                                  @click="linkToPublishDetail(scope.row.id)">查看</span>
+                            <span v-if="scope.row.status == '12'" class="operation"
+                                  @click="linkToPublishDetail(scope.row.id)">查看</span>
+                            <span v-if="scope.row.status == '13'" class="operation"
+                                  @click="linkToAuditDetail(scope.row.id)">领取并审核</span>
                         </template>
+
                     </el-table-column>
                 </el-table>
             </div>
@@ -129,6 +138,17 @@
                 this.searchCondition.startDate = '';
                 this.searchCondition.endDate = '';
                 this.getSciAndTechPolicy();
+            },
+
+            // 前往发布查看详情页面
+            linkToPublishDetail(id) {
+                this.$router.push({
+                    path: '/parkHall/manage/sciAndTechPolicyAuditDetail',
+                    query: {
+                        applyType: '01',
+                        id: id
+                    }
+                });
             },
 
             // 前往审核详情页面

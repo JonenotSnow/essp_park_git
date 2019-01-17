@@ -29,7 +29,7 @@
                     <div class="my-style">{{satpDate.userName}}</div>
                 </el-form-item>
                 <el-form-item label="附件：">
-                    <div class="my-style" v-for="(item, index) in satpDate.fileUrl" :key="index">{{item.name}}</div>
+                    <div class="my-style" v-for="(item, index) in fileList" :key="index">{{item.name}}</div>
                 </el-form-item>
             </el-form>
             <div class="audit-line"></div>
@@ -45,7 +45,7 @@
                     </p>
                 </el-form-item>
                 <el-form-item label="审核意见：">
-                    <div class="my-style audit-opinion">同意发布</div>
+                    <div class="my-style audit-opinion">{{lastComment.mark || '暂无'}}</div>
                 </el-form-item>
             </el-form>
 
@@ -86,7 +86,7 @@
                     <div class="my-style">{{satpDate.userName}}</div>
                 </el-form-item>
                 <el-form-item label="附件：">
-                    <div class="my-style" v-for="(item, index) in satpDate.fileUrl" :key="index">{{item.name}}</div>
+                    <div class="my-style" v-for="(item, index) in fileList" :key="index">{{item.name}}</div>
                 </el-form-item>
             </el-form>
             <div class="audit-line"></div>
@@ -102,7 +102,7 @@
                     </p>
                 </el-form-item>
                 <el-form-item label="审核意见：">
-                    <div class="my-style audit-opinion">同意发布</div>
+                    <div class="my-style audit-opinion">{{lastComment.mark || '暂无'}}</div>
                 </el-form-item>
             </el-form>
         </div>
@@ -160,8 +160,13 @@
                     }
                 ],
 
-
                 satpDate: {},
+                fileList: [],   // 附件字段
+
+
+                commentList: [],    // 审核详情列表
+                lastComment: {},    // 最新审核意见
+
                 rules_01: {
                     policyTitle: [
                         {required: true, message: '请输入政策法规标题', trigger: 'blur'},
@@ -212,6 +217,44 @@
                         // 对标签进行处理
                         this.satpDate.tagsTxt = this.satpDate.tagsTxt.split(',');
 
+                        // 对附件进行处理
+                        if (this.satpDate.fileUrl) {
+                            let fileList = JSON.parse(this.satpDate.fileUrl);
+
+                            fileList.forEach((item, index) => {
+                                var obj = {
+                                    name: item.name,
+                                    url: item.url
+                                };
+                                this.fileList.push(obj);
+                            })
+                        }
+
+                    } else {
+                        this.$message.info(response.resultMsg);
+                    }
+                }, err => {
+                    this.$message.error("接口异常");
+                })
+            },
+
+            /**
+             * 获取“科技政策”的审核详情
+             */
+            getCommentList() {
+                let params = {
+                    parkId: this.parkId,
+                    entityId: this.id
+                };
+                this.$post("/audit/getCommentList", params).then(response => {
+                    let codestatus = response.resultCode;
+                    if (codestatus == "CLT000000000") {
+                        this.commentList = response.resultData;
+
+                        if (this.commentList.length > 0) {
+                            this.lastComment = this.commentList[0];
+                        }
+
                     } else {
                         this.$message.info(response.resultMsg);
                     }
@@ -222,6 +265,7 @@
         },
         created() {
             this.getSatpDate();
+            this.getCommentList();
         },
     }
 </script>

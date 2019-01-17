@@ -45,7 +45,7 @@
                         <span>报名是否需审核：</span>
                         <span>{{infoList.enterNeedAudit == 0 ? '否' : '是'}}</span>
                     </p>
-                    <p>
+                    <p v-if="infoList.activityLabel">
                         <span>活动标签：</span>
                         <span>{{infoList.activityLabel}}</span>
                     </p>
@@ -68,14 +68,14 @@
                     <h3 class="common_titdes">其他设置</h3>
                 </div>
                 <p class="infoTitle">票务信息：</p>
-                <ul class="tickInfo">
+                <ul class="tickInfo" v-if="infoList.ticketForm && JSON.parse(infoList.ticketForm).length>0">
                     <li>
                         <span>票种名称</span>
                         <span>价格</span>
                         <span>数量</span>
                         <!-- <span>操作</span> -->
                     </li>
-                    <li v-if="infoList.ticketForm && JSON.parse(infoList.ticketForm)" v-for="item in JSON.parse(infoList.ticketForm)" :key="item.ticketType">
+                    <li v-for="item in JSON.parse(infoList.ticketForm)" :key="item.ticketType">
                         <span>{{item.ticketType}}</span>
                         <span>￥{{item.ticketPirce}}</span>
                         <span>{{item.ticketNum}}</span>
@@ -137,7 +137,7 @@ export default {
                     name: this.utils.isBdPark()?"系统管理":"园区管理"
                 },
                 {
-                    path:`/parkHall/manage/activityPoolAddPark`,
+                    path:`/parkHall/manage/activityPublishAudit`,
                     name: this.utils.isBdPark() ? "审核管理" : "任务池"
                 },
                 {
@@ -145,13 +145,14 @@ export default {
                     name: "活动发布审核详情"
                 }
             ],
-            infoList:this.$route.query.content,
+            infoList:{},
             rzz:JSON.parse(localStorage.getItem('rzz')),
             auditInfo:[]
         }
     },
     created () {
         this.getCommentList();
+        this.getByActivityId();
     },
     filters: {
         timerFormat(vaule){
@@ -200,6 +201,21 @@ export default {
         }
     },
     methods: {
+        getByActivityId(){
+            this.$post(this.$apiUrl.manage.getByActivityId,{
+                parkId : window.sessionStorage.getItem("parkId"),
+                activityId : this.$route.query.entityId,
+                opMark :'01'
+            })
+            .then((response) => {
+                this.infoList = response.resultData;
+            },(response)=>{
+                this.$message({
+                    type: 'error',
+                    message: response.resultMsg
+                });
+            })
+        },
         getCommentList(){
             this.$post(this.$apiUrl.manage.getCommentList,{
                 parkId : window.sessionStorage.getItem("parkId"),

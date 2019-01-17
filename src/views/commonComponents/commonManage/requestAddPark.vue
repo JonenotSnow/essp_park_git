@@ -133,7 +133,7 @@
             let filterList = ['0410','0411','0412','0413','0414','0415'];
             let menuList = this.SSH.getItem("menuList");
             let arr = [];
-            if (!this.bdFlag) {
+            if (!this.bdFlag && menuList.length>0) {
                 menuList.forEach(el => {
                     if (el.name == 'parkList' && el.children  && el.children.length>0) {
                         el.children.forEach((element,index)=>{

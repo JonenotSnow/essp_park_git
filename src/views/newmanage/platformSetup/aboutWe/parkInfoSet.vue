@@ -112,8 +112,7 @@ export default {
                     title:'完善模板'
                 }
             ],
-            stepType:'1',
-            pass:fasle //验证是否已经是信息全部填写
+            stepType:'1'
         }
     },
     created() {
@@ -199,7 +198,7 @@ export default {
                     type: 'success',
                     message: response.resultMsg
                 });
-                this.pass = true;
+                this.getCurStep();
             })
         },
         getParkById(){
@@ -244,14 +243,10 @@ export default {
             this.writeInfo = aj;
         },
         getCurStep(){
-            this.$emit('sendStepType','2')
+            this.$emit('sendStepType',{'stepType':'2'})
         },
         toNext(){
             this.saveBaseInfo();
-            if (this.pass) {
-                this.getCurStep();
-                this.pass = false;
-            }
             
         }
     },

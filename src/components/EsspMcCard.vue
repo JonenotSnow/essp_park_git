@@ -300,32 +300,44 @@
         }
         .essp-card {
             background-color: #ffffff;
-            margin-bottom: 20px;
+            padding: 20px 0;
             width: 730px;
-            height: 170px;
+            height: 140px;
+            border-bottom: 1px solid #eee;
+            transition: all 1s;
             &:hover {
                 zoom: 1;
-                box-shadow: 1px 1px 2px 0px rgba(0, 102, 179, 0.15);
+                box-shadow: 0px 0px 14.2px 0.8px
+                rgba(0, 0, 0, 0.08);
+                position: relative;
+                .cont-img{
+                    margin-left: 20px;
+                }
+                .cont-detail{
+                    margin-left: 15px;
+                }
             }
             .cont-img {
                 position: relative;
                 float: left;
-                width: 280px;
+                width: 245px;
                 height: 100%;
                 cursor: pointer;
                 transition: all 1s;
-                &:hover .img-detail {
-                    display: block;
-                    transform: scale(1.02);
-                }
+                /*&:hover{*/
+                    /*.img-detail {*/
+                        /*display: block;*/
+                        /*transform: scale(1.02);*/
+                    /*}*/
+                /*}*/
                 .detaillogo {
                     display: block;
                     width: 100%;
                     height: 100%;
                     transition: all 1s;
-                    &:hover {
-                        transform: scale(1.02);
-                    }
+                    /*&:hover {*/
+                        /*transform: scale(1.02);*/
+                    /*}*/
                 }
 
                 .img-detail {
@@ -337,6 +349,7 @@
                     height: 20px;
                     background-color: #000000;
                     .esspopacity(@value:0.8); //调节透明度
+                    transition: all 1s;
                     p {
                         position: absolute;
                         top: 0;
@@ -356,13 +369,14 @@
             .cont-detail {
                 position: relative;
                 float: left;
-                margin-left: 20px;
+                margin-left: 35px;
                 width: 430px;
                 height: 100%;
+                transition: all 1s;
                 h5 {
                     cursor: pointer;
-                    margin-top: 10px;
-                    margin-bottom: 10px;
+                    //margin-top: 10px;
+                    margin-bottom: 8px;
                     width: 100%;
                     font-size: 16px;
                     font-weight: normal;
