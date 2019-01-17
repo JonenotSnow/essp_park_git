@@ -349,7 +349,7 @@
         color: #999;
         width: 63%;
     }
-    .avatar-uploader-chengguo .el-upload {
+    #publishAchievement .avatar-uploader-chengguo .el-upload {
         border: 1px dashed #d9d9d9;
         border-radius: 6px;
         cursor: pointer;
@@ -359,10 +359,10 @@
          height: 120px;
         line-height: 120px;
     }
-    .avatar-uploader-chengguo.el-upload:hover {
+    #publishAchievement .avatar-uploader-chengguo.el-upload:hover {
         border-color: #409EFF;
     }
-    .avatar-uploader-chengguo .avatar-uploader-icon {
+    #publishAchievement .avatar-uploader-chengguo .avatar-uploader-icon {
         font-size: 28px;
         color: #fff;
         width: 40px;
@@ -375,12 +375,12 @@
         border-radius: 50%;
 
     }
-    .avatar-uploader-chengguo .avatar {
+    #publishAchievement .avatar-uploader-chengguo .avatar {
         width: 100%;
         min-height: 100%;
         display: block;
     }
-    .newscontent img {
+    #publishAchievement .newscontent img {
         max-width: 97%!important;
     }
 </style>

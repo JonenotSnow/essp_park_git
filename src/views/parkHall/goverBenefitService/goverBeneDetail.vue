@@ -89,9 +89,11 @@
     import EsspBreadCrumb from "@/components/EsspBreadCrumb";
     import EsspParkTag from "@/components/EsspParkTag";
     import Moment from "moment";
+    import mixin from '@/components/mixins/mixins_windowOpen.js'
 
     export default {
         name: "",
+        mixins:[mixin],
         components: {
             EsspBreadCrumb,
             EsspParkTag,
@@ -187,7 +189,7 @@
                     var _this = this;
                     this.$message.warning("您尚未登陆，请您先登陆");
                     setTimeout(function(){
-                        _this.$router.push('/userIndex/login');
+                        _this.windowHrefUrl('/userIndex/login')
                     },2000);
                     return
                 }

@@ -88,9 +88,10 @@
 
 <script>
 import EsspSearchPanel from "@/components/matchmark/EsspSearchPanel";
-
+import mixin from '@/components/mixins/mixins_windowOpen.js'
 export default {
   name: "",
+    mixins:[mixin],
   components: {
     EsspSearchPanel
   },
@@ -456,7 +457,7 @@ export default {
       return false;
     },
     goToLogin() {
-      this.$router.push("/userIndex/login");
+        this.windowHrefUrl('/userIndex/login')
     }
   }
 };

@@ -60,6 +60,16 @@
 <style lang="less">
     .ql-container {
         background: #fff;
+        height: -ms-calc(100% - 66px)!important;
+        height: -moz-calc(100% - 66px)!important;;
+        height: -webkit-calc(100% - 66px)!important;;
+        height: calc(100% - 66px)!important;;
+    }
+    .ql-container.ql-snow {
+        border: none!important;
+    }
+    .ql-container.ql-snow .ql-editor {
+        border: 1px solid #ccc!important;;
     }
 </style>
 

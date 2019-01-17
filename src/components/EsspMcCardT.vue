@@ -80,10 +80,12 @@
     import Moment from "moment";
     import imgfault from "@/assets/error.png"; //引入加载失败默认图
     import EsspParkTag from "@/components/EsspParkTag";
+    import mixin from '@/components/mixins/mixins_windowOpen.js'
 
 
     export default {
         name: "EsspMcCard",
+        mixins:[mixin],
         props: {
             mcCardList: {
                 type: Array,
@@ -163,7 +165,7 @@
                     var _this = this;
                     this.$message.warning("您尚未登陆，请您先登陆");
                     setTimeout(function(){
-                        _this.$router.push('/userIndex/login');
+                        _this.windowHrefUrl('/userIndex/login')
                     },2000);
                     return
                 }

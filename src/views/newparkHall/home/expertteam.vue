@@ -71,25 +71,13 @@
         //     parkId:"",//parkId,
         //     }
         ],
-        expertteam:[
-            {
-                src: require('@assets/newparkimg/home/zhuanjiabg.png'),
-                brf:`5年设计经验，层服务于北京建筑设计研究院（BIAD）、日本电通、
-                    联想集团、凤凰传媒、海尔商城、中美设计顾问、佰行尚···雯婕工作室、黑金时尚、金银岛、德雅视界、汇爱、汀美吉、
-                    崔友光律师事务所、鲸鲨软件、节点通、中天龙影视等`,
-                expertname:"张晓冲",
-                joblevel:"初级助理",
-                tel:"0563-7491552",
-                email:"xxxxxxxxxx@163.com"
-            }
-
-        ],
+        expertteam:[],
         swiperOption: {
             notNextTick: true,
             slidesPerView: 2,
             slidesPerGroup: 2,
             //循环
-            loop:true,
+            loop: false,
             //设定初始化时slide的索引
             initialSlide:0,
             speed:1800,
@@ -138,6 +126,7 @@
         this.$post(url,pop).then((response) => {
             let res = response.resultData;
             this.expertList = res.expertList;
+//            this.swiperOption.loop = this.expertList.length > 3 ?true: false;
             this.total= res.total;
             this.lodingMsg = "暂无数据";
 

@@ -111,8 +111,9 @@
 
 <script>
     import Moment from "moment";
-
+    import mixin from '@/components/mixins/mixins_windowOpen.js'
     export default {
+        mixins:[mixin],
         data() {
             return {
                 anonymous: false,//默认不匿名
@@ -178,7 +179,7 @@
                      var _this = this;
                      this.$message.warning("您尚未登陆，请您先登陆");
                      setTimeout(function(){
-                         _this.$router.push('/userIndex/login');
+                         _this.windowHrefUrl('/userIndex/login')
                      },2000)
                 }
             },
@@ -207,7 +208,7 @@
                     if (item.userId==item.reUserId){
                         this.$message.warning("暂不支持回复自己")
                         return
-    
+
                     }
                     if (realcnttext.length == 0) {
                         this.$message.warning("回复内容不能为空")
@@ -237,7 +238,7 @@
                     var _this = this;
                      this.$message.warning("您尚未登陆，请您先登陆");
                      setTimeout(function(){
-                         _this.$router.push('/userIndex/login');
+                         _this.windowHrefUrl('/userIndex/login')
                      },2000)
                 }
             },
@@ -265,7 +266,7 @@
                      var _this = this;
                      this.$message.warning("您尚未登陆，请您先登陆");
                      setTimeout(function(){
-                         _this.$router.push('/userIndex/login');
+                         _this.windowHrefUrl('/userIndex/login')
                      },2000)
                 }
             },
@@ -293,7 +294,7 @@
                      var _this = this;
                      this.$message.warning("您尚未登陆，请您先登陆");
                      setTimeout(function(){
-                         _this.$router.push('/userIndex/login');
+                         _this.windowHrefUrl('/userIndex/login')
                      },2000)
                 }
             },
@@ -350,7 +351,7 @@
                      var _this = this;
                      this.$message.warning("您尚未登陆，请您先登陆");
                      setTimeout(function(){
-                         _this.$router.push('/userIndex/login');
+                         _this.windowHrefUrl('/userIndex/login')
                      },2000)
                 }
             },

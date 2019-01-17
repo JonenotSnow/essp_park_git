@@ -22,7 +22,7 @@
         <div class="policie-and-regulation-main">
             <oneCardModel :list="list" :customopts={status,temeTit,allTotal}></oneCardModel>
         </div>
-        <div class="pageList">
+        <div class="pageList" v-if="list.length > 0">
             <el-pagination
                 @size-change="handleSizeChange"
                 @current-change="handleCurrentChange"
