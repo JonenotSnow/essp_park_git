@@ -60,13 +60,17 @@
                 </el-pagination>
             </div>
         </div>
+        <downLoadExcel :show = 'show' @showDialog='showDialog' :checkedIds='checkedIds' :pageType="pageType"></downLoadExcel>
     </div>
 </template>
 
 <script>
- export default {
-   components:{
-   },
+    import axios from 'axios';
+    import downLoadExcel from "../../../components/downLoadExcel";
+    export default {
+    components:{
+        downLoadExcel
+    },
     data () {
         return {
             checkAll: false,
@@ -125,7 +129,8 @@
                 cstName : '',    //发布人
                 createName : '',//公司名称
             },
-            pageType:'noOpenNeed'
+            pageType:'noOpenNeed',
+            show:false
         }
     },
     created () {
@@ -205,11 +210,11 @@
             let idList = this.list.map((el)=>{
                 return el.id;
             })
-            let params = {
-                id: idList.toString()
-            };
-            this.$get(this.$apiUrl.manageNeed.exportNeedData, params)
-                .then(response => {
+            axios.get(this.$apiUrl.manageNeed.exportNeedData, {
+                    params : {
+                        id: idList.toString()
+                    }
+                }).then(response => {
                     let codestatus = response.resultCode;
                     if (codestatus == "CLT000000000") {
                         this.data = response.resultData;
@@ -219,8 +224,8 @@
                 }, err => {
                     this.$message.error("接口异常");
                 })
-            },
-   }
+        },
+    }
  }
 </script>
 <style>

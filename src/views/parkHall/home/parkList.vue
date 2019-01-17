@@ -47,7 +47,7 @@
                                         <p class="wz">{{item.parkNm}}</p>
                                     </div>
                                     <p style="padding:10px 0;">
-                                        <el-button size="mini" class="join_park_btn" round @click="toApplyForm(item)">加入园区</el-button>
+                                        <el-button size="mini" class="join_park_btn" round @click="getCcbUser(item)">加入园区</el-button>
                                     </p>
                                     <p @click="linkTo(item,1)"  class="local_address">
                                         <i class="el-icon-location" style="color:#00a0e9;"></i>
@@ -116,7 +116,6 @@
             this.userName = this.SSH.getItem("userName");
             this.getParkList();
             // this.getCodeType()
-            // this.getCcbUser()
         },
         methods: {
             changeType(type){
@@ -247,8 +246,8 @@
             changeHeightFn() {
                 this.changeHeight = !this.changeHeight;
             },
-            toApplyForm(item) {
-
+            getCcbUser(item) {
+                
                 this.curIs = true;
                 let loginFlag = this.SSH.getItem("loginFlag");
                 //未登录提示
@@ -257,6 +256,27 @@
                     this.$router.push('/userIndex/login')
                     return;
                 }
+
+                if (!this.SSH.getItem("loginFlag"))return;
+                if (!(this.SSH.getItem("userInfo").cstBscInfVo))return;
+                if (!(this.SSH.getItem("userInfo").cstBscInfVo.cstId))return;
+                let userId = this.SSH.getItem("userInfo").id;
+                let cstId = this.SSH.getItem("userInfo").cstBscInfVo.cstId;
+                
+                this.$post(this.$apiUrl.home.selectCstPostIdList, {
+                    userId: userId,
+                    cstId: cstId,
+                    sysBsnAttr : '0000'
+                })
+                .then((response) => {
+                    this.ccbUser = response.resultData;
+                    if (this.ccbUser.length>0) {
+                        this.toRequestAddParK(item);
+                    }
+                }, (err) => {})
+                
+            },
+            toRequestAddParK(item) {
                 //申请入园操作需要 园区游客身份+平台企业管理员身份（11+32）
                 if (!this.ccbUser.includes('32')) {
                     this.$message.error("当前用户为平台企业管理员才能做此操作");
@@ -276,21 +296,6 @@
                         this.SSH.setItem("bdParkId", item.bdParkId);
                         this.getPower(item.parkId);
                     }, (err) => {})
-            },
-            getCcbUser() {
-                if (!this.SSH.getItem("loginFlag"))return;
-                if (!(this.SSH.getItem("userInfo").cstBscInfVo))return;
-                if (!(this.SSH.getItem("userInfo").cstBscInfVo.cstId))return;
-                let userId = this.SSH.getItem("userInfo").id;
-                let cstId = this.SSH.getItem("userInfo").cstBscInfVo.cstId;
-                this.$post(this.$apiUrl.home.selectCstPostIdList, {
-                    userId: userId,
-                    cstId: cstId,
-                    sysBsnAttr : '0000'
-                })
-                .then((response) => {
-                    this.ccbUser = response.resultData;
-                }, (err) => {})
             }
         }
     };

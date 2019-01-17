@@ -41,20 +41,26 @@
         created() {
         },
         methods: {
+            
+            //批量导出
             exportData () {
-                let params = {
-                    id: this.checkedIds.toString()
-                };
-                this.$post(this.$apiUrl.manageNeed.exportNeedData, params).then(response => {
-                    let codestatus = response.resultCode;
-                    if (codestatus == "CLT000000000") {
-                        this.data = response.resultData;
-                    } else {
-                        this.$message.info(response.resultMsg);
-                    }
-                }, err => {
-                    this.$message.error("接口异常");
+                let idList = this.list.map((el)=>{
+                    return el.id;
                 })
+                axios.get(this.$apiUrl.manageNeed.exportNeedData, {
+                        params : {
+                            id: idList.toString()
+                        }
+                    }).then(response => {
+                        let codestatus = response.resultCode;
+                        if (codestatus == "CLT000000000") {
+                            this.data = response.resultData;
+                        } else {
+                            this.$message.info(response.resultMsg);
+                        }
+                    }, err => {
+                        this.$message.error("接口异常");
+                    })
             },
             //关闭弹窗
             setVisible() {

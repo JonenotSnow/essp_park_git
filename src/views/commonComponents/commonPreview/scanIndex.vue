@@ -103,7 +103,6 @@
         },
         created() {
             this.getParkById();
-            this.getCcbUser();
         },
         methods: {
             getParkById(){
@@ -146,26 +145,12 @@
                 })
             },
             toRequestAddParK(){
-                //如果已在该园区
-                if (this.LoginUserRole.includes('31') || this.LoginUserRole.includes('32')
-                    || this.LoginUserRole.includes('33') || this.LoginUserRole.includes('34')) {
-                    this.$message.error("您已加入该园区，不能做此操作");
-                    return;
-                }
-                //申请入园操作需要 园区游客身份+平台企业管理员身份（11+32）
-                if (!this.ccbUser.includes('32')) {
-                    this.$message.error("当前用户为平台企业管理员才能做此操作");
-                    return;
-                }
-                this.$router.push('/parkHall/manage/requestAddPark');
-            },
-            //获取当前用户在平台的角色，用于申请入园页面权限校验
-            getCcbUser() {
                 if (!this.SSH.getItem("loginFlag"))return;
                 if (!(this.SSH.getItem("userInfo").cstBscInfVo))return;
                 if (!(this.SSH.getItem("userInfo").cstBscInfVo.cstId))return;
                 let userId = this.SSH.getItem("userInfo").id;
                 let cstId = this.SSH.getItem("userInfo").cstBscInfVo.cstId;
+                
                 this.$post(this.$apiUrl.home.selectCstPostIdList, {
                     userId: userId,
                     cstId: cstId,
@@ -173,7 +158,25 @@
                 })
                 .then((response) => {
                     this.ccbUser = response.resultData;
+                    if (this.ccbUser.length>0) {
+                        //如果已在该园区
+                        if (this.LoginUserRole.includes('31') || this.LoginUserRole.includes('32')
+                            || this.LoginUserRole.includes('33') || this.LoginUserRole.includes('34')) {
+                            this.$message.error("您已加入该园区，不能做此操作");
+                            return;
+                        }
+                        //申请入园操作需要 园区游客身份+平台企业管理员身份（11+32）
+                        if (!this.ccbUser.includes('32')) {
+                            this.$message.error("当前用户为平台企业管理员才能做此操作");
+                            return;
+                        }
+                        this.$router.push('/parkHall/manage/requestAddPark');
+                    }
                 }, (err) => {})
+                
+            },
+            //获取当前用户在平台的角色，用于申请入园页面权限校验
+            getCcbUser() {
             }
         }
     }

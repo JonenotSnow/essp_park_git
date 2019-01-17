@@ -73,7 +73,6 @@ export default {
             })
             .then((response) => {
                 this.writeInfo = Object.assign({},response.resultData);
-                console.log(response.resultData)
                 //如果没完善园区信息
                 if (response.resultData && !response.resultData.setUpTime) {
                     this.$message({
