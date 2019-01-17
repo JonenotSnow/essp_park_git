@@ -66,7 +66,7 @@
                                     </button>
                                     <button
                                         v-else-if="activeDetailData.status == '02' && btnText==1">
-                                        <em class="btn_text_i" :disabled="!loginFlag" @click="signUp(activeDetailData.enterType)" v-if="activeDetailData.topLimit != 0">立即报名</em>
+                                        <em class="btn_text_i" :class="!loginFlag ? 'sel':''"  @click="signUp(activeDetailData.enterType)" v-if="activeDetailData.topLimit != 0">立即报名</em>
                                         <em class="btn_text_i" v-else>人数已满</em>
                                     </button>
                                     <button
@@ -394,7 +394,7 @@
                     var _this = this;
                     this.$message.warning("您尚未登陆，请您先登陆");
                     setTimeout(function () {
-                        _this.windowHrefUrl('/userIndex/login');
+                        _this.windowHrefUrl('/userIndex/login')
                     }, 2000);
                     return;
                 }
@@ -438,7 +438,7 @@
                     var _this = this;
                     this.$message.warning("您尚未登陆，请您先登陆");
                     setTimeout(function () {
-                        _this.$router.push('/userIndex/login');
+                        _this.windowHrefUrl('/userIndex/login')
                     }, 2000);
                     return;
                 }
@@ -475,7 +475,7 @@
                     var _this = this;
                     this.$message.warning("您尚未登陆，请您先登陆");
                     setTimeout(function () {
-                        _this.$router.push('/userIndex/login');
+                        _this.windowHrefUrl('/userIndex/login')
                     }, 2000);
                     return;
                 }
@@ -675,7 +675,13 @@
         height: 100%;
         width: 100%;
         font-style: normal;
-    }f
+    }
+    .btn_text_i.sel {
+        background-color: #999;
+        -webkit-border-radius: 30px;
+        -moz-border-radius: 30px;
+        border-radius: 30px;
+    }
     .jbnc {
         .essp_width_auto();
         height: 32px;

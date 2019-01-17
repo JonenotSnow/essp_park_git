@@ -96,9 +96,11 @@
     import EsspInfoComment from "@/components/EsspInfoComment";
     import EsspParkTag from "@/components/EsspParkTag";
     import Moment from "moment";
+    import mixin from '@/components/mixins/mixins_windowOpen.js'
 
     export default {
         name: "",
+        mixins:[mixin],
         components: {
             EsspBreadCrumb,
             EsspInfoComment,
@@ -166,12 +168,12 @@
             },
             tipOffFn(type, id, title, cstNm, byInformer) {
                 //未登录
-                
+
                 if(!this.utils.isLoginMode()){
                     var _this = this;
                     this.$message.warning("您尚未登陆，请您先登陆");
                     setTimeout(function(){
-                        _this.$router.push('/userIndex/login');
+                        _this.windowHrefUrl('/userIndex/login')
                     },2000);
                     return
                 }
@@ -201,7 +203,7 @@
                     var _this = this;
                     this.$message.warning("您尚未登陆，请您先登陆");
                     setTimeout(function(){
-                        _this.$router.push('/userIndex/login');
+                        _this.windowHrefUrl('/userIndex/login')
                     },2000);
                     return
                 }
@@ -231,7 +233,7 @@
                             this.$message.success(successMsg);
                             this.followId = data.followId;
                             this.followStatus = data.followStatus;
-                       
+
                     },
                     err => {
                          this.$message.info(response.resultMsg);

@@ -128,7 +128,7 @@
                     var _this = this;
                     this.$message.warning("您尚未登陆，请您先登陆");
                     setTimeout(function(){
-                        _this.$router.push('/userIndex/login');
+                        _this.windowHrefUrl('/userIndex/login')
                     },2000);
                     return
                 }

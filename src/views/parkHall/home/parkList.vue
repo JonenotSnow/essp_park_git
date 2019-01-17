@@ -85,9 +85,11 @@
 
 <script>
     import EsspHead from "@/components/EsspHeadPark";
+    import mixin from '@/components/mixins/mixins_windowOpen.js'
 
     export default {
         name: "",
+        mixins:[mixin],
         components: {
             EsspHead
         },
@@ -229,7 +231,7 @@
                         }
                         this.parkNm = item.parkNm;
                         this.SSH.delItem('oldParkId')
-                        ///01/09隐藏 请勿增加local维护字段 
+                        ///01/09隐藏 请勿增加local维护字段
                         // localStorage.setItem("parkId", item.parkId);
                         this.SSH.setItem("parkId", item.parkId);
                         //01/09 不要用local维护麻烦，谢谢
@@ -247,13 +249,13 @@
                 this.changeHeight = !this.changeHeight;
             },
             getCcbUser(item) {
-                
+
                 this.curIs = true;
                 let loginFlag = this.SSH.getItem("loginFlag");
                 //未登录提示
                 if (loginFlag == null) {
                     this.$message.error("你当前未登录，不能作此操作，请先登录");
-                    this.$router.push('/userIndex/login')
+                    this.windowHrefUrl('/userIndex/login')
                     return;
                 }
 
@@ -262,7 +264,7 @@
                 if (!(this.SSH.getItem("userInfo").cstBscInfVo.cstId))return;
                 let userId = this.SSH.getItem("userInfo").id;
                 let cstId = this.SSH.getItem("userInfo").cstBscInfVo.cstId;
-                
+
                 this.$post(this.$apiUrl.home.selectCstPostIdList, {
                     userId: userId,
                     cstId: cstId,
@@ -274,7 +276,7 @@
                         this.toRequestAddParK(item);
                     }
                 }, (err) => {})
-                
+
             },
             toRequestAddParK(item) {
                 //申请入园操作需要 园区游客身份+平台企业管理员身份（11+32）

@@ -39,6 +39,7 @@
                     </p>
                 </div>
                 <div class="cont-detail-r" v-if="LoginUserRol == '11'">
+
                     <button type="primary" v-for="(itemChild,index) in item.btn" :key="index"
                             class="essp-btn btn-cancle">
                         {{itemChild.name}}
@@ -84,9 +85,11 @@
 <script>
     import Moment from "moment";
     import EsspParkTag from "@/components/EsspParkTag";
+    import mixin from '@/components/mixins/mixins_windowOpen.js'
 
     export default {
         name: "EsspMcCard",
+        mixins:[mixin],
         props: {
             mcCardList: {
                 type: Array,
@@ -121,7 +124,8 @@
                 dialogVisible: false,
                 activeId: '',
                 index: 0,
-                LoginUserRol: sessionStorage.getItem("LoginUserRol").toString()
+                LoginUserRol: JSON.parse(sessionStorage.getItem("LoginUserRol")).join(''),
+                loginFlag: this.SSH.getItem("loginFlag") ? this.SSH.getItem("loginFlag") : false
             };
         },
         filters: {
@@ -203,7 +207,7 @@
                     var _this = this;
                     this.$message.warning("您尚未登陆，请您先登陆");
                     setTimeout(function(){
-                        _this.$router.push('/userIndex/login');
+                        _this.windowHrefUrl('/userIndex/login')
                     },2000);
                     return
                 }

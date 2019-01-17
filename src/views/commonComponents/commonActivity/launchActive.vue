@@ -477,7 +477,7 @@
             //author：米格   20181217
             checkActivityOperateAuth(recordOwner){
                 let defautlFlag = false;
-                let currentUser = localStorage.getItem("userName");
+                let currentUser = sessionStorage.getItem("userName");
 
                 if(currentUser === recordOwner){
                     defautlFlag = true;
