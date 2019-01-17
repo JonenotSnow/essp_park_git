@@ -427,8 +427,9 @@
     }
 </script>
 <style>
-    .avatar-uploader-chengguo .el-upload {
+    #publishExpertTeams .avatar-uploader-chengguo .el-upload {
         width: 100%;
+        height: 100%;
     }
 </style>
 <style lang='less' scoped>
@@ -661,7 +662,7 @@
                 left: 98px;
                 top: 0;
                 width: 198px;
-                padding: 0 5px;
+                padding: 0;
                 border-radius: 3px;
                 border: 1px solid #ccc;
                 height: 140px;
