@@ -456,7 +456,7 @@ export default {
                         border:1px;
                         border-radius:14px;
                         float:left;
-                        background:#f8f8f8;
+                        background:#f5f5f5;
                     }
                     &>i{
                         float:left;

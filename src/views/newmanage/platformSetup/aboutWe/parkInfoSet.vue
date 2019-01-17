@@ -113,7 +113,7 @@ export default {
                 }
             ],
             stepType:'1',
-            pass:fasle //验证是否已经是信息全部填写
+            pass:false //验证是否已经是信息全部填写
         }
     },
     created() {

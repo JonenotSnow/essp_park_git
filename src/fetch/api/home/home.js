@@ -17,5 +17,6 @@
     getAchievement:'/achiev/getAllAchiev',// 获取全部成果列表
     getAchievByKey:'/achiev/getAchievByKey',// 获取成果详情
     saveAchiev:"/achiev/saveAchiev",//新增成果
-    delAchievByKey:"/achiev/delAchievByKey"//删除成果
+    delAchievByKey:"/achiev/delAchievByKey",//删除成果
+    selectCstPostIdList:"/userPostWeb/selectCstPostIdList"
 }

@@ -49,8 +49,12 @@
 
             // 查看政策
             linkToPolicie() {
+                sessionStorage.setItem('navIndex','1')
                 this.$router.push({
-                    path: '/sciIndex/policieAndRegulation/policieAndRegulation'
+                    path: '/sciIndex/policieAndRegulation/policieAndRegulatio',
+                    query:{
+                        'navIndex':'1'
+                    }
                 });
             }
         },
