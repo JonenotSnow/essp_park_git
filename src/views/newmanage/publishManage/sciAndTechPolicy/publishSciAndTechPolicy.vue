@@ -21,15 +21,16 @@
                 <el-form-item label="政策法规简介：" prop="approveComment">
                     <!--<el-input type="textarea" v-model="ruleForm.desc"></el-input>-->
                     <textarea
+                        class="my-approve-comment"
                         v-model="ruleForm.approveComment"
                         placeholder="请输入政策法规简介"
-                        style="padding: 10px; width: 720px; height: 140px; font-size: 14px; color: #999; border-radius: 3px; border: solid 1px #cccccc;"/>
+                    />
                 </el-form-item>
                 <el-form-item label="政策法规详情：" prop="infoDetail">
                     <textarea
+                        class="my-approve-comment"
                         v-model="ruleForm.infoDetail"
-                        placeholder="请输入政策法规详情"
-                        style="padding: 10px; width: 720px; height: 140px; font-size: 14px; color: #999; border-radius: 3px; border: solid 1px #cccccc;"/>
+                        placeholder="请输入政策法规详情"/>
                 </el-form-item>
                 <el-form-item label="政策法规标签：">
                     <div class="inline_div_tag">
@@ -48,19 +49,6 @@
                     {{userInfo.truename}}
                 </el-form-item>
                 <el-form-item>
-                    <!--<el-upload-->
-                    <!--class="upload-demo"-->
-                    <!--:action="uploadUrl"-->
-                    <!--:on-preview="handlePreview"-->
-                    <!--:on-remove="handleRemove"-->
-                    <!--:before-remove="beforeRemove"-->
-                    <!--multiple-->
-                    <!--:limit="5"-->
-                    <!--:on-exceed="handleExceed"-->
-                    <!--:file-list="fileList">-->
-                    <!--<span class="btn-upload">附件上传</span>-->
-                    <!--<div slot="tip" class="el-upload__tip">（政策法规支持pdf/word/excel等类型文件，大小10M内）</div>-->
-                    <!--</el-upload>-->
                     <el-upload
                         class="upload-demo"
                         action="#"
@@ -109,15 +97,17 @@
                 <el-form-item label="科技服务简介：" prop="approveComment">
                     <!--<el-input type="textarea" v-model="ruleForm.desc"></el-input>-->
                     <textarea
+                        class="my-approve-comment"
                         v-model="ruleForm.approveComment"
                         placeholder="请输入科技服务简介"
-                        style="padding: 10px; width: 720px; height: 140px; font-size: 14px; color: #999; border-radius: 3px; border: solid 1px #cccccc;"/>
+                    />
                 </el-form-item>
                 <el-form-item label="科技服务详情：" prop="infoDetail">
                     <textarea
+                        class="my-approve-comment"
                         v-model="ruleForm.infoDetail"
                         placeholder="请输入科技服务详情"
-                        style="padding: 10px; width: 720px; height: 140px; font-size: 14px; color: #999; border-radius: 3px; border: solid 1px #cccccc;"/>
+                    />
                 </el-form-item>
                 <el-form-item label="科技服务标签：">
                     <div class="inline_div_tag">
@@ -177,13 +167,13 @@
                 <div class="main-body">
                     <div v-html="this.ruleForm.infoDetail"></div>
                 </div>
-                <div class="main-foot" v-if="this.ruleForm.fileUrl && this.ruleForm.fileUrl.length > 0">
+                <div class="main-foot" v-if="this.fileList && this.fileList.length > 0">
                     <p class="attachment-p attachment-title">附件下载：</p>
                     <p class="attachment-p attachment-main"
-                       v-for="(item, index) in this.ruleForm.fileUrl"
+                       v-for="(item, index) in this.fileList"
                        :key="index"
                     >
-                        <a :href="item.url" download>·附件{{index+1}}：{{item.name}}</a>
+                        <a @click="linkToFile(item.url)">·附件{{index+1}}：{{item.name}}</a>
                     </p>
                 </div>
             </div>
@@ -208,30 +198,30 @@
             return {
                 breadlist_01: [
                     {
-                        path: "/parkHome",
+                        path: "/parkHall/manage/baseInfo1",
                         name: "系统管理"
                     },
                     {
-                        path: "",
+                        path: "/parkHall/manage/sciAndTechPolicy/policieAndRegulation",
                         name: "发布管理"
                     },
                     {
                         path: "",
-                        name: "发布政策法规"
+                        name: "政策法规"
                     }
                 ],
                 breadlist_02: [
                     {
-                        path: "/parkHome",
+                        path: "/parkHall/manage/baseInfo1",
                         name: "系统管理"
                     },
                     {
-                        path: "",
+                        path: "/parkHall/manage/sciAndTechPolicy/policieAndRegulation",
                         name: "发布管理"
                     },
                     {
                         path: "",
-                        name: "发布科技服务"
+                        name: "科技服务"
                     }
                 ],
 
@@ -288,7 +278,7 @@
                     entId: ""
                 },
 
-                // 附件上传路由
+                // 附件上传字段
                 fileList: [],
 
                 // 预览事件相关字段
@@ -334,14 +324,7 @@
                         this.ruleForm.tags = tags;
 
                         // 处理附件上传
-                        let fileUrl = '';
-                        for (let i = 0; i < this.fileList.length; i++) {
-                            fileUrl += this.fileList[i].url;
-                            if (i !== this.fileList.length - 1) {
-                                fileUrl += ',';
-                            }
-                        }
-                        this.ruleForm.fileUrl = fileUrl;
+                        this.ruleForm.fileUrl = this.fileList;
 
                         // 政策法规不需要服务类型这个字段
                         if (this.applyType === '01') {
@@ -395,14 +378,7 @@
                         this.ruleForm.tags = tags;
 
                         // 处理附件上传
-                        let fileUrl = '';
-                        for (let i = 0; i < this.fileList.length; i++) {
-                            fileUrl += this.fileList[i].url;
-                            if (i !== this.fileList.length - 1) {
-                                fileUrl += ',';
-                            }
-                        }
-                        this.ruleForm.fileUrl = fileUrl;
+                        this.ruleForm.fileUrl = this.fileList;
 
                         // 政策法规不需要服务类型这个字段
                         if (this.applyType === '01') {
@@ -453,20 +429,27 @@
                     let codestatus = response.resultCode;
                     if (codestatus == "CLT000000000") {
                         this.ruleForm = response.resultData;
-                        this.ruleForm.tags = this.ruleForm.tagsTxt.split(",");
 
-                        console.log('this.ruleForm.fileUrl==================');
-                        console.log(this.ruleForm.fileUrl);
-                        // let fileList = JSON.parse(this.ruleForm.fileUrl);
-                        let fileList = this.ruleForm.fileUrl.split(",");
+                        // 处理标签
+                        if (this.ruleForm.tagsTxt) {
+                            this.ruleForm.tags = this.ruleForm.tagsTxt.split(",");
+                        } else {
+                            this.ruleForm.tags = [];
+                        }
 
-                        fileList.forEach((item, index) => {
-                            var obj = {
-                                name: item.name,
-                                url: item.url
-                            };
-                            this.fileList.push(obj);
-                        })
+                        // 处理附件
+                        if (this.ruleForm.fileUrl) {
+                            let fileList = JSON.parse(this.ruleForm.fileUrl);
+
+                            fileList.forEach((item, index) => {
+                                var obj = {
+                                    name: item.name,
+                                    url: item.url
+                                };
+                                this.fileList.push(obj);
+                            })
+                        }
+
 
                     } else {
                         this.$message.info(response.resultMsg);
@@ -497,6 +480,7 @@
 
                 param.append("type", "park"); // 通过append向form对象添加数据
                 param.append("model", "fj"); // 通过append向form对象添加数据
+
                 console.log("上传文件格式：", file.type);
                 var flieName = file.name;
                 var fileType = flieName.substring(flieName.lastIndexOf(".") + 1).toLowerCase();
@@ -516,11 +500,9 @@
                 this.$post(this.$apiUrl.upload.upload, param).then(response => {
                     var obj = {
                         name: file.name,
-                        url: response.resultData[0].url
+                        url: response.resultData[0].url.concat(file.name)
                     };
                     this.fileList.push(obj);
-                    console.log('this.fileList============================');
-                    console.log(this.fileList);
                 });
                 return false; // 返回false不会自动上传
             },
@@ -531,6 +513,10 @@
             // 预览事件---开始
             handleScan() {
                 this.dialogVisible = true;
+            },
+            // 跳转出新窗口，看上传的附件
+            linkToFile(url) {
+                window.open(url)
             }
 
         },
@@ -564,6 +550,30 @@
 
         .publist-form {
             padding: 0 125px 60px;
+
+            .my-approve-comment {
+                padding: 10px;
+                width: 720px;
+                height: 140px;
+                font-size: 14px;
+                color: #606266;
+                border-radius: 3px;
+                border: solid 1px #cccccc;
+                outline: none;
+            }
+            textarea::-webkit-input-placeholder {
+                color: #ccc;
+            }
+            textarea::-moz-placeholder { /* Mozilla Firefox 19+ */
+                color: #ccc;
+            }
+            textarea:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+                color: #ccc;
+            }
+            textarea:-ms-input-placeholder { /* Internet Explorer 10-11 */
+                color: #ccc;
+            }
+
             .inline_div_tag {
                 /*border: 1px solid red;*/
                 float: left;

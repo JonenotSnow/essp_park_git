@@ -28,7 +28,7 @@
                     <div class="my-style">{{satpDate.userName}}</div>
                 </el-form-item>
                 <el-form-item label="附件：">
-                    <div class="my-style" v-for="(item, index) in satpDate.fileUrl" :key="index">{{item.name}}</div>
+                    <div class="my-style" v-for="(item, index) in fileList" :key="index">{{item.name}}</div>
                 </el-form-item>
             </el-form>
             <div class="audit-line"></div>
@@ -71,7 +71,7 @@
                     <div class="my-style">{{satpDate.userName}}</div>
                 </el-form-item>
                 <el-form-item label="附件：">
-                    <div class="my-style" v-for="(item, index) in satpDate.fileUrl" :key="index">{{item.name}}</div>
+                    <div class="my-style" v-for="(item, index) in fileList" :key="index">{{item.name}}</div>
                 </el-form-item>
             </el-form>
             <div class="audit-line"></div>
@@ -93,7 +93,7 @@
                 <h3 class="my-audit-title">填写审核意见</h3>
             </div>
             <div class="my-audit-opinion">
-                <textarea placeholder="请输入审核意见" v-model="remark">
+                <textarea placeholder="请输入审核意见" v-model="mark">
                 </textarea>
             </div>
             <div class="btn-submit-wrap">
@@ -129,7 +129,7 @@
                     },
                     {
                         path: "/parkHall/manage/sciAndTechPolicyAudit",
-                        name: "发布管理"
+                        name: "发布审核"
                     },
                     {
                         path: "/parkHall/manage/sciAndTechPolicyAudit",
@@ -151,7 +151,7 @@
                     },
                     {
                         path: "/parkHall/manage/sciAndTechPolicyAudit",
-                        name: "发布管理"
+                        name: "发布审核"
                     },
                     {
                         path: "/parkHall/manage/sciAndTechPolicyAudit",
@@ -166,6 +166,7 @@
 
                 // 详情数据
                 satpDate: {},
+                fileList: [],   // 附件字段
                 rules_01: {
                     policyTitle: [
                         {required: true, message: '请输入政策法规标题', trigger: 'blur'},
@@ -201,7 +202,7 @@
                 // 填写审核意见事件相关字段
                 dialogVisible: false,
                 status: '',
-                remark: '',
+                mark: '',
             }
         },
         methods: {
@@ -221,6 +222,18 @@
                         // 对标签进行处理
                         this.satpDate.tagsTxt = this.satpDate.tagsTxt.split(',');
 
+                        // 对附件进行处理
+                        if (this.satpDate.fileUrl) {
+                            let fileList = JSON.parse(this.satpDate.fileUrl);
+
+                            fileList.forEach((item, index) => {
+                                var obj = {
+                                    name: item.name,
+                                    url: item.url
+                                };
+                                this.fileList.push(obj);
+                            })
+                        }
                     } else {
                         this.$message.info(response.resultMsg);
                     }
@@ -243,16 +256,14 @@
                     parkId: this.parkId,
                     entityId: this.id,
                     status: this.status,
-                    remark: this.remark,
+                    mark: this.mark,
                 };
                 this.$post("/audit/policy", params).then(response => {
                     let codestatus = response.resultCode;
                     if (codestatus == "CLT000000000") {
                         this.satpDate = response.resultData;
                         this.$router.push({
-                            // 本应该是这个路径，因为配置出错了，所以改用
-                            // path: '/sciIndex/policieAndRegulation/policieAndRegulation'
-                            path: '/sciIndex'
+                            path: '/parkHall/manage/sciAndTechPolicyAudit'
                         });
                     } else {
                         this.$message.info(response.resultMsg);
@@ -361,10 +372,12 @@
                     font-weight: normal;
                     font-stretch: normal;
                     letter-spacing: 0px;
-                    color: #ccc;
+                    color: #606266;
                     border-radius: 3px;
                     border: solid 1px #00a0e9;
                     background-color: #ffffff;
+                    resize: none;
+                    outline: none;
                     &::-webkit-input-placeholder { /* WebKit, Blink, Edge */
                         color: #ccc;
                     }
