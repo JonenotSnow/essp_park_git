@@ -25,6 +25,7 @@
             <list-only-status
                 :list="dataList"
                 :type="status"
+                :totalCount="totalCount"
                 @childDeleted="childDeleted"
                 @childSwitchStatus="childSwitchStatus"
                 v-if="status=='1' || status=='2'"
@@ -33,6 +34,7 @@
             <list-no-status-and-classify
                 :list="dataList"
                 :type="status"
+                :totalCount="totalCount"
                 @childDeleted="childDeleted"
                 v-if="status=='0'"/>
         </div>
@@ -77,6 +79,7 @@
                 totalCount: 0,
                 pageNum: 1,
                 pageSize: 10,
+
 
                 // 返回的数据
                 dataList: []
@@ -145,9 +148,10 @@
              * 子组件传递上来的事件------------开始
              */
             // 子组件执行删除事件后传递到父组件的事件
-            childDeleted(status) {
+            childDeleted(type) {
+                alert('重新获取数据===');
                 // 重新获取数据
-                this.getPolicieAndRegulation(status);
+                this.getPolicieAndRegulation(type);
             },
 
             // 子组件里的状态切换事件

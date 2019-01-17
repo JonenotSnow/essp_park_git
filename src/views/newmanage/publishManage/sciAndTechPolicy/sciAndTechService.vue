@@ -27,6 +27,7 @@
                 v-if="status=='1' || status=='2'"
                 :list="dataList"
                 :type="status"
+                :totalCount="totalCount"
                 @childDeleted="childDeleted"
                 @childSwitchStatus="childSwitchStatus"
             />
@@ -34,6 +35,8 @@
             <list-only-classify
                 v-if="status=='0'"
                 :list="dataList"
+                :type="status"
+                :totalCount="totalCount"
                 @childDeleted="childDeleted"
             />
         </div>
@@ -145,15 +148,14 @@
              * 子组件传递上来的事件------------开始
              */
             // 子组件执行删除事件后传递到父组件的事件
-            childDeleted() {
+            childDeleted(status) {
                 // 重新获取数据
-                this.getPolicieAndRegulation();
+                this.getPolicieAndRegulation(status);
             },
 
             // 子组件里的状态切换事件
             childSwitchStatus(approveType) {
                 // 重新获取数据
-
                 // this.approveType = approveType;
                 this.getPolicieAndRegulation();
             }
