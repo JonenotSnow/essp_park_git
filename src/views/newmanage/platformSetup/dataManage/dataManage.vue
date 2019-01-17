@@ -333,7 +333,7 @@ export default {
             let itemIndex = Number(item.type);
             if (itemIndex > 5) return false;
             let itemObj = Object.assign({},this.switchFn(itemIndex,0),item)
-            if(this.list[itemIndex].content.length<6)this.list[itemIndex].content.push(itemObj);
+            if(this.list[itemIndex].content.length<5){this.list[itemIndex].content.push(itemObj);}
           });
         }
       });
@@ -415,7 +415,7 @@ export default {
         this.list.forEach((item, index) => {
         if (item.content.length > 0) {
           item.content.forEach(items => {
-            if(!items.dataNum || !item.year){
+            if(!items.dataNum || !items.year){
               throw '数据不完整'
               return false
             }
@@ -557,8 +557,8 @@ export default {
             display: inline-block;
             width: 30px;
             background: #fff;
-            height: 31px;
-            line-height: 31px;
+            height: 30px;
+            line-height: 30px;
             padding-left: 5px;
           }
           .sub1 {
