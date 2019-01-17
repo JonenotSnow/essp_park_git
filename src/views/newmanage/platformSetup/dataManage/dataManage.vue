@@ -297,7 +297,7 @@ export default {
   padding-bottom: 0;
 }
 #dataManage .list ul li:nth-of-type(1) .el-date-editor.el-input,
-.el-date-editor.el-input__inner {
+#dataManage .el-date-editor.el-input__inner {
   width: 200px !important;
 }
 </style>
