@@ -7,7 +7,7 @@
  -->
 <template>
     <div class="sponsorcon">
-        <!-- 发布新资讯 -->
+        <!-- 发布新公告 -->
         <essp-bread-crumb :breadList="breadlist"></essp-bread-crumb>
         <div class="newscon">
             <span></span>
@@ -111,7 +111,7 @@
             </el-button>
         </div>
 
-        <el-dialog title="资讯发布预览功能（仅提供预览功能）" :visible.sync="infoDialog" width="90%">
+        <el-dialog title="公告发布预览功能（仅提供预览功能）" :visible.sync="infoDialog" width="90%">
             <div class="inlookInfo">
                 <h2 class="inlookTit">{{informationTitle}}</h2>
                 <div class="newstatus esspclearfix">
@@ -190,20 +190,21 @@
                         ]
                     }
                 },
-                content: "", //资讯详情
-                classtType: "", //资讯明细分类
-                informationTitle: "", //资讯标题
-                contentbrif: "", //资讯简介
+                content: "", //公告详情
+                // classtType: "", //公告明细分类
+                informationTitle: "", //公告标题
+                contentbrif: "", //公告简介
                 saveType: "0", //暂存草稿箱
                 tags: [], //标签
-                informationId: "", //资讯id，供后台去重功能
+                informationId: "", //公告id，供后台去重功能
                 visible: false,
                 tagprops: {
                     lblTpCd: "3000003",
                     entId: ""
                 },
                 createTime: "",
-                cstNm: ""
+                cstNm: "",
+                listFile:[]
             };
         },
         components: {
@@ -215,7 +216,9 @@
         },
         created() {
             // this.getDraftResource();
-
+            let userInfo = this.SSH.getItem('userInfo')
+            this.initiatorWay = userInfo.truename
+            this.cstNm = userInfo.cstNm
         },
         filters: {
             timerFormat(vaule) {
@@ -223,11 +226,9 @@
             }
         },
         methods: {
-            // 改变图片路径
-            showImgUrl(url) {
-                this.parkUploadData.src = url;
-            },
-            //资讯预览功能
+
+
+            //公告预览功能
             infoPrint() {
                 if (this.checkLookInfo()) {
                     this.infoDialog = true;
@@ -237,15 +238,15 @@
             //限制预览功能的触发条件
             checkLookInfo() {
                 if (this.informationTitle == "") {
-                    this.$message.warning("资讯主题不能为空");
+                    this.$message.warning("公告标题不能为空");
                     return;
                 }
                 if (this.informationTitle.length > 40) {
-                    this.$message.warning("资讯主题长度不能大于50个字");
+                    this.$message.warning("公告标题长度不能大于50个字");
                     return;
                 }
                 if (this.content == "") {
-                    this.$message.warning("资讯内容不能为空");
+                    this.$message.warning("公告内容不能为空");
                     return;
                 }
                 // if(this.stillUpdateImg){
@@ -254,7 +255,7 @@
                 // }
                 return true;
             },
-            //获取资讯暂存的草稿数据
+            //获取公告暂存的草稿数据
             getDraftResource() {
                 this.typeitems = classtType.infoType;
                 var informationId = this.$route.query.informationId; //parkIndex/launchForm?draftId=1
@@ -265,14 +266,14 @@
                             var codestatus = response.resultCode;
                             if (codestatus == "CLT000000000") {
                                 let data = response.resultData;
-                                this.informationTitle = data.informationTitle; //资讯标题
-                                this.contentbrif = data.content; //资讯简介
-                                this.classtType = data.classtType; //资讯明细分类
+                                this.informationTitle = data.informationTitle; //公告标题
+                                this.contentbrif = data.content; //公告简介
+                                // this.classtType = data.classtType; //公告明细分类
                                 this.approveType = data.approveType; //是否需要公司内部审核1是0否
-                                this.content = data.infoDetail; //资讯详情
-                                this.pubComment = data.pubComment; //资讯备注
-                                this.informationId = data.informationId; //资讯id
-                                this.parkUploadData.src = data.titleImg ? data.titleImg : ""; //资讯配图
+                                this.content = data.infoDetail; //公告详情
+                                this.pubComment = data.pubComment; //公告备注
+                                this.informationId = data.informationId; //公告id
+                                // this.parkUploadData.src = data.titleImg ? data.titleImg : ""; //公告配图
                                 this.tags = data.tagsTxt ? data.tagsTxt.split(",") : [];
                             } else {
                                 this.$message.info(response.resultMsg);
@@ -300,32 +301,32 @@
 
             checkInfo() {
                 if (this.informationTitle == "") {
-                    this.$message.warning("资讯主题不能为空");
+                    this.$message.warning("公告标题不能为空");
                     return false;
                 }
                 if (this.informationTitle.length > 50) {
-                    this.$message.warning("资讯主题长度不能大于50个字");
+                    this.$message.warning("公告标题长度不能大于50个字");
                     return false;
                 }
                 if (this.content == "") {
-                    this.$message.warning("资讯内容不能为空");
+                    this.$message.warning("简介不能为空");
                     return false;
                 }
-                if (this.parkUploadData.src == "") {
-                    this.$message.warning("标题配图不能为空");
-                    return false;
-                }
-                if (this.classtType == "") {
-                    this.$message.warning("请您选择资讯类型");
-                    return false;
-                }
+                // if (this.parkUploadData.src == "") {
+                //     this.$message.warning("标题配图不能为空");
+                //     return false;
+                // }
+                // if (this.classtType == "") {
+                //     this.$message.warning("请您选择公告类型");
+                //     return false;
+                // }
                 return true;
             },
             //新闻发布功能
             lookfinalData() {
                 var parkId = sessionStorage.getItem("parkId") || "";
-                var msg = "您是否发布新闻动态？";
-                var goto = "/parkHall/manage/publicNews?status=1";
+                var msg = "您是否发布公告？";
+                var goto = "/parkHall/manage/publicNotice?status=1";
                 if (!this.checkInfo()) {
                     return;
                 }
@@ -335,7 +336,7 @@
                     center: true
                 };
                 this.$confirm(msg, maskConfig).then(() => {
-                    var url = "information/saveNews";
+                    var url = "information/saveNotice";
                     var pop = {
                         parkId,
                         informationTitle:this.informationTitle,
@@ -344,16 +345,16 @@
                         tags:this.tags.join(","),
                         saveType:1,
                         content: this.contentbrif,
-                        titleImg: this.parkUploadData.src,
+                        // titleImg: this.parkUploadData.src,
                     }
                     this.$post(url, pop).then(response => {
-                        this.$message.success("新闻动态发布成功")
+                        this.$message.success("通知公告发布成功")
                         this.$router.push({path: goto});
                     });
                     this.$refs.eat.saveTags();
                 });
             },
-            //暂存新闻
+            //暂存公告
             submitInfo() {
                 var parkId = sessionStorage.getItem("parkId") || "";
                 var type = 0;
@@ -366,10 +367,10 @@
                     dangerouslyUseHTMLString: true
                 };
 
-                this.$post("information/saveNews", {
+                this.$post("information/saveNotice", {
                     parkId: parkId,
                     informationTitle: this.informationTitle,
-                    titleImg: this.parkUploadData.src,
+                    // titleImg: this.parkUploadData.src,
                     content: this.contentbrif,
                     saveType: type,
                     tags: this.tags.join(","),
@@ -383,6 +384,9 @@
                     });
 
                 });
+            },
+            beforeup(val){
+                console.log(val)
             }
         }
     };
@@ -632,7 +636,7 @@
         }
     }
 
-    //资讯预览功能
+    //公告预览功能
     .inlookInfo {
         .inlookTit {
             margin-bottom: 20px;

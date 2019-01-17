@@ -151,7 +151,8 @@ export default {
         data
       ).then(
         response => {
-          if (response.resultCode == "CLT000000000") {
+          console.log(response.resultData.visitor)
+          if (response.resultCode == "CLT000000000" && !response.resultData.visitor) {
           that.hotRqmList = response.resultData.searchResultList;
           that.totalCount = response.resultData.page.total;
             //onsole.log('that.resultList',that.resultList)
@@ -169,7 +170,8 @@ export default {
     myNeed() {
 
       let parkId = this.SSH.getItem('parkId')
-      let token= this.SSH.getItem('token')?'&token='+token:''
+      let token= this.SSH.getItem('token')
+      token=token?'&token='+token:''
       let params = '?linkSrc='+parkId+token
       this.windowOpenUrl('requIndex/requMyrqm/all',params)
     },

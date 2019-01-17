@@ -39,9 +39,6 @@
                 <span class="sub2" v-if="is.sub && is.sub.length == 2">{{is.sub}}</span>
               </div>
             </li>
-            <span class="addYear" v-if="j == item.content.length-1" @click="addItem(i,j)">
-              <i class="el-icon-plus"></i>添加年份
-            </span>
           </ul>
         </div>
       </el-collapse-item>
@@ -68,6 +65,34 @@ export default {
               sub: "万人",
               subTitle: "R&D人员：",
               type:0
+            },{
+              id: 0,
+              year: "",
+              dataNum: "",
+              sub: "万人",
+              subTitle: "R&D人员：",
+              type:0
+            },{
+              id: 0,
+              year: "",
+              dataNum: "",
+              sub: "万人",
+              subTitle: "R&D人员：",
+              type:0
+            },{
+              id: 0,
+              year: "",
+              dataNum: "",
+              sub: "万人",
+              subTitle: "R&D人员：",
+              type:0
+            },{
+              id: 0,
+              year: "",
+              dataNum: "",
+              sub: "万人",
+              subTitle: "R&D人员：",
+              type:0
             }
           ]
         },
@@ -75,6 +100,34 @@ export default {
           title: "企业研究与发展（R&D）经费支出（亿元）",
           content: [
             {
+              id: 0,
+              year: "",
+              dataNum: "",
+              sub: "亿元",
+              subTitle: "R&D投入：",
+              type:1
+            },{
+              id: 0,
+              year: "",
+              dataNum: "",
+              sub: "亿元",
+              subTitle: "R&D投入：",
+              type:1
+            },{
+              id: 0,
+              year: "",
+              dataNum: "",
+              sub: "亿元",
+              subTitle: "R&D投入：",
+              type:1
+            },{
+              id: 0,
+              year: "",
+              dataNum: "",
+              sub: "亿元",
+              subTitle: "R&D投入：",
+              type:1
+            },{
               id: 0,
               year: "",
               dataNum: "",
@@ -94,6 +147,34 @@ export default {
               sub: "个",
               subTitle: "专利申请量：",
               type:2
+            },{
+              id: 0,
+              year: "",
+              dataNum: "",
+              sub: "个",
+              subTitle: "专利申请量：",
+              type:2
+            },{
+              id: 0,
+              year: "",
+              dataNum: "",
+              sub: "个",
+              subTitle: "专利申请量：",
+              type:2
+            },{
+              id: 0,
+              year: "",
+              dataNum: "",
+              sub: "个",
+              subTitle: "专利申请量：",
+              type:2
+            },{
+              id: 0,
+              year: "",
+              dataNum: "",
+              sub: "个",
+              subTitle: "专利申请量：",
+              type:2
             }
           ]
         },
@@ -101,6 +182,34 @@ export default {
           title: "发明专利申请量",
           content: [
             {
+              id: 0,
+              year: "",
+              dataNum: "",
+              sub: "项",
+              subTitle: "发明专利申请量：",
+              type:3
+            },{
+              id: 0,
+              year: "",
+              dataNum: "",
+              sub: "项",
+              subTitle: "发明专利申请量：",
+              type:3
+            },{
+              id: 0,
+              year: "",
+              dataNum: "",
+              sub: "项",
+              subTitle: "发明专利申请量：",
+              type:3
+            },{
+              id: 0,
+              year: "",
+              dataNum: "",
+              sub: "项",
+              subTitle: "发明专利申请量：",
+              type:3
+            },{
               id: 0,
               year: "",
               dataNum: "",
@@ -120,6 +229,34 @@ export default {
               sub: "项",
               subTitle: "高新技术企业数量：",
               type:4
+            },{
+              id: 0,
+              year: "",
+              dataNum: "",
+              sub: "项",
+              subTitle: "高新技术企业数量：",
+              type:4
+            },{
+              id: 0,
+              year: "",
+              dataNum: "",
+              sub: "项",
+              subTitle: "高新技术企业数量：",
+              type:4
+            },{
+              id: 0,
+              year: "",
+              dataNum: "",
+              sub: "项",
+              subTitle: "高新技术企业数量：",
+              type:4
+            },{
+              id: 0,
+              year: "",
+              dataNum: "",
+              sub: "项",
+              subTitle: "高新技术企业数量：",
+              type:4
             }
           ]
         },
@@ -127,6 +264,34 @@ export default {
           title: "技术合同登记额",
           content: [
             {
+              id: 0,
+              year: "",
+              dataNum: "",
+              sub: "亿元",
+              subTitle: "技术合同登记额：",
+              type:5
+            },{
+              id: 0,
+              year: "",
+              dataNum: "",
+              sub: "亿元",
+              subTitle: "技术合同登记额：",
+              type:5
+            },{
+              id: 0,
+              year: "",
+              dataNum: "",
+              sub: "亿元",
+              subTitle: "技术合同登记额：",
+              type:5
+            },{
+              id: 0,
+              year: "",
+              dataNum: "",
+              sub: "亿元",
+              subTitle: "技术合同登记额：",
+              type:5
+            },{
               id: 0,
               year: "",
               dataNum: "",
@@ -154,7 +319,6 @@ export default {
   },
   methods: {
     getData() {
-      console.log(this.list);
       this.$post("/dataIndex/getIndexData", {
         parkId: sessionStorage.getItem("parkId")
       }).then(res => {
@@ -169,7 +333,7 @@ export default {
             let itemIndex = Number(item.type);
             if (itemIndex > 5) return false;
             let itemObj = Object.assign({},this.switchFn(itemIndex,0),item)
-            this.list[itemIndex].content.push(itemObj);
+            if(this.list[itemIndex].content.length<6)this.list[itemIndex].content.push(itemObj);
           });
         }
       });
@@ -246,9 +410,15 @@ export default {
     saveUp() {
       let parkId = this.SSH.getItem("parkId");
       let params = [];
-      this.list.forEach((item, index) => {
+
+      try{
+        this.list.forEach((item, index) => {
         if (item.content.length > 0) {
           item.content.forEach(items => {
+            if(!items.dataNum || !item.year){
+              throw '数据不完整'
+              return false
+            }
             let obj = Object.assign({}, items, {
               parkId: parkId,
               type: index
@@ -257,6 +427,11 @@ export default {
           });
         }
       });
+      }catch(err){
+          this.$message('数据完整设置后，才可上传')
+          return false
+      }
+    
       this.$post("/dataIndex/saveData", params).then(res => {
         this.$message.success("数据上传成功");
       });

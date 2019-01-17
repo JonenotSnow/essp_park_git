@@ -386,6 +386,7 @@ const utils = {
         SSH.delItem('cetificateFlag')
         SSH.delItem('enterpriseFlag')
         SSH.delItem('grayFlag')
+        router.push('/parkHome')
     },
     /**
      *  比较菜单id，获取菜单层级
