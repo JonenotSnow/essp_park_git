@@ -26,11 +26,12 @@
                         placeholder="请输入政策法规简介"
                     />
                 </el-form-item>
-                <el-form-item label="政策法规详情：" prop="infoDetail">
-                    <textarea
-                        class="my-approve-comment"
-                        v-model="ruleForm.infoDetail"
-                        placeholder="请输入政策法规详情"/>
+                <el-form-item label="政策法规详情：" prop="infoDetail" class="my-detail-edit">
+                    <div class="my-quill-edit-wrap">
+                        <quill-editor v-model="ruleForm.infoDetail" :options="editorOption">
+                            <div id="toolbar" slot="toolbar"></div>
+                        </quill-editor>
+                    </div>
                 </el-form-item>
                 <el-form-item label="政策法规标签：">
                     <div class="inline_div_tag">
@@ -102,12 +103,12 @@
                         placeholder="请输入科技服务简介"
                     />
                 </el-form-item>
-                <el-form-item label="科技服务详情：" prop="infoDetail">
-                    <textarea
-                        class="my-approve-comment"
-                        v-model="ruleForm.infoDetail"
-                        placeholder="请输入科技服务详情"
-                    />
+                <el-form-item label="科技服务详情：" prop="infoDetail" class="my-detail-edit">
+                    <div class="my-quill-edit-wrap">
+                        <quill-editor v-model="ruleForm.infoDetail" :options="editorOption">
+                            <div id="toolbar" slot="toolbar"></div>
+                        </quill-editor>
+                    </div>
                 </el-form-item>
                 <el-form-item label="科技服务标签：">
                     <div class="inline_div_tag">
@@ -188,11 +189,18 @@
     import EsspTag from "@/components/EsspTag";
     import EsspAddTag from "@/components/EsspAddTag";
 
+    // 编辑器
+    import "quill/dist/quill.core.css";
+    import "quill/dist/quill.snow.css";
+    import "quill/dist/quill.bubble.css";
+    import {quillEditor} from "vue-quill-editor";
+
     export default {
         components: {
             EsspBreadCrumb,
             EsspTag,
-            EsspAddTag
+            EsspAddTag,
+            quillEditor
         },
         data() {
             return {
@@ -560,18 +568,29 @@
                 border-radius: 3px;
                 border: solid 1px #cccccc;
                 outline: none;
+                &::-webkit-input-placeholder {
+                    color: #ccc;
+                }
+                &::-moz-placeholder { /* Mozilla Firefox 19+ */
+                    color: #ccc;
+                }
+                &:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+                    color: #ccc;
+                }
+                &:-ms-input-placeholder { /* Internet Explorer 10-11 */
+                    color: #ccc;
+                }
             }
-            textarea::-webkit-input-placeholder {
-                color: #ccc;
-            }
-            textarea::-moz-placeholder { /* Mozilla Firefox 19+ */
-                color: #ccc;
-            }
-            textarea:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-                color: #ccc;
-            }
-            textarea:-ms-input-placeholder { /* Internet Explorer 10-11 */
-                color: #ccc;
+
+            .my-detail-edit {
+                .my-quill-edit-wrap {
+                    width: 825px;
+                    height: 360px;
+                    .quill-editor {
+                        height: 70%;
+                    }
+
+                }
             }
 
             .inline_div_tag {
