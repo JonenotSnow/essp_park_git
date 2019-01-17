@@ -52,7 +52,8 @@ export default {
     },
     methods: {
         sendStepType(value){
-            this.stepType = value;
+            console.log(value)
+            this.stepType = value.stepType;
         },
         //获取当前步骤
         getCurStepId(id){
