@@ -69,7 +69,7 @@
                     </div>
                     <div class="pic pic_list esspclearfix" v-if="item.isPic == '1'">
                         <div class="pic_list_item" v-for="(imgItem,imgIndex) in item.photoList"
-                             :key="index" @click="selectUploadIndex(index,imgIndex)">
+                             :key="imgIndex" @click="selectUploadIndex(index,imgIndex)">
                             <el-upload
                                 class="avatar-uploader avatar-uploader-chengguo esspclearfix"
                                 action="#"
@@ -258,8 +258,8 @@
                     this.$message.error("请填写姓名！");
                     return flag = false;
                 }
-                if (this.submitUploadInfo.name.length > 5) {
-                    this.$message.error("您的姓名不能超过4个字！");
+                if (this.submitUploadInfo.name.length > 7) {
+                    this.$message.error("您的姓名不能超过6个字！");
                     return flag = false;
                 }
                 if (this.submitUploadInfo.title.length === 0) {

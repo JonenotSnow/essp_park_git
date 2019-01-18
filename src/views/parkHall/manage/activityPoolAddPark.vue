@@ -1,77 +1,80 @@
 <template>
-    <div class="el-main">
-        <div class='notice'>
-            <p><i class="icon iconfont icon-guangbo" style="color: orange;"></i>【小秘书】您有
-                <span>{{count.parkCount?count.parkCount:0}}</span>
-                条未被领取的入园申请，快来处理吧~</p>
-        </div>
-        <div class="baseInfo">
-            <div class="searchAdd">
-                <ul>
-                    <li>
-                        <div>
-                            <span>公司名称：</span>
-                            <input type="text" v-model="searchCondition.companyName" placeholder="请输入公司名称">
-                        </div>
-                        <div>
-                            <span>状态：</span>
-                            <select v-model="searchCondition.status">
-                                <option :value="it.id" v-for="(it,i) in statusList" :key="i">{{it.name}}</option>
-                            </select>
-                        </div>
-                    </li>
-                    <li>
-                        <div>
-                            <span>提交时间：</span>
-                            <el-date-picker v-model="searchCondition.startDate" type="date" placeholder="选择日期"  value-format="yyyy-MM-dd"></el-date-picker>
-                            -
-                            <el-date-picker v-model="searchCondition.endDate" type="date" placeholder="选择日期" value-format="yyyy-MM-dd"></el-date-picker>
-                        </div>
-                    </li>
-                </ul>
+    <div>
+        <activityPoolAddPark v-if="isBdPark"></activityPoolAddPark>
+        <div class="el-main" v-else>
+            <div class='notice'>
+                <p><i class="icon iconfont icon-guangbo" style="color: orange;"></i>【小秘书】您有
+                    <span>{{count.parkCount?count.parkCount:0}}</span>
+                    条未被领取的入园申请，快来处理吧~</p>
             </div>
-            <p class="saveBtn">
-                <el-button type="primary" size='small' @click='getList'>查询</el-button>
-                <el-button type="info" size='small' @click='reset'>重置</el-button>
-            </p>
-            <p>采取先到先得的任务领取审核方式</p>
-            <div class="tabList">
-                <el-table :data="list" @row-click="getDetail" style="width: 100%">
-                    <el-table-column align="center" type="index" label="全部" width="85"></el-table-column>
-                    <el-table-column show-overflow-tooltip align="center" prop="cstNm" label="公司名称" width="200"></el-table-column>
-                    <el-table-column show-overflow-tooltip align="center" prop="idyTpcd" label="行业">
-                        <template slot-scope="scope">
-                            {{scope.row.idyTpcd | idType(scope.row.idyTpcd)}}
-                        </template>
-                    </el-table-column>
-                    <el-table-column align="center" prop="joinTime" label="提交时间" width="140">
-                        <template slot-scope="scope">
-                            {{scope.row.parkCreateTime | timerFormat(scope.row.parkCreateTime)}}
-                        </template>
-                    </el-table-column>
-                    <el-table-column align="center" prop="status" label="状态" width="130">
-                        <template slot-scope="scope">
-                            {{scope.row.status | statusFormat(scope.row.status)}}
-                        </template>
-                    </el-table-column>
-                    <el-table-column align="center" prop="" width="100" label="操作">
-                        <template slot-scope="scope">
-                            <el-button type="text" v-if="',10,01,13,14,'.indexOf(`,${scope.row.status},`) == -1" disabled>领取并审核</el-button>
-                            <el-button type="text" v-else @click.stop="cancelAudit(scope.row.id)">领取并审核</el-button>
-                        </template>
-                    </el-table-column>
-                </el-table>
-            </div>
-            <div class="pageList" v-if="totalCount>5">
-                <el-pagination
-                    @size-change="handleSizeChange"
-                    @current-change="handleCurrentChange"
-                    :current-page="pageNum"
-                    :page-sizes="[5, 10, 15, 20]"
-                    :page-size="pageSize"
-                    layout="total, sizes, prev, pager, next, jumper"
-                    :total="totalCount">
-                </el-pagination>
+            <div class="baseInfo">
+                <div class="searchAdd">
+                    <ul>
+                        <li>
+                            <div>
+                                <span>公司名称：</span>
+                                <input type="text" v-model="searchCondition.companyName" placeholder="请输入公司名称">
+                            </div>
+                            <div>
+                                <span>状态：</span>
+                                <select v-model="searchCondition.status">
+                                    <option :value="it.id" v-for="(it,i) in statusList" :key="i">{{it.name}}</option>
+                                </select>
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                <span>提交时间：</span>
+                                <el-date-picker v-model="searchCondition.startDate" type="date" placeholder="选择日期"  value-format="yyyy-MM-dd"></el-date-picker>
+                                -
+                                <el-date-picker v-model="searchCondition.endDate" type="date" placeholder="选择日期" value-format="yyyy-MM-dd"></el-date-picker>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <p class="saveBtn">
+                    <el-button type="primary" size='small' @click='getList'>查询</el-button>
+                    <el-button type="info" size='small' @click='reset'>重置</el-button>
+                </p>
+                <p>采取先到先得的任务领取审核方式</p>
+                <div class="tabList">
+                    <el-table :data="list" @row-click="getDetail" style="width: 100%">
+                        <el-table-column align="center" type="index" label="全部" width="85"></el-table-column>
+                        <el-table-column show-overflow-tooltip align="center" prop="cstNm" label="公司名称" width="200"></el-table-column>
+                        <el-table-column show-overflow-tooltip align="center" prop="idyTpcd" label="行业">
+                            <template slot-scope="scope">
+                                {{scope.row.idyTpcd | idType(scope.row.idyTpcd)}}
+                            </template>
+                        </el-table-column>
+                        <el-table-column align="center" prop="joinTime" label="提交时间" width="140">
+                            <template slot-scope="scope">
+                                {{scope.row.parkCreateTime | timerFormat(scope.row.parkCreateTime)}}
+                            </template>
+                        </el-table-column>
+                        <el-table-column align="center" prop="status" label="状态" width="130">
+                            <template slot-scope="scope">
+                                {{scope.row.status | statusFormat(scope.row.status)}}
+                            </template>
+                        </el-table-column>
+                        <el-table-column align="center" prop="" width="100" label="操作">
+                            <template slot-scope="scope">
+                                <el-button type="text" v-if="',10,01,13,14,'.indexOf(`,${scope.row.status},`) == -1" disabled>领取并审核</el-button>
+                                <el-button type="text" v-else @click.stop="cancelAudit(scope.row.id)">领取并审核</el-button>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                </div>
+                <div class="pageList" v-if="totalCount>5">
+                    <el-pagination
+                        @size-change="handleSizeChange"
+                        @current-change="handleCurrentChange"
+                        :current-page="pageNum"
+                        :page-sizes="[5, 10, 15, 20]"
+                        :page-size="pageSize"
+                        layout="total, sizes, prev, pager, next, jumper"
+                        :total="totalCount">
+                    </el-pagination>
+                </div>
             </div>
         </div>
     </div>
@@ -79,9 +82,14 @@
 
 <script>
 import Moment from 'moment'
+import activityPoolAddPark from '../../../views/newmanage/auditManage/addParkAudit/activityPoolAddPark'
 export default {
+    components:{
+        activityPoolAddPark
+    },
     data () {
         return {
+            isBdPark:this.utils.isBdPark(),
             startDate:'',
             endDate:'',
             totalCount:0,
