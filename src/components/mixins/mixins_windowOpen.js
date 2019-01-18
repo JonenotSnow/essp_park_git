@@ -28,8 +28,7 @@ export default {
 
             // 获取当前return路径覆盖label
             let currentObj = {label:this.mixin_window_label}
-            debugger
-             let returnUrl = this.utils.setUrlParams(currentObj)
+            let returnUrl = this.utils.setUrlParams(currentObj)
             returnUrl =encodeURIComponent(returnUrl)
             // 登陆参数
             currentObj=Object.assign({},{returnUrl:returnUrl},{token:this.mixin_window_token,channel:'PARK'})
