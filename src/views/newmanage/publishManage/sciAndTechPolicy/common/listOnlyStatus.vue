@@ -1,13 +1,12 @@
 <template>
     <div>
         <!-- 列表只有类型 已发布、已审核-->
-        <div v-if="list.length>0">
-            <div class="selectTitle">
-                <el-checkbox v-model="allCheck" @change="changeAllChecked">全选</el-checkbox>
-                共<span class="total">{{totalCount}}</span>条，
-                已选<span class="total">{{selectCheckItem.length}}</span>条
-                <span class="removeBtn" @click.stop="showDialog()">删除</span>
-                <span class="selectStatus">状态：
+        <div class="selectTitle">
+            <el-checkbox v-model="allCheck" @change="changeAllChecked">全选</el-checkbox>
+            共<span class="total">{{totalCount}}</span>条，
+            已选<span class="total">{{selectCheckItem.length}}</span>条
+            <span class="removeBtn" @click.stop="showDialog()">删除</span>
+            <span class="selectStatus">状态：
                     <select v-model="approveType" v-if="type == 1" @change="switchStatus()">
                         <!--status改成了approveType-->
                         <option value="">全部</option>
@@ -22,7 +21,8 @@
                         <option value="02">审核通过</option>
                     </select>
                 </span>
-            </div>
+        </div>
+        <div v-if="list.length>0">
             <ul class="listWrap">
                 <li class="list" v-for="(item, index) in list" :key="index">
                     <div class="ListTop">
@@ -51,7 +51,10 @@
                 </li>
             </ul>
         </div>
-        <div v-else class="noData">
+        <div class="noData" v-if="list.length == 0 && requestTip == '数据加载中...'">
+            <p>{{requestTip}}</p>
+        </div>
+        <div class="noData" v-if="list.length == 0 && requestTip == '数据加载完毕'">
             <span>尚未发布成果，点击右上方发布按钮立即发布吧！</span>
             <img src="@assets/newparkimg/newmanage/achievementSet/no_list.png" alt="">
         </div>
@@ -92,6 +95,10 @@
             totalCount: {
                 type: String,
                 default: '0'
+            },
+            requestTip: {
+                type: String,
+                default: ''
             }
         },
         data() {
@@ -316,7 +323,7 @@
                 }
                 .create {
                     display: inline-block;
-                    width: 100px;
+                    width: 120px;
                     margin-left: 50px;
                 }
                 .classifyC {

@@ -26,6 +26,7 @@
                 :list="dataList"
                 :type="status"
                 :totalCount="totalCount"
+                :requestTip = 'requestTip'
                 @childDeleted="childDeleted"
                 @childSwitchStatus="childSwitchStatus"
                 v-if="status=='1' || status=='2'"
@@ -35,6 +36,7 @@
                 :list="dataList"
                 :type="status"
                 :totalCount="totalCount"
+                :requestTip = 'requestTip'
                 @childDeleted="childDeleted"
                 v-if="status=='0'"/>
         </div>
@@ -82,7 +84,9 @@
 
 
                 // 返回的数据
-                dataList: []
+                dataList: [],
+
+                requestTip: '数据加载中...',
             }
         },
         methods: {
@@ -99,6 +103,7 @@
                 this.status = status;
                 this.type = status;
                 this.searchContent = '';
+                this.approveType = '';
                 this.getPolicieAndRegulation(status)
             },
 
@@ -119,6 +124,7 @@
 
             // 获取全部政策法规
             getPolicieAndRegulation(status) {
+                this.requestTip = '数据加载中...';
                 let params = {
                     parkId: this.parkId,            // 园区ID
                     pageNum: this.pageNum,          // 页码
@@ -135,6 +141,7 @@
                         let resultData = response.resultData;
                         this.totalCount = resultData.total;
                         this.dataList = resultData.policyList;
+                        this.requestTip = '数据加载完毕';
                     } else {
                         this.$message.info(response.resultMsg);
                         this.totalCount = this.dataList.length;
@@ -156,7 +163,7 @@
             // 子组件里的状态切换事件
             childSwitchStatus(approveType) {
                 // 重新获取数据
-                // this.approveType = approveType;
+                this.approveType = approveType;
                 this.getPolicieAndRegulation();
             }
             /**

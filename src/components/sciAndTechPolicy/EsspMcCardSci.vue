@@ -20,7 +20,12 @@
                 </div>
             </div>
         </div>
-        <div v-else class="noData">
+        <div class="noData" v-if="mcCardList.length == 0 && requestTip == '数据加载中...'" >
+            <div class="no-list-desc">
+                {{requestTip}}
+            </div>
+        </div>
+        <div class="noData" v-if="mcCardList.length == 0 && requestTip == '数据加载完毕'" >
             <div class="no-list-pic">
                 <img src="@assets/newparkimg/no-list-img.png" alt="">
             </div>
@@ -43,6 +48,10 @@
             mcCardList: {
                 type: Array,
                 default: []
+            },
+            requestTip: {
+                type: String,
+                default: ''
             }
         },
         data() {
