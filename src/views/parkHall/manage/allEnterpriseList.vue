@@ -138,8 +138,7 @@ export default {
       that.enterprises[index].isShowDetail = !isTrue;
 		},
 		enterBusiness(item){
-				let prams = "?cstId="+item.cstId
-				this.windowOpenUrl('/centerIndex/showHome',prams)
+				this.windowOpenUrl('/centerIndex/showHome',{cstId:item.cstId})
 		}
   }
 };

@@ -335,13 +335,20 @@ const utils = {
      */
     logoutDelSSH: async function (val) {
         if (val == 401) {
+            let parkLabel = SSH.getItem('bdParkId')
+            let currentUrl = location.href
+            let hasParams = currentUrl.indexOf('?')>-1
+            parkLabel = hasParams?'&label='+parkLabel:'?label='+parkLabel
             utils.delSSH();
+            window.location.href = Vue.$openUrl +'/userIndex/login?+returnUrl='+encodeURIComponent(currentUrl + parkLabel);
+    
         } else if (router.currentRoute.name != 'login' && SSH.getItem('token')) {
             await del(apiUrl.user.getLogoutUrl, {
                 access_token: SSH.getItem('token')
             })
                 .then((response) => {
                     utils.delSSH();
+                    
                 }, (err) => {
                     utils.delSSH();
                 })
@@ -368,9 +375,7 @@ const utils = {
             store.state.chat.ws.close();
         } catch (e) {
         }
-        let parkLabel = SSH.getItem('bdParkId')
-        let hasParams = location.href.indexOf('?')>-1
-        parkLabel = hasParams?parkLabel?'?label='+parkLabel:'&label='+parkLabel:''
+        
         SSH.delItem('oldParkId')
         SSH.delItem('friendList');
         SSH.delItem('messageList');
@@ -389,8 +394,7 @@ const utils = {
         SSH.delItem('cetificateFlag')
         SSH.delItem('enterpriseFlag')
         SSH.delItem('grayFlag')
-        window.location.href = Vue.$openUrl +'/userIndex/login?+returnUrl='+encodeURIComponent(location.href + parkLabel);
-    },
+        },
     /**
      *  比较菜单id，获取菜单层级
      */
@@ -527,6 +531,27 @@ const utils = {
             isParkNameHasBd = falg;
         }
         return isParkNameHasBd || bdFlag;
+    },
+    setUrlParams:function(params={},url=location.href,resetUrl=''){
+        let crtUrl = resetUrl?resetUrl:url.split('?')[0]
+        let temp = url.indexOf('?')>-1?url.substring(url.lastIndexOf("?") + 1):''
+        let paramsObj = {}
+        let reg = /([^?&=]+)=([^?&=]*)/g;
+        temp.replace(reg, function (rs, $1, $2) {
+                let name = decodeURIComponent($1);
+                let val = decodeURIComponent($2);
+                val = String(val);
+                paramsObj[name] = val;
+                return rs;
+            });
+        let endParams = Object.assign({},paramsObj,params)
+        let tempUrlParams = ''
+        for(let key in endParams){
+            if(endParams[key]){
+                tempUrlParams+='&'+key+'='+endParams[key]
+            }
+        }
+        return (crtUrl+'?'+tempUrlParams).replace(/\?&+/,'?')
     }
 
 }

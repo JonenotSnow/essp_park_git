@@ -229,7 +229,7 @@ export default {
     //编辑器样式
     .wrap {
         width: 850px;
-        height: 600px;
+        height: 500px;
         // margin: 0 0 20px;
         .quill-editor {
             height: 400px;

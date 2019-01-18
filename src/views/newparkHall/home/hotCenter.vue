@@ -172,8 +172,8 @@ import mixin from '@/components/mixins/mixins_windowOpen.js'
                                 //     }
                                 // });
                                 // window.open(routerData.href, "_blank");
-                                let pramas = val.bsnRqmId?'?bsnRqmId='+val.bsnRqmId:''
-                                pramas += val.tplId?'&tplId='+val.tplId:''
+                                let params ={bsnRqmId:val.bsnRqmId,
+                                tplId:val.tplId}
                                 this.windowOpenUrl(displayUrl,pramas)
                             } else {
                                 displayUrl = "/requIndex/display-other";
@@ -186,8 +186,8 @@ import mixin from '@/components/mixins/mixins_windowOpen.js'
                                 //     }
                                 // });
                                 // window.open(routerData.href, "_blank");
-                                let pramas = val.bsnRqmId?'?bsnRqmId='+val.bsnRqmId:''
-                                pramas += val.tplId?'&tplId='+val.tplId:''
+                                let params ={bsnRqmId:val.bsnRqmId,
+                                tplId:val.tplId}
                                 this.windowOpenUrl(displayUrl,pramas)
                             }
                         }
@@ -203,8 +203,8 @@ import mixin from '@/components/mixins/mixins_windowOpen.js'
                     //     }
                     // });
                     // window.open(routerData.href, "_blank");
-                    let pramas = val.bsnRqmId?'?bsnRqmId='+val.bsnRqmId:''
-                                pramas += val.tplId?'&tplId='+val.tplId:''
+                    let params ={bsnRqmId:val.bsnRqmId,
+                                tplId:val.tplId}
                                 this.windowOpenUrl(displayUrl,pramas)
                 }
             },
