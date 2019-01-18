@@ -1,5 +1,5 @@
 <template>
-    <div class="expert-detail-wrap">
+    <div class="expert-detail-wrapsss">
         <!-- 专家详情页 -->
         <essp-bread-crumb :breadList="breadlist"></essp-bread-crumb>
         <div class="expert-detail__content"></div>
@@ -28,22 +28,15 @@
                             {{detailInfo.introduction || "暂无"}}
                         </div>
                     </div>
-                    <!-- <div class="detail_item second_title program_experience">
-                        <span class="second_title_name">项目经历</span>
-                        <div class="experience_content detail_item_content">
-                            这是关于项目经历的介绍，这是关于项目经历的介绍。
-                        </div>
-                    </div> -->
-                    <!-- <div class="detail_item second_title winprize">
-                        <span class="second_title_name">获奖</span>
+                    <div class="other_info second_title" v-for="(item,index) in moduleData" :key="index">
+                        <span class="second_title_name">{{item.title}}</span>
                         <div class="detail_item_content">
-                            <p>2017年06月荣获《xxxxxxxxxxxxxxxxxxxxxxxxxxxxx》称号</p>
+                            <div v-html="item.info ||'暂无'"></div>
                         </div>
-                    </div> -->
-                    <div class="other_info second_title">
-                        <span class="second_title_name">其他</span>
-                        <div class="detail_item_content">
-                            <div v-html="detailInfo.moduleData ||'暂无'"></div>
+                        <div class="detail_item_img_wrap esspclearfix"v-if="item.isPic == '1'">
+                            <div class="detail_item_img" v-for="(itemC,indexC) in item.photoList">
+                                <img :src="itemC.src">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -57,11 +50,12 @@
 
 <script>
     import EsspBreadCrumb from "@/components/EsspBreadCrumb";
+
     export default {
         components: {},
         data() {
             return {
-                msg:"专家详情页",
+                msg: "专家详情页",
                 detailInfo: {
                     // createId: "1000180019",
                     // createName: "陈08",
@@ -107,6 +101,7 @@
                         name: "专家详情"
                     }
                 ],
+                moduleData: []
             }
         },
         created() {
@@ -116,7 +111,7 @@
             EsspBreadCrumb,
         },
         methods: {
-            async initData(){
+            async initData() {
                 await this.getExpertDetail();
             },
             getExpertDetail() {
@@ -126,8 +121,10 @@
                 };
                 this.$post(url, pop).then(
                     response => {
-                      var res = response.resultData;
-                      this.detailInfo = res.expert
+                        var res = response.resultData;
+                        this.detailInfo = res.expert
+                        this.moduleData = JSON.parse(this.detailInfo.moduleData);
+                        console.log(this.moduleData);
                     },
                     err => {
                         this.$message.error(response.resultMsg);
@@ -140,133 +137,149 @@
 
 <style lang='less' scoped>
 
-    .expert-detail-wrap {
+    .expert-detail-wrapsss {
         margin: 0 auto;
         width: 1200px;
         .expert-detail__content {
             background-color: #fff !important;
         }
 
-    }
-    /*专家详情start*/
-    .expertcontainer {
-        background-color: #fff !important;
+        /*专家详情start*/
+        .expertcontainer {
+            background-color: #fff !important;
 
-    }
-    .expertcontainer .experinfo {
-        margin-bottom: 20px;
-    }
-    .expertcontainer .experinfo .brief_info {
-        margin-top: 56px;
-        margin-left: 54px;
-        float: left;
-        width: 315px;
-    }
-
-    .expertcontainer .experinfo .brief_info .expertimg {
-        height: 180px;
-        line-height: 180px;
-        img {
-            width: 100%;
-            height: 100%;
         }
-    }
 
-    .expertcontainer .experinfo .brief_info .contact_info {
-        margin-top: 20px;
-        font-size: 14px;
-        line-height: 32px;
-        color: #999999;
-        text-align: left;
-    }
+        .expertcontainer .experinfo {
+            margin-bottom: 20px;
+        }
 
-    .expertcontainer .experinfo .brief_info .contact_info .tel_num {
-        display: inline;
-        color: #000;
-    }
+        .expertcontainer .experinfo .brief_info {
+            margin-top: 56px;
+            margin-left: 54px;
+            float: left;
+            width: 315px;
+        }
 
-    .expertcontainer .experinfo .brief_info .contact_info .mail_num {
-        display: inline;
-        color: #000;
-    }
+        .expertcontainer .experinfo .brief_info .expertimg {
+            height: 180px;
+            line-height: 180px;
+            img {
+                width: 100%;
+                height: 100%;
+            }
+        }
 
-    .expertcontainer .experinfo .detail_info {
-        float: left;
-        margin-top: 56px;
-        margin-left: 40px;
-        margin-bottom: 100px;
-        color: #999;
-        text-align: left;
-    }
+        .expertcontainer .experinfo .brief_info .contact_info {
+            margin-top: 20px;
+            font-size: 14px;
+            line-height: 32px;
+            color: #999999;
+            text-align: left;
+        }
 
-    .expertcontainer .experinfo .basic_info .basic_des {
-        margin-top: 30px;
-        margin-bottom: 40px;
-        font-size: 14px;
-        font-weight: normal;
-        font-stretch: normal;
-        letter-spacing: 0px;
-        color: #999999;
-    }
+        .expertcontainer .experinfo .brief_info .contact_info .tel_num {
+            display: inline;
+            color: #000;
+        }
 
-    .expertcontainer .experinfo .basic_info .expertname {
-        margin-top: 14px;
-        height: 19px;
-        line-height: 19px;
-        font-size: 20px;
-        font-weight: normal;
-        font-stretch: normal;
-        letter-spacing: 0px;
-        color: #333333;
-    }
+        .expertcontainer .experinfo .brief_info .contact_info .mail_num {
+            display: inline;
+            color: #000;
+        }
 
-    .expertcontainer .experinfo .basic_info .expertlevel {
-        margin-top: 20px;
-        height: 12px;
-        line-height: 12px;
-        font-size: 14px;
-        font-weight: normal;
-        font-stretch: normal;
-        letter-spacing: 0px;
-        color: #777777;
-    }
+        .expertcontainer .experinfo .detail_info {
+            float: left;
+            margin-top: 56px;
+            margin-left: 40px;
+            margin-bottom: 100px;
+            color: #999;
+            text-align: left;
+            width: 730px;
+        }
 
-    .expertcontainer .experinfo .detail_info .second_title {
-        font-size: 16px;
-    }
+        .expertcontainer .experinfo .basic_info .basic_des {
+            margin-top: 30px;
+            margin-bottom: 40px;
+            font-size: 14px;
+            font-weight: normal;
+            font-stretch: normal;
+            letter-spacing: 0px;
+            color: #999999;
+        }
 
-    .expertcontainer .experinfo .detail_info .detail_item {
-        border-bottom: 1px dashed #ccc;
-    }
+        .expertcontainer .experinfo .basic_info .expertname {
+            margin-top: 14px;
+            height: 19px;
+            line-height: 19px;
+            font-size: 20px;
+            font-weight: normal;
+            font-stretch: normal;
+            letter-spacing: 0px;
+            color: #333333;
+        }
 
-    .expertcontainer .experinfo .second_title_name {
-        font-size: 16px;
-    }
+        .expertcontainer .experinfo .basic_info .expertlevel {
+            margin-top: 20px;
+            height: 12px;
+            line-height: 12px;
+            font-size: 14px;
+            font-weight: normal;
+            font-stretch: normal;
+            letter-spacing: 0px;
+            color: #777777;
+        }
 
-    .expertcontainer .experinfo .detail_item_content {
-        margin-top: 30px;
-        margin-bottom: 40px;
-        max-width: 696px;
-        font-size: 14px;
-        font-weight: normal;
-        font-stretch: normal;
-        line-height: 24px;
-        letter-spacing: 0px;
-        color: #999999;
-    }
+        .expertcontainer .experinfo .detail_info .second_title {
+            font-size: 16px;
+        }
 
-    .expertcontainer .experinfo .program_experience {
-        margin-top: 40px;
-    }
+        .expertcontainer .experinfo .detail_info .detail_item {
+            border-bottom: 1px dashed #ccc;
+        }
 
-    .winprize {
-        margin-top: 40px;
-    }
+        .expertcontainer .experinfo .second_title_name {
+            font-size: 16px;
+        }
 
-    .other_info {
-        margin-top: 40px;
-    }
+        .expertcontainer .experinfo .detail_item_content {
+            margin-top: 30px;
+            margin-bottom: 40px;
+            font-size: 14px;
+            font-weight: normal;
+            font-stretch: normal;
+            line-height: 24px;
+            letter-spacing: 0px;
+            color: #999999;
+        }
 
-    /*专家详情end*/
+        .expertcontainer .experinfo .program_experience {
+            margin-top: 40px;
+        }
+
+        .winprize {
+            margin-top: 40px;
+        }
+
+        .other_info {
+            margin-top: 40px;
+        }
+        .detail_item_img_wrap {
+            .detail_item_img {
+                float: left;
+                width: 31%;
+                height: 140px;
+                overflow: hidden;
+                margin-right: 14px;
+                img {
+                    display: block;
+                    width: 100%;
+                    min-height: 100%;
+                }
+            }
+        }
+
+        /*专家详情end*/
+    }
 
 </style>

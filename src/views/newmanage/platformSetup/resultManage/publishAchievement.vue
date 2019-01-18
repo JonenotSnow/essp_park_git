@@ -129,7 +129,7 @@
             return {
                 isShowOverview:false,
                 info:{},
-                id: this.$route.query.id, // 成果id
+                id: this.$route.query.id || '', // 成果id
                 dialogVisible: false,
                 opMark: this.$route.query.opMark || "01",
                 form: {
@@ -297,6 +297,7 @@
                 console.log(isTrue);
                 if(isTrue) {
                     this.$post(this.$apiUrl.achievement.addActivity, {
+                        id: this.id,
                         name: this.form.name, // 成果标题
                         field: this.form.field,  // 所属领域
                         photo: this.form.photo,   // 上传图片
