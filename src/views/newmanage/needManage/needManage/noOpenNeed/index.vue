@@ -10,8 +10,7 @@
                         </div>
                         <div>
                             <span>发布人：</span>
-                            <input type="text" v-model="searchCondition.createName
-                            " placeholder="请输入发布人">
+                            <input type="text" v-model="searchCondition.createName" placeholder="请输入公司名称">
                         </div>
                     </li>
                     <li>
@@ -29,12 +28,23 @@
                 <button class="my-btn btn-reset" @click='reset'>重置</button>
             </div>
             <div class="selectTitle">
-                
-                <span class="removeBtn" @click="getAllNeed(0)">需求导出</span>
+                <el-checkbox class="maincheck" :indeterminate="isIndeterminate" v-model="checkAll" @change="AllChange" >全选</el-checkbox>
+                共
+                <span class="total">{{totalCount}}</span>
+                条，已选
+                <span class="total">{{hascheckedNum}}</span>
+                条
+                <span class="removeBtn" @click="openDialog">需求导出</span>
             </div>
             <div class="tabList">
                 <el-table :data="list" style="width: 100%">
-                    <el-table-column align="center" label="全部" type="index" width="85"></el-table-column>
+                    <el-table-column align="center" label="全部" width="85">
+                        <template slot-scope="scope">
+                            <el-checkbox-group v-model="checkedIds" class="checktop" @change="handleCheckedCitiesChange">
+                                <el-checkbox :label="scope.row.id"></el-checkbox>
+                            </el-checkbox-group>
+                        </template>
+                    </el-table-column>
                     <el-table-column show-overflow-tooltip align="center" prop="title" label="需求标题" width="200"></el-table-column>
                     <el-table-column show-overflow-tooltip align="center" prop="cstName" label="公司名称"></el-table-column>
                     <el-table-column align="center" prop="status" label="发布时间" width="140">
@@ -54,7 +64,7 @@
                     @size-change="handleSizeChange"
                     @current-change="handleCurrentChange"
                     :current-page="pageNum"
-                    :page-sizes="[5, 10, 15, 20]"
+                    :page-sizes="[5, 10, 15, 20,1000,2000]"
                     :page-size="pageSize"
                     layout="total, sizes, prev, pager, next, jumper"
                     :total="totalCount">
@@ -66,12 +76,11 @@
 </template>
 
 <script>
-    import axios from 'axios';
-    import downLoadExcel from "../../../components/downLoadExcel";
-    export default {
-    components:{
-        downLoadExcel
-    },
+import downLoadExcel from "../../../components/downLoadExcel";
+ export default {
+   components:{
+       downLoadExcel
+   },
     data () {
         return {
             checkAll: false,
@@ -130,32 +139,40 @@
                 cstName : '',    //发布人
                 createName : '',//公司名称
             },
-            pageType:'noOpenNeed',
-            show:false
+            show:false,
+            pageType:'noOpenNeed'
         }
     },
     created () {
         this.getAllNeed();
     },
     computed:{
+        //可以选择的id
+        allListIds(){
+            var ids = this.list.map(item=>{
+                return item.id
+            })
+            return ids
+        },
+        //已选数量
+        hascheckedNum(){
+            return this.checkedIds.length;
+        }
     },
    methods: {
         handleSizeChange(val) {
             this.pageSize = val;
+            this.getAllNeed();
         },
         handleCurrentChange(val) {
             this.pageNum = val;
+            this.getAllNeed();
         },
         // 获取非公开需求列表
-        getAllNeed(type){
+        getAllNeed(){
             if (!this.SSH.getItem('parkId')) {
                 this.$message.error('园区id不能为空');
                 return;
-            }
-            //用于批量导出
-            if (type == 0) {
-                this.pageNum = 1;
-                this.pageSize = 99999999; //极大值用于导出上线
             }
             this.$post(this.$apiUrl.manageNeed.getAllNeed, {
                 parkId:this.SSH.getItem('parkId'),
@@ -170,15 +187,6 @@
                     if (response.resultData && response.resultData.list) {
                         this.list = response.resultData.list;
                         this.totalCount = response.resultData.total;
-                    }
-                    //打包需要导出数据的id
-                    if (type == 0) {
-                        if (this.list && this.list.length == 0) {
-                            this.$message.error('没有可导出的数据');
-                            return;
-                        }else{
-                            this.exportData();
-                        }
                     }
                 },
                 err => {
@@ -206,14 +214,18 @@
             }
             this.getAllNeed();
         },
-        //批量导出
-        exportData () {
-            let idList = this.list.map((el)=>{
-                return el.id;
-            })
-            window.location.href = this.$apiUrl.manageNeed.exportNeedData + "?id="+idList.toString();
+        openDialog(){
+            if (this.checkedIds.length == 0) {
+                this.$message.error('请先选择要导出的内容');
+                return;
+            }
+            this.show = true;
         },
-    }
+        //导出弹窗
+        showDialog(value){
+            this.show = value.show;
+        }
+   }
  }
 </script>
 <style>
@@ -222,12 +234,6 @@
 }
 </style>
 
-<style>
-#noOpenNeed .el-input__inner{
-    border-radius:0;
-    height:35px;
-}
-</style>
 <style lang='less' scoped >
 #noOpenNeed{
     .baseInfo{
@@ -237,7 +243,7 @@
         padding-bottom: 20px;
         background-color: #ffffff;
         .searchAdd{
-            // height:135px;
+            height:135px;
             &>ul{
                 width:885px;
                 margin: 40px auto 0;
@@ -262,11 +268,12 @@
                             width: 208px;
                             padding:0 5px;
                             outline: none;
-                            height: 33px;
+                            height: 35px;
                             caret-color: #666;
                             color: #606266;
                             border: 1px solid #e4e7ed;
                             background: #fff;
+                            border-radius: 4px;
                         }
                         &>select{
                             width: 138px;
@@ -279,6 +286,7 @@
                             color: #606266;
                             border: 1px solid #e4e7ed;
                             background: #fff;
+                            border-radius: 4px;
                         }
                     }
                     &:nth-of-type(1){
@@ -301,9 +309,9 @@
                 }
             }
         }
-        .saveBtn {    
-            width: 890px;
-            margin: 50px auto 0;
+        .saveBtn {
+            margin-top: 50px;
+            text-align: center;
             .my-btn {
                 outline: none;
                 cursor: pointer;
@@ -319,12 +327,11 @@
                 border-radius: 5px;
             }
             .btn-search {
+                margin-right: 80px;
                 background-color: #00a0e9;
-                margin-left: 335px;
             }
             .btn-reset {
                 background-color: #999;
-                margin-left:75px;
             }
         }
         &>ul,.tabList{
@@ -431,8 +438,8 @@
         }
         .removeBtn{
             display:inline-block;
-            width: 98px;
-            height: 33px;
+            width: 100px;
+            height: 35px;
             background-image: linear-gradient(0deg, 
                 #f5f5f5 0%, 
                 #ffffff 100%);
@@ -440,8 +447,8 @@
             border: solid 1px #cccccc;
             text-align: center;
             cursor: pointer;
-            // margin-left:14px;
-            line-height: 33px;
+            margin-left:14px;
+            line-height: 35px;
         }
     }
 }

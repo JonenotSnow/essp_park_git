@@ -149,7 +149,6 @@
              */
             // 子组件执行删除事件后传递到父组件的事件
             childDeleted(type) {
-                alert('重新获取数据===');
                 // 重新获取数据
                 this.getPolicieAndRegulation(type);
             },

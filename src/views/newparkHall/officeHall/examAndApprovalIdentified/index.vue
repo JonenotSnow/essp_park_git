@@ -3,8 +3,8 @@
         <div class="list-wrap">
             <div class="list__main">
                 <ul>
-                    <li :class="{'list__list--select' : type==0}" @click="switchDetail(0)">科技型小企业认定</li>
-                    <li :class="{'list__list--select' : type==1}" @click="switchDetail(1)">高新技术企业认定</li>
+                    <li :class="{'list__list--select' : type==0}" @click="switchDetail(0)">科技型小企业认定{{navIndex}}</li>
+                    <li :class="{'list__list--select' : type==1}" @click="switchDetail(1)">高新技术企业认定{{navIndex}}</li>
                 </ul>
             </div>
         </div>
@@ -42,6 +42,12 @@
             return {
                 msg: '审批认定',
                 type: 0,
+            }
+        },
+        computed: {
+            navIndex(){
+                console.log(this.$store)
+                return this.$store.state.navIndex;
             }
         },
         methods: {
