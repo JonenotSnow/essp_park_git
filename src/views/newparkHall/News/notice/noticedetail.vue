@@ -2,20 +2,24 @@
  <div>
      <EsspBreadCrumb class="detailNav" :breadList="breadlist"></EsspBreadCrumb>
      <div class="newscon">
-      <div class="detail-tit">详情的标题详情的标题详情的标题情的题标题</div>
+      <div class="detail-tit">{{info.informationTitle || ''}}</div>
         <div class="newstatus esspclearfix">
-            <span class="statusitemsA">
-            <label>发布时间：</label>
-            <em>{{"2019-01-01" | timerFormat(createTime)}}</em>
+            <span class="statusitemsA" v-if="info.createTime">
+                <label>发布时间：</label>
+                <em>{{ info.createTime | timerFormat(info.createTime)}}</em>
             </span>
-            <span class="statusitemsB">
-            <label>发布机构：</label>
-            <em>{{cstNm|| "新园区管委会"}}</em>
+            <span class="statusitemsB" v-if="info.cstNm">
+                <label>发布机构：</label>
+                <em>{{info.cstNm }}</em>
+            </span>
+            <span class="statusitemsC" v-if="info.viewTime">
+                <label>浏览量：</label>
+                <em>{{info.viewTime}}</em>
             </span>
         </div>
         <div class="tagscon">
             <div class="tags_con esspclearfix">
-                <div class="tagssubcon" v-show="tags.length">
+                <div class="tagssubcon" v-if="tags.length > 0">
                     <span v-for="(item,index) in tags" :key="index" class="tagspan">{{item}}</span>
                 </div>
             </div>
@@ -24,7 +28,7 @@
             <div class="realinfo" v-html="mockdetalhtml"></div>
         </div>
         <div class="pinglun">
-            <EsspInfoComment commentSty="2"></EsspInfoComment>
+            <EsspInfoComment commentSty="2" :info="info"></EsspInfoComment>
         </div>
     </div>
  </div>
@@ -36,7 +40,8 @@ import EsspBreadCrumb from "@/components/EsspBreadCrumb";
  import Moment from "moment";
  export default {
    data () {
-     return {
+    let info = this.$route.query.info
+    return {
          breadlist: [
             {
                 path: "/newsinfo",
@@ -51,8 +56,9 @@ import EsspBreadCrumb from "@/components/EsspBreadCrumb";
                 name: "通知公告详情"
             }
         ],
-        tags:["新闻","新闻热点","人民英雄纪念碑"],
-        mockdetalhtml:"<p style='color:red'>全是通知公告的mock详情数据</p>"
+        info:info,
+        tags:info.tagsTxt || [],//["新闻","新闻热点","人民英雄纪念碑"]
+        mockdetalhtml:info.infoDetail || '' //"<p style='color:red'>全是通知公告的mock详情数据</p>"
      }
    },
     components: {
@@ -119,7 +125,20 @@ import EsspBreadCrumb from "@/components/EsspBreadCrumb";
                 font-style: normal;
             }
         }
-       
+        .statusitemsC {
+            float: left;
+            width: 40%;
+            font-size: 14px;
+            line-height: 25px;
+            color: #999;
+            text-align: center;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            em {
+                font-style: normal;
+            }
+        }
     }
     //新闻详情
     .infoDetail {

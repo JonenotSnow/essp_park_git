@@ -32,7 +32,7 @@
                 </div>
             </div>
         </div>
-        <div class="pageList">
+        <div class="pageList" v-if="mcCardDataList.length>0">
             <el-pagination
                 @size-change="handleSizeChange"
                 @current-change="handleCurrentChange"
@@ -170,7 +170,8 @@
                     endDate: this.endDate,
                     title: '',
                     parkId,
-                    tagTxt:this.tagTxt,//根据标签搜索
+                    //tagTxt:this.tagTxt,//根据标签搜索
+                    type:'2'
                 })
                 .then(response => {
                     var codestatus = response.resultCode;
