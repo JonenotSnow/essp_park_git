@@ -669,6 +669,7 @@
         data() {
             return {
                 isBdPark: this.utils.isBdPark(),
+                domain: window.location.pathname, // 区分前缀
                 databox: [],
                 parkUploadData: {
                     title: "活动宣传图/海报:",
@@ -1494,7 +1495,8 @@
                     invitings: this.t_concatvalue.join(","),
                     needCompanyAudit: this.needCompanyAudit,
                     activityRemarks: this.activityRemarks, //活动备注
-                    status: type
+                    status: type,
+                    domain: this.domain
                 }).then(
                     response => {
                         if (response.resultCode == "CLT000000000") {
