@@ -139,7 +139,7 @@ router.beforeEach(async (to, from, next) => {
             await getParkById(parkId);
         } else {
             //没有parkId时
-            return window.location.href=openUlr+'/parkList' && next();
+            return window.location.href=openUlr+'/parkList'
 
         }
         await getLoginUserRole({parkId: oneId});
