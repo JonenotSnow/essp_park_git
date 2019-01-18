@@ -68,8 +68,8 @@
                 <span class="scan" @click="showExpertInfo">预 览</span>
             </li>
         </ul>
-        <p class="save" @click="uploadAchievement">
-            <span>保存上传</span>
+        <p class="save">
+            <span  @click="uploadAchievement">保存上传</span>
         </p>
         <!-- 遮罩层 -->
         <el-dialog
@@ -129,7 +129,7 @@
             return {
                 isShowOverview:false,
                 info:{},
-                id: this.$route.query.id, // 成果id
+                id: this.$route.query.id || '', // 成果id
                 dialogVisible: false,
                 opMark: this.$route.query.opMark || "01",
                 form: {
@@ -289,6 +289,10 @@
                     this.$message.error("详情不能为空！");
                     return false;
                 }
+                if(this.form.inventor == "" && this.form.unit == "") {
+                    this.$message.error("发明人和所属单位必填一项！");
+                    return false;
+                }
                 return true;
             },
             // 提交数据
@@ -297,6 +301,7 @@
                 console.log(isTrue);
                 if(isTrue) {
                     this.$post(this.$apiUrl.achievement.addActivity, {
+                        id: this.id,
                         name: this.form.name, // 成果标题
                         field: this.form.field,  // 所属领域
                         photo: this.form.photo,   // 上传图片

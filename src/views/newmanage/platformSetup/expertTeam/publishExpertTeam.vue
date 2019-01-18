@@ -155,7 +155,7 @@
                 dialogVisible: false,
                 id: this.$route.query.id, // 专家id
                 submitUploadInfo: {
-                    id: '',
+                    id: this.$route.query.id ? this.$route.query.id : '',
                     name: '',
                     title: '',
                     photo: '',
@@ -205,6 +205,7 @@
         },
         created() {
             if(this.id) {
+
                 this.getExpertById();
             }
         },

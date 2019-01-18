@@ -41,7 +41,8 @@
                 totalCount: 0,
                 pageNum: 1,
                 pageSize: 10,
-                selectListNum: 0
+                selectListNum: 0,
+                parkId: sessionStorage.getItem("parkId")
             }
         },
         created() {
@@ -58,6 +59,7 @@
             getAllAchiev(){
                 this.ajaxTit = "数据加载中……"
                 this.$post(this.$apiUrl.achievement.getExpertInfo, {
+                    parkId:  this.parkId,
                     pageNum:this.pageNum,        // 页码
                     pageSize: this.pageSize,    // 每页显示数量
                     title: this.title,          // 搜索关键词

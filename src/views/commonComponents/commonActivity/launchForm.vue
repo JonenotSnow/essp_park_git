@@ -108,13 +108,7 @@
             <i class="imicon">*</i>活动详情：
           </span>
                     <div class="inline-box wraps">
-                        <quill-editor
-                            ref="myTextEditor"
-                            v-model="editorOption.editorCon"
-                            :options="editorOption"
-                        >
-                            <div id="toolbar" slot="toolbar"></div>
-                        </quill-editor>
+                        <essp-editor :editorCont="editorOption.editorCon" @onEditorChange="onEditorChange"></essp-editor>
                     </div>
                 </div>
                 <ParkUpload :parkUploadData="parkUploadData" @changeImgUrl="showImgUrl"></ParkUpload>
@@ -670,16 +664,12 @@
     import EsspAddTag from "@/components/EsspAddTag";
     import ParkUpload from "@/views/parkHall/parkUpload"; // 上传图片控件
 
-    import "quill/dist/quill.core.css";
-    import "quill/dist/quill.snow.css";
-    import "quill/dist/quill.bubble.css";
-    import {quillEditor} from "vue-quill-editor";
-
     export default {
         name: "",
         data() {
             return {
                 isBdPark: this.utils.isBdPark(),
+                domain: window.location.pathname, // 区分前缀
                 databox: [],
                 parkUploadData: {
                     title: "活动宣传图/海报:",
@@ -954,8 +944,7 @@
             addTag,
             EsspEditor,
             EsspAddTag,
-            ParkUpload,
-            quillEditor
+            ParkUpload
         },
         created() {
             this.uploads = this.$apiUrl.upload.upload;
@@ -975,6 +964,10 @@
         },
 
         methods: {
+            // 编辑器的值获取
+            onEditorChange(val) {
+                this.editorOption.editorCon = val;
+            },
             // 改变图片路径
             showImgUrl(url) {
                 this.activityPhoto = url;
@@ -1502,7 +1495,8 @@
                     invitings: this.t_concatvalue.join(","),
                     needCompanyAudit: this.needCompanyAudit,
                     activityRemarks: this.activityRemarks, //活动备注
-                    status: type
+                    status: type,
+                    domain: this.domain
                 }).then(
                     response => {
                         if (response.resultCode == "CLT000000000") {
@@ -1575,7 +1569,8 @@
                             invitings: this.t_concatvalue.join(","),
                             needCompanyAudit: this.needCompanyAudit,
                             activityRemarks: this.activityRemarks, //活动备注
-                            status: type
+                            status: type,
+                            domain:''
                         }).then(
                             response => {
                                 if (response.resultCode == "CLT000000000") {
