@@ -131,8 +131,10 @@
                     id: id
                 }).then(
                     response => {
+
                         this.$message.success(response.resultMsg);
                         this.$emit("delectList");
+                        this.selectCheckItem = [];
                     },
                     err => {
                         this.$message.error(err.resultMsg);

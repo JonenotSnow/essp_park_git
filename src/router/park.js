@@ -135,8 +135,8 @@ const bannerSet= resolve => require(['@/views/commonComponents/commonManage/bann
 //园区管理 banner设置
 
 // const baseInfo2 = resolve => require(['@/views/newmanage/platformSetup/aboutWe/baseInfo'], resolve);
-const activityPoolAddPark2 = resolve => require(['@/views/newmanage/auditManage/addParkAudit/activityPoolAddPark'], resolve);
-const activityPoolActivityAuditing2 = resolve => require(['@/views/newmanage/auditManage/activityPublishAudit/activityPublishAudit'], resolve);
+// const activityPoolAddPark2 = resolve => require(['@/views/newmanage/auditManage/addParkAudit/activityPoolAddPark'], resolve);
+// const activityPoolActivityAuditing2 = resolve => require(['@/views/newmanage/auditManage/activityPublishAudit/activityPublishAudit'], resolve);
 const userManage2 = resolve => require(['@/views/commonComponents/commonManage/userManage'], resolve);
 const occupancyApplication2 = resolve => require(['@/views/commonComponents/commonManage/occupancyApplication'],resolve);
 const bannerSet2 = resolve => require(['@/views/commonComponents/commonManage/bannerSet'],resolve);
@@ -547,16 +547,16 @@ export const parkRouter1 = {
                     ]
                 },
                 //审核管理
-                {
-                    path: "/parkHall/manage/activityPoolAddPark2",
-                    name: "park-activityPoolAddPark2",
-                    component: activityPoolAddPark2
-                },
-                {
-                    path: "/parkHall/manage/activityPoolActivityAuditing2",
-                    name: "park-activityPoolActivityAuditing2",
-                    component: activityPoolActivityAuditing2
-                },
+                // {
+                //     path: "/parkHall/manage/activityPoolAddPark2",
+                //     name: "park-activityPoolAddPark2",
+                //     component: activityPoolAddPark2
+                // },
+                // {
+                //     path: "/parkHall/manage/activityPoolActivityAuditing2",
+                //     name: "park-activityPoolActivityAuditing2",
+                //     component: activityPoolActivityAuditing2
+                // },
                 {
                     path: "/parkHall/manage/publishAudit",
                     name: "park-publishAudit",

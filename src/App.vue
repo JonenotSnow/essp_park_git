@@ -27,7 +27,7 @@
         name: 'App',
         // mixins: [baseLogin],
         components: {
-            chat,
+            chat
         },
         data() {
             return {

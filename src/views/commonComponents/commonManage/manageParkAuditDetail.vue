@@ -30,7 +30,7 @@
                     <hr class="divider">
                     <div class="auditInfo" v-for="(it,i) in auditInfo" :key="i">
                         <p><span>审核人：</span><span>{{it.auditer}}</span></p>
-                        <p><span>当前审核状态：</span><span>{{it.auditResult | statusFormat}}</span></p>
+                        <p><span>当前审核状态：</span><span>{{it.auditResult | statusFormat(it.auditResult)}}</span></p>
                         <p><span>审核时间：</span><span>{{it.createTime | timerFormat(it.createTime)}}</span></p>
                         <p v-if="it.mark"><span>审核意见：</span><span>{{it.mark}}</span></p>
                         <hr v-if="i<auditInfo.length-1">
@@ -94,7 +94,8 @@ export default {
                 "12":"园区审核未通过",
                 "21":"企业待审核",
                 "05":"企业审核中",
-                "03":"企业审核未通过"
+                "03":"企业审核未通过",
+                "13":"高级管理员待审核"
             }
             return statusList[val]?statusList[val]:''
         }
