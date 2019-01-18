@@ -298,10 +298,10 @@
                 let flieName = file.name;
                 let fileType = flieName.substring(flieName.lastIndexOf(".") + 1).toLowerCase();
                 // fileType === "zip" 格式不支持
-                const isFile = fileType === "docx" || fileType === "doc" || fileType === "rar" || fileType === "xls" || fileType === "xlsx";
+                const isFile = fileType === "docx" || fileType === "doc" || fileType === "xls" || fileType === "xlsx" || fileType === "pdf";
                 const isLt5M = file.size / 1024 / 1024 < 2;
                 if (!isFile) {
-                    this.$message.error("上传附件不能是JPG或者PNG格式！");
+                    this.$message.error("上传的附件只能是docx、doc、xls、xlsx、pdf格式！");
                     return isFile;
                 }
                 if (!isLt5M) {

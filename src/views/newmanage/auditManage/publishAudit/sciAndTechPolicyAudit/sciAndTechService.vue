@@ -72,11 +72,11 @@
                         <!--</template>-->
                         <template slot-scope="scope">
                             <span v-if="scope.row.status == '02'" class="operation"
-                                  @click="linkToPublishDetail(scope.row.id)">查看</span>
+                                  @click="linkToAuditDetail(scope.row)">查看</span>
                             <span v-if="scope.row.status == '12'" class="operation"
-                                  @click="linkToPublishDetail(scope.row.id)">查看</span>
+                                  @click="linkToAuditDetail(scope.row)">查看</span>
                             <span v-if="scope.row.status == '13'" class="operation"
-                                  @click="linkToAuditDetail(scope.row.id)">领取并审核</span>
+                                  @click="linkToAuditDetail(scope.row)">领取并审核</span>
                         </template>
 
                     </el-table-column>
@@ -152,12 +152,13 @@
             },
 
             // 前往审核详情页面
-            linkToAuditDetail(id) {
+            linkToAuditDetail(item) {
                 this.$router.push({
                     path: '/parkHall/manage/audit',
                     query: {
                         applyType: '02',
-                        id: id
+                        id: item.id,
+                        status: item.status
                     }
                 });
             },
