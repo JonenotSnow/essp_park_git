@@ -111,50 +111,37 @@ router.beforeEach(async (to, from, next) => {
         sessionStorageHandler.setItem("token", token);
         await refreshAuthToken(token);
     }
-    if (token && token!='null' && to.path !== "/parkList") {
-
-        if (to.query.label) {
+    console.log(to.query.label)
+    if ((token && token!='null' && to.path !== "/parkList")||(!menuList && to.path !== "/parkList")) {
+        // 如果有token继而判断是是保定,获取园区信息，其他园区通过label获取
+        if (isUrlHasBd || to.query.label) {
+            //判断是否保定园区路径，否则淮安， 以下通过方法获取保定园区信息
             await getParkByName(to.query.label);
         } else if (parkId) {
             await getParkById(parkId)
+        } else {
+            //没有parkId,label时,返回连接末尾参数，跳平台parkList列表页
+            let url =location.href.indexOf("?")>-1?'?'+location.href.split('?')[1]:''
+            return window.location.href=openUlr+'/parkList'+url
+
         }
-
         // bdParkId 有此字段优先返回
-
         console.log(oneId)
         await getLoginUserRole({parkId: oneId});
         await selectResMenu({oneId, LoginUserRol});
         // router.push(to.path)
-    } else if (!menuList && to.path !== "/parkList") {
-
-        // 当路径中有parkId说明是别的地方直跳园区项目
-        if (isUrlHasBd) {
-            //判断是否保定园区路径，否则淮安， 以下通过方法获取保定园区信息
-            await getParkByName("bdPark2018");
-        } else if (to.query.label) {
-            //获取淮安信息
-            await getParkByName(to.query.label);
-        }else if (parkId) {
-            //获取淮安信息
-            await getParkById(parkId);
-        } else {
-            //没有parkId时
-            return window.location.href=openUlr+'/parkList'
-
-        }
-        await getLoginUserRole({parkId: oneId});
-        await selectResMenu({oneId, LoginUserRol});
-    }
+    } 
 
     next();
 });
 async function getBd() {
-    await getParkByName("bdppc");
+    await getParkByName("bdPark2018");
     await getLoginUserRole({parkId: oneId});
     await selectResMenu({oneId, LoginUserRol});
 }
 
-async function getParkByName(name) {
+async function getParkByName(name='bdPark2018') {
+    console.log(name)
     await post("/parkManage/getParkByRealmName", {
         realmName: name
     }).then(res => {
