@@ -303,7 +303,8 @@
                         title: this.form.title,  // 简介
                         detail: this.form.detail, //编辑器内容
                         inventor: this.form.inventor,   //发明人
-                        unit:this.form.unit        // 所属单位
+                        unit:this.form.unit,        // 所属单位
+                        parkId:sessionStorage.getItem("parkId")//园区ID
                     }).then(
                         response => {
                             console.log(response);
