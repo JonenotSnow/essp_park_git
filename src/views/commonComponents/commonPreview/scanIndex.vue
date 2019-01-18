@@ -85,8 +85,10 @@
 </template>
 
 <script>
+    import mixin from '@/components/mixins/mixins_windowOpen.js'
     export default {
         name: "",
+        mixins:[mixin],
         data() {
             return {
                 logoPic:'',
@@ -97,12 +99,15 @@
                 scanImgList:[],
                 title:this.utils.isBdPark()?"关于我们":"园区概览",
                 ccbUser:[],
-                LoginUserRole: this.SSH.getItem("LoginUserRol").toString(),
+                LoginUserRole: this.SSH.getItem("LoginUserRol")?this.SSH.getItem("LoginUserRol").toString():[],
                 parkId:sessionStorage.getItem("parkId")
             }
         },
         created() {
             this.getParkById();
+            if (this.$route.query.id) {
+                this.getPower(this.$route.query.id)
+            }
         },
         methods: {
             getParkById(){
@@ -124,9 +129,9 @@
                         var moduleList = this.list.moduleList;
                         var arr = [];
                         moduleList.forEach(element => {
-                            var brr =[];
+                            let brr = [];
                             if (element.isPic == '1') {
-                                element.imgList.forEach(el => {
+                                element.imgList.forEach((el,i) => {
                                     if (el != '') {
                                         brr.push(el);
                                     }
@@ -145,9 +150,17 @@
                 })
             },
             toRequestAddParK(){
-                if (!this.SSH.getItem("loginFlag"))return;
-                if (!(this.SSH.getItem("userInfo").cstBscInfVo))return;
-                if (!(this.SSH.getItem("userInfo").cstBscInfVo.cstId))return;
+                let loginFlag = this.SSH.getItem("loginFlag");
+                //未登录提示
+                if (loginFlag == null) {
+                    this.$message.error("你当前未登录，不能作此操作，请先登录");
+                    this.windowHrefUrl('/userIndex/login')
+                    return;
+                }
+                if (!(this.SSH.getItem("userInfo").cstBscInfVo) || !(this.SSH.getItem("userInfo").cstBscInfVo.cstId)){
+                    this.$message.error("该账号未通过企业认证，请先通过企业认证");
+                    return;
+                };
                 let userId = this.SSH.getItem("userInfo").id;
                 let cstId = this.SSH.getItem("userInfo").cstBscInfVo.cstId;
                 
@@ -177,7 +190,38 @@
             },
             //获取当前用户在平台的角色，用于申请入园页面权限校验
             getCcbUser() {
-            }
+            },
+            //邀请函跳转过来获取游客权限
+            
+            getPower(parkId){
+                this.$post(this.$apiUrl.home.selectResMenu, {
+                        'sysType':"park",
+                        'sysBsnAttr':'newPark2',
+                        'postIdList':['11'] //点击邀请函过来是游客
+					})
+					.then((response) => {
+                        let parkInitPower = response.resultData.routerResMap;
+                        //用于平台进入退出园区校验
+                        this.SSH.setItem(parkId,response.resultData.routerResMap);
+
+                        let loginMenuResource = this.SSH.getItem("loginMenuResource");
+                        let initMenuResource = this.SSH.getItem("initMenuResource");
+                        let tmpRes=response.resultData
+                        if(tmpRes&& tmpRes.menuList && tmpRes.menuList[0] && tmpRes.menuList[0].children ){
+                            this.SSH.setItem("menuList",tmpRes.menuList[0]);
+                        }
+                        let menuList = this.SSH.getItem("menuList");
+                        let loginFlag = this.SSH.getItem("loginFlag");
+                        let curUserAllParkPower = {};
+                        if (loginFlag){
+                            curUserAllParkPower = Object.assign({},loginMenuResource,parkInitPower)
+                        }else{
+                            curUserAllParkPower = Object.assign({},initMenuResource,parkInitPower)
+                        }
+                        this.SSH.setItem("menuResource",curUserAllParkPower);
+
+                    }, (err) => {})
+            },
         }
     }
 </script>

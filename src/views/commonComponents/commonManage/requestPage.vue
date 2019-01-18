@@ -8,7 +8,7 @@
                     <span @click="$router.push({path:'/parkIndex/scanIndex',query:{id:parkId}})">点击查看{{parkNm}}园区详情</span>
                 </p>
                 <p class="save">
-                    <el-button type="primary" size='small' @click="agreeInvite" :disabled="mark|markfike(mark)">确认543543加入
+                    <el-button type="primary" size='small' @click="agreeInvite" :disabled="mark|markfike(mark)">确认加入
                     </el-button>
                     <el-button type="primary" size='small' @click="$router.push('/messageCenter/sysMsg')">
                         取&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;消
@@ -79,7 +79,7 @@
                     })
                 this.$router.push('/messageCenter/sysMsg')
             },
-            getParkById(park) {
+            getParkById(parkId) {
                 this.$post(this.$apiUrl.manage.getParkById, {
                     parkId: parkId
                 }).then(

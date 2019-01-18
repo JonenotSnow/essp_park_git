@@ -94,10 +94,12 @@
 <script>
 import Moment from "moment";
 import DialogNeedRange from "@/components/DialogNeedRange";
+import mixin from '@/components/mixins/mixins_windowOpen.js'
 export default {
   components: {
     DialogNeedRange
   },
+  mixins:[mixin],
   data() {
     return {
       showNeedRange: false,
@@ -128,7 +130,7 @@ export default {
         },
         {
           name: "任务池",
-          path: "/parkHall/manage/activityPoolAddPark",
+          path: "/parkHall/manage/activityPoolAddPark1",
           src: require("@/assets/imgs/icon4.png"),
           isShow: true,
           query: {
@@ -172,7 +174,7 @@ export default {
   },
   methods: {
     linkToPage() {
-      this.$router.push("/parkHall/manage/activityPoolAddPark");
+      this.$router.push("/parkHall/manage/activityPoolAddPark1");
     },
     // 点击任务池标题获取该审核权限
     cancelAudit(id) {
@@ -218,11 +220,16 @@ export default {
           return false;
         }
       }
-      if (item.path == "入驻审核") {
+      //园区管理员才有任务池和入驻审核的权限
+      if (item.name == "任务池" || item.name == "入驻审核") {
+        if (!this.LoginUserRole.includes("33") || !this.LoginUserRole.includes("34")) {
+          this.$message("只有园区管理员才有此权限");
+          return;
+        }
         this.$router.push(item.path + "1");
         return;
       }
-      if (item.path == "") {
+      if (item.name == "") {
         this.$message("暂无该栏目");
         return;
       }
@@ -271,7 +278,7 @@ export default {
           },
           {
             name: "入驻审核",
-            path: "/parkHall/manage/activityPoolAddPark",
+            path: "/parkHall/manage/activityPoolAddPark1",
             src: require("@/assets/imgs/icon4.png"),
             isShow: false,
             query: {
@@ -329,9 +336,18 @@ export default {
       });
     },
     toRequestAddParK() {
-      if (!this.SSH.getItem("loginFlag")) return;
-      if (!this.SSH.getItem("userInfo").cstBscInfVo) return;
-      if (!this.SSH.getItem("userInfo").cstBscInfVo.cstId) return;
+      
+      let loginFlag = this.SSH.getItem("loginFlag");
+      //未登录提示
+      if (loginFlag == null) {
+          this.$message.error("你当前未登录，不能作此操作，请先登录");
+          this.windowHrefUrl('/userIndex/login')
+          return;
+      }
+      if (!(this.SSH.getItem("userInfo").cstBscInfVo) || !(this.SSH.getItem("userInfo").cstBscInfVo.cstId)){
+          this.$message.error("该账号未通过企业认证，请先通过企业认证");
+          return;
+      };
       let userId = this.SSH.getItem("userInfo").id;
       let cstId = this.SSH.getItem("userInfo").cstBscInfVo.cstId;
       this.$post(this.$apiUrl.home.selectCstPostIdList, {
