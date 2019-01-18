@@ -43,7 +43,7 @@
             </div>
             <div class="searchinfo" @click="getAllAchiev">查询</div>
         </div>
-        <listOwnImg :list='list' :allCheck="isAllChecked" @delectList="getAllAchiev" :ajaxTit="ajaxTit" :totalCount='totalCount' :type="componentTit" :componentType="componentType"></listOwnImg>
+        <listOwnImg :list='list' :allCheck="isAllChecked"  @delectList="getAllAchiev" :ajaxTit="ajaxTit" :totalCount='totalCount' :type="componentTit" :componentType="componentType"></listOwnImg>
         <div class="pageList">
             <el-pagination
                 @size-change="handleSizeChange"

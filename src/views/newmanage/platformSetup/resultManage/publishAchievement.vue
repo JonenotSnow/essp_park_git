@@ -68,8 +68,8 @@
                 <span class="scan" @click="showExpertInfo">预 览</span>
             </li>
         </ul>
-        <p class="save" @click="uploadAchievement">
-            <span>保存上传</span>
+        <p class="save">
+            <span  @click="uploadAchievement">保存上传</span>
         </p>
         <!-- 遮罩层 -->
         <el-dialog
@@ -287,6 +287,10 @@
                 }
                 if(this.form.detail == "") {
                     this.$message.error("详情不能为空！");
+                    return false;
+                }
+                if(this.form.inventor == "" && this.form.unit == "") {
+                    this.$message.error("发明人和所属单位必填一项！");
                     return false;
                 }
                 return true;
