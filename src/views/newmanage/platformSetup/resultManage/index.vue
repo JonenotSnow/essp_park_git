@@ -91,6 +91,7 @@
                 pageNum: 1,
                 pageSize: 10,
                 selectListNum: 0,
+                parkId: sessionStorage.getItem("parkId"),
                 searchList: [
                     {
                         id: '0',
@@ -132,6 +133,7 @@
             getAllAchiev(){
                 this.ajaxTit = "数据加载中……"
                 this.$post(this.$apiUrl.achievement.getAllAchiev, {
+                    parkId:  this.parkId,
                     pageNum:this.pageNum,   // 页码
                     pageSize: this.pageSize,    // 每页显示数量
                     name: this.form.name, // 成果标题

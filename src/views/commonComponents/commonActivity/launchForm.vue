@@ -1567,7 +1567,8 @@
                             invitings: this.t_concatvalue.join(","),
                             needCompanyAudit: this.needCompanyAudit,
                             activityRemarks: this.activityRemarks, //活动备注
-                            status: type
+                            status: type,
+                            domain:''
                         }).then(
                             response => {
                                 if (response.resultCode == "CLT000000000") {
