@@ -7,25 +7,23 @@
                 <span class="descontool__title">{{temeTitle}}</span>
             </p>
         </div>
-        <!--<div v-if="mcCardList && mcCardList.length>0">-->
-        <div>
-            <!--<div class="essp-card" v-for="(item, mcCardIndex) in mcCardList" :key="mcCardIndex">-->
-            <div class="essp-card" v-for="(item, index) in 5" :key="index">
+        <div class="has_list" v-if="mcCardList && mcCardList.length>0">
+            <div class="essp-card" v-for="(item, mcCardIndex) in mcCardList" :key="mcCardIndex">
+            <!-- <div class="essp-card" v-for="(item, index) in 5" :key="index"> -->
                 <div class="card__head">
-                    <p class="head__title" @click="goToDetail(item)">保定市科技创新三年行动计划（2018-2020年）</p>
-                    <p class="head__time">2018-06-11</p>
+                    <p class="head__title" @click="goToDetail(item)">{{item.informationTitle}}</p>
+                    <p class="head__time">{{item.createTime | timerFormat(item.createTime)}}</p>
                 </div>
                 <div class="card__dest">
-                    <p>
-                        为贯彻落实习近平新时代中国特色社会主义思想和党的十九大精神，深入落实省委省政府的决策部署，实施创新驱动发展战略，加快保定创
-                        为贯彻落实习近平新时代中国特色社会主义思想和党的十九大精神，深入落实省委省政府的决策部署，实施创新驱动发展战略，加快保定创···
-                    </p>
+                    <p v-html="item.infoDetail"></p>
                 </div>
+            <!-- </div>  -->
             </div>
+        </div>        
+        <div class="no_list" v-else>
+            <span class="tipspan">暂无数据，敬请期待</span>
+            <img src="/static/img/noting.cf770e6.png"> 
         </div>
-        <!--<div v-else>-->
-        <!--<div style="text-align: center">暂无数据</div>-->
-        <!--</div>-->
     </div>
 </template>
 
@@ -58,7 +56,7 @@
         },
         methods: {
             goToDetail(item){
-                this.$router.push({path: "/news/noticedetail",query: {id: item}});
+                this.$router.push({path: "/news/noticedetail",query: {info: item}});
             }
         }
     }
@@ -159,6 +157,19 @@
                 }
             }
 
+        }
+        .no_list{
+            text-align: center;
+            .tipspan{ 
+                display: block;
+                font-family: MicrosoftYaHei;
+                color: #666666;
+                margin-top: 85px;
+                font-size: 18px;
+            }
+            img{
+                margin-bottom: 38px;
+            }
         }
     }
 </style>

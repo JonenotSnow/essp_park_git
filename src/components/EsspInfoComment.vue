@@ -25,7 +25,7 @@
             </div>
         </div>
         <div class="commentlist">
-            <div class="fundes">所有评论</div>
+            <div class="fundes">所有评论{{info.countComment}}</div>
             <div class="nocnslist" v-if="cnts.length==0">
                 <i class="iconfont icon-shafa"></i>
                 <p class="nocntops">还没评论，来抢个沙发</p>
@@ -93,7 +93,7 @@
 
 
             </div>
-            <div class="pageList">
+            <div class="pageList" v-if="info.countComment > 0">
                 <el-pagination
                     @size-change="handleSizeChange"
                     @current-change="handleCurrentChange"
@@ -111,9 +111,8 @@
 
 <script>
     import Moment from "moment";
-    import mixin from '@/components/mixins/mixins_windowOpen.js'
+
     export default {
-        mixins:[mixin],
         data() {
             return {
                 anonymous: false,//默认不匿名
@@ -127,7 +126,10 @@
                 userInfo: {},
             }
         },
-        props:["commentSty"], // 评论类型 1. 活动  2. 资讯
+        props:[
+            "commentSty",// 评论类型 1. 活动  2. 资讯
+            "info"
+        ], 
         computed: {},
         created() {
             this.userInfo = this.SSH.getItem('userInfo');
@@ -179,7 +181,7 @@
                      var _this = this;
                      this.$message.warning("您尚未登陆，请您先登陆");
                      setTimeout(function(){
-                         _this.windowHrefUrl('/userIndex/login')
+                         _this.$router.push('/userIndex/login');
                      },2000)
                 }
             },
@@ -208,7 +210,7 @@
                     if (item.userId==item.reUserId){
                         this.$message.warning("暂不支持回复自己")
                         return
-
+    
                     }
                     if (realcnttext.length == 0) {
                         this.$message.warning("回复内容不能为空")
@@ -238,7 +240,7 @@
                     var _this = this;
                      this.$message.warning("您尚未登陆，请您先登陆");
                      setTimeout(function(){
-                         _this.windowHrefUrl('/userIndex/login')
+                         _this.$router.push('/userIndex/login');
                      },2000)
                 }
             },
@@ -266,7 +268,7 @@
                      var _this = this;
                      this.$message.warning("您尚未登陆，请您先登陆");
                      setTimeout(function(){
-                         _this.windowHrefUrl('/userIndex/login')
+                         _this.$router.push('/userIndex/login');
                      },2000)
                 }
             },
@@ -294,7 +296,7 @@
                      var _this = this;
                      this.$message.warning("您尚未登陆，请您先登陆");
                      setTimeout(function(){
-                         _this.windowHrefUrl('/userIndex/login')
+                         _this.$router.push('/userIndex/login');
                      },2000)
                 }
             },
@@ -351,7 +353,7 @@
                      var _this = this;
                      this.$message.warning("您尚未登陆，请您先登陆");
                      setTimeout(function(){
-                         _this.windowHrefUrl('/userIndex/login')
+                         _this.$router.push('/userIndex/login');
                      },2000)
                 }
             },
