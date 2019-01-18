@@ -197,7 +197,6 @@ export default {
       );
     },
     linkTo(item) {
-      let ctData = JSON.parse(sessionStorage.getItem("ctData"));
       let isInPark = !(this.SSH.getItem("LoginUserRol").indexOf("11") > -1);
       let query = isInPark
         ? {

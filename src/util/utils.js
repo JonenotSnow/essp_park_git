@@ -6,7 +6,7 @@ import {apiUrl} from '../fetch/apiUrl'
 import {Message} from 'element-ui';
 import store from '../store'
 import router from '../router'
-
+import Vue from 'vue'
 const utils = {
     /**
      *  非空判断
@@ -368,6 +368,9 @@ const utils = {
             store.state.chat.ws.close();
         } catch (e) {
         }
+        let parkLabel = SSH.getItem('bdParkId')
+        let hasParams = location.href.indexOf('?')>-1
+        parkLabel = hasParams?parkLabel?'?label='+parkLabel:'&label='+parkLabel:''
         SSH.delItem('oldParkId')
         SSH.delItem('friendList');
         SSH.delItem('messageList');
@@ -386,7 +389,7 @@ const utils = {
         SSH.delItem('cetificateFlag')
         SSH.delItem('enterpriseFlag')
         SSH.delItem('grayFlag')
-        router.push('/parkHome')
+        window.location.href = Vue.$openUrl +'/userIndex/login?+returnUrl='+encodeURIComponent(location.href + parkLabel);
     },
     /**
      *  比较菜单id，获取菜单层级
