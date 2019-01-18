@@ -338,7 +338,7 @@
                     })
                 this.access = false;
                 this.noAccess = false;
-                this.$router.push('/parkHall/manage/activityPublishAudit')
+                this.$router.push('/parkHall/manage/activityPoolActivityAditing')
             },
             //取消审核
             cancelAudit() {
@@ -349,7 +349,7 @@
                     status: '10',
                     flag: "noContent"
                 })
-                this.$router.push('/parkHall/manage/activityPublishAudit')
+                this.$router.push('/parkHall/manage/activityPoolActivityAditing')
             }
         },
         filters: {
