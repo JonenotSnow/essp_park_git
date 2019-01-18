@@ -29,12 +29,10 @@
             </div>
             <div class="selectTitle">
                 <el-checkbox class="maincheck" :indeterminate="isIndeterminate" v-model="checkAll" @change="AllChange" >全选</el-checkbox>
-                共
-                <span class="total">{{totalCount}}</span>
-                条，已选
+                <span class="spanWrap" v-if="hascheckedNum>0">已选
                 <span class="total">{{hascheckedNum}}</span>
-                条
-                <span class="removeBtn" @click="openDialog">需求导出</span>
+                条</span>
+                <span class="removeBtn" @click="exportData" :class="{'active':touch}">导出</span>
             </div>
             <div class="tabList">
                 <el-table :data="list" style="width: 100%">
@@ -71,16 +69,11 @@
                 </el-pagination>
             </div>
         </div>
-        <downLoadExcel :show = 'show' @showDialog='showDialog' :checkedIds='checkedIds' :pageType="pageType"></downLoadExcel>
     </div>
 </template>
 
 <script>
-import downLoadExcel from "../../../components/downLoadExcel";
  export default {
-   components:{
-       downLoadExcel
-   },
     data () {
         return {
             checkAll: false,
@@ -139,8 +132,7 @@ import downLoadExcel from "../../../components/downLoadExcel";
                 cstName : '',    //发布人
                 createName : '',//公司名称
             },
-            show:false,
-            pageType:'noOpenNeed'
+            touch:false
         }
     },
     created () {
@@ -180,8 +172,8 @@ import downLoadExcel from "../../../components/downLoadExcel";
                 pageSize: this.pageSize, 
                 cstName: this.searchCondition.cstName,
                 createName: this.searchCondition.createName,  
-                startTime : this.searchCondition.startTime,  
-                endTime : this.searchCondition.endTime     
+                startTime : this.searchCondition.startDate,  
+                endTime : this.searchCondition.endDate     
             }).then(
                 response => {
                     if (response.resultData && response.resultData.list) {
@@ -214,16 +206,13 @@ import downLoadExcel from "../../../components/downLoadExcel";
             }
             this.getAllNeed();
         },
-        openDialog(){
-            if (this.checkedIds.length == 0) {
-                this.$message.error('请先选择要导出的内容');
-                return;
-            }
-            this.show = true;
-        },
-        //导出弹窗
-        showDialog(value){
-            this.show = value.show;
+        //批量导出
+        exportData () {
+            this.touch = true;
+            window.location.href = 'http://128.196.235.129:1345/'+this.$apiUrl.manageNeed.exportNeedData+'?id='+this.checkedIds.toString();
+            setTimeout(function(){
+                this.touch = false;
+            },1000)
         }
    }
  }
@@ -424,6 +413,9 @@ import downLoadExcel from "../../../components/downLoadExcel";
         letter-spacing: 0px;
         color: #666666;
         width:890px;
+        .spanWrap{
+            margin-left:22px;
+        }
         .all{
             margin-left: 10px;
             i{
@@ -438,8 +430,8 @@ import downLoadExcel from "../../../components/downLoadExcel";
         }
         .removeBtn{
             display:inline-block;
-            width: 100px;
-            height: 35px;
+            width: 58px;
+            height: 33px;
             background-image: linear-gradient(0deg, 
                 #f5f5f5 0%, 
                 #ffffff 100%);
@@ -448,7 +440,14 @@ import downLoadExcel from "../../../components/downLoadExcel";
             text-align: center;
             cursor: pointer;
             margin-left:14px;
-            line-height: 35px;
+            line-height: 33px;
+            &.active{
+                color:#00a0e9;
+                background-image: linear-gradient(0deg, 
+                #f5f5f5 0%, 
+                #ffffff 100%);
+                border: solid 1px #10b5ff;
+            }
         }
     }
 }
