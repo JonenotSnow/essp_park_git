@@ -1,7 +1,13 @@
 
     <template>
   <div>
-    <el-dialog :visible.sync="showNeedRange" width="720px" height="400px" class="needRange" :before-close="handleClose"> 
+    <el-dialog
+      :visible.sync="showNeedRange"
+      width="720px"
+      height="400px"
+      class="needRange"
+      :before-close="handleClose"
+    >
       <p class="title">请选择需求发布范围</p>
       <div class="title-border"></div>
       <div class="select-radio">
@@ -37,15 +43,15 @@ export default {
       if (this.NeedRangeRadio === "2") {
         return this.$router.push({ path: "/publishNeed" });
       }
-      let query = isInPark ? "linkSrc=" +this.SSH.getItem("parkId")  : '';
+      let query = isInPark ? "linkSrc=" + this.SSH.getItem("parkId") : "";
       let token = this.SSH.getItem("token");
       token = token ? "&token=" + token : "";
-      window.location.href =
-        this.$openUrl + "/requIndex/publish?" + query + token;
+
+      window.open(this.$openUrl + "/requIndex/publish?" + query + token);
       return false;
     },
-    handleClose(){
-        this.$emit("update:showNeedRange", false);
+    handleClose() {
+      this.$emit("update:showNeedRange", false);
     }
   }
 };
@@ -111,17 +117,16 @@ export default {
     color: #00a0e9;
   }
 }
-.el-radio+.el-radio{
+.el-radio + .el-radio {
   margin-left: 0;
 }
 .el-radio {
-  /deep/.el-radio__label{
-      font-size: 18px;
+  /deep/.el-radio__label {
+    font-size: 18px;
   }
   display: block;
   text-align: left;
   margin: 20px 0 10px;
-
 }
 </style>
     

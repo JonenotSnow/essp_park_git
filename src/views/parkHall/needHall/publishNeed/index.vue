@@ -38,9 +38,9 @@
             <div slot="tip" class="el-upload__tip">（科技服支持pdf/word/excel等类型文件，大小10M内）</div>
           </el-upload>
         </el-form-item>
-        <el-form-item>
+        <!-- <el-form-item>
           <el-button type="primary" size="normal" plain>预览</el-button>
-        </el-form-item>
+        </el-form-item> -->
 
         <div class="btn-sure" @click="saveNeed">创建</div>
       </el-form>
@@ -153,10 +153,8 @@ export default {
           that.$post("/need/saveNeed", params).then(res => {
             if (res.resultCode === "CLT000000000") {
               that.$message.success("发布成功!");
-              // this.$router.push('/needHall')
-              let token = this.SSH.getItem('token')
-              token?'&token='+token:''
-              this.windowOpenUrl('requIndex/display-own?bsnRqmId='+res.resultData.id+token)
+              this.$router.push('/needHall')
+              // this.windowOpenUrl('requIndex/display-own?bsnRqmId='+res.resultData.id)
             } else {
               that.$message.warning("发布失败");
             }

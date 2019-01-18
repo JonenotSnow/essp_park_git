@@ -74,7 +74,9 @@
     </div>
 </template>
 <script>
+import mixin from '@/components/mixins/mixins_windowOpen.js'
     export default {
+        mixins:[mixin],
         data: () => ({
             hotRqmList: [],
             pageNum: 1,
@@ -162,39 +164,48 @@
                                     displayUrl = "/requIndex/display-other";
                                 }
                                 //标签页打开页面
-                                let routerData = this.$router.resolve({
-                                    path: displayUrl,
-                                    query: {
-                                        bsnRqmId: val.bsnRqmId,
-                                        tplId: val.tplId
-                                    }
-                                });
-                                window.open(routerData.href, "_blank");
+                                // let routerData = this.$router.resolve({
+                                //     path: displayUrl,
+                                //     query: {
+                                //         bsnRqmId: val.bsnRqmId,
+                                //         tplId: val.tplId
+                                //     }
+                                // });
+                                // window.open(routerData.href, "_blank");
+                                let pramas = val.bsnRqmId?'?bsnRqmId='+val.bsnRqmId:''
+                                pramas += val.tplId?'&tplId='+val.tplId:''
+                                this.windowOpenUrl(displayUrl,pramas)
                             } else {
                                 displayUrl = "/requIndex/display-other";
                                 //标签页打开页面
-                                let routerData = this.$router.resolve({
-                                    path: displayUrl,
-                                    query: {
-                                        bsnRqmId: val.bsnRqmId,
-                                        tplId: val.tplId
-                                    }
-                                });
-                                window.open(routerData.href, "_blank");
+                                // let routerData = this.$router.resolve({
+                                //     path: displayUrl,
+                                //     query: {
+                                //         bsnRqmId: val.bsnRqmId,
+                                //         tplId: val.tplId
+                                //     }
+                                // });
+                                // window.open(routerData.href, "_blank");
+                                let pramas = val.bsnRqmId?'?bsnRqmId='+val.bsnRqmId:''
+                                pramas += val.tplId?'&tplId='+val.tplId:''
+                                this.windowOpenUrl(displayUrl,pramas)
                             }
                         }
                     });
                 } else {
                     displayUrl = "/requIndex/display-other";
                     //标签页打开页面
-                    let routerData = this.$router.resolve({
-                        path: displayUrl,
-                        query: {
-                            bsnRqmId: val.bsnRqmId,
-                            tplId: val.tplId
-                        }
-                    });
-                    window.open(routerData.href, "_blank");
+                    // let routerData = this.$router.resolve({
+                    //     path: displayUrl,
+                    //     query: {
+                    //         bsnRqmId: val.bsnRqmId,
+                    //         tplId: val.tplId
+                    //     }
+                    // });
+                    // window.open(routerData.href, "_blank");
+                    let pramas = val.bsnRqmId?'?bsnRqmId='+val.bsnRqmId:''
+                                pramas += val.tplId?'&tplId='+val.tplId:''
+                                this.windowOpenUrl(displayUrl,pramas)
                 }
             },
             focus(item, index) {

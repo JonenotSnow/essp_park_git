@@ -170,9 +170,7 @@ export default {
     myNeed() {
 
       let parkId = this.SSH.getItem('parkId')
-      let token= this.SSH.getItem('token')
-      token=token?'&token='+token:''
-      let params = '?linkSrc='+parkId+token
+      let params = '?linkSrc='+parkId
       this.windowOpenUrl('requIndex/requMyrqm/all',params)
     },
     publish() {

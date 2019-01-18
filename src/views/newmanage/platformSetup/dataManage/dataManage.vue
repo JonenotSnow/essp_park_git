@@ -352,7 +352,7 @@ export default {
             id: 1 + jIndex,
             year: "",
             dataNum: "",
-            sub: "亿元",
+            sub: "万人",
             subTitle: "R&D人员："
           };
           break;
@@ -397,7 +397,7 @@ export default {
             id: 1 + jIndex,
             year: "",
             dataNum: "",
-            sub: "亿",
+            sub: "亿元",
             subTitle: "技术合同登记额："
           };
           break;
@@ -587,6 +587,7 @@ export default {
     margin: 48px 0 0 40px;
     text-align: center;
     padding-bottom: 60px;
+    cursor: pointer;
     span {
       display: inline-block;
       width: 180px;

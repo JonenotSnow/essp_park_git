@@ -171,7 +171,7 @@ export default {
                     btn_l:{
                         showFlag:true,
                         isRouerPush:false,
-                        path:'http://www.sipo.gov.cn/zhfwpt/zlsqzn/'
+                        path:'http://www.hbscxcyds.com'
                     },
                     btn_r:{
                         showFlag:true,
