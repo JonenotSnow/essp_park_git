@@ -100,6 +100,7 @@
                 this.status = status;
                 this.type = status;
                 this.searchContent = '';
+                this.approveType = '';
                 this.getPolicieAndRegulation(this.status);
             },
 
@@ -156,7 +157,7 @@
             // 子组件里的状态切换事件
             childSwitchStatus(approveType) {
                 // 重新获取数据
-                // this.approveType = approveType;
+                this.approveType = approveType;
                 this.getPolicieAndRegulation();
             }
             /**

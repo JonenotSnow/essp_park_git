@@ -1,13 +1,12 @@
 <template>
     <div>
         <!-- 列表只有类型 已发布、已审核-->
-        <div v-if="list.length>0">
-            <div class="selectTitle">
-                <el-checkbox v-model="allCheck" @change="changeAllChecked">全选</el-checkbox>
-                共<span class="total">{{totalCount}}</span>条，
-                已选<span class="total">{{selectCheckItem.length}}</span>条
-                <span class="removeBtn" @click.stop="showDialog()">删除</span>
-                <span class="selectStatus">状态：
+        <div class="selectTitle">
+            <el-checkbox v-model="allCheck" @change="changeAllChecked">全选</el-checkbox>
+            共<span class="total">{{totalCount}}</span>条，
+            已选<span class="total">{{selectCheckItem.length}}</span>条
+            <span class="removeBtn" @click.stop="showDialog()">删除</span>
+            <span class="selectStatus">状态：
                     <select v-model="approveType" v-if="type == 1" @change="switchStatus()">
                         <!--status改成了approveType-->
                         <option value="">全部</option>
@@ -22,7 +21,8 @@
                         <option value="02">审核通过</option>
                     </select>
                 </span>
-            </div>
+        </div>
+        <div v-if="list.length>0">
             <ul class="listWrap">
                 <li class="list" v-for="(item, index) in list" :key="index">
                     <div class="ListTop">
@@ -316,7 +316,7 @@
                 }
                 .create {
                     display: inline-block;
-                    width: 100px;
+                    width: 120px;
                     margin-left: 50px;
                 }
                 .classifyC {

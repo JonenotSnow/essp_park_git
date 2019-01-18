@@ -20,7 +20,7 @@
                 </div>
             </div>
         </div>
-        <div v-else class="noData">
+        <div class="noData" v-else>
             <div class="no-list-pic">
                 <img src="@assets/newparkimg/no-list-img.png" alt="">
             </div>
