@@ -139,7 +139,6 @@ router.beforeEach(async (to, from, next) => {
             await getParkById(parkId);
         } else {
             //没有parkId时
-            debugger
             return window.location.href=Vue.$openUrl+'/parkList' && next();
 
         }
