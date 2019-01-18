@@ -20,8 +20,13 @@
                 </div>
             </div>
         </div>
-        <div v-else>
-            <div style="text-align: center">暂无数据</div>
+        <div v-else class="noData">
+            <div class="no-list-pic">
+                <img src="@assets/newparkimg/no-list-img.png" alt="">
+            </div>
+            <div class="no-list-desc">
+                暂无数据
+            </div>
         </div>
     </div>
 </template>
@@ -108,6 +113,30 @@
                 }
             }
         }
+
+        .noData {
+            margin-top: 100px;
+            margin-bottom: 50px;
+            text-align: center;
+            .no-list-pic {
+                padding-left: 262px;
+                width: 245px;
+                height: 189px;
+                img {
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+            .no-list-desc {
+                font-size: 18px;
+                font-weight: normal;
+                font-stretch: normal;
+                letter-spacing: 0px;
+                color: #666666;
+            }
+
+        }
+
         .essp-card {
             margin-top: 25px;
             margin-left: 40px;

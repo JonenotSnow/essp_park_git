@@ -8,10 +8,8 @@
         <div class="essp-aside-right-cont">
             <div class="aside-right-item aside-right-item-seach">
                 <div>
-                    <el-input
-                        placeholder="请输入标签关键字"
-                        v-model="tagTxt" @change="clearCurrentKeyname">
-                        <i slot="suffix" class="el-input__icon el-icon-search" @click="getSciAndTechPolicy"></i>
+                    <el-input placeholder="请输入搜索关键字" v-model="searchContent">
+                        <i slot="suffix" class="el-input__icon el-icon-search" @click="getSciAndTechPolicy()"></i>
                     </el-input>
                 </div>
                 <div class="keyname">
@@ -94,6 +92,9 @@
                     {name: "最近一个月", code: "month"}
                 ],
 
+                // 搜索关键字
+                searchContent: '',
+
                 // 分页
                 pageRanges: [5, 10, 20, 50, 100],//默认每页10条数区间
                 pageNum: 1,//当前页码
@@ -101,7 +102,6 @@
                 allTotal: 0,//总条数
                 startDate: "",//起始时间
                 endDate: "",//结束时间
-                title: "",//搜索关键词
                 times: '',
                 tagTxt: "",//通过标签搜索
 
@@ -110,8 +110,6 @@
             }
         },
         created() {
-            // this.getSciAndTechPolicy();
-            // this.getListInfoTags();
             this.getSciAndTechPolicy();
         },
         methods: {
@@ -153,6 +151,7 @@
                 this.currentTime = [this.startDate, this.endDate];
                 this.getSciAndTechPolicy();
             },
+
             //获取列表的标签
             getListInfoTags() {
                 var url = this.$apiUrl.parkInfo.getListTags;
@@ -183,11 +182,6 @@
                 this.pageNum = val;
                 this.getSciAndTechPolicy();
             },
-            //点击右侧搜索栏的特殊处理
-            getDataByKeyWord() {
-                this.currentKeyname = '';
-                this.getSciAndTechPolicy();
-            },
 
             /**
              * 获取“科技政策”的数据
@@ -199,7 +193,7 @@
                     pageSize: this.pageSize,        // 每页显示数量
                     startDate: this.startDate,      // 信息发布时间---开始时间
                     endDate: this.endDate,          // 信息发布时间---结束时间
-                    title: '',                       // 标题,
+                    title: this.searchContent,      // 先用标题搜索---标题,
                     type: this.satpType,            // 政策01，或科技服务02
                     classtType: this.classtType     // 科技服务才会有这个字段---
                 };
@@ -257,13 +251,13 @@
     }
 
     .aside-r-sea1 .el-date-editor {
-        height: 30px;
-        line-height: 30px;
+        height: 32px;
+        line-height: 32px;
         width: 100%;
     }
 
     .aside-r-sea1 .el-date-editor .el-range-input {
-        width: 43%;
+        width: 45%;
         font-size: 12px;
         height: 28px;
         line-height: 28px;
