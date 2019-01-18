@@ -44,7 +44,7 @@
             <div class="searchinfo" @click="getAllAchiev">查询</div>
         </div>
         <listOwnImg :list='list' :allCheck="isAllChecked"  @delectList="getAllAchiev" :ajaxTit="ajaxTit" :totalCount='totalCount' :type="componentTit" :componentType="componentType"></listOwnImg>
-        <div class="pageList">
+        <div class="pageList"  v-if="list.length > 0">
             <el-pagination
                 @size-change="handleSizeChange"
                 @current-change="handleCurrentChange"
