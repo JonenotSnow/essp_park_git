@@ -51,7 +51,10 @@
                 </li>
             </ul>
         </div>
-        <div v-else class="noData">
+        <div class="noData" v-if="list.length == 0 && requestTip == '数据加载中...'">
+            <p>{{requestTip}}</p>
+        </div>
+        <div class="noData" v-if="list.length == 0 && requestTip == '数据加载完毕'">
             <span>尚未发布成果，点击右上方发布按钮立即发布吧！</span>
             <img src="@assets/newparkimg/newmanage/achievementSet/no_list.png" alt="">
         </div>
@@ -92,6 +95,10 @@
             totalCount: {
                 type: String,
                 default: '0'
+            },
+            requestTip: {
+                type: String,
+                default: ''
             }
         },
         data() {

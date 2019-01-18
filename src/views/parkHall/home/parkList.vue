@@ -260,8 +260,10 @@
                 }
 
                 if (!this.SSH.getItem("loginFlag"))return;
-                if (!(this.SSH.getItem("userInfo").cstBscInfVo))return;
-                if (!(this.SSH.getItem("userInfo").cstBscInfVo.cstId))return;
+                if (!(this.SSH.getItem("userInfo").cstBscInfVo) || !(this.SSH.getItem("userInfo").cstBscInfVo.cstId)){
+                    this.$message.error("该账号未通过企业认证，请先通过企业认证");
+                    return;
+                };
                 let userId = this.SSH.getItem("userInfo").id;
                 let cstId = this.SSH.getItem("userInfo").cstBscInfVo.cstId;
 

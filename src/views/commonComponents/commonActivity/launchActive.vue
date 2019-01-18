@@ -360,6 +360,7 @@
                     response => {
                         if (response.resultCode == "CLT000000000") {
                             this.$message.success("删除成功");
+                            this.activedata=[];
                             this.getActiveList();
                         } else {
                             this.$message.error(failMsg + response.resultMsg);

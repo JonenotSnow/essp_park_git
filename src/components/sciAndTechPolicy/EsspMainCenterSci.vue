@@ -3,7 +3,9 @@
 
         <EsspMcCardSci
             :mcCardList="mcCardDataList"
-            :temeTitle="temeTitle"/>
+            :temeTitle="temeTitle"
+            :requestTip="requestTip"
+        />
 
         <div class="essp-aside-right-cont">
             <div class="aside-right-item aside-right-item-seach">
@@ -106,7 +108,9 @@
                 tagTxt: "",//通过标签搜索
 
                 // 列表数据
-                mcCardDataList: []
+                mcCardDataList: [],
+                // 请求字段
+                requestTip: '数据加载中...'
             }
         },
         created() {
@@ -187,6 +191,7 @@
              * 获取“科技政策”的数据
              */
             getSciAndTechPolicy() {
+                this.requestTip = '数据加载中...';
                 let params = {
                     parkId: this.parkId,            // 园区ID
                     pageNum: this.pageNum,          // 页码
@@ -209,6 +214,7 @@
                         let resultData = response.resultData;
                         this.allTotal = resultData.total;
                         this.mcCardDataList = resultData.policyList;
+                        this.requestTip = '数据加载完毕';
                     } else {
                         this.$message.info(response.resultMsg);
                     }

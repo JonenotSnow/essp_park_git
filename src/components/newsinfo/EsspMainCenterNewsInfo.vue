@@ -32,7 +32,7 @@
                 </div>
             </div>
         </div>
-        <div class="pageList">
+        <div class="pageList" v-if="mcCardDataList.length>0">
             <el-pagination
                 @size-change="handleSizeChange"
                 @current-change="handleCurrentChange"
@@ -170,12 +170,14 @@
                     endDate: this.endDate,
                     title: '',
                     parkId,
-                    tagTxt:this.tagTxt,//根据标签搜索
+                    //tagTxt:this.tagTxt,//根据标签搜索
+                    type:'1'
                 })
                 .then(response => {
                     var codestatus = response.resultCode;
                     if(codestatus=="CLT000000000"){
                         this.mcCardDataList = response.resultData.informationList;//数据源
+                        console.log(this.mcCardDataList)
                         this.allTotal = response.resultData.total;//总条数
                     }else{
                         this.$message.info(response.resultMsg);
