@@ -170,7 +170,7 @@ export default {
     myNeed() {
 
       let parkId = this.SSH.getItem('parkId')
-      let params = '?linkSrc='+parkId
+      let params = {linkSrc:parkId}
       this.windowOpenUrl('requIndex/requMyrqm/all',params)
     },
     publish() {
