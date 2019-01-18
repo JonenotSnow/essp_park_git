@@ -574,12 +574,14 @@ export default {
               font-size: 16px;
               line-height:20px;
               .casehead{    
-                padding: 31px 0 31px 175px;
-                width: 1125px;   
+                padding: 31px 0 31px 0;
+                width: 1200px;   
+                margin:0 auto;
                 .casetitle{
                   font-size:18px;
                   line-height:20px;
                   display: inline-block;
+                  margin-left: 120px;
                   width:395px;
                   color:#333;
                 }
@@ -587,10 +589,12 @@ export default {
               .caseinfo{
                 font-size: 16px;
                 line-height: 20px;
-                padding:0 0 24px 175px;
+                padding:0 0 24px 0;
                 color:#777;
-                width:1125px;
+                width:1200px;
+                margin: 0 auto;
                 .casetitlename{
+                  margin-left: 120px;
                   display: inline-block;
                   width:390px;
 
@@ -658,25 +662,29 @@ export default {
               font-size: 16px;
               line-height:20px;
               .casehead{    
-                padding: 31px 0 31px 175px;
-                width: 1125px;       
+                padding: 31px 0 31px 0;
+                width: 1200px;       
+                margin:0 auto;
                 .casetitle{
                   font-size:18px;
                   line-height:20px;
                   display: inline-block;
                   width:395px;
                   color:#333;
+                  margin-left: 120px;
                 }
               }
               .caseinfo{
                 font-size: 16px;
                 line-height: 20px;
-                padding:0 0 24px 175px;
+                padding:0 0 24px 0;
                 color:#777;
-                width:1125px;
+                width:1200px;
+                margin: 0 auto;
                 .casetitlename{
                   display: inline-block;
                   width:390px;
+                  margin-left: 120px;
                 }
               }
             }
@@ -689,6 +697,7 @@ export default {
             a{
               color:#00a0e9;
               font-size:16px;
+              margin-right: 18px;
             }
           }
         }
