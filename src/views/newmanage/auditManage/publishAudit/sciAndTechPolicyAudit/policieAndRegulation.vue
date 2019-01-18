@@ -48,7 +48,7 @@
                 <p>采取先到先得的任务领取审核方式</p>
             </div>
             <div class="tabList">
-                <el-table :data="policieAndRegulationData" @row-click="getDetail" style="width: 100%">
+                <el-table v-if="policieAndRegulationData && policieAndRegulationData.length > 0" :data="policieAndRegulationData" @row-click="getDetail" style="width: 100%">
                     <el-table-column align="center" type="index" label="全部" width="85"></el-table-column>
                     <el-table-column show-overflow-tooltip align="center" prop="policyTitle" label="标题名称"
                                      width="200"></el-table-column>
@@ -77,6 +77,19 @@
                         </template>
                     </el-table-column>
                 </el-table>
+                <div class="noData" v-if="policieAndRegulationData.length == 0 && requestTip == '数据加载中...'" >
+                    <div class="no-list-desc">
+                        {{requestTip}}
+                    </div>
+                </div>
+                <div class="noData" v-if="policieAndRegulationData.length == 0 && requestTip == '数据加载完毕'" >
+                    <div class="no-list-pic">
+                        <img src="@assets/newparkimg/no-list-img.png" alt="">
+                    </div>
+                    <div class="no-list-desc">
+                        暂无数据
+                    </div>
+                </div>
             </div>
             <div class="pageList">
                 <el-pagination
@@ -102,6 +115,7 @@
 
                 satpType: '01',     // 政策法规
                 policieAndRegulationData: [],
+                requestTip: '数据加载中...',
 
                 // 查询条件
                 searchCondition: {
@@ -167,6 +181,7 @@
              * 获取“科技政策”的数据
              */
             getSciAndTechPolicy() {
+                this.requestTip = '数据加载中...';
                 let params = {
                     parkId: this.parkId,              // 园区ID
                     pageNum: this.pageNum,            // 页码
@@ -189,6 +204,7 @@
                         let resultData = response.resultData;
                         this.totalCount = resultData.policyCount;
                         this.policieAndRegulationData = resultData.policyList;
+                        this.requestTip = '数据加载完毕';
                     } else {
                         this.$message.info(response.resultMsg);
                     }
@@ -319,6 +335,31 @@
                     letter-spacing: 0px;
                     color: #00a0e9;
                     cursor: pointer;
+                }
+
+                .noData {
+                    margin-top: 100px;
+                    margin-bottom: 50px;
+                    padding-bottom: 50px;
+                    text-align: center;
+                    border-bottom: 1px solid #ebeef5;
+                    .no-list-pic {
+                        padding-left: 320px;
+                        width: 245px;
+                        height: 189px;
+                        img {
+                            width: 100%;
+                            height: 100%;
+                        }
+                    }
+                    .no-list-desc {
+                        font-size: 18px;
+                        font-weight: normal;
+                        font-stretch: normal;
+                        letter-spacing: 0px;
+                        color: #666666;
+                    }
+
                 }
             }
 
