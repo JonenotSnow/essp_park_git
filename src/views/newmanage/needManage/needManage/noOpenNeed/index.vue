@@ -166,6 +166,7 @@
                 this.$message.error('园区id不能为空');
                 return;
             }
+            console.log('需求发布',this.$apiUrl.manageNeed)
             this.$post(this.$apiUrl.manageNeed.getAllNeed, {
                 parkId:this.SSH.getItem('parkId'),
                 pageNum:this.pageNum, 
