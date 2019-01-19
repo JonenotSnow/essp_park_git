@@ -34,7 +34,7 @@ export default {
             currentObj=Object.assign({},{returnUrl:returnUrl},{token:this.mixin_window_token,channel:'PARK'})
            
             let getUrl = this.utils.setUrlParams(currentObj,'',this.$openUrl+url)
-            window.open(getUrl);
+            window.location.href = getUrl;
         },
         // 用于当前页面平台跳转，不做return 园区操作。
         windowHrefUrlNormal(url) {

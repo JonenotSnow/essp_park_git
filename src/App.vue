@@ -21,11 +21,12 @@
     import constants from '@/util/constants'
     import {Notification} from 'element-ui';
     import {mapState} from 'vuex'
+    import mixins from '@/components/mixins/mixins_windowOpen.js'
     // import baseLogin from "@/views/user/login/loginCommon.js";
 
     export default {
         name: 'App',
-        // mixins: [baseLogin],
+        mixins: [mixins],
         components: {
             chat
         },
@@ -212,7 +213,7 @@
                     dangerouslyUseHTMLString: false,
                     onClick: function () {
                         this.close()
-                        self.$router.push("/messageCenter/sysMsg");
+                        self.windowOpenNoParams("/messageCenter/sysMsg");
                         this.close()
                     }
                 });
@@ -226,7 +227,7 @@
                     dangerouslyUseHTMLString: false,
                     onClick: function () {
                         this.close()
-                        self.$router.push("/messageCenter/businessMsg");
+                        self.windowOpenNoParams("/messageCenter/businessMsg");
                         this.close()
                     }
                 });
@@ -240,7 +241,7 @@
                     dangerouslyUseHTMLString: false,
                     onClick: function () {
                         this.close()
-                        self.$router.push("/messageCenter/subscribeMsg");
+                        self.windowOpenNoParams("/messageCenter/subscribeMsg");
                         this.close()
                     }
                 });

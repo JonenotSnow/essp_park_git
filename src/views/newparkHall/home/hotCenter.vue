@@ -174,7 +174,7 @@ import mixin from '@/components/mixins/mixins_windowOpen.js'
                                 // window.open(routerData.href, "_blank");
                                 let params ={bsnRqmId:val.bsnRqmId,
                                 tplId:val.tplId}
-                                this.windowOpenUrl(displayUrl,pramas)
+                                this.windowOpenUrl(displayUrl,params)
                             } else {
                                 displayUrl = "/requIndex/display-other";
                                 //标签页打开页面
@@ -188,7 +188,7 @@ import mixin from '@/components/mixins/mixins_windowOpen.js'
                                 // window.open(routerData.href, "_blank");
                                 let params ={bsnRqmId:val.bsnRqmId,
                                 tplId:val.tplId}
-                                this.windowOpenUrl(displayUrl,pramas)
+                                this.windowOpenUrl(displayUrl,params)
                             }
                         }
                     });
@@ -205,7 +205,7 @@ import mixin from '@/components/mixins/mixins_windowOpen.js'
                     // window.open(routerData.href, "_blank");
                     let params ={bsnRqmId:val.bsnRqmId,
                                 tplId:val.tplId}
-                                this.windowOpenUrl(displayUrl,pramas)
+                                this.windowOpenUrl(displayUrl,params)
                 }
             },
             focus(item, index) {

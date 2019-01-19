@@ -31,8 +31,8 @@
                     <div class="my-style" v-for="(item, index) in fileList" :key="index">{{item.name}}</div>
                 </el-form-item>
             </el-form>
-            <div class="audit-line" v-if="auditStatus== '13'"></div>
-            <div class="audit-opinion" v-if="auditStatus== '13'">
+            <div class="audit-line" v-if="(userType == '34') && auditStatus== '13'"></div>
+            <div class="audit-opinion" v-if="(userType == '34') && auditStatus== '13'">
                 <button class="audit-btn audit-success" @click="showDialog('02')">通过</button>
                 <button class="audit-btn audit-reject" @click="showDialog('12')">不通过</button>
             </div>
@@ -74,8 +74,8 @@
                     <div class="my-style" v-for="(item, index) in fileList" :key="index">{{item.name}}</div>
                 </el-form-item>
             </el-form>
-            <div class="audit-line" v-if="auditStatus== '13'"></div>
-            <div class="audit-opinion" v-if="auditStatus== '13'">
+            <div class="audit-line" v-if="(userType == '34') && auditStatus== '13'"></div>
+            <div class="audit-opinion" v-if="(userType == '34') && auditStatus== '13'">
                 <button class="audit-btn audit-success" @click="showDialog('02')">通过</button>
                 <button class="audit-btn audit-reject" @click="showDialog('12')">不通过</button>
             </div>
@@ -114,6 +114,9 @@
         },
         data() {
             return {
+                // 获取用户信息
+                userInfo: "",
+                userType: '',
                 parkId: sessionStorage.getItem("parkId") || "",
                 applyType: this.$route.query.applyType,
                 id: this.$route.query.id || "",
@@ -237,7 +240,8 @@
                                 this.fileList.push(obj);
                             })
                         }
-                    } else {
+                    }
+                    else {
                         this.$message.info(response.resultMsg);
                     }
                 }, err => {
@@ -278,6 +282,16 @@
             /**
              * 填写审核意见操作相关事件---结束
              */
+
+        },
+        mounted() {
+            this.userInfo = this.SSH.getItem("userInfo") || ''; // 获取用户信息
+            this.userType = this.userInfo.userPostList[1];
+            console.log('typeof (this.userInfo)================================');
+            console.log(this.userInfo);
+            console.log(this.userInfo.userPostList);
+            console.log(this.userInfo.userPostList[0]);
+            console.log(this.userInfo.userPostList[1]);
 
         },
         created() {
