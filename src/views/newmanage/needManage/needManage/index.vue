@@ -17,8 +17,8 @@ import openNeed from './openNeed/index'
 import noOpenNeed from './noOpenNeed/index'
  export default {
    components:{
-        openNeed,
-        noOpenNeed
+     openNeed,
+     noOpenNeed
    },
    data () {
      return {
@@ -26,15 +26,12 @@ import noOpenNeed from './noOpenNeed/index'
      }
    },
    created () {
-       //详情页点击面包屑返回
-        if (this.$route.query.id) {
-            this.getType(this.$route.query.id)
-        }
+     
    },
    methods: {
-        getType(type){
-            this.type = type;
-        }
+    getType(type){
+      this.type = type;
+    }
    },
  }
 </script>

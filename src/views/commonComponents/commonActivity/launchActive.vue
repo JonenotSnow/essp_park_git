@@ -39,7 +39,7 @@
                         </div>
                         <div class="infocon esspclearfix">
                             <div class="logocon" @click="goActiveDetail(item)">
-                                <img class="detaillogo" v-lazy="item.activityPhoto" alt="">
+                                <img class="detaillogo" :src="item.activityPhoto" alt="">
                                 <!--<div class="img_tips">-->
                                 <!--<p class="enrolled">已报名：{{item.enterSum}}人</p>-->
                                 <!--<p class="cost">{{item.isCharge == '1' ? "收费" : "免费"}}</p>-->

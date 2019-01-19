@@ -680,7 +680,7 @@
                     border-radius: 3px;
                     i {
                         display: block;
-                        margin: 40px auto -57px;
+                        margin: 35px auto -53px;;
                     }
                 }
             }
@@ -730,7 +730,7 @@
             margin-right: 20px;
             .avatar-uploader-chengguo {
                 left: 0;
-                width: 210px;
+                width: 220px;
                 height: 110px;
                 padding: 0;
                 .upload_pic_icon {

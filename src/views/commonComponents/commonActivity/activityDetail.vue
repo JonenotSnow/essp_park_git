@@ -416,10 +416,7 @@
                 });
             },
             interCc() {
-                this.$router.push({
-                    path: '/centerIndex/showHome',
-                    query: {cstId: this.activeDetailData.cstId}
-                })
+                this.windowOpenUrl('/centerIndex/showHome',{cstId:this.activeDetailData.cstId})
             },
             /* 获取企业logo */
             getLogo() {

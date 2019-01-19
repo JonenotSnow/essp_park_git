@@ -94,10 +94,6 @@
                 var type = type;
                 var id = '';
                 if(type == "01") {
-                    if(!item.isChecked) {
-                        this.$message.error("您还未选择该项"+this.type + "信息！");
-                        return;
-                    }
                     id = item.id;
                 } else {
                     if(this.selectCheckItem.length < 1) {
@@ -162,6 +158,8 @@
                         this.allCheck = true;
                     }
                 } else {
+                    console.log(this.selectCheckItem.length == this.list.length);
+                    this.allCheck = false;
                    if(this.selectCheckItem.length) {
                        var index = this.selectCheckItem.indexOf(item);
                        if(index >-1) {
