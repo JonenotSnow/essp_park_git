@@ -294,35 +294,6 @@
             }
         },
         methods: {
-            beforeAvatarUpload(file) {
-                let flieName = file.name;
-                let fileType = flieName.substring(flieName.lastIndexOf(".") + 1).toLowerCase();
-                // fileType === "zip" 格式不支持
-                const isFile = fileType === "docx" || fileType === "doc" || fileType === "xls" || fileType === "xlsx" || fileType === "pdf";
-                const isLt5M = file.size / 1024 / 1024 < 2;
-                if (!isFile) {
-                    this.$message.error("上传的附件只能是docx、doc、xls、xlsx、pdf格式！");
-                    return isFile;
-                }
-                if (!isLt5M) {
-                    this.$message.error("上传文件大小不能超过 5MB!");
-                    return isLt5M;
-                }
-                let param = new FormData(); // 创建form对象
-                param.append("file", file); // 通过append向form对象添加数据
-                param.append("type", "park"); // 通过append向form对象添加数据
-                param.append("model", "active"); // 通过append向form对象添加数据
-
-                this.$post(this.$apiUrl.upload.upload, param).then(
-                    response => {
-                        this.activityPhoto = response.resultData[0].url;
-                    },
-                    err => {
-                        this.$message.error("接口异常");
-                    }
-                );
-                return false; // 返回false不会自动上传
-            },
             /**
              * 标签相关字段---开始
              *  */
@@ -506,43 +477,46 @@
             /**
              * 附件上传事件---开始
              */
+            beforeAvatarUpload(file) {
+
+                let flieName = file.name;
+                let fileType = flieName.substring(flieName.lastIndexOf(".") + 1).toLowerCase();
+
+                // fileType === "zip" 格式不支持
+                const isFile = fileType === "docx" || fileType === "doc" || fileType === "xls" || fileType === "xlsx" || fileType === "pdf";
+                const isLt5M = file.size / 1024 / 1024 < 2;
+
+                if (!isFile) {
+                    this.$message.error("上传的附件只能是docx、doc、xls、xlsx、pdf格式！");
+                    return isFile;
+                }
+                if (!isLt5M) {
+                    this.$message.error("上传文件大小不能超过 5MB!");
+                    return isLt5M;
+                }
+
+                let param = new FormData(); // 创建form对象
+                param.append("file", file); // 通过append向form对象添加数据
+                param.append("type", "park"); // 通过append向form对象添加数据
+                param.append("model", "sciAndTechPolicy"); // 通过append向form对象添加数据
+
+                this.$post(this.$apiUrl.upload.upload, param).then(
+                    response => {
+                        var obj = {
+                            name: file.name,
+                            url: response.resultData[0].url
+                        };
+                        this.fileList.push(obj);
+                    },
+                    err => {
+                        this.$message.error("接口异常");
+                    }
+                );
+                return false; // 返回false不会自动上传
+            },
             removeList(file, fileList) {
                 console.log(fileList);
                 this.fileList = fileList;
-            },
-            beforeAvatarUploadFile(file) {
-                let param = new FormData(); // 创建form对象
-                console.log(file)
-                param.append("file", file); // 通过append向form对象添加数据
-
-                param.append("type", "kj"); // 通过append向form对象添加数据
-                param.append("model", "ddd"); // 通过append向form对象添加数据
-
-                console.log("上传文件格式：", file.type);
-                var flieName = file.name;
-                var fileType = flieName.substring(flieName.lastIndexOf(".") + 1).toLowerCase();
-                console.log(fileType);
-                const isFile = fileType === "docx" || fileType === "doc" || fileType === "rar" || fileType === "zip" || fileType === "xls" || fileType === "xlsx";
-                const isLt30M = file.size / 1024 / 1024 < 30;
-
-                if (!isFile) {
-                    this.$message.error('上传附件只能上传docx、doc、rar、zip、xls、xlsx格式文件');
-                    return isFile;
-                }
-
-                if (!isLt30M) {
-                    this.$message.error("附件总共不能超过30MB!");
-                    return isLt30M;
-                }
-                console.log(file.name)
-                this.$post(this.$apiUrl.upload.upload, param).then(response => {
-                    var obj = {
-                        name: file.name,
-                        url: response.resultData[0].url.concat(file.name)
-                    };
-                    this.fileList.push(obj);
-                });
-                return false; // 返回false不会自动上传
             },
             /**
              * 附件上传事件---结束
