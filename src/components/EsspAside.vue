@@ -10,7 +10,7 @@
                             <p @click="togglechildren(it)" class="someli-p">{{it.menu}}</p>
                             <ul v-if="it.children && it.children.length>0" class="someli-ul">
                                 <li @click="linkto(it,is)" v-if="is.isshow" v-for="(is,j) in it.children" :key="j"
-                                    :class="is.id == active.childrenindex && it.id == active.faterindex?'span-link':''">{{is.menu}}
+                                    :class="routerName == is.name?'span-link':''">{{is.menu}}
                                 </li>
                             </ul>
                         </div>
@@ -65,14 +65,20 @@
             },
             //获取资源
             getRouteInfo() {
-                var navIndex = sessionStorage.getItem("navIndex");
-                var menuList = JSON.parse(sessionStorage.getItem("menuList"));
-                this.asideList = menuList.children[navIndex].children;
-                this.title = menuList.children[navIndex].menu;
+                // 主要是需要延迟跟导航顶部同时获取到数据
+                setTimeout(()=>{
+                    var navIndex = sessionStorage.getItem("navIndex");
+                    console.log("导航索引项",navIndex);
+                    var menuList = JSON.parse(sessionStorage.getItem("menuList"));
+                    this.asideList = menuList.children[navIndex].children;
+                    this.title = menuList.children[navIndex].menu;
+                })
+
                 // //此值变化，表示横向导航一切换，默认左侧第一个可点击菜单入口
                 // this.oldId = this.asideList[0].id;
             },
             linkto(it,is) {
+                console.log(it,is);
                 this.active = {
                     faterindex: it.id,
                     childrenindex: is.id

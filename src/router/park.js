@@ -195,7 +195,7 @@ export const parkRouter1 = {
             path: '/parkHome',
             name: "park-home",
             component: parkHome,
-            
+
         },
         {
 
@@ -213,13 +213,13 @@ export const parkRouter1 = {
             path: '/parkHall/manage/inclusiveFinance',
             name: "park-inclusiveFinance",
             component: inclusiveFinance,
-            
+
         },
         {
             path: '/parkHall/manage/allEnterpriseList',
             name: "park-allEnterpriseList",
             component: allEnterpriseList,
-            
+
         },
         {
             path: '/needHall',
@@ -231,53 +231,53 @@ export const parkRouter1 = {
             path: '/parkTestDemo/iconfontDemo',
             name: 'park-iconfontDemo',
             component: iconfontDemo,
-           
+
         },
 
         {
             path: '/parkIndex/achievement',
             name: "park-achievement",
             component: achievement,
-            
+
         },
         {
             path: '/parkIndex/achievementDetail',
             name: "park-achievementDetail",
             component: achievementDetail,
-            
+
         },
         {
             path: '/parkIndex/experteam',
             name: "park-experteam",
             component: expertList,
-            
+
         },
         {
             path: '/parkIndex/expertDetail',
             name: "park-expertDetail",
             component: expertDetail,
-            
+
         },
         {
             path: '/parkSearch',
             name: 'park-search',
             component: parkSearch,
-           
+
         },
         {
             path: '/parkList',
             name: 'parkList',
             component: parkList,
-            
+
         },
-        
+
         {
             path: '/parkIndex/scanIndex',
             name: "park-scanIndex",
             component: scanIndex,
-            
+
         },
-        
+
         {
             path: '/parkIndex/goverBeneSer',
             name: "park-goverBeneSer",
@@ -288,25 +288,25 @@ export const parkRouter1 = {
                     path: '/parkIndex/goverBene/all',
                     name: 'park-allGoverBene',
                     component: allGoverBene,
-                    
+
                 },
                 {
                     path: '/parkIndex/goverBene/release',
                     name: 'park-releaseGoverBene',
                     component: releaseGoverBene,
-                    
+
                 },
                 {
                     path: '/parkIndex/goverBene/apply',
                     name: 'park-applyGoverBene',
                     component: applyGoverBene,
-                   
+
                 },
                 {
                     path: '/parkIndex/goverBene/follow',
                     name: 'park-followGoverBene',
                     component: followGoverBene,
-                   
+
                 },
                 {
                     path: '/parkIndex/goverBene/draft',
@@ -317,7 +317,7 @@ export const parkRouter1 = {
                     path: '/parkIndex/goverReviewBm',
                     name: "park-goverReviewBm",
                     component: goverReviewBm,
-                    
+
                 }
             ]
         },
@@ -325,7 +325,7 @@ export const parkRouter1 = {
             path: '/parkIndex/publishGover',
             name: "park-publishGover",
             component: publishGover,
-            
+
         },
         {
             path: '/parkIndex/setInstruction',
@@ -336,19 +336,19 @@ export const parkRouter1 = {
             path: '/parkIndex/goverBeneDetail',
             name: 'park-goverBeneDetail',
             component: goverBeneDetail,
-            
+
         },
         {
             path: '/parkIndex/goverEnrollForm',
             name: 'park-goverEnrollForm',
             component: goverEnrollForm,
-            
+
         },
         {
             path: '/parkIndex/goverBmAuditDetail',
             name: 'park-goverBmAuditDetail',
             component: goverBmAuditDetail,
-            
+
         },
         {
             path: '/parkIndex/parkInformation',
@@ -360,32 +360,32 @@ export const parkRouter1 = {
                     path: '/parkIndex/parkInformation/all',
                     name: 'park-allInfo',
                     component: allInfo,
-                    
+
                 },
                 {
                     path: '/parkIndex/parkInformation/myFollowedInfo',
                     name: 'park-myFollowedInfo',
                     component: myFollowedInfo,
-                    
+
                 },
                 {
                     path: '/parkIndex/parkInformation/myPublishedInfo',
                     name: 'park-myPublishedInfo',
                     component: myPublishedInfo,
-                    
+
                 },
                 {
                     path: '/parkIndex/parkInformation/auditing',
                     name: 'park-infoAuditing',
                     component: infoAuditing,
-                    
+
                 },
 
                 {
                     path: '/parkIndex/parkInformation/draftInfo',
                     name: 'park-draftInfo',
                     component: draftInfo,
-                    
+
                 }
 
             ]
@@ -394,19 +394,19 @@ export const parkRouter1 = {
             path: '/parkIndex/infoAuditDetail',
             name: "park-infoAuditDetail",
             component: infoAuditDetail,
-           
+
         },
         {
             path: '/parkIndex/publishNewInfo',
             name: "park-publishNewInfo",
             component: publishNewInfo,
-            
+
         },
         {
             path: '/parkIndex/infoDetail',
             name: "park-infoDetail",
             component: infoDetail,
-            
+
         },
 
         //园区管理---淮安园区
@@ -425,85 +425,85 @@ export const parkRouter1 = {
                     path: '/parkHall/manage/selectModule',
                     name: "park-selectModule",
                     component: selectModule,
-                    
+
                 },
                 {
                     path: '/parkHall/manage/bannerSet',
                     name: "park-bannerSet",
                     component: bannerSet,
-                    
+
                 },
                 {
                     path: '/parkHall/manage/auditSetting',
                     name: "park-auditSetting",
                     component: auditSetting,
-                    
+
                 },
                 {
                     path: '/parkHall/manage/noticeAndAD',
                     name: "park-noticeAndAD",
                     component: noticeAndAD,
-                    
+
                 },
                 {
                     path: '/parkHall/manage/publishAD',
                     name: "park-publishAD",
                     component: publishAD,
-                   
+
                 },
                 {
                     path: '/parkHall/manage/userManage',
                     name: "park-userManage",
                     component: userManage,
-                    
+
                 },
                 {
                     path: '/parkHall/manage/activityPoolAddPark1',
                     name: "park-activityPoolAddPark1",
                     component: activityPoolAddPark1,
-                    
+
                 },
                 {
                     path: '/parkHall/manage/activityPoolZX',
                     name: "park-activityPoolZX",
                     component: activityPoolZX,
-                    
+
                 },
                 {
                     path: '/parkHall/manage/activityPoolGover',
                     name: "park-activityPoolGover",
                     component: activityPoolGover,
-                    
+
                 },
                 {
                     path: '/parkHall/manage/manageGoverAuditing',
                     name: "park-manageGoverAuditing",
                     component: manageGoverAuditing,
-                    
+
                 },
                 {
                     path: '/parkHall/manage/manageGoverAuditingDetail',
                     name: "park-manageGoverAuditingDetail",
                     component: manageGoverAuditingDetail,
-                    
+
                 },
                 {
                     path: '/parkHall/manage/activityPoolActivityAditing1',
                     name: "park-activityPoolActivityAditing1",
                     component: activityPoolActivityAditing1,
-                    
+
                 },
                 {
                     path: '/parkHall/manage/occupancyApplication1',
                     name: "park-occupancyApplication1",
                     component: occupancyApplication1,
-                  
+
                 },
                 {
                     path: '/parkHall/manage/bannerSet2',
                     name: "park-bannerSet2",
                     component: bannerSet2,
-                    
+
                 },
                 {
                     path: "/parkHall/manage/dataManage",
@@ -524,7 +524,7 @@ export const parkRouter1 = {
                     path: '/parkHall/manage/occupancyApplication2',
                     name: "park-occupancyApplication2",
                     component: occupancyApplication2,
-                  
+
                 },
                 //发布管理
                 //科技政策
@@ -629,7 +629,7 @@ export const parkRouter1 = {
                     path: '/parkHall/manage/taskLose',
                     name: "park-taskLose",
                     component: resolve => require(['@/views/parkHall/attrForeInve/enterprise/businessManager/index'], resolve),
-                    
+
                 },
             ]
         },
@@ -676,19 +676,19 @@ export const parkRouter1 = {
             path: '/parkHall/manage/noAndADDetail',
             name: "park-noAndADDetail",
             component: noAndADDetail,
-            
+
         },
         {
             path: '/parkHall/manage/manageZXAuditing',
             name: "park-manageZXAuditing",
             component: manageZXAuditing,
-            
+
         },
         {
             path: '/parkHall/manage/manageZXAuditingDetail',
             name: "park-manageZXAuditingDetail",
             component: manageZXAuditingDetail,
-           
+
         },
         {
             path: '/parkHall/merchants/baseInfo',
@@ -700,25 +700,25 @@ export const parkRouter1 = {
                     path: '/parkHall/merchants/contractsManager',
                     name: "park-contractsManager",
                     component: resolve => require(['@/views/parkHall/attrForeInve/contractsManager/index'], resolve),
-                    
+
                 },
                 {
                     path: '/parkHall/merchants/parkInnovation',
                     name: "park-parkInnovation",
                     component: resolve => require(['@/views/parkHall/attrForeInve/parkInnovation/parkInnovation'], resolve),
-                   
+
                 },
                 {
                     path: '/parkHall/merchants/viewParkInnovation',
                     name: "park-view-innovation",
                     component: resolve => require(['@/views/parkHall/attrForeInve/parkInnovation/parkInnovation'], resolve),
-                    
+
                 },
                 {
                     path: '/parkHall/attrForeInve/departmentInvestment',
                     name: "park-departmentInvestment",
                     component: resolve => require(['@/views/parkHall/attrForeInve/departmentInvestment/index'], resolve),
-                    
+
                 }
             ]
         },
@@ -727,13 +727,13 @@ export const parkRouter1 = {
             path: '/parkHall/attrForeInve/zhaoshangDetail',
             name: "park-zhaoshangDetail",
             component: resolve => require(['@/views/parkHall/attrForeInve/investmentManagement/zhaoshangDetail'], resolve),
-           
+
         },
         {
             path: '/parkHall/merchants/parkIndex/goverBene/all',
             name: "park-processTracking",
             component: resolve => require(['@/views/parkHall/attrForeInve/processTracking/index'], resolve),
-            
+
         },
         {
             path: '/parkHall/merchants/assetManag/projects',
@@ -745,7 +745,7 @@ export const parkRouter1 = {
                     path: '/parkHall/merchants/assetManag/projects',
                     name: "park-projects",
                     component: resolve => require(['@/views/parkHall/property/assetManag/projects'], resolve),
-                    
+
                 }
             ]
         },
@@ -753,16 +753,16 @@ export const parkRouter1 = {
             path: '/parkHall/merchants/assetManag/fangJian',
             name: "park-fangJian",
             component: resolve => require(['@/views/parkHall/property/assetManag/fangJian/index'], resolve),
-           
+
         },
         {
             path: '/parkHall/merchants/assetManag/louDong',
             name: "park-louDong",
             component: resolve => require(['@/views/parkHall/property/assetManag/louDong/index'], resolve),
-           
+
         }
     ]
-  
+
 };
 
 
