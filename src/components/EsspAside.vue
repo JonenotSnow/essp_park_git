@@ -10,7 +10,17 @@
                             <p @click="togglechildren(it)" class="someli-p">{{it.menu}}</p>
                             <ul v-if="it.children && it.children.length>0" class="someli-ul">
                                 <li @click="linkto(it,is)" v-if="is.isshow" v-for="(is,j) in it.children" :key="j"
-                                    :class="is.id == active.childrenindex && it.id == active.faterindex?'span-link':''">{{is.menu}}
+                                    :class="routerName == is.name?'span-link':''">
+                                    <!--<span v-if="is.children && is.children.length>0" v-for="(item,index) in is.children">-->
+                                        <!--<em v-if="routerName == item.name?'span-link':''">{{is.menu}}</em>-->
+                                    <!--</span>-->
+                                    <!--<span v-else>{{is.menu}}</span>-->
+                                    <!--{{is.children.length}}{{is.menu}}-->
+                                    <span v-if="is.children.length > 0" v-for="(item,index) in is.children" :class="routerName == item.name?'span-link':''">
+                                         <span v-if="index == 0">{{is.menu}}</span>
+                                    </span>
+                                    <span v-if="is.children.length == 0">{{is.menu}}</span>
+
                                 </li>
                             </ul>
                         </div>
@@ -65,14 +75,20 @@
             },
             //获取资源
             getRouteInfo() {
-                var navIndex = sessionStorage.getItem("navIndex");
-                var menuList = JSON.parse(sessionStorage.getItem("menuList"));
-                this.asideList = menuList.children[navIndex].children;
-                this.title = menuList.children[navIndex].menu;
+                // 主要是需要延迟跟导航顶部同时获取到数据
+                setTimeout(()=>{
+                    var navIndex = sessionStorage.getItem("navIndex");
+                    console.log("导航索引项",navIndex);
+                    var menuList = JSON.parse(sessionStorage.getItem("menuList"));
+                    this.asideList = menuList.children[navIndex].children;
+                    this.title = menuList.children[navIndex].menu;
+                })
+
                 // //此值变化，表示横向导航一切换，默认左侧第一个可点击菜单入口
                 // this.oldId = this.asideList[0].id;
             },
             linkto(it,is) {
+                console.log(it,is);
                 this.active = {
                     faterindex: it.id,
                     childrenindex: is.id
@@ -166,7 +182,8 @@
                                 cursor: pointer;
                                 text-indent: 18px;
                                 margin: 0 9px;
-                                &.span-link {
+                                &.span-link, span.span-link{
+                                    display: block;
                                     background-color: #409eff;
                                     background-image: linear-gradient(21deg, #22a2fa 0%, #10b5ff 100%), linear-gradient(#00a0e9, #00a0e9);
                                     border-radius: 3px;
@@ -228,7 +245,8 @@
                                 cursor: pointer;
                                 text-indent: 18px;
                                 margin: 0 9px;
-                                &.span-link {
+                                &.span-link, span.span-link {
+                                    display: block;
                                     background-color: #409eff;
                                     background-image: linear-gradient(21deg, #22a2fa 0%, #10b5ff 100%), linear-gradient(#00a0e9, #00a0e9);
                                     border-radius: 3px;
@@ -272,7 +290,8 @@
                                 cursor: pointer;
                                 text-indent: 18px;
                                 margin: 0 9px;
-                                &.span-link {
+                                &.span-link,span.span-link {
+                                    display: block;
                                     background-color: #409eff;
                                     background-image: linear-gradient(21deg, #22a2fa 0%, #10b5ff 100%), linear-gradient(#00a0e9, #00a0e9);
                                     border-radius: 3px;
