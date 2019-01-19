@@ -1,10 +1,3 @@
-<!--
- * @Author: Evan-lian
- * @Date: 2019-01-07 16:14:17
- * @LastEditors: Evan-lian
- * @LastEditTime: 2019-01-10 18:33:28
- * @Description: 发布新闻
- -->
 <template>
     <div class="sponsorcon">
         <!-- 发布新资讯 -->
@@ -102,27 +95,28 @@
             >提&nbsp;&nbsp;&nbsp;&nbsp;交
             </el-button>
         </div>
-        <el-dialog title="资讯发布预览功能（仅提供预览功能）" :visible.sync="infoDialog" width="90%">
-            <div class="inlookInfo">
-                <h2 class="inlookTit">{{informationTitle}}</h2>
-                <div class="newstatus esspclearfix">
-          <span class="statusitemsA">
-            <label>发布时间 :</label>
-            <span>{{createTime | timerFormat(createTime)}}</span>
-          </span>
-                    <span class="statusitemsB">
-            <label>发布机构 :</label>
-            <span>{{cstNm}}</span>
-          </span>
+
+
+        <!-- 预览弹窗start -->
+        <el-dialog
+            class="my-scan-dialog"
+            :visible.sync="dialogVisible"
+            width="1200px"
+            :before-close="handleClose"
+        >
+            <div class="my-scan-main">
+                <div class="main-head" v-if="informationTitle">
+                    <div class="head-title">{{informationTitle}}</div>
+                    <div class="head-tag" v-if="tags && tags.length > 0">
+                        <span v-for="(item, index) in tags" :key="index">{{item}}</span>
+                    </div>
                 </div>
-                <div class="inlookContent">
-                    <div v-html="this.content"></div>
+                <div class="main-body">
+                    <div v-html="content"></div>
                 </div>
             </div>
-            <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="infoDialog = false">确 定</el-button>
-      </span>
         </el-dialog>
+        <!-- 预览弹窗end -->
     </div>
 </template>
 
@@ -159,7 +153,7 @@
                 ],
                 initiatorWay: "",
                 typeitems: [], //类型明细
-                infoDialog: false,
+
                 editorOption: {
                     placeholder: `请您编辑新闻动态内容`,
                     modules: {
@@ -205,7 +199,10 @@
                     entId: ""
                 },
                 createTime: "",
-                cstNm: ""
+                cstNm: "",
+
+                // 预览事件相关字段
+                dialogVisible: false
             };
         },
         components: {
@@ -228,13 +225,17 @@
             showImgUrl(url) {
                 this.parkUploadData.src = url;
             },
-            //资讯预览功能
-            infoPrint() {
-                if (this.checkLookInfo()) {
-                    this.infoDialog = true;
-                    this.createTime = new Date();
-                }
+
+            // 预览事件---开始
+            handleScan() {
+                this.dialogVisible = true;
             },
+            // 跳转出新窗口，看上传的附件
+            linkToFile(url) {
+                window.open(url)
+            },
+            // 预览事件---结束
+
             //限制预览功能的触发条件
             checkLookInfo() {
                 if (this.informationTitle == "") {
@@ -634,6 +635,78 @@
     .border-top {
         border-top: 1px solid #ccc;
         padding: 25px 55px 0;
+    }
+
+
+    /*预览样式*/
+    .my-scan-dialog {
+        .my-scan-main {
+            .main-head {
+                .head-title {
+                    height: 25px;
+                    line-height: 25px;
+                    text-align: center;
+                    font-size: 24px;
+                    font-weight: normal;
+                    font-stretch: normal;
+                    letter-spacing: 0px;
+                    color: #333;
+                }
+                .head-info {
+                    margin-top: 35px;
+                    text-align: center;
+                    .info-p {
+                        display: inline-block;
+                        font-size: 12px;
+                        font-weight: normal;
+                        font-stretch: normal;
+                        letter-spacing: 0px;
+                        color: #999;
+                    }
+                    .release-time {
+                        margin-right: 38px;
+                    }
+                }
+
+                .head-tag {
+                    margin-top: 30px;
+                    text-align: center;
+                    span {
+                        margin-right: 20px;
+                        padding: 5px 8px;
+                        width: 40px;
+                        color: #fff;
+                        background-color: #cccccc;
+                    }
+                }
+            }
+            .main-body {
+                padding: 40px 50px 0;
+            }
+            .main-foot {
+                padding: 60px 50px 0;
+                .attachment-p {
+                    font-size: 16px;
+                    font-weight: normal;
+                    font-stretch: normal;
+                    line-height: 30px;
+                    letter-spacing: 0px;
+                    color: #666666;
+                }
+                .attachment-title {
+
+                }
+                .attachment-main {
+                    text-indent: 1rem;
+                    a {
+                        &:hover {
+                            color: #00a0e9;
+                            cursor: pointer;
+                        }
+                    }
+                }
+            }
+        }
     }
 </style>
 
