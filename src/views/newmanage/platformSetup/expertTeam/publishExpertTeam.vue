@@ -677,7 +677,7 @@
                     top: 0;
                     width: 198px;
                     height: 140px;
-                    padding: 0 5px;
+                    padding: 0;
                     border-radius: 3px;
                     i {
                         display: block;
