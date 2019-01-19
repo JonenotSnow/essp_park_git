@@ -34,7 +34,7 @@
                    v-for="(item, index) in fileList"
                    :key="index"
                 >
-                    <a @click="linkToFile(item.url)">·附件{{index+1}}：{{item.name}}</a>
+                    <a :href="item.url" :download="item.name">·附件{{index+1}}：{{item.name}}</a>
                 </p>
             </div>
         </div>
