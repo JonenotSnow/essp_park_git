@@ -74,8 +74,8 @@
                     <div class="tabletit">
                         <p class="title_p">请添加合适该企业的标签，可多选</p>
                     </div>
-                    <div class="yList" v-if="TJTagList && TJTagList.length>0" >
-                        <el-tag :key="it.lblId" v-for="it in TJTagList" @click.native="addTagToL(it)">{{it.lblTxt}}</el-tag>
+                    <div class="yList">
+                        <el-tag v-if="TJTagList && TJTagList.length>0" :key="it.lblId" v-for="it in TJTagList" @click.native="addTagToL(it)">{{it.lblTxt}}</el-tag>
                     </div>
                     <div class="relist">
                         <el-tag :key="tag" v-for="tag in forTagList" closable :disable-transitions="false" @close="handleClose(tag)">{{tag}}</el-tag>
@@ -227,7 +227,7 @@ export default {
             this.curCasId = casId;
             this.forTagList = [];
             this.findEntityTags();
-            // this.selectLblInfo();
+            this.selectLblInfo();
         },
         //企业已有标签
         findEntityTags(){
@@ -238,7 +238,7 @@ export default {
                 .then((response) => {
                     this.dynamicTags =response.resultData.lblInfo;
 
-                    if (this.dynamicTags && this.dynamicTags.length>0) {
+                    if (this.dynamicTags.length>0) {
                         this.dynamicTags.map(x=>{
                             this.forTagList.push(x.lblTxt)
                         })
@@ -252,7 +252,7 @@ export default {
                     lblTpCd : '3000001'
                 })
                 .then((response) => {
-                    this.TJTagList =response.resultData.lblInfo;
+                    this.TJTagList =response.resultData.lblInfo
                 })
         },
         //全局推荐标签
