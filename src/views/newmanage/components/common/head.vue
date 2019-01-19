@@ -69,7 +69,7 @@
                     this.$message.error("请输入搜索关键字！");
                     return;
                 }
-                this.$emit("f", this.searchContent);
+                this.$emit("seachConFn", this.searchContent);
             },
             // 发布跳转
             getPageType() {

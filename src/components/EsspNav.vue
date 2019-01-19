@@ -76,6 +76,7 @@
                         }
                     }
                 }
+                console.log("导航索引",this.active);
                 sessionStorage.setItem('navIndex',this.active);
             },
             toLink(item,index) {

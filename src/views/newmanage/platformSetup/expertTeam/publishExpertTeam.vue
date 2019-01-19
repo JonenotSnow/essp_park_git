@@ -258,7 +258,8 @@
                     this.$message.error("请填写姓名！");
                     return flag = false;
                 }
-                if (this.submitUploadInfo.name.length > 7) {
+                console.log(this.submitUploadInfo.name.length);
+                if (this.submitUploadInfo.name.length >= 7) {
                     this.$message.error("您的姓名不能超过6个字！");
                     return flag = false;
                 }
