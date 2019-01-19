@@ -27,10 +27,8 @@
                     />
                 </el-form-item>
                 <el-form-item label="政策法规详情：" prop="infoDetail" class="my-detail-edit">
-                    <div class="my-quill-edit-wrap">
-                        <quill-editor v-model="ruleForm.infoDetail" :options="editorOption">
-                            <div id="toolbar" slot="toolbar"></div>
-                        </quill-editor>
+                    <div class="edit_wrap">
+                        <essp-editor :editorCont="ruleForm.infoDetail" @onEditorChange="onEditorChange"></essp-editor>
                     </div>
                 </el-form-item>
                 <el-form-item label="政策法规标签：">
@@ -46,7 +44,7 @@
                     </div>
                     <essp-tag @showtag="closetag" :centerDialogVisible="visible" :tagprops="tagprops"></essp-tag>
                 </el-form-item>
-                <el-form-item label="发布人：">
+                <el-form-item label="发布人：" v-if="userInfo">
                     {{userInfo.truename}}
                 </el-form-item>
                 <el-form-item>
@@ -104,10 +102,8 @@
                     />
                 </el-form-item>
                 <el-form-item label="科技服务详情：" prop="infoDetail" class="my-detail-edit">
-                    <div class="my-quill-edit-wrap">
-                        <quill-editor v-model="ruleForm.infoDetail" :options="editorOption">
-                            <div id="toolbar" slot="toolbar"></div>
-                        </quill-editor>
+                    <div class="edit_wrap">
+                        <essp-editor :editorCont="ruleForm.infoDetail" @onEditorChange="onEditorChange"></essp-editor>
                     </div>
                 </el-form-item>
                 <el-form-item label="科技服务标签：">
@@ -188,19 +184,14 @@
     import EsspBreadCrumb from "@/components/EsspBreadCrumb";
     import EsspTag from "@/components/EsspTag";
     import EsspAddTag from "@/components/EsspAddTag";
-
-    // 编辑器
-    import "quill/dist/quill.core.css";
-    import "quill/dist/quill.snow.css";
-    import "quill/dist/quill.bubble.css";
-    import {quillEditor} from "vue-quill-editor";
+    import EsspEditor from "@/components/EsspEditor";
 
     export default {
         components: {
             EsspBreadCrumb,
             EsspTag,
             EsspAddTag,
-            quillEditor
+            EsspEditor
         },
         data() {
             return {
@@ -301,6 +292,10 @@
             }
         },
         methods: {
+            // 编辑器的值获取
+            onEditorChange(val) {
+                this.ruleForm.infoDetail = val;
+            },
             /**
              * 标签相关字段---开始
              *  */
@@ -558,8 +553,19 @@
         },
     }
 </script>
-
+<style>
+    .my-detail-edit .el-form-item__content {
+        line-height: normal;
+    }
+</style>
 <style lang='less' scoped>
+    .edit_wrap  {
+        float: left;
+        margin-left: 8px;
+        width: 720px;
+        min-height: 400px;
+        border-radius: 3px;
+    }
     .publish-sciAnd-tech-policy-wrap {
         width: 1200px;
         background: #fff;
@@ -605,16 +611,6 @@
                 }
             }
 
-            .my-detail-edit {
-                .my-quill-edit-wrap {
-                    width: 825px;
-                    height: 360px;
-                    .quill-editor {
-                        height: 70%;
-                    }
-
-                }
-            }
 
             .inline_div_tag {
                 /*border: 1px solid red;*/

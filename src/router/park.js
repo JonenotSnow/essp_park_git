@@ -238,7 +238,6 @@ export const parkRouter1 = {
             path: '/parkIndex/achievement',
             name: "park-achievement",
             component: achievement,
-
         },
         {
             path: '/parkIndex/achievementDetail',
