@@ -161,7 +161,7 @@ async function getParkByName(name='bdPark2018') {
 
 async function getLoginUserRole(options) {
     var urlapi = apiUrl.home.getLoginUserRole;
-    var pop = {flag: options.parkId,park:sessionStorageHandler.getItem('parkId')};
+    var pop = {flag: options.parkId,parkId:sessionStorageHandler.getItem('parkId')};
     await post(urlapi, pop).then(
         response => {
             if (response.resultCode == "CLT000000000") {

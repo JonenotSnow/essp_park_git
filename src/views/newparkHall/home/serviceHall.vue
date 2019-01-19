@@ -72,7 +72,7 @@ export default {
                     btn_r:{
                         showFlag:true,
                         isRouerPush:true,
-                        path:'/officeHall/techContractRegistration'
+                        path:'/sciIndex/sciAndTechService/techContractRegistration'
                     }
                    }
                 ]
