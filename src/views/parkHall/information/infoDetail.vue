@@ -296,7 +296,6 @@
 
 <style scoped lang="less">
     @import "../../../assets/css/mixin";
-
     .jbnc {
         .essp_width_auto();
         height: 32px;
@@ -354,8 +353,7 @@
     .tagscon {
         .essp_width_auto();
         background: #fff;
-        border-bottom: 1px solid #ccc;
-        margin-bottom: 10px;
+        margin-bottom: 0;
         .tags_con {
             padding: 30px 5%;
             overflow: hidden;
@@ -434,10 +432,10 @@
     .infoDetail {
         .essp_width_auto();
         background: #fff;
-        padding: 34px 0px 38px;
+        padding: 34px 0px 0;
         line-height: 30px;
         text-indent: 2em;
-        border-bottom: 1px solid #ccc;
+        /*border-bottom: 1px solid #ccc;*/
         .content_p {
             padding: 0px 50px;
         }

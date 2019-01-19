@@ -1,6 +1,12 @@
 <template>
     <div class="essp-card-cont-inner esspclearfix">
-        <!-- 全部资讯/关注资讯/审核资讯页 模版-->
+        <!-- 新闻模块---模版-->
+        <div class="descontool">
+            <p>
+                <span class="descontool__tag"></span>
+                <span class="descontool__title">{{temeTitle}}</span>
+            </p>
+        </div>
         <div v-if="mcCardList && mcCardList.length>0">
             <div class="essp-card" v-for="(item, mcCardIndex) in mcCardList" :key="mcCardIndex">
                 <div class="cont-img" @click="goinfoDetail(item)">
@@ -24,22 +30,25 @@
 
                         </div>
                         <div class="cont-detail-r">
-                            <div class="btncon" v-if="chilrPageType=='allInfos'">
+                            <div class="btncon" v-if="chilrPageType=='getAllInformation'">
                                 <el-button type="primary" size="mini" round  @click="goinfoDetail(item)">查看详情</el-button>
                             </div>
-                            <div class="btncon" v-if="chilrPageType=='followInfo'">
+                            <div class="btncon" v-if="chilrPageType=='actAll'">
                                 <el-button type="info"  size="mini" round  @click="showDialog(item)">取消关注</el-button>
                             </div>
                         </div>
                     </div>
-
-
                 </div>
             </div>
         </div>
-        <div v-else>
-            <div style="text-align: center">暂无数据</div>
+        <div v-else class="noDataInfo">
+        <div class="no-list-pic">
+            <img src="@/assets/newparkimg/no-list-img.png" alt="">
+            <div class="no-list-desc">
+                暂无数据
+            </div>
         </div>
+    </div>
 
         <!-- 关注事件对话框start -->
         <el-dialog class="quguanbox"
@@ -71,7 +80,10 @@
                 type: Array,
                 default: []
             },
-            chilrPageType:{
+            chilrPageType: {
+                type: String
+            },
+            temeTitle: {
                 type: String
             }
         },
@@ -162,51 +174,18 @@
                     }
                 );
             },
-
-            // upDatefollowStatus(item){
-            //     var pop ={followId:item.followId}
-            //     var url =this.$apiUrl.parkInfo.delMyFocus;
-            //     var successMsg ="取消关注成功";
-            //     var failMsg = "取消关注失败";
-            //     var tpl = "此操作取消关注该资讯, 是否继续?";
-            //     var tplTitle = "温馨提示"
-            //     this.$confirm(tpl, tplTitle, {
-            //         confirmButtonText: '确定',
-            //         cancelButtonText: '取消',
-            //         type: 'warning'
-            //     }).then(() => {
-            //         this.$post(url,pop)
-            //         .then((response) => {
-            //              var codestatus = response.resultCode;
-            //              if(codestatus=="CLT000000000"){
-            //                 this.$message.success(successMsg);
-            //                 this.$router.go(0);
-            //              }else{
-            //                 this.$message.error(failMsg+response.resultMsg);
-            //              }
-            //         },(err)=>{
-            //            this.$message.error("接口异常");
-            //         })
-            //     }).catch(() => {
-            //         this.$message.info("已取消操作")
-            //     });
-            //
-            // },
-
             goinfoDetail(item){
                 var informationId = item.informationId;
-                this.$router.push({path:'/parkIndex/infoDetail',query: {informationId: informationId}})
+                this.$router.push({
+                    path:'/news/newsdetail',
+                    query: {informationId: informationId}
+                })
             },
             //图片失败设置默认图
             setDefaultImg (event){
                 var ele = event.currentTarget;
                 ele.src = imgfault;
                 ele.title = "默认配图";
-            },
-            toLink() {
-                var type = this.types;
-                var url = '/parkIndex/parkInformation/infoDetail';
-                this.$router.push(url)
             }
 
         }
@@ -215,6 +194,16 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
+    .noDataInfo {
+        margin-top: 100px;
+        margin-bottom: 50px;
+        text-align: center;
+        .no-list-pic {
+            padding-left: 262px;
+            width: 245px;
+            height: 189px;
+        }
+    }
     .address_p {
         width: 94%;
         overflow: hidden;
@@ -227,7 +216,7 @@
     .essp-card-cont-inner {
         float: left;
         width: 726px;
-        padding: 20px 20px 0;
+        /*padding: 20px 20px 0;*/
         background: #fff;
         .cont-detail-l {
             float:left;
@@ -389,6 +378,36 @@
                     -webkit-box-orient: vertical;
                 }
 
+            }
+        }
+    }
+    .descontool {
+        height: 59px;
+        line-height: 100px;
+        border-bottom: 1px solid #ccc;
+        p {
+            margin-top: 40px;
+            margin-left: 40px;
+            height: 30px;
+            line-height: 30px;
+            span {
+                display: inline-block;
+            }
+            .descontool__tag {
+                width: 8px;
+                height: 30px;
+                background-color: #10b5ff;
+            }
+            .descontool__title {
+                margin-left: 22px;
+                height: 30px;
+                line-height: 30px;
+                vertical-align: top;
+                font-size: 18px;
+                font-weight: 500;
+                font-stretch: normal;
+                letter-spacing: 3.6px;
+                color: #333;
             }
         }
     }

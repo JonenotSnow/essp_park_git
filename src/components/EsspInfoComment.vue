@@ -50,10 +50,10 @@
                                     <span class="re_reUserName">{{item.state == "1"? "匿名" : it.reUserName}}</span>
                                 </div>
                                 <div class="replytext">{{it.content}}</div>
-                                <div class="replytool esspclearfix">
+                                <div class="replytool esspclearfix"  v-if="userInfo">
                                     <div class="relytoolleft">
                                         <em class="replytimeicon">{{it.createTime | timerFormat(it.createTime)}}</em>
-                                        <span style="padding-left: 10px;" v-if="userInfo.userrole == '33' || userInfo.userrole == '34' || it.userId == userInfo.id" @click="delReply(it,item,index,indexChild)">删除</span>
+                                        <span style="padding-left: 10px;" v-if="userrole == '33' || userrole == '34' || it.userId == userInfo.id" @click="delReply(it,item,index,indexChild)">删除</span>
                                         <span @click="tipOffFn(5,it.id,it.content,it.cstNm,it.usrNm)" v-if="it.userId != userInfo.id">举报</span>
                                     </div>
                                 </div>
@@ -65,15 +65,15 @@
                             <div class="abouttool-left">
                                 <em class="timeicon">{{item.createTime | timerFormat(item.createTime)}}</em>
                             </div>
-                            <div class="abouttool-right">
+                            <div class="abouttool-right" v-if="userInfo">
                                 <el-dropdown @command="handleCommand">
-                                <span class="el-dropdown-link">
-                                     <i class="el-icon-more"></i>
-                                </span>
+                                    <span class="el-dropdown-link">
+                                         <i class="el-icon-more"></i>
+                                    </span>
                                     <el-dropdown-menu slot="dropdown">
                                         <el-dropdown-item :command="{item,keyindex:0}">回复</el-dropdown-item>
                                         <el-dropdown-item :command="{item,keyindex:1,index:index}"
-                                                          v-if="userInfo.userrole == '33' || userInfo.userrole == '34' || item.userId == userInfo.id">删除
+                                                          v-if="userrole == '33' || userrole == '34' || item.userId == userInfo.id">删除
                                         </el-dropdown-item>
                                         <el-dropdown-item :command="{item,keyindex:2}" v-if="item.userId != userInfo.id">举报</el-dropdown-item>
                                     </el-dropdown-menu>
@@ -124,6 +124,7 @@
                 pageSize: 5,//每页条数
                 allTotal: 0,//总条数
                 userInfo: {},
+                userrole: this.userInfo ? this.userInfo.userrole : '11'
             }
         },
         props:[
@@ -133,6 +134,7 @@
         computed: {},
         created() {
             this.userInfo = this.SSH.getItem('userInfo');
+            console.log( this.userInfo);
             this.getCnt();
         },
         methods: {

@@ -80,7 +80,7 @@
                         ></el-option>
                     </el-select>
                 </div>
-            <div class="tdcon" v-if="isCharge == '1'">
+                <div class="tdcon" v-if="isCharge == '1'">
           <span class="inline_span">
             <i class="imicon">*</i>收费说明 :
           </span>
@@ -108,7 +108,13 @@
             <i class="imicon">*</i>活动详情：
           </span>
                     <div class="inline-box wraps">
-                        <essp-editor :editorCont="editorOption.editorCon" @onEditorChange="onEditorChange"></essp-editor>
+                        <quill-editor
+                            ref="myTextEditor"
+                            v-model="editorOption.editorCon"
+                            :options="editorOption"
+                        >
+                            <div id="toolbar" slot="toolbar"></div>
+                        </quill-editor>
                     </div>
                 </div>
                 <ParkUpload :parkUploadData="parkUploadData" @changeImgUrl="showImgUrl"></ParkUpload>
@@ -661,15 +667,20 @@
     import EsspEditor from "@/components/EsspEditor";
     import addTag from "@/views/commonComponents/commonActivity/addTag";
     import Moment from "moment";
+    import EsspTag from "@/components/EsspTag";
     import EsspAddTag from "@/components/EsspAddTag";
     import ParkUpload from "@/views/parkHall/parkUpload"; // 上传图片控件
+
+    import "quill/dist/quill.core.css";
+    import "quill/dist/quill.snow.css";
+    import "quill/dist/quill.bubble.css";
+    import {quillEditor} from "vue-quill-editor";
 
     export default {
         name: "",
         data() {
             return {
                 isBdPark: this.utils.isBdPark(),
-                domain: window.location.pathname, // 区分前缀
                 databox: [],
                 parkUploadData: {
                     title: "活动宣传图/海报:",
@@ -943,8 +954,10 @@
             EsspBreadCrumb,
             addTag,
             EsspEditor,
+            EsspTag,
             EsspAddTag,
-            ParkUpload
+            ParkUpload,
+            quillEditor
         },
         created() {
             this.uploads = this.$apiUrl.upload.upload;
@@ -956,18 +969,14 @@
             this.objListName(); // 邀请对象
             this.getBaomingType(this.enterType); //设置默认报名表样式
 
-             if(this.isBdPark){
-                 this.parkFlag = false;
+            if(this.isBdPark){
+                this.parkFlag = false;
 
-             }
+            }
 
         },
 
         methods: {
-            // 编辑器的值获取
-            onEditorChange(val) {
-                this.editorOption.editorCon = val;
-            },
             // 改变图片路径
             showImgUrl(url) {
                 this.activityPhoto = url;
@@ -1568,8 +1577,7 @@
                             invitings: this.t_concatvalue.join(","),
                             needCompanyAudit: this.needCompanyAudit,
                             activityRemarks: this.activityRemarks, //活动备注
-                            status: type,
-                            domain: this.domain+'#'
+                            status: type
                         }).then(
                             response => {
                                 if (response.resultCode == "CLT000000000") {

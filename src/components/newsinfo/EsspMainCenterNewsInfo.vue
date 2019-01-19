@@ -177,7 +177,7 @@
                     var codestatus = response.resultCode;
                     if(codestatus=="CLT000000000"){
                         this.mcCardDataList = response.resultData.informationList;//数据源
-                        console.log(this.mcCardDataList)
+                            console.log(this.mcCardDataList)
                         this.allTotal = response.resultData.total;//总条数
                     }else{
                         this.$message.info(response.resultMsg);

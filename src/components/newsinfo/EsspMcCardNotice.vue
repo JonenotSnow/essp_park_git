@@ -19,10 +19,14 @@
                 </div>
             <!-- </div>  -->
             </div>
-        </div>        
-        <div class="no_list" v-else>
-            <span class="tipspan">暂无数据，敬请期待</span>
-            <img src="/static/img/noting.cf770e6.png"> 
+        </div>
+        <div v-else class="noDataInfo">
+            <div class="no-list-pic">
+                <img src="@/assets/newparkimg/no-list-img.png" alt="">
+                <div class="no-list-desc">
+                    暂无数据
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -65,7 +69,16 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
     @import "../../assets/css/mixin";
-
+    .noDataInfo {
+        margin-top: 100px;
+        margin-bottom: 50px;
+        text-align: center;
+        .no-list-pic {
+            padding-left: 262px;
+            width: 245px;
+            height: 189px;
+        }
+    }
     button:focus {
         outline: 0;
     }
@@ -160,7 +173,7 @@
         }
         .no_list{
             text-align: center;
-            .tipspan{ 
+            .tipspan{
                 display: block;
                 font-family: MicrosoftYaHei;
                 color: #666666;
