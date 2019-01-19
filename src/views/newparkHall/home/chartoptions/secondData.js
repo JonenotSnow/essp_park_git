@@ -6,7 +6,7 @@ export let data1 = {
             color:"#10b5ff",
             fontWeight:'normal'
         },
-        padding:[15, 0, 0, 25 ]
+        padding:[15, 0, 0, 55 ]
     },
     tooltip: {
         trigger: 'axis'
@@ -30,6 +30,9 @@ export let data1 = {
                     color: '#CECECE'
                 }
             }
+    },
+    grid:{
+        left:'15%'
     },
     series: [{
         name: '',

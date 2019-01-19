@@ -7,7 +7,7 @@
                 color:"#10b5ff",
                 fontWeight:'normal'
             },
-            padding:[15, 0, 0, 25 ]
+            padding:[15, 0, 0, 55 ]
         },
         tooltip : {
             trigger: 'axis'
@@ -37,6 +37,9 @@
                 }
             }
         ],
+        grid:{
+            left:'15%'
+        },
         series : [
             {
                 name:'',

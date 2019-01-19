@@ -336,11 +336,10 @@ const utils = {
     logoutDelSSH: async function (val) {
         if (val == 401) {
             let parkLabel = SSH.getItem('bdParkId')
-            let currentUrl = location.href
-            let hasParams = currentUrl.indexOf('?')>-1
-            parkLabel = hasParams?'&label='+parkLabel:'?label='+parkLabel
+            let currentUrl = ''
             utils.delSSH();
-            window.location.href = Vue.$openUrl +'/userIndex/login?+returnUrl='+encodeURIComponent(currentUrl + parkLabel);
+            currentUrl = utils.setUrlParams({label:parkLabel,chennel:'PARK'})
+            window.location.href = Vue.prototype.$openUrl +'/userIndex/login?+returnUrl='+encodeURIComponent(currentUrl);
     
         } else if (router.currentRoute.name != 'login' && SSH.getItem('token')) {
             await del(apiUrl.user.getLogoutUrl, {
