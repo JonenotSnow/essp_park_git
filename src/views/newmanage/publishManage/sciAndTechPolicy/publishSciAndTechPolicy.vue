@@ -619,7 +619,7 @@
             .inline_div_tag {
                 /*border: 1px solid red;*/
                 float: left;
-                width: 40%;
+                /*width: 40%;*/
                 line-height: 40px;
             }
             .upload-demo {
