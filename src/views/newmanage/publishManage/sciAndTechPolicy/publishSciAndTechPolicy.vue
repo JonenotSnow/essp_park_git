@@ -245,6 +245,13 @@
                     infoDetail: '',
                     tags: []
                 },
+
+                // 编辑器提示语
+                editorOption: {
+                    placeholder: "请输入模板内容",
+                    theme: "snow"
+                },
+
                 rules_01: {
                     policyTitle: [
                         {required: true, message: '请输入政策法规标题', trigger: 'blur'},
@@ -305,7 +312,7 @@
                 this.visible = true;
             },
             delTag(tag) {
-                this.ruleForm.tags.splice(this.tags.indexOf(tag), 1);
+                this.ruleForm.tags.splice(this.ruleForm.tags.indexOf(tag), 1);
             },
             initTag(tmpTags) {
                 this.ruleForm.tags = tmpTags;
@@ -342,13 +349,21 @@
                             let codestatus = response.resultCode;
                             if (codestatus == "CLT000000000") {
                                 if (this.applyType === '01') {
-                                    this.$message.success("创建政策法规成功！");
+                                    if (this.id) {
+                                        this.$message.success("政策法规修改成功！");
+                                    } else {
+                                        this.$message.success("创建政策法规成功！");
+                                    }
                                     this.$router.push({
                                         path: '/parkHall/manage/sciAndTechPolicy/policieAndRegulation'
                                     });
                                 }
                                 if (this.applyType === '02') {
-                                    this.$message.success("创建科技服务成功！");
+                                    if (this.id) {
+                                        this.$message.success("科技服务修改成功！");
+                                    } else {
+                                        this.$message.success("创建科技服务成功！");
+                                    }
                                     this.$router.push({
                                         path: '/parkHall/manage/sciAndTechPolicy/sciAndTechService'
                                     });
@@ -435,11 +450,15 @@
                 this.$post("/policy/getPolById", params).then(response => {
                     let codestatus = response.resultCode;
                     if (codestatus == "CLT000000000") {
+
                         this.ruleForm = response.resultData;
 
+                        // 删除时间“createTime”这个字段
+                        delete this.ruleForm.createTime;
+
                         // 处理标签
-                        if (this.ruleForm.tagsTxt) {
-                            this.ruleForm.tags = this.ruleForm.tagsTxt.split(",");
+                        if (response.resultData.tagsTxt) {
+                            this.ruleForm.tags = response.resultData.tagsTxt.split(",");
                         } else {
                             this.ruleForm.tags = [];
                         }
@@ -491,7 +510,7 @@
                     return isFile;
                 }
                 if (!isLt5M) {
-                    this.$message.error("上传文件大小不能超过 5MB!");
+                    this.$message.error("上传文件大小不能超过5MB!");
                     return isLt5M;
                 }
 
