@@ -13,12 +13,6 @@
                     <h5 @click="goinfoDetail(item)">{{item.informationTitle}}</h5>
                     <div class="esspclearfix">
                         <div class="cont-detail-l">
-                            <!--<p class="detail-tag">-->
-                                <!--<el-tag class="it_tag"-->
-                                        <!--v-for="(it, tagIndex) in activityLabelList[mcCardIndex]" v-if="tagIndex<3" :key="tagIndex">-->
-                                    <!--{{it}}-->
-                                <!--</el-tag>-->
-                            <!--</p>-->
                             <p class="introduction">
                                 {{item.content}}
                             </p>

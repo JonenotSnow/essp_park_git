@@ -41,7 +41,6 @@
 
     export default {
         data() {
-            let info = this.$route.query.info
             return {
                 breadlist: [
                     {
@@ -57,9 +56,10 @@
                         name: "通知公告详情"
                     }
                 ],
-                info: info,
-                tags: info.tagsTxt || [],//["新闻","新闻热点","人民英雄纪念碑"]
-                mockdetalhtml: info.infoDetail || '' //"<p style='color:red'>全是通知公告的mock详情数据</p>"
+                info: {},
+                informationId: this.$route.query.informationId || '',  // 新闻id
+                tags:  [],//["新闻","新闻热点","人民英雄纪念碑"]
+                mockdetalhtml: '' //"<p style='color:red'>全是通知公告的mock详情数据</p>"
             }
         },
         components: {
@@ -67,7 +67,7 @@
             EsspInfoComment
         },
         created() {
-
+            this.getInfoById();
         },
         computed: {},
         filters: {
@@ -77,11 +77,13 @@
         },
         methods: {
             getInfoById(){
-                this.$post(this.$apiUrl.active.getLogo, {
-                    cstId: this.activeDetailData.cstId
+                this.$post(this.$apiUrl.newsinfo.getInfoById,{
+                    informationId: this.informationId
                 }).then((response) => {
-                    this.logo = response.resultData.logo;
 
+                        this.info = response.resultData;
+                        this.tags = this.info.tagsTxt || [];
+                        this.mockdetalhtml = this.info.infoDetail;
                 });
             }
         }
@@ -137,7 +139,7 @@
             }
             .statusitemsC {
                 float: left;
-                width: 40%;
+                width: 28%;
                 font-size: 14px;
                 line-height: 25px;
                 color: #999;

@@ -7,7 +7,7 @@
  -->
 <template>
  <div>
-<EsspMainCenterNewsInfo :pageType="aipStyle" :temeTitle="temeTitle"></EsspMainCenterNewsInfo>
+    <EsspMainCenterNewsInfo :pageType="aipStyle" :temeTitle="temeTitle"></EsspMainCenterNewsInfo>
  </div>
 </template>
 
@@ -25,10 +25,10 @@ export default {
         }
     },
     methods: {
-        
+
     },
 }
- 
+
 </script>
 
 <style lang='less' scoped>
