@@ -30,7 +30,7 @@
                         </div>
                     </div>
                 </li>
-                <li v-if="list.length == 0 && ajaxTit != '数据加载中……'" class="no_odata">尚未发布{{type}}，点击右上方发布按钮立即发布吧!</li>
+                <li v-if="list.length == 0 && ajaxTit != '数据加载中……'" class="no_odata">暂无数据！</li>
                 <li v-if="list.length == 0 && ajaxTit == '数据加载中……'" class="data_tit">{{ajaxTit}}</li>
 
             </ul>
@@ -196,11 +196,11 @@
     }
     .no_odata {
         text-align: center;
-        height: 700px;
-        line-height: 254px;
+        min-height: 480px;
+        line-height: 480px;
         font-size: 18px;
         color: #666;
-        background: url('../../../assets/imgs/nodataBg.jpg') no-repeat center top;
+        background: url('../../../assets/newparkimg/no-list-img.png') no-repeat center 57px;
     }
     #listOwnImg {
         .selectTitle, .listWrap {
