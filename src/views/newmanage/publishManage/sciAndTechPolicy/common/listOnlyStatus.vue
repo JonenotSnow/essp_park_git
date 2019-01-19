@@ -26,8 +26,8 @@
             <ul class="listWrap">
                 <li class="list" v-for="(item, index) in list" :key="index">
                     <div class="ListTop">
-                        <el-checkbox v-model="item.isChecked" @change="changeChecked(item,index)">备选项</el-checkbox>
-                        <span class="time">保存时间：{{item.createTimeitem | timerFormat(item.createTime)}}</span>
+                        <el-checkbox v-model="item.isChecked" @change="changeChecked(item,index)" />
+                        <span class="time">保存时间：{{item.createTime | timerFormat(item.createTime)}}</span>
                         <span class="create">发布人：{{item.userName}}</span>
                         <span class="classifyC">状态：
                             <span v-if="item.status == '02'">审核通过</span>
@@ -285,7 +285,7 @@
         .selectStatus {
             margin-left: 14px;
             select {
-                width: 100px;
+                width: 110px;
                 height: 30px;
                 border-radius: 3px;
                 border: solid 1px #cccccc;
