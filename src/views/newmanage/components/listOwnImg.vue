@@ -140,7 +140,6 @@
             // 全选选择项
             changeAllChecked(){
                 this.selectCheckItem = [];
-
                 this.list.forEach((item,index) => {
                     item.isChecked = this.allCheck;
                     if(this.allCheck){

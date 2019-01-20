@@ -17,8 +17,6 @@ const myfcsnews = resolve => require(['@/views/newparkHall/News/allNews/myfcsnew
 const allnotice = resolve => require(['@/views/newparkHall/News/notice/allnotice'], resolve);//全部通告
 const newsdetail = resolve => require(['@/views/newparkHall/News/allNews/newsdetail'], resolve);//新闻详情页
 const noticedetail = resolve => require(['@/views/newparkHall/News/notice/noticedetail'], resolve);//通知公告详情页
-const addNews = resolve => require(['@/views/newmanage/publishManage/newsInfoSet/addNews'], resolve);//新闻发布页
-const addNotice = resolve => require(['@/views/newmanage/publishManage/newsInfoSet/addNotice'], resolve);//通知公告详发布页
 
 // 发布页面公用这个
 const publishInformationAnnounce = resolve => require(['@/views/newmanage/publishManage/newsInfoSet/publishInformationAnnounce'], resolve);//新闻发布页
@@ -91,11 +89,6 @@ export default {
             name: "park-addNews",
             // component: addNews,
             component: publishInformationAnnounce,
-        },
-        {
-            path: "/news/addNotice",
-            name: "park-addNotice",
-            component: addNotice,
         },
         {
             path: "/news/lookNewsAudit",

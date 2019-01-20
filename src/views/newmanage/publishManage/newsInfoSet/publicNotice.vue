@@ -2,7 +2,8 @@
     <div class="policie-and-regulation-wrap">
         <div class="policie-and-regulation-head">
             <div class="head-div head-left">
-              <span v-for="(item,index) in itemsouces" :key="index" :class="{'span-click': status==item.status}" @click="switchStatus(item)">{{item.fnName}}</span>
+                <span v-for="(item,index) in itemsouces" :key="index" :class="{'span-click': status==item.status}"
+                      @click="switchStatus(item)">{{item.fnName}}</span>
             </div>
             <div class="head-div head-right">
                 <div class="right-div search-wrap">
@@ -20,7 +21,7 @@
             </div>
         </div>
         <div class="policie-and-regulation-main">
-            <twoCardModel :list="list" :customopts={status,temeTit,allTotal}></twoCardModel>
+            <oneCardModel :list="list" :allCheck="isAllChecked" @changeStatusList="changeStatusList" @delectList="getPublicedNews" :customopts={status,temeTit,allTotal}></oneCardModel>
         </div>
         <div class="pageList">
             <el-pagination
@@ -38,65 +39,77 @@
 
 <script>
 
-    import twoCardModel from "./common/twoCardModel"
+    import oneCardModel from "./common/oneCardModel"
 
     export default {
         name: 'policie-and-regulation',
         props: {},
         components: {
-            twoCardModel
+            oneCardModel
         },
         data() {
             return {
                 msg: '新闻发布',
-                temeTit:"通知公告",
-                currentTime:[],
-                parkId:sessionStorage.getItem("parkId")||"",
+                temeTit: "通知公告",
+                currentTime: [],
+                parkId: sessionStorage.getItem("parkId") || "",
                 pageRanges: [5, 10, 20],//默认每页10条数区间
                 pageNum: 1,//当前页码
                 pageSize: 5,//每页条数
                 allTotal: 0,//总条数
-                status: this.$route.query.status||'1',                // 状态值
+                isAllChecked: false,
+                type: '2',  // 类型（新闻与公告）新闻1，公告2
+                status: this.$route.query.status || '1',                // 状态值
                 searchContent: '',          // 查询字段
-                list: [{id:"00001",title:"我的"},{id:"00002",title:"你的"}],
-                itemsouces:[
+                list: [{id: "00001", title: "我的"}, {id: "00002", title: "你的"}],
+                itemsouces: [
                     {
-                    fnName:"已发布",
-                    status:1
+                        fnName: "已发布",
+                        status: 1
                     },
                     {
-                    fnName:"草稿箱",
-                    status:0
+                        fnName: "草稿箱",
+                        status: 0
 
                     },
                     {
-                    fnName:"已审核",
-                    status:2
+                        fnName: "已审核",
+                        status: 2
 
                     }
                 ],
             }
         },
-        created(){
-        //   this.getPublicedNews();
+        created() {
+               this.getPublicedNews();
         },
         methods: {
-             getPublicedNews(){
+            getPublicedNews() {
+
                 var url = this.$apiUrl.newsinfo.getMyPubInfo;
                 var pop = {
-                  pageNum:this.pageNum,
-                  pageSize:this.pageSize,
-                  startDate : this.currentTime[0]||"",
-                  endDate : this.currentTime[1]||"",
-                  title:this.title,
-                  parkId:this.parkId,
-                  status:this.status
+                    pageNum: this.pageNum,
+                    pageSize: this.pageSize,
+                    startDate: this.currentTime[0] || "",
+                    endDate: this.currentTime[1] || "",
+                    title: this.searchContent,
+                    parkId: this.parkId,
+                    status: this.status,
+                    type: this.type
                 }
-                this.$post(url,pop).then(res=>{
-                  this.list = res.resultData.informationList;
-                  this.allTotal = res.resultData.total;
-                },err=>{
-                  console.log(err)
+                this.$post(url, pop).then(res => {
+                    var arr = res.resultData.informationList;
+                    arr.forEach((item,index) => {
+                        if(!item.isChecked) {
+                            this.$set(item,"isChecked", false);
+                        } else {
+                            item.isChecked = false;
+                        }
+                    })
+                    this.list = arr;
+                    this.allTotal = res.resultData.total;
+                }, err => {
+                    console.log(err)
                 })
             },
             handleSizeChange(val) {
@@ -112,13 +125,21 @@
                 this.status = item.status;
                 this.getPublicedNews();
             },
-
+            // 改变审核状态
+            changeStatusList(val){
+                console.log(val);
+            },
             // 查询事件
             search() {
                 this.getPublicedNews();
             },
-            goToPublish(){
-              this.$router.push('/news/addNotice')
+            goToPublish() {
+                this.$router.push({
+                    path: '/news/addNews',
+                    query: {
+                        applyType: '02'
+                    }
+                })
             }
 
         },
@@ -248,10 +269,11 @@
 
         }
     }
-    .pageList{
-      width: 910px;
-      margin: 45px auto 57px;
-      text-align: right;
-      padding-bottom: 57px;
+
+    .pageList {
+        width: 910px;
+        margin: 45px auto 57px;
+        text-align: right;
+        padding-bottom: 57px;
     }
 </style>
