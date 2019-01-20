@@ -3,37 +3,44 @@
         <essp-bread-crumb :breadList="breadlist_01" v-if="applyType === '01'"/>
         <essp-bread-crumb :breadList="breadlist_02" v-if="applyType === '02'"/>
         <div class="publish-title" v-if="applyType === '01'">
-            <i></i>发布政策法规<i></i>
+            <i></i>发布新闻动态<i></i>
         </div>
         <div class="publish-title" v-if="applyType === '02'">
-            <i></i>发布科技服务<i></i>
+            <i></i>发布通知公告<i></i>
         </div>
 
-        <!--！！！！！！政策法规表格！！！！！！-->
+        <!--！！！！！！新闻动态表格！！！！！！-->
         <div class="publist-form" v-if="applyType === '01'">
             <el-form :model="ruleForm" :rules="rules_01" ref="ruleForm" label-width="125px" class="demo-ruleForm">
-                <el-form-item label="政策法规标题：" prop="policyTitle">
-                    <el-input v-model="ruleForm.policyTitle"
-                              placeholder="请输入政策法规标题"
+                <el-form-item label="新闻动态标题：" prop="informationTitle">
+                    <el-input v-model="ruleForm.informationTitle"
+                              placeholder="请输入新闻动态标题"
                               style="width: 500px;"
                     ></el-input>
                 </el-form-item>
-                <el-form-item label="政策法规简介：" prop="approveComment">
+
+                <ParkUpload
+                    class="my-dynamic-pic"
+                    :parkUploadData="parkUploadData"
+                    @changeImgUrl="showImgUrl"
+                />
+
+                <el-form-item label="新闻简介：" prop="content">
                     <!--<el-input type="textarea" v-model="ruleForm.desc"></el-input>-->
                     <textarea
                         class="my-approve-comment"
-                        v-model="ruleForm.approveComment"
-                        placeholder="请输入政策法规简介"
+                        v-model="ruleForm.content"
+                        placeholder="请输入新闻简介"
                     />
                 </el-form-item>
-                <el-form-item label="政策法规详情：" prop="infoDetail" class="my-detail-edit">
+                <el-form-item label="新闻动态详情：" prop="infoDetail" class="my-detail-edit">
                     <div class="my-quill-edit-wrap">
                         <quill-editor v-model="ruleForm.infoDetail" :options="editorOption">
                             <div id="toolbar" slot="toolbar"></div>
                         </quill-editor>
                     </div>
                 </el-form-item>
-                <el-form-item label="政策法规标签：">
+                <el-form-item label="新闻动态标签：">
                     <div class="inline_div_tag">
                         <essp-add-tag
                             ref="eat"
@@ -73,44 +80,31 @@
             </el-form>
         </div>
 
-        <!--！！！！！！科技服务表格！！！！！！-->
+        <!--！！！！！！通知公告表格！！！！！！-->
         <div class="publist-form" v-if="applyType === '02'">
             <el-form :model="ruleForm" :rules="rules_02" ref="ruleForm" label-width="125px" class="demo-ruleForm">
-                <el-form-item label="科技服务标题：" prop="policyTitle">
-                    <el-input v-model="ruleForm.policyTitle"
-                              placeholder="请输入科技服务标题"
+                <el-form-item label="通知公告标题：" prop="informationTitle">
+                    <el-input v-model="ruleForm.informationTitle"
+                              placeholder="请输入通知公告标题"
                               style="width: 500px;"
                     ></el-input>
                 </el-form-item>
-                <el-form-item label=" 科技服务类型：
-                    " prop="classtType">
-                    <el-select v-model="ruleForm.classtType" placeholder="请选择科技服务类型">
-                        <el-option label="科技创新" value="01"></el-option>
-                        <el-option label="技术合同登记" value="02"></el-option>
-                        <el-option label="高企认定" value="03"></el-option>
-                        <el-option label="科小认定" value="04"></el-option>
-                        <el-option label="知识产权" value="05"></el-option>
-                        <el-option label="科技服务机构" value="06"></el-option>
-                        <el-option label="风险投资" value="07"></el-option>
-                        <el-option label="天使投资" value="08"></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="科技服务简介：" prop="approveComment">
+                <el-form-item label="通知公告简介：" prop="content">
                     <!--<el-input type="textarea" v-model="ruleForm.desc"></el-input>-->
                     <textarea
                         class="my-approve-comment"
-                        v-model="ruleForm.approveComment"
-                        placeholder="请输入科技服务简介"
+                        v-model="ruleForm.content"
+                        placeholder="请输入通知公告简介"
                     />
                 </el-form-item>
-                <el-form-item label="科技服务详情：" prop="infoDetail" class="my-detail-edit">
+                <el-form-item label="通知公告详情：" prop="infoDetail" class="my-detail-edit">
                     <div class="my-quill-edit-wrap">
                         <quill-editor v-model="ruleForm.infoDetail" :options="editorOption">
                             <div id="toolbar" slot="toolbar"></div>
                         </quill-editor>
                     </div>
                 </el-form-item>
-                <el-form-item label="科技服务标签：">
+                <el-form-item label="通知公告标签：">
                     <div class="inline_div_tag">
                         <essp-add-tag
                             ref="eat"
@@ -159,8 +153,8 @@
             :before-close="handleClose"
         >
             <div class="my-scan-main">
-                <div class="main-head" v-if="this.ruleForm.policyTitle">
-                    <div class="head-title">{{this.ruleForm.policyTitle}}</div>
+                <div class="main-head" v-if="this.ruleForm.informationTitle">
+                    <div class="head-title">{{this.ruleForm.informationTitle}}</div>
                     <div class="head-tag" v-if="this.ruleForm.tags && this.ruleForm.tags.length > 0">
                         <span v-for="(item, index) in this.ruleForm.tags" :key="index">{{item}}</span>
                     </div>
@@ -189,6 +183,9 @@
     import EsspTag from "@/components/EsspTag";
     import EsspAddTag from "@/components/EsspAddTag";
 
+    import ParkUpload from "@/views/parkHall/parkUpload";
+
+
     // 编辑器
     import "quill/dist/quill.core.css";
     import "quill/dist/quill.snow.css";
@@ -200,6 +197,7 @@
             EsspBreadCrumb,
             EsspTag,
             EsspAddTag,
+            ParkUpload,
             quillEditor
         },
         data() {
@@ -215,7 +213,7 @@
                     },
                     {
                         path: "",
-                        name: "政策法规"
+                        name: "新闻动态"
                     }
                 ],
                 breadlist_02: [
@@ -229,19 +227,28 @@
                     },
                     {
                         path: "",
-                        name: "科技服务"
+                        name: "通知公告"
                     }
                 ],
 
-                parkId: sessionStorage.getItem("parkId") || "20181217093701001",
-                applyType: this.$route.query.applyType,
+                parkId: sessionStorage.getItem("parkId") || "",
+                applyType: this.$route.query.applyType || '02', // 新闻动态：01，通知公告：02
                 id: this.$route.query.id || "",
                 userInfo: this.SSH.getItem("userInfo"), // 获取用户信息
 
+                //新版上传图片
+                parkUploadData: {
+                    title: "新闻动态配图 :",
+                    src: "", //资讯配图
+                    isPic: "",
+                    // "（该图片以资讯主图进行展示,每张最大2M，图片宽高比为7：4，建议分辨率建议为840*480，支持jpg/jpeg/gif/png格式。）",
+                    imgItemType: "information", // 图片图库类型 资讯
+                    styleClass: "inline_span_my"
+                },
+
                 ruleForm: {
-                    policyTitle: '',
-                    classtType: '',
-                    approveComment: '',
+                    informationTitle: '',
+                    content: '',
                     infoDetail: '',
                     tags: []
                 },
@@ -253,36 +260,33 @@
                 },
 
                 rules_01: {
-                    policyTitle: [
-                        {required: true, message: '请输入政策法规标题', trigger: 'blur'},
+                    informationTitle: [
+                        {required: true, message: '请输入新闻动态标题', trigger: 'blur'},
                         // {min: 10, max: 20, message: '长度在 10 到 20 个字符', trigger: 'blur'}
                     ],
-                    approveComment: [
-                        {required: true, message: '请填政策法规简介', trigger: 'blur'}
+                    content: [
+                        {required: true, message: '请输入新闻动态简介', trigger: 'blur'}
                     ],
                     infoDetail: [
-                        {required: true, message: '请填写政策法规详情', trigger: 'blur'}
+                        {required: true, message: '请输入新闻动态详情', trigger: 'blur'}
                     ],
                     tags: [
-                        {required: true, message: '请填写政策法规标签', trigger: 'blur'}
+                        {required: true, message: '请输入新闻动态标签', trigger: 'blur'}
                     ]
                 },
                 rules_02: {
-                    policyTitle: [
-                        {required: true, message: '请输入科技服务标题', trigger: 'blur'},
+                    informationTitle: [
+                        {required: true, message: '请输入通知公告标题', trigger: 'blur'},
                         // {min: 10, max: 20, message: '长度在 10 到 20 个字符', trigger: 'blur'}
                     ],
-                    classtType: [
-                        {required: true, message: '请选择科技服务类型', trigger: 'change'}
-                    ],
-                    approveComment: [
-                        {required: true, message: '请填科技服务简介', trigger: 'blur'}
+                    content: [
+                        {required: true, message: '请输入通知公告简介', trigger: 'blur'}
                     ],
                     infoDetail: [
-                        {required: true, message: '请填写科技服务详情', trigger: 'blur'}
+                        {required: true, message: '请输入通知公告详情', trigger: 'blur'}
                     ],
                     tags: [
-                        {required: true, message: '请填写科技服务标签', trigger: 'blur'}
+                        {required: true, message: '请输入通知公告标签', trigger: 'blur'}
                     ]
                 },
 
@@ -301,8 +305,19 @@
             }
         },
         methods: {
+
             /**
-             * 标签相关字段---开始
+             * 新闻动态配图相关事件---开始
+             *  */
+            showImgUrl(url) {
+                this.parkUploadData.src = url;
+            },
+            /**
+             * 新闻动态配图相关事件---结束
+             *  */
+
+            /**
+             * 标签相关事件---开始
              *  */
             closetag({viewtags}) {
                 this.visible = false;
@@ -318,7 +333,7 @@
                 this.ruleForm.tags = tmpTags;
             },
             /**
-             * 标签相关字段---结束
+             * 标签相关事件---结束
              *  */
 
             // 创建事件
@@ -328,11 +343,6 @@
 
                         this.ruleForm.parkId = this.parkId;
 
-                        this.ruleForm.saveType = saveType;
-
-                        // 区分政策或者法规
-                        this.ruleForm.applyType = this.applyType;
-
                         // 处理标签
                         let tags = this.ruleForm.tags.join(',');
                         this.ruleForm.tags = tags;
@@ -340,19 +350,27 @@
                         // 处理附件上传
                         this.ruleForm.fileUrl = this.fileList;
 
-                        // 政策法规不需要服务类型这个字段
-                        if (this.applyType === '01') {
-                            delete this.ruleForm.classtType;
+                        // “新闻动态”模块的接口："/information/saveNews"
+                        // “通知公告”模块的接口："information/saveNotice"
+                        let url;
+                        if (applyType == '01') {
+                            // 处理动态图片，“新闻动态”模块才有这个字段
+                            this.ruleForm.parkUploadData = this.parkUploadData;
+                            url = '/information/saveNews';
                         }
 
-                        this.$post("/policy/savePolicyTech", this.ruleForm).then(response => {
+                        if (applyType == '02') {
+                            url = '/information/saveNotice';
+                        }
+
+                        this.$post(url, this.ruleForm).then(response => {
                             let codestatus = response.resultCode;
                             if (codestatus == "CLT000000000") {
                                 if (this.applyType === '01') {
                                     if (this.id) {
-                                        this.$message.success("政策法规修改成功！");
+                                        this.$message.success("新闻动态修改成功！");
                                     } else {
-                                        this.$message.success("创建政策法规成功！");
+                                        this.$message.success("新闻动态创建成功！");
                                     }
                                     this.$router.push({
                                         path: '/parkHall/manage/sciAndTechPolicy/policieAndRegulation'
@@ -360,9 +378,9 @@
                                 }
                                 if (this.applyType === '02') {
                                     if (this.id) {
-                                        this.$message.success("科技服务修改成功！");
+                                        this.$message.success("通知公告修改改成功！");
                                     } else {
-                                        this.$message.success("创建科技服务成功！");
+                                        this.$message.success("通知公告创建成功！");
                                     }
                                     this.$router.push({
                                         path: '/parkHall/manage/sciAndTechPolicy/sciAndTechService'
@@ -402,12 +420,8 @@
                         // 处理附件上传
                         this.ruleForm.fileUrl = this.fileList;
 
-                        // 政策法规不需要服务类型这个字段
-                        if (this.applyType === '01') {
-                            delete this.ruleForm.classtType;
-                        }
 
-                        this.$post("/policy/savePolicyTech", this.ruleForm).then(response => {
+                        this.$post("/information/saveNews", this.ruleForm).then(response => {
                             let codestatus = response.resultCode;
                             if (codestatus == "CLT000000000") {
                                 if (this.applyType === '01') {
@@ -447,7 +461,7 @@
                 let params = {
                     id: this.id
                 };
-                this.$post("/policy/getPolById", params).then(response => {
+                this.$post("/information/getInfoById", params).then(response => {
                     let codestatus = response.resultCode;
                     if (codestatus == "CLT000000000") {
 
@@ -581,6 +595,10 @@
 
         .publist-form {
             padding: 0 125px 60px;
+
+            .my-dynamic-pic {
+                margin-left: -100px;
+            }
 
             .my-approve-comment {
                 padding: 10px;
