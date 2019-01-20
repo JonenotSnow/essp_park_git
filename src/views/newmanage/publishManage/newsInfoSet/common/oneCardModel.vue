@@ -54,10 +54,7 @@
                 </div>
             </div>
         </div>
-        <div v-else class="noData">
-            <span>尚未发布{{type}}，点击右上方发布按钮立即发布吧！</span>
-            <img src="@assets/newparkimg/newmanage/achievementSet/no_list.png" alt="">
-        </div>
+        <div v-else  class="no_odata">暂无数据！</div>
     </div>
 </template>
 
@@ -255,6 +252,14 @@
     .model_label {
         float: left;
         margin: 0 15px;
+    }
+    .no_odata {
+        text-align: center;
+        min-height: 480px;
+        line-height: 480px;
+        font-size: 18px;
+        color: #666;
+        background: url('../../../../../assets/newparkimg/no-list-img.png') no-repeat center 57px;
     }
     //全选工具条
     #oneCardModel {

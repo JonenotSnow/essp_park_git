@@ -1,61 +1,100 @@
-<!--
- * @Author: Evan-lian
- * @Date: 2019-01-10 18:48:25
- * @LastEditors: Evan-lian
- * @LastEditTime: 2019-01-10 20:03:53
- * @Description: 新闻审核详情页展示
- -->
-
 <template>
     <div class="publish-sciAnd-tech-policy-wrap" id="publishAchievement">
-        <essp-bread-crumb :breadList="breadlist_01"/>
-     
+        <essp-bread-crumb :breadList="breadlist_01" v-if="applyType === '01'"/>
+        <essp-bread-crumb :breadList="breadlist_02" v-if="applyType === '02'"/>
         <div class="publish-title">
             <i></i>审核详情<i></i>
         </div>
-        <!--！！！！！！政策法规表格！！！！！！-->
-        <div class="publist-form">
+
+        <!--！！！！！！新闻动态表格！！！！！！-->
+        <div class="publist-form" v-if="applyType === '01'">
             <el-form :rules="rules_01" label-width="125px" class="demo-ruleForm">
-                <el-form-item label="政策法规标题：" prop="policyTitle">
-                    <div class="my-style">{{satpDate.policyTitle}}</div>
+                <el-form-item label="新闻动态标题：" prop="informationTitle">
+                    <div class="my-style">{{satpDate.informationTitle}}</div>
                 </el-form-item>
-                <el-form-item label="政策法规简介：" prop="desc">
-                    <div class="my-style">{{satpDate.desc}}</div>
+                <el-form-item label="新闻简介：" prop="content">
+                    <div class="my-style">{{satpDate.content}}</div>
                 </el-form-item>
-                <el-form-item label="政策法规详情：" prop="infoDetail">
+                <el-form-item label="新闻动态详情：" prop="infoDetail">
                     <div class="my-style">
                         <div v-html="satpDate.infoDetail"></div>
                     </div>
                 </el-form-item>
-                <el-form-item label="政策法规标签：" prop="tags">
+                <el-form-item label="新闻动态标签：" prop="tags">
                     <div class="my-style">
                         <span class="my-tag" v-for="(item, index) in satpDate.tagsTxt" :key="index">{{item}}</span>
                     </div>
                 </el-form-item>
                 <el-form-item label="发布人：">
-                    <div class="my-style">发布人</div>
+                    <!--<div class="my-style">{{userInfo.truename}}</div>-->
+                    <div class="my-style">{{satpDate.userName}}</div>
                 </el-form-item>
                 <el-form-item label="附件：">
-                    <div class="my-style" v-for="(item, index) in satpDate.fileUrl" :key="index">{{item.name}}</div>
+                    <div class="my-style" v-for="(item, index) in fileList" :key="index">{{item.name}}</div>
                 </el-form-item>
             </el-form>
             <div class="audit-line"></div>
             <el-form :rules="rules_01" label-width="125px" class="demo-ruleForm demo-ruleForm-Next">
                 <el-form-item label="审核结果：">
-                    <i class="icon iconfont icon-butongguo"
-                       style="margin-right:10px; color: #fe696c;"></i><span>不通过</span>
-                    <i class="icon iconfont icon-zhengque"
-                       style="margin-right:10px; color: #6bde73"></i><span>正确</span>
+                    <p v-if="satpDate.status == '12'">
+                        <i class="icon iconfont icon-butongguo"
+                           style="margin-right:10px; color: #fe696c;"></i><span>不通过</span>
+                    </p>
+                    <p v-if="satpDate.status== '02'">
+                        <i class="icon iconfont icon-zhengque"
+                           style="margin-right:10px; color: #6bde73"></i><span>通过</span>
+                    </p>
                 </el-form-item>
                 <el-form-item label="审核意见：">
-                    <div class="my-style audit-opinion">同意发布</div>
+                    <div class="my-style audit-opinion">{{lastComment.mark || '暂无'}}</div>
                 </el-form-item>
             </el-form>
-
-
         </div>
 
-      
+        <!--！！！！！！通知公告表格！！！！！！-->
+        <div class="publist-form" v-if="applyType === '02'">
+            <el-form :rules="rules_02" label-width="125px" class="demo-ruleForm">
+                <el-form-item label="通知公告标题：" prop="informationTitle">
+                    <div class="my-style">{{satpDate.informationTitle}}</div>
+                </el-form-item>
+                <el-form-item label="通知公告简介：" prop="content">
+                    <div class="my-style">{{satpDate.content}}</div>
+                </el-form-item>
+                <el-form-item label="通知公告详情：" prop="infoDetail">
+                    <div class="my-style">
+                        <div v-html="satpDate.infoDetail"></div>
+                    </div>
+                </el-form-item>
+                <el-form-item label="通知公告标签：" prop="tags">
+                    <div class="my-style">
+                        <span class="my-tag" v-for="(item, index) in satpDate.tagsTxt" :key="index">{{item}}</span>
+                    </div>
+                </el-form-item>
+                <el-form-item label="发布人：">
+                    <!--<div class="my-style">{{userInfo.truename}}</div>-->
+                    <div class="my-style">{{satpDate.userName}}</div>
+                </el-form-item>
+                <el-form-item label="附件：">
+                    <div class="my-style" v-for="(item, index) in fileList" :key="index">{{item.name}}</div>
+                </el-form-item>
+            </el-form>
+            <div class="audit-line"></div>
+            <el-form :rules="rules_02" label-width="125px" class="demo-ruleForm demo-ruleForm-Next">
+                <el-form-item label="审核结果：">
+                    <p v-if="satpDate.status == '12'">
+                        <i class="icon iconfont icon-butongguo"
+                           style="margin-right:10px; color: #fe696c;"></i><span>不通过</span>
+                    </p>
+                    <p v-if="satpDate.status== '02'">
+                        <i class="icon iconfont icon-zhengque"
+                           style="margin-right:10px; color: #6bde73"></i><span>通过</span>
+                    </p>
+                </el-form-item>
+                <el-form-item label="审核意见：">
+                    <div class="my-style audit-opinion">{{lastComment.mark || '暂无'}}</div>
+                </el-form-item>
+            </el-form>
+        </div>
     </div>
 </template>
 
@@ -69,93 +108,74 @@
         data() {
             return {
                 parkId: sessionStorage.getItem("parkId") || "",
-                applyType: this.$route.query.applyType,
+                applyType: this.$route.query.applyType || '01',
                 id: this.$route.query.id || "",
+                userInfo: this.SSH.getItem("userInfo"), // 获取用户信息
 
                 breadlist_01: [
                     {
-                        path: "/parkHome",
+                        path: "/parkHall/manage/baseInfo",
                         name: "系统管理"
                     },
                     {
-                        path: "",
-                        name: "发布管理"
+                        path: "/parkHall/manage/publicNews",
+                        name: "新闻动态"
                     },
                     {
                         path: "",
-                        name: "发布政策法规"
-                    },
-                    {
-                        path: "",
-                        name: "审核详情"
+                        name: "新闻动态审核详情"
                     }
                 ],
                 breadlist_02: [
                     {
-                        path: "/parkHome",
+                        path: "/parkHall/manage/baseInfo",
                         name: "系统管理"
                     },
                     {
-                        path: "",
-                        name: "发布管理"
+                        path: "/parkHall/manage/publicNotice",
+                        name: "通知公告"
                     },
                     {
                         path: "",
-                        name: "发布科技服务"
-                    },
-                    {
-                        path: "",
-                        name: "审核详情"
+                        name: "通知公告审核详情"
                     }
                 ],
 
+                satpDate: {},
+                fileList: [],   // 附件字段
 
-                satpDate: {
-                    policyTitle: '科技政策标题1',
-                    classtType: '01',
-                    desc: '科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介科技政策简介',
-                    infoDetail: '科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情科技政策详情',
-                    tagsTxt: ['测试标签1', '测试标签2', '测试标签3'],
-                    fileUrl: [
-                        {
-                            name: 'xxxxxx',
-                            url: ''
-                        },
-                        {
-                            name: 'qqqqqqqqq',
-                            url: ''
-                        }
-                    ]
-                },
+
+                commentList: [],    // 审核详情列表
+                lastComment: {},    // 最新审核意见
+
                 rules_01: {
-                    policyTitle: [
-                        {required: true, message: '请输入政策法规标题', trigger: 'blur'},
+                    informationTitle: [
+                        {required: true, message: '请输入新闻动态标题', trigger: 'blur'},
+                        // {min: 10, max: 20, message: '长度在 10 到 20 个字符', trigger: 'blur'}
                     ],
-                    desc: [
-                        {required: true, message: '请填政策法规简介', trigger: 'blur'}
+                    content: [
+                        {required: true, message: '请输入新闻动态简介', trigger: 'blur'}
                     ],
                     infoDetail: [
-                        {required: true, message: '请填写政策法规详情', trigger: 'blur'}
+                        {required: true, message: '请输入新闻动态详情', trigger: 'blur'}
                     ],
                     tags: [
-                        {required: true, message: '请填写政策法规标签', trigger: 'blur'}
+                        {required: true, message: '请输入新闻动态标签', trigger: 'blur'}
                     ]
                 },
                 rules_02: {
-                    policyTitle: [
-                        {required: true, message: '请输入科技服务标题', trigger: 'blur'},
+                    informationTitle: [
+                        {required: true, message: '请输入通知公告标题', trigger: 'blur'},
+                        // {min: 10, max: 20, message: '长度在 10 到 20 个字符', trigger: 'blur'}
                     ],
-                    classtType: [
-                        {required: true, message: '请选择科技服务类型', trigger: 'change'}
-                    ],
-                    desc: [
-                        {required: true, message: '请填科技服务简介', trigger: 'blur'}
+                    content: [
+                        {required: true, message: '请输入通知公告简介', trigger: 'blur'}
                     ],
                     infoDetail: [
-                        {required: true, message: '请填写科技服务详情', trigger: 'blur'}
+                        {required: true, message: '请输入通知公告详情', trigger: 'blur'}
                     ],
                     tags: [
-                        {required: true, message: '请填写科技服务标签', trigger: 'blur'}
+                        {required: true, message: '请输入通知公告标签', trigger: 'blur'}
                     ]
                 },
             }
@@ -167,12 +187,56 @@
              */
             getSatpDate() {
                 let params = {
-                    id: this.id
+                    informationId: this.id
                 };
-                this.$post("/policy/getPolById", params).then(response => {
+                this.$post("/information/getInfoById", params).then(response => {
                     let codestatus = response.resultCode;
                     if (codestatus == "CLT000000000") {
                         this.satpDate = response.resultData;
+
+                        // 对标签进行处理
+                        if (this.satpDate.tagsTxt) {
+                            this.satpDate.tagsTxt = this.satpDate.tagsTxt.split(',');
+                        }
+
+                        // 对附件进行处理
+                        if (this.satpDate.fileUrl) {
+                            let fileList = JSON.parse(this.satpDate.fileUrl);
+
+                            fileList.forEach((item, index) => {
+                                var obj = {
+                                    name: item.name,
+                                    url: item.url
+                                };
+                                this.fileList.push(obj);
+                            })
+                        }
+
+                    } else {
+                        this.$message.info(response.resultMsg);
+                    }
+                }, err => {
+                    this.$message.error("接口异常");
+                })
+            },
+
+            /**
+             * 获取“科技政策”的审核详情
+             */
+            getCommentList() {
+                let params = {
+                    parkId: this.parkId,
+                    entityId: this.id
+                };
+                this.$post("/audit/getCommentList", params).then(response => {
+                    let codestatus = response.resultCode;
+                    if (codestatus == "CLT000000000") {
+                        this.commentList = response.resultData;
+
+                        if (this.commentList.length > 0) {
+                            this.lastComment = this.commentList[0];
+                        }
+
                     } else {
                         this.$message.info(response.resultMsg);
                     }
@@ -182,6 +246,8 @@
             }
         },
         created() {
+            this.getSatpDate();
+            this.getCommentList();
         },
     }
 </script>

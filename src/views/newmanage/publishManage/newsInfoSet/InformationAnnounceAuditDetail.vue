@@ -114,38 +114,30 @@
 
                 breadlist_01: [
                     {
-                        path: "/parkHall/manage/baseInfo1",
+                        path: "/parkHall/manage/baseInfo",
                         name: "系统管理"
                     },
                     {
-                        path: "/parkHall/manage/sciAndTechPolicy/policieAndRegulation",
-                        name: "发布管理"
-                    },
-                    {
-                        path: "/parkHall/manage/sciAndTechPolicy/policieAndRegulation",
-                        name: "发布新闻动态"
+                        path: "/parkHall/manage/publicNews",
+                        name: "新闻动态"
                     },
                     {
                         path: "",
-                        name: "审核详情"
+                        name: "新闻动态审核详情"
                     }
                 ],
                 breadlist_02: [
                     {
-                        path: "/parkHall/manage/baseInfo1",
+                        path: "/parkHall/manage/baseInfo",
                         name: "系统管理"
                     },
                     {
-                        path: "/parkHall/manage/sciAndTechPolicy/policieAndRegulation",
-                        name: "发布管理"
-                    },
-                    {
-                        path: "/parkHall/manage/sciAndTechPolicy/sciAndTechService",
-                        name: "发布通知公告"
+                        path: "/parkHall/manage/publicNotice",
+                        name: "通知公告"
                     },
                     {
                         path: "",
-                        name: "审核详情"
+                        name: "通知公告审核详情"
                     }
                 ],
 
@@ -195,7 +187,7 @@
              */
             getSatpDate() {
                 let params = {
-                    id: this.id
+                    informationId: this.id
                 };
                 this.$post("/information/getInfoById", params).then(response => {
                     let codestatus = response.resultCode;

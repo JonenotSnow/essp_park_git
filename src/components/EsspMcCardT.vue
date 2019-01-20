@@ -21,9 +21,9 @@
                         />
                     </p>
                     <p>
-                        <i :class="icons[0]"></i>发布时间：{{item.createTime | timerFormat(item.createTime)}}</p>
+                        <i :class="icons[0]" style="color:#ccc;"></i>发布时间：{{item.createTime | timerFormat(item.createTime)}}</p>
                     <p>
-                        <i :class="icons[1]"></i>发起方：{{item.cstNm}}</p>
+                        <i :class="icons[1]" style="color:#ccc;"></i>发起方：{{item.cstNm}}</p>
                     <p class="icon_p_font">
                         <span><i :class="icons[2]"></i>{{item.viewTime || 0}}</span>
                         <span><i :class="icons[3]"></i>{{item.countFollower || 0}}</span>
@@ -268,38 +268,47 @@
         .cont-detail-r {
             float: right;
             padding-right: 2%;
-            padding-top: 85px;
+            padding-top: 65px;
             width: 22%;
             text-align: right;
         }
         .essp-card {
             background-color: #ffffff;
-            margin-bottom: 20px;
+            padding: 20px 0;
             width: 730px;
-            height: 170px;
+            height: 140px;
+            border-bottom: 1px solid #eee;
+            transition: all 1s;
             &:hover {
-                zoom: 1;
-                box-shadow: 1px 1px 2px 0px rgba(0, 102, 179, 0.15);
+                zoom:1;
+                box-shadow: 0px 0px 14.2px 0.8px rgba(0, 0, 0, 0.08);
+                position: relative;
+                .cont-img{
+                    margin-left: 20px;
+                }
+                .cont-detail{
+                    margin-left: 15px;
+                }
             }
             .cont-img {
                 position: relative;
                 float: left;
-                width: 280px;
+                width: 245px;
                 height: 100%;
                 cursor: pointer;
                 transition: all 1s;
-                &:hover .img-detail {
-                    display: block;
-                    transform: scale(1.02);
-                }
+                /*&:hover .img-detail {*/
+                /*display: block;*/
+                /*transform: scale(1.02);*/
+                /*}*/
                 .detaillogo {
                     display: block;
                     width: 100%;
                     height: 100%;
                     transition: all 1s;
-                    &:hover {
-                        transform: scale(1.02);
-                    }
+                    /*&:hover {*/
+                    /*transform: scale(1.02);*/
+                    /*}*/
                 }
                 .img-detail {
                     display: none;
@@ -348,9 +357,10 @@
             .cont-detail {
                 position: relative;
                 float: left;
-                margin-left: 20px;
+                margin-left: 35px;
                 width: 430px;
                 height: 100%;
+                transition: all 1s;
                 .cont-detail-l {
                     float: left;
                     width: 76%;
@@ -381,7 +391,7 @@
                     .esspellipsis();
                 }
                 p {
-                    margin-bottom: 13px;
+                    margin-bottom: 12px;
                     font-size: 12px;
                     font-weight: normal;
                     font-stretch: normal;
@@ -400,6 +410,7 @@
                 .icon_p_font {
                     i {
                         font-size: 14px;
+                        color: #ccc;
                     }
                     .icon-collect2:before {
                         font-size: 12px;

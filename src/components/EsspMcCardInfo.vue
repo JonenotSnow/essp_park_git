@@ -251,6 +251,7 @@
             .icon_p_font {
                 i {
                     font-size: 14px;
+                    color: #ccc;
                 }
                 .icon-collect2:before {
                     font-size: 12px;

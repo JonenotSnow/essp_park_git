@@ -203,11 +203,11 @@
             return {
                 breadlist_01: [
                     {
-                        path: "/parkHall/manage/baseInfo1",
+                        path: "/parkHall/manage/baseInfo",
                         name: "系统管理"
                     },
                     {
-                        path: "/parkHall/manage/sciAndTechPolicy/policieAndRegulation",
+                        path: "/parkHall/manage/publicNews",
                         name: "发布管理"
                     },
                     {
@@ -354,7 +354,7 @@
                         let url;
                         if (this.applyType == '01') {
                             // 处理动态图片，“新闻动态”模块才有这个字段
-                            this.ruleForm.parkUploadData = this.parkUploadData;
+                            this.ruleForm.titleImg= this.parkUploadData.src;
                             url = '/information/saveNews';
                         }
 
@@ -458,13 +458,15 @@
             // 获取详情，编辑页面使用
             getDateForEdit() {
                 let params = {
-                    id: this.id
+                    informationId: this.id
                 };
                 this.$post("/information/getInfoById", params).then(response => {
                     let codestatus = response.resultCode;
                     if (codestatus == "CLT000000000") {
 
                         this.ruleForm = response.resultData;
+
+                        this.parkUploadData.src = this.ruleForm.titleImg ? this.ruleForm.titleImg : ""; //资讯配图
 
                         // 删除时间“createTime”这个字段
                         delete this.ruleForm.createTime;

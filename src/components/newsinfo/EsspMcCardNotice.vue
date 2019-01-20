@@ -60,7 +60,7 @@
         },
         methods: {
             goToDetail(item){
-                this.$router.push({path: "/news/noticedetail",query: {info: item}});
+                this.$router.push({path: "/news/noticedetail",query: {informationId: informationId}});
             }
         }
     }

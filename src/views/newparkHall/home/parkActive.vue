@@ -241,7 +241,8 @@
         position: absolute;
         right: 0;
         top: 0;
-        padding: 2px 4px;
+        padding: 3px 12px;
+        font-size: 18px;
         background-color: #fb3131;
         color: #fff;
     }
@@ -258,7 +259,7 @@
         padding: 8px;
         background: #fff;
         margin-bottom: 40px;
-        border: 1px solid #999;
+        border: 1px solid #ccc;
     }
 
     .swiperwrap:hover .swiper-button-prev,
@@ -365,6 +366,7 @@
             font-weight: normal;
         }
         p {
+            padding: 0 10px;
             height: 60px;
             line-height: 30px;
             font-size: 14px;
@@ -398,11 +400,11 @@
 
     .swiper_item:hover {
         cursor: pointer;
-        box-shadow: 2px 2px 5px 1px #ccf;
-        -webkit-box-shadow: 2px 2px 5px 1px #ccf;
-        -moz-box-shadow: 2px 2px 5px 1px #ccf;
-        -ms-box-shadow: 2px 2px 5px 1px #ccf;
-        -o-box-shadow: 2px 2px 5px 1px #ccf;
+        box-shadow: 2.5px 4.3px 19.4px 0.6px rgba(0, 0, 0, 0.15);
+        -webkit-box-shadow: 2.5px 4.3px 19.4px 0.6px rgba(0, 0, 0, 0.15);
+        -moz-box-shadow: 2.5px 4.3px 19.4px 0.6px rgba(0, 0, 0, 0.15);
+        -ms-box-shadow: 2.5px 4.3px 19.4px 0.6px rgba(0, 0, 0, 0.15);
+        -o-box-shadow: 2.5px 4.3px 19.4px 0.6px rgba(0, 0, 0, 0.15);
     }
 
     .swiper_item:hover .index_mask_item {

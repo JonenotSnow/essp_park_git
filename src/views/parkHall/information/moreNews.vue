@@ -93,7 +93,7 @@
 
     .left_news {
         float: left;
-        width: 49%;
+        width: 560px;
     }
 
     .right_news {
