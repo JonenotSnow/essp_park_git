@@ -130,7 +130,7 @@ export default {
         },
         {
           name: "任务池",
-          path: "/parkHall/manage/activityPoolAddPark1",
+          path: "/parkHall/manage/activityPoolAddPark",
           src: require("@/assets/imgs/icon4.png"),
           isShow: true,
           query: {
@@ -174,7 +174,7 @@ export default {
   },
   methods: {
     linkToPage() {
-      this.$router.push("/parkHall/manage/activityPoolAddPark1");
+      this.$router.push("/parkHall/manage/activityPoolAddPark");
     },
     // 点击任务池标题获取该审核权限
     cancelAudit(id) {
@@ -277,7 +277,7 @@ export default {
           },
           {
             name: "入驻审核",
-            path: "/parkHall/manage/activityPoolAddPark1",
+            path: "/parkHall/manage/activityPoolAddPark",
             src: require("@/assets/imgs/icon4.png"),
             isShow: false,
             query: {
@@ -293,14 +293,14 @@ export default {
           },
           {
             name: "发布资讯",
-            path: "/parkHall/manage/publicNews",
+            path: "/news/addNews",
             src: require("@/assets/imgs/icon3.png"),
             isShow: false,
             query: {}
           },
           {
             name: "发布活动",
-            path: "/parkIndex/park/all",
+            path: "/parkIndex/launchForm",
             src: require("@/assets/imgs/icon1.png"),
             isShow: false,
             query: {}
