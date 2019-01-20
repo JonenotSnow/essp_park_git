@@ -5,11 +5,10 @@ import {parkRouter1} from "./park.js"
 import newsinfo from './newsinfo.js'
 import sciAndTechPolicy from './sciAndTechPolicy.js'
 import officeHall from './officeHall.js'
-import systemManage from './systemManage.js'
 import commonComponents from './commonComponents.js'
 
 var parkToal = [];
-parkToal.push(parkRouter1,newsinfo, sciAndTechPolicy, officeHall, systemManage,commonComponents);
+parkToal.push(parkRouter1,newsinfo, sciAndTechPolicy, officeHall,commonComponents);
 
 
 export default new Router({

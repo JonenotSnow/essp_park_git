@@ -137,7 +137,7 @@ export default {
                     name: this.utils.isBdPark()?"系统管理":"园区管理"
                 },
                 {
-                    path:`/parkHall/manage/activityPoolActivityAditing1`,
+                    path:`/parkHall/manage/activityPoolActivityAditing`,
                     name: this.utils.isBdPark() ? "审核管理" : "任务池"
                 },
                 {
@@ -235,6 +235,9 @@ export default {
 </script>
 
 <style scoped lang="less">
+#manageParkAuditDetail{
+    margin-bottom:50px;
+}
 .common_titwrap{
     width:1200px;
     margin:0 auto 50px;
@@ -332,7 +335,7 @@ export default {
     }
     .contentList1{
         width: 1034px;
-        margin:0 auto;
+        margin:20px auto;
         height: 404px;
         padding-bottom: 20px;
         border-radius: 6px;

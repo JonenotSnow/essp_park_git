@@ -4,20 +4,15 @@
             <div class='aside'>
                 <p class="tTitle">{{title}}</p>
                 <ul class="fNav" v-if="asideList && asideList.length>0">
-                    <li v-for="(it, index) in asideList" :key="index" :class="noChildMenu?'guanliStyle':'huodongStyle'">
+                    <li v-for="(it, i) in asideList" :key="i" :class="noChildMenu?'guanliStyle':'huodongStyle'">
                         <!-- 多层子菜单 -->
                         <div v-if="noChildMenu">
                             <p @click="togglechildren(it)" class="someli-p">{{it.menu}}</p>
                             <ul v-if="it.children && it.children.length>0" class="someli-ul">
                                 <li @click="linkto(it,is)" v-if="is.isshow" v-for="(is,j) in it.children" :key="j"
-                                    :class="routerName == is.name?'span-link':''">
-                                    <!--<span v-if="is.children && is.children.length>0" v-for="(item,index) in is.children">-->
-                                        <!--<em v-if="routerName == item.name?'span-link':''">{{is.menu}}</em>-->
-                                    <!--</span>-->
-                                    <!--<span v-else>{{is.menu}}</span>-->
-                                    <!--{{is.children.length}}{{is.menu}}-->
-                                    <span v-if="is.children.length > 0" v-for="(item,index) in is.children" :class="routerName == item.name?'span-link':''">
-                                         <span v-if="index == 0">{{is.menu}}</span>
+                                    :class="childId == is.id?'span-link':''">
+                                    <span v-if="is.children.length > 0" v-for="(item,j) in is.children" :key="j">
+                                         <span v-if="j == 0">{{is.menu}}</span>
                                     </span>
                                     <span v-if="is.children.length == 0">{{is.menu}}</span>
 
@@ -46,25 +41,21 @@
         components: {},
         data() {
             return {
-                active: {
-                    //999999999为了防冲突
-                    faterindex: '99999999999',
-                    childrenindex: '9999999999999'
-                },
                 title: "",
                 asideList: [],
+                childId:'',
                 routerName: this.$route.name,
                 //当前左侧菜单显示类型-多层子菜单 (保定园区-科技政策，资讯公告，系统管理，淮安园区-园区管理),
-                curLeftClass:['0421','0424','0426','0405']
+                curLeftClass:['0421','0424','0426','0405'],
+                firstLevel:0
             };
         },
 
         created() {
-            this.getRouteInfo();
+            this.getLeftMenu();
         },
         methods: {
             togglechildren(it) {
-                this.active.faterindex =  it.id;
                 if (it.children && it.children.length) {
                     var children = it.children;
                     children.forEach(element => {
@@ -72,28 +63,48 @@
                     });
                 }
             },
-            //获取资源
-            getRouteInfo() {
-                // 主要是需要延迟跟导航顶部同时获取到数据
-                setTimeout(()=>{
-                    var navIndex = sessionStorage.getItem("navIndex");
-                    var menuList = JSON.parse(sessionStorage.getItem("menuList"));
-                    this.asideList = menuList.children[navIndex].children;
-                    this.title = menuList.children[navIndex].menu;
-                })
+            getLeftMenu() {
+                let name = this.$router.currentRoute.name;
+                let menuList = this.SSH.getItem("menuList");
+                let menuResource = this.SSH.getItem("menuResource");
+                let currentMenu = menuResource[name];
+                let tmp = [];
+                this.asideList = [];
+                //保持左侧入口样式
+                this.childId = currentMenu.menuid.toString().substr(0, 8);
+                //获取当前横向导航索引
+                let dir = currentMenu.menuid.substr(0, 4);
+                if (menuList.children && menuList.children.length>0) {
+                    for (let i = 0; i < menuList.children.length; i++) {
+                        if (dir == menuList.children[i].id) {
+                            this.firstLevel = i;
+                        }
+                    }
+                }
+                //当前横向导航下 菜单入口
+                let child = menuList.children[this.firstLevel];
+                if (child.children[0].id.length == 8) {//子菜单第一个id长度为8时(三级导航，如管理)
+                    for (let i = 0;i < child.children.length;i++) {
+                        tmp.push(child.children[i]);
+                    }
+                    this.title = child.menu;
+                    this.asideList = tmp;
+                } else if (child.children[0].id.length == 6) {//子菜单第一个id长度为6时(二级导航，如活动)
+                    for (let i = 0;i < child.children.length;i++) {
+                        tmp.push(child.children[i]);
+                    }
+                    this.title = child.menu;
+                    this.asideList = tmp;
+                }
             },
             linkto(it,is) {
-                this.active = {
-                    faterindex: it.id,
-                    childrenindex: is.id
-                };
                 this.$router.push({name: is.name})
             }
         },
         watch: {
             $route() {
                 this.routerName = this.$route.name;
-                this.getRouteInfo();
+                this.getLeftMenu();
             }
         },
         computed: {

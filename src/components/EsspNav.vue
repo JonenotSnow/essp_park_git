@@ -4,7 +4,7 @@
             <ul class="esspclearfix">
                 <li v-for="(item,index) in headMenu"
                     :key="index">
-                    <span :class="index == active?'span-link':'span-none'"
+                    <span :class="item.id == active?'span-link':'span-none'"
                           @click="toLink(item,index)"><span style="font-size: 18px;">{{item.menu}}</span></span>
                 </li>
             </ul>
@@ -37,48 +37,16 @@
         methods: {
             getNavIndex(){
                 // 直接从本地获取菜单权限
-                var menuList = this.SSH.getItem("menuList");
+                let name = this.$router.currentRoute.name;
+                let menuList = this.SSH.getItem("menuList");
                 this.headMenu = (menuList && menuList.children) || [];
-                var routerName = this.$route.name;
-                var munuLen = this.headMenu.length;
-
-                //定位当前激活的横向导航并存值对应的sessionStorage
-                // 左侧一级导航的判断
-                for(var i = 0 ;i < munuLen; i++ ){
-                    // 判断菜单地下是否有存在子菜单，需要循环判断子菜单里的name
-                    var menuChildLen = this.headMenu[i].children && this.headMenu[i].children.length;
-                    // 左侧二级导航的判断
-                    if(menuChildLen > 0) {
-                        for(var j = 0; j < menuChildLen; j ++) {
-                            var menuChild = this.headMenu[i].children[j];
-                            var menuChildChildLen = menuChild.length;
-                            // 左侧三级导航的时候判断
-                            if(menuChildChildLen > 0) {
-                                for(var z = 0; z < menuChildChildLen; z ++ ) {
-                                    var menuChildChild = menuChild.menuChild[z];
-                                    if(menuChildChild.name == routerName) {
-                                        this.active = i;
-                                        break
-                                    }
-                                }
-                            } else {
-                                if(menuChild.name == routerName) {
-                                    this.active = i;
-                                    break
-                                }
-                            }
-                        }
-                    } else {
-                        if(this.headMenu[i].name == routerName) {
-                            this.active = i;
-                            break
-                        }
-                    }
+                let menuResource = this.SSH.getItem("menuResource");
+                let currentMenu = menuResource[name];
+                if (currentMenu) {
+                    this.active = currentMenu.menuid.substr(0, 4);
                 }
-                sessionStorage.setItem('navIndex',this.active);
             },
             toLink(item,index) {
-                this.active = index;
                 this.$router.push({
                     name: item.name
                 })

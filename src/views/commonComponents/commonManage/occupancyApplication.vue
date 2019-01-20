@@ -1,7 +1,7 @@
 <template>
     <div id='wrap' class="occupancyApplication">
         <p style="padding-top:50px;">
-            <span style="letter-spacing: 4.8px;">申请表设置</span>
+            <span :class="{'differ':isBdPark}">申请表设置</span>
         </p>
         <p style="margin-bottom:8px;">
             <span style="margin-left:4px;">设置企业申请入驻园区时需要填写的申请信息</span>
@@ -594,7 +594,8 @@ export default {
             ],
             addList: [],
             displayList: [],
-            confirmSend:false
+            confirmSend:false,
+            isBdPark: this.utils.isBdPark(),//是否是保定园区
         };
     },
     computed: {},
@@ -881,6 +882,17 @@ export default {
                 line-height: 30px;
                 color: #333333;
                 border-left: 10px solid #10b5ff;
+                letter-spacing: 4.8px;
+                &.differ{
+                        font-size: 18px;
+                        padding-left: 0;
+                        line-height: 30px;
+                        color: #333;
+                        border-left: 8px solid #10b5ff;
+                        text-indent: 22px;
+                        letter-spacing: 3.6px;
+                        display: block;
+                }
             }
         }
         &:nth-of-type(2) {

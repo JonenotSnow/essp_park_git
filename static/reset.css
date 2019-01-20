@@ -202,7 +202,7 @@ html {
 
 .content_r {
     float: right;
-    width: 83%;
+    width: 990px;
     min-height: 375px;
 }
 .floats .el-input__inner {

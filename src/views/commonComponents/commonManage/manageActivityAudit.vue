@@ -198,7 +198,7 @@
                         name: this.utils.isBdPark() ? "系统管理" : "园区管理"
                     },
                     {
-                        path: `/parkHall/manage/activityPoolActivityAditing1`,
+                        path: `/parkHall/manage/activityPoolActivityAditing`,
                         name: this.utils.isBdPark() ? "审核管理" : "任务池"
                     },
                     {
@@ -393,6 +393,9 @@
 </style>
 
 <style scoped lang="less">
+    #manageActivityAudit{
+        margin-bottom: 50px;
+    }
     .common_titwrap {
         width: 1200px;
         margin: 0 auto;
@@ -485,7 +488,7 @@
         }
         .contentList1 {
             width: 1034px;
-            margin: 0 auto;
+            margin: 20px auto;
             height: auto;
             padding-bottom: 20px;
             border-radius: 6px;

@@ -1,4 +1,3 @@
-
 // 路由名称: 园区路由
 const parkIndex = resolve => require(['@/views/parkHall/index'],resolve);
 // 园区首页
@@ -59,7 +58,7 @@ const infoDetail = resolve => require(['@/views/parkHall/information/infoDetail'
 
 // 园区管理
 // //园区管理 概览设置
-const baseInfo1 = resolve => require(['@/views/parkHall/manage/baseInfo'],resolve);
+const baseInfo= resolve => require(['@/views/parkHall/manage/baseInfo'],resolve);
 //园区管理 概览设置 模板选择
 const selectModule = resolve => require(['@/views/parkHall/manage/selectModule'],resolve);
 // 园区通知公告
@@ -74,13 +73,13 @@ const userManage = resolve => require(['@/views/commonComponents/commonManage/us
 // 园区邀请函
 const requestPage = resolve => require(['@/views/commonComponents/commonManage/requestPage'],resolve);
 // 园区管理入园审核
-const activityPoolAddPark1 =resolve => require(['@/views/parkHall/manage/activityPoolAddPark'],resolve);
+const activityPoolAddPark =resolve => require(['@/views/parkHall/manage/activityPoolAddPark'],resolve);
 // 园区管理资讯审核
 const activityPoolZX = resolve => require(['@/views/parkHall/manage/activityPoolZX'],resolve);
 // 园区管理活动设置
-const activityPoolActivityAditing1 = resolve => require(['@/views/parkHall/manage/activityPoolActivityAditing'],resolve);
+const activityPoolActivityAditing = resolve => require(['@/views/parkHall/manage/activityPoolActivityAditing'],resolve);
 // 园区管理入驻申请表
-const occupancyApplication1 = resolve => require(['@/views/commonComponents/commonManage/occupancyApplication'],resolve);
+const occupancyApplication = resolve => require(['@/views/commonComponents/commonManage/occupancyApplication'],resolve);
 // 园区管理 咨询审核详情
 const manageZXAuditing =  resolve => require(['@/views/parkHall/manage/manageZXAuditing'],resolve);
 //园区管理 活动状态审核详情
@@ -132,14 +131,6 @@ const newIndex =  resolve => require(['@/views/parkHall/needHall/newIndex.vue'],
 const publishNeed =  resolve => require(['@/views/parkHall/needHall/publishNeed/index'], resolve);// 园区-需求大厅
 
 const bannerSet= resolve => require(['@/views/commonComponents/commonManage/bannerSet'], resolve);
-//园区管理 banner设置
-
-// const baseInfo2 = resolve => require(['@/views/newmanage/platformSetup/aboutWe/baseInfo'], resolve);
-// const activityPoolAddPark2 = resolve => require(['@/views/newmanage/auditManage/addParkAudit/activityPoolAddPark'], resolve);
-const activityPoolActivityAuditing2 = resolve => require(['@/views/newmanage/auditManage/activityPublishAudit/activityPublishAudit'], resolve);
-const userManage2 = resolve => require(['@/views/commonComponents/commonManage/userManage'], resolve);
-const occupancyApplication2 = resolve => require(['@/views/commonComponents/commonManage/occupancyApplication'],resolve);
-const bannerSet2 = resolve => require(['@/views/commonComponents/commonManage/bannerSet'],resolve);
 
 //园区管理-关于我们
 const dataManage = resolve => require(['@/views/newmanage/platformSetup/dataManage/dataManage'], resolve);
@@ -172,13 +163,13 @@ const publishAudit = resolve => require(['@/views/newmanage/auditManage/publishA
 
 //科技政策审核列表
 const sciAndTechPolicyAudit = resolve => require(['@/views/newmanage/auditManage/publishAudit/sciAndTechPolicyAudit/index.vue'], resolve);
-//资讯新闻审核列表
-const newsNoticeAudit = resolve => require(['@/views/newmanage/auditManage/publishAudit/newsNoticeAudit/index.vue'], resolve);
 //发布审核详情
 const audit = resolve => require(['@/views/newmanage/auditManage/publishAudit/sciAndTechPolicyAudit/audit'], resolve);
 
 //发布审核历史详情
 const auditDetail = resolve => require(['@/views/newmanage/auditManage/publishAudit/sciAndTechPolicyAudit/auditDetail'], resolve);
+//资讯新闻审核列表
+const newsNoticeAudit = resolve => require(['@/views/newmanage/auditManage/publishAudit/newsNoticeAudit/index.vue'], resolve);
 
 //园区管理-需求管理
 const needManage = resolve => require(['@/views/newmanage/needManage/needManage'], resolve);
@@ -407,18 +398,18 @@ export const parkRouter1 = {
             component: infoDetail,
 
         },
-
-        //园区管理---淮安园区
+        
+        //园区管理
         {
-            path: '/parkHall/manage/baseInfo1',
+            path: '/parkHall/manage/baseInfo',
             name: "park-manage",
             component: asideComRoot,
-            redirect: '/parkHall/manage/baseInfo1',
+            redirect: '/parkHall/manage/baseInfo',
             children: [
                 {
-                    path: "/parkHall/manage/baseInfo1",
-                    name: "park-baseInfo1",
-                    component: baseInfo1
+                    path: "/parkHall/manage/baseInfo",
+                    name: "park-baseInfo",
+                    component: baseInfo
                 },
                 {
                     path: '/parkHall/manage/selectModule',
@@ -457,9 +448,9 @@ export const parkRouter1 = {
 
                 },
                 {
-                    path: '/parkHall/manage/activityPoolAddPark1',
-                    name: "park-activityPoolAddPark1",
-                    component: activityPoolAddPark1,
+                    path: '/parkHall/manage/activityPoolAddPark',
+                    name: "park-activityPoolAddPark",
+                    component: activityPoolAddPark,
 
                 },
                 {
@@ -487,21 +478,22 @@ export const parkRouter1 = {
 
                 },
                 {
-                    path: '/parkHall/manage/activityPoolActivityAditing1',
-                    name: "park-activityPoolActivityAditing1",
-                    component: activityPoolActivityAditing1,
+                    path: '/parkHall/manage/activityPoolActivityAditing',
+                    name: "park-activityPoolActivityAditing",
+                    component: activityPoolActivityAditing,
 
                 },
                 {
-                    path: '/parkHall/manage/occupancyApplication1',
-                    name: "park-occupancyApplication1",
-                    component: occupancyApplication1,
+                    path: '/parkHall/manage/occupancyApplication',
+                    name: "park-occupancyApplication",
+                    component: occupancyApplication,
 
                 },
+                //需求管理
                 {
-                    path: '/parkHall/manage/bannerSet2',
-                    name: "park-bannerSet2",
-                    component: bannerSet2,
+                    path: "/parkHall/manage/needManage",
+                    name: "park-needManage",
+                    component: needManage
 
                 },
                 {
@@ -518,12 +510,6 @@ export const parkRouter1 = {
                     path: "/parkHall/manage/expertTeam",
                     name: "park-expertTeam",
                     component: expertTeam
-                },
-                {
-                    path: '/parkHall/manage/occupancyApplication2',
-                    name: "park-occupancyApplication2",
-                    component: occupancyApplication2,
-
                 },
                 //发布管理
                 //科技政策
@@ -545,17 +531,6 @@ export const parkRouter1 = {
                         }
                     ]
                 },
-                //审核管理
-                // {
-                //     path: "/parkHall/manage/activityPoolAddPark2",
-                //     name: "park-activityPoolAddPark2",
-                //     component: activityPoolAddPark2
-                // },
-                {
-                    path: "/parkHall/manage/activityPoolActivityAuditing2",
-                    name: "park-activityPoolActivityAuditing2",
-                    component: activityPoolActivityAuditing2
-                },
                 {
                     path: "/parkHall/manage/publishAudit",
                     name: "park-publishAudit",
@@ -574,20 +549,6 @@ export const parkRouter1 = {
                             component: newsNoticeAudit
                         }
                     ]
-                },
-
-                //成员管理
-                {
-                    path: "/parkHall/manage/userManage2",
-                    name: "park-userManage2",
-                    component: userManage2
-                },
-                //需求管理
-                {
-                    path: "/parkHall/manage/needManage",
-                    name: "park-needManage",
-                    component: needManage
-
                 },
                 //招商管理（新版）
                 {
@@ -633,18 +594,6 @@ export const parkRouter1 = {
             ]
         },
         {
-            path: '/parkHall/manage/publishAchievement',
-            name: "park-publishAchievement",
-            component: publishAchievement,
-
-        },
-        {
-            path: '/parkHall/manage/publishExpertTeam',
-            name: "park-publishExpertTeam",
-            component: publishExpertTeam,
-
-        },
-        {
             path: '/parkHall/manage/publishSciAndTechPolicy',
             name: "park-publishSciAndTechPolicy",
             component: publishSciAndTechPolicy,
@@ -664,6 +613,24 @@ export const parkRouter1 = {
             path: "/parkHall/manage/audit",
             name: "park-audit",
             component: audit
+        },
+        {
+            path: '/parkHall/manage/publishAchievement',
+            name: "park-publishAchievement",
+            component: publishAchievement,
+
+        },
+        {
+            path: '/parkHall/manage/publishExpertTeam',
+            name: "park-publishExpertTeam",
+            component: publishExpertTeam,
+
+        },
+        {
+            path: '/parkHall/manage/publishSciAndTechPolicy',
+            name: "park-publishSciAndTechPolicy",
+            component: publishSciAndTechPolicy,
+
         },
         {
             path: "/parkHall/manage/needManageDetail",

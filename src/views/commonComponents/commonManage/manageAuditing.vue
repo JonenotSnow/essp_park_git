@@ -66,11 +66,11 @@
             return {
                 breadlist: [
                     {
-                        path: '/parkHall/manage/baseInfo1',
+                        path: '/parkHall/manage/baseInfo',
                         name: this.utils.isBdPark()?"系统管理":"园区管理"
                     },
                     {
-                        path: `/parkHall/manage/activityPoolAddPark1`,
+                        path: `/parkHall/manage/activityPoolAddPark`,
                         name: this.utils.isBdPark() ? "审核管理" : "任务池"
                     },
                     {
@@ -166,7 +166,7 @@
                     });
                 this.access = false;
                 this.noAccess = false;
-                this.$router.push('/parkHall/manage/activityPoolAddPark1')
+                this.$router.push('/parkHall/manage/activityPoolAddPark')
             },
             //取消审核
             cancelAudit() {
@@ -177,7 +177,7 @@
                     status: '10',
                     flag: "noContent"
                 })
-                this.$router.push('/parkHall/manage/activityPoolAddPark1')
+                this.$router.push('/parkHall/manage/activityPoolAddPark')
             }
         }
 
@@ -213,6 +213,9 @@
 </style>
 
 <style scoped lang="less">
+    #manageAuditing{
+        margin-bottom: 50px;   
+    }
     .common_titwrap {
         width: 1200px;
         margin: 0 auto;
