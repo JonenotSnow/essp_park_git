@@ -198,7 +198,7 @@
                         name: this.utils.isBdPark() ? "系统管理" : "园区管理"
                     },
                     {
-                        path: `/parkHall/manage/activityPublishAudit`,
+                        path: `/parkHall/manage/activityPoolActivityAditing1`,
                         name: this.utils.isBdPark() ? "审核管理" : "任务池"
                     },
                     {

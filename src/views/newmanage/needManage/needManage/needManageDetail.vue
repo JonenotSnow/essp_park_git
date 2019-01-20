@@ -1,220 +1,153 @@
 <template>
-    <div id="audit">
-        <essp-bread-crumb :breadList="breadlist"></essp-bread-crumb>
-        <p class='Otitle'>
-            <i></i>
-            {{typeTitle}}
-            <i></i>
-        </p>
+    <div class="publish-sciAnd-tech-policy-wrap" id="needManageDetail">
+        <essp-bread-crumb :breadList="breadlist"/>
+     
+        <div class="publish-title">
+            <i></i>非公开需求<i></i>
+        </div>
+        <div class="publist-form">
+            <el-form  label-width="125px" class="demo-ruleForm">
+                <el-form-item label="需求标题：" prop="title">
+                    <div class="my-style">{{data.title}}</div>
+                </el-form-item>
+                <el-form-item label="发布人姓名：" prop="createName">
+                    <div class="my-style">{{data.createName}}</div>
+                </el-form-item>
+                <el-form-item label="公司名称：" prop="cstName">
+                    <div class="my-style">
+                        <div v-html="data.cstName"></div>
+                    </div>
+                </el-form-item>
+                <el-form-item label="发布时间：" prop="createTime">
+                    <div class="my-style">{{data.createTime | timerFormat(data.createTime) }}</div>
+                </el-form-item>
+                <el-form-item label="需求详情：">
+                    <div class="my-style" v-html="data.detail"></div>
+                </el-form-item>
+                <el-form-item label="附件：" v-if="data.accessory && data.accessory.length>0">
+                    <div class="my-style" v-for="(item, index) in data.accessory" :key="index">{{item.name}}</div>
+                </el-form-item>
+            </el-form>
+        </div>
     </div>
 </template>
 
 <script>
-import EsspBreadCrumb from "@/components/EsspBreadCrumb";
-export default {
-    components: {
-        EsspBreadCrumb
-    },
-    props:{
-        //引用组件区别字段
-        type:{
-            type:String,
-            default:''
+    import EsspBreadCrumb from "@/components/EsspBreadCrumb";
+    export default {
+        components: {
+            EsspBreadCrumb
         },
-        //引用组件顶部显示字段
-        typeTitle:{
-            type:String,
-            default:'公开需求详情'
+        data() {
+            return {
+                parkId: sessionStorage.getItem("parkId") || "",
+                id: this.$route.query.id || "",
+                breadlist: [
+                    {
+                        path: "/parkHall/manage/baseInfo",
+                        name: "系统管理"
+                    },
+                    {
+                        path: "/parkHall/manage/needManage?id=1",
+                        name: "需求管理"
+                    },
+                    {
+                        path: "/parkHall/manage/needManage?id=1",
+                        name: "非公开需求"
+                    },
+                    {
+                        path: "",
+                        name: "非公开需求详情"
+                    }
+                ],
+                data:{}
+            }
         },
-        //面包屑导航
-        breadlist:{
-            type:[],
-            default:[]
+        created() {
+            this.getNeedByKey();
         },
-    },
-    data() {
-        return {
-        }
-    },
-    created() {
-        
-    },
-    methods: {
-    },
-}
+        methods: {
+            getNeedByKey() {
+                let params = {
+                    id: this.id
+                };
+                this.$post(this.$apiUrl.manageNeed.getNeedByKey, params).then(response => {
+                    let codestatus = response.resultCode;
+                    if (codestatus == "CLT000000000") {
+                        this.data = response.resultData;
+                    } else {
+                        this.$message.info(response.resultMsg);
+                    }
+                }, err => {
+                    this.$message.error("接口异常");
+                })
+            }
+        },
+    }
 </script>
 
 <style lang='less' scoped>
-#audit{
-    width:1200px;
-    background:#fff;
-    margin: 0 auto;
-    .Otitle{
-        font-size: 24px;
-        line-height: 36px;
-        margin-bottom:20px;
-        margin-top:60px;
-        color: #333333;
-        text-align: center;
-        i {
-            display: inline-block;
-            width: 70px;
-            border: 1px solid #ddd;
-            position: relative;
-            top: -6px;
-        }
-    }
-    .content{
-        width:884px;
-        margin: 76px auto 0;
-        li{
-            margin-bottom:20px;
-            .require{
-                color:#ff9900;
-            }
-            .title,.title1{
-                font-size: 14px;
-                font-weight: normal;
-                letter-spacing: 0.4px;
-                color: #666666;
+    #needManageDetail {
+        width: 1200px;
+        background: #fff;
+        margin: 0 auto 20px;
+        .publish-title {
+            margin-top: 66px;
+            margin-bottom: 95px;
+            font-size: 24px;
+            color: #333333;
+            text-align: center;
+            i {
                 display: inline-block;
-                width:72px;
-                text-align: right;
-                margin-right:10px;
+                width: 70px;
+                border: 1px solid #ddd;
+                position: relative;
+                top: -6px;
+                &:nth-of-type(1){
+                    left:-17px;
+                }
+                &:nth-of-type(2){
+                    right:-17px;
+                }
             }
-            input,select{
-                width: 198px;
-                height: 35px;
-                padding: 0 5px;
-                border-radius: 3px;
-                border: solid 1px #cccccc;
+        }
+        .publist-form {
+            .demo-ruleForm {
+                padding: 0 125px 88px;
             }
-            select{
-                width: 210px;
+            .demo-ruleForm-Next {
+                padding-bottom: 60px;
             }
-            textarea{
-                width: 700px;
-                height: 120px;
-                max-width: 700px;
-                max-height:120px;
-                min-width: 700px;
-                min-height:120px;
-                border-radius: 3px;
-                border: solid 1px #cccccc;
-            }
-            .sub,.sub1{
+            .my-style {
                 font-size: 14px;
                 font-weight: normal;
                 font-stretch: normal;
                 letter-spacing: 0.1px;
-                color: #999999
+                color: #999;
+                .my-tag {
+                    margin-right: 20px;
+                    padding: 7px 16px;
+                    font-size: 14px;
+                    font-weight: normal;
+                    font-stretch: normal;
+                    letter-spacing: 0px;
+                    color: #fff;
+                    border-radius: 3px;
+                    background-color: #cccccc;
+                }
             }
-            .sub1{
-                margin-top:100px;
-                margin-left:14px;
+            .audit-line {
+                margin-bottom: 20px;
+                border-bottom: 1px solid #ccc;
             }
-            .title1{
-                margin-left:10px;
-            }
-            .scan{
-                display: inline-block;
-                width: 100px;
-                height: 35px;
-                background-color: #e6f4ff;
+            .audit-opinion {
+                padding: 0px 15px;
+                width: 570px;
+                height: 180px;
                 border-radius: 3px;
-                font-size: 14px;
-                font-weight: normal;
-                font-stretch: normal;
-                line-height: 35px;
-                letter-spacing: 0px;
-                color: #00a0e9;
-                text-align: center;
-                margin-left:95px;
-                cursor: pointer;
-            }
-            &.pic{
-                overflow: hidden;
-                &>span{
-                    float: left;
-                }
-                .avater-uploader{
-                    float: left;
-                    width: 210px;
-                    height: 120px;
-                    border-radius: 3px;
-                    border: dashed 1px #cccccc;
-                    margin-left:8px;
-                    .tianjia{
-                        display:block;
-                        font-size: 40px;
-                        margin-left:80px;
-                        margin-top:36px;
-                    }
-                    .detil{
-                        font-size: 14px;
-                        font-weight: normal;
-                        font-stretch: normal;
-                        line-height: 30px;
-                        letter-spacing: 0px;
-                        color: #cccccc;
-                        margin-left:80px;
-                    }
-                }
-            }
-            &.resume{
-                overflow: hidden;
-                span{
-                    float: left;
-                }
-                textarea{
-                    float: left;
-                    margin-left:8px;
-                    padding:10px;
-                }
-            }
-            &.editor{
-                overflow: hidden;
-                span{
-                    float: left;
-                }
-                div{
-                    float: left;
-                    margin-left:8px;
-                    width: 700px;
-                    height: 400px;
-                    max-width: 700px;
-                    max-height:400px;
-                    min-width: 700px;
-                    min-height:400px;
-                    border-radius: 3px;
-                    border: solid 1px #cccccc;
-                    padding:10px;
-                }
+                border: solid 1px #00a0e9;
+                background-color: #ffffff;
             }
         }
     }
-    .save{
-        padding-bottom: 60px;
-        text-align: center;
-        width: 884px;
-        margin: 40px auto 20px;
-        span{
-            display: inline-block;
-            width: 180px;
-            height: 40px;
-            background-image: linear-gradient(31deg, 
-                #22a2fa 0%, 
-                #10b5ff 100%);
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: normal;
-            font-stretch: normal;
-            line-height: 40px;
-            letter-spacing: 0px;
-            color: #ffffff;
-            text-align: center;
-        }
-    }
-}
 </style>
