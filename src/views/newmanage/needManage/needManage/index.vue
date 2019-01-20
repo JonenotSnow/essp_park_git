@@ -2,36 +2,27 @@
  <div>
     <div class="outroute">
         <div class="router__link">
-          <!-- <span class="Inlinkstyle" :class="{'outlinkstyle': type == 0 }" @click="getType(0)">公开需求</span>
-          <span class="separator">|</span> -->
-          <span class="Inlinkstyle outlinkstyle" :class="{'outlinkstyle': type == 1 }" @click="getType(1)">非公开需求</span>
+          <span class="Inlinkstyle outlinkstyle">非公开需求</span>
         </div>
-        <!-- <openNeed v-show="type == 0"></openNeed> -->
-        <noOpenNeed v-show="type == 1"></noOpenNeed>
+        <noOpenNeed></noOpenNeed>
     </div>
  </div>
 </template>
 
 <script>
-import openNeed from './openNeed/index'
 import noOpenNeed from './noOpenNeed/index'
  export default {
    components:{
-     openNeed,
      noOpenNeed
    },
    data () {
      return {
-        type:1
      }
    },
    created () {
      
    },
    methods: {
-    getType(type){
-      this.type = type;
-    }
    },
  }
 </script>
