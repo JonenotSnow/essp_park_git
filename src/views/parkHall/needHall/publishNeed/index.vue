@@ -7,6 +7,7 @@
         <label>需求发布</label>
         <span></span>
       </div>
+      <div class="need-tip">注：此需求仅科技局可见</div>
       <el-form ref="form" :model="form" label-width="100px" :rules="rules">
         <el-form-item label="需求标题" prop="title">
           <el-col :span="12">
@@ -175,6 +176,7 @@ export default {
 .btn-sure {
   width: 200px;
   height: 40px;
+  margin: 40px auto 60px;
   line-height: 40px;
   vertical-align: middle;
   background-image: linear-gradient(21deg, #22a2fa 0%, #10b5ff 100%),
@@ -183,7 +185,6 @@ export default {
   font-size: 16px;
   letter-spacing: 10px;
   color: #ffffff;
-  margin: 0 auto;
   text-align: center;
   cursor: pointer;
 }
@@ -202,6 +203,7 @@ export default {
   width: 1200px;
   min-height: 685px;
   background-color: #ffffff;
+  overflow: hidden;
   .title {
     font-size: 24px;
     line-height: 90px;
@@ -235,5 +237,13 @@ export default {
             height: 400px;
         }
     }
+.need-tip{
+  width: 980px;
+  margin: 0 auto;
+  padding: 0 0 0 45px;
+  font-size: 14px;
+  color: #00a0e9;
+  line-height: 30px;
+}
 </style>
 

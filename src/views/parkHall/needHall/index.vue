@@ -5,7 +5,7 @@
       <div class="btn_group">
         <div class="btn" @click="publish">
 			<i class="iconfont icon-fasong icon-publish"></i>
-			需求发布</div>
+			发布需求</div>
         <div class="btn" @click="myNeed">
 			<i class="iconfont icon-icon-test"></i>
 			我的商机</div>
@@ -204,40 +204,49 @@ export default {
               } else {
                 displayUrl = "/requIndex/display-other";
               }
-              //标签页打开页面
-              let routerData = this.$router.resolve({
-                path: displayUrl,
-                query: {
-                  bsnRqmId: val.simRqmInfVo.bsnRqmID,
-                  tplId: val.simRqmInfVo.tplID
-                }
-              });
-              window.open(routerData.href, "_blank");
+              // //标签页打开页面
+              // let routerData = this.$router.resolve({
+              //   path: displayUrl,
+              //   query: {
+              //     bsnRqmId: val.simRqmInfVo.bsnRqmID,
+              //     tplId: val.simRqmInfVo.tplID
+              //   }
+              // });
+              // window.open(routerData.href, "_blank");
+              let params ={bsnRqmId:val.simRqmInfVo.bsnRqmId,
+                                tplId:val.simRqmInfVo.tplId}
+                                this.windowOpenUrl(displayUrl,params)
             } else {
               displayUrl = "/requIndex/display-other";
               //标签页打开页面
-              let routerData = this.$router.resolve({
-                path: displayUrl,
-                query: {
-                  bsnRqmId: val.simRqmInfVo.bsnRqmID,
-                  tplId: val.simRqmInfVo.tplID
-                }
-              });
-              window.open(routerData.href, "_blank");
+              // let routerData = this.$router.resolve({
+              //   path: displayUrl,
+              //   query: {
+              //     bsnRqmId: val.simRqmInfVo.bsnRqmID,
+              //     tplId: val.simRqmInfVo.tplID
+              //   }
+              // });
+              // window.open(routerData.href, "_blank");
+              let params ={bsnRqmId:val.simRqmInfVo.bsnRqmId,
+                                tplId:val.simRqmInfVo.tplId}
+                                this.windowOpenUrl(displayUrl,params)
             }
           }
         });
       } else {
         displayUrl = "/requIndex/display-other";
         //标签页打开页面
-        let routerData = this.$router.resolve({
-          path: displayUrl,
-          query: {
-            bsnRqmId: val.simRqmInfVo.bsnRqmID,
-            tplId: val.simRqmInfVo.tplID
-          }
-        });
-        window.open(routerData.href, "_blank");
+        // let routerData = this.$router.resolve({
+        //   path: displayUrl,
+        //   query: {
+        //     bsnRqmId: val.simRqmInfVo.bsnRqmID,
+        //     tplId: val.simRqmInfVo.tplID
+        //   }
+        // });
+        // window.open(routerData.href, "_blank");
+        let params ={bsnRqmId:val.simRqmInfVo.bsnRqmId,
+                                tplId:val.simRqmInfVo.tplID}
+                                this.windowOpenUrl(displayUrl,params)
       }
     },
     focus(item, index) {

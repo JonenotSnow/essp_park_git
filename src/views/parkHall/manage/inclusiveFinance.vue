@@ -148,29 +148,29 @@ export default {
           isShow:true,
           linkTo:'http://www.ccb.com/cn/home/smallcompany/xw_quickLoan.html',
           img:require('../../../assets/newparkimg/inclusivefinance/creditQuick Loan.png'),
-          condition:['小微企业主:信用状况良好；','中国内地居民（不含港澳台）；','个人网银网银盾客户；','持有建行个人金融资产（包括存款、理财等）或诚信纳税企业。'],
+          condition:['小微企业主:','信用状况良好；','中国内地居民（不含港澳台）；','个人网银网银盾客户；','持有建行个人金融资产（包括存款、理财等）或诚信纳税企业。'],
           feature:['信用贷款，免抵押、免担保；','全流程线上办理；','自主支用，随借随还，按实际使用金额及天数计息。']
         },{
           name:'',
           isShow:true,
           linkTo:'http://www.ccb.com/cn/home/smallcompany/xw_quickLoan.html',
           img:require('../../../assets/newparkimg/inclusivefinance/mortgageQuickLoan.png'),
-          condition:['小微企业主:信用状况良好；','中国内地居民（不含港澳台）；','个人网银网银盾客户；','拥有优质房产或者在建设银行尚有个人住房贷款。'],
+          condition:['小微企业主:','信用状况良好；','中国内地居民（不含港澳台）；','个人网银网银盾客户；','拥有优质房产或者在建设银行尚有个人住房贷款。'],
           feature:['线上审批，线下签约；','房产抵押或存量按揭贷款住房二次顺位抵押；','自主支用，随借随还，按实际使用金额及天数计息。']
         },{
           name:'',
           isShow:true,
           linkTo:'http://www.ccb.com/cn/home/smallcompany/xw_quickLoan.html',
           img:require('../../../assets/newparkimg/inclusivefinance/hypothecation QuickLoan.png'),
-          condition:['小微企业主；','信用状况良好；','中国内地居民（不含港澳台）；','个人网银网银盾客户；','持有建行个人或企业金融资产（包括存款、理财等）。'],
-          feature:['质押贷款；全流程线上办理；','自主支用，随借随还，按实际使用金额及天数计息。']
+          condition:['小微企业主:','信用状况良好；','中国内地居民（不含港澳台）；','个人网银网银盾客户；','持有建行个人或企业金融资产（包括存款、理财等）。'],
+          feature:['质押贷款；','全流程线上办理；','自主支用，随借随还，按实际使用金额及天数计息。']
         },{
           name:'',
           isShow:true,
           linkTo:'http://www.ccb.com/cn/home/smallcompany/xw_quickLoan.html',
           img:require('../../../assets/newparkimg/inclusivefinance/platformQuick Loan.png'),
-          condition:['小微企业主；','信用状况良好；','中国内地居民（不含港澳台）；','个人网银网银盾客户；','电商、政府、供应链等合作平台上小微企业。'],
-          feature:['特定客户群；全流程线上办理；','自主支用，随借随还，按实际使用金额及天数计息。']
+          condition:['小微企业主:','信用状况良好；','中国内地居民（不含港澳台）；','个人网银网银盾客户；','电商、政府、供应链等合作平台上小微企业。'],
+          feature:['特定客户群；','全流程线上办理；','自主支用，随借随还，按实际使用金额及天数计息。']
         }
       ],
       industrySolutions:[

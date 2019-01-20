@@ -221,11 +221,11 @@ export default {
       }
       //园区管理员才有任务池和入驻审核的权限
       if (item.name == "任务池" || item.name == "入驻审核") {
-        if (!this.LoginUserRole.includes("33") || !this.LoginUserRole.includes("34")) {
+        if (!(this.LoginUserRole.includes("33") || this.LoginUserRole.includes("34"))) {
           this.$message("只有园区管理员才有此权限");
           return;
         }
-        this.$router.push(item.path + "1");
+        this.$router.push(item.path);
         return;
       }
       if (item.name == "") {
