@@ -42,7 +42,6 @@
                 var routerName = this.$route.name;
                 var munuLen = this.headMenu.length;
 
-                console.log(routerName);
                 //定位当前激活的横向导航并存值对应的sessionStorage
                 // 左侧一级导航的判断
                 for(var i = 0 ;i < munuLen; i++ ){
@@ -76,7 +75,6 @@
                         }
                     }
                 }
-                console.log("导航索引",this.active);
                 sessionStorage.setItem('navIndex',this.active);
             },
             toLink(item,index) {

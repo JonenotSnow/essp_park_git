@@ -353,13 +353,13 @@
                         // “新闻动态”模块的接口："/information/saveNews"
                         // “通知公告”模块的接口："information/saveNotice"
                         let url;
-                        if (applyType == '01') {
+                        if (this.applyType == '01') {
                             // 处理动态图片，“新闻动态”模块才有这个字段
                             this.ruleForm.parkUploadData = this.parkUploadData;
                             url = '/information/saveNews';
                         }
 
-                        if (applyType == '02') {
+                        if (this.applyType == '02') {
                             url = '/information/saveNotice';
                         }
 
@@ -373,7 +373,7 @@
                                         this.$message.success("新闻动态创建成功！");
                                     }
                                     this.$router.push({
-                                        path: '/parkHall/manage/sciAndTechPolicy/policieAndRegulation'
+                                        path: '/parkHall/manage/publicNews'
                                     });
                                 }
                                 if (this.applyType === '02') {
@@ -383,7 +383,7 @@
                                         this.$message.success("通知公告创建成功！");
                                     }
                                     this.$router.push({
-                                        path: '/parkHall/manage/sciAndTechPolicy/sciAndTechService'
+                                        path: '/parkHall/manage/publicNotice'
                                     });
                                 }
                             } else {
@@ -425,18 +425,18 @@
                             let codestatus = response.resultCode;
                             if (codestatus == "CLT000000000") {
                                 if (this.applyType === '01') {
-                                    this.$message.success("政策法规暂存成功！");
+                                    this.$message.success("新闻动态暂存成功！");
                                     this.$router.push({
-                                        path: '/parkHall/manage/sciAndTechPolicy/policieAndRegulation',
+                                        path: '/parkHall/manage/publicNews',
                                         query: {
                                             status: '0'
                                         }
                                     });
                                 }
                                 if (this.applyType === '02') {
-                                    this.$message.success("科技服务暂存成功！");
+                                    this.$message.success("通知公告暂存成功！");
                                     this.$router.push({
-                                        path: '/parkHall/manage/sciAndTechPolicy/sciAndTechService',
+                                        path: '/parkHall/manage/publicNotice',
                                         query: {
                                             status: '0'
                                         }
