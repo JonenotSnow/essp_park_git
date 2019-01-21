@@ -78,11 +78,6 @@
                 type: Array,
                 default: []
             },
-            // 已选项
-            selectCheckItem: {
-                type: Array,
-                default: []
-            },
             classtType: {
                 type: String(),
                 default: ''
@@ -90,8 +85,6 @@
         },
         data() {
             return {
-                checkAll: false,
-//                classtType: "",//审核的状态
                 typeitems: [
                     {
                         name: "全部",
@@ -108,7 +101,7 @@
                         id: "12"
                     }
                 ],
-                selectCheckItems: this.selectCheckItem,
+                selectCheckItems: [],
                 thisUserId: sessionStorage.getItem("userInfo") ? JSON.parse(sessionStorage.getItem("userInfo")).id : '',
             }
         },
@@ -116,6 +109,12 @@
             console.log("传入List",this.list);
         },
         methods: {
+            // 改变已选重置
+            changeAllCheck(val){
+                console.log(val);
+                this.allCheck = false;
+                this.selectCheckItems = [];
+            },
             // 跳转审核详情
             goAudit(item) {
                 this.$router.push({

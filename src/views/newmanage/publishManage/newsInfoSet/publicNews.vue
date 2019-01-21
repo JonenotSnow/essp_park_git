@@ -21,7 +21,7 @@
             </div>
         </div>
         <div class="policie-and-regulation-main">
-            <oneCardModel :list="list" :classtType="approveType" :type="type" :allChecks="allCheck" :selectCheckItem="selectCheckItem" @changeStatusList="changeStatusList" @delectList="getPublicedNews" :customopts={status,temeTit,allTotal}></oneCardModel>
+            <oneCardModel ref="listModule" :list="list" :classtType="approveType" :type="type" :allChecks="allCheck" :selectCheckItem="selectCheckItem" @changeStatusList="changeStatusList" @delectList="getPublicedNews" :customopts={status,temeTit,allTotal}></oneCardModel>
         </div>
         <div class="pageList" v-if="list.length > 0">
             <el-pagination
@@ -112,6 +112,7 @@
                     })
                     this.list = arr;
                     this.allTotal = res.resultData.total;
+                    this.$refs.listModule.changeAllCheck(false);
                 }, err => {
                     console.log(err)
                 })
@@ -229,7 +230,7 @@
                             font-weight: normal;
                             font-stretch: normal;
                             letter-spacing: 0px;
-                            color: #ccc;
+                            color: #444;
                             outline: none;
                             border: none;
                         }
