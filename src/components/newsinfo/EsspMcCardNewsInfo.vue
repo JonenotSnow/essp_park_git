@@ -9,33 +9,28 @@
         </div>
         <div v-if="mcCardList && mcCardList.length>0">
             <div class="essp-card" v-for="(item, mcCardIndex) in mcCardList" :key="mcCardIndex">
-                <div class="cont-img" @click="goinfoDetail(item)">
-                    <img class="detaillogo" :src="item.titleImg" alt="" @error="setDefaultImg($event)">
-                    <div class="img-detail">
-                        <p class="cost">{{item.createTime|timerFormat(item.createTime)}}</p>
-                    </div>
+                <div class="card_left">
+                    <img :src="item.titleImg">
                 </div>
-                <div class="cont-detail">
-                    <h5 @click="goinfoDetail(item)">{{item.informationTitle}}</h5>
-                    <div class="esspclearfix">
-                        <div class="cont-detail-l">
-                            <p class="introduction">
-                                {{item.content}}
-                            </p>
-                            <p class="icon_p_font">
-                                <span><i :class="icons[0]"></i>{{item.viewTime}}</span>
-                                <span><i :class="icons[1]"></i>{{item.countFollower}}</span>
-                                <span><i :class="icons[2]"></i>{{item.countComment}}</span>
-                            </p>
-
-                        </div>
-                        <div class="cont-detail-r">
-                            <div class="btncon" v-if="chilrPageType=='getAllInformation'">
-                                <el-button type="primary" size="mini" round  @click="goinfoDetail(item)">查看详情</el-button>
-                            </div>
-                            <div class="btncon" v-if="chilrPageType=='actAll'">
-                                <el-button type="info"  size="mini" round  @click="showDialog(item)">取消关注</el-button>
-                            </div>
+                <div class="card_cont">
+                    <div class="card__head">
+                        <p class="head__title" @click="goToDetail(item)">{{item.informationTitle}}</p>
+                    </div>
+                    <div class="card__dest">
+                        <p v-html="item.infoDetail"></p>
+                        <div class="fundiv">
+                            <span class="funitems">
+                                <i class="icon iconfont icon-liulan"></i>
+                                <em>{{item.viewTime}}</em>
+                            </span>
+                                <span class="funitems">
+                                <i class="icon iconfont icon-collect2"></i>
+                                <em>{{item.countFollower}}</em>
+                            </span>
+                                <span class="funitems">
+                                <i class="icon iconfont icon-pinglun"></i>
+                                <em>{{item.countComment}}</em>
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -217,10 +212,11 @@
         float: left;
         width: 726px;
         /*padding: 20px 20px 0;*/
-        background: #fff;
-        .cont-detail-l {
-            float:left;
-            width:80%;
+        background-color: #fff;
+        .descontool {
+            height: 59px;
+            line-height: 100px;
+            border-bottom: 1px solid #eee;
             p {
                 margin-bottom: 10px;
                 font-size: 12px;
@@ -288,115 +284,108 @@
             }
         }
         .essp-card {
-            background-color: #ffffff;
-            padding: 20px 0;
             width: 730px;
-            height: 140px;
-            border-bottom: 1px solid #eee;
-            transition: all 1s;
-            &:hover{
-                zoom:1;
-                box-shadow: 0px 0px 14.2px 0.8px rgba(0, 0, 0, 0.08);
-                position: relative;
-                .cont-img{
-                    margin-left: 20px;
-                }
-                .cont-detail{
-                    margin-left: 15px;
+            height: 160px;
+            margin: 20px auto 0;
+            .card_left{
+                float: left;
+                width:280px;
+                height: 160px;
+                margin-right: 20px;
+                img{
+                    width:100%;
+                    height: 100%;
+                    border:none;
                 }
             }
-            .cont-img {
-                position: relative;
-                float: left;
-                width: 245px;
-                height: 100%;
-                cursor: pointer;
-                transition: all 1s;
-                /*&:hover .img-detail{*/
-                /*// display: block;*/
-                /*transform: scale(1.02);*/
-                /*}*/
-                .detaillogo {
-                    display: block;
-                    width: 100%;
-                    height: 100%;
-                    transition: all 1s;
-                    /*&:hover{*/
-                    /*transform: scale(1.02);*/
-                    /*}*/
-                }
-
-                .img-detail {
-                    // display: none;
-                    position: absolute;
-                    bottom: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 20px;
-                    background-color: #000000;
-                    opacity: 0.7;
-                    transition: all 1s;
+            .card_cont{
+                float:left;
+                width:430px;
+                .card__head {
+                    position: relative;
+                    height: 60px;
                     p {
+                        display: inline-block;
+                        font-family: MicrosoftYaHei;
+                        font-weight: normal;
+                        font-stretch: normal;
+                        letter-spacing: 0px;
+                    }
+                    .head__title {
+                        font-size: 16px;
+                        color: #222222;
+                        height: 40px;
+                        margin:20px 0 12px;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        display: -webkit-box;
+                        -webkit-line-clamp: 2;
+                        -webkit-box-orient: vertical;
+                        &:hover {
+                            color: #00a0e9;
+                            cursor: pointer;
+                        }
+                    }
+                    .head__time {
                         position: absolute;
                         top: 0;
-                        color: #fff;
-                        font-size: 12px;
-                        line-height: 20px;
-                    }
-                    .enrolled {
-                        left: 10px;
-                    }
-                    .cost {
-                        right: 10px;
+                        right: 0;
+                        font-size: 14px;
+                        color: #999999;
                     }
                 }
-            }
-            .cont-detail {
-                position: relative;
-                float: left;
-                margin-left: 35px;
-                width: 430px;
-                height: 100%;
-                transition: all 1s;
-                h5 {
-                    //.esspellipsis();
-                    cursor: pointer;
-                    //margin-top: 10px;
-                    margin-bottom: 8px;
-                    width: 100%;
-                    height: 45px;
-                    line-height: 24px;
-                    font-size: 16px;
-                    font-weight: normal;
-                    font-stretch: normal;
-                    letter-spacing: 0;
-                    color: #444;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    display: -webkit-box;
-                    -webkit-line-clamp: 2;
-                    -webkit-box-orient: vertical;
+                .card__dest {
+                    margin-top: 10px;
+                    p {
+                        height: 40px;
+                        line-height: 20px;
+                        font-family: MicrosoftYaHei;
+                        font-size: 14px;
+                        font-weight: normal;
+                        font-stretch: normal;
+                        letter-spacing: 0px;
+                        color: #999999;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        display: -webkit-box;
+                        -webkit-line-clamp: 2;
+                        -webkit-box-orient: vertical;
+                    }
+                    .fundiv {
+                        margin: 10px 0;
+                        color:#ccc;
+                        .funitems {
+                            font-size: 12px;
+                            i {
+                                color: #ccc;
+                                font-size: 14px;
+                                margin-right: 5px;
+                            }
+                            .icon-collect2, .icon-pinglun {
+                                font-size: 12px;
+                            }
+                        }
+                        em{
+                            font-style: normal;
+                            margin-right: 20px;
+                        }
+                    }
                 }
 
             }
         }
-    }
-    .descontool {
-        height: 59px;
-        line-height: 100px;
-        border-bottom: 1px solid #ccc;
-        p {
-            margin-top: 40px;
-            margin-left: 40px;
-            height: 30px;
-            line-height: 30px;
-            span {
-                display: inline-block;
-            }
-            .descontool__tag {
-                width: 8px;
-                height: 30px;
-                background-color: #10b5ff;
+        .essp-card:hover{
+            box-shadow: 0px 0px 14.2px 0.8px 
+        rgba(0, 0, 0, 0.08);
+        }
+        .no_list{
+            text-align: center;
+            .tipspan{ 
+                display: block;
+                font-family: MicrosoftYaHei;
+                color: #666666;
+                margin-top: 85px;
+                font-size: 18px;
             }
             .descontool__title {
                 margin-left: 22px;

@@ -37,7 +37,6 @@
     import {leftNavStyleSetting} from "@/util/leftNavStyleSetting";
     export default {
         name: "EsspAside",
-
         components: {},
         data() {
             return {
@@ -50,7 +49,6 @@
                 firstLevel:0
             };
         },
-
         created() {
             this.getLeftMenu();
         },
@@ -120,11 +118,9 @@
                 return curLeft;
             }
         }
-
     };
 </script>
 <style lang="less" scoped>
-
     .essp-aside-cont {
         height: 100%;
         font-weight: normal;
@@ -161,7 +157,6 @@
                             margin: 20px 0 10px;
                             text-indent: 9px;
                             font-size: 14px;
-
                         }
                         .someli-ul {
                             li {
@@ -224,7 +219,6 @@
                             margin: 20px 0 10px;
                             text-indent: 9px;
                             font-size: 14px;
-
                         }
                         .someli-ul {
                             li {
@@ -269,7 +263,6 @@
                             margin: 20px 0 10px;
                             text-indent: 9px;
                             font-size: 14px;
-
                         }
                         .someli-ul {
                             li {
@@ -303,9 +296,6 @@
                     }
                 }
             }
-
         }
     }
-
-
 </style>
