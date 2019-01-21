@@ -63,7 +63,8 @@
                 type: '1',  // 类型（新闻与公告）新闻1，公告2
                 status: this.$route.query.status || '1',                // 状态值
                 searchContent: '',          // 查询字段
-                list: [{id: "00001", title: "我的"}, {id: "00002", title: "你的"}],
+                list: [],
+                approveType: '',  // 审核状态的筛选条件
                 itemsouces: [
                     {
                         fnName: "已发布",
@@ -97,7 +98,8 @@
                     title: this.searchContent,
                     parkId: this.parkId,
                     status: this.status,
-                    type: this.type
+                    type: this.type,
+                    statusType: this.approveType
                 }
                 this.$post(url, pop).then(res => {
                     var arr = res.resultData.informationList;
@@ -128,6 +130,8 @@
             // 改变审核状态
             changeStatusList(val){
                 console.log(val);
+                this.approveType = val;
+                this.getPublicedNews();
             },
             // 状态切换
             switchStatus(item) {
