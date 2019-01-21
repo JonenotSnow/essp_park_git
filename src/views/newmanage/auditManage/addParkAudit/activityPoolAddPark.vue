@@ -36,7 +36,7 @@
             </div>
             <div class="select">
                 <div class="selectTitle">
-                    <span class="removeBtn" @click="getList(0)">申请表导出</span>
+                    <span class="removeBtn" @click="getList(0)" :class="{'active':touch}">申请表导出</span>
                 </div>
                 <div class="text">采取先到先得的任务领取审核方式</div>
             </div>
@@ -72,7 +72,7 @@
                     @size-change="handleSizeChange"
                     @current-change="handleCurrentChange"
                     :current-page="pageNum"
-                    :page-sizes="[5, 10, 15, 20]"
+                    :page-sizes="[5, 10, 15, 20,1000,2000]"
                     :page-size="pageSize"
                     layout="total, sizes, prev, pager, next, jumper"
                     :total="totalCount">
@@ -145,7 +145,9 @@ export default {
                 endDate : '',
                 status : '',
                 companyName : ''
-            }
+            },
+            selectList:[],
+            touch:false
         }
     },
     async created(){
@@ -212,7 +214,8 @@ export default {
         getList(type){
             //用于申请表导出查询
             if (type == 0) {
-                this.pageNum = this.pageSize = '';
+                this.pageNum = 1;
+                this.pageSize = 9999;
             }
 
             this.$post(this.$apiUrl.manage.getAuditList,{
@@ -228,6 +231,14 @@ export default {
             .then((response) => {
                 this.list = response.resultData.applyParkList;
                 this.totalCount = response.resultData.apParkCount;
+                
+                //用于申请表导出查询
+                if (type == 0 && this.list.length>0) {
+                    this.selectList = this.list.map((el)=>{
+                        return el.id;
+                    })
+                    this.exportData()
+                }
             },(err)=>{
                 this.$message({
                     type: 'warn',
@@ -269,6 +280,14 @@ export default {
                 return;
             }
             this.$router.push({path:'/parkHall/manage/manageParkAuditDetail',query:{entityId:rows.id}});
+        },
+        //批量导出
+        exportData () {
+            this.touch = true;
+            window.location.href = "http://128.196.235.129:1345/"+ this.$apiUrl.manage.applyFormExport+'?id='+this.selectList.toString();
+            setTimeout(function(){
+                this.touch = false;
+            },1000)
         }
     }
 };
@@ -442,6 +461,13 @@ export default {
                         text-align: center;
                         cursor: pointer;
                         line-height: 33px;
+                        &.active{
+                            color:#00a0e9;
+                            background-image: linear-gradient(0deg, 
+                            #f5f5f5 0%, 
+                            #ffffff 100%);
+                            border: solid 1px #10b5ff;
+                        }
                     }
                 }
                 .text{

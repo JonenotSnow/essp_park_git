@@ -20,7 +20,9 @@
 </template>
 
 <script>
+    import mixin from '@/components/mixins/mixins_windowOpen.js'
     export default {
+        mixins:[mixin],
         data() {
             return {
                 content: '',
@@ -77,7 +79,7 @@
                             message: response.resultMsg
                         });
                     })
-                this.$router.push('/messageCenter/sysMsg')
+                this.windowHrefUrl('/centerIndex/showHome',params);
             },
             getParkById(parkId) {
                 this.$post(this.$apiUrl.manage.getParkById, {
