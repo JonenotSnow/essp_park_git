@@ -15,7 +15,6 @@
                 <div class="card_cont">
                     <div class="card__head">
                         <p class="head__title" @click="goToDetail(item)">{{item.informationTitle}}</p>
-                        <!-- <p class="head__time">{{item.createTime | timerFormat(item.createTime)}}</p> -->
                     </div>
                     <div class="card__dest">
                         <p v-html="item.infoDetail"></p>
