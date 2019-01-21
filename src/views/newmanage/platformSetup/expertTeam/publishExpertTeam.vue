@@ -670,7 +670,7 @@
                 height: 140px;
                 text-align: center;
                 line-height: 140px;
-                overflow: hidden;
+                /*overflow: hidden;*/
                 .upload_pic_icon {
                     position: absolute;
                     left: 0px;
