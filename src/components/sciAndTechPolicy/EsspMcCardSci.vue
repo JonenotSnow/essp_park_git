@@ -158,7 +158,7 @@
                 border-bottom: 1px solid #ccc;
                 p {
                     display: inline-block;
-                    font-family: MicrosoftYaHei;
+                    /*font-family: MicrosoftYaHei;*/
                     font-weight: normal;
                     font-stretch: normal;
                     letter-spacing: 0px;
@@ -182,9 +182,8 @@
             .card__dest {
                 margin-top: 10px;
                 p {
-                    height: 40px;
-                    line-height: 20px;
-                    font-family: MicrosoftYaHei;
+                    height: 48px;
+                    line-height: 24px;
                     font-size: 14px;
                     font-weight: normal;
                     font-stretch: normal;

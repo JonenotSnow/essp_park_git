@@ -27,13 +27,13 @@
                                     <span v-for="(item,index) in activityLabelList" v-if="index < 3" :key="index">{{item}}</span>
                                 </div>
                                 <div class="infos">
-                                    <div class="infos_item"><i class="icon iconfont icon-riqi1"></i>
+                                    <div class="infos_item"><i class="icon iconfont icon-riqi1" style="color: #ccc;"></i>
                                         <b>时间：</b><em>{{actData.activityStarttime}}</em></div>
-                                    <div class="infos_item btns"><i class="icon iconfont icon-dizhi"></i>
+                                    <div class="infos_item btns"><i class="icon iconfont icon-dizhi" style="color: #ccc;"></i>
                                         <b>地点：</b><em>{{actData.activityPlace}}</em></div>
-                                    <div class="infos_item"><i class="icon iconfont icon-faburen"></i>
+                                    <div class="infos_item"><i class="icon iconfont icon-faburen" style="color: #ccc;"></i>
                                         <b>发布机构：</b><em>{{actData.initiatorWay || '暂无发起人'}}</em></div>
-                                    <div style="margin-bottom: 18px;"><i class="icon iconfont icon-piaozhong"></i> <b style="padding-left: 0;">票种：</b><em></em></div>
+                                    <div style="margin-bottom: 18px;"><i class="icon iconfont icon-piaozhong" style="color: #ccc;"></i> <b style="padding-left: 0;">票种：</b><em></em></div>
                                 </div>
                                 <div class="infobtn esspclearfix">
                                     <div class="btnitem" v-for="(item,index) in tableData" :key="index">
@@ -212,9 +212,9 @@
                         <div class="batchbtn">
                             <el-button size="small" type="primary" class="downloadbtn"><a class="down_a" :href="actData.enrolTemplateUrl">下载模板</a></el-button>
                             <el-upload class="uploadbtn upload-demo"
-                                action="#"
-                                :file-list="listFile"
-                                :before-upload="beforeup">
+                                       action="#"
+                                       :file-list="listFile"
+                                       :before-upload="beforeup">
                                 <el-button size="small" slot="trigger" type="primary">选择文件</el-button>
                             </el-upload>
                         </div>
