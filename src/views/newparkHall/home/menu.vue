@@ -213,7 +213,7 @@ export default {
 
       if (item.name === "入驻申请") {
         if (isInPark) {
-          return this.$message("已入住园区,请勿重复申请");
+          return this.$message("已入驻园区,请勿重复申请");
         } else {
           this.showPower = true;
           return false;

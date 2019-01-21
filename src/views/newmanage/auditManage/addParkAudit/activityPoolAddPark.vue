@@ -461,13 +461,13 @@ export default {
                         text-align: center;
                         cursor: pointer;
                         line-height: 33px;
-                        &.active{
-                            color:#00a0e9;
-                            background-image: linear-gradient(0deg, 
-                            #f5f5f5 0%, 
-                            #ffffff 100%);
-                            border: solid 1px #10b5ff;
-                        }
+                    }
+                    .active{
+                        color:#00a0e9;
+                        background-image: linear-gradient(0deg, 
+                        #f5f5f5 0%, 
+                        #ffffff 100%);
+                        border: solid 1px #10b5ff;
                     }
                 }
                 .text{
