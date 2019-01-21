@@ -9,7 +9,7 @@
           <div class="listcon">
           	<div class="listitem" v-for="(item,index) in enterprises" :key="index" @mouseenter="showDetail(item.isShowDetail,index)" @mouseleave="showDetail(item.isShowDetail,index)">
           		<img class="enter_child" :src="item.cstLogo">
-          		<div class="detailinfo" v-if="item.isShowDetail" >
+          		<div class="detailinfo" v-if="item.isShowDetail" :class="{cur:item.isShowDetail}">
           			<P>{{item.cstNm}}</P>
           			<P>{{item.idyTpcd}}</P>
           			<div class="checkenterprise" @click="enterBusiness(item)">进入企业橱窗</div>          			
@@ -181,7 +181,7 @@ export default {
 		        cursor: pointer;
 		        width: 200px;
 						height: 150px;
-						background-color: #00a0e9;
+						// background-color: #00a0e9;
 						opacity: 0.8;
 						border-right: 1px solid #ccc;
 						border-bottom:1px solid #ccc;

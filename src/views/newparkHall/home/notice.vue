@@ -8,48 +8,92 @@
                 <div class="left-aside">
                     <div class="title-s">新闻动态</div>
                     <ul>
-                        <li class="item" v-for="(item,index) in 2" :key="index">
-                            <div class="word-part">
-                                <div class="title-ss">2018年度河北省技术创新引导计划技中···~~``···小···企业技术创新和科技小巨人企业发展专项项目申报指南</div>
-                                <div class="detail">2018年度河北省技术创新引导计划技中···~~``···小···企业技术创新和科技小巨人企业发展专项项目申报指南</div>
+                        <li class="item" v-for="(item,index) in newsList" :key="index">
+                            <div class="word-part" @click="goToNewsDetail(item)">
+                                <div class="title-ss">{{item.informationTitle}}</div>
+                                <div class="detail">{{item.content}}</div>
                                 <div class="part-b">
                                     <div class="label"></div>
-                                    <div class="time">2018-09-22</div>
+                                    <div class="time">{{ item.createTime | timerFormat(item.createTime) }}</div>
                                 </div>
                             </div>
                             <div class="img" :style="'background-image:url('+imgUrl+')'"></div>
                         </li>
+                        <li v-if="newsList.length==0" class="nothing">暂无数据</li>
                     </ul>
-                    <div class="more">More ></div>
+                    <div class="more" @click="linkToNewsListPage">More ></div>
                 </div>
                 <div class="right-aside">
                     <div class="title-s">通知公告</div>
-
                     <ul>
-                        <li v-for="(item,index) in 8" :key="index">
-                            <div class="left-p">我省今天将建设“24”个示范基地</div>
-                            <div class="time">2018-09-22</div>
+                        <li v-for="(item,index) in noticesList" :key="index" @click="goToNoticeDetail(item)">
+                            <div class="left-p">{{item.informationTitle}}</div>
+                            <div class="time">{{ item.createTime | timerFormat(item.createTime) }}</div>
                         </li>
+                        <li v-if="noticesList.length==0" class="nothing">暂无数据</li>
                     </ul>
-                    <div class="more">More ></div>
+                    <div class="more" @click="linkToNoticeListPage">More></div>
                 </div>
             </div>
         </div>
     </div>
 </template>
 <script>
+    import Moment from "moment";
     export default {
-        data: () => ({
-            list: [{title: "标题"}],
-            imgUrl: require('../../../assets/actlogo.png')
-        }),
+        data(){
+            return {
+                list: [{title: "标题"}],
+                imgUrl: require('../../../assets/actlogo.png'),
+                newsList:[],
+                noticesList:[]
+            }
+        },
+        created(){
+            this.getNewsList(1)
+            this.getNewsList(2)            
+        },
         methods:{
-            getNewsList(){
-                this.$post('/information/getAllInformation').then((result) => {
-                    console.log()
+            getNewsList(type){      
+                let parkId =  sessionStorage.getItem("parkId") || "";
+                this.$post('/information/getAllInformation',{
+                    endDate: "",
+                    pageNum: 1,
+                    pageSize: 10,
+                    parkId: parkId,
+                    startDate: "",
+                    title: "",
+                    type: type
+                }).then((result) => {
+                    if(type == 1){
+                        this.newsList = result.resultData.informationList.slice(0,2);//数据源
+                    }else if(type == 2){
+                        this.noticesList = result.resultData.informationList.slice(0,8);//数据源
+                    }
                 }).catch((err) => {
-                    
+                    this.$message.error("接口异常");
                 });
+            },
+            linkToNoticeListPage() {
+              this.$router.push("/news/notice");
+              sessionStorage.setItem('navIndex',4);
+              this.$router.push({name: "park-newsinfo"})
+            },
+            linkToNewsListPage() {
+                //this.$router.push("/news/alllistnews");
+                sessionStorage.setItem('navIndex',4);
+                this.$router.push({name: "park-newsinfo"})
+            },
+            goToNewsDetail(item){
+                this.$router.push({path: "/news/noticedetail",query: {info: item}});
+            },
+            goToNoticeDetail(item){
+                this.$router.push({path: "/news/noticedetail",query: {info: item}});
+            }
+        },
+        filters: {
+            timerFormat(vaule) {
+                return Moment(vaule).format("YYYY-MM-DD");
             }
         }
     };
@@ -100,6 +144,7 @@
                 .left-aside {
                     width: 570px;
                     ul{
+                        height: 320px;
                         border-bottom: solid 1px #cccccc;
                     }
                     .item {
@@ -170,7 +215,7 @@
                         li {
                             display: flex;
                             justify-content: space-between;
-                            border-top: solid 1px #cccccc;
+                            /*border-top: solid 1px #cccccc;*/
                             line-height: 39px;
                             vertical-align: middle;
                             &:hover {

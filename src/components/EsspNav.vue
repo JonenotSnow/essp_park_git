@@ -20,7 +20,7 @@
             return {
                 //游客默认导航
                 defaultNav:[],
-                active: sessionStorage.getItem('navIndex')||0,
+                active: '',
                 headMenu: [],
             };
         },
@@ -32,8 +32,12 @@
             },
             
         },
+        beforeUpdate(){
+            this.active = sessionStorage.getItem('navIndex')||0;
+        },
         created() {
             // 直接从本地获取菜单权限
+            
             var menuList = this.SSH.getItem("menuList");
             this.headMenu = (menuList && menuList.children) || [];
             var routerName = this.$route.name;

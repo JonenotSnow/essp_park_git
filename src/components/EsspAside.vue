@@ -72,7 +72,7 @@
                 // //此值变化，表示横向导航一切换，默认左侧第一个可点击菜单入口
                 // this.oldId = this.asideList[0].id;
             },
-            linkto(it,is) {
+            linkto(it,is) {debugger
                 this.active = {
                     faterindex: it.id,
                     childrenindex: is.id
