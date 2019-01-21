@@ -74,7 +74,7 @@
                             <input type="text" v-model='it.value' :placeholder="`请输入${it.name}`">
                         </p>
                     </div>
-                    <span @click="$router.push({path:'/centerIndex/showHome',query:{cstId:curCstId}})">查看企业橱窗</span>
+                    <span @click="goShowHome">查看企业橱窗</span>
                 </div>
                 <p class="btnT">
                     <span @click="toPop">提交申请</span>
@@ -105,11 +105,12 @@
 
 <script>
     import EsspBreadCrumb from "@/components/EsspBreadCrumb";
-
+    import mixin from '@/components/mixins/mixins_windowOpen.js'
     export default {
         components: {
             EsspBreadCrumb
         },
+        mixins:[mixin],
         data() {
             return {
                 getFormList: [],
@@ -168,6 +169,10 @@
                         });
                     }
                 );
+            },
+            goShowHome(){
+                //path:'/centerIndex/showHome',query:{cstId:curCstId
+                this.windowOpenUrl('/centerIndex/showHome',{cstId:this.curCstId})
             },
             getFxContent() {
                 this.$post(this.$apiUrl.manage.getCstIdByUserId, {}).then(
