@@ -2,13 +2,13 @@
     <div class="achievementSetHead">
         <!--  成果管理已发布 -->
         <achievementSetHead :type="componentTit" :isSeachInput="isSeachInput" :publishTitle='publishTitle' @seachConFn="seachConFn"></achievementSetHead>
-        <listOwnImg :list='list' :allCheck="isAllChecked" @delectList="getAllAchiev" :ajaxTit="ajaxTit" :totalCount='totalCount' :type="componentTit" :componentType="componentType"></listOwnImg>
+        <listOwnImg ref="listModule" :list='list' :allChecks="isAllChecked" @delectList="getAllAchiev" :ajaxTit="ajaxTit" :totalCount='totalCount' :type="componentTit" :componentType="componentType"></listOwnImg>
         <div class="pageList" v-if="list.length > 0">
             <el-pagination
                 @size-change="handleSizeChange"
                 @current-change="handleCurrentChange"
                 :current-page="pageNum"
-                :page-sizes="[5, 10, 15, 20]"
+                :page-sizes="[10, 15, 20]"
                 :page-size="pageSize"
                 layout="total, sizes, prev, pager, next, jumper"
                 :total="totalCount">
@@ -77,6 +77,7 @@
                         this.list = arr;
                         console.log("this.list ",this.list );
                         this.totalCount = response.resultData.total;
+                        this.$refs.listModule.changeAllCheck(false);
                         console.log(this.totalCount);
                         this.ajaxTit = "数据加载完毕"
 
@@ -88,12 +89,10 @@
             },
             handleSizeChange(val) {
                 this.pageSize = val;
-                this.isAllChecked = false;
                 this.getAllAchiev();
             },
             handleCurrentChange(val) {
                 this.pageNum = val;
-                this.isAllChecked = false;
                 this.getAllAchiev();
             }
         }
@@ -106,7 +105,8 @@
     }
     .pageList {
         width: 910px;
-        margin: 0 auto;
-        padding-bottom: 20px;
+        margin: 45px auto 57px;
+        text-align: right;
+        padding-bottom: 57px;
     }
 </style>

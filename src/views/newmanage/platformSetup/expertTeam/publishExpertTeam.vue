@@ -34,7 +34,7 @@
                         <em>上传图片</em>
                     </div>
                 </el-upload>
-                <span class="sub1">（图片高宽1：1，每张最大2M,建议分辨率为840*480像素，支持jpg/jpeg/png格式。）</span>
+                <span class="sub1">（图片高宽1：1，每张最大2M,建议分辨率为500*500像素，支持jpg/jpeg/png格式。）</span>
             </li>
 
             <li>
@@ -432,7 +432,6 @@
     #publishExpertTeams .avatar-uploader-chengguo .el-upload {
         width: 100%;
         height: 100%;
-        border: 1px dashed #d9d9d9;
     }
 </style>
 <style lang='less' scoped>
@@ -667,11 +666,11 @@
                 width: 198px;
                 padding: 0;
                 border-radius: 3px;
-                /*border: 1px solid #ccc;*/
+                border: 1px dashed #d9d9d9;
                 height: 140px;
                 text-align: center;
                 line-height: 140px;
-                /*overflow: hidden;*/
+                overflow: hidden;
                 .upload_pic_icon {
                     position: absolute;
                     left: 0px;

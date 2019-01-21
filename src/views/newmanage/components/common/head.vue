@@ -65,10 +65,6 @@
         methods: {
             // 搜索方法， 需要绑定
             seachClick(){
-                if(this.searchContent == "") {
-                    this.$message.error("请输入搜索关键字！");
-                    return;
-                }
                 this.$emit("seachConFn", this.searchContent);
             },
             // 发布跳转
