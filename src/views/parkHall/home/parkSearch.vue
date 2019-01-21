@@ -8,7 +8,9 @@
                 <el-select v-model="typeselect" slot="prepend" placeholder="请选择" class="typecon" @change="changetype">
                     <el-option label="活动" value="park_activity"></el-option>
                     <el-option label="惠政" value="park_gover" v-if="!isBdPark"></el-option>
-                    <el-option label="资讯" value="park_information"  v-if="!isBdPark"></el-option>
+                    <el-option label="资讯" value="park_information" v-if="!isBdPark"></el-option>
+                    <el-option label="资讯" value="park_information" v-if="isBdPark"></el-option>
+                    <el-option label="政策" value="park_gover" v-if="isBdPark"></el-option>
                 </el-select>
                 <el-button slot="append" icon="el-icon-search" @click="getListResult()">园区内搜索</el-button>
             </el-input>
@@ -25,7 +27,7 @@
                     <h2 class="tit-tool">筛选条件</h2>
                     <el-button type="text" class="reset-tool" @click="resetHandelSearch()">重置条件</el-button>
                 </div>
-                <div class="tdcon esspclearfix">
+                <div class="tdcon esspclearfix" v-if="!isBdPark || typeselect == 'park_activity'">
                     <span class="inline_span"><em></em>{{typeName}}类型 :</span>
                      <el-select v-model="classtType" placeholder="请选择" class="inline_select" @change="getListResult">
                         <el-option v-for="(item,index) in typeitems" :key="index" :label="item.name"
@@ -66,12 +68,10 @@
                                     <span class="btntext">{{items.followStatus==0?"未关注":"已关注"}}</span>
                                 </div>
                             </div>
-
                         </li>
-                        <li v-if="searchData.length==0" class="nothing">暂无数据</li>
                     </ul>
                     <!-- 惠政 -->
-                    <ul v-if="this.typeselect=='park_gover'">
+                    <ul v-if="this.typeselect=='park_gover' && !isBdPark">
                         <li v-for="(items,index) in searchData" :key="index" class="itemli esspclearfix">
                             <div class="itemli_wrap_div esspclearfix">
                                 <div class="imgcon" @click="gotoGoverDetail(items)"><img class="imgdetail" :src="items.titleImg" alt=""></div>
@@ -90,7 +90,22 @@
                                 </div>
                             </div>
                         </li>
-                        <li v-if="searchData.length==0" class="nothing">暂无数据</li>
+                    </ul>
+                    <!-- 政策 -->
+                    <ul v-if="this.typeselect=='park_gover' && isBdPark">
+                        <li v-for="(items,index) in searchData" :key="index" class="itemli esspclearfix">
+                            <div class="essp-card">
+                                <div class="card__head">
+                                    <p class="head__title" @click.stop="linkToDetail(items)">{{items.policyTitle}}</p>
+                                    <p class="head__time">{{items.createTime | timerFormat(items.createTime)}}</p>
+                                </div>
+                                <div class="card__dest">
+                                    <p>
+                                        {{items.approveComment}}
+                                    </p>
+                                </div>
+                            </div>
+                        </li>
                     </ul>
                     <!-- 活动 -->
                     <ul v-if="this.typeselect=='park_activity'">
@@ -112,8 +127,21 @@
                                 </div>
                             </div>
                         </li>
-                        <li v-if="searchData.length==0" class="nothing"></li>
                     </ul>
+                    <div id="comnoData" v-if="searchData.length==0 && !loading">
+                        <div class="no-list-pic">
+                            <img src="@assets/newparkimg/no-list-img.png" width="245" height="189" alt="">
+                        </div>
+                        <div class="no-list-desc">
+                            暂无数据
+                        </div>
+                    </div>
+                    <div id="comnoData" v-if="loading">
+                        <div class="no-list-desc">
+                            数据加载中...
+                        </div>
+                    </div>
+                    
                 </div>
             </div>
             <div class="pageList">
@@ -153,7 +181,8 @@ export default {
             pageSize: 10, //每页条数
             allTotal: 0, //总条数
             timeRange: [], //时间区间
-            classtType: "" //明细分类条件
+            classtType: "", //明细分类条件
+            loading: false
             
         };
     },
@@ -248,7 +277,9 @@ export default {
                 activityTheme: this.indexSeachKW,
                 activityType: this.classtType
             };
+            this.loading = true
             this.$post(url, pop).then(response => {
+                this.loading = false
                 var codestatus = response.resultCode;
                     if (codestatus == "CLT000000000") {
                         this.searchData = response.resultData.activityList;
@@ -272,10 +303,12 @@ export default {
                 endDate: this.timeRange[1] || "",
                 tagTxt: this.tagTxt,
                 parkId: this.parkId,
-                title: this.indexSeachKW,
-                classtType: this.classtType
+                title: this.indexSeachKW
             };
+            this.isBdPark ? '' : pop.classtType = this.classtType
+            this.loading = true
             this.$post(url, pop).then(response => {
+                this.loading = false
                 var codestatus = response.resultCode;
                     if (codestatus == "CLT000000000") {
                         this.searchData = response.resultData.policyList;
@@ -299,10 +332,12 @@ export default {
                 endDate: this.timeRange[1] || "",
                 tagTxt: this.tagTxt,
                 parkId: this.parkId,
-                title: this.indexSeachKW,
-                classtType: this.classtType
+                title: this.indexSeachKW
             };
+            this.isBdPark ? '' : pop.classtType = this.classtType
+            this.loading = true
             this.$post(url, pop).then(response => {
+                this.loading = false
                 var codestatus = response.resultCode;
                     if (codestatus == "CLT000000000") {
                         this.searchData = response.resultData.informationList;
@@ -374,6 +409,16 @@ export default {
                     return item.tagTxt;
                 });
             }
+        },
+        //政策详情
+        linkToDetail(item) {
+            this.$router.push({
+                path: '/sciIndex/sciAndTechPolicyDetail',
+                query: {
+                    applyType: item.applyType,
+                    id: item.id
+                }
+            });
         }
     },
     filters: {
@@ -521,6 +566,57 @@ export default {
         }
         .rescon {
         border-top: 1px solid #ccc;
+        }
+        .essp-card {
+            margin-top: 25px;
+            height: 110px;
+            .card__head {
+                position: relative;
+                height: 49px;
+                line-height: 50px;
+                border-bottom: 1px solid #ccc;
+                p {
+                    display: inline-block;
+                    font-family: MicrosoftYaHei;
+                    font-weight: normal;
+                    font-stretch: normal;
+                    letter-spacing: 0px;
+                }
+                .head__title {
+                    font-size: 16px;
+                    color: #222222;
+                    &:hover {
+                        color: #00a0e9;
+                        cursor: pointer;
+                    }
+                }
+                .head__time {
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    font-size: 14px;
+                    color: #999999;
+                }
+            }
+            .card__dest {
+                margin-top: 10px;
+                p {
+                    height: 40px;
+                    line-height: 20px;
+                    font-family: MicrosoftYaHei;
+                    font-size: 14px;
+                    font-weight: normal;
+                    font-stretch: normal;
+                    letter-spacing: 0px;
+                    color: #999999;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 2;
+                    -webkit-box-orient: vertical;
+                }
+            }
+
         }
     }
 }

@@ -29,6 +29,8 @@
                     <el-option label="活动" value="park_activity"></el-option>
                     <el-option label="惠政" value="park_gover" v-if="!isBdPark"></el-option>
                     <el-option label="资讯" value="park_information" v-if="!isBdPark"></el-option>
+                    <el-option label="资讯" value="park_information" v-if="isBdPark"></el-option>
+                    <el-option label="政策" value="park_gover" v-if="isBdPark"></el-option>
                 </el-select>
 
                 <el-button class slot="append" icon="el-icon-search" @click="goSearchPage()">中心内搜索</el-button>

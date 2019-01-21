@@ -20,12 +20,12 @@
                 </div>
             </div>
         </div>
-        <div class="noData" v-if="mcCardList.length == 0 && requestTip == '数据加载中...'" >
+        <div class="noData" v-if="mcCardList.length == 0 && requestTip == '数据加载中...'">
             <div class="no-list-desc">
                 {{requestTip}}
             </div>
         </div>
-        <div class="noData" v-if="mcCardList.length == 0 && requestTip == '数据加载完毕'" >
+        <div class="noData" v-if="mcCardList.length == 0 && requestTip == '数据加载完毕'">
             <div class="no-list-pic">
                 <img src="@assets/newparkimg/no-list-img.png" alt="">
             </div>
@@ -158,7 +158,7 @@
                 border-bottom: 1px solid #ccc;
                 p {
                     display: inline-block;
-                    font-family: MicrosoftYaHei;
+                    /*font-family: MicrosoftYaHei;*/
                     font-weight: normal;
                     font-stretch: normal;
                     letter-spacing: 0px;
@@ -182,9 +182,8 @@
             .card__dest {
                 margin-top: 10px;
                 p {
-                    height: 40px;
-                    line-height: 20px;
-                    font-family: MicrosoftYaHei;
+                    height: 48px;
+                    line-height: 24px;
                     font-size: 14px;
                     font-weight: normal;
                     font-stretch: normal;

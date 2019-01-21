@@ -168,7 +168,8 @@
                     path: '/parkHall/manage/publishSciAndTechPolicy',
                     query: {
                         applyType: '02',
-                        id: id
+                        id: id,
+                        nuType: this.type
                     }
                 });
             },
@@ -292,7 +293,7 @@
                 }
                 .classifyC {
                     display: inline-block;
-                    width: 112px;
+                    width: 150px;
                     margin-left: 138px;
                     span {
                         color: #10b5ff;

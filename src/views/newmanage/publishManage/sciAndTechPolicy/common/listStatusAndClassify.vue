@@ -206,7 +206,8 @@
                     path: '/parkHall/manage/publishSciAndTechPolicy',
                     query: {
                         applyType: '02',
-                        id: id
+                        id: id,
+                        nuType: this.type
                     }
                 });
             },
@@ -345,6 +346,10 @@
                     position: relative;
                     top: 7px;
                 }
+
+                .classifyC {
+                    margin-left: 50px;
+                }
                 .create {
                     display: inline-block;
                     width: 100px;
@@ -361,7 +366,7 @@
                     margin-left: 42px;
                 }
                 .classifyB {
-                    width: 126px;
+                    width: 150px;
                     margin-left: 48px;
                 }
                 .remove {

@@ -10,26 +10,41 @@
           <em>{{createTime | timerFormat(createTime)}}</em>
         </span>
                 <span class="statusitemsB">
-          <label>发布机构：</label>
-          <em>{{cstNm}}</em>
+          <label>浏览量：</label>
+          <em>{{viewTime}}</em>
         </span>
-                <span class="statusitems">
-          <!-- <div class="follow">
-                        <i class="icon iconfont icon-liulan"></i>
-                        <em>{{viewTime}}</em>
-          </div>-->
-          <div class="follow cursor guanzhu" @click="showDialog()">
-            <i class="icon iconfont" :class="followStatus == 0 ?'icon-aixin-xianxing':'icon-collect2'"></i>
-            <em>{{followStatus == 0 ? "关注" : "已关注"}}</em>
-          </div>
-          <div
-              class="follow cursor"
-              @click="tipOffFn(3,infoDetailData.informationId,infoDetailData.informationTitle)"
-          >
-            <i class="iconfont icon-warning" style="font-size: 14px;"></i>
-            <em>举报</em>
-          </div>
-        </span>
+                <!--<span class="statusitems">-->
+                <!--<div class="follow">-->
+                <!--<i class="icon iconfont icon-liulan"></i>-->
+                <!--<em>{{viewTime}}</em>-->
+                <!--</div>-->
+                <div class="follow cursor guanzhu" @click="showDialog()">
+                    <i class="icon iconfont" :class="followStatus == 0 ?'icon-aixin-xianxing':'icon-collect2'"></i>
+                    <em>{{followStatus == 0 ? "关注" : "已关注"}}</em>
+                </div>
+                <!--<div-->
+                <!--class="follow cursor"-->
+                <!--@click="tipOffFn(3,infoDetailData.informationId,infoDetailData.informationTitle)"-->
+                <!--&gt;-->
+                <!--<i class="iconfont icon-warning" style="font-size: 14px;"></i>-->
+                <!--<em>举报</em>-->
+                <!--</div>-->
+                </span>
+            </div>
+            <div class="tagscon"  v-show="tags.length">
+                <div class="tags_con esspclearfix">
+                    <div class="tagssubcon">
+                        <essp-park-tag
+                            v-for="(item, eptIndex) in tags"
+                            :value="item"
+                            :key="eptIndex"
+                        />
+                    </div>
+                    <!--author：miguel，跟纯玲确认不需要此举报-->
+                    <!--<button class="infojb"-->
+                    <!--@click="tipOffFn(3,infoDetailData.informationId,infoDetailData.informationTitle)">举报-->
+                    <!--</button>-->
+                </div>
             </div>
             <!-- <div class="btncon">
                       <el-button type="primary" @click="upDatefollowStatus(followStatus)">{{followStatus==0?"关注":"取消关注"}}</el-button>
@@ -39,36 +54,21 @@
         <div class="infoDetail">
             <div class="realinfo" v-html="infoDetail"></div>
         </div>
-        <div class="tagscon"  v-show="tags.length">
-            <div class="tags_con esspclearfix">
-                <div class="tagssubcon">
-                    <span class="taglables">资讯标签：</span>
-                    <essp-park-tag
-                        v-for="(item, eptIndex) in tags"
-                        :value="item"
-                        :key="eptIndex"
-                    />
-                </div>
-                <!--author：miguel，跟纯玲确认不需要此举报-->
-                <!--<button class="infojb"-->
-                <!--@click="tipOffFn(3,infoDetailData.informationId,infoDetailData.informationTitle)">举报-->
-                <!--</button>-->
-            </div>
-        </div>
+
         <div class="pinglun">
             <essp-info-comment commentSty="2"></essp-info-comment>
         </div>
 
-        <div class="common_titwrap esspclearfix">
-            <div class="moreinfo esspclearfix">
-                <h3 class="common_titdesa">更多热门资讯</h3>
-                <div class="info_more" @click="goParkInfoAll">查看更多></div>
-            </div>
-            <!-- 更多资讯模块 -->
-            <div class="newscard_con">
-                <more-news></more-news>
-            </div>
-        </div>
+        <!--<div class="common_titwrap esspclearfix">-->
+            <!--<div class="moreinfo esspclearfix">-->
+                <!--<h3 class="common_titdesa">更多热门资讯</h3>-->
+                <!--<div class="info_more" @click="goParkInfoAll">查看更多></div>-->
+            <!--</div>-->
+            <!--&lt;!&ndash; 更多资讯模块 &ndash;&gt;-->
+            <!--<div class="newscard_con">-->
+                <!--<more-news></more-news>-->
+            <!--</div>-->
+        <!--</div>-->
 
         <!-- 关注事件对话框start -->
         <el-dialog class="quguanbox"
@@ -92,19 +92,16 @@
 
 <script>
     import EsspBreadCrumb from "@/components/EsspBreadCrumb";
-    import MoreNews from "@/views/parkHall/information/moreNews";
     import EsspInfoComment from "@/components/EsspInfoComment";
     import EsspParkTag from "@/components/EsspParkTag";
-    import Moment from "moment";
     import mixin from '@/components/mixins/mixins_windowOpen.js'
 
     export default {
         name: "",
-        mixins:[mixin],
+        mixins: [mixin],
         components: {
             EsspBreadCrumb,
             EsspInfoComment,
-            MoreNews,
             EsspParkTag
         },
         data() {
@@ -116,8 +113,8 @@
                         name: "资讯公告",
                     },
                     {
-                        path:"/news/alllistnews",
-                        name:"新闻动态",
+                        path: "/news/alllistnews",
+                        name: "新闻动态",
                     },
                     {
                         path: "/news/newsdetail",
@@ -144,8 +141,8 @@
                 dialogVisible: false,
                 followStatus: "", //资讯关注状态，非0 就是关注了
                 followId: "", // 关注id,
-                LoginUserRol:this.SSH.getItem("LoginUserRol").toString(),
-                loginFlag:this.SSH.getItem("loginFlag")
+                LoginUserRol: this.SSH.getItem("LoginUserRol").toString(),
+                loginFlag: this.SSH.getItem("loginFlag")
             };
         },
         created() {
@@ -173,16 +170,16 @@
             tipOffFn(type, id, title, cstNm, byInformer) {
                 //未登录
 
-                if(!this.utils.isLoginMode()){
+                if (!this.utils.isLoginMode()) {
                     var _this = this;
                     this.$message.warning("您尚未登陆，请您先登陆");
-                    setTimeout(function(){
+                    setTimeout(function () {
                         _this.windowHrefUrl('/userIndex/login')
-                    },2000);
+                    }, 2000);
                     return
                 }
                 //游客模式暂不支持关注
-                if(this.utils.isVisitorMode()){
+                if (this.utils.isVisitorMode()) {
                     this.$message.warning("您暂无权限进行举报");
                     return;
                 }
@@ -203,16 +200,16 @@
             // 弹窗
             showDialog() {
                 //未登录
-                if(!this.utils.isLoginMode()){
+                if (!this.utils.isLoginMode()) {
                     var _this = this;
                     this.$message.warning("您尚未登陆，请您先登陆");
-                    setTimeout(function(){
+                    setTimeout(function () {
                         _this.windowHrefUrl('/userIndex/login')
-                    },2000);
+                    }, 2000);
                     return
                 }
                 //游客模式暂不支持关注
-                if(this.utils.isVisitorMode()){
+                if (this.utils.isVisitorMode()) {
                     this.$message.warning("您暂无权限进行关注/取消关注");
                     return;
                 }
@@ -284,11 +281,6 @@
                 }
             }
         },
-        filters: {
-            timerFormat(vaule) {
-                return Moment(vaule).format("YYYY-MM-DD HH:mm");
-            }
-        },
         watch: {
             $route(to, from) {
                 //监听路由
@@ -336,7 +328,7 @@
     .newscon {
         .essp_width_auto();
         background: #fff;
-        padding: 40px 0 50px;
+        padding: 40px 0 0;
         // border-bottom: 1px solid #ccc;
         // margin-bottom: 15px;
         h2 {
@@ -360,10 +352,11 @@
         background: #fff;
         margin-bottom: 0;
         .tags_con {
-            padding: 30px 5%;
+            padding: 0 5%;
+            text-align: center;
             overflow: hidden;
             .tagssubcon {
-                float: left;
+                /*float: left;*/
                 line-height: 30px;
                 .taglables {
                     float: left;

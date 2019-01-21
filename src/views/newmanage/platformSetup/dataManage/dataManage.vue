@@ -482,7 +482,7 @@ export default {
   width: 990px;
   background: #fff;
   min-height: 455px;
-  padding-top: 50px;
+  padding-top: 42px;
   .baseInfo {
     width: 832px;
     margin-left: 40px;
@@ -492,9 +492,9 @@ export default {
       font-weight: normal;
       font-stretch: normal;
       line-height: 30px;
-      letter-spacing: 3.6px;
+      letter-spacing: 4.8px;
       color: #333333;
-      border-left: 10px solid #10b5ff;
+      border-left: 8px solid #10b5ff;
       text-indent: 22px;
     }
   }

@@ -34,7 +34,7 @@
                         />
                     </div>
                 </el-form-item>
-                <el-form-item label="政策法规标签：" prop="tags">
+                <el-form-item label="政策法规标签：">
                     <div class="inline_div_tag">
                         <essp-add-tag
                             ref="eat"
@@ -109,7 +109,7 @@
                         <essp-editor :editorCont="ruleForm.infoDetail" @onEditorChange="onEditorChange"></essp-editor>
                     </div>
                 </el-form-item>
-                <el-form-item label="科技服务标签：" prop="tags">
+                <el-form-item label="科技服务标签：">
                     <div class="inline_div_tag">
                         <essp-add-tag
                             ref="eat"
@@ -230,6 +230,7 @@
                 parkId: sessionStorage.getItem("parkId") || "20181217093701001",
                 applyType: this.$route.query.applyType,
                 id: this.$route.query.id || "",
+                nuType: this.$route.query.nuType || "",
                 userInfo: this.SSH.getItem("userInfo"), // 获取用户信息
 
                 ruleForm: {
@@ -348,9 +349,13 @@
                             if (codestatus == "CLT000000000") {
                                 if (this.applyType === '01') {
                                     if (this.id) {
-                                        this.$message.success("政策法规修改成功！");
+                                        if (this.nuType === '0') {
+                                            this.$message.success("政策法规创建成功！");
+                                        } else {
+                                            this.$message.success("政策法规修改成功！");
+                                        }
                                     } else {
-                                        this.$message.success("创建政策法规成功！");
+                                        this.$message.success("政策法规创建成功！");
                                     }
                                     this.$router.push({
                                         path: '/parkHall/manage/sciAndTechPolicy/policieAndRegulation'
@@ -358,9 +363,13 @@
                                 }
                                 if (this.applyType === '02') {
                                     if (this.id) {
-                                        this.$message.success("科技服务修改成功！");
+                                        if (this.nuType === '0') {
+                                            this.$message.success("科技服务创建成功！");
+                                        } else {
+                                            this.$message.success("科技服务修改成功！");
+                                        }
                                     } else {
-                                        this.$message.success("创建科技服务成功！");
+                                        this.$message.success("科技服务创建成功！");
                                     }
                                     this.$router.push({
                                         path: '/parkHall/manage/sciAndTechPolicy/sciAndTechService'
@@ -547,7 +556,6 @@
             linkToFile(url) {
                 window.open(url)
             }
-
         },
         created() {
             if (this.id) {

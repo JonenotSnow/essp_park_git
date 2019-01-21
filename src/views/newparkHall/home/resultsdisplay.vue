@@ -143,7 +143,7 @@
                     background-color: #f5f5f5;
                     border: solid 1px #cccccc;
                     //脑子有病的ui
-                    box-shadow: 2.5px 4.3px 19.4px 0.6px rgba(0, 0, 0, 0.15);
+                    /*box-shadow: 2.5px 4.3px 19.4px 0.6px rgba(0, 0, 0, 0.15);*/
                     .boxitem_tit {
                         width: 100%;
                         text-align: center;
@@ -188,6 +188,7 @@
                     height: 200px;
                     left: 60px;
                     top: 40px;
+                    box-shadow: 5px 0.3px 4.8px 0.2px rgba(141, 141, 141, 0.15);
                     img {
                         display: block;
                         width: 100%;
@@ -225,7 +226,7 @@
             float: right;
             width: 46px;
             cursor: pointer;
-            margin-right: 30px;
+            margin-right: 60px;
 
             font-size: 14px;
             font-weight: normal;

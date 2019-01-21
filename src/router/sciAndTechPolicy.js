@@ -74,7 +74,7 @@ export default {
                 },
                 {
                     path: "/sciIndex/sciAndTechService/techContractRegistration",   // 技术合同登记
-                    name: "park-techContractRegistration",
+                    name: "park-techContractRegistrationSci",
                     component: techContractRegistration,
                 },
                 {

@@ -158,7 +158,8 @@
                     path: '/parkHall/manage/publishSciAndTechPolicy',
                     query: {
                         applyType: '01',
-                        id: id
+                        id: id,
+                        nuType: this.type
                     }
                 });
             },

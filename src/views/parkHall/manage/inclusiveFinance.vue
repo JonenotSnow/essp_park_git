@@ -51,7 +51,7 @@
                         </div>
                         <div class="iscase_fir_des" v-for="(item,index) in industrySolutions.slice(0,5)" :key="index"
                              v-if="item.isCaseCur">
-                            <p class="casehead"><b class="casetitle">行业解决方案：</b><b class="casedectitle">方案简介：</b></p>
+                            <p class="casehead"><span class="casetitle">行业解决方案：</span><span class="casedectitle">方案简介：</span></p>
                             <div class="caseinfo" v-for="resCase in item.resolveCase">
                                 <span class="casetitlename">{{resCase.caseSecName}}</span>
                                 <span class="casedecinfo">{{resCase.caseSecInfo}}</span>
@@ -71,7 +71,7 @@
                         </div>
                         <div class="iscase_sec_des" v-for="(item,index) in industrySolutions.slice(5,10)" :key="index"
                              v-if="item.isCaseCur">
-                            <p class="casehead"><b class="casetitle">行业解决方案：</b><b class="casedectitle">方案简介：</b></p>
+                            <p class="casehead"><span class="casetitle">行业解决方案：</span><span class="casedectitle">方案简介：</span></p>
                             <div class="caseinfo" v-for="resCase in item.resolveCase">
                                 <span class="casetitlename">{{resCase.caseSecName}}</span>
                                 <span class="casedecinfo">{{resCase.caseSecInfo}}</span>
@@ -536,7 +536,7 @@
                                 text-align: center;
                                 width: 220px;
                                 height: 220px;
-                                box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.1);
+                                box-shadow: 0px 8px 25px 0px rgba(0, 0, 0, 0.1);
                                 position: relative;
                                 .iconfont {
                                     display: block;
@@ -592,6 +592,10 @@
                                     width: 395px;
                                     color: #333;
                                 }
+                                .casedectitle{
+                                    font-size: 18px;
+                                    color: #333;
+                                }
                             }
                             .caseinfo {
                                 font-size: 16px;
@@ -621,7 +625,7 @@
                                 text-align: center;
                                 width: 220px;
                                 height: 220px;
-                                box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.1);
+                                box-shadow: 0px 8px 25px 0px rgba(0, 0, 0, 0.1);
                                 position: relative;
                                 .iconfont {
                                     display: block;
@@ -679,6 +683,10 @@
                                     width: 395px;
                                     color: #333;
                                     margin-left: 120px;
+                                }
+                                .casedectitle{
+                                    font-size: 18px;
+                                    color: #333;
                                 }
                             }
                             .caseinfo {
