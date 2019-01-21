@@ -257,8 +257,8 @@
     }
 
     .aside-r-sea1 .el-date-editor {
-        height: 32px;
-        line-height: 32px;
+        /*height: 32px;*/
+        /*line-height: 32px;*/
         width: 100%;
     }
 
@@ -306,21 +306,18 @@
         .aside-r-sea1 {
             width: 190px;
             margin: 0 auto;
+            .el-date-editor {
+                height: 32px;
+                line-height: 32px;
+            }
             input {
-                height: 30px;
-                line-height: 30px;
                 background-color: #f8f8f8;
                 color: #ccc;
-            }
-
-            .el-range-editor.el-input__inner {
-                width: 100%;
             }
             .el-input__icon {
                 line-height: 30px;
             }
             .el-date-editor.el-input {
-
                 width: 100%;
             }
         }
