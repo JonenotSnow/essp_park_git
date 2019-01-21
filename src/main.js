@@ -15,36 +15,20 @@ Vue.use(ElementUI);
 // 兼容IE9
 import "babel-polyfill";
 
+
 import "quill/dist/quill.core.css";
 import "quill/dist/quill.snow.css";
 import "quill/dist/quill.bubble.css";
 import quillEditor from "vue-quill-editor";
-
+import quilConfig from './quilConfig'
 Vue.config.productionTip = false;
 
 import VueLazyload from "vue-lazyload"; //引入这个懒加载插件
 Vue.use(VueLazyload);
 
-Vue.use(quillEditor, {
-    toolbar: {
-        container: [
-            ["bold", "italic", "underline", "strike"],
-            ["blockquote", "code-block"],
-            [{ header: 1 }, { header: 2 }],
-            [{ list: "ordered" }, { list: "bullet" }],
-            [{ script: "sub" }, { script: "super" }],
-            [{ indent: "-1" }, { indent: "+1" }],
-            [{ direction: "rtl" }],
-            [{ size: ["small", false, "large", "huge"] }],
-            [{ header: [1, 2, 3, 4, 5, 6, false] }],
-            [{ font: [] }],
-            [{ color: [] }, { background: [] }],
-            [{ align: [] }],
-            ["clean"],
-            ["link", "image",'video']
-        ]
-    }
-});
+Vue.use(quillEditor, 
+    quilConfig
+);
 // 或者添加VueLazyload 选项
 Vue.use(VueLazyload, {
     loading: "./assets/loading.png",
@@ -64,7 +48,6 @@ import { setting } from "./util/serveHttp";
 import fontIcon from "./assets/font/iconfont.css";
 // 引入公共的举报弹窗
 import commonJs from "./commonFun/commonJs";
-import { menuListData } from "./mock/menuList";
 
 //定义全局变量
 Vue.prototype.$apiUrl = apiUrl;

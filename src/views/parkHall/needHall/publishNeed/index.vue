@@ -17,7 +17,7 @@
         <el-form-item label="需求详情" required>
 
           <div class="wrap" >
-                      <quill-editor :options="editorOption" v-model="form.detail"></quill-editor>
+                      <quill-editor  v-model="form.detail"></quill-editor>
           </div>
 
         </el-form-item>
@@ -77,32 +77,10 @@ export default {
         cstName:''
       },
       fileList: [],
-      editorOption: {
-        placeholder: "请输入模板内容",
-        theme: "snow",
-        modules:{
-                toolbar:
-                  {
-                    container:[
-                      ['bold', 'italic', 'underline', 'strike'],
-                      ['blockquote', 'code-block'],
-                      [{'header': 1}, {'header': 2}],
-                      [{'list': 'ordered'}, {'list': 'bullet'}],
-                      [{'script': 'sub'}, {'script': 'super'}],
-                      [{'indent': '-1'}, {'indent': '+1'}],
-                      [{'direction': 'rtl'}],
-                      [{'size': ['small', false, 'large', 'huge']}],
-                      [{'header': [1, 2, 3, 4, 5, 6, false]}],
-                      [{'font': []}],
-                      [{'color': []}, {'background': []}],
-                      [{'align': []}],
-                      ['clean'],
-                      ['link', 'image']
-                    ]
-                  }
-                
-            }
-      },
+      // editorOption: {
+      //   placeholder: "请输入模板内容",
+      //   theme: "snow"
+      // },
       rules: {
         title: [
           { required: true, message: "请输入需求标题", trigger: "blur" },
