@@ -133,7 +133,7 @@ export default {
         return {
             breadlist:[
                 {
-                    path: '/parkHall/manage/baseInfo1',
+                    path: '/parkHall/manage/baseInfo',
                     name: this.utils.isBdPark()?"系统管理":"园区管理"
                 },
                 {

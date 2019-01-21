@@ -197,7 +197,7 @@
             return {
                 breadlist_01: [
                     {
-                        path: "/parkHall/manage/baseInfo1",
+                        path: "/parkHall/manage/baseInfo",
                         name: "系统管理"
                     },
                     {
@@ -211,7 +211,7 @@
                 ],
                 breadlist_02: [
                     {
-                        path: "/parkHall/manage/baseInfo1",
+                        path: "/parkHall/manage/baseInfo",
                         name: "系统管理"
                     },
                     {

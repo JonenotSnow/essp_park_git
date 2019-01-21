@@ -170,11 +170,11 @@ export default {
                     name: this.utils.isBdPark()?"系统管理":"园区管理"
                 },
                 {
-                    path:this.utils.isBdPark()?'/parkHall/manage/baseInfo2':'/parkHall/manage/baseInfo1',
+                    path: "/parkHall/manage/baseInfo",
                     name: this.utils.isBdPark()?"平台设置":"园区设置"
                 },
                 {
-                    path:this.utils.isBdPark()?'/parkHall/manage/baseInfo2':'/parkHall/manage/baseInfo1',
+                    path: "/parkHall/manage/baseInfo",
                     name: this.utils.isBdPark()?"关于我们":"概览设置"
                 },
                 {
@@ -300,11 +300,7 @@ export default {
                 _that.confirmSend = true;
                 setTimeout(() => {
                     _that.confirmSend = false;
-                    if (this.isBdPark) {
-                        this.$router.push('/parkHall/manage/baseInfo2');
-                    }else{
-                        this.$router.push('/parkHall/manage/baseInfo1');
-                    }
+                    this.$router.push("/parkHall/manage/baseInfo");
                 }, 2000);
             },(err)=>{
                 this.$message({

@@ -143,7 +143,7 @@
                 },
                 breadlist: [
                     {
-                        path: "/parkHall/manage/baseInfo2",
+                        path: "/parkHall/manage/baseInfo",
                         name: "系统管理"
                     },
                     {
