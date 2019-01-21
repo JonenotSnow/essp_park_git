@@ -1,6 +1,6 @@
 <template>
     <div id='wrap' class="occupancyApplication">
-        <p style="padding-top:50px;">
+        <p >
             <span :class="{'differ':isBdPark}">申请表设置</span>
         </p>
         <p style="margin-bottom:8px;">
@@ -871,11 +871,12 @@ export default {
     width: 990px;
     margin: 0 auto;
     & > p {
-        width: 890px;
+        width: 910px;
         margin: 0 auto;
         padding-top: 25px;
         overflow: hidden;
         &:nth-of-type(1) {
+            padding-top:42px;
             & > span {
                 padding-left: 24px;
                 font-size: 24px;
@@ -913,7 +914,7 @@ export default {
         color: #333333;
     }
     .tableContent {
-        width: 890px;
+        width: 910px;
         margin: 0 auto;
         .require,.addItem,.tableTitle{
             border-top: 1px solid #ccc;
@@ -926,17 +927,17 @@ export default {
                 line-height: 60px;
                 float: left;
                 &:nth-of-type(1) {
-                    width: 318px;
+                    width: 325px;
                     border-left:none;
                 }
                 &:nth-of-type(2) {
-                    width: 120px;
+                    width: 128px;
                 }
                 &:nth-of-type(3) {
                     width: 325px;
                 }
                 &:nth-of-type(4) {
-                    width: 124px;
+                    width: 130px;
                     border-right:1px solid #ccc;
                 }
                 & > input[type="text"],
@@ -1117,7 +1118,7 @@ export default {
         }
     }
     .selectO {
-        width: 860px;
+        width: 880px;
         margin: 0 auto;
         background-color: #f5f5f5;
         border: solid 1px #cccccc;
@@ -1187,7 +1188,7 @@ export default {
         }
     }
     .scan {
-        width: 890px;
+        width: 910px;
         margin: 10px auto 10px;
         position: relative;
         top:-25px;

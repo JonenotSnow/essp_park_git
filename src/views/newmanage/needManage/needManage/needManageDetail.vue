@@ -24,8 +24,8 @@
                 <el-form-item label="需求详情：">
                     <div class="my-style" v-html="data.detail"></div>
                 </el-form-item>
-                <el-form-item label="附件：" v-if="data.accessory && data.accessory.length>0">
-                    <div class="my-style" v-for="(item, index) in data.accessory" :key="index">{{item.name}}</div>
+                <el-form-item label="附件：" v-if="data.accessory">
+                    <a :href="data.accessory" :download="data.oldName">{{data.oldName}}</a>
                 </el-form-item>
             </el-form>
         </div>

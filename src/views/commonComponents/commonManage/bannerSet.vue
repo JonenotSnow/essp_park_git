@@ -330,7 +330,7 @@
                 height: 30px;
                 line-height: 30px;
                 margin-bottom: 50px;
-                padding-top: 50px;
+                padding-top: 42px;
                 .head__tag {
                     float: left;
                     margin-right: 20px;
@@ -346,7 +346,8 @@
                     font-size: 18px;
                     font-weight: normal;
                     font-stretch: normal;
-                    letter-spacing: 3.6px;
+                    // letter-spacing: 3.6px;
+                    letter-spacing: 4.8px;
                     color: #333333;
                 }
                 .head__tip {
