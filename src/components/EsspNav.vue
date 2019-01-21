@@ -28,7 +28,7 @@
             $route() {
                 //路由变化获取最新选择的园区
                 this.getNavIndex();
-            },
+            }
         },
         created() {
             this.getNavIndex();
