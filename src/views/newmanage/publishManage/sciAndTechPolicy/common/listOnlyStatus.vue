@@ -137,12 +137,6 @@
             // 弹窗
             showDialog(deleteId) {
 
-                if(this.selectCheckItem.length == '0'){
-                    this.$message.warning("您暂无选择要删除的信息");
-                    return;
-                };
-
-
                 this.dialogVisible = true;
 
                 if (deleteId) {
@@ -150,6 +144,12 @@
                     this.deleteId = deleteId;
                 } else {
                     // 全部删除
+                    
+                    if (this.selectCheckItem.length == '0') {
+                        this.$message.warning("您暂无选择要删除的信息");
+                        return;
+                    }
+
                     let selectCheckList = [];
                     let selectCheckIds = "";
                     // 获取id
