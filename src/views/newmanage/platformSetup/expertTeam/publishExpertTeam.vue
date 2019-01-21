@@ -666,7 +666,7 @@
                 width: 198px;
                 padding: 0;
                 border-radius: 3px;
-                border: 1px solid #ccc;
+                /*border: 1px solid #ccc;*/
                 height: 140px;
                 text-align: center;
                 line-height: 140px;
