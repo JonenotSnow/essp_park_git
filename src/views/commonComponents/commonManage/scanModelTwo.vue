@@ -59,7 +59,7 @@
                         <input type="text" :placeholder="`请输入模块${index+1}标题`" v-model='it.title'>
                     </p>
                     <div class="editorContent">
-                        <quill-editor :options="editorOption" v-model='it.content'></quill-editor>
+                        <quill-editor  v-model='it.content'></quill-editor>
                         <span>350字</span>
                     </div>
                 </div>
@@ -164,27 +164,27 @@ export default {
                     name: "模板编辑"
                 }
             ],
-            editorOption:{
-                readOnly:true,
-                placeholder:'请输入模板内容',
-                modules:{
-                    toolbar:[
-                        ['bold', 'italic', 'underline'],        // toggled buttons
-                        ['blockquote', 'code-block'],
-                        [{ 'header': 1 }, { 'header': 2 }],
-                        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-                        [{ 'script': 'sub'}, { 'script': 'super' }],
-                        [{ 'indent': '-1'}, { 'indent': '+1' }],
-                        [{ 'direction': 'rtl' }],
-                        [{ 'size': ['small', false, 'large', 'huge'] }],
-                        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-                        [{ 'color': [] }, { 'background': [] }],
-                        [{ 'font': [] }],
-                        [{ 'align': [] }]
-                    ]
-                },
-                theme:'snow'
-            },
+            // editorOption:{
+            //     readOnly:true,
+            //     placeholder:'请输入模板内容',
+            //     modules:{
+            //         toolbar:[
+            //             ['bold', 'italic', 'underline'],        // toggled buttons
+            //             ['blockquote', 'code-block'],
+            //             [{ 'header': 1 }, { 'header': 2 }],
+            //             [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+            //             [{ 'script': 'sub'}, { 'script': 'super' }],
+            //             [{ 'indent': '-1'}, { 'indent': '+1' }],
+            //             [{ 'direction': 'rtl' }],
+            //             [{ 'size': ['small', false, 'large', 'huge'] }],
+            //             [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+            //             [{ 'color': [] }, { 'background': [] }],
+            //             [{ 'font': [] }],
+            //             [{ 'align': [] }]
+            //         ]
+            //     },
+            //     theme:'snow'
+            // },
             scanTwo: false,
             logoPic: "",
             dialogImageUrl: "",

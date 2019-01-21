@@ -20,15 +20,13 @@ import "quill/dist/quill.core.css";
 import "quill/dist/quill.snow.css";
 import "quill/dist/quill.bubble.css";
 import quillEditor from "vue-quill-editor";
-import quilConfig from './quilConfig'
+import quillConfig from './quillConfig'
 Vue.config.productionTip = false;
 
 import VueLazyload from "vue-lazyload"; //引入这个懒加载插件
 Vue.use(VueLazyload);
 
-Vue.use(quillEditor, 
-    quilConfig
-);
+Vue.use(quillEditor, quillConfig);
 // 或者添加VueLazyload 选项
 Vue.use(VueLazyload, {
     loading: "./assets/loading.png",

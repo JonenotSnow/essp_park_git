@@ -84,7 +84,7 @@ const handlers = {
 };
  
 export default {
-    placeholder: '',
+    placeholder: '请输入内容',
     theme: 'snow',  // 主题
     modules: {
         toolbar: {

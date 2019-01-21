@@ -59,7 +59,7 @@
                             </div>
                         </div>
                         <div class="noPic">
-                            <quill-editor :options="editorOption" v-model="it.content"></quill-editor>
+                            <quill-editor  v-model="it.content"></quill-editor>
                         </div>
                         <div class="picList" v-if="it.isPic == '1'">
                             <div v-for="(is,itemindex) in imgBoxA[moudelIndex]" :key="itemindex" @click="getCurPicOrder(itemindex,moudelIndex)"
@@ -177,27 +177,27 @@ export default {
                     name: "模板编辑"
                 }
             ],
-            editorOption:{
-                readOnly:true,
-                placeholder:'请输入模板内容',
-                modules:{
-                    toolbar:[
-                        ['bold', 'italic', 'underline'],        // toggled buttons
-                        ['blockquote', 'code-block'],
-                        [{ 'header': 1 }, { 'header': 2 }],
-                        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-                        [{ 'script': 'sub'}, { 'script': 'super' }],
-                        [{ 'indent': '-1'}, { 'indent': '+1' }],
-                        [{ 'direction': 'rtl' }],
-                        [{ 'size': ['small', false, 'large', 'huge'] }],
-                        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-                        [{ 'color': [] }, { 'background': [] }],
-                        [{ 'font': [] }],
-                        [{ 'align': [] }]
-                    ]
-                },
-                theme:'snow'
-            },
+            // editorOption:{
+            //     readOnly:true,
+            //     placeholder:'请输入模板内容',
+            //     modules:{
+            //         toolbar:[
+            //             ['bold', 'italic', 'underline'],        // toggled buttons
+            //             ['blockquote', 'code-block'],
+            //             [{ 'header': 1 }, { 'header': 2 }],
+            //             [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+            //             [{ 'script': 'sub'}, { 'script': 'super' }],
+            //             [{ 'indent': '-1'}, { 'indent': '+1' }],
+            //             [{ 'direction': 'rtl' }],
+            //             [{ 'size': ['small', false, 'large', 'huge'] }],
+            //             [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+            //             [{ 'color': [] }, { 'background': [] }],
+            //             [{ 'font': [] }],
+            //             [{ 'align': [] }]
+            //         ]
+            //     },
+            //     theme:'snow'
+            // },
             parkSet1:"",
             parkSet1Obj:{},
             comlogo:"",//企业logo

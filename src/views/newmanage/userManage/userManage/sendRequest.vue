@@ -8,7 +8,7 @@
                 <span>INVITATION</span>
             </p>
             <div class="wrap">
-                <quill-editor :options="editorOption" v-model="content"></quill-editor>
+                <quill-editor  v-model="content"></quill-editor>
             </div>
             <p style="display:none;"><span>*</span>请使用编辑器自带功能编辑</p>
             <p class="scan">

@@ -22,7 +22,7 @@
           <span>
             <i>*</i>内容详情：</span>
                     <div class="editorContent">
-                        <quill-editor :options="editorOption" v-model='params.content'></quill-editor>
+                        <quill-editor  v-model='params.content'></quill-editor>
                     </div>
                 </div>
             </div>

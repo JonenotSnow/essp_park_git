@@ -241,10 +241,10 @@
                 },
 
                 // 编辑器提示语
-                editorOption: {
-                    placeholder: "请输入模板内容",
-                    theme: "snow"
-                },
+                // editorOption: {
+                //     placeholder: "请输入模板内容",
+                //     theme: "snow"
+                // },
 
                 rules_01: {
                     policyTitle: [

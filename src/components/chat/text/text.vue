@@ -27,7 +27,7 @@
         </div>
         <div class="chat-text" @keyup.ctrl.enter="send('enter')">
             <quill-editor v-if="chat.selectId"
-                          ref="childEditor" :options="editorOption" v-model="editorCon" @focus="onEditorFocus($event)"
+                          ref="childEditor"  v-model="editorCon" @focus="onEditorFocus($event)"
                           @blur="onEditorBlur($event)" @change="changeText($event)">
             </quill-editor>
         </div>

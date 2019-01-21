@@ -111,7 +111,6 @@
                         <quill-editor
                             ref="myTextEditor"
                             v-model="editorOption.editorCon"
-                            :options="editorOption"
                         >
                             <div id="toolbar" slot="toolbar"></div>
                         </quill-editor>
@@ -689,11 +688,11 @@
                 p1: "",
                 p2: "",
                 toLimit: 0,
-                editorOption: {
-                    editorCon: "",
-                    readOnly: "true",
-                    placeholder: `请输入内容`
-                },
+                // editorOption: {
+                //     editorCon: "",
+                //     readOnly: "true",
+                //     placeholder: `请输入内容`
+                // },
                 thisDate: new Date(),
                 breadlist: [
                     {
