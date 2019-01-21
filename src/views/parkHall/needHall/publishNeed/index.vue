@@ -17,7 +17,7 @@
         <el-form-item label="需求详情" required>
 
           <div class="wrap" >
-                      <quillEditor :options="editorOption" v-model="form.detail"></quillEditor>
+                      <quill-editor :options="editorOption" v-model="form.detail"></quill-editor>
           </div>
 
         </el-form-item>
@@ -50,16 +50,12 @@
 </template>
 <script>
 import EsspBreadCrumb from "@/components/EsspBreadCrumb";
-import "quill/dist/quill.core.css";
-import "quill/dist/quill.snow.css";
-import "quill/dist/quill.bubble.css";
-import { quillEditor } from "vue-quill-editor";
+
 import mixin from '@/components/mixins/mixins_windowOpen.js'
 export default {
   mixins:[mixin],
   components: {
     EsspBreadCrumb,
-    quillEditor
   },
   data() {
     return {

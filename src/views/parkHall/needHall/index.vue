@@ -188,7 +188,6 @@ export default {
     toDetailrqm(val) {
       let displayUrl = "";
       let usrid = "";
-
       if (!this.utils.isEmpty(this.userInfo)) {
         this.$post("/requirement/requirement_other_detail_head", {
           bsnId: val.simRqmInfVo.bsnRqmID
@@ -213,8 +212,8 @@ export default {
               //   }
               // });
               // window.open(routerData.href, "_blank");
-              let params ={bsnRqmId:val.simRqmInfVo.bsnRqmId,
-                                tplId:val.simRqmInfVo.tplId}
+              let params ={bsnRqmId:val.simRqmInfVo.bsnRqmID,
+                                tplId:val.simRqmInfVo.tplID}
                                 this.windowOpenUrl(displayUrl,params)
             } else {
               displayUrl = "/requIndex/display-other";
@@ -227,8 +226,8 @@ export default {
               //   }
               // });
               // window.open(routerData.href, "_blank");
-              let params ={bsnRqmId:val.simRqmInfVo.bsnRqmId,
-                                tplId:val.simRqmInfVo.tplId}
+              let params ={bsnRqmId:val.simRqmInfVo.bsnRqmID,
+                                tplId:val.simRqmInfVo.tplID}
                                 this.windowOpenUrl(displayUrl,params)
             }
           }
@@ -244,7 +243,7 @@ export default {
         //   }
         // });
         // window.open(routerData.href, "_blank");
-        let params ={bsnRqmId:val.simRqmInfVo.bsnRqmId,
+        let params ={bsnRqmId:val.simRqmInfVo.bsnRqmID,
                                 tplId:val.simRqmInfVo.tplID}
                                 this.windowOpenUrl(displayUrl,params)
       }

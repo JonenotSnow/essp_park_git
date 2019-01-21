@@ -15,11 +15,17 @@ Vue.use(ElementUI);
 // 兼容IE9
 import "babel-polyfill";
 
+import "quill/dist/quill.core.css";
+import "quill/dist/quill.snow.css";
+import "quill/dist/quill.bubble.css";
+import  quillEditor  from "vue-quill-editor";
+
 Vue.config.productionTip = false;
 
 import VueLazyload from "vue-lazyload"; //引入这个懒加载插件
 Vue.use(VueLazyload);
 
+Vue.use(quillEditor)
 // 或者添加VueLazyload 选项
 Vue.use(VueLazyload, {
     loading: "./assets/loading.png",
@@ -134,8 +140,9 @@ router.beforeEach(async (to, from, next) => {
 
     next();
 });
-async function getBd() {
-    await getParkByName("bdPark2018");
+async function getResetSession() {
+    let parkId= sessionStorageHandler.getItem('parkId')
+    await getParkById(parkId);
     await getLoginUserRole({parkId: oneId});
     await selectResMenu({oneId, LoginUserRol});
 }
@@ -191,6 +198,7 @@ async function selectResMenu(options, next) {
             if (response.resultCode == "CLT000000000") {
                 var menuList = response.resultData.menuList[0] || {};
                 sessionStorageHandler.setItem("menuList", menuList);
+                sessionStorageHandler.setItem("menuResource", response.resultData.routerResMap);
             } else {
                 Message.info(response.resultMsg);
             }
