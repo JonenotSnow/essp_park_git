@@ -21,7 +21,7 @@
             </div>
         </div>
         <div class="policie-and-regulation-main">
-            <oneCardModel :list="list"  :allChecks="allCheck" :selectCheckItem="selectCheckItem" @changeStatusList="changeStatusList" @delectList="getPublicedNews" :customopts={status,temeTit,allTotal}></oneCardModel>
+            <oneCardModel :list="list" :type="type" :allChecks="allCheck" :selectCheckItem="selectCheckItem" @changeStatusList="changeStatusList" @delectList="getPublicedNews" :customopts={status,temeTit,allTotal}></oneCardModel>
         </div>
         <div class="pageList" v-if="list.length > 0">
             <el-pagination

@@ -68,6 +68,10 @@
             },
             allCheck: {
                 type: Boolean,
+                default: false
+            },
+            type: {
+                type: String,
                 default: ''
             },
             list: {
@@ -113,7 +117,7 @@
                     name: 'park-lookNewsAudit',
                     query: {
                         id: item.informationId,
-                        applyType: '01'
+                        applyType: '0'+this.type
                     }
                 })
             },
