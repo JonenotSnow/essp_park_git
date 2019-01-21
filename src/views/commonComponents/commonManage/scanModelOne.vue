@@ -59,7 +59,7 @@
                             </div>
                         </div>
                         <div class="noPic">
-                            <quillEditor :options="editorOption" v-model="it.content"></quillEditor>
+                            <quill-editor :options="editorOption" v-model="it.content"></quill-editor>
                         </div>
                         <div class="picList" v-if="it.isPic == '1'">
                             <div v-for="(is,itemindex) in imgBoxA[moudelIndex]" :key="itemindex" @click="getCurPicOrder(itemindex,moudelIndex)"
@@ -153,14 +153,9 @@
 
 <script>
 import EsspBreadCrumb from "@/components/EsspBreadCrumb"
-import 'quill/dist/quill.core.css'
-import 'quill/dist/quill.snow.css'
-import 'quill/dist/quill.bubble.css'
-import {quillEditor} from 'vue-quill-editor'
 export default {
     components:{
         EsspBreadCrumb,
-        quillEditor
     },
     data () {
         return {

@@ -671,11 +671,6 @@
     import EsspAddTag from "@/components/EsspAddTag";
     import ParkUpload from "@/views/parkHall/parkUpload"; // 上传图片控件
 
-    import "quill/dist/quill.core.css";
-    import "quill/dist/quill.snow.css";
-    import "quill/dist/quill.bubble.css";
-    import {quillEditor} from "vue-quill-editor";
-
     export default {
         name: "",
         data() {
@@ -957,7 +952,6 @@
             EsspTag,
             EsspAddTag,
             ParkUpload,
-            quillEditor
         },
         created() {
             this.uploads = this.$apiUrl.upload.upload;

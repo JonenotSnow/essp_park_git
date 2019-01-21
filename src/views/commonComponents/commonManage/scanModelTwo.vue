@@ -59,7 +59,7 @@
                         <input type="text" :placeholder="`请输入模块${index+1}标题`" v-model='it.title'>
                     </p>
                     <div class="editorContent">
-                        <quillEditor :options="editorOption" v-model='it.content'></quillEditor>
+                        <quill-editor :options="editorOption" v-model='it.content'></quill-editor>
                         <span>350字</span>
                     </div>
                 </div>
@@ -138,10 +138,6 @@
 
 <script>
 import EsspBreadCrumb from "@/components/EsspBreadCrumb";
-import "quill/dist/quill.core.css";
-import "quill/dist/quill.snow.css";
-import "quill/dist/quill.bubble.css";
-import { quillEditor } from "vue-quill-editor";
 export default {
     name: "",
     components: {

@@ -18,34 +18,53 @@ import "babel-polyfill";
 import "quill/dist/quill.core.css";
 import "quill/dist/quill.snow.css";
 import "quill/dist/quill.bubble.css";
-import  quillEditor  from "vue-quill-editor";
+import quillEditor from "vue-quill-editor";
 
 Vue.config.productionTip = false;
 
 import VueLazyload from "vue-lazyload"; //引入这个懒加载插件
 Vue.use(VueLazyload);
 
-Vue.use(quillEditor)
+Vue.use(quillEditor, {
+    toolbar: {
+        container: [
+            ["bold", "italic", "underline", "strike"],
+            ["blockquote", "code-block"],
+            [{ header: 1 }, { header: 2 }],
+            [{ list: "ordered" }, { list: "bullet" }],
+            [{ script: "sub" }, { script: "super" }],
+            [{ indent: "-1" }, { indent: "+1" }],
+            [{ direction: "rtl" }],
+            [{ size: ["small", false, "large", "huge"] }],
+            [{ header: [1, 2, 3, 4, 5, 6, false] }],
+            [{ font: [] }],
+            [{ color: [] }, { background: [] }],
+            [{ align: [] }],
+            ["clean"],
+            ["link", "image",'video']
+        ]
+    }
+});
 // 或者添加VueLazyload 选项
 Vue.use(VueLazyload, {
     loading: "./assets/loading.png",
     error: "./assets/error.png"
 });
 // ajax全局配置
-import {post, get, patch, put, del} from "./fetch/http";
-import {apiUrl} from "./fetch/apiUrl";
+import { post, get, patch, put, del } from "./fetch/http";
+import { apiUrl } from "./fetch/apiUrl";
 import sessionStorageHandler from "./util/sessionStorageHandler"; // sessionStorage管理类
 import localStorageHandler from "./util/localStorageHandler"; // localStorage管理类
 import utils from "./util/utils";
 import constants from "./util/constants";
 
 //服务器域名
-import {setting} from "./util/serveHttp";
+import { setting } from "./util/serveHttp";
 // 设置字体图库
 import fontIcon from "./assets/font/iconfont.css";
 // 引入公共的举报弹窗
 import commonJs from "./commonFun/commonJs";
-import {menuListData} from "./mock/menuList";
+import { menuListData } from "./mock/menuList";
 
 //定义全局变量
 Vue.prototype.$apiUrl = apiUrl;
@@ -64,9 +83,9 @@ Vue.prototype.$echarts = echarts; // 图表库
 
 import Moment from "moment";
 
-Vue.filter("timerFormat", function (value) {
+Vue.filter("timerFormat", function(value) {
     return Moment(value).format("YYYY-MM-DD HH:mm");
-})
+});
 
 // Vue.prototype.$uploadCommom = uploadCommom;
 let openUlr = "http://128.196.235.129:1345/essp/#";
@@ -103,72 +122,82 @@ router.beforeEach(async (to, from, next) => {
     // let query  = getQueryObjuect()
     let menuList = sessionStorageHandler.getItem("menuList");
     let parkId = to.query.parkId;
-    let token = to.query.token
+    let token = to.query.token;
     let isUrlHasBd = window.location.href.indexOf("bdppc") > -1;
     if (parkId) {
         sessionStorageHandler.setItem("parkId", parkId);
     }
-    oneId = sessionStorageHandler.getItem("bdParkId")
-    if (!oneId && oneId === 'undefined') {
-        oneId = sessionStorageHandler.getItem("parkId")
+    oneId = sessionStorageHandler.getItem("bdParkId");
+    if (!oneId && oneId === "undefined") {
+        oneId = sessionStorageHandler.getItem("parkId");
     }
 
-    if(token && token!='null'){
+    if (token && token != "null") {
         sessionStorageHandler.setItem("token", token);
         await refreshAuthToken(token);
     }
-    console.log(to.query.label)
-    if ((token && token!='null' && to.path !== "/parkList")||(!menuList && to.path !== "/parkList")) {
+    console.log(to.query.label);
+    if (
+        (token && token != "null" && to.path !== "/parkList") ||
+        (!menuList && to.path !== "/parkList")
+    ) {
         // 如果有token继而判断是是保定,获取园区信息，其他园区通过label获取
         if (isUrlHasBd || to.query.label) {
             //判断是否保定园区路径，否则淮安， 以下通过方法获取保定园区信息
             await getParkByName(to.query.label);
         } else if (parkId) {
-            await getParkById(parkId)
+            await getParkById(parkId);
         } else {
             //没有parkId,label时,返回连接末尾参数，跳平台parkList列表页
-            let url =location.href.indexOf("?")>-1?'?'+location.href.split('?')[1]:''
-            return window.location.href=openUlr+'/parkList'+url
-
+            let url =
+                location.href.indexOf("?") > -1
+                    ? "?" + location.href.split("?")[1]
+                    : "";
+            return (window.location.href = openUlr + "/parkList" + url);
         }
         // bdParkId 有此字段优先返回
-        console.log(oneId)
-        await getLoginUserRole({parkId: oneId});
-        await selectResMenu({oneId, LoginUserRol});
+        console.log(oneId);
+        await getLoginUserRole({ parkId: oneId });
+        await selectResMenu({ oneId, LoginUserRol });
         // router.push(to.path)
-    } 
+    }
 
     next();
 });
 async function getResetSession() {
-    let parkId= sessionStorageHandler.getItem('parkId')
+    let parkId = sessionStorageHandler.getItem("parkId");
     await getParkById(parkId);
-    await getLoginUserRole({parkId: oneId});
-    await selectResMenu({oneId, LoginUserRol});
+    await getLoginUserRole({ parkId: oneId });
+    await selectResMenu({ oneId, LoginUserRol });
 }
 
-async function getParkByName(name='bdPark2018') {
-    console.log(name)
+async function getParkByName(name = "bdPark2018") {
+    console.log(name);
     await post("/parkManage/getParkByRealmName", {
         realmName: name
     }).then(res => {
         if (res.resultData) {
-            console.log(res.resultData)
-            bdParkId = res.resultData.bdParkId
+            console.log(res.resultData);
+            bdParkId = res.resultData.bdParkId;
             sessionStorageHandler.setItem("parkId", res.resultData.parkId);
             sessionStorageHandler.setItem("parkName", res.resultData.parkNm);
             sessionStorageHandler.setItem("bdParkId", res.resultData.bdParkId);
             // 1/3去除多余参数不采用parkFlag
             // sessionStorageHandler.setItem("parkFlag", res.resultData.bdParkId);
             // 规则，如果有
-            oneId = bdParkId ? bdParkId : sessionStorageHandler.getItem('parkId');
+            oneId = bdParkId
+                ? bdParkId
+                : sessionStorageHandler.getItem("parkId");
         }
     });
 }
 
 async function getLoginUserRole(options) {
     var urlapi = apiUrl.home.getLoginUserRole;
-    var pop = {flag: options.parkId,parkId:sessionStorageHandler.getItem('parkId')};
+    var pop = {
+        flag: options.parkId,
+        parkId: sessionStorageHandler.getItem("parkId")
+    };
     await post(urlapi, pop).then(
         response => {
             if (response.resultCode == "CLT000000000") {
@@ -198,7 +227,10 @@ async function selectResMenu(options, next) {
             if (response.resultCode == "CLT000000000") {
                 var menuList = response.resultData.menuList[0] || {};
                 sessionStorageHandler.setItem("menuList", menuList);
-                sessionStorageHandler.setItem("menuResource", response.resultData.routerResMap);
+                sessionStorageHandler.setItem(
+                    "menuResource",
+                    response.resultData.routerResMap
+                );
             } else {
                 Message.info(response.resultMsg);
             }
@@ -210,11 +242,11 @@ async function selectResMenu(options, next) {
 }
 
 async function refreshAuthToken(token) {
-    await post(apiUrl.user.getOtherTokenUrl, {access_token: token}).then(
+    await post(apiUrl.user.getOtherTokenUrl, { access_token: token }).then(
         response => {
             let data = response.resultData;
             // 开发阶段没必要加，暂时注释
-            loginCtrl(data)
+            loginCtrl(data);
         }
     );
 }
@@ -226,8 +258,6 @@ async function getParkById(parkId) {
         if (res.resultCode == "CLT000000000") {
             console.log(res.resultData);
             if (res.resultData) {
-
-
                 sessionStorageHandler.setItem("parkId", res.resultData.parkId);
                 sessionStorageHandler.setItem(
                     "parkName",
@@ -237,8 +267,10 @@ async function getParkById(parkId) {
                     "bdParkId",
                     res.resultData.bdParkId
                 );
-                bdParkId = res.resultData.bdParkId
-                oneId = bdParkId ? bdParkId : sessionStorageHandler.getItem('parkId');
+                bdParkId = res.resultData.bdParkId;
+                oneId = bdParkId
+                    ? bdParkId
+                    : sessionStorageHandler.getItem("parkId");
             }
         }
     });
@@ -291,7 +323,6 @@ function loginCtrl(data) {
             sessionStorageHandler.setItem("enterpriseFlag", true);
         }
     }
-
 }
 
 function getQueryObjuect(url) {
@@ -299,7 +330,7 @@ function getQueryObjuect(url) {
     let search = url.substring(url.lastIndexOf("?") + 1);
     let obj = {};
     let reg = /([^?&=]+)=([^?&=]*)/g;
-    search.replace(reg, function (rs, $1, $2) {
+    search.replace(reg, function(rs, $1, $2) {
         let name = decodeURIComponent($1);
         let val = decodeURIComponent($2);
         val = String(val);
@@ -321,8 +352,7 @@ function getCodeType() {
                 );
             }
         },
-        err => {
-        }
+        err => {}
     );
 }
 
@@ -331,7 +361,7 @@ new Vue({
     el: "#app",
     router,
     store,
-    components: {App},
+    components: { App },
     template: "<App/>",
     created() {
         let rzz = localStorage.getItem("rzz");

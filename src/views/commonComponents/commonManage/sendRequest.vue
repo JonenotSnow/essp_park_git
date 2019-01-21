@@ -8,7 +8,7 @@
                 <span>INVITATION</span>
             </p>
             <div class="wrap">
-                <quillEditor :options="editorOption" v-model="content"></quillEditor>
+                <quill-editor :options="editorOption" v-model="content"></quill-editor>
             </div>
             <p style="display:none;"><span>*</span>请使用编辑器自带功能编辑</p>
             <p class="scan">
@@ -47,14 +47,9 @@
 
 <script>
 import EsspBreadCrumb from "@/components/EsspBreadCrumb";
-import "quill/dist/quill.core.css";
-import "quill/dist/quill.snow.css";
-import "quill/dist/quill.bubble.css";
-import { quillEditor } from "vue-quill-editor";
 export default {
     components: {
-        EsspBreadCrumb,
-        quillEditor
+        EsspBreadCrumb
     },
     data() {
         return {
