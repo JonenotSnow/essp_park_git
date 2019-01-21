@@ -432,6 +432,7 @@
     #publishExpertTeams .avatar-uploader-chengguo .el-upload {
         width: 100%;
         height: 100%;
+        border: 1px dashed #d9d9d9;
     }
 </style>
 <style lang='less' scoped>
