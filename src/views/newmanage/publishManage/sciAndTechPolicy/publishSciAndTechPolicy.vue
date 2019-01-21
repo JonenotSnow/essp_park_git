@@ -19,7 +19,7 @@
                     ></el-input>
                 </el-form-item>
                 <el-form-item label="政策法规简介：" prop="approveComment">
-                    <!--<el-input type="textarea" v-model="ruleForm.desc"></el-input>-->
+                    <!--<el-input type="textarea" v-model="ruleForm.approveComment"/>-->
                     <textarea
                         class="my-approve-comment"
                         v-model="ruleForm.approveComment"
@@ -28,10 +28,13 @@
                 </el-form-item>
                 <el-form-item label="政策法规详情：" prop="infoDetail" class="my-detail-edit">
                     <div class="edit_wrap">
-                        <essp-editor :editorCont="ruleForm.infoDetail" @onEditorChange="onEditorChange"></essp-editor>
+                        <essp-editor
+                            :editorCont="ruleForm.infoDetail"
+                            @onEditorChange="onEditorChange"
+                        />
                     </div>
                 </el-form-item>
-                <el-form-item label="政策法规标签：">
+                <el-form-item label="政策法规标签：" prop="tags">
                     <div class="inline_div_tag">
                         <essp-add-tag
                             ref="eat"
@@ -106,7 +109,7 @@
                         <essp-editor :editorCont="ruleForm.infoDetail" @onEditorChange="onEditorChange"></essp-editor>
                     </div>
                 </el-form-item>
-                <el-form-item label="科技服务标签：">
+                <el-form-item label="科技服务标签：" prop="tags">
                     <div class="inline_div_tag">
                         <essp-add-tag
                             ref="eat"
@@ -553,19 +556,9 @@
         },
     }
 </script>
-<style>
-    .my-detail-edit .el-form-item__content {
-        line-height: normal;
-    }
-</style>
+
 <style lang='less' scoped>
-    .edit_wrap  {
-        float: left;
-        margin-left: 8px;
-        width: 720px;
-        min-height: 400px;
-        border-radius: 3px;
-    }
+
     .publish-sciAnd-tech-policy-wrap {
         width: 1200px;
         background: #fff;
@@ -589,13 +582,16 @@
             padding: 0 125px 60px;
 
             .my-approve-comment {
+                margin: 0;
                 padding: 10px;
                 width: 720px;
-                height: 140px;
+                /*height: 140px;*/
+                height: 155px;
                 font-size: 14px;
                 color: #606266;
                 border-radius: 3px;
                 border: solid 1px #cccccc;
+                resize: none;
                 outline: none;
                 &::-webkit-input-placeholder {
                     color: #ccc;
@@ -611,6 +607,14 @@
                 }
             }
 
+            .my-detail-edit {
+                .ql-container {
+                    height: 170px;
+                }
+                .el-form-item__content {
+                    line-height: normal;
+                }
+            }
 
             .inline_div_tag {
                 /*border: 1px solid red;*/
