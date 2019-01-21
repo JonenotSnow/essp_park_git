@@ -111,6 +111,11 @@
             // 弹窗
             showDialog(deleteId) {
 
+                if(this.selectCheckItem.length == '0'){
+                    this.$message.warning("您暂无选择要删除的信息");
+                    return;
+                };
+
                 this.dialogVisible = true;
 
                 if (deleteId) {
@@ -138,6 +143,9 @@
                     if (codestatus == "CLT000000000") {
                         this.dialogVisible = false;
                         this.$message.success(response.resultMsg);
+
+                        // 重置空
+                        this.selectCheckItem = [];
 
                         // 通知父组件，重新获取数据
                         this.$emit("childDeleted", this.type);
