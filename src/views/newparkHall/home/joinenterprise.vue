@@ -10,7 +10,7 @@
             现在固定显示6个
              -->
             <div class="hasenters" v-if="enterprises.length">
-                <img class="enter_child" v-for="(item,index) in enterprises.slice(0,5)" :key="index" :src="item.src" >
+                <img class="enter_child" v-for="(item,index) in enterprises.slice(0,5)" :key="index" :src="item.cstLogo"  @click="enterBusiness(item)">
                 <span class="enter_child entermore" v-if="enterprises.length>5" @click="linkToPage">View More ></span>
             </div>
                <div v-else class="nobox"><i class="myicon"></i><span class="tipspan">暂无数据</span></div>
@@ -25,7 +25,7 @@
      return {
          msg:"入驻企业",
          enterprises:[
-             {
+             /*{
                  src: require('@/views/newparkHall/home/imgs/logo_b1.png'),
 
              },
@@ -43,12 +43,15 @@
              },
              {
                 src: require('@/views/newparkHall/home/imgs/logo_b6.png'),
-             },
-         ]
+             },*/
+         ],
+         pageNum: 1,
+         pageSize: 5,
+         rzzMap:new Map()
      }
    },
    created () {
-
+    this.queryEnterpriseList()
    },
    computed: {
 
@@ -59,6 +62,30 @@
    methods:{
     linkToPage() {
       this.$router.push("/parkHall/manage/allEnterpriseList");
+    },
+    queryEnterpriseList(){
+        this.$post('/memberManage/getMemInfo', {
+        parkId: this.SSH.getItem('parkId'),
+        pageSize:this.pageSize,
+        pageNum:this.pageNum
+      }).then(      
+        response => {
+          if (response.resultCode == "CLT000000000") {
+            if(response.resultData.memInfoCount > 0){
+              this.enterprises = response.resultData.memberList
+            }else{
+
+            }           
+          }
+        },
+        response => {
+          this.$message.error(response.resultMsg);
+        }
+      );
+    },
+    enterBusiness(item){
+        let prams = "?cstId="+item.cstId
+        this.windowOpenUrl('/centerIndex/showHome',prams)
     }
    }
  }
