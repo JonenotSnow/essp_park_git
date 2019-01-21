@@ -42,14 +42,15 @@
                 </el-input>
             </div>
             <div class="searchinfo" @click="getAllAchiev">查询</div>
+            <div class="searchinfo" @click="resetAllChiev" style="margin-left: 20px;">重置</div>
         </div>
-        <listOwnImg :list='list' :allCheck="isAllChecked"  @delectList="getAllAchiev" :ajaxTit="ajaxTit" :totalCount='totalCount' :type="componentTit" :componentType="componentType"></listOwnImg>
-        <div class="pageList"  v-if="list.length > 0">
+        <listOwnImg ref="listModule" :list='list' :allChecks="isAllChecked" @delectList="getAllAchiev"  :ajaxTit="ajaxTit" :type="componentTit" :componentType="componentType"></listOwnImg>
+        <div class="pageList" v-if="list.length > 0">
             <el-pagination
                 @size-change="handleSizeChange"
                 @current-change="handleCurrentChange"
                 :current-page="pageNum"
-                :page-sizes="[5, 10, 15, 20]"
+                :page-sizes="[10, 15, 20]"
                 :page-size="pageSize"
                 layout="total, sizes, prev, pager, next, jumper"
                 :total="totalCount">
@@ -80,6 +81,7 @@
                     inventor: '',   //发明人
                     unit:'',        // 所属单位
                 },
+                selectListNum: 0,
                 isSeachInput: false,  // 当前是否需要显示搜索框
                 ajaxTit:'数据加载中……',
                 publishTitle: '立即发布',
@@ -90,7 +92,7 @@
                 totalCount: 0,
                 pageNum: 1,
                 pageSize: 10,
-                selectListNum: 0,
+                selectList: [],
                 parkId: sessionStorage.getItem("parkId"),
                 searchList: [
                     {
@@ -127,11 +129,13 @@
         created() {
             this.getAllAchiev();
         },
-        computed: {},
         methods: {
+
+
             // 获取成果列表
             getAllAchiev(){
-                this.ajaxTit = "数据加载中……"
+                this.ajaxTit = "数据加载中……";
+                this.isAllChecked = false;
                 this.$post(this.$apiUrl.achievement.getAllAchiev, {
                     parkId:  this.parkId,
                     pageNum:this.pageNum,   // 页码
@@ -156,7 +160,10 @@
                         this.list = arr;
                         console.log("this.list ",this.list );
                         this.totalCount = response.resultData.total;
-                        console.log(this.totalCount);
+
+                        this.$refs.listModule.changeAllCheck(false);
+
+
                         this.ajaxTit = "数据加载完毕"
                     },
                     err => {
@@ -164,14 +171,26 @@
                     }
                 );
             },
+            // 重置搜索
+            resetAllChiev(){
+                this.pageNum = 1;
+                this.pageSize = 10;
+                this.form.name = ''; // 成果标题
+                this.form.field =  '';  // 所属领域
+                this.form.photo = '';   // 上传图片
+                this.form.title = '';  // 简介
+                this.form.detail = ''; //编辑器内容
+                this.form.inventor = '';   //发明人
+                this.form.unit = '';        // 所属单位
+                this.getAllAchiev();
+            },
+            // 改变每页数量
             handleSizeChange(val) {
                 this.pageSize = val;
-                this.isAllChecked = false;
                 this.getAllAchiev();
             },
             handleCurrentChange(val) {
                 this.pageNum = val;
-                this.isAllChecked = false;
                 this.getAllAchiev();
             }
         },

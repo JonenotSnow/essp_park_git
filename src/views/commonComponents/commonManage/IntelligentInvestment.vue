@@ -194,11 +194,20 @@ export default {
                     }
                 }
             }
+            let job = this.searchForm.indLvl3Cd;
+            //如果二级查询存在 三级查询无  取二级查询
+            if (!this.searchForm.indLvl3Cd && this.searchForm.indLvl2Cd) {
+                job = this.searchForm.indLvl2Cd;
+            }
+            //如果二级查询不存在 取一级查询
+            if (!this.searchForm.indLvl2Cd) {
+                job = this.searchForm.indLvl1Cd;
+            }
             this.$post(this.$apiUrl.manage.getInviteByInfo, {
                 parkId: sessionStorage.getItem("parkId"),
                 pageSize: this.pageSize,
                 pageNum: this.pageNum,
-                idyCode: this.searchForm.indLvl3Cd,
+                idyCode: job,
                 adress: address
             }).then(response => {
                 this.list = response.resultData.list;

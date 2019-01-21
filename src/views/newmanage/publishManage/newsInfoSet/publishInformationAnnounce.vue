@@ -34,10 +34,8 @@
                     />
                 </el-form-item>
                 <el-form-item label="新闻动态详情：" prop="infoDetail" class="my-detail-edit">
-                    <div class="my-quill-edit-wrap">
-                        <quill-editor v-model="ruleForm.infoDetail" :options="editorOption">
-                            <div id="toolbar" slot="toolbar"></div>
-                        </quill-editor>
+                    <div class="my-quill-edit-wrap-ss">
+                        <essp-editor :editorCont="ruleForm.infoDetail" @onEditorChange="onEditorChange"></essp-editor>
                     </div>
                 </el-form-item>
                 <el-form-item label="新闻动态标签：">
@@ -98,13 +96,11 @@
                     />
                 </el-form-item>
                 <el-form-item label="通知公告详情：" prop="infoDetail" class="my-detail-edit">
-                    <div class="my-quill-edit-wrap">
-                        <quill-editor v-model="ruleForm.infoDetail" :options="editorOption">
-                            <div id="toolbar" slot="toolbar"></div>
-                        </quill-editor>
+                    <div class="my-quill-edit-wrap-ss">
+                        <essp-editor :editorCont="ruleForm.infoDetail" @onEditorChange="onEditorChange"></essp-editor>
                     </div>
                 </el-form-item>
-                <el-form-item label="通知公告标签：">
+                <el-form-item label="通知公告标签：" prop="tags">
                     <div class="inline_div_tag">
                         <essp-add-tag
                             ref="eat"
@@ -183,13 +179,7 @@
     import EsspTag from "@/components/EsspTag";
     import EsspAddTag from "@/components/EsspAddTag";
     import ParkUpload from "@/views/parkHall/parkUpload";
-
-
-    // 编辑器
-    import "quill/dist/quill.core.css";
-    import "quill/dist/quill.snow.css";
-    import "quill/dist/quill.bubble.css";
-    import {quillEditor} from "vue-quill-editor";
+    import EsspEditor from "@/components/EsspEditor";
 
     export default {
         components: {
@@ -197,7 +187,7 @@
             EsspTag,
             EsspAddTag,
             ParkUpload,
-            quillEditor
+            EsspEditor
         },
         data() {
             return {
@@ -217,11 +207,11 @@
                 ],
                 breadlist_02: [
                     {
-                        path: "/parkHall/manage/baseInfo1",
+                        path: "/parkHall/manage/baseInfo",
                         name: "系统管理"
                     },
                     {
-                        path: "/parkHall/manage/sciAndTechPolicy/policieAndRegulation",
+                        path: "/parkHall/manage/publicNotice",
                         name: "发布管理"
                     },
                     {
@@ -342,6 +332,8 @@
 
                         this.ruleForm.parkId = this.parkId;
 
+                        this.ruleForm.saveType = saveType;
+
                         // 处理标签
                         let tags = this.ruleForm.tags.join(',');
                         this.ruleForm.tags = tags;
@@ -354,7 +346,7 @@
                         let url;
                         if (this.applyType == '01') {
                             // 处理动态图片，“新闻动态”模块才有这个字段
-                            this.ruleForm.titleImg= this.parkUploadData.src;
+                            this.ruleForm.titleImg = this.parkUploadData.src;
                             url = '/information/saveNews';
                         }
 
@@ -409,9 +401,6 @@
 
                         this.ruleForm.saveType = saveType;
 
-                        // 区分政策或者法规
-                        this.ruleForm.applyType = this.applyType;
-
                         // 处理标签
                         let tags = this.ruleForm.tags.join(',');
                         this.ruleForm.tags = tags;
@@ -419,8 +408,20 @@
                         // 处理附件上传
                         this.ruleForm.fileUrl = this.fileList;
 
+                        // “新闻动态”模块的接口："/information/saveNews"
+                        // “通知公告”模块的接口："information/saveNotice"
+                        let url;
+                        if (this.applyType == '01') {
+                            // 处理动态图片，“新闻动态”模块才有这个字段
+                            this.ruleForm.titleImg = this.parkUploadData.src;
+                            url = '/information/saveNews';
+                        }
 
-                        this.$post("/information/saveNews", this.ruleForm).then(response => {
+                        if (this.applyType == '02') {
+                            url = '/information/saveNotice';
+                        }
+
+                        this.$post(url, this.ruleForm).then(response => {
                             let codestatus = response.resultCode;
                             if (codestatus == "CLT000000000") {
                                 if (this.applyType === '01') {
@@ -560,6 +561,10 @@
             handleScan() {
                 this.dialogVisible = true;
             },
+            // 编辑器的值获取
+            onEditorChange(val) {
+                this.ruleForm.infoDetail = val;
+            },
             // 跳转出新窗口，看上传的附件
             linkToFile(url) {
                 window.open(url)
@@ -573,8 +578,13 @@
         },
     }
 </script>
-
+<style>
+    .my-detail-edit .el-form-item__content {
+        line-height: normal;
+    }
+</style>
 <style lang='less' scoped>
+
     .publish-sciAnd-tech-policy-wrap {
         width: 1200px;
         background: #fff;

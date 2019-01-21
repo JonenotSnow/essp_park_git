@@ -1,24 +1,24 @@
 <template>
     <div id="oneCardModel">
         <!-- 新闻管理专用 -->
-        <div v-if="list.length">
-            <div class="maintool esspclearfix">
-                <el-checkbox class="all_checked_model" v-model="allCheck" @change="changeAllChecked">全选</el-checkbox>
-                <div class="numdes">共<span class="detailnum">{{list.length}}</span>条，已选<span class="detailnum">{{selectCheckItem.length}}</span>条
-                </div>
-                <div class="btntool"><span class="delbtn" @click="removeList">删除</span></div>
-                <!-- 草稿屏蔽 -->
-                <div class="statustool" v-if="!customopts.status==0">
-                    <el-select v-model="classtType" @change="changeStatus" placeholder="请选择" class="inline_select">
-                        <el-option
-                            v-for="(item,index) in typeitems"
-                            :key="index"
-                            :label="item.name"
-                            :value="item.id"
-                        ></el-option>
-                    </el-select>
-                </div>
+        <div class="maintool esspclearfix">
+            <el-checkbox class="all_checked_model" v-model="allCheck" @change="changeAllChecked">全选</el-checkbox>
+            <div class="numdes">共<span class="detailnum">{{list.length}}</span>条，已选<span class="detailnum">{{selectCheckItems.length}}</span>条
             </div>
+            <div class="btntool"><span class="delbtn" @click="removeList">删除</span></div>
+            <!-- 草稿屏蔽 -->
+            <div class="statustool" v-if="!customopts.status==0">
+                <el-select v-model="classtType" @change="changeStatus" placeholder="请选择" class="inline_select">
+                    <el-option
+                        v-for="(item,index) in typeitems"
+                        :key="index"
+                        :label="item.name"
+                        :value="item.id"
+                    ></el-option>
+                </el-select>
+            </div>
+        </div>
+        <div v-if="list.length">
             <div>
                 <div class="listitem" v-for="(item,index) in list" :key="index">
                     <div class="listtop esspclearfix">
@@ -82,12 +82,16 @@
             selectCheckItem: {
                 type: Array,
                 default: []
+            },
+            classtType: {
+                type: String(),
+                default: ''
             }
         },
         data() {
             return {
                 checkAll: false,
-                classtType: "",//审核的状态
+//                classtType: "",//审核的状态
                 typeitems: [
                     {
                         name: "全部",
@@ -104,6 +108,7 @@
                         id: "12"
                     }
                 ],
+                selectCheckItems: this.selectCheckItem,
                 thisUserId: sessionStorage.getItem("userInfo") ? JSON.parse(sessionStorage.getItem("userInfo")).id : '',
             }
         },
@@ -133,28 +138,49 @@
             },
             // 状态修改
             changeStatus(){
+                this.selectCheckItems = [];
+                this.allCheck = false;
+                console.log( this.selectCheckItems);
                 this.$emit("changeStatusList",this.classtType);
+
             },
             // 删除列表  01 表示删除一条 其他表示删除多条
             removeList(type,item){
                 var type = type;
                 var ids = '';
                 if(type == "01") {
+                    console.log(this.thisUserId,item.creator);
+                    if(this.thisUserId != item.creator) {
+                        this.$message.error("抱歉,您只能删除当前用户人数据！");
+                        return;
+                    }
                     ids = item.informationId;
                 } else {
-                    if(this.selectCheckItem.length < 1) {
-                        this.$message.error("您还未选择"+this.type + "信息！");
+                    console.log(this.selectCheckItems)
+                    var arrId = [];
+                    var len = this.selectCheckItems.length;
+                    if(len < 1) {
+                        var msg = this.type == '1' ? "新闻动态":'通知公告'
+                        this.$message.error("您还未选择"+msg + "信息！");
+                        return;
+                    }
+                    for (var i = 0; i < len; i++) {
+                        var item = this.selectCheckItems[i];
+                        if(this.thisUserId != item.creator) {
+                            arrId = [];
+                            break
+                        }
+                        arrId.push(item.informationId);
+                    }
+                    console.log(arrId)
+                    if(arrId.length == 0) {
+                        this.$message.error("您删除的信息含有不属于您的信息！");
                         return;
                     }
 
-                    var arrId = [];
-                    this.selectCheckItem.forEach((item,index) => {
-                        arrId.push(item.informationId)
-                    })
                     ids = arrId.join(",");
                 }
                 console.log(ids);
-
                 this.$confirm('此操作将永久删除该信息, 是否继续?', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
@@ -179,7 +205,7 @@
                     response => {
                         this.$message.success(response.resultMsg);
                         this.$emit("delectList");
-                        this.selectCheckItem = [];
+                        this.selectCheckItems = [];
                     },
                     err => {
                         this.$message.error(err.resultMsg);
@@ -188,38 +214,43 @@
             },
             // 全选选择项
             changeAllChecked(){
-                this.selectCheckItem = [];
+                this.selectCheckItems = [];
+                var arr = [];
                 this.list.forEach((item,index) => {
                     item.isChecked = this.allCheck;
                     if(this.allCheck){
-                        this.selectCheckItem.push(item);
+                        arr.push(item);
                     }
                 })
-                console.log("全选",this.selectCheckItem);
+                arr.forEach((item,index) => {
+                    this.selectCheckItems.push(item);
+                })
+
+                console.log("全选",this.selectCheckItems);
 
             },
             // 列表选择项
             changeChecked(item,index) {
                 if(item.isChecked) {
-                    this.selectCheckItem.push(item);
-                    console.log(this.selectCheckItem.length,this.list.length);
-                    console.log(this.selectCheckItem.length==this.list.length);
+                    this.selectCheckItems.push(item);
+                    console.log(this.selectCheckItems.length,this.list.length);
+                    console.log(this.selectCheckItems.length==this.list.length);
 
-                    if(this.selectCheckItem.length >= this.list.length) {
+                    if(this.selectCheckItems.length >= this.list.length) {
                         this.allCheck = true;
                     }
 
                     console.log(this.allCheck);
                 } else {
                     this.allCheck = false;
-                    if(this.selectCheckItem.length) {
-                        var index = this.selectCheckItem.indexOf(item);
+                    if(this.selectCheckItems.length) {
+                        var index = this.selectCheckItems.indexOf(item);
                         if(index >-1) {
-                            this.selectCheckItem.splice(index,1)
+                            this.selectCheckItems.splice(index,1)
                         }
                     }
                 }
-                console.log("选一个",this.selectCheckItem);
+                console.log("选一个",this.selectCheckItems);
             }
 
         },

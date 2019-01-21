@@ -28,7 +28,7 @@
             <ul class="listWrap">
                 <li class="list" v-for="(item, index) in list" :key="index">
                     <div class="ListTopStatus">
-                        <el-checkbox v-model="item.isChecked" @change="changeChecked(item,index)" />
+                        <el-checkbox v-model="item.isChecked" @change="changeChecked(item,index)"/>
                         <span class="time">保存时间：{{item.createTime | timerFormat(item.createTime)}}</span>
                         <span class="create">发布人：{{item.userName}}</span>
                         <span class="classifyC">状态：
@@ -54,10 +54,13 @@
                         </div>
                         <div class='editorBtn2' v-if="type == 2">
                             <span @click.stop="linkToDetail(item.id)">查看</span>
-                            <span @click.stop="linkToPublish(item.id)">编辑</span>
+                            <!--审核过的就不需要编辑了-->
+                            <!--<span @click.stop="linkToPublish(item.id)">编辑</span>-->
                         </div>
                         <div class='editorBtn1' v-if="type == 1">
-                            <span @click.stop="linkToPublish(item.id)">编辑</span>
+                            <!--待审核 13-->
+                            <span v-if="item.status == '13'" @click.stop="linkToPublish(item.id)">编辑</span>
+                            <span v-else @click.stop="linkToDetail(item.id)">查看</span>
                         </div>
                     </div>
                 </li>
@@ -153,6 +156,12 @@
                     this.deleteId = deleteId;
                 } else {
                     // 全部删除
+
+                    if (this.selectCheckItem.length == '0') {
+                        this.$message.warning("您暂无选择要删除的信息");
+                        return;
+                    }
+
                     let selectCheckList = [];
                     let selectCheckIds = "";
                     // 获取id
@@ -173,6 +182,9 @@
                     if (codestatus == "CLT000000000") {
                         this.dialogVisible = false;
                         this.$message.success(response.resultMsg);
+
+                        // 重置空
+                        this.selectCheckItem = [];
 
                         // 通知父组件，重新获取数据
                         this.$emit("childDeleted", this.type);
@@ -418,9 +430,6 @@
                         text-align: center;
                         line-height: 28px;
                         cursor: pointer;
-                        &:nth-of-type(2) {
-                            margin-left: 15px;
-                        }
                     }
                 }
             }

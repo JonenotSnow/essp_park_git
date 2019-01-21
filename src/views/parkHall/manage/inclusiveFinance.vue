@@ -134,7 +134,7 @@
                 cciInfo: [
                     {
                         name: '平台简介',
-                        content: `“建融智合”企业智能撮合综合服务平台以中国建设银行作为服务第三方，打通线上与线下、境内与境外、系统内与外的对接渠道，为资金与资源需求双方提供智能撮合方案。<br/><br/><a style="color:#fff;border-radius: 25px;background-color: #3d7cff; padding:12px 30px;" href="/essp/#/home">了解更多</a>`,
+                        content: '“建融智合”企业智能撮合综合服务平台以中国建设银行作为服务第三方，打通线上与线下、境内与境外、系统内与外的对接渠道，为资金与资源需求双方提供智能撮合方案。',
                         checkmore: 'https://want.ccb.com/essp/#/aboutUs/aboutState',
                         img: require('../../../assets/newparkimg/inclusivefinance/platform_introduce.png')
                     }, {

@@ -5,7 +5,7 @@
             <div class="selectTitle" v-if="list.length > 0">
                 <el-checkbox v-model="allCheck" @change="changeAllChecked">全选</el-checkbox>
                 共
-                <span class="total">{{totalCount}}</span>
+                <span class="total">{{ list.length}}</span>
                 条，已选
                 <span class="total">{{selectCheckItem.length}}</span>
                 条
@@ -40,46 +40,19 @@
 
 <script>
     export default {
-        props: {
-            type: {
-                type: String,
-                default: ''
-            },
-            componentType: {
-                type: String,
-                default: ''
-            },
-            allCheck: {
-                type: Boolean,
-                default: ''
-            },
-            list: {
-                type: [],
-                default: null
-
-            },
-            ajaxTit: {
-                type: String,
-                default: ''
-            },
-            selectListNum: {
-                type: Number,
-                default: ''
-            },
-
-            totalCount: {
-                type: Number,
-                defalut: 0
-            }
-        },
+        props: ['type','componentType','list','ajaxTit','allChecks'],
         data() {
-
             return {
                 selectCheckItem: [],  // 已选择项
+                allCheck: this.allChecks,
             }
-
         },
         methods: {
+            // changeAllCheck
+            changeAllCheck(val) {
+                this.allCheck = false;
+                this.selectCheckItem = [];
+            },
             // 配置相应的删除接口
             filterStatus(type,string) {
                 var string = string || "00";
@@ -140,6 +113,7 @@
             // 全选选择项
             changeAllChecked(){
                 this.selectCheckItem = [];
+
                 this.list.forEach((item,index) => {
                     item.isChecked = this.allCheck;
                     if(this.allCheck){

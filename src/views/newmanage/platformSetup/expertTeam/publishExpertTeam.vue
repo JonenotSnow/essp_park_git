@@ -34,7 +34,7 @@
                         <em>上传图片</em>
                     </div>
                 </el-upload>
-                <span class="sub1">（图片高宽1：1，每张最大2M,建议分辨率为840*480像素，支持jpg/jpeg/png格式。）</span>
+                <span class="sub1">（图片高宽1：1，每张最大2M,建议分辨率为500*500像素，支持jpg/jpeg/png格式。）</span>
             </li>
 
             <li>
@@ -168,7 +168,7 @@
                 childIndex: 0,
                 breadlist: [
                     {
-                        path: "/parkHall/manage/baseInfo2",
+                        path: "/parkHall/manage/baseInfo",
                         name: "系统管理"
                     },
                     {
@@ -666,7 +666,7 @@
                 width: 198px;
                 padding: 0;
                 border-radius: 3px;
-                border: 1px solid #ccc;
+                border: 1px dashed #d9d9d9;
                 height: 140px;
                 text-align: center;
                 line-height: 140px;
