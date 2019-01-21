@@ -21,7 +21,7 @@
             </div>
         </div>
         <div class="policie-and-regulation-main">
-            <oneCardModel :list="list" :allCheck="isAllChecked" :type="type" @changeStatusList="changeStatusList" @delectList="getPublicedNews" :customopts={status,temeTit,allTotal}></oneCardModel>
+            <oneCardModel :list="list" :classtType="approveType" :allCheck="isAllChecked" :type="type" @changeStatusList="changeStatusList" @delectList="getPublicedNews" :customopts={status,temeTit,allTotal}></oneCardModel>
         </div>
         <div class="pageList">
             <el-pagination
@@ -125,12 +125,16 @@
             // 状态切换
             switchStatus(item) {
                 this.status = item.status;
+                this.isAllChecked = false;
+                this.selectCheckItem = [];
+                this.approveType = '';
                 this.getPublicedNews();
             },
             // 改变审核状态
             changeStatusList(val){
                 console.log(val);
                 this.approveType = val;
+
                 this.getPublicedNews();
             },
             // 查询事件

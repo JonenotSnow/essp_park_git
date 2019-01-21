@@ -82,12 +82,16 @@
             selectCheckItem: {
                 type: Array,
                 default: []
+            },
+            classtType: {
+                type: String(),
+                default: ''
             }
         },
         data() {
             return {
                 checkAll: false,
-                classtType: "",//审核的状态
+//                classtType: "",//审核的状态
                 typeitems: [
                     {
                         name: "全部",
@@ -138,6 +142,7 @@
                 this.allCheck = false;
                 console.log( this.selectCheckItems);
                 this.$emit("changeStatusList",this.classtType);
+
             },
             // 删除列表  01 表示删除一条 其他表示删除多条
             removeList(type,item){
@@ -220,8 +225,6 @@
                 arr.forEach((item,index) => {
                     this.selectCheckItems.push(item);
                 })
-
-
 
                 console.log("全选",this.selectCheckItems);
 

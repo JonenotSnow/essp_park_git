@@ -21,7 +21,7 @@
             </div>
         </div>
         <div class="policie-and-regulation-main">
-            <oneCardModel :list="list" :type="type" :allChecks="allCheck" :selectCheckItem="selectCheckItem" @changeStatusList="changeStatusList" @delectList="getPublicedNews" :customopts={status,temeTit,allTotal}></oneCardModel>
+            <oneCardModel :list="list" :classtType="approveType" :type="type" :allChecks="allCheck" :selectCheckItem="selectCheckItem" @changeStatusList="changeStatusList" @delectList="getPublicedNews" :customopts={status,temeTit,allTotal}></oneCardModel>
         </div>
         <div class="pageList" v-if="list.length > 0">
             <el-pagination
@@ -127,17 +127,18 @@
                 this.pageNum = val;
                 this.getPublicedNews();
             },
-            // 改变审核状态
-            changeStatusList(val){
-                console.log(val);
-                this.approveType = val;
-                this.getPublicedNews();
-            },
             // 状态切换
             switchStatus(item) {
                 this.status = item.status;
                 this.isAllChecked = false;
                 this.selectCheckItem = [];
+                this.approveType = '';
+                this.getPublicedNews();
+            },
+            // 改变审核状态
+            changeStatusList(val){
+                console.log(val);
+                this.approveType = val;
                 this.getPublicedNews();
             },
 
