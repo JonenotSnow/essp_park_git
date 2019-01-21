@@ -56,18 +56,18 @@
                 <el-form-item label="发布人：">
                     {{userInfo.truename}}
                 </el-form-item>
-                <el-form-item>
-                    <el-upload
-                        class="upload-demo"
-                        action="#"
-                        :limit="5"
-                        :on-remove="removeList"
-                        :before-upload="beforeAvatarUpload"
-                        :file-list="fileList">
-                        <span class="btn-upload">附件上传</span>
-                        <div slot="tip" class="el-upload__tip">（政策法规支持pdf/word/excel等类型文件，大小10M内）</div>
-                    </el-upload>
-                </el-form-item>
+                <!--<el-form-item>-->
+                <!--<el-upload-->
+                <!--class="upload-demo"-->
+                <!--action="#"-->
+                <!--:limit="5"-->
+                <!--:on-remove="removeList"-->
+                <!--:before-upload="beforeAvatarUpload"-->
+                <!--:file-list="fileList">-->
+                <!--<span class="btn-upload">附件上传</span>-->
+                <!--<div slot="tip" class="el-upload__tip">（政策法规支持pdf/word/excel等类型文件，大小10M内）</div>-->
+                <!--</el-upload>-->
+                <!--</el-form-item>-->
                 <el-form-item>
                     <p class="scan" @click="handleScan()"><span class="scan-1">预</span><span>览</span></p>
                 </el-form-item>

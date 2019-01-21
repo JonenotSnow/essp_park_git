@@ -109,7 +109,7 @@
                         <essp-editor :editorCont="ruleForm.infoDetail" @onEditorChange="onEditorChange"></essp-editor>
                     </div>
                 </el-form-item>
-                <el-form-item label="科技服务标签：" prop="tags">
+                <el-form-item label="科技服务标签：">
                     <div class="inline_div_tag">
                         <essp-add-tag
                             ref="eat"
