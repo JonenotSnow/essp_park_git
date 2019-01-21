@@ -209,6 +209,10 @@
         },
         //批量导出
         exportData () {
+            if (this.checkedIds.length == 0) {
+                this.$message.error('请选择要导出的内容');
+                return;
+            }
             this.touch = true;
             window.location.href = window.location.host+'/'+this.$apiUrl.manageNeed.exportNeedData+'?id='+this.checkedIds.toString();
             setTimeout(function(){
