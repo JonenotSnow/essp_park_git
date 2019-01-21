@@ -4,7 +4,7 @@
             <ul class="esspclearfix">
                 <li v-for="(item,index) in headMenu"
                     :key="index">
-                    <span :class="index == active?'span-link':'span-none'"
+                    <span :class="item.id == active?'span-link':'span-none'"
                           @click="toLink(item,index)"><span style="font-size: 18px;">{{item.menu}}</span></span>
                 </li>
             </ul>
@@ -20,69 +20,32 @@
             return {
                 //游客默认导航
                 defaultNav:[],
-                active: '',
+                active: sessionStorage.getItem('navIndex')||0,
                 headMenu: [],
             };
         },
         watch: {
             $route() {
                 //路由变化获取最新选择的园区
-                var menuList = this.SSH.getItem("menuList");
-                this.headMenu = (menuList && menuList.children) ||[];
+                this.getNavIndex();
             },
-            
-        },
-        beforeUpdate(){
-            this.active = sessionStorage.getItem('navIndex')||0;
         },
         created() {
-            // 直接从本地获取菜单权限
-            
-            var menuList = this.SSH.getItem("menuList");
-            this.headMenu = (menuList && menuList.children) || [];
-            var routerName = this.$route.name;
-            var munuLen = this.headMenu.length;
-            //定位当前激活的横向导航并存值对应的sessionStorage
-            // 左侧一级导航的判断
-            for(var i = 0 ;i < munuLen; i++ ){
-                // 判断菜单地下是否有存在子菜单，需要循环判断子菜单里的name
-                var menuChildLen = this.headMenu[i].children && this.headMenu[i].children.length;
-                // 左侧二级导航的判断
-                if(menuChildLen > 0) {
-                    for(var j = 0; j < menuChildLen; j ++) {
-                        var menuChild = this.headMenu[i].children[j];
-                        var menuChildChildLen = menuChild.length;
-                        // 左侧三级导航的时候判断
-                        if(menuChildChildLen > 0) {
-                            for(var z = 0; z < menuChildChildLen; z ++ ) {
-                                var menuChildChild = menuChild.menuChild[z];
-                                if(menuChildChild.name == routerName) {
-                                    this.active = i;
-                                    sessionStorage.setItem('navIndex',i);
-                                    break
-                                }
-                            }
-                        } else {
-                            if(menuChild.name == routerName) {
-                                this.active = i;
-                                sessionStorage.setItem('navIndex',i);
-                                break
-                            }
-                        }
-                    }
-                } else {
-                    if(this.headMenu[i].name == routerName) {
-                        this.active = i;
-                        sessionStorage.setItem('navIndex',i);
-                        break
-                    }
-                }
-            }
+            this.getNavIndex();
         },
         methods: {
+            getNavIndex(){
+                // 直接从本地获取菜单权限
+                let name = this.$router.currentRoute.name;
+                let menuList = this.SSH.getItem("menuList");
+                this.headMenu = (menuList && menuList.children) || [];
+                let menuResource = this.SSH.getItem("menuResource");
+                let currentMenu = menuResource[name];
+                if (currentMenu) {
+                    this.active = currentMenu.menuid.substr(0, 4);
+                }
+            },
             toLink(item,index) {
-                this.active = index;
-                sessionStorage.setItem('navIndex',index);
                 this.$router.push({
                     name: item.name
                 })
@@ -93,7 +56,6 @@
 
 <style lang="less">
     @import "../assets/css/mixin";
-
     .essp-cont {
         width: 100%;
         .essp-nav {
@@ -129,24 +91,20 @@
             }
         }
     }
-
     .el-dropdown-link {
         color: @essp_nav_selcolor;
         cursor: pointer;
     }
-
     .el-dropdown-none {
         outline: none;
         &:hover {
             color: @essp_nav_selcolor;
         }
     }
-
     .span-link {
         color: @essp_nav_selcolor;
         cursor: pointer;
     }
-
     .span-none {
         outline: none;
         color: #333;
@@ -154,7 +112,6 @@
             color: @essp_nav_selcolor;
         }
     }
-
     .essp_left_background {
         position: absolute;
         top: 0;
@@ -163,20 +120,16 @@
         height: 100%;
         background-color: #00a0e9;
     }
-
     .essp_float_left {
         float: left;
     }
-
     .page-header span,
     .el-dropdown span {
         outline: none;
     }
-
     .displayNone {
         display: none;
     }
-
     .displayBlock {
         display: block;
     }
