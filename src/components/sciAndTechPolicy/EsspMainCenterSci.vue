@@ -256,12 +256,6 @@
         display: none;
     }
 
-    .aside-r-sea1 .el-date-editor {
-        /*height: 32px;*/
-        /*line-height: 32px;*/
-        width: 100%;
-    }
-
     .aside-r-sea1 .el-date-editor .el-range-input {
         width: 45%;
         font-size: 12px;
@@ -306,7 +300,9 @@
         .aside-r-sea1 {
             width: 190px;
             margin: 0 auto;
+
             .el-date-editor {
+                width: 100%;
                 height: 32px;
                 line-height: 32px;
             }

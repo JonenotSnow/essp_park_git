@@ -11,7 +11,7 @@
             <ul class="listWrap">
                 <li class="list" v-for="(item, index) in list" :key="index">
                     <div class="ListTop">
-                        <el-checkbox v-model="item.isChecked" @change="changeChecked(item,index)" />
+                        <el-checkbox v-model="item.isChecked" @change="changeChecked(item,index)"/>
                         <span class="time">保存时间：{{item.createTime | timerFormat(item.createTime)}}</span>
                         <span class="create">发布人：{{item.userName}}</span>
                         <i class="el-icon-delete remove" @click="showDialog(item.id)"></i>
@@ -149,7 +149,8 @@
                     path: '/parkHall/manage/publishSciAndTechPolicy',
                     query: {
                         applyType: '01',
-                        id: id
+                        id: id,
+                        nuType: this.type
                     }
                 });
             },
