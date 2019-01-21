@@ -342,6 +342,8 @@
 
                         this.ruleForm.parkId = this.parkId;
 
+                        this.ruleForm.saveType = saveType;
+
                         // 处理标签
                         let tags = this.ruleForm.tags.join(',');
                         this.ruleForm.tags = tags;
@@ -354,7 +356,7 @@
                         let url;
                         if (this.applyType == '01') {
                             // 处理动态图片，“新闻动态”模块才有这个字段
-                            this.ruleForm.titleImg= this.parkUploadData.src;
+                            this.ruleForm.titleImg = this.parkUploadData.src;
                             url = '/information/saveNews';
                         }
 
@@ -409,9 +411,6 @@
 
                         this.ruleForm.saveType = saveType;
 
-                        // 区分政策或者法规
-                        this.ruleForm.applyType = this.applyType;
-
                         // 处理标签
                         let tags = this.ruleForm.tags.join(',');
                         this.ruleForm.tags = tags;
@@ -419,8 +418,20 @@
                         // 处理附件上传
                         this.ruleForm.fileUrl = this.fileList;
 
+                        // “新闻动态”模块的接口："/information/saveNews"
+                        // “通知公告”模块的接口："information/saveNotice"
+                        let url;
+                        if (this.applyType == '01') {
+                            // 处理动态图片，“新闻动态”模块才有这个字段
+                            this.ruleForm.titleImg = this.parkUploadData.src;
+                            url = '/information/saveNews';
+                        }
 
-                        this.$post("/information/saveNews", this.ruleForm).then(response => {
+                        if (this.applyType == '02') {
+                            url = '/information/saveNotice';
+                        }
+
+                        this.$post(url, this.ruleForm).then(response => {
                             let codestatus = response.resultCode;
                             if (codestatus == "CLT000000000") {
                                 if (this.applyType === '01') {
