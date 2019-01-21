@@ -9,7 +9,7 @@ export const parkInfo = {
     focusInfo: "/information/getApprovalList",//我关注的资讯
     auditDetail: "/information/approvalInfo",//发布资讯通过不通过
     infoById: "/information/getInfoById",//根据资讯id获取资讯详情
-    updInfo: "/information/updInformation",//草稿箱获取资讯详情
+    updInfo: "/information/updInformallPolicyation",//草稿箱获取资讯详情
     addMyFocus: "/information/addMyFocus",//添加关注资讯
     delMyFocus: "/information/cancelFollInfo",//取消关注资讯
     hotListInfo: "/parkIndex/getdataList",//0:活动1:惠政:2:资讯
@@ -19,5 +19,5 @@ export const parkInfo = {
     addReply: "/comment/addReply",//新增回复
     getReplys: "/comment/getReplys",//获取回复
     delComment: '/comment/delComment',  //删除评论
-    delReply: '/comment/delReply',  //删除回复
+    delReply: '/comment/delReply'  //删除回复
 }
