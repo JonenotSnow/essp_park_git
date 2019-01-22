@@ -28,7 +28,12 @@
                     <div class="my-style">{{satpDate.userName}}</div>
                 </el-form-item>
                 <el-form-item label="附件：">
-                    <div class="my-style" v-for="(item, index) in fileList" :key="index">{{item.name}}</div>
+                    <!--v-if="fileList && fileList.length > 0"-->
+                    <a class="my-style"
+                       :href="item.url"
+                       :download="item.name"
+                       v-for="(item, index) in fileList" :key="index"
+                    >{{item.name}}</a>
                 </el-form-item>
             </el-form>
             <div class="audit-line" v-if="(userType == '34') && auditStatus== '13'"></div>
@@ -71,7 +76,12 @@
                     <div class="my-style">{{satpDate.userName}}</div>
                 </el-form-item>
                 <el-form-item label="附件：">
-                    <div class="my-style" v-for="(item, index) in fileList" :key="index">{{item.name}}</div>
+                    <!--v-if="fileList && fileList.length > 0"-->
+                    <a class="my-style"
+                       :href="item.url"
+                       :download="item.name"
+                       v-for="(item, index) in fileList" :key="index"
+                    >{{item.name}}</a>
                 </el-form-item>
             </el-form>
             <div class="audit-line" v-if="(userType == '34') && auditStatus== '13'"></div>
@@ -333,8 +343,12 @@
                 letter-spacing: 0.1px;
                 color: #999;
                 .my-tag {
+                    display: inline-block;
                     margin-right: 20px;
-                    padding: 7px 16px;
+                    /*padding: 7px 16px;*/
+                    padding: 6px 16px;
+                    height: 20px;
+                    line-height: 20px;
                     font-size: 14px;
                     font-weight: normal;
                     font-stretch: normal;

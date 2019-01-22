@@ -203,7 +203,7 @@
                     if (codestatus == "CLT000000000") {
                         let resultData = response.resultData;
                         this.totalCount = resultData.policyCount;
-                        // this.sciAndTechServiceData = resultData.policyList;
+                        this.sciAndTechServiceData = resultData.policyList;
                         this.requestTip = '数据加载完毕';
                     } else {
                         this.$message.info(response.resultMsg);
@@ -232,7 +232,7 @@
 <style lang='less' scoped>
     #noOpenNeed {
         .baseInfo {
-            width: 1000px;
+            width: 990px;
             margin-bottom: 50px;
             padding-bottom: 20px;
             background-color: #ffffff;
