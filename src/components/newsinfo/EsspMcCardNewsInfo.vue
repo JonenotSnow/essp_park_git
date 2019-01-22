@@ -14,7 +14,7 @@
                 </div>
                 <div class="card_cont">
                     <div class="card__head">
-                        <p class="head__title" @click="goToDetail(item)">{{item.informationTitle}}</p>
+                        <p class="head__title" @click="goInfoDetail(item)">{{item.informationTitle}}</p>
                     </div>
                     <div class="card__dest">
                         <p v-html="item.infoDetail"></p>
@@ -169,7 +169,7 @@
                     }
                 );
             },
-            goinfoDetail(item){
+            goInfoDetail(item){
                 var informationId = item.informationId;
                 this.$router.push({
                     path:'/news/newsdetail',
@@ -210,7 +210,7 @@
     button:focus{outline:0;}
     .essp-card-cont-inner {
         float: left;
-        width: 726px;
+        width: 730px;
         /*padding: 20px 20px 0;*/
         background-color: #fff;
         .descontool {
@@ -284,12 +284,12 @@
             }
         }
         .essp-card {
-            width: 730px;
+            width: 710px;
             height: 160px;
             margin: 20px auto 0;
             .card_left{
                 float: left;
-                width:280px;
+                width:260px;
                 height: 160px;
                 margin-right: 20px;
                 img{
