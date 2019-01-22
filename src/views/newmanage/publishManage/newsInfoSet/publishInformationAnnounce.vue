@@ -38,7 +38,7 @@
                         <essp-editor :editorCont="ruleForm.infoDetail" @onEditorChange="onEditorChange"></essp-editor>
                     </div>
                 </el-form-item>
-                <el-form-item label="新闻动态标签：">
+                <el-form-item label="新闻动态标签：" prop="tags">
                     <div class="inline_div_tag">
                         <essp-add-tag
                             ref="eat"
@@ -100,7 +100,7 @@
                         <essp-editor :editorCont="ruleForm.infoDetail" @onEditorChange="onEditorChange"></essp-editor>
                     </div>
                 </el-form-item>
-                <el-form-item label="通知公告标签：">
+                <el-form-item label="通知公告标签：" prop="tags">
                     <div class="inline_div_tag">
                         <essp-add-tag
                             ref="eat"

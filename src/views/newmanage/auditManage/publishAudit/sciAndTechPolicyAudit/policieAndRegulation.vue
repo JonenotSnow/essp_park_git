@@ -191,7 +191,7 @@
 
                     // 查询用到的字段
                     title: this.searchCondition.policyTitle,  // 标题名称
-                    userName: this.searchCondition.userName,        // 发布人
+                    name: this.searchCondition.userName,        // 发布人
                     status: this.searchCondition.status,            // 状态
                     startDate: this.searchCondition.startDate,      // 开始时间
                     endDate: this.searchCondition.endDate,          // 结束时间
@@ -232,7 +232,7 @@
 <style lang='less' scoped>
     #noOpenNeed {
         .baseInfo {
-            width: 1000px;
+            width: 990px;
             margin-bottom: 50px;
             padding-bottom: 20px;
             background-color: #ffffff;
