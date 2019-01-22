@@ -169,7 +169,7 @@
                     }
                 );
             },
-            goinfoDetail(item){
+            goToDetail(item){
                 var informationId = item.informationId;
                 this.$router.push({
                     path:'/news/newsdetail',
@@ -375,12 +375,12 @@
             }
         }
         .essp-card:hover{
-            box-shadow: 0px 0px 14.2px 0.8px 
+            box-shadow: 0px 0px 14.2px 0.8px
         rgba(0, 0, 0, 0.08);
         }
         .no_list{
             text-align: center;
-            .tipspan{ 
+            .tipspan{
                 display: block;
                 font-family: MicrosoftYaHei;
                 color: #666666;
