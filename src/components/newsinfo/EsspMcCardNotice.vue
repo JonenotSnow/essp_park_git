@@ -1,5 +1,5 @@
 <template>
-    <div class="essp-card-cont-inner esspclearfix">
+    <div class="essp-card-cont-inner-notice esspclearfix">
         <!-- 科技政策模块---模版-->
         <div class="descontool">
             <p>
@@ -83,9 +83,9 @@
         outline: 0;
     }
 
-    .essp-card-cont-inner {
+    .essp-card-cont-inner-notice {
         float: left;
-        width: 770px;
+        width: 755px;
         /*padding: 20px 20px 0;*/
         background-color: #fff;
         .descontool {
@@ -128,6 +128,7 @@
                 height: 49px;
                 line-height: 50px;
                 border-bottom: 1px solid #ccc;
+
                 p {
                     display: inline-block;
                     font-family: MicrosoftYaHei;
@@ -138,6 +139,8 @@
                 .head__title {
                     font-size: 16px;
                     color: #222222;
+                    width: 80%;
+                    .esspellipsis();
                     &:hover {
                         color: #00a0e9;
                         cursor: pointer;

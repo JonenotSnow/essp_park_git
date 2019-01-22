@@ -34,7 +34,7 @@
                         />
                     </div>
                 </el-form-item>
-                <el-form-item label="政策法规标签：">
+                <el-form-item label="政策法规标签：" prop="tags">
                     <div class="inline_div_tag">
                         <essp-add-tag
                             ref="eat"
@@ -109,7 +109,7 @@
                         <essp-editor :editorCont="ruleForm.infoDetail" @onEditorChange="onEditorChange"></essp-editor>
                     </div>
                 </el-form-item>
-                <el-form-item label="科技服务标签：">
+                <el-form-item label="科技服务标签：" prop="tags">
                     <div class="inline_div_tag">
                         <essp-add-tag
                             ref="eat"
@@ -284,8 +284,8 @@
                 // 标签相关字段
                 visible: false,
                 tagprops: {
-                    lblTpCd: "3000003",
-                    entId: ""
+                    lblTpCd: "3000004",
+                    // entId: ""
                 },
 
                 // 附件上传字段

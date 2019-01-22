@@ -214,7 +214,7 @@
                 return;
             }
             this.touch = true;
-            window.location.href = window.location.host+'/'+this.$apiUrl.manageNeed.exportNeedData+'?id='+this.checkedIds.toString();
+            window.location.href = this.$openUrl + this.$apiUrl.manageNeed.exportNeedData+'?id='+this.checkedIds.toString();
             setTimeout(function(){
                 this.touch = false;
             },1000)

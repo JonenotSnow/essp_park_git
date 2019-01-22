@@ -32,7 +32,7 @@
                         <span class="time">保存时间：{{item.createTime | timerFormat(item.createTime)}}</span>
                         <span class="create">发布人：{{item.userName}}</span>
                         <span class="classifyC">状态：
-                        <span v-if="item.status == '02'">发布中</span>
+                        <span v-if="item.status == '02'">审核通过</span>
                             <span v-if="item.status == '13'">待审核</span>
                             <span v-if="item.status == '12'">审核不通过</span>
                         </span>
@@ -149,8 +149,6 @@
             // 弹窗
             showDialog(deleteId) {
 
-                this.dialogVisible = true;
-
                 if (deleteId) {
                     // 删除单个
                     this.deleteId = deleteId;
@@ -171,6 +169,8 @@
                     selectCheckIds = selectCheckList.join(',');
                     this.deleteId = selectCheckIds;
                 }
+
+                this.dialogVisible = true;
 
             },
             dealWithDelete() {

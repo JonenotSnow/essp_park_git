@@ -55,11 +55,11 @@
                 id: this.$route.query.id || '',
                 breadlist_01: [
                     {
-                        path: "/sciIndex/policieAndRegulation/policieAndRegulation",
+                        path: "/sciIndex/policieAndRegulation/policieAndRegulatio",
                         name: "科技政策",
                     },
                     {
-                        path: "/sciIndex/policieAndRegulation/policieAndRegulation",
+                        path: "/sciIndex/policieAndRegulation/policieAndRegulatio",
                         name: "政策法规",
                     },
                     {
