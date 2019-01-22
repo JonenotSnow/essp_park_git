@@ -13,7 +13,8 @@
                                 <div class="title-ss">{{item.informationTitle}}</div>
                                 <div class="detail">{{item.content}}</div>
                                 <div class="part-b">
-                                    <div class="label"></div>
+                                    <!-- <div class="label">{{item.tagsTxt}}</div> -->
+                                    <div class="label" v-for="(its,idx) in item.tagsTxt.split(',').slice(0,2)" :key="idx"><span>{{ its }}</span></div>
                                     <div class="time">{{ item.createTime | timerFormat(item.createTime) }}</div>
                                 </div>
                             </div>
@@ -75,17 +76,13 @@
                 });
             },
             linkToNoticeListPage() {
-              this.$router.push("/news/notice");
-              sessionStorage.setItem('navIndex',4);
-              this.$router.push({name: "park-newsinfo"})
+                this.$router.push("/news/notice");
             },
             linkToNewsListPage() {
-                //this.$router.push("/news/alllistnews");
-                sessionStorage.setItem('navIndex',4);
-                this.$router.push({name: "park-newsinfo"})
+                this.$router.push("/news/alllistnews");
             },
             goToNewsDetail(item){
-                this.$router.push({path: "/news/noticedetail",query: {info: item}});
+                this.$router.push({path: "/news/newsdetail",query: {info: item}});
             },
             goToNoticeDetail(item){
                 this.$router.push({path: "/news/noticedetail",query: {info: item}});
@@ -140,70 +137,91 @@
                     text-align: left;
                     color: #474747;
                     padding-bottom: 18px;
+                    border-bottom: 1px solid #ccc;
                 }
                 .left-aside {
                     width: 570px;
                     ul{
-                        height: 320px;
+                        height: 319px;
                         border-bottom: solid 1px #cccccc;
-                    }
-                    .item {
-                        height: 160px;
-                        display: flex;
-                        justify-content: space-around;
-                        border-top: solid 1px #cccccc;
-                        box-sizing: border-box;
-                        align-items: center;
-                        &:hover {
-                            cursor: pointer;
-                        }
-                        .word-part {
-                            width: 340px;
-                            .title-ss {
-                                font-size: 16px;
-                                letter-spacing: 1px;
-                                color: #333333;
-                                width: 320px;
-                                overflow: hidden;
-                                text-overflow: ellipsis;
-                                white-space: nowrap;
+                        .item {
+                            height: 160px;
+                            display: flex;
+                            justify-content: space-around;
+                            border-bottom: solid 1px #cccccc;
+                            box-sizing: border-box;
+                            align-items: center;
+                            &:hover {
+                                cursor: pointer;
                             }
-                            .detail {
-                                display: -webkit-box;
-                                font-size: 14px;
-                                width: 320px;
-                                line-clamp: 2;
-                                -webkit-box-orient: vertical;
-                                -webkit-line-clamp: 2;
-                                overflow: hidden;
-                                letter-spacing: 1px;
-                                color: #777777;
-                                margin-top: 17px;
-                            }
-                            .part-b {
-                                display: flex;
-                                justify-content: space-between;
-                                margin-top: 21px;
-                                vertical-align: bottom;
-                                width: 320px;
-                                .lable {
+                            .word-part {
+                                width: 340px;
+                                .title-ss {
+                                    font-size: 16px;
+                                    letter-spacing: 1px;
+                                    color: #333333;
+                                    width: 320px;
+                                    overflow: hidden;
+                                    text-overflow: ellipsis;
+                                    white-space: nowrap;
                                 }
-                                .time {
+                                .detail {
+                                    display: -webkit-box;
                                     font-size: 14px;
+                                    width: 320px;
+                                    line-clamp: 2;
+                                    -webkit-box-orient: vertical;
+                                    -webkit-line-clamp: 2;
+                                    overflow: hidden;
+                                    letter-spacing: 1px;
                                     color: #777777;
+                                    margin-top: 17px;
+                                }
+                                .part-b {
+                                    /*display: flex;
+                                    justify-content: space-between;*/
+                                    overflow: hidden;
+                                    margin-top: 21px;
+                                    vertical-align: bottom;
+                                    width: 320px;
+                                    .label {
+                                        float:left;
+                                        width: 74px;
+                                        height: 25px;
+                                        line-height:25px;
+                                        color:#fff;
+                                        text-align: center;
+                                        background-image: linear-gradient(119deg, 
+                                            #fb7272 0%, 
+                                            #fc9595 100%);
+                                        transform: skew(-10deg);
+                                        margin:0 7px;
+                                        border-radius: 3px;
+                                        span{
+                                            display: inline-block;
+                                           transform: skew(10deg);
+                                        }
+                                    }
+                                    .time {
+                                        float: right;
+                                        font-size: 14px;
+                                        height: 25px;
+                                        line-height:40px;
+                                        color: #777777;
+                                    }
                                 }
                             }
-                        }
-                        .img {
-                            width: 210px;
-                            height: 120px;
-                            vertical-align: middle;
-                            background-position: center;
-                            background-size: cover;
-                            background-repeat: no-repeat;
-                        }
-                        &:hover {
-                            background-color: #fff;
+                            .img {
+                                width: 210px;
+                                height: 120px;
+                                vertical-align: middle;
+                                background-position: center;
+                                background-size: cover;
+                                background-repeat: no-repeat;
+                            }
+                            &:hover {
+                                background-color: #fff;
+                            }
                         }
                     }
                 }

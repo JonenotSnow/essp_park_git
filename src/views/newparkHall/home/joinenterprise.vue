@@ -20,7 +20,9 @@
 </template>
 
 <script>
+import mixins_windowOpen from '@/components/mixins/mixins_windowOpen.js'
  export default {
+    mixins:[mixins_windowOpen],
    data () {
      return {
          msg:"入驻企业",

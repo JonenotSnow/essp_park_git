@@ -28,8 +28,7 @@
             $route() {
                 //路由变化获取最新选择的园区
                 this.getNavIndex();
-            },
-
+            }
         },
         created() {
             this.getNavIndex();
@@ -57,7 +56,6 @@
 
 <style lang="less">
     @import "../assets/css/mixin";
-
     .essp-cont {
         width: 100%;
         .essp-nav {
@@ -93,24 +91,20 @@
             }
         }
     }
-
     .el-dropdown-link {
         color: @essp_nav_selcolor;
         cursor: pointer;
     }
-
     .el-dropdown-none {
         outline: none;
         &:hover {
             color: @essp_nav_selcolor;
         }
     }
-
     .span-link {
         color: @essp_nav_selcolor;
         cursor: pointer;
     }
-
     .span-none {
         outline: none;
         color: #333;
@@ -118,7 +112,6 @@
             color: @essp_nav_selcolor;
         }
     }
-
     .essp_left_background {
         position: absolute;
         top: 0;
@@ -127,20 +120,16 @@
         height: 100%;
         background-color: #00a0e9;
     }
-
     .essp_float_left {
         float: left;
     }
-
     .page-header span,
     .el-dropdown span {
         outline: none;
     }
-
     .displayNone {
         display: none;
     }
-
     .displayBlock {
         display: block;
     }
