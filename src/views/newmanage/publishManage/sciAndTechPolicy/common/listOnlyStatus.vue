@@ -137,14 +137,12 @@
             // 弹窗
             showDialog(deleteId) {
 
-                this.dialogVisible = true;
-
                 if (deleteId) {
                     // 删除单个
                     this.deleteId = deleteId;
                 } else {
                     // 全部删除
-                    
+
                     if (this.selectCheckItem.length == '0') {
                         this.$message.warning("您暂无选择要删除的信息");
                         return;
@@ -159,6 +157,8 @@
                     selectCheckIds = selectCheckList.join(',');
                     this.deleteId = selectCheckIds;
                 }
+
+                this.dialogVisible = true;
 
             },
             dealWithDelete() {

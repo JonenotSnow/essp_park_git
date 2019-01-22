@@ -6,12 +6,12 @@
             :temeTitle="temeTitle"
             :requestTip="requestTip"
         />
-
         <div class="essp-aside-right-cont">
             <div class="aside-right-item aside-right-item-seach">
-                <div>
+                <div class="seach-key">
                     <el-input placeholder="请输入搜索关键字" v-model="searchContent">
-                        <i slot="suffix" class="el-input__icon el-icon-search" @click="getSciAndTechPolicy()"></i>
+                        <i slot="suffix" class="el-input__icon el-icon-search" @click="getSciAndTechPolicy()"
+                           style="margin-top:-4px; cursor: pointer"></i>
                     </el-input>
                 </div>
                 <div class="keyname">
@@ -22,16 +22,17 @@
                     </el-button>
                 </div>
             </div>
-            <div class="aside-right-item aside-right-item1">
+            <div class="aside-right-item aside-right-item1 sci-date-picker">
                 <div class="aside-r-sea aside-r-sea1">
                     <el-date-picker
                         v-model="currentTime"
-                        type="daterange"
                         range-separator="-"
+                        type="daterange"
                         start-placeholder="开始日期"
+                        end-placeholder="结束日期"
                         value-format="yyyy-MM-dd"
-                        end-placeholder="结束日期" @change="timeChangeList">
-                    </el-date-picker>
+                        @change="timeChangeList"
+                    ></el-date-picker>
                 </div>
                 <div class="keyname">
                     <el-button :class="{'sel':currentKeytime===index,'btns':true}" type="primary" round size="mini"
@@ -228,15 +229,6 @@
 
 <style>
 
-    .aside-right-item-seach .el-input--suffix {
-        width: 80%;
-        margin-left: 10%;
-    }
-
-    .aside-right-item-seach .el-input__suffix {
-        top: -4px;
-    }
-
     .aside-right-item-seach .el-input--suffix input {
         border-radius: 20px;
         -webkit-border-radius: 20px;
@@ -248,22 +240,22 @@
         font-size: 12px;
     }
 
-    .aside-r-sea1 .el-icon-date {
+    .sci-date-picker .aside-r-sea1 .el-icon-date {
         display: none;
     }
 
-    .aside-r-sea1 .el-range__close-icon {
+    .sci-date-picker .aside-r-sea1 .el-range__close-icon {
         display: none;
     }
 
-    .aside-r-sea1 .el-date-editor .el-range-input {
+    .sci-date-picker .aside-r-sea1 .el-date-editor .el-range-input {
         width: 45%;
         font-size: 12px;
         height: 28px;
         line-height: 28px;
     }
 
-    .aside-r-sea1 .el-range-editor .el-range-separator {
+    .sci-date-picker .aside-r-sea1 .el-range-editor .el-range-separator {
         line-height: 24px;
     }
 </style>
@@ -275,69 +267,81 @@
             height: 68px;
             line-height: 68px;
         }
+
+        .essp-aside-right-cont {
+            float: right;
+            width: 218px;
+            background: #fff;
+            padding: 20px 0;
+            .aside-right-item-seach {
+                .seach-key {
+                    margin-left: 10px;
+                    width: 90%;
+                }
+            }
+
+            .aside-right-item1 {
+                margin-top: 20px;
+                padding-top: 20px;
+                border-top: 1px solid #ccc;
+            }
+
+            .aside-r-sea1 {
+                width: 190px;
+                margin: 0 auto;
+                .my-date-picker {
+                    input {
+                        color: #ccc;
+                        background-color: #f8f8f8;
+                    }
+                }
+                .el-date-editor {
+                    width: 100%;
+                    height: 32px;
+                    line-height: 32px;
+                }
+
+                .el-input__icon {
+                    line-height: 30px;
+                }
+                .el-date-editor.el-input {
+                    width: 100%;
+                }
+            }
+            .keyname {
+                /*padding: 0 20px;*/
+                margin-top: 25px;
+                .btns {
+                    margin-left: 14px;
+                    margin-bottom: 20px;
+                }
+                .el-button--mini,
+                .el-button--mini.is-round {
+                    padding: 5px 10px;
+                }
+                .el-button--primary {
+                    background-color: #ccc;
+                    border-color: #ccc;
+
+                }
+                .sel {
+                    //傻逼的ui
+                    background-color: #409EFF;
+                    border-color: #409EFF;
+                }
+            }
+        }
+
+        .pageList {
+            float: left;
+            padding-top: 40px;
+            padding-right: 24px;
+            padding-bottom: 50px;
+            width: 746px;
+            background: #fff;
+            text-align: right;
+        }
     }
 
-    .pageList {
-        float: left;
-        padding-top: 40px;
-        padding-right: 24px;
-        padding-bottom: 50px;
-        width: 746px;
-        background: #fff;
-        text-align: right;
-    }
 
-    .essp-aside-right-cont {
-        float: right;
-        width: 218px;
-        background: #fff;
-        padding: 20px 0;
-        .aside-right-item1 {
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 1px solid #ccc;
-        }
-        .aside-r-sea1 {
-            width: 190px;
-            margin: 0 auto;
-
-            .el-date-editor {
-                width: 100%;
-                height: 32px;
-                line-height: 32px;
-            }
-            input {
-                background-color: #f8f8f8;
-                color: #ccc;
-            }
-            .el-input__icon {
-                line-height: 30px;
-            }
-            .el-date-editor.el-input {
-                width: 100%;
-            }
-        }
-        .keyname {
-            /*padding: 0 20px;*/
-            margin-top: 25px;
-            .btns {
-                margin-left: 14px;
-                margin-bottom: 20px;
-            }
-            .el-button--mini,
-            .el-button--mini.is-round {
-                padding: 5px 10px;
-            }
-            .el-button--primary {
-                background-color: #ccc;
-                border-color: #ccc;
-
-            }
-            .sel {
-                //傻逼的ui
-                background-color: #409EFF;
-                border-color: #409EFF;
-            }
-        }
-    }
 </style>
