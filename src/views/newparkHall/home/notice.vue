@@ -13,8 +13,8 @@
                                 <div class="title-ss">{{item.informationTitle}}</div>
                                 <div class="detail">{{item.content}}</div>
                                 <div class="part-b">
-                                    <!-- <div class="label">{{item.tagsTxt}}</div> -->
-                                    <div class="label" v-for="(its,idx) in item.tagsTxt.split(',').slice(0,2)" :key="idx"><span>{{ its }}</span></div>
+                                    <div class="label">{{item.tagsTxt[0]}}</div>
+                                    <!-- <div class="label" v-for="(its,idx) in item.tagsTxt.split(',').slice(0,2)" :key="idx"><span>{{ its }}</span></div> -->
                                     <div class="time">{{ item.createTime | timerFormat(item.createTime) }}</div>
                                 </div>
                             </div>
