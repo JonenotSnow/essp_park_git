@@ -9,7 +9,7 @@ export default {
         ],
         searchCondition: {
             policyTitle: '',
-            userName: '',
+            name: '',
             status: '',
             startDate: '',      //开始时间
             endDate: '',        //结束时间
@@ -28,7 +28,7 @@ export default {
         // 重置事件
         reset() {
             this.searchCondition.policyTitle = '';
-            this.searchCondition.userName = '';
+            this.searchCondition.name = '';
             this.searchCondition.status = '';
             this.searchCondition.startDate = '';
             this.searchCondition.endDate = '';
@@ -40,6 +40,7 @@ export default {
                 path: '/news/lookNewsAudit',
                 query: {
                     id: item.informationId,
+                    status: item.status,
                     applyType: this.entityType == 1 ? '01' : '02'
                 }
             });
@@ -56,7 +57,7 @@ export default {
                 entityType: this.entityType,     //新闻1公告2
                 // 查询用到的字段
                 title: this.searchCondition.policyTitle,  // 标题名称
-                userName: this.searchCondition.userName,        // 发布人
+                name: this.searchCondition.name,        // 发布人
                 status: this.searchCondition.status,            // 状态
                 startDate: this.searchCondition.startDate,      // 开始时间
                 endDate: this.searchCondition.endDate,          // 结束时间
@@ -66,7 +67,7 @@ export default {
                 let codestatus = response.resultCode;
                 if (codestatus == "CLT000000000") {
                     let resultData = response.resultData;
-                    this.allTotal = resultData.infomationCount;
+                    this.totalCount = resultData.infomationCount;
                     this.list = resultData.infomationList;
                 } else {
                     this.$message.info(response.resultMsg);

@@ -10,7 +10,7 @@
                         </div>
                         <div>
                             <span>发布人：</span>
-                            <input type="text" v-model="searchCondition.userName">
+                            <input type="text" v-model="searchCondition.name">
                         </div>
                         <div>
                             <span>状态：</span>
@@ -68,7 +68,12 @@
                     </el-table-column>
                     <el-table-column align="center" prop="" width="100" label="操作">
                         <template slot-scope="scope">
-                            <span class="operation" @click="linkToAuditDetail(scope.row)">查看</span>
+                            <span v-if="scope.row.status == '02'" class="operation"
+                                  @click="linkToAuditDetail(scope.row)">查看</span>
+                            <span v-if="scope.row.status == '12'" class="operation"
+                                  @click="linkToAuditDetail(scope.row)">查看</span>
+                            <span v-if="scope.row.status == '13'" class="operation"
+                                  @click="linkToAuditDetail(scope.row)">领取并审核</span>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -203,6 +208,7 @@ import newsNoticeMixins from './newsNoticeMixins'
                     font-stretch: normal;
                     line-height: 30px;
                     letter-spacing: 0px;
+                    cursor: pointer;
                     color: #00a0e9;
                 }
             }
