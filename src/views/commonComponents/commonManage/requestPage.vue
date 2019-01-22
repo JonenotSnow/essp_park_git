@@ -9,8 +9,9 @@
                 </p>
                 <p class="save">
                     <el-button type="primary" size='small' @click="agreeInvite" :disabled="mark|markfike(mark)">确认加入
+                        <span style="display:none">检查是否独立园区页面</span>
                     </el-button>
-                    <el-button type="primary" size='small' @click="$router.push('/messageCenter/sysMsg')">
+                    <el-button type="primary" size='small' @click="toOut">
                         取&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;消
                     </el-button>
                 </p>
@@ -79,7 +80,7 @@
                             message: response.resultMsg
                         });
                     })
-                this.windowHrefUrl('/centerIndex/showHome',params);
+                    this.toOut();
             },
             getParkById(parkId) {
                 this.$post(this.$apiUrl.manage.getParkById, {
@@ -95,6 +96,10 @@
                         });
                     }
                 );
+            },
+            toOut(){
+                console.log("邀请函跳平台");
+                this.windowHrefUrl('/messageCenter/sysMsg',params);
             }
         }
     }
