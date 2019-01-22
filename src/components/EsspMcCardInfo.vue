@@ -25,10 +25,10 @@
                         </div>
                         <div class="cont-detail-r">
                             <div class="btncon" v-if="chilrPageType=='allInfos'">
-                                <el-button type="primary" size="mini" round  @click="goinfoDetail(item)">查看详情</el-button>
+                                <el-button type="primary" size="mini" round @click="goinfoDetail(item)">查看详情</el-button>
                             </div>
                             <div class="btncon" v-if="chilrPageType=='followInfo'">
-                                <el-button type="info"  size="mini" round  @click="showDialog(item)">取消关注</el-button>
+                                <el-button type="info" size="mini" round @click="showDialog(item)">取消关注</el-button>
                             </div>
                         </div>
                     </div>
@@ -41,12 +41,12 @@
             <div style="text-align: center">暂无数据</div>
         </div>
 
-     <!-- 关注事件对话框start -->
+        <!-- 关注事件对话框start -->
         <el-dialog class="quguanbox"
-            title="提示"
-            :visible.sync="dialogVisible"
-            width="30%"
-            :before-close="handleClose">
+                   title="提示"
+                   :visible.sync="dialogVisible"
+                   width="30%"
+                   :before-close="handleClose">
             <!-- <span style="display: inline-block; width: 100%; text-align: center;font-size: 16px">确定取消该关注？</span> -->
             <div>
                 <i class="icon iconfont icon-tishi"></i><span class="quguan">是否取消该关注</span>
@@ -64,6 +64,7 @@
 <script>
     import imgfault from "@/assets/error.png";//引入加载失败默认图
     import Moment from "moment";
+
     export default {
         name: 'EsspMcCard',
         props: {
@@ -71,7 +72,7 @@
                 type: Array,
                 default: []
             },
-            chilrPageType:{
+            chilrPageType: {
                 type: String
             }
         },
@@ -90,20 +91,20 @@
                 followId: ''
             }
         },
-        filters:{
-            timerFormat(vaule){
+        filters: {
+            timerFormat(vaule) {
                 return Moment(vaule).format("YYYY-MM-DD")
             }
         },
         computed: {
-            activityLabelList(){
+            activityLabelList() {
                 let arr = [];
                 let brr = [];
                 let len = this.mcCardList.length;
                 for (let i = 0; i < len; i++) {
                     if (this.mcCardList[i].tagsTxt != undefined) {
                         arr = this.mcCardList[i].tagsTxt.split(',')
-                    }else{
+                    } else {
                         arr = [];
                     }
                     brr.push(arr)
@@ -114,30 +115,30 @@
         methods: {
 
             /**
-             * 发送意向相关事件
+             * 取消关注事件
              */
             // 弹窗
             showDialog(item) {
-                if(!this.utils.isLoginMode()){
+                if (!this.utils.isLoginMode()) {
                     var _this = this;
                     this.$message.warning("您尚未登陆，请您先登陆");
-                    setTimeout(function(){
+                    setTimeout(function () {
                         _this.windowHrefUrl('/userIndex/login')
-                    },2000);
+                    }, 2000);
                     return
                 }
-                if(this.utils.isVisitorMode()){
+                if (this.utils.isVisitorMode()) {
                     this.$message.warning("您暂无权限进行关注/取消关注");
                     return;
                 }
                 this.dialogVisible = true;
-                this.followId = item.informationId;
+                this.followId = item.followId;
             },
             cancleFocus() {
                 this.cancelMyFocus(this.followId);
             },
             cancelMyFocus(followId) {
-                var url =this.$apiUrl.parkInfo.delMyFocus;
+                var url = this.$apiUrl.parkInfo.delMyFocus;
                 this.$post(url, {
                     followId: followId,
                     parkId: window.sessionStorage.getItem("parkId")
@@ -193,12 +194,12 @@
             //
             // },
 
-            goinfoDetail(item){
+            goinfoDetail(item) {
                 var informationId = item.informationId;
-                this.$router.push({path:'/parkIndex/infoDetail',query: {informationId: informationId}})
+                this.$router.push({path: '/parkIndex/infoDetail', query: {informationId: informationId}})
             },
-              //图片失败设置默认图
-            setDefaultImg (event){
+            //图片失败设置默认图
+            setDefaultImg(event) {
                 var ele = event.currentTarget;
                 ele.src = imgfault;
                 ele.title = "默认配图";
@@ -216,6 +217,7 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
     @import "../assets/css/mixin";
+
     .address_p {
         width: 94%;
         overflow: hidden;
@@ -224,15 +226,19 @@
         -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
     }
-    button:focus{outline:0;}
+
+    button:focus {
+        outline: 0;
+    }
+
     .essp-card-cont-inner {
         float: left;
         width: 726px;
         padding: 20px 20px 0;
         background: #fff;
         .cont-detail-l {
-            float:left;
-            width:80%;
+            float: left;
+            width: 80%;
             p {
                 margin-bottom: 10px;
                 font-size: 12px;
@@ -261,9 +267,9 @@
                 }
             }
 
-            .introduction{
-                width:90%;
-                color:#999;
+            .introduction {
+                width: 90%;
+                color: #999;
                 font-size: 14px;
                 margin-bottom: 15px;
                 height: 40px;
@@ -292,12 +298,12 @@
             }
         }
         .cont-detail-r {
-            float:left;
-            width:20%;
-            .btncon{
+            float: left;
+            width: 20%;
+            .btncon {
                 float: left;
-                width:80px;
-                margin-top:40px;
+                width: 80px;
+                margin-top: 40px;
             }
         }
         .essp-card {
@@ -307,14 +313,14 @@
             height: 140px;
             border-bottom: 1px solid #eee;
             transition: all 1s;
-            &:hover{
-                zoom:1;
+            &:hover {
+                zoom: 1;
                 box-shadow: 0px 0px 14.2px 0.8px rgba(0, 0, 0, 0.08);
                 position: relative;
-                .cont-img{
+                .cont-img {
                     margin-left: 20px;
                 }
-                .cont-detail{
+                .cont-detail {
                     margin-left: 15px;
                 }
             }
@@ -347,7 +353,7 @@
                     width: 100%;
                     height: 20px;
                     background-color: #000000;
-                    .esspopacity(@value:0.7);//调节透明度
+                    .esspopacity(@value:0.7); //调节透明度
                     transition: all 1s;
                     p {
                         position: absolute;
