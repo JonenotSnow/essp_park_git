@@ -69,7 +69,7 @@ Vue.filter("timerFormat", function(value) {
 });
 
 // Vue.prototype.$uploadCommom = uploadCommom;
-let openUlr = "http://128.196.235.129:1345/essp/#";
+let openUrl = "http://128.196.235.129:1345/essp/#";
 
 if (process.env.NODE_ENV === "production") {
     openUrl = window.location.origin+"/essp_vue/#";;
@@ -133,7 +133,7 @@ router.beforeEach(async (to, from, next) => {
                 location.href.indexOf("?") > -1
                     ? "?" + location.href.split("?")[1]
                     : "";
-            return (window.location.href = openUlr + "/parkList" + url);
+            return (window.location.href = openUrl + "/parkList" + url);
         }
         // bdParkId 有此字段优先返回
         console.log(oneId);
