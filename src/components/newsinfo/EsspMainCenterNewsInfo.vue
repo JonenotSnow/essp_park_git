@@ -241,7 +241,7 @@
     }
     .pageList {
         float: left;
-        width: 718px;
+        width: 708px;
         background: #fff;
         text-align: right;
         padding: 65px 24px 52px;
