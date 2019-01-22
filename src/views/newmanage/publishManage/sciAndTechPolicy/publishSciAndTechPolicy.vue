@@ -284,8 +284,8 @@
                 // 标签相关字段
                 visible: false,
                 tagprops: {
-                    lblTpCd: "3000003",
-                    // entId: ""
+                    lblTpCd: "3000004",
+                    entId: ""
                 },
 
                 // 附件上传字段

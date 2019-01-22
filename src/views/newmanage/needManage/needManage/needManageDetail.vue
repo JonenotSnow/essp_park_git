@@ -24,8 +24,8 @@
                 <el-form-item label="需求详情：">
                     <div class="my-style" v-html="data.detail"></div>
                 </el-form-item>
-                <el-form-item label="附件：" v-if="data.accessory">
-                    <a :href="data.accessory" :download="data.oldName">{{data.oldName}}</a>
+                <el-form-item label="附件：" v-if="accessory.length>0">
+                    <a v-for="(it,i) in accessory" :key="i" :href="it.url" :download="it.name">{{it.name}}</a>
                 </el-form-item>
             </el-form>
         </div>
@@ -60,7 +60,8 @@
                         name: "非公开需求详情"
                     }
                 ],
-                data:{}
+                data:{},
+                accessory:[]
             }
         },
         created() {
@@ -75,6 +76,10 @@
                     let codestatus = response.resultCode;
                     if (codestatus == "CLT000000000") {
                         this.data = response.resultData;
+                        console.log(typeof(this.data.accessory));
+                        if (this.data.accessory !== null) {
+                            this.accessory = JSON.parse(this.data.accessory);
+                        }
                     } else {
                         this.$message.info(response.resultMsg);
                     }

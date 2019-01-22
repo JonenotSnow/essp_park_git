@@ -16,8 +16,8 @@
                     <div class="my-style">{{satpDate.content}}</div>
                 </el-form-item>
                 <el-form-item label="新闻动态详情：" prop="infoDetail">
-                    <div class="my-style">
-                        <div v-html="satpDate.infoDetail"></div>
+                    <div class="my-style ql-container ql-snow">
+                        <div class="ql-editor" v-html="satpDate.infoDetail"></div>
                     </div>
                 </el-form-item>
                 <el-form-item label="新闻动态标签：" prop="tags">
@@ -35,7 +35,7 @@
             </el-form>
             <div class="audit-line"></div>
             <el-form :rules="rules_01" label-width="125px" class="demo-ruleForm demo-ruleForm-Next">
-                <el-form-item label="审核结果：">
+                <el-form-item label="审核结果：" v-if="satpDate.status !== '13'">
                     <p v-if="satpDate.status == '12'">
                         <i class="icon iconfont icon-butongguo"
                            style="margin-right:10px; color: #fe696c;"></i><span>不通过</span>
@@ -45,10 +45,14 @@
                            style="margin-right:10px; color: #6bde73"></i><span>通过</span>
                     </p>
                 </el-form-item>
-                <el-form-item label="审核意见：">
-                    <div class="my-style audit-opinion">{{lastComment.mark || '暂无'}}</div>
+                <el-form-item label="审核意见：" prop="mark">
+                    <div><textarea class="my-style audit-opinion" name="" v-model="lastComment.mark"></textarea></div>
                 </el-form-item>
             </el-form>
+            <div class="audit-line" v-if="userInfo.userPostList.includes('34') && (satpDate.status== '13')"></div>
+            <div class="audit-button" v-if="userInfo.userPostList.includes('34') && (satpDate.status== '13')">
+                <span class="audit-btn audit-success" @click="submit('02')">通过</span><span class="audit-btn audit-reject" @click="submit('12')">不通过</span>
+            </div>
         </div>
 
         <!--！！！！！！通知公告表格！！！！！！-->
@@ -61,8 +65,8 @@
                     <div class="my-style">{{satpDate.content}}</div>
                 </el-form-item>
                 <el-form-item label="通知公告详情：" prop="infoDetail">
-                    <div class="my-style">
-                        <div v-html="satpDate.infoDetail"></div>
+                    <div class="my-style ql-container ql-snow">
+                        <div class="ql-editor" v-html="satpDate.infoDetail"></div>
                     </div>
                 </el-form-item>
                 <el-form-item label="通知公告标签：" prop="tags">
@@ -80,7 +84,7 @@
             </el-form>
             <div class="audit-line"></div>
             <el-form :rules="rules_02" label-width="125px" class="demo-ruleForm demo-ruleForm-Next">
-                <el-form-item label="审核结果：">
+                <el-form-item label="审核结果：" v-if="satpDate.status !== '13'">
                     <p v-if="satpDate.status == '12'">
                         <i class="icon iconfont icon-butongguo"
                            style="margin-right:10px; color: #fe696c;"></i><span>不通过</span>
@@ -90,11 +94,16 @@
                            style="margin-right:10px; color: #6bde73"></i><span>通过</span>
                     </p>
                 </el-form-item>
-                <el-form-item label="审核意见：">
-                    <div class="my-style audit-opinion">{{lastComment.mark || '暂无'}}</div>
+                <el-form-item label="审核意见：" prop="mark">
+                    <div><textarea class="my-style audit-opinion" name="" v-model="lastComment.mark"></textarea></div>
                 </el-form-item>
             </el-form>
+            <div class="audit-line" v-if="userInfo.userPostList.includes('34') && (satpDate.status== '13')"></div>
+            <div class="audit-button" v-if="userInfo.userPostList.includes('34') && (satpDate.status== '13')">
+                <span class="audit-btn audit-success" @click="submit('02')">通过</span><span class="audit-btn audit-reject" @click="submit('12')">不通过</span>
+            </div>
         </div>
+    
     </div>
 </template>
 
@@ -111,7 +120,7 @@
                 applyType: this.$route.query.applyType || '01',
                 id: this.$route.query.id || "",
                 userInfo: this.SSH.getItem("userInfo"), // 获取用户信息
-
+                userType: '',
                 breadlist_01: [
                     {
                         path: "/parkHall/manage/baseInfo",
@@ -161,6 +170,9 @@
                     ],
                     tags: [
                         {required: true, message: '请输入新闻动态标签', trigger: 'blur'}
+                    ],
+                    mark: [
+                        {required: true, message: '请输入审核意见', trigger: 'blur'}
                     ]
                 },
                 rules_02: {
@@ -176,8 +188,13 @@
                     ],
                     tags: [
                         {required: true, message: '请输入通知公告标签', trigger: 'blur'}
+                    ],
+                    mark: [
+                        {required: true, message: '请输入审核意见', trigger: 'blur'}
                     ]
                 },
+                dialogVisible: false,
+                status: '',
             }
         },
         methods: {
@@ -193,7 +210,7 @@
                     let codestatus = response.resultCode;
                     if (codestatus == "CLT000000000") {
                         this.satpDate = response.resultData;
-
+                        console.log(this.satpDate.status)
                         // 对标签进行处理
                         if (this.satpDate.tagsTxt) {
                             this.satpDate.tagsTxt = this.satpDate.tagsTxt.split(',');
@@ -243,12 +260,40 @@
                 }, err => {
                     this.$message.error("接口异常");
                 })
+            },
+            //审核按钮
+            submit(status){
+                if(!this.lastComment.mark){
+                    this.$message.error("请填写审核意见");
+                    return
+                }
+                let params = {
+                    parkId: this.parkId,
+                    entityId: this.id,
+                    status: status,
+                    mark: this.lastComment.mark
+                }
+                this.$post("/audit/infomation", params).then(response => {
+                    let codestatus = response.resultCode;
+                    if (codestatus == "CLT000000000") {
+                        this.$message.info(response.resultMsg);
+                        this.$router.push({
+                            path: '/parkHall/manage/newsNoticeAudit'
+                        });
+                        
+                    } else {
+                        this.$message.info(response.resultMsg);
+                    }
+                }, err => {
+                    this.$message.error("接口异常");
+                })
             }
         },
         created() {
             this.getSatpDate();
             this.getCommentList();
         },
+        
     }
 </script>
 
@@ -309,6 +354,26 @@
                 border-radius: 3px;
                 border: solid 1px #00a0e9;
                 background-color: #ffffff;
+            }
+            .audit-button{
+                padding: 60px 0;
+                text-align: center;
+                .audit-btn{
+                    width: 100px;
+                    height: 40px;
+                    line-height: 40px;
+                    text-align: center;
+                    font-size: 16px;
+                    font-weight: normal;
+                    font-stretch: normal;
+                    letter-spacing: 0px;
+                    color: #ffffff;
+                    border-radius: 3px;
+                    background-color: #00a0e9;
+                    cursor: pointer;
+                    display: inline-block;
+                    margin: 0 65px;
+                }
             }
         }
     }
