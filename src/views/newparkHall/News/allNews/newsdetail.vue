@@ -19,8 +19,11 @@
                 <!--<em>{{viewTime}}</em>-->
                 <!--</div>-->
                 <div class="follow cursor guanzhu" @click="showDialog()">
-                    <i class="icon iconfont" :class="followStatus == 0 ?'icon-aixin-xianxing':'icon-collect2'"></i>
-                    <em>{{followStatus == 0 ? "关注" : "已关注"}}</em>
+                    <i class="icon iconfont"
+                       :class="followStatus == 0 ?'icon-aixin-xianxing':'icon-collect2'"
+                       style="font-size: 14px"></i>
+                    <span>{{followStatus == 0 ? "关注" : "已关注"}}</span>
+                    <span>{{countFollower || 0}}</span>
                 </div>
                 <!--<div-->
                 <!--class="follow cursor"-->
@@ -31,7 +34,7 @@
                 <!--</div>-->
                 </span>
             </div>
-            <div class="tagscon"  v-show="tags.length">
+            <div class="tagscon" v-show="tags.length">
                 <div class="tags_con esspclearfix">
                     <div class="tagssubcon">
                         <essp-park-tag
@@ -40,7 +43,6 @@
                             :key="eptIndex"
                         />
                     </div>
-                    <!--author：miguel，跟纯玲确认不需要此举报-->
                     <!--<button class="infojb"-->
                     <!--@click="tipOffFn(3,infoDetailData.informationId,infoDetailData.informationTitle)">举报-->
                     <!--</button>-->
@@ -60,14 +62,14 @@
         </div>
 
         <!--<div class="common_titwrap esspclearfix">-->
-            <!--<div class="moreinfo esspclearfix">-->
-                <!--<h3 class="common_titdesa">更多热门资讯</h3>-->
-                <!--<div class="info_more" @click="goParkInfoAll">查看更多></div>-->
-            <!--</div>-->
-            <!--&lt;!&ndash; 更多资讯模块 &ndash;&gt;-->
-            <!--<div class="newscard_con">-->
-                <!--<more-news></more-news>-->
-            <!--</div>-->
+        <!--<div class="moreinfo esspclearfix">-->
+        <!--<h3 class="common_titdesa">更多热门资讯</h3>-->
+        <!--<div class="info_more" @click="goParkInfoAll">查看更多></div>-->
+        <!--</div>-->
+        <!--&lt;!&ndash; 更多资讯模块 &ndash;&gt;-->
+        <!--<div class="newscard_con">-->
+        <!--<more-news></more-news>-->
+        <!--</div>-->
         <!--</div>-->
 
         <!-- 关注事件对话框start -->
@@ -128,13 +130,11 @@
                 infoDetail: "", //资讯详情
                 createTime: "", //发布时间
                 cstNm: "", //发布机构
-                followStatus: "", //资讯关注状态，非0 就是关注了
                 informationId: "", //资讯id
                 viewTime: "", //浏览数
                 countFollower: "", //关注数
                 countComment: "", //评论数
                 tags: [], //资讯标签
-                followId: "", //关注id
                 prompt: 0,
 
                 // 关注
@@ -224,19 +224,24 @@
                 let type = this.followStatus;
                 var pop = type == 0 ? {informationId: this.informationId} : {followId: this.followId};
                 var url = type == 0 ? this.$apiUrl.parkInfo.addMyFocus : this.$apiUrl.parkInfo.delMyFocus;
+
+
                 var successMsg = type == 0 ? "关注成功" : "取消关注成功";
                 var failMsg = type == 0 ? "关注失败" : "取消关注失败";
-                this.$post(url, pop).then(
-                    response => {
+                this.$post(url, pop).then(response => {
                         var codestatus = response.resultCode;
                         this.dialogVisible = false;
                         let data = response.resultData;
                         this.$message.success(successMsg);
                         this.followId = data.followId;
                         this.followStatus = data.followStatus;
-
-                    },
-                    err => {
+                        if (data.followStatus == 0) {
+                            this.countFollower = parseInt(this.countFollower) - 1;
+                        }
+                        if (data.followStatus == 1) {
+                            this.countFollower = parseInt(this.countFollower) + 1;
+                        }
+                    }, err => {
                         this.$message.info(response.resultMsg);
                     }
                 );
@@ -481,5 +486,9 @@
         margin: 0 auto;
         background-color: #fff;
         overflow: hidden;
+    }
+
+    .icon-collect2 {
+        color: #ff0000;
     }
 </style>
