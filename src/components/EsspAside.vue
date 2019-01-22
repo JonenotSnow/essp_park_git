@@ -7,6 +7,7 @@
                     <li v-for="(it, i) in asideList" :key="i" :class="noChildMenu?'guanliStyle':'huodongStyle'">
                         <!-- 多层子菜单 -->
                         <div v-if="noChildMenu">
+                            <!-- 多层菜单需要判断一下顶级目录是否需要加样式 'someli-active':'someli-p'-->
                             <p @click="togglechildren(it)" class="someli-p">{{it.menu}}</p>
                             <ul v-if="it.children && it.children.length>0" class="someli-ul">
                                 <li @click="linkto(it,is)" v-if="is.isshow" v-for="(is,j) in it.children" :key="j"
@@ -15,7 +16,6 @@
                                          <span v-if="j == 0">{{is.menu}}</span>
                                     </span>
                                     <span v-if="is.children.length == 0">{{is.menu}}</span>
-
                                 </li>
                             </ul>
                         </div>
@@ -46,7 +46,8 @@
                 routerName: this.$route.name,
                 //当前左侧菜单显示类型-多层子菜单 (保定园区-科技政策，资讯公告，系统管理，淮安园区-园区管理),
                 curLeftClass:['0421','0424','0426','0405'],
-                firstLevel:0
+                firstLevel:0,
+                active:'',
             };
         },
         created() {
@@ -127,63 +128,54 @@
         font-stretch: normal;
         letter-spacing: 0;
         background: #fff;
-        border: 1px solid #e5e5e5;
+        //border: 1px solid #e5e5e5;
         .cont-body {
             margin-top: 0px;
             .aside {
                 .tTitle {
-                    height: 50px;
+                    height: 120px;
                     font-size: 18px;
-                    line-height: 50px;
-                    text-align: left;
-                    padding-left: 25px;
+                    line-height: 120px;
+                    text-align: center;
+                    //padding-left: 25px;
                     color: #fff;
-                    background: linear-gradient(#1598ff 0%, #36bffd 100%);
+                    background: url("../assets/imgs/aside-bg.jpg") no-repeat 25% center,
+                    linear-gradient(265deg, #1598ff 0%, #1b83f8 100%);
                 }
                 .fNav {
                     background: #fff;
                     overflow: hidden;
-                    padding-bottom: 20px;
+                    //padding-bottom: 20px;
                     //资讯的
                     .zixunStyle {
-                        line-height: 30px;
-                        text-align: left;
+                        position: relative;
+                        font-size: 16px;
+                        color: #333;
                         height: auto;
-                        font-size: 14px;
-                        color: #666;
+                        line-height: 50px;
+                        text-align: left;
                         cursor: pointer;
-                        margin: 0 16px;
+                        border-top: 1px solid #f5f5f5;
                         .someli-p {
-                            margin: 20px 0 10px;
-                            text-indent: 9px;
-                            font-size: 14px;
+                            //margin: 20px 0 10px;
+                            //text-indent: 9px;
+                            padding-left: 44px;
+                            border-left: 6px solid #fff;
+                        }
+                        .someli-active{
+                            padding-left: 44px;
+                            border-left: 6px solid #1792fd;
                         }
                         .someli-ul {
                             li {
                                 text-align: left;
-                                font-size: 12px;
+                                font-size: 14px;
                                 color: #999;
                                 cursor: pointer;
-                                text-indent: 18px;
-                                margin: 0 9px;
-                                &.span-link, span.span-link{
-                                    display: block;
-                                    background-color: #409eff;
-                                    background-image: linear-gradient(21deg, #22a2fa 0%, #10b5ff 100%), linear-gradient(#00a0e9, #00a0e9);
-                                    border-radius: 3px;
-                                    color: #fff;
-                                    position: relative;
-                                    &:after {
-                                        position: absolute;
-                                        content: " ";
-                                        right: 20px;
-                                        top: 10px;
-                                        width: 0;
-                                        height: 0;
-                                        border-top: 5px solid transparent;
-                                        border-bottom: 5px solid transparent;
-                                        border-left: 5px solid #fff;
-                                    }
+                                padding-left: 44px;
+                                border-left: 6px solid #fff;
+                                &.span-link {
+                                    color: #333;
                                 }
                             }
                         }
@@ -191,105 +183,87 @@
                     //活动的
                     .huodongStyle {
                         position: relative;
-                        font-size: 14px;
-                        color: #666;
-                        margin: 10px 0;
+                        font-size: 16px;
+                        color: #333;
+                        //margin: 10px 0;
                         height: 50px;
                         line-height: 50px;
-                        text-align: center;
+                        text-align: left;
                         cursor: pointer;
+                        border-top: 1px solid #f5f5f5;
                         p {
-                            border-left: 4px solid #fff;
+                            padding-left: 44px;
+                            border-left: 6px solid #fff;
                             &.router-link-active {
-                                border-left: 4px solid #22a2fa;
-                                color: #22a2fa;
+                                border-left: 6px solid #1792fd;
+                                //color: #22a2fa;
                             }
                         }
                     }
                     //科技的
                     .sciStyle {
-                        line-height: 30px;
-                        text-align: left;
+                        position: relative;
+                        font-size: 16px;
+                        color: #333;
                         height: auto;
-                        font-size: 14px;
-                        color: #666;
+                        line-height: 50px;
+                        text-align: left;
                         cursor: pointer;
-                        margin: 0 16px;
+                        border-top: 1px solid #f5f5f5;
                         .someli-p {
-                            margin: 20px 0 10px;
-                            text-indent: 9px;
-                            font-size: 14px;
+                            //margin: 20px 0 10px;
+                            //text-indent: 9px;
+                            padding-left: 44px;
+                            border-left: 6px solid #fff;
+                        }
+                        .someli-active{
+                            padding-left: 44px;
+                            border-left: 6px solid #1792fd;
                         }
                         .someli-ul {
                             li {
                                 text-align: left;
-                                font-size: 12px;
+                                font-size: 14px;
                                 color: #999;
                                 cursor: pointer;
-                                text-indent: 18px;
-                                margin: 0 9px;
-                                &.span-link, span.span-link {
-                                    display: block;
-                                    background-color: #409eff;
-                                    background-image: linear-gradient(21deg, #22a2fa 0%, #10b5ff 100%), linear-gradient(#00a0e9, #00a0e9);
-                                    border-radius: 3px;
-                                    color: #fff;
-                                    position: relative;
-                                    &:after {
-                                        position: absolute;
-                                        content: " ";
-                                        right: 20px;
-                                        top: 10px;
-                                        width: 0;
-                                        height: 0;
-                                        border-top: 5px solid transparent;
-                                        border-bottom: 5px solid transparent;
-                                        border-left: 5px solid #fff;
-                                    }
+                                padding-left: 44px;
+                                border-left: 6px solid #fff;
+                                &.span-link {
+                                    color: #333;
                                 }
                             }
                         }
                     }
                     //管理的
                     .guanliStyle {
-                        line-height: 30px;
-                        text-align: left;
+                        position: relative;
+                        font-size: 16px;
+                        color: #333;
                         height: auto;
-                        font-size: 14px;
-                        color: #666;
+                        line-height: 50px;
+                        text-align: left;
                         cursor: pointer;
-                        margin: 0 16px;
+                        border-top: 1px solid #f5f5f5;
                         .someli-p {
-                            margin: 20px 0 10px;
-                            text-indent: 9px;
-                            font-size: 14px;
+                            //margin: 20px 0 10px;
+                            //text-indent: 9px;
+                            padding-left: 44px;
+                            border-left: 6px solid #fff;
+                        }
+                        .someli-active{
+                            padding-left: 44px;
+                            border-left: 6px solid #1792fd;
                         }
                         .someli-ul {
                             li {
                                 text-align: left;
-                                font-size: 12px;
+                                font-size: 14px;
                                 color: #999;
                                 cursor: pointer;
-                                text-indent: 18px;
-                                margin: 0 9px;
-                                &.span-link,span.span-link {
-                                    display: block;
-                                    background-color: #409eff;
-                                    background-image: linear-gradient(21deg, #22a2fa 0%, #10b5ff 100%), linear-gradient(#00a0e9, #00a0e9);
-                                    border-radius: 3px;
-                                    color: #fff;
-                                    position: relative;
-                                    &:after {
-                                        position: absolute;
-                                        content: " ";
-                                        right: 20px;
-                                        top: 10px;
-                                        width: 0;
-                                        height: 0;
-                                        border-top: 5px solid transparent;
-                                        border-bottom: 5px solid transparent;
-                                        border-left: 5px solid #fff;
-                                    }
+                                padding-left: 44px;
+                                border-left: 6px solid #fff;
+                                &.span-link {
+                                    color: #333;
                                 }
                             }
                         }
