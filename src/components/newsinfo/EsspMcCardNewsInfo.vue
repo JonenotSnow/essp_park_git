@@ -7,7 +7,8 @@
                 <span class="descontool__title">{{temeTitle}}</span>
             </p>
         </div>
-        <div class="essp-card-cont-inner-news"  v-if="mcCardList && mcCardList.length>0">>
+
+        <div class="essp-card-cont-inner-news"  v-if="mcCardList && mcCardList.length>0">
             <div class="essp-card" v-for="(item, mcCardIndex) in mcCardList" :key="mcCardIndex">
                 <div class="cont-img" @click="toLink(item)">
                     <img class="detaillogo" :src="item.titleImg">
@@ -20,7 +21,7 @@
                         {{item.informationTitle}}
                     </h5>
                     <div class="cont-detail-l">
-                        <div class="cont-detail-l-content" v-html="item.infoDetail"></div>
+                        <div class="cont-detail-l-content">{{item.content}}</div>
                         <p class="icon_p_font">
                             <span class=""><i :class="icons[0]" style="color: #ccc"></i>{{item.viewTime}}</span>
                             <span><i :class="icons[1]" style="color: #ccc"></i>{{item.countFollower}}</span>
@@ -29,10 +30,10 @@
                     </div>
                     <div class="cont-detail-r">
                         <div class="btncon" v-if="chilrPageType=='getAllInformation'">
-                            <el-button type="primary" size="mini" round  @click="goinfoDetail(item)">查看详情</el-button>
+                            <el-button type="primary" size="mini" round @click="goInfoDetail(item)">查看详情</el-button>
                         </div>
                         <div class="btncon" v-if="chilrPageType=='actAll'">
-                            <el-button type="info"  size="mini" round  @click="showDialog(item)">取消关注</el-button>
+                            <el-button type="info" size="mini" round @click="showDialog(item)">取消关注</el-button>
                         </div>
                     </div>
                 </div>
@@ -169,7 +170,7 @@
                     }
                 );
             },
-            goinfoDetail(item) {
+            goInfoDetail(item) {
                 var informationId = item.informationId;
                 this.$router.push({
                     path: '/news/newsdetail',
@@ -437,14 +438,30 @@
                     border: 1px solid #fff;
                     outline: none;
                 }
-
-                .btn-enroll {
-                    background-color: #00a0e9;
-                    cursor: pointer;
-                }
-                .btn-cancle {
-                    background-color: #ccc;
-                }
+            }
+        }
+        .essp-card:hover {
+            box-shadow: 0px 0px 14.2px 0.8px rgba(0, 0, 0, 0.08);
+        }
+        .no_list {
+            text-align: center;
+            .tipspan {
+                display: block;
+                font-family: MicrosoftYaHei;
+                color: #666666;
+                margin-top: 85px;
+                font-size: 18px;
+            }
+            .descontool__title {
+                margin-left: 22px;
+                height: 30px;
+                line-height: 30px;
+                vertical-align: top;
+                font-size: 18px;
+                font-weight: 500;
+                font-stretch: normal;
+                letter-spacing: 3.6px;
+                color: #333;
             }
         }
     }
