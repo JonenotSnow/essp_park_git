@@ -10,7 +10,6 @@
     export default {
         name: 'editor',
         components: {
-            quillEditor
         },
         data() {
             return {

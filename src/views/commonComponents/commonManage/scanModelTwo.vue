@@ -142,7 +142,6 @@ export default {
     name: "",
     components: {
         EsspBreadCrumb,
-        quillEditor
     },
     data() {
         return {

@@ -69,13 +69,12 @@ Vue.filter("timerFormat", function(value) {
 });
 
 // Vue.prototype.$uploadCommom = uploadCommom;
-// let openUlr = "http://128.196.235.129:1345/essp/#";
-let openUlr = "http://128.196.235.132:1345/essp_vue/#";
-console.log(process.env.NODE_ENV);
-// if (process.env.NODE_ENV === "production") {
-//     openUlr = "http://want.bbc.com/essp/#";
-// }
-Vue.prototype.$openUrl = openUlr;
+let openUlr = "http://128.196.235.129:1345/essp/#";
+
+if (process.env.NODE_ENV === "production") {
+    openUrl = window.location.origin+"/essp_vue/#";;
+}
+Vue.prototype.$openUrl = openUrl;
 
 import axios from "axios";
 

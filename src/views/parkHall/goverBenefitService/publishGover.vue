@@ -1295,13 +1295,6 @@
         height: 178px;
         display: block;
     }
-
-    .ql-toolbar .ql-formats .ql-link,
-    .ql-toolbar .ql-formats .ql-image,
-    .ql-toolbar .ql-formats .ql-video {
-        display: none;
-    }
-
 </style>
 <style lang='less' scoped>
     @import "../../../assets/css/mixin";

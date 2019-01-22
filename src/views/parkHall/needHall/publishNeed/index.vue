@@ -129,6 +129,7 @@ export default {
       this.$post(this.$apiUrl.upload.upload, param).then(response => {
         var obj = {
           name: file.name,
+          oldName: file.oldName,
           url: response.resultData[0].url
         };
         this.fileList=[]
@@ -141,7 +142,7 @@ export default {
       this.$refs["form"].validate(vaild => {
         if (vaild) {
           if (that.fileList[0] && that.fileList[0].url) {
-            that.form.accessory = that.fileList[0].url;
+            that.form.accessory = that.fileList;
           }
           if(!that.form.detail){
                return that.$message("请填写需求内容!");
