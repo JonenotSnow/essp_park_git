@@ -676,7 +676,7 @@
         },
         methods: {
             // 编辑器的值获取
-            onEditorChange(val){
+            onEditorChange(val) {
                 this.content = val;
                 console.log(this.content);
             },
@@ -701,7 +701,6 @@
                 this.formTicketList.t_concatvalue.forEach((item, index) => {
                     this.databox.forEach((itemChild, indexChild) => {
                         if (item == itemChild.key) {
-
                             name.push(itemChild.cstNm);
                         }
                     })
@@ -1057,12 +1056,74 @@
                 this.$post("/activity/getInvitingCst", {
                     parkId: sessionStorage.getItem("parkId")
                 }).then(response => {
-                    var arr = response.resultData;
-
+//                    var arr = response.resultData;
+                    var arr =  [{
+                            "id": null,
+                            "cstId": "91630103MA7578GT33",
+                            "cstNm": "青海宇志建筑有限公司",
+                            "orgCode": null,
+                            "cstShrNm": null,
+                            "entId": null,
+                            "lblTxt": null,
+                            "entTp": null,
+                            "parkId": "20181220204119007",
+                            "lblId": null,
+                            "idyTpcd": null,
+                            "entityForm": null,
+                            "joinTime": null,
+                            "applyUserId": null,
+                            "status": "02",
+                            "auditer": null,
+                            "dtlAdr": null,
+                            "commandInd": null,
+                            "area": null
+                        }, {
+                            "id": null,
+                            "cstId": "91630102MA758EL42L",
+                            "cstNm": "青海丽生商贸有限公司",
+                            "orgCode": null,
+                            "cstShrNm": null,
+                            "entId": null,
+                            "lblTxt": null,
+                            "entTp": null,
+                            "parkId": "20181220204119007",
+                            "lblId": null,
+                            "idyTpcd": null,
+                            "entityForm": null,
+                            "joinTime": null,
+                            "applyUserId": null,
+                            "status": "02",
+                            "auditer": null,
+                            "dtlAdr": null,
+                            "commandInd": null,
+                            "area": null
+                        }, {
+                            "id": null,
+                            "cstId": null,
+                            "cstNm": null,
+                            "orgCode": null,
+                            "cstShrNm": null,
+                            "entId": null,
+                            "lblTxt": null,
+                            "entTp": null,
+                            "parkId": "20181220204119007",
+                            "lblId": null,
+                            "idyTpcd": null,
+                            "entityForm": null,
+                            "joinTime": null,
+                            "applyUserId": null,
+                            "status": "02",
+                            "auditer": null,
+                            "dtlAdr": null,
+                            "commandInd": null,
+                            "area": null
+                        }]
                     arr.forEach((item, index) => {
-                        item.key = item.cstId;
-                        item.label = item.cstNm;
-                        this.databox.push(item);
+                        if(item.cstId || item.cstNm){
+                            item.key = item.cstId;
+                            item.label = item.cstNm;
+                            this.databox.push(item);
+                        }
                     })
 
                 })
@@ -1637,7 +1698,7 @@
     //最后部分的样式
     .final_tablecon, .final_tableconT {
         // padding: 0 55px;
-        padding-left:  23px;
+        padding-left: 23px;
         margin-left: 32px;
         .tditem {
             width: 100%;
