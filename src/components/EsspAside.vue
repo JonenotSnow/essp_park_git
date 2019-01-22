@@ -8,7 +8,7 @@
                         <!-- 多层子菜单 -->
                         <div v-if="noChildMenu">
                             <!-- 多层菜单需要判断一下顶级目录是否需要加样式 'someli-active':'someli-p'-->
-                            <p @click="togglechildren(it)" class="someli-p">{{it.menu}}</p>
+                            <p @click="togglechildren(it)" class="someli-p" :class="parentId == it.id?'someli-active':''">{{it.menu}}</p>
                             <ul v-if="it.children && it.children.length>0" class="someli-ul">
                                 <li @click="linkto(it,is)" v-if="is.isshow" v-for="(is,j) in it.children" :key="j"
                                     :class="childId == is.id?'span-link':''">
@@ -48,6 +48,7 @@
                 curLeftClass:['0421','0424','0426','0405'],
                 firstLevel:0,
                 active:'',
+                parentId:''
             };
         },
         created() {
@@ -70,6 +71,7 @@
                 let tmp = [];
                 this.asideList = [];
                 //保持左侧入口样式
+                this.parentId = currentMenu.menuid.toString().substr(0, 6);
                 this.childId = currentMenu.menuid.toString().substr(0, 8);
                 //获取当前横向导航索引
                 let dir = currentMenu.menuid.substr(0, 4);
