@@ -149,8 +149,6 @@
             // 弹窗
             showDialog(deleteId) {
 
-                this.dialogVisible = true;
-
                 if (deleteId) {
                     // 删除单个
                     this.deleteId = deleteId;
@@ -171,6 +169,8 @@
                     selectCheckIds = selectCheckList.join(',');
                     this.deleteId = selectCheckIds;
                 }
+
+                this.dialogVisible = true;
 
             },
             dealWithDelete() {
