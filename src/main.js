@@ -72,7 +72,7 @@ Vue.filter("timerFormat", function(value) {
 let openUrl = "http://128.196.235.129:1345/essp/#";
 
 if (process.env.NODE_ENV === "production") {
-    openUrl = window.location.origin+"/essp_vue/#";;
+    openUrl = window.location.origin+'/essp/'+"#";;
 }
 Vue.prototype.$openUrl = openUrl;
 

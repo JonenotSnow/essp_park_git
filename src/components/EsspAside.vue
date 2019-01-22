@@ -99,6 +99,7 @@
                 }
             },
             linkto(it,is) {
+                debugger;
                 this.$router.push({name: is.name})
             }
         },
