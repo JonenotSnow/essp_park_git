@@ -99,7 +99,7 @@
             },
             toOut(){
                 console.log("邀请函跳平台");
-                this.windowHrefUrl('/messageCenter/sysMsg',params);
+                this.windowHrefUrl('/messageCenter/sysMsg');
             }
         }
     }
