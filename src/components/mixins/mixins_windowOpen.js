@@ -7,6 +7,11 @@ export default {
         };
     },
     methods: {
+        //新开标签打开url，不带token
+        windowOpenUrlNoToken(url, params) {
+            var URL = this.$openUrl+url + params
+            window.open(URL);
+        },
         //新开标签打开url，参数可放url，可放参数，方法里面统一带token
         windowOpenUrl(url, params) {
             this.getCurrentParams()
@@ -32,7 +37,7 @@ export default {
             returnUrl =encodeURIComponent(returnUrl)
             // 登陆参数
             currentObj=Object.assign({},{returnUrl:returnUrl},{token:this.mixin_window_token,channel:'PARK'})
-           
+
             let getUrl = this.utils.setUrlParams(currentObj,'',this.$openUrl+url)
             window.location.href = getUrl;
         },
@@ -47,13 +52,12 @@ export default {
         // 更新参数，每次获取相对应的参数信息
         getCurrentParams(){
             let parkId = this.SSH.getItem("parkId");
-            this.mixin_window_parkId = parkId 
+            this.mixin_window_parkId = parkId
             let bdParkId = this.SSH.getItem("bdParkId");
             let label =
                 location.origin.indexOf("bdppc") > -1 ? "bdPark2018" : bdParkId;
             this.mixin_window_label =  label ;
             this.mixin_window_token = this.SSH.getItem("token")
-            
         }
     }
 };
