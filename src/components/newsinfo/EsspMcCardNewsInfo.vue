@@ -29,7 +29,7 @@
                     </div>
                     <div class="cont-detail-r">
                         <div class="btncon" v-if="chilrPageType=='getAllInformation'">
-                            <el-button type="primary" size="mini" round  @click="goinfoDetail(item)">查看详情</el-button>
+                            <el-button type="primary" size="mini" round  @click="goInfoDetail(item)">查看详情</el-button>
                         </div>
                         <div class="btncon" v-if="chilrPageType=='actAll'">
                             <el-button type="info"  size="mini" round  @click="showDialog(item)">取消关注</el-button>
@@ -169,7 +169,7 @@
                     }
                 );
             },
-            goinfoDetail(item) {
+            goInfoDetail(item){
                 var informationId = item.informationId;
                 this.$router.push({
                     path: '/news/newsdetail',

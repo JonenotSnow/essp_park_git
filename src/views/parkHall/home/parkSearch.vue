@@ -128,20 +128,8 @@
                             </div>
                         </li>
                     </ul>
-                    <div id="comnoData" v-if="searchData.length==0 && !loading">
-                        <div class="no-list-pic">
-                            <img src="@assets/newparkimg/no-list-img.png" width="245" height="189" alt="">
-                        </div>
-                        <div class="no-list-desc">
-                            暂无数据
-                        </div>
-                    </div>
-                    <div id="comnoData" v-if="loading">
-                        <div class="no-list-desc">
-                            数据加载中...
-                        </div>
-                    </div>
-                    
+                    <NoData v-if="searchData.length==0 && !loading" />
+                    <Loading v-if="loading" />
                 </div>
             </div>
             <div class="pageList">
@@ -164,7 +152,13 @@
 <script>
 import Moment from "moment";
 import { classtType } from "./../../../util/classtType";
+import NoData from '@/components/EsspNoData';
+import Loading from '@/components/EsspLoading';
 export default {
+    components: {
+        NoData,
+        Loading
+    },
     data() {
         return {
             isBdPark: this.utils.isBdPark(),

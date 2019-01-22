@@ -284,7 +284,8 @@ export default {
         //批量导出
         exportData () {
             this.touch = true;
-            window.location.href = "http://128.196.235.129:1345/"+ this.$apiUrl.manage.applyFormExport+'?id='+this.selectList.toString();
+            // window.location.href = "http://128.196.235.129:1345/"+ this.$apiUrl.manage.applyFormExport+'?id='+this.selectList.toString();
+             window.location.href = window.location.host + '/'+ this.$apiUrl.manage.applyFormExport+'?id='+this.selectList.toString();
             setTimeout(function(){
                 this.touch = false;
             },1000)

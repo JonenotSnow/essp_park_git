@@ -50,23 +50,25 @@
             <div class="tabList">
                 <el-table :data="list" @row-click="getDetail" style="width: 100%">
                     <el-table-column align="center" type="index" label="全部" width="85"></el-table-column>
-                    <el-table-column show-overflow-tooltip align="center" prop="policyTitle" label="标题名称"
+                    <el-table-column show-overflow-tooltip align="center" prop="informationTitle" label="标题名称"
                                      width="200"></el-table-column>
                     <el-table-column show-overflow-tooltip align="center" prop="userName" label="发布人">
                     </el-table-column>
-                    <el-table-column align="center" prop="createTime" label="提交时间" width="130">
+                    <el-table-column align="center" prop="createTime" label="提交时间" width="140">
                         <template slot-scope="scope">
-                            {{scope.row.createTime | statusFormat(scope.row.createTime)}}
+                            {{scope.row.createTime | timerFormat(scope.row.createTime)}}
                         </template>
                     </el-table-column>
-                    <el-table-column align="center" prop="status" label="状态" width="130">
+                    <el-table-column align="center" prop="status" label="状态" width="120">
                         <template slot-scope="scope">
-                            {{scope.row.status | statusFormat(scope.row.status)}}
+                            <span v-if="scope.row.status == '02'">发布中</span>
+                            <span v-if="scope.row.status == '13'">待审核</span>
+                            <span v-if="scope.row.status == '12'">审核不通过</span>
                         </template>
                     </el-table-column>
                     <el-table-column align="center" prop="" width="100" label="操作">
                         <template slot-scope="scope">
-                            <span class="operation" @click="linkToAuditDetail(scope.row.id)">领取并审核</span>
+                            <span class="operation" @click="linkToAuditDetail(scope.row)">查看</span>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -87,129 +89,15 @@
 </template>
 
 <script>
+import newsNoticeMixins from './newsNoticeMixins'
     export default {
         components: {},
         data() {
             return {
-                totalCount: 0,
-                pageNum: 1,
-                pageSize: 10,
-                list: [
-                    {
-                        id: '123456',                       // 政策id
-                        createTime: '1546928463894',        // 发布时间
-                        cstNm: '建行',                      // 发布机构
-                        policyTitle: '政策法规标题1',       // 标题
-                        userName: '行长',                   // 发布人
-                        status: '已发布',                   // 发布状态
-                        applyType: '01',                    // 政策01，或科技服务02
-                        classtType: "高企认定",              // 类型【服务类型】
-                        desc: '政策简介政策简介政策简介政策简介'
-                    },
-                    {
-                        id: '123456',                       // 政策id
-                        createTime: '1546928463894',        // 发布时间
-                        cstNm: '交行',                      // 发布机构
-                        policyTitle: '政策法规标题2',       // 标题
-                        userName: '行长',                   // 发布人
-                        status: '已审核',                   // 发布状态
-                        applyType: '01',                    // 政策01，或科技服务02
-                        classtType: "科小认定",              // 类型【服务类型】
-                        desc: '政策简介政策简介政策简介政策简介政策简介政策简介政策简介政策简介政策简介政策简介'
-                    },
-                    {
-                        id: '123456',                       // 政策id
-                        createTime: '1546928463894',        // 发布时间
-                        cstNm: '交行',                      // 发布机构
-                        policyTitle: '政策法规标题3',       // 标题
-                        userName: '行长',                   // 发布人
-                        status: '未审核',                   // 发布状态
-                        applyType: '01',                    // 政策01，或科技服务02
-                        classtType: "风险投资",              // 类型【服务类型】
-                        desc: '政策简介政策简介政策简介政策简介政策简介政策简介政策简介政策简介政策简介政策简介'
-                    }
-                ],
-                searchCondition: {   //查询条件
-                    parkId: sessionStorage.getItem("parkId"),
-                    policyTitle: '',
-                    userName: '',
-                    status: '',
-                    startDate: '',      //开始时间
-                    endDate: '',        //结束时间
-                }
+                entityType: 1
             }
         },
-        created() {
-
-        },
-        methods: {
-
-            // 查询事件
-            search() {
-
-            },
-
-            // 重置事件
-            reset() {
-
-            },
-
-            // 前往审核详情页面
-            linkToAuditDetail(id) {
-                this.$router.push({
-                    path: '/parkHall/manage/audit',
-                    query: {
-                        applyType: '01',
-                        id: id
-                    }
-                });
-            },
-
-            /**
-             * 获取“科技政策”的数据
-             */
-            getSciAndTechPolicy() {
-                let params = {
-                    parkId: this.parkId,            // 园区ID
-                    pageNum: this.pageNum,          // 页码
-                    pageSize: this.pageSize,        // 每页显示数量
-                    startDate: this.startDate,      // 信息发布时间---开始时间
-                    endDate: this.endDate,          // 信息发布时间---结束时间
-                    title: '',                       // 标题,
-                    type: this.satpType,            // 政策01，或科技服务02
-                    classtType: this.classtType     // 科技服务才会有这个字段---
-                };
-
-                // “政策法规”不需要“classtType”这个字段
-                if (this.satpType === '01') {
-                    delete params.classtType;
-                }
-
-                this.$post(" /policy/getAllPolicy", params).then(response => {
-                    let codestatus = response.resultCode;
-                    if (codestatus == "CLT000000000") {
-                        let resultData = response.resultData;
-                        this.allTotal = resultData.total;
-                        this.mcCardDataList = resultData.policyList;
-                    } else {
-                        this.$message.info(response.resultMsg);
-                    }
-                }, err => {
-                    this.$message.error("接口异常");
-                })
-            },
-
-            /**
-             * 分页相关事件
-             * @param val
-             */
-            handleSizeChange(val) {
-                this.pageSize = val;
-            },
-            handleCurrentChange(val) {
-                this.pageNum = val;
-            }
-        },
+        mixins: [newsNoticeMixins]
     }
 </script>
 
