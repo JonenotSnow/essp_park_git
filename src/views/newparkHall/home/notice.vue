@@ -19,10 +19,9 @@
                             </div>
                             <div class="img" :style="'background-image:url('+imgUrl+')'"></div>
                         </li>
-                        <!-- <li v-if="newsList.length==0" class="nothing">暂无数据</li> -->
                         <EsspNoData v-if="noticesList.length==0" class="nothing"></EsspNoData>
                     </ul>
-                    <div class="more" @click="linkToNewsListPage">More ></div>
+                    <div class="more" v-if="noticesList.length>0" @click="linkToNewsListPage">More ></div>
                 </div>
                 <div class="right-aside">
                     <div class="title-s">通知公告</div>
@@ -31,10 +30,9 @@
                             <div class="left-p">{{item.informationTitle}}</div>
                             <div class="time">{{ item.createTime | timerFormat(item.createTime) }}</div>
                         </li>
-                        <!-- <li v-if="noticesList.length==0" class="nothing">暂无数据</li> -->
                         <EsspNoData v-if="noticesList.length==0" class="nothing"></EsspNoData>
                     </ul>
-                    <div class="more" @click="linkToNoticeListPage">More></div>
+                    <div class="more" v-if="noticesList.length>0" @click="linkToNoticeListPage">More></div>
                 </div>
             </div>
         </div>
