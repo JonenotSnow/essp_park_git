@@ -82,10 +82,10 @@
                 this.$router.push("/news/alllistnews");
             },
             goToNewsDetail(item){
-                this.$router.push({path: "/news/newsdetail",query: {info: item}});
+                this.$router.push({path: "/news/newsdetail",query: {informationId: item.id}});
             },
             goToNoticeDetail(item){
-                this.$router.push({path: "/news/noticedetail",query: {info: item}});
+                this.$router.push({path: "/news/noticedetail",query: {informationId: item.id}});
             }
         },
         filters: {
