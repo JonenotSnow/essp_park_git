@@ -10,8 +10,8 @@
             现在固定显示6个
              -->
             <div class="hasenters" v-if="enterprises.length">
-                <img class="enter_child" v-for="(item,index) in enterprises.slice(0,5)" :key="index" :src="item.cstLogo"  @click="enterBusiness(item)">
-                <span class="enter_child entermore" v-if="enterprises.length>5" @click="linkToPage">View More ></span>
+                <img class="enter_child" v-for="(item,index) in enterprises" v-if="index<5" :key="index" :src="item.cstLogo"  @click="enterBusiness(item)">
+                <span class="enter_child entermore" v-if="enterprises.length>0" @click="linkToPage">View More ></span>
             </div>
                <div v-else class="nobox"><i class="myicon"></i><span class="tipspan">暂无数据</span></div>
         </div>
@@ -26,27 +26,7 @@ import mixins_windowOpen from '@/components/mixins/mixins_windowOpen.js'
    data () {
      return {
          msg:"入驻企业",
-         enterprises:[
-             /*{
-                 src: require('@/views/newparkHall/home/imgs/logo_b1.png'),
-
-             },
-             {
-                 src: require('@/views/newparkHall/home/imgs/logo_b2.png'),
-             },
-             {
-                src: require('@/views/newparkHall/home/imgs/logo_b3.png'),
-             },
-             {
-                 src: require('@/views/newparkHall/home/imgs/logo_b4.png'),
-             },
-             {
-                src: require('@/views/newparkHall/home/imgs/logo_b5.png'),
-             },
-             {
-                src: require('@/views/newparkHall/home/imgs/logo_b6.png'),
-             },*/
-         ],
+         enterprises:[],
          pageNum: 1,
          pageSize: 5,
          rzzMap:new Map()
@@ -111,6 +91,7 @@ import mixins_windowOpen from '@/components/mixins/mixins_windowOpen.js'
         box-shadow: 1.5px 2.6px 7.8px 0.2px 
             rgba(0, 0, 0, 0.1);
         margin-right:50px;
+        cursor: pointer;
         &:last-child{
             margin-right: 0px;
         }

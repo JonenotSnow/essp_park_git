@@ -155,7 +155,7 @@
             },
             // 举报是否需要提示
             isPit() {
-                var informationId = this.$route.query.info.informationId;
+                var informationId = this.$route.query.informationId;
                 // 举报 3. 资讯模块  4. 活动模块  5. 评论模块
                 this.$post("/inform/findPrompt", {
                     informType: 3,
@@ -249,7 +249,7 @@
 
             //获取文章
             detailInfoP() {
-                var informationId = this.$route.query.info.informationId;
+                var informationId = this.$route.query.informationId;
                 if (informationId) {
                     var pop = {
                         informationId: informationId
