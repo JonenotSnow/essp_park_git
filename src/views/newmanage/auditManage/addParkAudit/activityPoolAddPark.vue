@@ -285,7 +285,7 @@ export default {
         exportData () {
             this.touch = true;
             // window.location.href = "http://128.196.235.129:1345/"+ this.$apiUrl.manage.applyFormExport+'?id='+this.selectList.toString();
-             window.location.href = this.$openUrl +this.$apiUrl.manage.applyFormExport+'?id='+this.selectList.toString();
+            window.location.href = window.location.origin +this.$apiUrl.manage.applyFormExport+'?id='+this.selectList.toString();
             setTimeout(function(){
                 this.touch = false;
             },1000)
