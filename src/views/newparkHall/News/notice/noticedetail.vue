@@ -57,7 +57,7 @@
                     }
                 ],
                 info: {},
-                informationId: this.$route.query.info.informationId || '',  // 新闻id
+                informationId: this.$route.query.informationId || '',  // 新闻id
                 tags:  [],//["新闻","新闻热点","人民英雄纪念碑"]
                 mockdetalhtml: '' //"<p style='color:red'>全是通知公告的mock详情数据</p>"
             }

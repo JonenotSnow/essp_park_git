@@ -13,8 +13,7 @@
                                 <div class="title-ss">{{item.informationTitle}}</div>
                                 <div class="detail">{{item.content}}</div>
                                 <div class="part-b">
-                                    <div class="label">{{item.tagsTxt[0]}}</div>
-                                    <!-- <div class="label" v-for="(its,idx) in item.tagsTxt.split(',').slice(0,2)" :key="idx"><span>{{ its }}</span></div> -->
+                                    <div class="label"><span>{{item.tagsTxt[0]}}</span></div>
                                     <div class="time">{{ item.createTime | timerFormat(item.createTime) }}</div>
                                 </div>
                             </div>
@@ -82,10 +81,10 @@
                 this.$router.push("/news/alllistnews");
             },
             goToNewsDetail(item){
-                this.$router.push({path: "/news/newsdetail",query: {informationId: item.id}});
+                this.$router.push({path: "/news/newsdetail",query: {informationId: item.informationId}});
             },
             goToNoticeDetail(item){
-                this.$router.push({path: "/news/noticedetail",query: {informationId: item.id}});
+                this.$router.push({path: "/news/noticedetail",query: {informationId: item.informationId}});
             }
         },
         filters: {

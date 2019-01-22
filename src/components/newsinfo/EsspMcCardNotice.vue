@@ -9,15 +9,13 @@
         </div>
         <div class="has_list" v-if="mcCardList && mcCardList.length>0">
             <div class="essp-card" v-for="(item, mcCardIndex) in mcCardList" :key="mcCardIndex">
-            <!-- <div class="essp-card" v-for="(item, index) in 5" :key="index"> -->
                 <div class="card__head">
                     <p class="head__title" @click="goToDetail(item)">{{item.informationTitle}}</p>
                     <p class="head__time">{{item.createTime | timerFormat(item.createTime)}}</p>
                 </div>
                 <div class="card__dest">
-                    <p v-html="item.infoDetail"></p>
+                    <p v-html="item.content"></p>
                 </div>
-            <!-- </div>  -->
             </div>
         </div>
         <div v-else class="noDataInfo">
