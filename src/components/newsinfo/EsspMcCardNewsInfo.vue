@@ -7,7 +7,7 @@
                 <span class="descontool__title">{{temeTitle}}</span>
             </p>
         </div>
-        <div class="essp-card-cont-inner-news"  v-if="mcCardList && mcCardList.length>0">>
+        <div class="essp-card-cont-inner-news"  v-if="mcCardList && mcCardList.length>0">
             <div class="essp-card" v-for="(item, mcCardIndex) in mcCardList" :key="mcCardIndex">
                 <div class="cont-img" @click="toLink(item)">
                     <img class="detaillogo" :src="item.titleImg">
@@ -20,7 +20,7 @@
                         {{item.informationTitle}}
                     </h5>
                     <div class="cont-detail-l">
-                        <div class="cont-detail-l-content" v-html="item.infoDetail"></div>
+                        <div class="cont-detail-l-content">{{item.content}}</div>
                         <p class="icon_p_font">
                             <span class=""><i :class="icons[0]" style="color: #ccc"></i>{{item.viewTime}}</span>
                             <span><i :class="icons[1]" style="color: #ccc"></i>{{item.countFollower}}</span>
