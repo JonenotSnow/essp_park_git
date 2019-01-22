@@ -249,7 +249,8 @@
                     if (this.selectCheckItem.length) {
                         var index = this.selectCheckItem.indexOf(item);
                         if (index > -1) {
-                            this.selectCheckItem.splice(index, 1)
+                            this.selectCheckItem.splice(index, 1);
+                            this.allCheck = false;
                         }
                     }
                 }
