@@ -284,7 +284,7 @@
                 // 标签相关字段
                 visible: false,
                 tagprops: {
-                    lblTpCd: "3000004",
+                    lblTpCd: "3000003",
                     // entId: ""
                 },
 
