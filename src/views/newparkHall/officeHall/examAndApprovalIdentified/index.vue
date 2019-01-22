@@ -3,8 +3,8 @@
         <div class="list-wrap">
             <div class="list__main">
                 <ul>
-                    <li :class="{'list__list--select' : type==0}" @click="switchDetail(0)">科技型小企业认定{{navIndex}}</li>
-                    <li :class="{'list__list--select' : type==1}" @click="switchDetail(1)">高新技术企业认定{{navIndex}}</li>
+                    <li :class="{'list__list--select' : type==0}" @click="switchDetail(0)">科技型小企业认定</li>
+                    <li :class="{'list__list--select' : type==1}" @click="switchDetail(1)">高新技术企业认定</li>
                 </ul>
             </div>
         </div>
@@ -45,10 +45,6 @@
             }
         },
         computed: {
-            navIndex(){
-                console.log(this.$store)
-                return this.$store.state.navIndex;
-            }
         },
         methods: {
             switchDetail(type) {
@@ -69,7 +65,6 @@
 
             // 查看政策
             linkToPolicie() {
-                sessionStorage.setItem('navIndex','1')
                 let path;
                 if (this.type == '0') {
                     path = '/sciIndex/sciAndTechService/familyJuniorIdentify';
@@ -78,10 +73,7 @@
                     path = '/sciIndex/sciAndTechService/seniorEnterpriseIdentify';
                 }
                 this.$router.push({
-                    path: path,
-                    query:{
-                        'navIndex':'1'
-                    }
+                    path: path
                 });
             }
         },

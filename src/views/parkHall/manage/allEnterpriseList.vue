@@ -180,7 +180,7 @@
                         cursor: pointer;
                         width: 200px;
                         height: 150px;
-                        background-color: #00a0e9;
+                        //background-color: #00a0e9;
                         opacity: 0.8;
                         border-right: 1px solid #ccc;
                         border-bottom:1px solid #ccc;
