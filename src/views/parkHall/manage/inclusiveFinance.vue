@@ -1,6 +1,12 @@
 <template>
     <div class="inclusivefinance">
-        <div class="main_banner"></div>
+        <div class="main_banner">
+            <el-carousel indicator-position="none" height="500px">
+                <el-carousel-item v-for="item in bannerDisList" :key="item.id">
+                    <div class="banner_bg" :style="'background-image:url('+item.img_url+')'" ></div>
+                </el-carousel-item>
+            </el-carousel>
+        </div>
         <div class="inclusive_menu">
             <div class="menulist">
                 <div class="listitem" v-for="(item,index) in menuList" :key="index" :class="{cur:item.isCur}"
@@ -113,10 +119,22 @@
 </template>
 
 <script>
+    import "swiper/dist/css/swiper.css"; ////这里注意具体看使用的版本是否需要引入样式，以及具体位置。
+    import {swiper, swiperSlide} from "vue-awesome-swiper";
     export default {
+        components: {
+            swiper, swiperSlide
+        },
         data() {
             let curIndex = 1;
             return {
+                bannerDisList:[
+                    {
+                        img_url:require('../../../assets/newparkimg/inclusivefinance/inclusiveFinance_banner.png')
+                    },{
+                        img_url:require('../../../assets/newparkimg/inclusivefinance/inclusiveFinance_banner2.png')
+                    }
+                ],
                 detailShow: [true, false, false],
                 phoneShow: [true, false],
                 menuList: [//类别
@@ -377,7 +395,15 @@
         font-family: MicrosoftYaHei;
         .main_banner {
             height: 500px;
-            background: url(../../../assets/newparkimg/inclusivefinance/inclusiveFinance_banner2.png) center no-repeat;
+            // background: url(../../../assets/newparkimg/inclusivefinance/inclusiveFinance_banner2.png) center no-repeat;
+            .banner_bg {
+                // .bgSize(cover);
+                width: 100%;
+                height: 500px;
+                background-position: center;
+                background-repeat: no-repeat;
+                overflow: hidden;
+            }
         }
         .inclusive_menu {
             .menulist {

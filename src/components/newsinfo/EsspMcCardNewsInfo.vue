@@ -1,5 +1,5 @@
 <template>
-    <div class="essp-card-cont-inner esspclearfix">
+    <div class="essp-card-cont-outer-news esspclearfix">
         <!-- 新闻模块---模版-->
         <div class="descontool">
             <p>
@@ -7,44 +7,46 @@
                 <span class="descontool__title">{{temeTitle}}</span>
             </p>
         </div>
-        <div v-if="mcCardList && mcCardList.length>0">
+
+        <div class="essp-card-cont-inner-news"  v-if="mcCardList && mcCardList.length>0">
             <div class="essp-card" v-for="(item, mcCardIndex) in mcCardList" :key="mcCardIndex">
-                <div class="card_left">
-                    <img :src="item.titleImg">
-                </div>
-                <div class="card_cont">
-                    <div class="card__head">
-                        <p class="head__title" @click="goToDetail(item)">{{item.informationTitle}}</p>
+                <div class="cont-img" @click="toLink(item)">
+                    <img class="detaillogo" :src="item.titleImg">
+                    <div class="img-detail">
+                        <p class="enrolled">{{item.createTime | timerFormat}}</p>
                     </div>
-                    <div class="card__dest">
-                        <p v-html="item.infoDetail"></p>
-                        <div class="fundiv">
-                            <span class="funitems">
-                                <i class="icon iconfont icon-liulan"></i>
-                                <em>{{item.viewTime}}</em>
-                            </span>
-                                <span class="funitems">
-                                <i class="icon iconfont icon-collect2"></i>
-                                <em>{{item.countFollower}}</em>
-                            </span>
-                                <span class="funitems">
-                                <i class="icon iconfont icon-pinglun"></i>
-                                <em>{{item.countComment}}</em>
-                            </span>
+                </div>
+                <div class="cont-detail">
+                    <h5 @click="toLink(item)">
+                        {{item.informationTitle}}
+                    </h5>
+                    <div class="cont-detail-l">
+                        <div class="cont-detail-l-content">{{item.content}}</div>
+                        <p class="icon_p_font">
+                            <span class=""><i :class="icons[0]" style="color: #ccc"></i>{{item.viewTime}}</span>
+                            <span><i :class="icons[1]" style="color: #ccc"></i>{{item.countFollower}}</span>
+                            <span><i :class="icons[3]" style="color: #ccc"></i>{{item.countComment}}</span>
+                        </p>
+                    </div>
+                    <div class="cont-detail-r">
+                        <div class="btncon" v-if="chilrPageType=='getAllInformation'">
+                            <el-button type="primary" size="mini" round @click="goInfoDetail(item)">查看详情</el-button>
+                        </div>
+                        <div class="btncon" v-if="chilrPageType=='actAll'">
+                            <el-button type="info" size="mini" round @click="showDialog(item)">取消关注</el-button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <div v-else class="noDataInfo">
-        <div class="no-list-pic">
-            <img src="@/assets/newparkimg/no-list-img.png" alt="">
-            <div class="no-list-desc">
-                暂无数据
+            <div class="no-list-pic">
+                <img src="@/assets/newparkimg/no-list-img.png" alt="">
+                <div class="no-list-desc">
+                    暂无数据
+                </div>
             </div>
         </div>
-    </div>
-
         <!-- 关注事件对话框start -->
         <el-dialog class="quguanbox"
                    title="提示"
@@ -61,13 +63,13 @@
             </span>
         </el-dialog>
         <!-- 关注事件对话框end -->
-
     </div>
 </template>
 
 <script>
     import imgfault from "@/assets/error.png";//引入加载失败默认图
     import Moment from "moment";
+
     export default {
         name: 'EsspMcCard',
         props: {
@@ -88,8 +90,8 @@
                 icons: [
                     "icon iconfont icon-liulan",
                     "icon iconfont icon-collect2",
-                    'icon iconfont icon-pinglun'
-
+                    'icon iconfont icon-pinglun',
+                    "icon iconfont icon-info"
                 ],
 
                 // 关注
@@ -97,20 +99,20 @@
                 followId: ''
             }
         },
-        filters:{
-            timerFormat(vaule){
+        filters: {
+            timerFormat(vaule) {
                 return Moment(vaule).format("YYYY-MM-DD")
             }
         },
         computed: {
-            activityLabelList(){
+            activityLabelList() {
                 let arr = [];
                 let brr = [];
                 let len = this.mcCardList.length;
                 for (let i = 0; i < len; i++) {
                     if (this.mcCardList[i].tagsTxt != undefined) {
                         arr = this.mcCardList[i].tagsTxt.split(',')
-                    }else{
+                    } else {
                         arr = [];
                     }
                     brr.push(arr)
@@ -119,21 +121,20 @@
             }
         },
         methods: {
-
             /**
              * 发送意向相关事件
              */
             // 弹窗
             showDialog(item) {
-                if(!this.utils.isLoginMode()){
+                if (!this.utils.isLoginMode()) {
                     var _this = this;
                     this.$message.warning("您尚未登陆，请您先登陆");
-                    setTimeout(function(){
+                    setTimeout(function () {
                         _this.windowHrefUrl('/userIndex/login')
-                    },2000);
+                    }, 2000);
                     return
                 }
-                if(this.utils.isVisitorMode()){
+                if (this.utils.isVisitorMode()) {
                     this.$message.warning("您暂无权限进行关注/取消关注");
                     return;
                 }
@@ -144,7 +145,7 @@
                 this.cancelMyFocus(this.followId);
             },
             cancelMyFocus(followId) {
-                var url =this.$apiUrl.parkInfo.delMyFocus;
+                var url = this.$apiUrl.parkInfo.delMyFocus;
                 this.$post(url, {
                     followId: followId,
                     parkId: window.sessionStorage.getItem("parkId")
@@ -169,15 +170,15 @@
                     }
                 );
             },
-            goToDetail(item){
+            goInfoDetail(item) {
                 var informationId = item.informationId;
                 this.$router.push({
-                    path:'/news/newsdetail',
+                    path: '/news/newsdetail',
                     query: {informationId: informationId}
                 })
             },
             //图片失败设置默认图
-            setDefaultImg (event){
+            setDefaultImg(event) {
                 var ele = event.currentTarget;
                 ele.src = imgfault;
                 ele.title = "默认配图";
@@ -189,6 +190,7 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
+
     .noDataInfo {
         margin-top: 100px;
         margin-bottom: 50px;
@@ -199,6 +201,7 @@
             height: 189px;
         }
     }
+
     .address_p {
         width: 94%;
         overflow: hidden;
@@ -207,180 +210,242 @@
         -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
     }
-    button:focus{outline:0;}
-    .essp-card-cont-inner {
+
+    button:focus {
+        outline: 0;
+    }
+
+    .essp-card-cont-outer-news {
         float: left;
-        width: 726px;
-        /*padding: 20px 20px 0;*/
+        width: 755px;
         background-color: #fff;
         .descontool {
             height: 59px;
             line-height: 100px;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid #ccc;
             p {
-                margin-bottom: 10px;
-                font-size: 12px;
-                font-weight: normal;
-                font-stretch: normal;
-                letter-spacing: 0;
-                color: #999999;
-                i {
-                    margin-right: 10px;
-                    color: #ff9900;
-                }
+                margin-top: 40px;
+                margin-left: 40px;
+                height: 30px;
+                line-height: 30px;
                 span {
-                    margin-right: 20px;
+                    display: inline-block;
+                }
+                .descontool__tag {
+                    width: 8px;
+                    height: 30px;
+                    background-color: #10b5ff;
+                }
+                .descontool__title {
+                    margin-left: 22px;
+                    height: 30px;
+                    line-height: 30px;
+                    vertical-align: top;
+                    font-size: 18px;
+                    font-weight: 500;
+                    font-stretch: normal;
+                    letter-spacing: 3.6px;
+                    color: #333;
                 }
             }
-            .icon_p_font {
-                i {
-                    font-size: 14px;
-                }
-                .icon-collect2:before {
-                    font-size: 12px;
-                }
-                .icon-pinglun {
-                    font-size: 12px;
-                }
-            }
+        }
+    }
 
-            .introduction{
-                width:90%;
-                color:#999;
-                font-size: 14px;
-                margin-bottom: 15px;
-                height: 40px;
-                line-height: 20px;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                display: -webkit-box;
-                -webkit-line-clamp: 2;
-                -webkit-box-orient: vertical;
-            }
-            .detail-tag {
-                margin-bottom: 10px;
-                .it_tag {
-                    background: #fff;
-                    color: #999;
-                    border-radius: 10px;
-                    min-width: 20px;
-                    // max-width: 80px;
-                    font-size: 12px;
-                    height: 22px;
-                    line-height: 20px;
-                    text-align: center;
-                    border: 1px solid #999;
-                    overflow: hidden;
-                }
+    .essp-card-cont-inner-news .essp-card .it_tag {
+        background: #fff;
+        color: #999;
+        border-radius: 10px;
+        min-width: 20px;
+        // max-width: 80px;
+        font-size: 12px;
+        height: 22px;
+        line-height: 20px;
+        text-align: center;
+        border: 1px solid #999;
+        overflow: hidden;
+    }
+
+    .essp-card-cont-inner-news {
+        float: left;
+        width: 715px;
+        padding: 20px 20px 0;
+        background: #fff;
+
+        .cont-detail-l {
+            float: left;
+            width: 76%;
+            .tag_btn_p {
+                height: 18px;
             }
         }
         .cont-detail-r {
-            float:left;
-            width:20%;
-            .btncon{
-                float: left;
-                width:80px;
-                margin-top:40px;
-            }
+            float: right;
+            width: 22%;
+            margin-top: 54px;
+            text-align: right;
         }
         .essp-card {
+            background-color: #ffffff;
+            padding: 20px 0;
             width: 730px;
-            height: 160px;
-            margin: 20px auto 0;
-            .card_left{
-                float: left;
-                width:280px;
-                height: 160px;
-                margin-right: 20px;
-                img{
-                    width:100%;
-                    height: 100%;
-                    border:none;
+            height: 140px;
+            border-bottom: 1px solid #eee;
+            transition: all 1s;
+            &:hover {
+                zoom: 1;
+                box-shadow: 0px 0px 14.2px 0.8px rgba(0, 0, 0, 0.08);
+                position: relative;
+                .cont-img {
+                    margin-left: 20px;
+                }
+                .cont-detail {
+                    margin-left: 15px;
                 }
             }
-            .card_cont{
-                float:left;
-                width:430px;
-                .card__head {
-                    position: relative;
-                    height: 60px;
-                    p {
-                        display: inline-block;
-                        font-family: MicrosoftYaHei;
-                        font-weight: normal;
-                        font-stretch: normal;
-                        letter-spacing: 0px;
-                    }
-                    .head__title {
-                        font-size: 16px;
-                        color: #222222;
-                        height: 40px;
-                        margin:20px 0 12px;
-                        overflow: hidden;
-                        text-overflow: ellipsis;
-                        display: -webkit-box;
-                        -webkit-line-clamp: 2;
-                        -webkit-box-orient: vertical;
-                        &:hover {
-                            color: #00a0e9;
-                            cursor: pointer;
-                        }
-                    }
-                    .head__time {
-                        position: absolute;
-                        top: 0;
-                        right: 0;
-                        font-size: 14px;
-                        color: #999999;
-                    }
-                }
-                .card__dest {
-                    margin-top: 10px;
-                    p {
-                        height: 40px;
-                        line-height: 20px;
-                        font-family: MicrosoftYaHei;
-                        font-size: 14px;
-                        font-weight: normal;
-                        font-stretch: normal;
-                        letter-spacing: 0px;
-                        color: #999999;
-                        overflow: hidden;
-                        text-overflow: ellipsis;
-                        display: -webkit-box;
-                        -webkit-line-clamp: 2;
-                        -webkit-box-orient: vertical;
-                    }
-                    .fundiv {
-                        margin: 10px 0;
-                        color:#ccc;
-                        .funitems {
-                            font-size: 12px;
-                            i {
-                                color: #ccc;
-                                font-size: 14px;
-                                margin-right: 5px;
-                            }
-                            .icon-collect2, .icon-pinglun {
-                                font-size: 12px;
-                            }
-                        }
-                        em{
-                            font-style: normal;
-                            margin-right: 20px;
-                        }
-                    }
+            .cont-img {
+                position: relative;
+                float: left;
+                width: 245px;
+                height: 100%;
+                cursor: pointer;
+                transition: all 1s;
+                /*&:hover{*/
+                /*.img-detail {*/
+                /*display: block;*/
+                /*transform: scale(1.02);*/
+                /*}*/
+                /*}*/
+                .detaillogo {
+                    display: block;
+                    width: 100%;
+                    height: 100%;
+                    transition: all 1s;
+                    /*&:hover {*/
+                    /*transform: scale(1.02);*/
+                    /*}*/
                 }
 
+                .img-detail {
+                    // display: none;
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 20px;
+                    background-color: #000000;
+                    opacity: 0.8;
+                    transition: all 1s;
+                    p {
+                        position: absolute;
+                        top: 0;
+                        color: #fff;
+                        font-size: 12px;
+                        line-height: 20px;
+                    }
+                    .enrolled {
+                        left: 10px;
+
+                    }
+                    .cost {
+                        right: 10px;
+                    }
+                }
+            }
+            .cont-detail {
+                position: relative;
+                float: left;
+                margin-left: 35px;
+                width: 430px;
+                height: 100%;
+                transition: all 1s;
+                h5 {
+                    cursor: pointer;
+                    //margin-top: 10px;
+                    margin-bottom: 34px;
+                    width: 100%;
+                    font-size: 16px;
+                    font-weight: normal;
+                    font-stretch: normal;
+                    color: #444;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: -o-ellipsis-lastline;
+                    text-overflow: ellipsis;
+                }
+                .cont-detail-l-content {
+                    height: 42px;
+                    line-height: 24px;
+                    overflow: hidden;
+                }
+                p {
+                    font-size: 12px;
+                    margin-top: 23px;
+                    font-weight: normal;
+                    font-stretch: normal;
+                    letter-spacing: 0;
+                    color: #999999;
+                    i {
+                        margin-right: 10px;
+                        color: #ff9900;
+                        font-size: 12px;
+                    }
+                    span {
+                        margin-right: 20px;
+                    }
+                }
+                .icon_p_font {
+                    i {
+                        font-size: 14px;
+                    }
+                    .icon-collect2:before {
+                        font-size: 12px;
+                    }
+                    .icon-pinglun {
+                        font-size: 12px;
+                    }
+                }
+                p.detail-tag {
+                    span {
+                        margin-right: 10px;
+                        min-width: 50px;
+                        max-width: 90px;
+                        overflow: hidden;
+                        white-space: nowrap;
+                        text-overflow: -o-ellipsis-lastline;
+                        text-overflow: ellipsis;
+                        height: 20px;
+                        line-height: 20px;
+                        text-align: center;
+                        color: #999999;
+                        border-radius: 10px;
+                        border: solid 1px #999999;
+                        background-color: #fff;
+                    }
+                    .tag-enroll {
+                        margin-left: 25px;
+                        margin-right: 25px;
+                        background-color: #ff7210;
+                    }
+                }
+                .essp-btn {
+                    min-width: 80px;
+                    padding: 0 10px;
+                    height: 28px;
+                    font-size: 14px;
+                    color: #fff;
+                    border-radius: 14px;
+                    margin-bottom: 10px;
+                    border: 1px solid #fff;
+                    outline: none;
+                }
             }
         }
-        .essp-card:hover{
-            box-shadow: 0px 0px 14.2px 0.8px
-        rgba(0, 0, 0, 0.08);
+        .essp-card:hover {
+            box-shadow: 0px 0px 14.2px 0.8px rgba(0, 0, 0, 0.08);
         }
-        .no_list{
+        .no_list {
             text-align: center;
-            .tipspan{
+            .tipspan {
                 display: block;
                 font-family: MicrosoftYaHei;
                 color: #666666;

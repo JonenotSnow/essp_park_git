@@ -27,7 +27,7 @@
         </div>
         <div class="chat-text" @keyup.ctrl.enter="send('enter')">
             <quill-editor v-if="chat.selectId"
-                          ref="childEditor" :options="editorOption" v-model="editorCon" @focus="onEditorFocus($event)"
+                          ref="childEditor"  v-model="editorCon" @focus="onEditorFocus($event)"
                           @blur="onEditorBlur($event)" @change="changeText($event)">
             </quill-editor>
         </div>
@@ -54,18 +54,13 @@
     // import textEditorTwo from '../text/textEditorTwo'
     import groupMembers from '../addfriends/groupMembers'
     import bus from '../../../eventBus'
-    import {quillEditor} from 'vue-quill-editor'
-    import 'quill/dist/quill.core.css'
-    import 'quill/dist/quill.snow.css'
-    import 'quill/dist/quill.bubble.css'
 
     export default {
         components: {
             // textEditor,
             // esspDitor,
             // textEditorTwo,
-            groupMembers,
-            quillEditor,
+            groupMembers
         },
         data() {
             return {

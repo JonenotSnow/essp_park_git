@@ -285,7 +285,7 @@
 
     .essp-card-cont-inner {
         float: left;
-        width: 726px;
+        width: 715px;
         padding: 20px 20px 0;
         background: #fff;
         .cont-detail-l {
@@ -305,7 +305,6 @@
         .essp-card {
             background-color: #ffffff;
             padding: 20px 0;
-            width: 730px;
             height: 140px;
             border-bottom: 1px solid #eee;
             transition: all 1s;

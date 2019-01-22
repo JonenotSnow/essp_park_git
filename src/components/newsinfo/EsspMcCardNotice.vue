@@ -1,5 +1,5 @@
 <template>
-    <div class="essp-card-cont-inner esspclearfix">
+    <div class="essp-card-cont-inner-notice esspclearfix">
         <!-- 科技政策模块---模版-->
         <div class="descontool">
             <p>
@@ -9,15 +9,13 @@
         </div>
         <div class="has_list" v-if="mcCardList && mcCardList.length>0">
             <div class="essp-card" v-for="(item, mcCardIndex) in mcCardList" :key="mcCardIndex">
-            <!-- <div class="essp-card" v-for="(item, index) in 5" :key="index"> -->
                 <div class="card__head">
                     <p class="head__title" @click="goToDetail(item)">{{item.informationTitle}}</p>
                     <p class="head__time">{{item.createTime | timerFormat(item.createTime)}}</p>
                 </div>
                 <div class="card__dest">
-                    <p v-html="item.infoDetail"></p>
+                    <p v-html="item.content"></p>
                 </div>
-            <!-- </div>  -->
             </div>
         </div>
         <div v-else class="noDataInfo">
@@ -83,9 +81,9 @@
         outline: 0;
     }
 
-    .essp-card-cont-inner {
+    .essp-card-cont-inner-notice {
         float: left;
-        width: 770px;
+        width: 755px;
         /*padding: 20px 20px 0;*/
         background-color: #fff;
         .descontool {
@@ -128,6 +126,7 @@
                 height: 49px;
                 line-height: 50px;
                 border-bottom: 1px solid #ccc;
+
                 p {
                     display: inline-block;
                     font-family: MicrosoftYaHei;
@@ -138,6 +137,8 @@
                 .head__title {
                     font-size: 16px;
                     color: #222222;
+                    width: 80%;
+                    .esspellipsis();
                     &:hover {
                         color: #00a0e9;
                         cursor: pointer;

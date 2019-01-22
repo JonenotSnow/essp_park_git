@@ -8,7 +8,7 @@
                 <span>INVITATION</span>
             </p>
             <div class="wrap">
-                <quillEditor :options="editorOption" v-model="content"></quillEditor>
+                <quill-editor  v-model="content"></quill-editor>
             </div>
             <p style="display:none;"><span>*</span>请使用编辑器自带功能编辑</p>
             <p class="scan">
@@ -47,14 +47,9 @@
 
 <script>
 import EsspBreadCrumb from "@/components/EsspBreadCrumb";
-import "quill/dist/quill.core.css";
-import "quill/dist/quill.snow.css";
-import "quill/dist/quill.bubble.css";
-import { quillEditor } from "vue-quill-editor";
 export default {
     components: {
-        EsspBreadCrumb,
-        quillEditor
+        EsspBreadCrumb
     },
     data() {
         return {
@@ -80,27 +75,6 @@ export default {
                     <p class="ql-align-right" style="font-size:16px;">xxxx年xx月xx日</p>`,
             confirmSend: false,
             scan: false,
-            editorOption:{
-                readOnly:true,
-                placeholder:'',
-                modules:{
-                    toolbar:[
-                        ['bold', 'italic', 'underline'],        // toggled buttons
-                        ['blockquote', 'code-block'],
-                        [{ 'header': 1 }, { 'header': 2 }],
-                        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-                        [{ 'script': 'sub'}, { 'script': 'super' }],
-                        [{ 'indent': '-1'}, { 'indent': '+1' }],
-                        [{ 'direction': 'rtl' }],
-                        // [{ 'size': ['small', false, 'large', 'huge'] }],
-                        // [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-                        [{ 'color': [] }, { 'background': [] }],
-                        [{ 'font': [] }],
-                        [{ 'align': [] }]
-                    ]
-                },
-                theme:'snow'
-            },
             parkNm:''
         };
     },

@@ -22,7 +22,7 @@
           <span>
             <i>*</i>内容详情：</span>
                     <div class="editorContent">
-                        <quillEditor :options="editorOption" v-model='params.content'></quillEditor>
+                        <quill-editor  v-model='params.content'></quill-editor>
                     </div>
                 </div>
             </div>
@@ -63,14 +63,11 @@
 </template>
 
 <script>
-    import "quill/dist/quill.core.css";
-    import "quill/dist/quill.snow.css";
-    import "quill/dist/quill.bubble.css";
-    import {quillEditor} from "vue-quill-editor";
+
 
     export default {
         components: {
-            quillEditor
+
         },
         data() {
             return {

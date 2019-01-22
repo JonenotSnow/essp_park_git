@@ -111,7 +111,6 @@
                         <quill-editor
                             ref="myTextEditor"
                             v-model="editorOption.editorCon"
-                            :options="editorOption"
                         >
                             <div id="toolbar" slot="toolbar"></div>
                         </quill-editor>
@@ -671,11 +670,6 @@
     import EsspAddTag from "@/components/EsspAddTag";
     import ParkUpload from "@/views/parkHall/parkUpload"; // 上传图片控件
 
-    import "quill/dist/quill.core.css";
-    import "quill/dist/quill.snow.css";
-    import "quill/dist/quill.bubble.css";
-    import {quillEditor} from "vue-quill-editor";
-
     export default {
         name: "",
         data() {
@@ -696,8 +690,8 @@
                 toLimit: 0,
                 editorOption: {
                     editorCon: "",
-                    readOnly: "true",
-                    placeholder: `请输入内容`
+                    // readOnly: "true",
+                    // placeholder: `请输入内容`
                 },
                 thisDate: new Date(),
                 breadlist: [
@@ -957,7 +951,6 @@
             EsspTag,
             EsspAddTag,
             ParkUpload,
-            quillEditor
         },
         created() {
             this.uploads = this.$apiUrl.upload.upload;
