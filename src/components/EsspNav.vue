@@ -20,7 +20,7 @@
             return {
                 //游客默认导航
                 defaultNav:[],
-                active: sessionStorage.getItem('navIndex')||0,
+                active: '',
                 headMenu: [],
             };
         },
