@@ -37,7 +37,7 @@
             @click="$router.push('/parkHall/manage/noticeAndAD')"
           >More&gt;</span>
         </div>
-        <div v-else class="noData">暂无通知通告~~</div>
+        <div v-else class="noData">暂无通知公告~~</div>
       </div>
       <!-- 有新入园通知 -->
       <div
@@ -335,7 +335,7 @@ export default {
       });
     },
     toRequestAddParK() {
-      
+
       let loginFlag = this.SSH.getItem("loginFlag");
       //未登录提示
       if (loginFlag == null) {

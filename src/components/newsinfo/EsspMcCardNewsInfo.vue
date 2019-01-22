@@ -10,14 +10,14 @@
 
         <div class="essp-card-cont-inner-news"  v-if="mcCardList && mcCardList.length>0">
             <div class="essp-card" v-for="(item, mcCardIndex) in mcCardList" :key="mcCardIndex">
-                <div class="cont-img" @click="toLink(item)">
+                <div class="cont-img" @click="goInfoDetail(item)">
                     <img class="detaillogo" :src="item.titleImg">
                     <div class="img-detail">
                         <p class="enrolled">{{item.createTime | timerFormat}}</p>
                     </div>
                 </div>
                 <div class="cont-detail">
-                    <h5 @click="toLink(item)">
+                    <h5 @click="goInfoDetail(item)">
                         {{item.informationTitle}}
                     </h5>
                     <div class="cont-detail-l">

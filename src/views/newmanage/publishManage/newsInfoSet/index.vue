@@ -25,7 +25,7 @@ import outRoute from "../../components/outRoute";
             },
             {
                 id:2,
-                name:"通知通告",
+                name:"通知公告",
                 path:'/parkHall/manage/publicNotice'
             }
         ]
@@ -45,5 +45,5 @@ import outRoute from "../../components/outRoute";
 
 <style lang='less' scoped >
 
- 
+
 </style>
