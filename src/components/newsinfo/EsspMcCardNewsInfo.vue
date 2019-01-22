@@ -7,7 +7,7 @@
                 <span class="descontool__title">{{temeTitle}}</span>
             </p>
         </div>
-        <div class="essp-card-cont-inner-news">
+        <div class="essp-card-cont-inner-news"  v-if="mcCardList && mcCardList.length>0">>
             <div class="essp-card" v-for="(item, mcCardIndex) in mcCardList" :key="mcCardIndex">
                 <div class="cont-img" @click="toLink(item)">
                     <img class="detaillogo" :src="item.titleImg">
@@ -38,6 +38,30 @@
                 </div>
             </div>
         </div>
+        <div v-else class="noDataInfo">
+            <div class="no-list-pic">
+                <img src="@/assets/newparkimg/no-list-img.png" alt="">
+                <div class="no-list-desc">
+                    暂无数据
+                </div>
+            </div>
+        </div>
+        <!-- 关注事件对话框start -->
+        <el-dialog class="quguanbox"
+                   title="提示"
+                   :visible.sync="dialogVisible"
+                   width="30%"
+                   :before-close="handleClose">
+            <!-- <span style="display: inline-block; width: 100%; text-align: center;font-size: 16px">确定取消该关注？</span> -->
+            <div>
+                <i class="icon iconfont icon-tishi"></i><span class="quguan">是否取消该关注</span>
+            </div>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="dialogVisible = false">取 消</el-button>
+                <el-button type="primary" @click="cancleFocus()">确 认</el-button>
+            </span>
+        </el-dialog>
+        <!-- 关注事件对话框end -->
     </div>
 </template>
 
@@ -96,7 +120,6 @@
             }
         },
         methods: {
-
             /**
              * 发送意向相关事件
              */
