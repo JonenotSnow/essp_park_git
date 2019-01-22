@@ -1,7 +1,7 @@
 <template>
     <div>
         <div v-if="parkService == '1'" class="scanOneM">
-            <el-carousel indicator-position="none" height="450px" v-if="bannerDisList && bannerDisList.length>0" >
+            <el-carousel indicator-position="none" width="1200px" height="400px" v-if="bannerDisList && bannerDisList.length>0" >
                 <el-carousel-item v-for="(item,i) in bannerDisList" :key="i">
                     <img :src="item" alt="" @click="delBannerClick(item)">
                 </el-carousel-item>
@@ -397,6 +397,8 @@
     text-align: center;
 }
 .scanOneM{
+    width: 1200px;
+    overflow: hidden;
     margin:0 auto;
     .el-carousel img{
         height:450px;
