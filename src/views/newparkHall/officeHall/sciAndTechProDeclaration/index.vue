@@ -63,12 +63,8 @@
 
             // 查看政策
             linkToPolicie() {
-                sessionStorage.setItem('navIndex','1')
                 this.$router.push({
-                    path: '/sciIndex/sciAndTechService/technologyServiceOrganization',
-                    query:{
-                        'navIndex':'1'
-                    }
+                    path: '/sciIndex/sciAndTechService/technologyServiceOrganization'
                 });
             }
         },
