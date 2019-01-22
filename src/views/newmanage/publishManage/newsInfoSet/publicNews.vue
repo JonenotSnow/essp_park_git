@@ -134,6 +134,9 @@
                 this.isAllChecked = false;
                 this.selectCheckItem = [];
                 this.approveType = '';
+                this.pageNum =  1;//当前页码
+                this.pageSize= 5;//每页条数
+                this.allTotal=0;//总条数
                 this.getPublicedNews();
             },
             // 改变审核状态

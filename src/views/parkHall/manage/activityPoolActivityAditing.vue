@@ -306,7 +306,7 @@ export default {
                     line-height: 50px;
                     & > div {
                         float: left;
-                        margin-right: 18px;
+                        margin-right: 12px;
                         & > span {
                             font-size: 16px;
                             font-weight: normal;

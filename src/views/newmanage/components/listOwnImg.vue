@@ -14,7 +14,7 @@
             <ul class="listWrap">
                 <li class="list" v-if="list.length > 0" v-for="(item,index) in list" :key="index">
                     <div class="ListTop">
-                        <el-checkbox v-model="item.isChecked" @change="changeChecked(item,index)">备选项</el-checkbox>
+                        <el-checkbox v-model="item.isChecked" @change="changeChecked(item,index)"></el-checkbox>
                         <span class="time">保存时间：{{item.modifyTime | timerFormat}}</span>
                         <span class="create">发布人：{{item.modifyName || item.createName}}</span>
                         <i class="el-icon-delete remove" @click="removeList('01',item)"></i>

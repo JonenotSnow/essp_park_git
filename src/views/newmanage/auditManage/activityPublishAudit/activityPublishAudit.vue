@@ -305,7 +305,7 @@ export default {
                     height:60px;
                     &>div{
                         float:left;
-                        margin-right:18px;
+                        margin-right:12px;
                         &>span{
                             font-size: 16px;
                             font-weight: normal;
@@ -326,7 +326,7 @@ export default {
                             // border-radius: 4px;
                         }
                         &>select{
-                            width: 128px;
+                            width: 144px;
                             padding:0 5px;
                             outline: none;
                             height: 35px;
@@ -392,7 +392,7 @@ export default {
                 color: #00a0e9;
             }
         }
-        
+
 
         &>ul,.tabList{
             border:1px solid #ebeef5;

@@ -15,7 +15,7 @@ export const classtType = {
     infoType : [
         {id:"",name:"全部"},
         {id:"1",name:"行业动态"},
-        {id:"2",name:"通知通告"},
+        {id:"2",name:"通知公告"},
         {id:"3",name:"政府公告"},
         {id:"4",name:"方针政策"},
         {id:"5",name:"专家解读"},

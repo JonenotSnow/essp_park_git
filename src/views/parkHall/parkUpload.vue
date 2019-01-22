@@ -492,7 +492,7 @@
                             ]
                         },
                         {
-                            title: '通知通告',
+                            title: '通知公告',
                             items:[
                                 {
                                     src: require('@/assets/parkUploadImg/information/tztg1.jpg'),
