@@ -29,7 +29,7 @@
                     </div>
                     <div class="cont-detail-r">
                         <div class="btncon" v-if="chilrPageType=='getAllInformation'">
-                            <el-button type="primary" size="mini" round  @click="goinfoDetail(item)">查看详情</el-button>
+                            <el-button type="primary" size="mini" round  @click="goInfoDetail(item)">查看详情</el-button>
                         </div>
                         <div class="btncon" v-if="chilrPageType=='actAll'">
                             <el-button type="info"  size="mini" round  @click="showDialog(item)">取消关注</el-button>
@@ -169,11 +169,7 @@
                     }
                 );
             },
-<<<<<<< HEAD
-            goinfoDetail(item) {
-=======
             goInfoDetail(item){
->>>>>>> ccj0122
                 var informationId = item.informationId;
                 this.$router.push({
                     path: '/news/newsdetail',
@@ -220,12 +216,7 @@
 
     .essp-card-cont-outer-news {
         float: left;
-<<<<<<< HEAD
         width: 755px;
-=======
-        width: 730px;
-        /*padding: 20px 20px 0;*/
->>>>>>> ccj0122
         background-color: #fff;
         .descontool {
             height: 59px;
@@ -293,7 +284,6 @@
             text-align: right;
         }
         .essp-card {
-<<<<<<< HEAD
             background-color: #ffffff;
             padding: 20px 0;
             width: 730px;
@@ -327,18 +317,6 @@
                 .detaillogo {
                     display: block;
                     width: 100%;
-=======
-            width: 710px;
-            height: 160px;
-            margin: 20px auto 0;
-            .card_left{
-                float: left;
-                width:260px;
-                height: 160px;
-                margin-right: 20px;
-                img{
-                    width:100%;
->>>>>>> ccj0122
                     height: 100%;
                     transition: all 1s;
                     /*&:hover {*/
