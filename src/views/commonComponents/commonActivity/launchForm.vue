@@ -1040,9 +1040,11 @@
                     var arr = response.resultData;
 
                     arr.forEach((item, index) => {
-                        item.key = item.cstId;
-                        item.label = item.cstNm;
-                        this.databox.push(item);
+                        if(item.cstId && item.cstNm) {
+                            item.key = item.cstId || '';
+                            item.label = item.cstNm || '';
+                            this.databox.push(item);
+                        }
                     });
                 });
             },
