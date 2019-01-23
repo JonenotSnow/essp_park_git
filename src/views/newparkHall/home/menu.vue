@@ -7,10 +7,10 @@
         <div class="swiper_inner">通知公告：</div>
         <div v-if="infoList.length>0">
           <div
-            v-if="infoList[0].title && infoList[0].title.length<28"
+            v-if="(infoList[0].title && infoList[0].title.length<28)||(infoList[0].informationTitle|| infoList[0].informationTitle.length<28)"
             class="swiper_inner3"
-            v-html="infoList[0].title"
-            @click="$router.push({path:'/parkHall/manage/noAndADDetail',query:{id:infoList[0].id}})"
+            v-html="infoList[0].title||infoList[0].informationTitle"
+            @click="getNoticeDetail()"
           ></div>
           <marquee
             v-else
@@ -22,9 +22,9 @@
             onmouseout="this.start()"
           >
             <div
-              v-if="infoList[0] && infoList[0].title"
-              v-html="infoList[0].title"
-              @click="$router.push({path:'/parkHall/manage/noAndADDetail',query:{id:infoList[0].id}})"
+              v-if="infoList[0] && (infoList[0].title || infoList[0].informationTitle)"
+              v-html="infoList[0].title||infoList[0].informationTitle"
+              @click="getNoticeDetail()"
             ></div>
           </marquee>
           <div
@@ -34,7 +34,7 @@
           <span
             class="more"
             v-if="LoginUserRole.includes('33') || LoginUserRole.includes('34')"
-            @click="$router.push('/parkHall/manage/noticeAndAD')"
+            @click="goNoticeList()"
           >More&gt;</span>
         </div>
         <div v-else class="noData">暂无通知公告~~</div>
@@ -44,7 +44,7 @@
         class="swiper_com swiper_com1 esspclearfix"
         v-if="LoginUserRole.includes('33') || LoginUserRole.includes('34')"
       >
-        <div class="swiper_inner">任务池：</div>
+        <div class="swiper_inner">{{isBdPark?'审核管理':'任务池'}}</div>
         <div class="esspclearfix" v-if="lastApplyParkFlag">
           <div
             class="swiper_inner3"
@@ -94,12 +94,12 @@
 <script>
 import Moment from "moment";
 import DialogNeedRange from "@/components/DialogNeedRange";
-import mixin from '@/components/mixins/mixins_windowOpen.js'
+import mixin from "@/components/mixins/mixins_windowOpen.js";
 export default {
   components: {
     DialogNeedRange
   },
-  mixins:[mixin],
+  mixins: [mixin],
   data() {
     return {
       showNeedRange: false,
@@ -161,7 +161,12 @@ export default {
     };
   },
   created() {
-    this.getNoticeList();
+    if (this.isBdPark) {
+      this.getBdNotice();
+    } else {
+      this.getNoticeList();
+    }
+
     // this.getCcbUser(); //不再需要这个接口，从本地获取当前状态
 
     // 管理员身份登录才调用这个方法
@@ -221,7 +226,12 @@ export default {
       }
       //园区管理员才有任务池和入驻审核的权限
       if (item.name == "任务池" || item.name == "入驻审核") {
-        if (!(this.LoginUserRole.includes("33") || this.LoginUserRole.includes("34"))) {
+        if (
+          !(
+            this.LoginUserRole.includes("33") ||
+            this.LoginUserRole.includes("34")
+          )
+        ) {
           this.$message("只有园区管理员才有此权限");
           return;
         }
@@ -335,18 +345,20 @@ export default {
       });
     },
     toRequestAddParK() {
-
       let loginFlag = this.SSH.getItem("loginFlag");
       //未登录提示
       if (loginFlag == null) {
-          this.$message.error("你当前未登录，不能作此操作，请先登录");
-          this.windowHrefUrl('/userIndex/login')
-          return;
+        this.$message.error("你当前未登录，不能作此操作，请先登录");
+        this.windowHrefUrl("/userIndex/login");
+        return;
       }
-      if (!(this.SSH.getItem("userInfo").cstBscInfVo) || !(this.SSH.getItem("userInfo").cstBscInfVo.cstId)){
-          this.$message.error("该账号未通过企业认证，请先通过企业认证");
-          return;
-      };
+      if (
+        !this.SSH.getItem("userInfo").cstBscInfVo ||
+        !this.SSH.getItem("userInfo").cstBscInfVo.cstId
+      ) {
+        this.$message.error("该账号未通过企业认证，请先通过企业认证");
+        return;
+      }
       let userId = this.SSH.getItem("userInfo").id;
       let cstId = this.SSH.getItem("userInfo").cstBscInfVo.cstId;
       this.$post(this.$apiUrl.home.selectCstPostIdList, {
@@ -377,6 +389,48 @@ export default {
         },
         err => {}
       );
+    },
+    getBdNotice() {
+      let parkId = sessionStorage.getItem("parkId") || "";
+      this.$post("/information/getAllInformation", {
+        endDate: "",
+        pageNum: 1,
+        pageSize: 1,
+        parkId: parkId,
+        startDate: "",
+        title: "",
+        type: 2
+      })
+        .then(result => {
+          this.infoList = result.resultData.informationList; //通告数据源
+        })
+        .catch(err => {
+          this.$message.error("接口异常");
+        });
+    },
+    getNoticeDetail() {
+      console.log(1)
+      debugger
+      if (this.isBdPark) {
+        
+        this.$router.push({
+                path: "/news/noticedetail",
+                query: { informationId: this.infoList[0].informationId }
+              });
+      }else{
+      this.$router.push({
+                path: "/parkHall/manage/noAndADDetail",
+                query: { id: this.infoList[0].id }
+              });
+      }
+    },
+    goNoticeList(){
+      if(this.isBdPark){
+        this.$router.push('/news/notice')
+      }else{
+        this.$router.push('/parkHall/manage/noticeAndAD')
+      }
+      
     }
   },
   filters: {

@@ -63,16 +63,16 @@
                 this.$post('/information/getAllInformation',{
                     endDate: "",
                     pageNum: 1,
-                    pageSize: 10,
+                    pageSize: type==1?2:8,
                     parkId: parkId,
                     startDate: "",
                     title: "",
                     type: type
                 }).then((result) => {
                     if(type == 1){
-                        this.newsList = result.resultData.informationList.slice(0,2);//数据源
+                        this.newsList = result.resultData.informationList;//新闻数据源
                     }else if(type == 2){
-                        this.noticesList = result.resultData.informationList.slice(0,8);//数据源
+                        this.noticesList = result.resultData.informationList;//通告数据源
                     }
                 }).catch((err) => {
                     this.$message.error("接口异常");
