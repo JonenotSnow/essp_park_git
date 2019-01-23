@@ -59,7 +59,7 @@
                         <input type="text" :placeholder="`请输入模块${index+1}标题`" v-model='it.title'>
                     </p>
                     <div class="editorContent">
-                        <quill-editor options="toolOptions" v-model='it.content'></quill-editor>
+                        <quill-editor :options="toolOptions" v-model='it.content'></quill-editor>
                         <span>350字</span>
                     </div>
                 </div>
@@ -376,9 +376,9 @@ export default {
     display:none;
 }
 /* 配置无效 */
-#scanModelTwo .ql-video,#scanModelTwo .ql-image,#scanModelTwo .ql-link{
+/* #scanModelTwo .ql-video,#scanModelTwo .ql-image,#scanModelTwo .ql-link{
     display:none;
-}
+} */
 </style>
 
 

@@ -1,7 +1,8 @@
 <template>
     <div class="allenterprise">
         <!-- 加入的企业模块 -->
-        <div class="breadcrumbtrail">首页>入驻企业</div>
+        <!-- <div class="breadcrumbtrail">首页>入驻企业</div> -->
+        <essp-bread-crumb :breadList="breadlist"></essp-bread-crumb>
         <div class="main_inter">
             <div class="com-tit">入驻企业</div>
             <div class="com-brf">入驻企业400+家，在职人员10000+人</div>
@@ -35,10 +36,24 @@
 
 <script>
     import mixins_windowOpen from '@/components/mixins/mixins_windowOpen.js'
+    import EsspBreadCrumb from "@/components/EsspBreadCrumb";
     export default {
         mixins:[mixins_windowOpen],
+        components: {
+            EsspBreadCrumb
+        },
         data () {
             return {
+                breadlist: [
+                    {
+                        path: '/',
+                        name: "首页",
+                    },
+                    {
+                        path: "",
+                        name: "入驻企业"
+                    }
+                ],
                 totalCount: 0,
                 pageNum: 1,
                 pageSize: 5,
