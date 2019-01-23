@@ -118,7 +118,7 @@
                 </div>
                 <ParkUpload :parkUploadData="parkUploadData" @changeImgUrl="showImgUrl"></ParkUpload>
                 <div class="tdcon">
-                    <span class="inline_span">活动标签 :</span>
+                    <span class="inline_span"><i class="imicon">*</i>活动标签 :</span>
                     <div class="inline_div_tag">
                         <essp-add-tag
                             ref="eat"
@@ -663,9 +663,7 @@
 
 <script>
     import EsspBreadCrumb from "@/components/EsspBreadCrumb";
-    import EsspEditor from "@/components/EsspEditor";
     import addTag from "@/views/commonComponents/commonActivity/addTag";
-    import Moment from "moment";
     import EsspTag from "@/components/EsspTag";
     import EsspAddTag from "@/components/EsspAddTag";
     import ParkUpload from "@/views/parkHall/parkUpload"; // 上传图片控件
@@ -942,12 +940,10 @@
                 dialogVisible__SUCCESS: false,
                 parkFlag:true,//区分报名是否只有公司 true 默认开启选项
             };
-
         },
         components: {
             EsspBreadCrumb,
             addTag,
-            EsspEditor,
             EsspTag,
             EsspAddTag,
             ParkUpload,
@@ -1430,6 +1426,10 @@
                     this.$message.error("图片必传！");
                     return;
                 }
+                if(this.tags.length == 0) {
+                    this.$message.error("标签必填！");
+                    return;
+                }
                 if (this.initiateUnits == "") {
                     this.$message.error("发布单位必填！");
                     return;
@@ -1481,8 +1481,7 @@
                     isCharge: this.isCharge,
                     chargeInfo: this.chargeInfo,
                     activityDetails: this.editorOption.editorCon
-                        ? this.editorOption.editorCon.replace(/\s/g, "&nbsp")
-                        : "",
+                        ? this.editorOption.editorCon : "",
                     enterNeedAudit: this.enterNeedAudit,
                     activityPhoto: this.activityPhoto,
                     activityLabel: this.tags.join(","),
@@ -1540,7 +1539,6 @@
 
                     this.$confirm(msg, maskConfig).then(() => {
                         var activeId = this.$route.query.activityId || "";
-
                         this.$post(this.$apiUrl.active.addActivity, {
                             parkId: window.sessionStorage.getItem("parkId"), //'20180816101609002'
                             activityId: activeId,

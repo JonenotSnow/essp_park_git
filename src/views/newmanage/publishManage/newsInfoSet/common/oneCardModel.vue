@@ -7,7 +7,7 @@
             </div>
             <div class="btntool"><span class="delbtn" @click="removeList">删除</span></div>
             <!-- 草稿屏蔽 -->
-            <div class="statustool" v-if="!customopts.status==0">
+            <div class="statustool" v-if="customopts.status != 0">
                 <el-select v-model="classtType" @change="changeStatus" placeholder="请选择" class="inline_select">
                     <el-option
                         v-for="(item,index) in typeitems"
@@ -26,7 +26,7 @@
                         <div class="tdcn timecn"><span>保存时间：{{item.createTime | timerFormat}}</span></div>
                         <div class="tdcn pbcn"><span>发布人:{{item.userName}}</span></div>
                         <!-- 草稿屏蔽 -->
-                        <div class="tdcn statusdes" v-if="!customopts.status==0"><span>状态:<span
+                        <div class="tdcn statusdes" v-if="customopts.status!= '0'"><span>状态:<span
                             class="detail">{{item.status | statusFormat(item.status)}}</span></span></div>
                         <div class="tdcn handeltool"><i class="el-icon-delete remove" @click="removeList('01',item)"></i></div>
                         <!--当前用户是否能删除其他用户-->
@@ -46,7 +46,7 @@
                                 <span class="btnitem" @click="goAudit(item)" v-if="thisUserId !== item.creator">查看</span>
                             </div>
                             <!-- 草稿  -->
-                            <div class="btncons" v-if="customopts.status==0">
+                            <div class="btncons" v-if="customopts.status=='0'">
                                 <span class="btnitem" @click="goEdit(item)" v-if="thisUserId == item.creator">编辑</span>
                             </div>
 

@@ -103,8 +103,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="newscontent">
-                        <div v-html="form.detail" v-if="form.detail != null"></div>
+                    <div class="newscontent  ql-container ql-snow">
+                        <div class="ql-editor" style="border: none; padding:0;"  v-html="form.detail" v-if="form.detail != null"></div>
                         <div v-else>
                             暂无详细内容
                         </div>
