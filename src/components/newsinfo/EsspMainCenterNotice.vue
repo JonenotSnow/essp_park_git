@@ -169,6 +169,7 @@
                     startDate: this.startDate,
                     endDate: this.endDate,
                     title: '',
+                    tagTxt: this.tagTxt,
                     parkId,
                     //tagTxt:this.tagTxt,//根据标签搜索
                     type:'2'

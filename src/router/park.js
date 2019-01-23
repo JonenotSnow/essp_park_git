@@ -78,9 +78,7 @@ const activityPoolAddPark =resolve => require(['@/views/parkHall/manage/activity
 const activityPoolZX = resolve => require(['@/views/parkHall/manage/activityPoolZX'],resolve);
 
 // 园区管理活动设置
-const activityPoolActivityAditing = resolve => require(['@/views/parkHall/manage/activityPoolActivityAditing'],resolve);
-// 园区管理活动设置
-const activityPoolActivityAuditing = resolve => require(['@/views/parkHall/manage/activityPoolActivityAditing'],resolve);
+const activityPoolActivityAuditing = resolve => require(['@/views/parkHall/manage/activityPoolActivityAuditing'],resolve);
 // 园区管理入驻申请表
 const occupancyApplication = resolve => require(['@/views/commonComponents/commonManage/occupancyApplication'],resolve);
 // 园区管理 咨询审核详情
@@ -484,12 +482,6 @@ export const parkRouter1 = {
                     path: '/parkHall/manage/activityPoolActivityAuditing',
                     name: "park-activityPoolActivityAuditing",
                     component: activityPoolActivityAuditing,
-
-                },
-                {
-                    path: '/parkHall/manage/activityPoolActivityAditing',
-                    name: "park-activityPoolActivityAditing",
-                    component: activityPoolActivityAditing,
 
                 },
                 {

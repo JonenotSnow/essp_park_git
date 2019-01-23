@@ -100,7 +100,9 @@ router.beforeEach(async (to, from, next) => {
     // }
 
     // let query  = getQueryObjuect()
+    console.log(to)
     let menuList = sessionStorageHandler.getItem("menuList");
+
 
     let parkId = to.query.parkId;
     let token = to.query.token;
@@ -140,7 +142,14 @@ router.beforeEach(async (to, from, next) => {
         await selectResMenu({ oneId, LoginUserRol });
         // router.push(to.path)
     }
-
+    //
+    let name = to.name;
+    let menuResource = sessionStorageHandler.getItem("menuResource"); 
+    let currentMenu = menuResource[name]; 
+    if(!currentMenu){
+        Message.error('暂无权限访问此页面')
+        return false
+    }
     next();
 });
 async function getResetSession() {

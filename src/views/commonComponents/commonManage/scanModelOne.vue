@@ -37,7 +37,8 @@
                         <span v-if="parkInfoes.setUpTime">{{parkInfoes.setUpTime.slice(0,10)}}</span>
                     </p>
                     <p class="address">联系电话：{{parkInfoes.parkAdminTel}}</p>
-                    <p class="address">占地面积：{{parkInfoes.parkSize}}平方米</p>
+                    <p  v-if="!isBdPark" class="address">占地面积：{{parkInfoes.parkSize}}平方米</p>
+                    <p  v-else class="address">联系邮箱：{{parkInfoes.email}}</p>
                     <div class="addressT">
                         <span>园区地址：</span>
                         <div>{{parkInfoes.parkPosition}}</div>
@@ -107,7 +108,8 @@
                         	<span v-if="parkInfoes.setUpTime">{{parkInfoes.setUpTime.slice(0,10)}}</span>
                         </p>
                         <p class="address">联系电话：{{parkInfoes.parkAdminTel}}</p>
-                        <p class="address">占地面积：{{parkInfoes.parkSize}}平方米</p>
+                        <p  v-if="!isBdPark" class="address">占地面积：{{parkInfoes.parkSize}}平方米</p>
+                        <p  v-else class="address">联系邮箱：{{parkInfoes.email}}</p>
                         <div class="addressT">
                             <span>园区地址：</span>
                             <div>{{parkInfoes.parkPosition}}</div>
@@ -505,7 +507,7 @@ export default {
             font-size:16px;
             color:#409EFF;
     }
-    #scanModelOne .quill-editor .ql-container.ql-snow{
+    #scanModelOne .quill-editor .ql-container.ql-snow .ql-editor{
             height:240px!important;
             min-height:240px!important;
             max-height:240px!important;
@@ -552,7 +554,7 @@ export default {
 				margin-top:10px;
 			}
             &>p.address,&>p.addressParkName{
-                width:80%;
+                width:100%;
                 margin-left:45px;
                 font-size: 14px;
                 color:#777;
@@ -743,7 +745,7 @@ export default {
 				margin-top:10px;
 			}
             &>p.address{
-                width:80%;
+                width:100%;
                 margin-left:45px;
                 &:nth-of-type(1){
                     line-height: 30px;
@@ -767,7 +769,7 @@ export default {
                 }
             }
             .addressT{
-                width:80%;
+                width:100%;
                 margin-left:45px;
                 overflow: hidden;
                 span{
