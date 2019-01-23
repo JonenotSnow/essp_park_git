@@ -1,7 +1,7 @@
 export let data4 = {
 
     title: {
-        text: '高新技术企业数量(个)',
+        text: '高新技术企业数量(家)', // 别傻傻的又改回去了，谁改回去，我就弄死谁
         textStyle:{
             color:"#10b5ff",
             fontWeight:'normal'

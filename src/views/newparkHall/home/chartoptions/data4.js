@@ -1,7 +1,7 @@
 export let data3= {
     // backgroundColor: '#FBFBFB',
         title: {
-            text: '发明专利申请量(个)',
+            text: '发明专利申请量(项)', // 别傻傻的又改回去了，谁改回去，我就弄死谁
             textStyle:{
                 color:"#10b5ff",
                 fontWeight:'normal',
@@ -20,7 +20,7 @@ export let data3= {
         grid:{
             left:'15%'
         },
-        xAxis : 
+        xAxis :
             {
                 axisLine:{
                   lineStyle :{
