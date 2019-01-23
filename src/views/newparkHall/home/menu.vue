@@ -176,7 +176,7 @@ export default {
     ) {
       this.getLastApplyPark();
     }
-    this.setMenuList()
+    this.setMenuList();
   },
   methods: {
     linkToPage() {
@@ -256,7 +256,6 @@ export default {
           this.infoList = response.resultData.list;
         }
       });
-      
     },
 
     /**
@@ -275,7 +274,7 @@ export default {
         }
       });
     },
-    setMenuList(){
+    setMenuList() {
       if (this.isBdPark) {
         this.menuList = [
           {
@@ -414,25 +413,23 @@ export default {
     },
     getNoticeDetail() {
       if (this.isBdPark) {
-        
         this.$router.push({
-                path: "/news/noticedetail",
-                query: { informationId: this.infoList[0].informationId }
-              });
-      }else{
-      this.$router.push({
-                path: "/parkHall/manage/noAndADDetail",
-                query: { id: this.infoList[0].id }
-              });
+          path: "/news/noticedetail",
+          query: { informationId: this.infoList[0].informationId }
+        });
+      } else {
+        this.$router.push({
+          path: "/parkHall/manage/noAndADDetail",
+          query: { id: this.infoList[0].id }
+        });
       }
     },
-    goNoticeList(){
-      if(this.isBdPark){
-        this.$router.push('/news/notice')
-      }else{
-        this.$router.push('/parkHall/manage/noticeAndAD')
+    goNoticeList() {
+      if (this.isBdPark) {
+        this.$router.push("/news/notice");
+      } else {
+        this.$router.push("/parkHall/manage/noticeAndAD");
       }
-      
     }
   },
   filters: {
