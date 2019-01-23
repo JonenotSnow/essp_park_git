@@ -38,7 +38,7 @@
                     <div class="inline_div_tag">
                         <essp-add-tag
                             ref="eat"
-                            :showtags="this.ruleForm.tags"
+                            :showtags="this.showTags"
                             @showTagWin="showTagWin"
                             @delTag="delTag"
                             @initTag="initTag"
@@ -113,7 +113,7 @@
                     <div class="inline_div_tag">
                         <essp-add-tag
                             ref="eat"
-                            :showtags="this.ruleForm.tags"
+                            :showtags="this.showTags"
                             @showTagWin="showTagWin"
                             @delTag="delTag"
                             @initTag="initTag"
@@ -158,19 +158,22 @@
             :before-close="handleClose"
         >
             <div class="my-scan-main">
-                <div class="main-head" >
+                <div class="main-head">
                     <div class="head-title" v-if="this.ruleForm.policyTitle">{{this.ruleForm.policyTitle}}</div>
-                    <div class="head-tag" v-if="this.ruleForm.tags && this.ruleForm.tags.length > 0">
+                    <div class="head-tag" v-if="this.showTags && this.showTags.length > 0">
                         <!--<span v-for="(item, index) in this.ruleForm.tags" :key="index">{{item}}</span>-->
                         <essp-park-tag
-                            v-for="(item, index) in this.ruleForm.tags"
+                            v-for="(item, index) in this.showTags"
                             :key="index"
                             :value="item"
                         />
                     </div>
                 </div>
                 <div class="main-body">
-                    <div v-html="this.ruleForm.infoDetail"></div>
+                    <!--<div v-html="this.ruleForm.infoDetail"></div>-->
+                    <div class="ql-container ql-snow">
+                        <div class="ql-editor" v-html="this.ruleForm.infoDetail"></div>
+                    </div>
                 </div>
                 <div class="main-foot" v-if="this.fileList && this.fileList.length > 0">
                     <p class="attachment-p attachment-title">附件下载：</p>
@@ -178,7 +181,6 @@
                        v-for="(item, index) in this.fileList"
                        :key="index"
                     >
-                        <!--<a @click="linkToFile(item.url)">·附件{{index+1}}：{{item.name}}</a>-->
                         <a :href="item.url" :download="item.name">·附件{{index+1}}：{{item.name}}</a>
                     </p>
                 </div>
@@ -243,6 +245,7 @@
                 nuType: this.$route.query.nuType || "",
                 userInfo: this.SSH.getItem("userInfo"), // 获取用户信息
 
+                showTags: [], // 细节处理，
                 ruleForm: {
                     policyTitle: '',
                     classtType: '',
@@ -268,7 +271,7 @@
                     infoDetail: [
                         {required: true, message: '请填写政策法规详情', trigger: 'blur'}
                     ],
-                    tags: [
+                    showTags: [
                         {required: true, message: '请填写政策法规标签', trigger: 'blur'}
                     ]
                 },
@@ -286,7 +289,7 @@
                     infoDetail: [
                         {required: true, message: '请填写科技服务详情', trigger: 'blur'}
                     ],
-                    tags: [
+                    showTags: [
                         {required: true, message: '请填写科技服务标签', trigger: 'blur'}
                     ]
                 },
@@ -315,16 +318,16 @@
              *  */
             closetag({viewtags}) {
                 this.visible = false;
-                this.ruleForm.tags = viewtags;
+                this.showTags = viewtags;
             },
             showTagWin() {
                 this.visible = true;
             },
             delTag(tag) {
-                this.ruleForm.tags.splice(this.ruleForm.tags.indexOf(tag), 1);
+                this.showTags.splice(this.showTags.indexOf(tag), 1);
             },
             initTag(tmpTags) {
-                this.ruleForm.tags = tmpTags;
+                this.showTags = tmpTags;
             },
             /**
              * 标签相关字段---结束
@@ -343,8 +346,10 @@
                         this.ruleForm.applyType = this.applyType;
 
                         // 处理标签
-                        let tags = this.ruleForm.tags.join(',');
-                        this.ruleForm.tags = tags;
+                        if (this.showTags && this.showTags.length > 0) {
+                            let tags = this.showTags.join(',');
+                            this.ruleForm.tags = tags;
+                        }
 
                         // 处理附件上传
                         this.ruleForm.fileUrl = this.fileList;
@@ -413,8 +418,10 @@
                         this.ruleForm.applyType = this.applyType;
 
                         // 处理标签
-                        let tags = this.ruleForm.tags.join(',');
-                        this.ruleForm.tags = tags;
+                        if (this.showTags && this.showTags.length > 0) {
+                            let tags = this.showTags.join(',');
+                            this.ruleForm.tags = tags;
+                        }
 
                         // 处理附件上传
                         this.ruleForm.fileUrl = this.fileList;
@@ -475,9 +482,9 @@
 
                         // 处理标签
                         if (response.resultData.tagsTxt) {
-                            this.ruleForm.tags = response.resultData.tagsTxt.split(",");
+                            this.showTags = response.resultData.tagsTxt.split(",");
                         } else {
-                            this.ruleForm.tags = [];
+                            this.showTags = [];
                         }
 
                         // 处理附件
@@ -622,12 +629,12 @@
             }
 
             .my-detail-edit {
-                .ql-container {
-                    height: 170px;
-                }
-                .el-form-item__content {
-                    line-height: normal;
-                }
+                /*.ql-container {*/
+                /*height: 170px;*/
+                /*}*/
+                /*.el-form-item__content {*/
+                /*line-height: normal;*/
+                /*}*/
             }
 
             .inline_div_tag {

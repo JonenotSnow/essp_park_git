@@ -16,7 +16,9 @@
                 </el-form-item>
                 <el-form-item label="政策法规详情：" prop="infoDetail">
                     <div class="my-style">
-                        <div v-html="satpDate.infoDetail"></div>
+                        <div class="ql-container ql-snow">
+                            <div v-html="satpDate.infoDetail"></div>
+                        </div>
                     </div>
                 </el-form-item>
                 <el-form-item label="政策法规标签：" prop="tags">
@@ -83,7 +85,9 @@
                 </el-form-item>
                 <el-form-item label="科技服务详情：" prop="infoDetail">
                     <div class="my-style">
-                        <div v-html="satpDate.infoDetail"></div>
+                        <div class="ql-container ql-snow">
+                            <div v-html="satpDate.infoDetail"></div>
+                        </div>
                     </div>
                 </el-form-item>
                 <el-form-item label="科技服务标签：" prop="tags">

@@ -16,7 +16,9 @@
                 </el-form-item>
                 <el-form-item label="政策法规详情：" prop="infoDetail">
                     <div class="my-style">
-                        <div v-html="satpDate.infoDetail"></div>
+                        <div class="ql-container ql-snow">
+                            <div v-html="satpDate.infoDetail"></div>
+                        </div>
                     </div>
                 </el-form-item>
                 <el-form-item label="政策法规标签：" prop="tags">
@@ -32,12 +34,11 @@
                 <el-form-item label="发布人：">
                     <div class="my-style">{{satpDate.userName}}</div>
                 </el-form-item>
-                <el-form-item label="附件：">
+                <el-form-item label="附件：" v-if="fileList && fileList.length > 0">
                     <!--v-if="fileList && fileList.length > 0"-->
                     <a class="my-style"
                        :href="item.url"
                        :download="item.name"
-                       v-if="fileList && fileList.length > 0"
                        v-for="(item, index) in fileList" :key="index"
                     >{{item.name}}</a>
                 </el-form-item>
@@ -70,7 +71,9 @@
                 </el-form-item>
                 <el-form-item label="科技服务详情：" prop="infoDetail">
                     <div class="my-style">
-                        <div v-html="satpDate.infoDetail"></div>
+                        <div class="ql-container ql-snow">
+                            <div v-html="satpDate.infoDetail"></div>
+                        </div>
                     </div>
                 </el-form-item>
                 <el-form-item label="科技服务标签：" prop="tags">
@@ -86,12 +89,11 @@
                 <el-form-item label="发布人：">
                     <div class="my-style">{{satpDate.userName}}</div>
                 </el-form-item>
-                <el-form-item label="附件：">
+                <el-form-item label="附件：" v-if="fileList && fileList.length > 0">
                     <!--v-if="fileList && fileList.length > 0"-->
                     <a class="my-style"
                        :href="item.url"
                        :download="item.name"
-                       v-if="fileList && fileList.length > 0"
                        v-for="(item, index) in fileList" :key="index"
                     >{{item.name}}</a>
                 </el-form-item>
