@@ -27,6 +27,7 @@
                 :type="status"
                 :totalCount="totalCount"
                 :requestTip = 'requestTip'
+                :approveType="approveType"
                 @childDeleted="childDeleted"
                 @childSwitchStatus="childSwitchStatus"
                 v-if="status=='1' || status=='2'"
@@ -37,6 +38,7 @@
                 :type="status"
                 :totalCount="totalCount"
                 :requestTip = 'requestTip'
+                :approveType="approveType"
                 @childDeleted="childDeleted"
                 v-if="status=='0'"/>
         </div>

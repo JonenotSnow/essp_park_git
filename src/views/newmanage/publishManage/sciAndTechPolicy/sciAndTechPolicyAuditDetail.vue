@@ -17,7 +17,7 @@
                 <el-form-item label="政策法规详情：" prop="infoDetail">
                     <div class="my-style">
                         <div class="ql-container ql-snow">
-                            <div v-html="satpDate.infoDetail"></div>
+                            <div class="ql-editor" v-html="satpDate.infoDetail"></div>
                         </div>
                     </div>
                 </el-form-item>
@@ -36,7 +36,7 @@
                     <div class="my-style">{{satpDate.userName}}</div>
                 </el-form-item>
                 <el-form-item label="附件：" v-if="fileList && fileList.length > 0">
-                    <a class="my-style"
+                    <a class="my-style my-file-list"
                        :href="item.url"
                        :download="item.name"
                        v-for="(item, index) in fileList"
@@ -86,7 +86,7 @@
                 <el-form-item label="科技服务详情：" prop="infoDetail">
                     <div class="my-style">
                         <div class="ql-container ql-snow">
-                            <div v-html="satpDate.infoDetail"></div>
+                            <div class="ql-editor" v-html="satpDate.infoDetail"></div>
                         </div>
                     </div>
                 </el-form-item>
@@ -105,7 +105,7 @@
                     <div class="my-style">{{satpDate.userName}}</div>
                 </el-form-item>
                 <el-form-item label="附件：" v-if="fileList && fileList.length > 0">
-                    <a class="my-style"
+                    <a class="my-style my-file-list"
                        :href="item.url"
                        :download="item.name"
                        v-for="(item, index) in fileList"
@@ -348,6 +348,12 @@
                     /*background-color: #cccccc;*/
                 }
             }
+
+            .my-file-list{
+                display: inline-block;
+                width: 100%;
+            }
+
             .audit-line {
                 margin-bottom: 20px;
                 border-bottom: 1px solid #ccc;
