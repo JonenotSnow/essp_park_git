@@ -129,7 +129,6 @@
 
                 p {
                     display: inline-block;
-                    font-family: MicrosoftYaHei;
                     font-weight: normal;
                     font-stretch: normal;
                     letter-spacing: 0px;
@@ -157,7 +156,6 @@
                 p {
                     height: 40px;
                     line-height: 20px;
-                    font-family: MicrosoftYaHei;
                     font-size: 14px;
                     font-weight: normal;
                     font-stretch: normal;
@@ -176,7 +174,6 @@
             text-align: center;
             .tipspan{
                 display: block;
-                font-family: MicrosoftYaHei;
                 color: #666666;
                 margin-top: 85px;
                 font-size: 18px;
