@@ -149,10 +149,16 @@
             :before-close="handleClose"
         >
             <div class="my-scan-main">
-                <div class="main-head" v-if="this.ruleForm.informationTitle">
-                    <div class="head-title">{{this.ruleForm.informationTitle}}</div>
+                <div class="main-head">
+                    <div class="head-title" v-if="this.ruleForm.informationTitle">{{this.ruleForm.informationTitle}}
+                    </div>
                     <div class="head-tag" v-if="this.ruleForm.tags && this.ruleForm.tags.length > 0">
-                        <span v-for="(item, index) in this.ruleForm.tags" :key="index">{{item}}</span>
+                        <!--<span v-for="(item, index) in this.ruleForm.tags" :key="index">{{item}}</span>-->
+                        <essp-park-tag
+                            v-for="(item, index) in this.ruleForm.tags"
+                            :key="index"
+                            :value="item"
+                        />
                     </div>
                 </div>
                 <div class="main-body">
@@ -180,6 +186,8 @@
     import EsspAddTag from "@/components/EsspAddTag";
     import ParkUpload from "@/views/parkHall/parkUpload";
     import EsspEditor from "@/components/EsspEditor";
+    import EsspParkTag from "@/components/EsspParkTag";
+
 
     export default {
         components: {
@@ -187,7 +195,8 @@
             EsspTag,
             EsspAddTag,
             ParkUpload,
-            EsspEditor
+            EsspEditor,
+            EsspParkTag
         },
         data() {
             return {
