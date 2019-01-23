@@ -203,6 +203,10 @@
             }
             .main-body {
                 padding: 40px 50px 0;
+                .ql-snow{
+                    padding: 0 110px;
+                    border: none;
+                }
             }
             .main-foot {
                 padding: 60px 50px 0;

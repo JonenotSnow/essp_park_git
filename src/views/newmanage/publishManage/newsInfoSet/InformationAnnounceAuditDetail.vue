@@ -17,7 +17,9 @@
                 </el-form-item>
                 <el-form-item label="新闻动态详情：" prop="infoDetail">
                     <div class="my-style">
-                        <div v-html="satpDate.infoDetail"></div>
+                        <div class="ql-container ql-snow">
+                            <div v-html="satpDate.infoDetail"></div>
+                        </div>
                     </div>
                 </el-form-item>
                 <el-form-item label="新闻动态标签：" prop="tags">
@@ -72,7 +74,9 @@
                 </el-form-item>
                 <el-form-item label="通知公告详情：" prop="infoDetail">
                     <div class="my-style">
-                        <div v-html="satpDate.infoDetail"></div>
+                        <div class="ql-container ql-snow">
+                            <div v-html="satpDate.infoDetail"></div>
+                        </div>
                     </div>
                 </el-form-item>
                 <el-form-item label="通知公告标签：" prop="tags">
@@ -308,6 +312,9 @@
                 font-stretch: normal;
                 letter-spacing: 0.1px;
                 color: #999;
+                .ql-snow {
+                    border: none;
+                }
                 .my-tag {
                     /*margin-right: 20px;*/
                     /*padding: 7px 16px;*/
