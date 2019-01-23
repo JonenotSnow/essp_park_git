@@ -17,10 +17,10 @@
                         <span>{{satpDate.viewTime}}</span>
                     </p>
                 </div>
-                <div class="head-tag"  v-if="satpDate.tagsTxt && satpDate.tagsTxt.length > 0">
+                <div class="head-tag" v-if="satpDate.tagsTxt && satpDate.tagsTxt.length > 0">
                     <!--<span v-if="satpDate.tagsTxt && satpDate.tagsTxt.length > 0"-->
-                          <!--v-for="(item ,index) in satpDate.tagsTxt"-->
-                          <!--:key="index"-->
+                    <!--v-for="(item ,index) in satpDate.tagsTxt"-->
+                    <!--:key="index"-->
                     <!--&gt;{{item}}</span>-->
                     <essp-park-tag
                         v-for="(item, index) in satpDate.tagsTxt"
@@ -30,12 +30,13 @@
                 </div>
             </div>
             <div class="main-body">
-                <div v-html="satpDate.infoDetail"></div>
+                <div class="ql-container ql-snow">
+                    <div v-html="satpDate.infoDetail"></div>
+                </div>
             </div>
             <div class="main-foot">
-                <p class="attachment-p attachment-title">附件下载：</p>
+                <p class="attachment-p attachment-title" v-if="fileList && fileList.length > 0">附件下载：</p>
                 <p class="attachment-p attachment-main"
-                   v-if="fileList && fileList.length > 0"
                    v-for="(item, index) in fileList"
                    :key="index"
                 >
