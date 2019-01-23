@@ -103,13 +103,14 @@
                         ></el-option>
                     </el-select>
                 </div>
-                <div class="tabcons esspclearfix" style="height: 480px;">
+                <div class="tabcons esspclearfix">
           <span class="inline_span">
             <i class="imicon">*</i>活动详情：
           </span>
                     <div class="inline-box wraps">
                         <quill-editor
                             ref="myTextEditor"
+                            :options="editorOption"
                             v-model="editorOption.editorCon"
                         >
                             <div id="toolbar" slot="toolbar"></div>
@@ -686,10 +687,32 @@
                 p1: "",
                 p2: "",
                 toLimit: 0,
+//                editorOption: {
+//
+//                    // readOnly: "true",
+//                    // placeholder: `请输入内容`
+//                },
                 editorOption: {
+                    readOnly: true,
+                    placeholder: '',
                     editorCon: "",
-                    // readOnly: "true",
-                    // placeholder: `请输入内容`
+                    modules: {
+                        toolbar: [
+                            ['bold', 'italic', 'underline'],        // toggled buttons
+                            ['blockquote', 'code-block'],
+                            [{'header': 1}, {'header': 2}],
+                            [{'list': 'ordered'}, {'list': 'bullet'}],
+                            [{'script': 'sub'}, {'script': 'super'}],
+                            [{'indent': '-1'}, {'indent': '+1'}],
+                            [{'direction': 'rtl'}],
+                            [{'size': ['small', false, 'large', 'huge']}],
+                            [{'header': [1, 2, 3, 4, 5, 6, false]}],
+                            [{'color': []}, {'background': []}],
+                            [{'font': []}],
+                            [{'align': []}]
+                        ]
+                    },
+                    theme: 'snow'
                 },
                 thisDate: new Date(),
                 breadlist: [
