@@ -7,7 +7,7 @@
         <div class="swiper_inner">通知公告：</div>
         <div v-if="infoList.length>0">
           <div
-            v-if="(infoList[0].title && infoList[0].title.length<28)||(infoList[0].informationTitle|| infoList[0].informationTitle.length<28)"
+            v-if="(infoList[0].title && infoList[0].title.length<28)||(infoList[0].informationTitle&& infoList[0].informationTitle.length<28)"
             class="swiper_inner3"
             v-html="infoList[0].title||infoList[0].informationTitle"
             @click="getNoticeDetail()"
