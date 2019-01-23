@@ -42,8 +42,9 @@
             <p>{{requestTip}}</p>
         </div>
         <div class="noData" v-if="list.length == 0 && requestTip == '数据加载完毕'">
-            <span>尚未发布成果，点击右上方发布按钮立即发布吧！</span>
-            <img src="@assets/newparkimg/newmanage/achievementSet/no_list.png" alt="">
+            <!--<img src="@assets/newparkimg/newmanage/achievementSet/no_list.png" alt="">-->
+            <p class="no-data-img"><img src="@assets/newparkimg/no-list-img.png" alt=""></p>
+            <p class="no-data-desc">暂无数据</p>
         </div>
 
         <!-- 删除事件对话框start -->
@@ -379,14 +380,10 @@
         position: relative;
         margin: 57px 137px 238px 237px;
         text-align: center;
-        span {
-            position: absolute;
-            top: 90px;
-            font-size: 18px;
-            font-weight: normal;
-            font-stretch: normal;
-            letter-spacing: 0px;
-            color: #666666;
+        .no-data-img{
+        }
+        .no-data-desc{
+            padding-bottom: 30px;
         }
     }
 

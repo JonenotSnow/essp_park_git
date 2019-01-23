@@ -31,7 +31,7 @@
             </div>
             <div class="main-body">
                 <div class="ql-container ql-snow">
-                    <div v-html="satpDate.infoDetail"></div>
+                    <div class="ql-editor" v-html="satpDate.infoDetail"></div>
                 </div>
             </div>
             <div class="main-foot">

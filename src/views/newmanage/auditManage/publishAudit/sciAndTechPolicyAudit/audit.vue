@@ -3,7 +3,7 @@
         <essp-bread-crumb :breadList="breadlist_01" v-if="applyType === '01'"/>
         <essp-bread-crumb :breadList="breadlist_02" v-if="applyType === '02'"/>
         <div class="publish-title">
-            <i></i>审核详情{{userType}}<i></i>
+            <i></i>审核详情<i></i>
         </div>
         <!--！！！！！！政策法规表格！！！！！！-->
         <div class="publist-form" v-if="applyType === '01'">
@@ -17,7 +17,7 @@
                 <el-form-item label="政策法规详情：" prop="infoDetail">
                     <div class="my-style">
                         <div class="ql-container ql-snow">
-                            <div v-html="satpDate.infoDetail"></div>
+                            <div class="ql-editor" v-html="satpDate.infoDetail"></div>
                         </div>
                     </div>
                 </el-form-item>
@@ -36,7 +36,7 @@
                 </el-form-item>
                 <el-form-item label="附件：" v-if="fileList && fileList.length > 0">
                     <!--v-if="fileList && fileList.length > 0"-->
-                    <a class="my-style"
+                    <a class="my-style my-file-list"
                        :href="item.url"
                        :download="item.name"
                        v-for="(item, index) in fileList" :key="index"
@@ -72,7 +72,7 @@
                 <el-form-item label="科技服务详情：" prop="infoDetail">
                     <div class="my-style">
                         <div class="ql-container ql-snow">
-                            <div v-html="satpDate.infoDetail"></div>
+                            <div class="ql-editor" v-html="satpDate.infoDetail"></div>
                         </div>
                     </div>
                 </el-form-item>
@@ -91,7 +91,7 @@
                 </el-form-item>
                 <el-form-item label="附件：" v-if="fileList && fileList.length > 0">
                     <!--v-if="fileList && fileList.length > 0"-->
-                    <a class="my-style"
+                    <a class="my-style my-file-list"
                        :href="item.url"
                        :download="item.name"
                        v-for="(item, index) in fileList" :key="index"
@@ -286,6 +286,12 @@
             },
             // 提交事件
             submit() {
+
+                if (this.mark == '') {
+                    this.$message.warning('审核意见不能为空，请输入您的审核意见');
+                    return;
+                }
+
                 let params = {
                     parkId: this.parkId,
                     entityId: this.id,
@@ -373,6 +379,11 @@
                     /*background-color: #cccccc;*/
                 }
             }
+            .my-file-list {
+                display: inline-block;
+                width: 100%;
+            }
+
             .audit-line {
                 margin-bottom: 20px;
                 border-bottom: 1px solid #ccc;

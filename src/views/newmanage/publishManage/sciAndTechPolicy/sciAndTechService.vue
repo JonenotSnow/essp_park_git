@@ -29,6 +29,7 @@
                 :type="status"
                 :totalCount="totalCount"
                 :requestTip='requestTip'
+                :approveType="approveType"
                 @childDeleted="childDeleted"
                 @childSwitchStatus="childSwitchStatus"
             />
@@ -39,6 +40,7 @@
                 :type="status"
                 :totalCount="totalCount"
                 :requestTip='requestTip'
+                :approveType="approveType"
                 @childDeleted="childDeleted"
             />
         </div>
