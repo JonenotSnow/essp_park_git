@@ -22,7 +22,8 @@
                             <span v-if="displayList.setUpTime">{{displayList.setUpTime.slice(0,10)}}</span>
                         </p>
                         <p>联系电话：{{displayList.parkAdminTel}}</p>
-                        <p>占地面积：{{displayList.parkSize}}平方米</p>
+                        <p v-if="!isBdPark">占地面积：{{displayList.parkSize}}平方米</p>
+                        <p v-else class="address">联系邮箱：{{displayList.email}}</p>
                         <p>园区地址：{{displayList.parkPosition}}</p>
                     </div>
                 </div>
@@ -89,7 +90,8 @@
                                 <span v-if="displayList.setUpTime">{{displayList.setUpTime.slice(0,10)}}</span>
                             </p>
                             <p>联系电话：{{displayList.parkAdminTel}}</p>
-                            <p>占地面积：{{displayList.parkSize}}平方米</p>
+                            <p  v-if="!isBdPark">占地面积：{{displayList.parkSize}}平方米</p>
+                            <p  v-else class="address">联系邮箱：{{displayList.email}}</p>
                             <p>园区地址：{{displayList.parkPosition}}</p>
                         </div>
                     </div>

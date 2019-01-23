@@ -14,7 +14,8 @@
                         <span v-if="dataMap.setUpTime">{{dataMap.setUpTime.slice(0,10)}}</span>
                     </p>
                     <p class="address">联系电话：{{dataMap.parkAdminTel}}</p>
-                    <p class="address">占地面积：{{dataMap.parkSize}}平方米</p>
+                    <p v-if="!isBdPark" class="address">占地面积：{{dataMap.parkSize}}平方米</p>
+                    <p v-else class="address">联系邮箱：{{dataMap.email}}</p>
                     <div class="addressT">
                         <span>园区地址：</span>
                         <div>{{dataMap.parkPosition}}</div>
@@ -52,7 +53,8 @@
                             <p>{{dataMap.parkNm}}</p>
                             <p>成立日期：<span v-if="dataMap.setUpTime">{{dataMap.setUpTime.slice(0,10)}}</span></p>
                             <p>联系电话：{{dataMap.parkAdminTel}}</p>
-                            <p>占地面积：{{dataMap.parkSize}}平方米</p>
+                            <p v-if="!isBdPark">占地面积：{{dataMap.parkSize}}平方米</p>
+                            <p v-else class="address">联系邮箱：{{dataMap.email}}</p>
                             <p>园区地址：{{dataMap.parkPosition}}</p>
                         </div>
                     </div>
@@ -100,7 +102,8 @@
                 title:this.utils.isBdPark()?"关于我们":"园区概览",
                 ccbUser:[],
                 LoginUserRole: this.SSH.getItem("LoginUserRol")?this.SSH.getItem("LoginUserRol").toString():[],
-                parkId:sessionStorage.getItem("parkId")
+                parkId:sessionStorage.getItem("parkId"),
+                isBdPark: this.utils.isBdPark(),
             }
         },
         created() {
@@ -415,7 +418,7 @@
 				margin-top:10px;
 			}
             &>p.address,&>p.addressParkName{
-                width:80%;
+                width:100%;
                 margin-left:45px;
                 font-size: 14px;
                 color:#777;
@@ -445,7 +448,7 @@
                 color:#333;
             }
             .addressT{
-                width:80%;
+                width:100%;
                 margin-left:45px;
                 overflow: hidden;
                 font-size: 14px;
