@@ -85,7 +85,7 @@
 
         },
         async created(){
-            this.queryEnterpriseList()
+            this.queryEnterpriseList(1)
         },
         computed: {
             curId(){
@@ -96,11 +96,11 @@
 
         },
         methods:{
-            queryEnterpriseList(){
+            queryEnterpriseList(pageNum){
                 this.$post('/memberManage/getMemInfo', {
                     parkId: this.SSH.getItem('parkId'),
                     pageSize:this.pageSize,
-                    pageNum:this.pageNum
+                    pageNum:pageNum
                 }).then(
                     response => {
                         if (response.resultCode == "CLT000000000") {
@@ -132,6 +132,7 @@
             },
             handleCurrentChange(val) {
                 this.pageNum = val;
+                this.queryEnterpriseList(val)
             },
             showDetail(isTrue,index){
                 let that = this;
