@@ -4,4 +4,5 @@ export const newsinfo = {
     getAllInformation:"/information/getAllInformation",//获取全部新闻
     getInfoById:"/information/getInfoById",//获取新闻详情
     getMyPubInfo:"/information/getMyPubInfo",//已发布，草稿箱,已审核
+    followInfo: "/information/getMyFollowInfo",//我关注的新闻列表
 }

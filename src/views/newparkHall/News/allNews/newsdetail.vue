@@ -23,7 +23,7 @@
                        :class="followStatus == 0 ?'icon-aixin-xianxing':'icon-collect2'"
                        style="font-size: 14px"></i>
                     <span>{{followStatus == 0 ? "关注" : "已关注"}}</span>
-                    <span>{{countFollower || 0}}</span>
+                    <span>(已关注{{countFollower || 0}})</span>
                 </div>
                 <!--<div-->
                 <!--class="follow cursor"-->
@@ -32,7 +32,7 @@
                 <!--<i class="iconfont icon-warning" style="font-size: 14px;"></i>-->
                 <!--<em>举报</em>-->
                 <!--</div>-->
-                </span>
+                <!-- </span> -->
             </div>
             <div class="tagscon" v-show="tags.length">
                 <div class="tags_con esspclearfix">

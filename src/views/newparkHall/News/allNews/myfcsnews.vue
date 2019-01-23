@@ -21,7 +21,7 @@ export default {
     data() {
         return {
             temeTitle: "我关注的新闻",
-            aipStyle:"actAll",//传参数获取列表
+            aipStyle:"followInfo",//传参数获取列表
         }
     },
     methods: {
