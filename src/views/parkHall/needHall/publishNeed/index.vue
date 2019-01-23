@@ -32,7 +32,6 @@
             action="#"
             :before-upload="beforeAvatarUploadFile"
             multiple
-            :limit="1"
             :file-list="fileList"
           >
             <el-button size="small" type="primary">附件上传</el-button>

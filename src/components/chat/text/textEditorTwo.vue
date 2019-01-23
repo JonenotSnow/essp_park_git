@@ -29,7 +29,6 @@
         },
         methods: {
             onEditorFocus(e){
-                debugger
             }
         },
     }

@@ -413,8 +413,6 @@ export default {
         });
     },
     getNoticeDetail() {
-      console.log(1)
-      debugger
       if (this.isBdPark) {
         
         this.$router.push({
