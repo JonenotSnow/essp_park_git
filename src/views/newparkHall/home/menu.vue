@@ -176,6 +176,7 @@ export default {
     ) {
       this.getLastApplyPark();
     }
+    this.setMenuList()
   },
   methods: {
     linkToPage() {
@@ -255,6 +256,26 @@ export default {
           this.infoList = response.resultData.list;
         }
       });
+      
+    },
+
+    /**
+     * 首页任务池---最新申请入园消息
+     */
+    getLastApplyPark() {
+      console.log(this.$apiUrl.manage.getLastApplyPark);
+      this.$post(this.$apiUrl.manage.getLastApplyPark, {
+        parkId: window.sessionStorage.getItem("parkId")
+      }).then(response => {
+        if (response.resultData) {
+          this.lastApplyPark = response.resultData;
+          if (this.lastApplyPark.cstNm && this.lastApplyPark.joinTime) {
+            this.lastApplyParkFlag = true;
+          }
+        }
+      });
+    },
+    setMenuList(){
       if (this.isBdPark) {
         this.menuList = [
           {
@@ -326,23 +347,6 @@ export default {
           console.log(this.menuList);
         }
       }
-    },
-
-    /**
-     * 首页任务池---最新申请入园消息
-     */
-    getLastApplyPark() {
-      console.log(this.$apiUrl.manage.getLastApplyPark);
-      this.$post(this.$apiUrl.manage.getLastApplyPark, {
-        parkId: window.sessionStorage.getItem("parkId")
-      }).then(response => {
-        if (response.resultData) {
-          this.lastApplyPark = response.resultData;
-          if (this.lastApplyPark.cstNm && this.lastApplyPark.joinTime) {
-            this.lastApplyParkFlag = true;
-          }
-        }
-      });
     },
     toRequestAddParK() {
       let loginFlag = this.SSH.getItem("loginFlag");
