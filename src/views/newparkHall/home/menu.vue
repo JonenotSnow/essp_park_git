@@ -7,7 +7,7 @@
         <div class="swiper_inner">通知公告：</div>
         <div v-if="infoList.length>0">
           <div
-            v-if="(infoList[0].title && infoList[0].title.length<28)||(infoList[0].informationTitle|| infoList[0].informationTitle.length<28)"
+            v-if="(infoList[0].title && infoList[0].title.length<28)||(infoList[0].informationTitle&& infoList[0].informationTitle.length<28)"
             class="swiper_inner3"
             v-html="infoList[0].title||infoList[0].informationTitle"
             @click="getNoticeDetail()"
@@ -176,6 +176,7 @@ export default {
     ) {
       this.getLastApplyPark();
     }
+    this.setMenuList()
   },
   methods: {
     linkToPage() {
@@ -255,6 +256,26 @@ export default {
           this.infoList = response.resultData.list;
         }
       });
+      
+    },
+
+    /**
+     * 首页任务池---最新申请入园消息
+     */
+    getLastApplyPark() {
+      console.log(this.$apiUrl.manage.getLastApplyPark);
+      this.$post(this.$apiUrl.manage.getLastApplyPark, {
+        parkId: window.sessionStorage.getItem("parkId")
+      }).then(response => {
+        if (response.resultData) {
+          this.lastApplyPark = response.resultData;
+          if (this.lastApplyPark.cstNm && this.lastApplyPark.joinTime) {
+            this.lastApplyParkFlag = true;
+          }
+        }
+      });
+    },
+    setMenuList(){
       if (this.isBdPark) {
         this.menuList = [
           {
@@ -327,23 +348,6 @@ export default {
         }
       }
     },
-
-    /**
-     * 首页任务池---最新申请入园消息
-     */
-    getLastApplyPark() {
-      console.log(this.$apiUrl.manage.getLastApplyPark);
-      this.$post(this.$apiUrl.manage.getLastApplyPark, {
-        parkId: window.sessionStorage.getItem("parkId")
-      }).then(response => {
-        if (response.resultData) {
-          this.lastApplyPark = response.resultData;
-          if (this.lastApplyPark.cstNm && this.lastApplyPark.joinTime) {
-            this.lastApplyParkFlag = true;
-          }
-        }
-      });
-    },
     toRequestAddParK() {
       let loginFlag = this.SSH.getItem("loginFlag");
       //未登录提示
@@ -409,8 +413,6 @@ export default {
         });
     },
     getNoticeDetail() {
-      console.log(1)
-      debugger
       if (this.isBdPark) {
         
         this.$router.push({
