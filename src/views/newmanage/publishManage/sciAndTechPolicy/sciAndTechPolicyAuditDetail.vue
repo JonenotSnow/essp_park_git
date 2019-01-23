@@ -20,8 +20,13 @@
                     </div>
                 </el-form-item>
                 <el-form-item label="政策法规标签：" prop="tags">
-                    <div class="my-style">
-                        <span class="my-tag" v-for="(item, index) in satpDate.tagsTxt" :key="index">{{item}}</span>
+                    <div class="my-style" v-if="satpDate.tagsTxt && satpDate.tagsTxt.length > 0">
+                        <!--<span class="my-tag" v-for="(item, index) in satpDate.tagsTxt" :key="index">{{item}}</span>-->
+                        <essp-park-tag
+                            v-for="(item, index) in satpDate.tagsTxt"
+                            :key="index"
+                            :value="item"
+                        />
                     </div>
                 </el-form-item>
                 <el-form-item label="发布人：">
@@ -77,8 +82,13 @@
                     </div>
                 </el-form-item>
                 <el-form-item label="科技服务标签：" prop="tags">
-                    <div class="my-style">
-                        <span class="my-tag" v-for="(item, index) in satpDate.tagsTxt" :key="index">{{item}}</span>
+                    <div class="my-style" v-if="satpDate.tagsTxt && satpDate.tagsTxt.length > 0">
+                        <!--<span class="my-tag" v-for="(item, index) in satpDate.tagsTxt" :key="index">{{item}}</span>-->
+                        <essp-park-tag
+                            v-for="(item, index) in satpDate.tagsTxt"
+                            :key="index"
+                            :value="item"
+                        />
                     </div>
                 </el-form-item>
                 <el-form-item label="发布人：">
@@ -111,10 +121,13 @@
 
 <script>
     import EsspBreadCrumb from "@/components/EsspBreadCrumb";
+    import EsspParkTag from "@/components/EsspParkTag";
+
 
     export default {
         components: {
-            EsspBreadCrumb
+            EsspBreadCrumb,
+            EsspParkTag
         },
         data() {
             return {
@@ -307,15 +320,15 @@
                 letter-spacing: 0.1px;
                 color: #999;
                 .my-tag {
-                    margin-right: 20px;
-                    padding: 7px 16px;
-                    font-size: 14px;
-                    font-weight: normal;
-                    font-stretch: normal;
-                    letter-spacing: 0px;
-                    color: #fff;
-                    border-radius: 3px;
-                    background-color: #cccccc;
+                    /*margin-right: 20px;*/
+                    /*padding: 7px 16px;*/
+                    /*font-size: 14px;*/
+                    /*font-weight: normal;*/
+                    /*font-stretch: normal;*/
+                    /*letter-spacing: 0px;*/
+                    /*color: #fff;*/
+                    /*border-radius: 3px;*/
+                    /*background-color: #cccccc;*/
                 }
             }
             .audit-line {
