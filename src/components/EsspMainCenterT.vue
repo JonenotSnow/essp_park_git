@@ -160,7 +160,7 @@
                                 show: true
                             }]
                         }
-                        if(btnType ===2) {
+                        if(btnType ===2 && this.SSH.getItem("loginFlag")) {
                             arr = [{
                                 name: '立即申报',
                                 type: 1,

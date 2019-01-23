@@ -492,7 +492,7 @@
                             value-format="yyyy-MM-dd HH:mm"
                         ></el-date-picker>
                     </div>
-                    <div class="ticket-td">
+                    <div class="ticket-td" v-if="databox.length > 0">
                         <span class="inline_span">邀请对象 :</span>
                         <span class="nametix">{{t_invitings}}</span>
                         <i class="el-icon-circle-plus addicon" @click="showContactbBook"></i>
@@ -1040,9 +1040,11 @@
                     var arr = response.resultData;
 
                     arr.forEach((item, index) => {
-                        item.key = item.cstId;
-                        item.label = item.cstNm;
-                        this.databox.push(item);
+                        if(item.cstId && item.cstNm) {
+                            item.key = item.cstId || '';
+                            item.label = item.cstNm || '';
+                            this.databox.push(item);
+                        }
                     });
                 });
             },

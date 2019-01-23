@@ -1,4 +1,4 @@
-<template>
+d<template>
     <div>
         <!-- 我发起的活动模版 -->
 
@@ -200,8 +200,7 @@
                 dialogTableVisible: false,
                 curId: '',
                 type: 0,
-                flag: sessionStorage.getItem('myList').includes(sessionStorage.getItem('parkId')),
-
+                flag: this.SSH.getItem("loginFlag")
             };
         },
         created() {

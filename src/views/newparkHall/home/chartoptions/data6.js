@@ -2,7 +2,7 @@
     export let data5 = {
         // backgroundColor: '#FBFBFB',
         title: {
-            text: '技术合同登记额(亿)',
+            text: '技术合同登记额(亿元)',  // 别傻傻的又改回去了，谁改回去，我就弄死谁
             textStyle:{
                 color:"#10b5ff",
                 fontWeight:'normal'
@@ -15,7 +15,7 @@
         legend: {
         },
         calculable : true,
-        xAxis : 
+        xAxis :
             {
                 axisLine:{
                   lineStyle :{

@@ -14,7 +14,7 @@
  export default {
    data () {
     return {
-        flag:sessionStorage.getItem('myList').includes(sessionStorage.getItem('parkId'))
+        flag: this.SSH.getItem("loginFlag")
     }
    },
    props:['pageType'],
