@@ -5,7 +5,7 @@ export const parkInfo = {
     addfollowInfo: "/information/addMyFocus",//我关注的资讯
     addInfo: "/information/saveInformation",//发布资讯
     delInfoes: "/information/delBatchInfo",//删除资讯草稿（批量和单条删除）
-    followInfo: "/information/getMyFollowInfo",//我关注的资讯列表
+    followInfo: "/information/getMyFollowInfo",//我关注的新闻列表
     focusInfo: "/information/getApprovalList",//我关注的资讯
     auditDetail: "/information/approvalInfo",//发布资讯通过不通过
     infoById: "/information/getInfoById",//根据资讯id获取资讯详情
