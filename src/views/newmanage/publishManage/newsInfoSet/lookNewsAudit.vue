@@ -348,6 +348,9 @@
                 font-stretch: normal;
                 letter-spacing: 0.1px;
                 color: #999;
+                .ql-snow {
+                    border: none;
+                }
                 .my-tag {
                     margin-right: 20px;
                     padding: 7px 16px;

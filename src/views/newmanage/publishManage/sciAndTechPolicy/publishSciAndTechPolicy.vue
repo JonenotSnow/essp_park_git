@@ -271,7 +271,7 @@
                     infoDetail: [
                         {required: true, message: '请填写政策法规详情', trigger: 'blur'}
                     ],
-                    showTags: [
+                    tags: [
                         {required: true, message: '请填写政策法规标签', trigger: 'blur'}
                     ]
                 },
@@ -289,7 +289,7 @@
                     infoDetail: [
                         {required: true, message: '请填写科技服务详情', trigger: 'blur'}
                     ],
-                    showTags: [
+                    tags: [
                         {required: true, message: '请填写科技服务标签', trigger: 'blur'}
                     ]
                 },
@@ -335,6 +335,13 @@
 
             // 创建事件
             submitForm(formName, saveType) {
+
+                // 处理标签---先处理，再验证
+                if (this.showTags && this.showTags.length > 0) {
+                    let tags = this.showTags.join(',');
+                    this.ruleForm.tags = tags;
+                }
+
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
 
@@ -344,12 +351,6 @@
 
                         // 区分政策或者法规
                         this.ruleForm.applyType = this.applyType;
-
-                        // 处理标签
-                        if (this.showTags && this.showTags.length > 0) {
-                            let tags = this.showTags.join(',');
-                            this.ruleForm.tags = tags;
-                        }
 
                         // 处理附件上传
                         this.ruleForm.fileUrl = this.fileList;
@@ -407,6 +408,13 @@
             // 暂存事件
             temporaryStorage(formName, saveType) {
                 // this.$refs[formName].resetFields();
+
+                // 处理标签---先处理，再验证
+                if (this.showTags && this.showTags.length > 0) {
+                    let tags = this.showTags.join(',');
+                    this.ruleForm.tags = tags;
+                }
+
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
 
@@ -417,11 +425,6 @@
                         // 区分政策或者法规
                         this.ruleForm.applyType = this.applyType;
 
-                        // 处理标签
-                        if (this.showTags && this.showTags.length > 0) {
-                            let tags = this.showTags.join(',');
-                            this.ruleForm.tags = tags;
-                        }
 
                         // 处理附件上传
                         this.ruleForm.fileUrl = this.fileList;
@@ -758,6 +761,12 @@
                 }
                 .main-body {
                     padding: 40px 50px 0;
+                    .ql-snow {
+                        padding: 0 110px;
+                        .ql-editor{
+                            border: none;
+                        }
+                    }
                 }
                 .main-foot {
                     padding: 60px 50px 0;

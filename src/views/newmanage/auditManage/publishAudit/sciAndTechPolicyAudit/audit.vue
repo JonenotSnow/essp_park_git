@@ -354,6 +354,9 @@
                 font-stretch: normal;
                 letter-spacing: 0.1px;
                 color: #999;
+                .ql-snow {
+                    border: none;
+                }
                 .my-tag {
                     /*display: inline-block;*/
                     /*margin-right: 20px;*/
