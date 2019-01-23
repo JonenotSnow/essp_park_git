@@ -46,7 +46,7 @@
                     </p>
                 </el-form-item>
                 <el-form-item label="审核意见：" prop="mark">
-                    <div><textarea class="my-style audit-opinion" name="" v-model="lastComment.mark"></textarea></div>
+                    <div><textarea class="my-style audit-opinion" name="" placeholder="暂无" v-model="lastComment.mark" v-bind:disabled="satpDate.status!== '13'"></textarea></div>
                 </el-form-item>
             </el-form>
             <div class="audit-line" v-if="userInfo.userPostList.includes('34') && (satpDate.status== '13')"></div>
@@ -95,7 +95,7 @@
                     </p>
                 </el-form-item>
                 <el-form-item label="审核意见：" prop="mark">
-                    <div><textarea class="my-style audit-opinion" name="" v-model="lastComment.mark"></textarea></div>
+                    <div><textarea class="my-style audit-opinion" name="" placeholder="暂无" v-model="lastComment.mark" v-bind:disabled="satpDate.status!== '13'"></textarea></div>
                 </el-form-item>
             </el-form>
             <div class="audit-line" v-if="userInfo.userPostList.includes('34') && (satpDate.status== '13')"></div>

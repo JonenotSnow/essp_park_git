@@ -82,9 +82,11 @@ export default {
          */
         handleSizeChange(val) {
             this.pageSize = val;
+            this.getList();
         },
         handleCurrentChange(val) {
             this.pageNum = val;
+            this.getList();
         }
     }
   }
