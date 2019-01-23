@@ -4,11 +4,11 @@
             <div class="userHeader">
                 <span>
                     <i class="el-icon-circle-plus-outline"></i>
-                    还没企业没加入园区？立即邀请TA
+                    是不是还有企业没加入园区？立即邀请TA
                     <span @click="$router.push('/parkHall/manage/requestEnterprice')"><span>点击立即邀请</span></span>
                 </span>
                 <span>
-                    <i class="iconfont icon-tuijianren"></i>试一试系统为你推荐企业>>
+                    <i class="iconfont icon-tuijianren"></i>试一试系统为您推荐企业>>
                     <span @click="$router.push('/parkHall/manage/IntelligentInvestment')"><span>点击立即推荐</span></span>
                 </span>
             </div>
