@@ -71,7 +71,7 @@
                     },
                     {
                         path: `/parkHall/manage/activityPoolAddPark`,
-                        name: this.utils.isBdPark() ? "审核管理" : "任务池"
+                        name: this.utils.isBdPark() ? "审核管理:" : "任务池:"
                     },
                     {
                         path: '',
@@ -214,7 +214,7 @@
 
 <style scoped lang="less">
     #manageAuditing{
-        margin-bottom: 50px;   
+        margin-bottom: 50px;
     }
     .common_titwrap {
         width: 1200px;
