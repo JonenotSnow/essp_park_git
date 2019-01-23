@@ -59,7 +59,7 @@
                         <input type="text" :placeholder="`请输入模块${index+1}标题`" v-model='it.title'>
                     </p>
                     <div class="editorContent">
-                        <quill-editor  v-model='it.content'></quill-editor>
+                        <quill-editor options="toolOptions" v-model='it.content'></quill-editor>
                         <span>350字</span>
                     </div>
                 </div>
@@ -163,27 +163,22 @@ export default {
                     name: "模板编辑"
                 }
             ],
-            // editorOption:{
-            //     readOnly:true,
-            //     placeholder:'请输入模板内容',
-            //     modules:{
-            //         toolbar:[
-            //             ['bold', 'italic', 'underline'],        // toggled buttons
-            //             ['blockquote', 'code-block'],
-            //             [{ 'header': 1 }, { 'header': 2 }],
-            //             [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-            //             [{ 'script': 'sub'}, { 'script': 'super' }],
-            //             [{ 'indent': '-1'}, { 'indent': '+1' }],
-            //             [{ 'direction': 'rtl' }],
-            //             [{ 'size': ['small', false, 'large', 'huge'] }],
-            //             [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-            //             [{ 'color': [] }, { 'background': [] }],
-            //             [{ 'font': [] }],
-            //             [{ 'align': [] }]
-            //         ]
-            //     },
-            //     theme:'snow'
-            // },
+            toolOptions : [
+                // ['link', 'image', 'video'],
+                [{ header: 1 }, { header: 2 }],
+                ["blockquote", "code-block"],
+                ["bold", "italic", "underline", "strike"],
+                [{ list: "ordered" }, { list: "bullet" }],
+                [{ script: "sub" }, { script: "super" }],
+                [{ indent: "-1" }, { indent: "+1" }],
+                [{ direction: "rtl" }],
+                [{ header: [1, 2, 3, 4, 5, 6, false] }],
+                [{ size: ["small", false, "large", "huge"] }],
+                [{ color: [] }, { background: [] }],
+                [{ font: [] }],
+                [{ align: [] }],
+                ["clean"]
+            ],
             scanTwo: false,
             logoPic: "",
             dialogImageUrl: "",
@@ -378,6 +373,10 @@ export default {
     margin: 0 auto;
 }
 #scanModelTwo .scanTwoM .el-dialog__header{
+    display:none;
+}
+/* 配置无效 */
+#scanModelTwo .ql-video,#scanModelTwo .ql-image,#scanModelTwo .ql-link{
     display:none;
 }
 </style>

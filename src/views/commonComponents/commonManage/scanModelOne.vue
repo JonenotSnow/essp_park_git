@@ -59,7 +59,7 @@
                             </div>
                         </div>
                         <div class="noPic">
-                            <quill-editor  v-model="it.content"></quill-editor>
+                            <quill-editor options="toolOptions" v-model="it.content"></quill-editor>
                         </div>
                         <div class="picList" v-if="it.isPic == '1'">
                             <div v-for="(is,itemindex) in imgBoxA[moudelIndex]" :key="itemindex" @click="getCurPicOrder(itemindex,moudelIndex)"
@@ -194,6 +194,22 @@ export default {
             bLoading:false,
             confirmSend:false,
             isBdPark: this.utils.isBdPark(),
+            toolOptions : [
+                // ['link', 'image', 'video'],
+                [{ header: 1 }, { header: 2 }],
+                ["blockquote", "code-block"],
+                ["bold", "italic", "underline", "strike"],
+                [{ list: "ordered" }, { list: "bullet" }],
+                [{ script: "sub" }, { script: "super" }],
+                [{ indent: "-1" }, { indent: "+1" }],
+                [{ direction: "rtl" }],
+                [{ header: [1, 2, 3, 4, 5, 6, false] }],
+                [{ size: ["small", false, "large", "huge"] }],
+                [{ color: [] }, { background: [] }],
+                [{ font: [] }],
+                [{ align: [] }],
+                ["clean"]
+            ]
         }
     },
     created(){
@@ -493,6 +509,9 @@ export default {
             height:240px!important;
             min-height:240px!important;
             max-height:240px!important;
+    }/* 配置无效 */
+    #scanModelOne .ql-video,#scanModelOne .ql-image,#scanModelOne .ql-link{
+        display:none;
     }
 </style>
 
