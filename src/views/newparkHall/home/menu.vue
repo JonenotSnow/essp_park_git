@@ -44,7 +44,7 @@
         class="swiper_com swiper_com1 esspclearfix"
         v-if="LoginUserRole.includes('33') || LoginUserRole.includes('34')"
       >
-        <div class="swiper_inner">{{isBdPark?'审核管理':'任务池'}}</div>
+        <div class="swiper_inner">{{isBdPark?'审核管理':'任务池'}}：</div>
         <div class="esspclearfix" v-if="lastApplyParkFlag">
           <div
             class="swiper_inner3"
