@@ -459,10 +459,10 @@ export default {
         font-size: 12px;
         /* color: #999; */
     }
-    #scanModelOne .scanWrap .ql-editor{
+    /* #scanModelOne .scanWrap .ql-editor{
         height: 230px;
         overflow-y: scroll;
-    }
+    } */
     #scanModelOne .ownPic .picList{
         margin:20px 0;
         text-align: center;
