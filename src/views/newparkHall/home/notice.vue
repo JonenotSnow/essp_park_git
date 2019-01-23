@@ -13,15 +13,15 @@
                                 <div class="title-ss">{{item.informationTitle}}</div>
                                 <div class="detail">{{item.content}}</div>
                                 <div class="part-b">
-                                    <div class="label"><span>{{item.tagsTxt[0]}}</span></div>
+                                    <div class="label"><span>{{item.tagsTxt.split(',')[0]}}</span></div>
                                     <div class="time">{{ item.createTime | timerFormat(item.createTime) }}</div>
                                 </div>
                             </div>
                             <div class="img" :style="'background-image:url('+imgUrl+')'"></div>
                         </li>
-                        <EsspNoData v-if="noticesList.length==0" class="nothing"></EsspNoData>
+                        <EsspNoData v-if="newsList.length==0" class="nothing"></EsspNoData>
                     </ul>
-                    <div class="more" v-if="noticesList.length>0" @click="linkToNewsListPage">More ></div>
+                    <div class="more" v-if="newsList.length>0" @click="linkToNewsListPage">More ></div>
                 </div>
                 <div class="right-aside">
                     <div class="title-s">通知公告</div>
@@ -231,12 +231,12 @@
                 .right-aside {
                     width: 570px;
                     ul {
-                        height: 320px;
-                        /*border-bottom: solid 1px #cccccc;*/
+                        height: 319px;
+                        border-bottom: solid 1px #cccccc;
                         li {
                             display: flex;
                             justify-content: space-between;
-                            border-top: solid 1px #cccccc;
+                            border-bottom: solid 1px #cccccc;
                             line-height: 39px;
                             vertical-align: middle;
                             &:hover {
