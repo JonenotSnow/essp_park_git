@@ -1,3 +1,4 @@
+
 <template>
     <div class="achievements-list-wrap">
         <!-- 成果列表模版 -->
@@ -114,7 +115,7 @@
                     {label: "生物与新医药", val: "1"},
                     {label: "新材料", val: "2"},
                     {label: "高新技术服务", val: "3"},
-                    {label: "新能源与节流", val: "4"},
+                    {label: "新能源与节能", val: "4"},
                     {label: "资源与环境", val: "5"},
                     {label: "现代农业", val: "6"},
                     {label: "高端装备制造", val: "7"},
