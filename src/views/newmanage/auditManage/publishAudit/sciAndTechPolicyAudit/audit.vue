@@ -3,7 +3,7 @@
         <essp-bread-crumb :breadList="breadlist_01" v-if="applyType === '01'"/>
         <essp-bread-crumb :breadList="breadlist_02" v-if="applyType === '02'"/>
         <div class="publish-title">
-            <i></i>审核详情<i></i>
+            <i></i>审核详情{{userType}}<i></i>
         </div>
         <!--！！！！！！政策法规表格！！！！！！-->
         <div class="publist-form" v-if="applyType === '01'">
@@ -139,8 +139,8 @@
         },
         data() {
             return {
-                // 获取用户信息
-                userInfo: "",
+                // 获取用户权限信息
+                LoginUserRol: "",
                 userType: '',
                 parkId: sessionStorage.getItem("parkId") || "",
                 applyType: this.$route.query.applyType,
@@ -310,13 +310,8 @@
 
         },
         mounted() {
-            this.userInfo = this.SSH.getItem("userInfo") || ''; // 获取用户信息
-            this.userType = this.userInfo.userPostList[1];
-            console.log('typeof (this.userInfo)================================');
-            console.log(this.userInfo);
-            console.log(this.userInfo.userPostList);
-            console.log(this.userInfo.userPostList[0]);
-            console.log(this.userInfo.userPostList[1]);
+            this.LoginUserRol = this.SSH.getItem("LoginUserRol") || ''; // 获取用户权限
+            this.userType = this.LoginUserRol[0];
 
         },
         created() {

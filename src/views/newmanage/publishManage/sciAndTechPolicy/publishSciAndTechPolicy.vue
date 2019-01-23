@@ -178,7 +178,8 @@
                        v-for="(item, index) in this.fileList"
                        :key="index"
                     >
-                        <a @click="linkToFile(item.url)">·附件{{index+1}}：{{item.name}}</a>
+                        <!--<a @click="linkToFile(item.url)">·附件{{index+1}}：{{item.name}}</a>-->
+                        <a :href="item.url" :download="item.name">·附件{{index+1}}：{{item.name}}</a>
                     </p>
                 </div>
             </div>
@@ -191,9 +192,11 @@
 <script>
     import EsspBreadCrumb from "@/components/EsspBreadCrumb";
     import EsspTag from "@/components/EsspTag";
-    import EsspParkTag from "@/components/EsspParkTag";
     import EsspAddTag from "@/components/EsspAddTag";
     import EsspEditor from "@/components/EsspEditor";
+
+    import EsspParkTag from "@/components/EsspParkTag";
+
 
     export default {
         components: {
@@ -558,10 +561,6 @@
             // 预览事件---开始
             handleScan() {
                 this.dialogVisible = true;
-            },
-            // 跳转出新窗口，看上传的附件
-            linkToFile(url) {
-                window.open(url)
             }
         },
         created() {
