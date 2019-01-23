@@ -101,9 +101,6 @@ router.beforeEach(async (to, from, next) => {
 
     // let query  = getQueryObjuect()
     let menuList = sessionStorageHandler.getItem("menuList");
-    let name = to.name;
-    let menuResource = sessionStorageHandler.getItem("menuResource") || []; 
-    let currentMenu = menuResource[name]; 
 
     let parkId = to.query.parkId;
     let token = to.query.token;
@@ -142,12 +139,6 @@ router.beforeEach(async (to, from, next) => {
         await getLoginUserRole({ parkId: oneId });
         await selectResMenu({ oneId, LoginUserRol });
         // router.push(to.path)
-    }
-    
-    //如果返回的页面权限没有当前路由name值
-    if (currentMenu == null && menuResource.length>0) {
-        Message.error("你没有权限访问此页面");
-        return;
     }
 
     next();

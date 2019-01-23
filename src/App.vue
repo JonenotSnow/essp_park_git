@@ -294,6 +294,3 @@
         }
     }
 </style>
-<style>
-.quill-editor .ql-container.ql-snow .ql-editor{height: 340px;}
-</style>
