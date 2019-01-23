@@ -17,10 +17,16 @@
                     </p>
                 </div>
                 <div class="head-tag">
-                    <span v-if="satpDate.tagsTxt && satpDate.tagsTxt.length > 0"
-                          v-for="(item ,index) in satpDate.tagsTxt"
-                          :key="index"
-                    >{{item}}</span>
+                    <!--<span v-if="satpDate.tagsTxt && satpDate.tagsTxt.length > 0"-->
+                          <!--v-for="(item ,index) in satpDate.tagsTxt"-->
+                          <!--:key="index"-->
+                    <!--&gt;{{item}}</span>-->
+                    <essp-park-tag
+                        v-if="satpDate.tagsTxt && satpDate.tagsTxt.length > 0"
+                        v-for="(item, index) in satpDate.tagsTxt"
+                        :key="index"
+                        :value="item"
+                    />
                 </div>
             </div>
             <div class="main-body">
@@ -42,11 +48,14 @@
 
 <script>
     import EsspBreadCrumb from "@/components/EsspBreadCrumb";
+    import EsspParkTag from "@/components/EsspParkTag";
+
     import Moment from "moment";
 
     export default {
         components: {
-            EsspBreadCrumb
+            EsspBreadCrumb,
+            EsspParkTag
         },
         data() {
             return {
@@ -163,13 +172,13 @@
                 .head-tag {
                     margin-top: 30px;
                     text-align: center;
-                    span {
-                        margin-right: 20px;
-                        padding: 5px 8px;
-                        width: 40px;
-                        color: #fff;
-                        background-color: #cccccc;
-                    }
+                    /*span {*/
+                    /*margin-right: 20px;*/
+                    /*padding: 5px 8px;*/
+                    /*width: 40px;*/
+                    /*color: #fff;*/
+                    /*background-color: #cccccc;*/
+                    /*}*/
                 }
             }
             .main-body {
