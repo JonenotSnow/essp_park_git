@@ -20,7 +20,7 @@
                 </select> -->
                 <input type="text" placeholder="请输入专家职称" v-model="submitUploadInfo.title">
             </li>
-            <li class="pic">
+            <li class="pic" style="height: 198px;">
                 <span class="require">*</span>
                 <span class="title">专家头像：</span>
                 <el-upload
@@ -71,7 +71,7 @@
                         <div class="pic_list_item" v-for="(imgItem,imgIndex) in item.photoList"
                              :key="imgIndex" @click="selectUploadIndex(index,imgIndex)">
                             <el-upload
-                                class="avatar-uploader avatar-uploader-chengguo esspclearfix"
+                                class="avatar-uploader avatar-uploader-chengguo1 esspclearfix"
                                 action="#"
                                 :show-file-list="false"
                                 :before-upload="moduleUpload">
@@ -127,7 +127,7 @@
                         <div class="other_info second_title" v-for="(item,index) in moduleList" :key="index">
                             <span class="second_title_name">{{item.title}}</span>
                             <div class="detail_item_content">
-                                <div v-html="item.info ||'暂无'"></div>
+                                <div v-html="submitUploadInfo.introduction ||'暂无'"></div>
                             </div>
                             <div class="detail_item_imglist esspclearfix" v-if="item.isPic == '1'">
                                 <div class="img_items" v-for="(itemChild, indexChild) in item.photoList" :key="indexChild">
@@ -658,6 +658,32 @@
                     margin-left: 80px;
                 }
             }
+            .avatar-uploader-chengguo1 {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 220px;
+                height: 110px;
+                padding: 0;
+                border-radius: 3px;
+                border: 1px dashed #d9d9d9;
+                text-align: center;
+                overflow: hidden;
+                .upload_pic_icon {
+                    position: absolute;
+                    left: 0px;
+                    top: 0;
+                    width: 220px;
+                    height: 110px;
+                    padding: 0;
+                    border-radius: 3px;
+                    em {
+                        display: block;
+                        text-align: center;
+                        margin-top:8px;
+                    }
+                }
+            }
             /*图片样式*/
             .avatar-uploader-chengguo {
                 position: absolute;
@@ -667,22 +693,27 @@
                 padding: 0;
                 border-radius: 3px;
                 border: 1px dashed #d9d9d9;
-                height: 140px;
+                height: 198px;
                 text-align: center;
-                line-height: 140px;
                 overflow: hidden;
                 .upload_pic_icon {
                     position: absolute;
                     left: 0px;
                     top: 0;
                     width: 198px;
-                    height: 140px;
+                    height: 198px;
                     padding: 0;
                     border-radius: 3px;
-                    i {
+                    em {
                         display: block;
-                        margin: 35px auto -53px;;
+                        text-align: center;
+                        margin-top:8px;
                     }
+                }
+                .avatar {
+                    display: block;
+                    width: 100%;
+                    min-height: 100%;
                 }
             }
             .sub1 {
@@ -716,12 +747,47 @@
                 -webkit-border-radius: 50%;
                 -moz-border-radius: 50%;
                 border-radius: 50%;
-
-            }
-            .avatar-uploader-chengguo .avatar {
-                width: 100%;
-                min-height: 100%;
                 display: block;
+                margin: 62px auto 0;
+            }
+            .avatar-uploader-chengguo1 {
+                .avatar {
+                    width: 100%;
+                    min-height: 100%;
+                    display: block;
+                }
+                .el-upload {
+                    border: 1px dashed #d9d9d9;
+                    border-radius: 6px;
+                    cursor: pointer;
+                    position: relative;
+                    overflow: hidden;
+                    width: 285px;
+                    height: 120px;
+                    line-height: 120px;
+                }
+                .el-upload:hover {
+                    border-color: #409EFF;
+                }
+                .avatar-uploader-icon {
+                    font-size: 20px;
+                    color: #fff;
+                    width: 30px;
+                    height: 30px;
+                    line-height: 30px;
+                    text-align: center;
+                    background: #22a2fa ;
+                    -webkit-border-radius: 50%;
+                    -moz-border-radius: 50%;
+                    border-radius: 50%;
+                    display: block;
+                    margin: 31px auto 0;
+                }
+                .avatar {
+                    width: 100%;
+                    min-height: 100%;
+                    display: block;
+                }
             }
         }
         .pic_list_item {
@@ -745,6 +811,7 @@
                         background: #10b5ff;
                     }
                 }
+
             }
         }
         .pic_list_item {

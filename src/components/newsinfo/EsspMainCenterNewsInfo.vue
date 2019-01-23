@@ -1,7 +1,7 @@
 <template>
     <div class="essp-main-cont">
 
-        <EsspMcCardNewsInfo :mcCardList="mcCardDataList" :chilrPageType="pageType" :temeTitle="temeTitle"></EsspMcCardNewsInfo>
+        <EsspMcCardNewsInfo :mcCardList="mcCardDataList" @getCardList="getCardList" :chilrPageType="pageType" :temeTitle="temeTitle"></EsspMcCardNewsInfo>
         <div class="essp-aside-right-cont">
             <div class="aside-right-item aside-right-item-seach">
                 <div>
@@ -88,6 +88,16 @@
             this.getListInfoTags();
         },
         methods: {
+            getCardList(){
+                this.pageNum = 1;
+                this.pageSize= 10;
+                this.startDate= "";
+                this.endDate ="";
+                this.title = '';
+                this.tagTxt = '';
+                this.currentTime = [this.startDate,this.endDate];
+                this.getParkInfoList();
+            },
             //聚焦右侧搜索栏的清空
             clearCurrentKeyname(){
                 this.currentKeyname = '';
@@ -96,11 +106,15 @@
                 this.startDate = this.currentTime[0];
                 this.endDate = this.currentTime[1];
                 this.currentKeytime = "";
+                this.pageNum = 1;
+                this.pageSize= 10;
                 this.getParkInfoList();
             },
             setKeyName(item,index){
                 this.currentKeyname = index;
                 this.tagTxt =item.tagTxt;
+                this.pageNum = 1;
+                this.pageSize= 10;
                 this.getParkInfoList()
             },
             setTime(item,index){
@@ -124,6 +138,8 @@
                     this.endDate=Moment().format("YYYY-MM-DD");
                 }
                 this.currentTime = [this.startDate,this.endDate];
+                this.pageNum = 1;
+                this.pageSize= 10;
                 this.getParkInfoList();
             },
             //获取列表的标签
@@ -170,7 +186,8 @@
                     startDate: this.startDate,
                     endDate: this.endDate,
                     title: '',
-                    parkId,
+                    tagTxt: this.tagTxt,
+                    parkId: parkId,
                     //tagTxt:this.tagTxt,//根据标签搜索
                     type:'1'
                 })

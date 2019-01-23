@@ -32,7 +32,7 @@
                         <div class="btncon" v-if="chilrPageType=='getAllInformation'">
                             <el-button type="primary" size="mini" round @click="goInfoDetail(item)">查看详情</el-button>
                         </div>
-                        <div class="btncon" v-if="chilrPageType=='actAll'">
+                        <div class="btncon" v-if="chilrPageType=='followInfo'">
                             <el-button type="info" size="mini" round @click="showDialog(item)">取消关注</el-button>
                         </div>
                     </div>
@@ -139,7 +139,7 @@
                     return;
                 }
                 this.dialogVisible = true;
-                this.followId = item.informationId;
+                this.followId = item.followId;
             },
             cancleFocus() {
                 this.cancelMyFocus(this.followId);
@@ -147,14 +147,14 @@
             cancelMyFocus(followId) {
                 var url = this.$apiUrl.parkInfo.delMyFocus;
                 this.$post(url, {
-                    followId: followId,
-                    parkId: window.sessionStorage.getItem("parkId")
+                    followId: followId
                 }).then(
                     response => {
                         if (response.resultCode == "CLT000000000") {
                             this.dialogVisible = false;
                             this.$message.success(response.resultMsg);
-                            this.$router.go(0);
+                            this.$emit("getCardList");
+//                            this.$router.go(0);
                         } else {
                             this.$message({
                                 type: "info",
