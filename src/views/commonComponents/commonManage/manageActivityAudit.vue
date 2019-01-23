@@ -45,9 +45,9 @@
                         <span>报名是否需审核：</span>
                         <span>{{infoList.enterNeedAudit == 0 ? '否' : '是'}}</span>
                     </p>
-                    <p class="ts">
+                    <p class="ts ql-container ql-snow">
                         <span class="tspan">活动详情：</span>
-                        <span v-html="infoList.activityDetails"></span>
+                        <span style="border: none; padding:0;" class="ql-editor" v-html="infoList.activityDetails"></span>
                     </p>
                     <p class="ts">
                         <span class="tspan">活动宣传图/海报：</span>
@@ -244,7 +244,6 @@
                         name: '沙龙'
                     }
                 ],
-                mark: '',
                 items: [],
                 numberToplimit: 0,
                 formRqList: [],
