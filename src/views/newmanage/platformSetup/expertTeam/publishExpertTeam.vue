@@ -127,7 +127,7 @@
                         <div class="other_info second_title" v-for="(item,index) in moduleList" :key="index">
                             <span class="second_title_name">{{item.title}}</span>
                             <div class="detail_item_content">
-                                <div v-html="submitUploadInfo.introduction ||'暂无'"></div>
+                                <div v-html="item.info ||'暂无'"></div>
                             </div>
                             <div class="detail_item_imglist esspclearfix" v-if="item.isPic == '1'">
                                 <div class="img_items" v-for="(itemChild, indexChild) in item.photoList" :key="indexChild">
@@ -244,11 +244,11 @@
                         flag = false;
                         break;
                     }
-                    if(this.moduleList[i].info.length > 200) {
-                        this.$message.error("您的专家详情不能大于200个字！");
-                        flag = false;
-                        break;
-                    }
+//                    if(this.moduleList[i].info.length > 200) {
+//                        this.$message.error("您的专家详情不能大于200个字！");
+//                        flag = false;
+//                        break;
+//                    }
                 }
                 return flag;
             },
@@ -291,8 +291,8 @@
                     this.$message.error("请正确填写简介！");
                     return flag = false;
                 }
-                if (this.submitUploadInfo.introduction.length > 200) {
-                    this.$message.error("您的简介不能大于200个字！");
+                if (this.submitUploadInfo.introduction.length > 300) {
+                    this.$message.error("您的简介不能大于300个字！");
                     return flag = false;
                 }
                 if (!/^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/.test(this.submitUploadInfo.email)) {
