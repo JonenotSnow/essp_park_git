@@ -117,7 +117,9 @@
                     {label: "新能源与节流", val: "4"},
                     {label: "资源与环境", val: "5"},
                     {label: "现代农业", val: "6"},
-                    {label: "高端装备制造", val: "7"}
+                    {label: "高端装备制造", val: "7"},
+                    {label: "其他", val: "8"}
+
                 ]
             };
         },
@@ -132,7 +134,7 @@
             searchResult() {
                 this.getArcList();
             },
-         
+
             //获取成果列表
             getArcList() {
                 var url = this.$apiUrl.home.getAchievement;
@@ -175,20 +177,21 @@
                 this.getArcList();
             }
         },
-        filters:{
-            formatFields(val){
+        filters: {
+            formatFields(val) {
                 let defaultVal = "高新技术服务"
-                let mapFields={
+                let mapFields = {
                     "0": "电子信息",
-                    "1":"生物与新医药", 
-                    "2": "新材料", 
-                    "3": "高新技术服务", 
-                    "4": "新能源与节流", 
-                    "5": "资源与环境", 
-                    "6": "现代农业", 
-                    "7": "高端装备制造"
+                    "1": "生物与新医药",
+                    "2": "新材料",
+                    "3": "高新技术服务",
+                    "4": "新能源与节流",
+                    "5": "资源与环境",
+                    "6": "现代农业",
+                    "7": "高端装备制造",
+                    "8": "其他",
                 };
-                return mapFields[val]||defaultVal
+                return mapFields[val] || defaultVal
             }
         },
         components: {}
@@ -258,7 +261,7 @@
                     margin: 30px auto 0;
                     display: flex;
                     .result_item-img {
-                        
+
                         padding: 10px;
                         width: 315px;
                         height: 180px;
@@ -269,7 +272,7 @@
                     }
 
                     .result_item-info {
-                       
+
                         margin-left: 30px;
                         padding: 10px;
                         text-align: left;
@@ -284,7 +287,7 @@
                             letter-spacing: 0px;
                             color: #333333;
                             overflow: hidden;
-                            text-overflow:ellipsis;
+                            text-overflow: ellipsis;
 
                         }
 
@@ -310,7 +313,7 @@
                             color: #999999;
                             overflow: hidden;
                             width: 617px;
-                            text-overflow:ellipsis;
+                            text-overflow: ellipsis;
                             -webkit-line-clamp: 2;
                         }
                         .result-des__hover {

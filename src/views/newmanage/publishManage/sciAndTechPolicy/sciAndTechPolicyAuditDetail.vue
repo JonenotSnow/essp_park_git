@@ -33,8 +33,13 @@
                     <!--<div class="my-style">{{userInfo.truename}}</div>-->
                     <div class="my-style">{{satpDate.userName}}</div>
                 </el-form-item>
-                <el-form-item label="附件：">
-                    <div class="my-style" v-for="(item, index) in fileList" :key="index">{{item.name}}</div>
+                <el-form-item label="附件：" v-if="fileList && fileList.length > 0">
+                    <a class="my-style"
+                       :href="item.url"
+                       :download="item.name"
+                       v-for="(item, index) in fileList"
+                       :key="index"
+                    >{{item.name}}</a>
                 </el-form-item>
             </el-form>
             <div class="audit-line"></div>
@@ -95,8 +100,13 @@
                     <!--<div class="my-style">{{userInfo.truename}}</div>-->
                     <div class="my-style">{{satpDate.userName}}</div>
                 </el-form-item>
-                <el-form-item label="附件：">
-                    <div class="my-style" v-for="(item, index) in fileList" :key="index">{{item.name}}</div>
+                <el-form-item label="附件：" v-if="fileList && fileList.length > 0">
+                    <a class="my-style"
+                       :href="item.url"
+                       :download="item.name"
+                       v-for="(item, index) in fileList"
+                       :key="index"
+                    >{{item.name}}</a>
                 </el-form-item>
             </el-form>
             <div class="audit-line"></div>

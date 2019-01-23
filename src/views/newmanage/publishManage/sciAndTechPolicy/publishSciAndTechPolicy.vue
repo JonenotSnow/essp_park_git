@@ -27,7 +27,7 @@
                     />
                 </el-form-item>
                 <el-form-item label="政策法规详情：" prop="infoDetail" class="my-detail-edit">
-                    <div class="edit_wrap">
+                    <div class="my-quill-edit-wrap-ss">
                         <essp-editor
                             :editorCont="ruleForm.infoDetail"
                             @onEditorChange="onEditorChange"
@@ -105,7 +105,7 @@
                     />
                 </el-form-item>
                 <el-form-item label="科技服务详情：" prop="infoDetail" class="my-detail-edit">
-                    <div class="edit_wrap">
+                    <div class="my-quill-edit-wrap-ss">
                         <essp-editor :editorCont="ruleForm.infoDetail" @onEditorChange="onEditorChange"></essp-editor>
                     </div>
                 </el-form-item>

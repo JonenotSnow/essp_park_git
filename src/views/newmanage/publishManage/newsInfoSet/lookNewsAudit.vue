@@ -21,16 +21,25 @@
                     </div>
                 </el-form-item>
                 <el-form-item label="新闻动态标签：" prop="tags">
-                    <div class="my-style">
-                        <span class="my-tag" v-for="(item, index) in satpDate.tagsTxt" :key="index">{{item}}</span>
+                    <div class="my-style" v-if="satpDate.tagsTxt && satpDate.tagsTxt.length > 0">
+                        <!--<span class="my-tag" v-for="(item, index) in satpDate.tagsTxt" :key="index">{{item}}</span>-->
+                        <essp-park-tag
+                            v-for="(item, index) in satpDate.tagsTxt"
+                            :key="index"
+                            :value="item"
+                        />
                     </div>
                 </el-form-item>
                 <el-form-item label="发布人：">
                     <!--<div class="my-style">{{userInfo.truename}}</div>-->
                     <div class="my-style">{{satpDate.userName}}</div>
                 </el-form-item>
-                <el-form-item label="附件：">
-                    <div class="my-style" v-for="(item, index) in fileList" :key="index">{{item.name}}</div>
+                <el-form-item label="附件：" v-if="fileList && fileList.length > 0">
+                    <a class="my-style"
+                       :href="item.url"
+                       :download="item.name"
+                       v-for="(item, index) in fileList" :key="index"
+                    >{{item.name}}</a>
                 </el-form-item>
             </el-form>
             <div class="audit-line"></div>
@@ -70,8 +79,13 @@
                     </div>
                 </el-form-item>
                 <el-form-item label="通知公告标签：" prop="tags">
-                    <div class="my-style">
-                        <span class="my-tag" v-for="(item, index) in satpDate.tagsTxt" :key="index">{{item}}</span>
+                    <div class="my-style" v-if="satpDate.tagsTxt && satpDate.tagsTxt.length > 0">
+                        <!--<span class="my-tag" v-for="(item, index) in satpDate.tagsTxt" :key="index">{{item}}</span>-->
+                        <essp-park-tag
+                            v-for="(item, index) in satpDate.tagsTxt"
+                            :key="index"
+                            :value="item"
+                        />
                     </div>
                 </el-form-item>
                 <el-form-item label="发布人：">
@@ -109,10 +123,13 @@
 
 <script>
     import EsspBreadCrumb from "@/components/EsspBreadCrumb";
+    import EsspParkTag from "@/components/EsspParkTag";
+
 
     export default {
         components: {
-            EsspBreadCrumb
+            EsspBreadCrumb,
+            EsspParkTag
         },
         data() {
             return {
