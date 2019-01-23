@@ -57,9 +57,9 @@
                         <span>发布方：</span>
                         <span>{{infoList.cstName}}</span>
                     </p>
-                    <p class="ts">
+                    <p class="ts ql-container ql-snow">
                         <span class="tspan">活动详情：</span>
-                        <span v-html="infoList.activityDetails"></span>
+                        <span style="border: none; padding:0;" class="ql-editor"  v-html="infoList.activityDetails"></span>
                     </p>
                 </div>
             </div>
