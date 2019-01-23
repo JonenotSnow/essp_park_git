@@ -315,13 +315,12 @@
             },
             // 通过  或者 不通过
             auditOption(type){
-                var reason = (type=="02")? "":this.mark;
+                var reason = this.mark;
 
-                if(type != "02" && this.mark == "") {
+                if(this.mark == "") {
                     this.$message.error("拒绝理由必填！");
                     return;
                 }
-
                 this.$post(this.$apiUrl.active.auditOption, {
                     activityId: this.$route.query.id,
                     parkId: sessionStorage.getItem("parkId"),

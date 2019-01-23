@@ -31,8 +31,8 @@
                                         <b>时间：</b><em>{{actData.activityStarttime}}</em></div>
                                     <div class="infos_item btns"><i class="icon iconfont icon-dizhi" style="color: #ccc;"></i>
                                         <b>地点：</b><em>{{actData.activityPlace}}</em></div>
-                                    <div class="infos_item"><i class="icon iconfont icon-faburen" style="color: #ccc;"></i>
-                                        <b>发布机构：</b><em>{{actData.initiatorWay || '暂无发起人'}}</em></div>
+                                    <!--<div class="infos_item"><i class="icon iconfont icon-faburen" style="color: #ccc;"></i>-->
+                                        <!--<b>发布机构：</b><em>{{actData.initiatorWay || '暂无发起人'}}</em></div>-->
                                     <div style="margin-bottom: 18px;"><i class="icon iconfont icon-piaozhong" style="color: #ccc;"></i> <b style="padding-left: 0;">票种：</b><em></em></div>
                                 </div>
                                 <div class="infobtn esspclearfix">

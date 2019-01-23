@@ -186,7 +186,7 @@
             return {
                 //新版上传图片
                 parkUploadData: {
-                    title: '惠政主图：',
+                    title: '资讯主图：',
                     src: '',
                     isPic: '（该图片以资讯主图进行展示,每张最大2M，图片宽高比为7：4，建议分辨率建议为840*480，支持jpg/jpeg/gif/png格式。）',
                     imgItemType: 'information',
