@@ -345,9 +345,14 @@ export default {
         await this.selectResMenu()
         await this.utils.logoutDelSSH();
         this.$message.info("退出登录成功!");
-        this.$router.push({
-            path: '/parkHome',
-        });
+        // this.$router.push({
+        //     path: '/parkHome',
+        // });
+        let that =this
+        setTimeout(() => {
+              that.windowOpenNoParams('/userIndex/login')
+        }, 1000);
+
       }
     },
     // 获取菜单权限 需要传入 parkId, 角色权限
@@ -363,8 +368,11 @@ export default {
                 console.log(4);
                 if (response.resultCode == "CLT000000000") {
                     var menuList = response.resultData.menuList[0] || {};
-                    console.log(menuList)
                     this.SSH.setItem("menuList", menuList);
+                    this.SSH.setItem(
+                    "menuResource",
+                    response.resultData.routerResMap
+                );
                 } else {
                     this.$message.info(response.resultMsg);
                 }

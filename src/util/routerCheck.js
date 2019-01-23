@@ -3,6 +3,7 @@ import constants from "./constants";
 import utils from "./utils";
 import sessionStorageHandler from "./sessionStorageHandler";
 import {Message} from "element-ui";
+import {platform} from './initAndLogin'
 
 export function checkResource(to, from, next){
 
@@ -27,7 +28,6 @@ export function checkResource(to, from, next){
 
     if (!utils.isEmpty(resource)) {
         resourceFlag = true
-        debugger
         nameRes = resource[to.name]
     }
     if(utils.isEmpty(nameRes)){
@@ -39,6 +39,12 @@ export function checkResource(to, from, next){
     }
     if(utils.isEmpty(nameRes)){
         let url = window.location.href
+        // if(from.name === 'login' && sessionStorageHandler.getItem('loginFlag')){
+            // next({
+            //     path: '/',
+            // })
+            // Message.error('您没有权限访问此页面!')
+        // }else
             if(sessionStorageHandler.getItem('toUrlResource') && sessionStorageHandler.getItem('toUrlResource').isclick==='1'){
             next({
                 path: from.path,
@@ -111,10 +117,25 @@ export function checkResource(to, from, next){
                 next();
             }
         } else if (!loginPermission) {
-                // next({
-                //     path: '/userIndex/login',
-                //     query: { redirect: to.fullPath }
-                // })
+            // 未登录跳转至登录界面
+            // if(isEsscFlag){
+                next({
+                    path: '/userIndex/login',
+                    query: { redirect: to.fullPath }
+                })
+            // }else{
+            //     if(platform()===constants.platformType.parkType.key && sessionStorageHandler.getItem('parkId')){
+            //         if(to.fullPath.indexOf('?')>-1){
+            //             urlTmp = window.location.origin+window.location.pathname+'#'+to.fullPath+'&'+sessionStorageHandler.getItem('parkId')
+            //         }else{
+            //             urlTmp = window.location.origin+window.location.pathname+'#'+to.fullPath+'?'+sessionStorageHandler.getItem('parkId')
+            //         }
+            //     }else{
+            //         urlTmp = window.location.origin+window.location.pathname+'#'+to.fullPath
+            //     }
+            //     window.open(sessionStorageHandler.getItem('esscPathname')+'/userIndex/login?channel='+platform()+'&returnUrl='+encodeURIComponent(urlTmp),'_self')
+            // }
+            // window.open('http://localhost:8080/#/userIndex/login?channel=JZFP&returnUrl='+to.path,'_self')
             Message.error('您还未登录，请先登录!')
         } else if (!cetificatePermission) {
             // 未登录跳转至登录界面
