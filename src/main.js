@@ -3,7 +3,7 @@ import Vue from "vue";
 import App from "./App";
 import router from "./router";
 // import VueRouter from 'vue-router'
-import ElementUI from "element-ui";
+import ElementUI,{Message} from "element-ui";
 import echarts from "echarts";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
@@ -69,7 +69,7 @@ Vue.filter("timerFormat", function(value) {
 });
 
 // Vue.prototype.$uploadCommom = uploadCommom;
-let openUrl = "http://128.196.235.129:1345/essp/#";
+let openUrl = "http://128.196.235.132:1345/essp/#";
 
 if (process.env.NODE_ENV === "production") {
     openUrl = window.location.origin+'/essp/'+"#";;
@@ -101,6 +101,10 @@ router.beforeEach(async (to, from, next) => {
 
     // let query  = getQueryObjuect()
     let menuList = sessionStorageHandler.getItem("menuList");
+    let name = to.name;
+    let menuResource = sessionStorageHandler.getItem("menuResource");
+    let currentMenu = menuResource[name]; 
+
     let parkId = to.query.parkId;
     let token = to.query.token;
     let isUrlHasBd = window.location.href.indexOf("bdppc") > -1;
@@ -116,7 +120,6 @@ router.beforeEach(async (to, from, next) => {
         sessionStorageHandler.setItem("token", token);
         await refreshAuthToken(token);
     }
-    console.log(to.query.label);
     if (
         (token && token != "null" && to.path !== "/parkList") ||
         (!menuList && to.path !== "/parkList")
@@ -136,10 +139,15 @@ router.beforeEach(async (to, from, next) => {
             return (window.location.href = openUrl + "/parkList" + url);
         }
         // bdParkId 有此字段优先返回
-        console.log(oneId);
         await getLoginUserRole({ parkId: oneId });
         await selectResMenu({ oneId, LoginUserRol });
         // router.push(to.path)
+    }
+    
+    //如果返回的页面权限没有当前路由name值
+    if (currentMenu == null) {
+        Message.error("你没有权限访问此页面");
+        return;
     }
 
     next();
@@ -152,12 +160,10 @@ async function getResetSession() {
 }
 
 async function getParkByName(name = "bdPark2018") {
-    console.log(name);
     await post("/parkManage/getParkByRealmName", {
         realmName: name
     }).then(res => {
         if (res.resultData) {
-            console.log(res.resultData);
             bdParkId = res.resultData.bdParkId;
             sessionStorageHandler.setItem("parkId", res.resultData.parkId);
             sessionStorageHandler.setItem("parkName", res.resultData.parkNm);
@@ -203,7 +209,6 @@ async function selectResMenu(options, next) {
     };
     await post(urlapi, pop).then(
         response => {
-            console.log(4);
             if (response.resultCode == "CLT000000000") {
                 var menuList = response.resultData.menuList[0] || {};
                 sessionStorageHandler.setItem("menuList", menuList);
@@ -236,7 +241,6 @@ async function getParkById(parkId) {
         parkId: parkId
     }).then(res => {
         if (res.resultCode == "CLT000000000") {
-            console.log(res.resultData);
             if (res.resultData) {
                 sessionStorageHandler.setItem("parkId", res.resultData.parkId);
                 sessionStorageHandler.setItem(

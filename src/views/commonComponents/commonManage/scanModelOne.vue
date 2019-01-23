@@ -59,7 +59,7 @@
                             </div>
                         </div>
                         <div class="noPic">
-                            <quill-editor options="toolOptions" v-model="it.content"></quill-editor>
+                            <quill-editor :options="toolOptions" v-model="it.content"></quill-editor>
                         </div>
                         <div class="picList" v-if="it.isPic == '1'">
                             <div v-for="(is,itemindex) in imgBoxA[moudelIndex]" :key="itemindex" @click="getCurPicOrder(itemindex,moudelIndex)"
@@ -509,10 +509,11 @@ export default {
             height:240px!important;
             min-height:240px!important;
             max-height:240px!important;
-    }/* 配置无效 */
-    #scanModelOne .ql-video,#scanModelOne .ql-image,#scanModelOne .ql-link{
-        display:none;
     }
+    /* 配置无效 */
+    /* #scanModelOne .ql-video,#scanModelOne .ql-image,#scanModelOne .ql-link{
+        display:none;
+    } */
 </style>
 
 
