@@ -126,7 +126,7 @@
                         :before-upload="beforeAvatarUpload"
                         :file-list="fileList">
                         <span class="btn-upload">附件上传</span>
-                        <div slot="tip" class="el-upload__tip">（政策法规支持pdf/word/excel等类型文件，大小10M内）</div>
+                        <div slot="tip" class="el-upload__tip">（通知公告支持pdf/word/excel等类型文件，大小10M内）</div>
                     </el-upload>
                 </el-form-item>
                 <el-form-item>
