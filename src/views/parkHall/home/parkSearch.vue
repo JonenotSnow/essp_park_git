@@ -328,7 +328,10 @@ export default {
                 parkId: this.parkId,
                 title: this.indexSeachKW
             };
-            this.isBdPark ? '' : pop.classtType = this.classtType
+            if(this.isBdPark) {
+                pop.classtType = this.classtType
+                pop.type = '1'
+            }
             this.loading = true
             this.$post(url, pop).then(response => {
                 this.loading = false
