@@ -1,93 +1,97 @@
 <template>
     <div style="margin-bottom: 30px;">
-        <essp-bread-crumb class="detailNav" :breadList="breadlist"></essp-bread-crumb>
-        <!-- 资讯详情页 -->
-        <div class="newscon">
-            <h2>{{informationTitle}}</h2>
-            <div class="newstatus esspclearfix">
+        <div v-show="isShow">
+            <essp-bread-crumb class="detailNav" :breadList="breadlist"></essp-bread-crumb>
+            <!-- 资讯详情页 -->
+            <div class="newscon">
+                <h2>{{informationTitle}}</h2>
+                <div class="newstatus esspclearfix">
         <span class="statusitemsA">
           <label>发布时间：</label>
           <em>{{createTime | timerFormat(createTime)}}</em>
         </span>
-                <span class="statusitemsB">
+                    <span class="statusitemsB">
           <label>浏览量：</label>
           <em>{{viewTime}}</em>
         </span>
-                <!--<span class="statusitems">-->
-                <!--<div class="follow">-->
-                <!--<i class="icon iconfont icon-liulan"></i>-->
-                <!--<em>{{viewTime}}</em>-->
-                <!--</div>-->
-                <div class="follow cursor guanzhu" @click="showDialog()">
-                    <i class="icon iconfont"
-                       :class="followStatus == 0 ?'icon-aixin-xianxing':'icon-collect2'"
-                       style="font-size: 14px"></i>
-                    <span>{{followStatus == 0 ? "关注" : "已关注"}}</span>
-                    <span>(已关注{{countFollower || 0}})</span>
-                </div>
-                <!--<div-->
-                <!--class="follow cursor"-->
-                <!--@click="tipOffFn(3,infoDetailData.informationId,infoDetailData.informationTitle)"-->
-                <!--&gt;-->
-                <!--<i class="iconfont icon-warning" style="font-size: 14px;"></i>-->
-                <!--<em>举报</em>-->
-                <!--</div>-->
-                <!-- </span> -->
-            </div>
-            <div class="tagscon" v-show="tags.length">
-                <div class="tags_con esspclearfix">
-                    <div class="tagssubcon">
-                        <essp-park-tag
-                            v-for="(item, eptIndex) in tags"
-                            :value="item"
-                            :key="eptIndex"
-                        />
+                    <!--<span class="statusitems">-->
+                    <!--<div class="follow">-->
+                    <!--<i class="icon iconfont icon-liulan"></i>-->
+                    <!--<em>{{viewTime}}</em>-->
+                    <!--</div>-->
+                    <div class="follow cursor guanzhu" @click="showDialog()">
+                        <i class="icon iconfont"
+                           :class="followStatus == 0 ?'icon-aixin-xianxing':'icon-collect2'"
+                           style="font-size: 14px"></i>
+                        <span>{{followStatus == 0 ? "关注" : "已关注"}}</span>
+                        <span>(已关注{{countFollower || 0}})</span>
                     </div>
-                    <!--<button class="infojb"-->
-                    <!--@click="tipOffFn(3,infoDetailData.informationId,infoDetailData.informationTitle)">举报-->
-                    <!--</button>-->
+                    <!--<div-->
+                    <!--class="follow cursor"-->
+                    <!--@click="tipOffFn(3,infoDetailData.informationId,infoDetailData.informationTitle)"-->
+                    <!--&gt;-->
+                    <!--<i class="iconfont icon-warning" style="font-size: 14px;"></i>-->
+                    <!--<em>举报</em>-->
+                    <!--</div>-->
+                    <!-- </span> -->
                 </div>
+                <div class="tagscon" v-show="tags.length">
+                    <div class="tags_con esspclearfix">
+                        <div class="tagssubcon">
+                            <essp-park-tag
+                                v-for="(item, eptIndex) in tags"
+                                :value="item"
+                                :key="eptIndex"
+                            />
+                        </div>
+                        <!--<button class="infojb"-->
+                        <!--@click="tipOffFn(3,infoDetailData.informationId,infoDetailData.informationTitle)">举报-->
+                        <!--</button>-->
+                    </div>
+                </div>
+                <!-- <div class="btncon">
+                          <el-button type="primary" @click="upDatefollowStatus(followStatus)">{{followStatus==0?"关注":"取消关注"}}</el-button>
+                </div>-->
+                <div class="jbnc" v-if="prompt == 1">PS: 该内容因被举报正在取证中，请您谨慎对待。</div>
             </div>
-            <!-- <div class="btncon">
-                      <el-button type="primary" @click="upDatefollowStatus(followStatus)">{{followStatus==0?"关注":"取消关注"}}</el-button>
-            </div>-->
-            <div class="jbnc" v-if="prompt == 1">PS: 该内容因被举报正在取证中，请您谨慎对待。</div>
-        </div>
-        <div class="infoDetail">
-            <div class="realinfo" v-html="infoDetail"></div>
-        </div>
-
-        <div class="pinglun">
-            <essp-info-comment commentSty="2"></essp-info-comment>
-        </div>
-
-        <!--<div class="common_titwrap esspclearfix">-->
-        <!--<div class="moreinfo esspclearfix">-->
-        <!--<h3 class="common_titdesa">更多热门资讯</h3>-->
-        <!--<div class="info_more" @click="goParkInfoAll">查看更多></div>-->
-        <!--</div>-->
-        <!--&lt;!&ndash; 更多资讯模块 &ndash;&gt;-->
-        <!--<div class="newscard_con">-->
-        <!--<more-news></more-news>-->
-        <!--</div>-->
-        <!--</div>-->
-
-        <!-- 关注事件对话框start -->
-        <el-dialog class="quguanbox"
-                   title="提示"
-                   :visible.sync="dialogVisible"
-                   width="30%"
-                   :before-close="handleClose">
-            <!-- <span style="display: inline-block; width: 100%; text-align: center;font-size: 16px">确定取消该关注？</span> -->
-            <div>
-                <i class="icon iconfont icon-tishi"></i><span class="quguan">是否取消该关注</span>
+            <div class="infoDetail ql-container ql-snow">
+                <div class="realinfo ql-editor" v-html="infoDetail"></div>
             </div>
-            <span slot="footer" class="dialog-footer">
+
+            <div class="pinglun">
+                <essp-info-comment commentSty="2"></essp-info-comment>
+            </div>
+
+            <!--<div class="common_titwrap esspclearfix">-->
+            <!--<div class="moreinfo esspclearfix">-->
+            <!--<h3 class="common_titdesa">更多热门资讯</h3>-->
+            <!--<div class="info_more" @click="goParkInfoAll">查看更多></div>-->
+            <!--</div>-->
+            <!--&lt;!&ndash; 更多资讯模块 &ndash;&gt;-->
+            <!--<div class="newscard_con">-->
+            <!--<more-news></more-news>-->
+            <!--</div>-->
+            <!--</div>-->
+
+            <!-- 关注事件对话框start -->
+            <el-dialog class="quguanbox"
+                       title="提示"
+                       :visible.sync="dialogVisible"
+                       width="30%"
+                       :before-close="handleClose">
+                <!-- <span style="display: inline-block; width: 100%; text-align: center;font-size: 16px">确定取消该关注？</span> -->
+                <div>
+                    <i class="icon iconfont icon-tishi"></i><span class="quguan">是否取消该关注</span>
+                </div>
+                <span slot="footer" class="dialog-footer">
                 <el-button @click="dialogVisible = false">取 消</el-button>
                 <el-button type="primary" @click="upDatefollowStatus()">确 认</el-button>
             </span>
-        </el-dialog>
-        <!-- 关注事件对话框end -->
+            </el-dialog>
+            <!-- 关注事件对话框end -->
+        </div>
+        <div style="height:40px;line-height:40px;text-align: center;background-color: #fff;" v-show="!isShow">由于详情内容过大，加载比较慢，请您耐心等候！</div>
+
 
     </div>
 </template>
@@ -109,6 +113,7 @@
         data() {
             return {
                 msg: "资讯详情",
+                isShow: false,
                 breadlist: [
                     {
                         path: "/newsinfo",
@@ -146,6 +151,7 @@
             };
         },
         created() {
+
             this.detailInfoP();
             this.isPit();
         },
@@ -275,21 +281,18 @@
                                 this.countFollower = data.countFollower; //关注数
                                 this.countComment = data.countComment; //评论数
                                 this.followId = data.followId; //关注id，供取消关注用
+                                this.isShow = true;
                             } else {
                                 this.$message.info(response.resultMsg);
+                                this.isShow = false;
                             }
                         },
                         err => {
                             this.$message.error("接口异常");
+                            this.isShow = false;
                         }
                     );
                 }
-            }
-        },
-        watch: {
-            $route(to, from) {
-                //监听路由
-                this.detailInfoP();
             }
         }
     };
@@ -381,8 +384,8 @@
     }
 
     .newstatus {
-        padding: 0 15%;
-        margin-bottom: 20px;
+        padding: 0 15% 20px;
+        /*margin-bottom: 20px;*/
         .statusitemsA {
             float: left;
             width: 30%;

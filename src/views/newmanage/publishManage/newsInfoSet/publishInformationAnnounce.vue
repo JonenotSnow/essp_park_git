@@ -35,14 +35,19 @@
                 </el-form-item>
                 <el-form-item label="新闻动态详情：" prop="infoDetail" class="my-detail-edit">
                     <div class="my-quill-edit-wrap-ss">
-                        <essp-editor :editorCont="ruleForm.infoDetail" @onEditorChange="onEditorChange"></essp-editor>
+                        <quill-editor
+                            ref="myTextEditor"
+                            v-model="ruleForm.infoDetail"
+                        >
+                            <div id="toolbar" slot="toolbar"></div>
+                        </quill-editor>
                     </div>
                 </el-form-item>
                 <el-form-item label="新闻动态标签：" prop="tags">
                     <div class="inline_div_tag">
                         <essp-add-tag
                             ref="eat"
-                            :showtags="this.ruleForm.tags"
+                            :showtags="this.textTag"
                             @showTagWin="showTagWin"
                             @delTag="delTag"
                             @initTag="initTag"
@@ -97,14 +102,19 @@
                 </el-form-item>
                 <el-form-item label="通知公告详情：" prop="infoDetail" class="my-detail-edit">
                     <div class="my-quill-edit-wrap-ss">
-                        <essp-editor :editorCont="ruleForm.infoDetail" @onEditorChange="onEditorChange"></essp-editor>
+                        <quill-editor
+                            ref="myTextEditor"
+                            v-model="ruleForm.infoDetail"
+                        >
+                            <div id="toolbar" slot="toolbar"></div>
+                        </quill-editor>
                     </div>
                 </el-form-item>
                 <el-form-item label="通知公告标签：" prop="tags">
                     <div class="inline_div_tag">
                         <essp-add-tag
                             ref="eat"
-                            :showtags="this.ruleForm.tags"
+                            :showtags="textTag"
                             @showTagWin="showTagWin"
                             @delTag="delTag"
                             @initTag="initTag"
@@ -150,18 +160,16 @@
         >
             <div class="my-scan-main">
                 <div class="main-head">
-                    <div class="head-title" v-if="this.ruleForm.informationTitle">{{this.ruleForm.informationTitle}}
-                    </div>
-                    <div class="head-tag" v-if="this.ruleForm.tags && this.ruleForm.tags.length > 0">
-                        <!--<span v-for="(item, index) in this.ruleForm.tags" :key="index">{{item}}</span>-->
+                    <div class="head-title"  v-if="this.ruleForm.informationTitle">{{this.ruleForm.informationTitle}}</div>
+                    <div class="head-tag" v-if="this.textTag && this.textTag.length > 0">
                         <essp-park-tag
-                            v-for="(item, index) in this.ruleForm.tags"
+                            v-for="(item, index) in this.textTag"
                             :key="index"
                             :value="item"
                         />
                     </div>
                 </div>
-                <div class="main-body">
+                <div class="main-body" >
                     <div v-html="this.ruleForm.infoDetail"></div>
                 </div>
                 <div class="main-foot" v-if="this.fileList && this.fileList.length > 0">
@@ -185,9 +193,7 @@
     import EsspTag from "@/components/EsspTag";
     import EsspAddTag from "@/components/EsspAddTag";
     import ParkUpload from "@/views/parkHall/parkUpload";
-    import EsspEditor from "@/components/EsspEditor";
     import EsspParkTag from "@/components/EsspParkTag";
-
 
     export default {
         components: {
@@ -195,7 +201,6 @@
             EsspTag,
             EsspAddTag,
             ParkUpload,
-            EsspEditor,
             EsspParkTag
         },
         data() {
@@ -233,7 +238,7 @@
                 applyType: this.$route.query.applyType || '02', // 新闻动态：01，通知公告：02
                 id: this.$route.query.id || "",
                 userInfo: this.SSH.getItem("userInfo"), // 获取用户信息
-
+                textTag:[], // 标签
                 //新版上传图片
                 parkUploadData: {
                     title: "新闻动态配图 :",
@@ -319,16 +324,16 @@
              *  */
             closetag({viewtags}) {
                 this.visible = false;
-                this.ruleForm.tags = viewtags;
+                this.textTag = viewtags;
             },
             showTagWin() {
                 this.visible = true;
             },
             delTag(tag) {
-                this.ruleForm.tags.splice(this.ruleForm.tags.indexOf(tag), 1);
+                this.textTag.splice(this.textTag.indexOf(tag), 1);
             },
             initTag(tmpTags) {
-                this.ruleForm.tags = tmpTags;
+                this.textTag = tmpTags;
             },
             /**
              * 标签相关事件---结束
@@ -336,6 +341,11 @@
 
             // 创建事件
             submitForm(formName, saveType) {
+                // 处理标签
+                let tags = this.textTag.join(',');
+                this.ruleForm.tags = tags;
+
+
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
 
@@ -343,9 +353,7 @@
 
                         this.ruleForm.saveType = saveType;
 
-                        // 处理标签
-                        let tags = this.ruleForm.tags.join(',');
-                        this.ruleForm.tags = tags;
+
 
                         // 处理附件上传
                         this.ruleForm.fileUrl = this.fileList;
@@ -390,7 +398,7 @@
                                 this.$message.info(response.resultMsg);
                             }
                         }, err => {
-                            this.$message.error("接口异常");
+                            this.$message.info(this.resultMsg);
                         })
 
                     } else {
@@ -403,16 +411,17 @@
             // 暂存事件
             temporaryStorage(formName, saveType) {
                 // this.$refs[formName].resetFields();
+
+                // 处理标签
+                let tags = this.textTag.join(',');
+                this.ruleForm.tags = tags;
+
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
 
                         this.ruleForm.parkId = this.parkId;
 
                         this.ruleForm.saveType = saveType;
-
-                        // 处理标签
-                        let tags = this.ruleForm.tags.join(',');
-                        this.ruleForm.tags = tags;
 
                         // 处理附件上传
                         this.ruleForm.fileUrl = this.fileList;
@@ -483,9 +492,9 @@
 
                         // 处理标签
                         if (response.resultData.tagsTxt) {
-                            this.ruleForm.tags = response.resultData.tagsTxt.split(",");
+                            this.textTag = response.resultData.tagsTxt.split(",");
                         } else {
-                            this.ruleForm.tags = [];
+                            this.textTag = [];
                         }
 
                         // 处理附件
@@ -642,14 +651,17 @@
                     color: #ccc;
                 }
             }
-
+            .my-quill-edit-wrap-ss {
+                height: 400px;
+                .quill-editor {
+                    height: 80%;
+                }
+            }
             .my-detail-edit {
                 .my-quill-edit-wrap {
                     width: 825px;
                     height: 360px;
-                    .quill-editor {
-                        height: 70%;
-                    }
+
 
                 }
             }
