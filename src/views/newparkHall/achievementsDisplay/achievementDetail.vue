@@ -27,8 +27,8 @@
                     </div>
                 </div>
             </div>
-            <div class="newscontent">
-                <div v-html="achievementResult.detail" v-if="achievementResult.detail != null"></div>
+            <div class="newscontent ql-container ql-snow">
+                <div style="border: none; padding:0;" class="ql-editor" v-html="achievementResult.detail" v-if="achievementResult.detail != null"></div>
                 <div v-else>
                     暂无详细内容
                 </div>

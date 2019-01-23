@@ -1553,9 +1553,7 @@
                             activityPlace: this.activityPlace,
                             isCharge: this.isCharge,
                             chargeInfo: this.chargeInfo,
-                            activityDetails: this.editorOption.editorCon
-                                ? this.editorOption.editorCon.replace(/\s/g, "&nbsp")
-                                : "",
+                            activityDetails: this.editorOption.editorCon ? this.editorOption.editorCon : "",
                             enterNeedAudit: this.enterNeedAudit,
                             activityPhoto: this.activityPhoto,
                             activityLabel: this.tags.join(","),

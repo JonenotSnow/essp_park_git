@@ -89,7 +89,7 @@ export default {
   border: none !important;
 }
 .ql-container.ql-snow .ql-editor {
-  border: 1px solid #ccc !important;
+  border: 1px solid #ccc;
 }
 </style>
 
