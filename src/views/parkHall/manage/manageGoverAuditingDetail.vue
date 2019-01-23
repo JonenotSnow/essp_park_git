@@ -82,12 +82,13 @@
                         name: "惠政审核详情"
                     }
                 ],
-                infoList: this.$route.query.content,
+                infoList: {},
                 auditInfo: []
             }
         },
         created() {
             this.getCommentList();
+            this.getPolById();
         },
         filters: {
             timerFormat(vaule) {
@@ -119,6 +120,20 @@
                 })
                     .then((response) => {
                         this.auditInfo = response.resultData;
+                    }, (err) => {
+                        this.$message({
+                            type: 'success',
+                            message: response.resultMsg
+                        });
+                    })
+            },
+            getPolById() {
+                this.$post('policy/getPolById', {
+                    parkId: window.sessionStorage.getItem("parkId"),
+                    id: this.$route.query.entityId
+                })
+                    .then((response) => {
+                        this.infoList = response.resultData;
                     }, (err) => {
                         this.$message({
                             type: 'success',

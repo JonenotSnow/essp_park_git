@@ -507,7 +507,7 @@ export default {
             font-size:16px;
             color:#409EFF;
     }
-    #scanModelOne .quill-editor .ql-container.ql-snow{
+    #scanModelOne .quill-editor .ql-container.ql-snow .ql-editor{
             height:240px!important;
             min-height:240px!important;
             max-height:240px!important;
