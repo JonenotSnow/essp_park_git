@@ -7,20 +7,20 @@
             <div class="content">
                 <div class="left-aside">
                     <div class="title-s">新闻动态</div>
-                    <ul>
+                    <ul v-if="newsList.length > 0">
                         <li class="item" v-for="(item,index) in newsList" :key="index">
                             <div class="word-part" @click="goToNewsDetail(item)">
                                 <div class="title-ss">{{item.informationTitle}}</div>
                                 <div class="detail">{{item.content}}</div>
                                 <div class="part-b">
-                                    <div class="label"><span>{{item.tagsTxt.split(',')[0]}}</span></div>
+                                    <div class="label" v-if="item.tagsTxt && item.tagsTxt.length > 0"><span>{{item.tagsTxt.split(',')[0]}}</span></div>
                                     <div class="time">{{ item.createTime | timerFormat(item.createTime) }}</div>
                                 </div>
                             </div>
                             <div class="img" :style="'background-image:url('+imgUrl+')'"></div>
                         </li>
-                        <EsspNoData v-if="newsList.length==0" class="nothing"></EsspNoData>
                     </ul>
+                    <EsspNoData v-if="newsList.length==0" class="nothing"></EsspNoData>
                     <div class="more" v-if="newsList.length>0" @click="linkToNewsListPage">More ></div>
                 </div>
                 <div class="right-aside">
@@ -74,6 +74,7 @@
                     }else if(type == 2){
                         this.noticesList = result.resultData.informationList;//通告数据源
                     }
+                    console.log( this.newsList);
                 }).catch((err) => {
                     this.$message.error("接口异常");
                 });
