@@ -89,7 +89,7 @@
 
     .essp-card-cont-inner {
         float: left;
-        width: 770px;
+        width: 755px;
         /*padding: 20px 20px 0;*/
         background-color: #fff;
         .descontool {

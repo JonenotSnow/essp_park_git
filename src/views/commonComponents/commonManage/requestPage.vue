@@ -31,7 +31,8 @@
                 key: '',
                 mark: '',
                 parkId: '',
-                parkNm: ''
+                parkNm: '',
+                notice:false
             }
         },
         async created() {
@@ -65,6 +66,7 @@
                     })
             },
             agreeInvite() {
+                let that = this;
                 this.$post(this.$apiUrl.manage.agreeInvite, {
                     parkId: this.parkId,
                     key: this.$route.query.key
@@ -74,13 +76,23 @@
                             type: "success",
                             message: "加入成功"
                         });
+                        this.notice = true;
                     }, (error) => {
                         this.$message({
                             type: "error",
                             message: response.resultMsg
                         });
+                        this.notice = false;
                     })
-                    this.toOut();
+                    setTimeout(()=>{
+                        if (that.notice) {
+                            this.$message({
+                                type: "success",
+                                message: "加入成功"
+                            });
+                        }
+                        that.toOut();
+                    },1000)
             },
             getParkById(parkId) {
                 this.$post(this.$apiUrl.manage.getParkById, {
@@ -98,8 +110,7 @@
                 );
             },
             toOut(){
-                console.log("邀请函跳平台");
-                this.windowHrefUrl('/messageCenter/sysMsg');
+                this.windowOpenNoParams('/messageCenter/sysMsg');
             }
         }
     }

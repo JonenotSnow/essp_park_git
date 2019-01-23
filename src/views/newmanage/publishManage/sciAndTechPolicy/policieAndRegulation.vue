@@ -248,6 +248,7 @@
                             outline: none;
                             border: none;
                             vertical-align: top;
+                            border-radius: 0;
                         }
                         input::-webkit-input-placeholder {
                             color: #ccc;

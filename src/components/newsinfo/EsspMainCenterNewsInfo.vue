@@ -161,6 +161,7 @@
                 this.getParkInfoList();
             },
             getParkInfoList() {
+                console.log(this.pageType)
                 var parkId =  sessionStorage.getItem("parkId") || "";
                 var url = newsinfo[this.pageType] || " ";
                 this.$post(url,{

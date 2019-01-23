@@ -79,7 +79,7 @@
                     <div class="my-style">{{satpDate.userName}}</div>
                 </el-form-item>
                 <el-form-item label="附件：">
-                    <div class="my-style" v-for="(item, index) in fileList" :key="index">{{item.name}}</div>
+                    <div class="my-style" v-for="(item, index) in fileList" :key="index"><a :href="item.url" :download="item.name">{{item.name}}</a></div>
                 </el-form-item>
             </el-form>
             <div class="audit-line"></div>
@@ -103,7 +103,7 @@
                 <span class="audit-btn audit-success" @click="submit('02')">通过</span><span class="audit-btn audit-reject" @click="submit('12')">不通过</span>
             </div>
         </div>
-    
+
     </div>
 </template>
 
@@ -280,7 +280,7 @@
                         this.$router.push({
                             path: '/parkHall/manage/newsNoticeAudit'
                         });
-                        
+
                     } else {
                         this.$message.info(response.resultMsg);
                     }
@@ -293,7 +293,7 @@
             this.getSatpDate();
             this.getCommentList();
         },
-        
+
     }
 </script>
 

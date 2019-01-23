@@ -144,28 +144,28 @@ export default {
               id: 0,
               year: "",
               dataNum: "",
-              sub: "个",
+              sub: "项",
               subTitle: "专利申请量：",
               type:2
             },{
               id: 0,
               year: "",
               dataNum: "",
-              sub: "个",
+              sub: "项",
               subTitle: "专利申请量：",
               type:2
             },{
               id: 0,
               year: "",
               dataNum: "",
-              sub: "个",
+              sub: "项",
               subTitle: "专利申请量：",
               type:2
             },{
               id: 0,
               year: "",
               dataNum: "",
-              sub: "个",
+              sub: "项",
               subTitle: "专利申请量：",
               type:2
             },{
@@ -226,35 +226,35 @@ export default {
               id: 0,
               year: "",
               dataNum: "",
-              sub: "项",
+              sub: "家",
               subTitle: "高新技术企业数量：",
               type:4
             },{
               id: 0,
               year: "",
               dataNum: "",
-              sub: "项",
+              sub: "家",
               subTitle: "高新技术企业数量：",
               type:4
             },{
               id: 0,
               year: "",
               dataNum: "",
-              sub: "项",
+              sub: "家",
               subTitle: "高新技术企业数量：",
               type:4
             },{
               id: 0,
               year: "",
               dataNum: "",
-              sub: "项",
+              sub: "家",
               subTitle: "高新技术企业数量：",
               type:4
             },{
               id: 0,
               year: "",
               dataNum: "",
-              sub: "项",
+              sub: "家",
               subTitle: "高新技术企业数量：",
               type:4
             }
@@ -431,7 +431,7 @@ export default {
           this.$message('数据完整设置后，才可上传')
           return false
       }
-    
+
       this.$post("/dataIndex/saveData", params).then(res => {
         this.$message.success("数据上传成功");
       });
@@ -460,10 +460,13 @@ export default {
   font-size: 14px;
   font-weight: normal;
   font-stretch: normal;
-  line-height: 40px;
+  line-height: 35px;
   letter-spacing: 0.4px;
   color: #00a0e9;
   text-indent: 9px;
+}
+#dataManage .accordion .el-collapse-item .el-collapse-item__header .el-collapse-item__arrow{
+    line-height: 35px;
 }
 #dataManage .accordion .el-collapse-item .el-collapse-item__header i {
   float: right;

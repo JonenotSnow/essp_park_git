@@ -31,7 +31,7 @@
                 </ul>
             </div>
             <div class="saveBtn">
-                <button class="my-btn btn-search" @click='getList'>查询</button>
+                <button class="my-btn btn-search" @click='checkList'>查询</button>
                 <button class="my-btn btn-reset" @click='reset'>重置</button>
             </div>
             <div class="select">
@@ -210,12 +210,17 @@ export default {
                 this.count = response.resultData
             })
         },
+        checkList(){
+            this.pageNum = 1;
+            this.getList();
+        },
         //list列表
         getList(type){
             //用于申请表导出查询
+            let pageSize = this.pageSize;
             if (type == 0) {
                 this.pageNum = 1;
-                this.pageSize = 9999;
+                pageSize = 9999;
             }
 
             this.$post(this.$apiUrl.manage.getAuditList,{
@@ -226,7 +231,7 @@ export default {
                 status : this.searchCondition.status,
                 companyName : this.searchCondition.companyName,
                 pageNum : this.pageNum,
-                pageSize : this.pageSize
+                pageSize : pageSize
             })
             .then((response) => {
                 this.list = response.resultData.applyParkList;
@@ -285,7 +290,7 @@ export default {
         exportData () {
             this.touch = true;
             // window.location.href = "http://128.196.235.129:1345/"+ this.$apiUrl.manage.applyFormExport+'?id='+this.selectList.toString();
-            window.location.href = window.location.origin + window.location.pathname +'#'+ this.$apiUrl.manage.applyFormExport+'?id='+this.selectList.toString();
+            window.location.href = window.location.origin + this.$apiUrl.manage.applyFormExport+'?id='+this.selectList.toString();
             setTimeout(function(){
                 this.touch = false;
             },1000)
@@ -357,7 +362,7 @@ export default {
                                 // border-radius: 4px;
                             }
                             &>select{
-                                width: 128px;
+                                width: 144px;
                                 padding:0 5px;
                                 outline: none;
                                 height: 35px;
@@ -373,7 +378,7 @@ export default {
                         &:nth-of-type(1){
                             &>div:nth-of-type(2){
                                 span{
-                                    margin-left:36px;
+                                    margin-left:20px;
                                 }
                             }
                         }

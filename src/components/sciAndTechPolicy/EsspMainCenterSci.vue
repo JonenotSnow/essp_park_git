@@ -337,7 +337,7 @@
             padding-top: 40px;
             padding-right: 24px;
             padding-bottom: 50px;
-            width: 746px;
+            width: 731px;
             background: #fff;
             text-align: right;
         }

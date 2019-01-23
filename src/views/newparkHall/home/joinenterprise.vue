@@ -6,7 +6,7 @@
         <div class="com-brf">入驻企业400+，在职人员10000+</div>
         <div class="entercons">
             <!-- 逻辑是 一行最多显示5个，超过5个显示more 否则不必要
-            
+
             现在固定显示6个
              -->
             <div class="hasenters" v-if="enterprises.length">
@@ -15,7 +15,7 @@
             </div>
                <div v-else class="nobox"><i class="myicon"></i><span class="tipspan">暂无数据</span></div>
         </div>
-    </div> 
+    </div>
  </div>
 </template>
 
@@ -50,14 +50,14 @@ import mixins_windowOpen from '@/components/mixins/mixins_windowOpen.js'
         parkId: this.SSH.getItem('parkId'),
         pageSize:this.pageSize,
         pageNum:this.pageNum
-      }).then(      
+      }).then(
         response => {
           if (response.resultCode == "CLT000000000") {
             if(response.resultData.memInfoCount > 0){
               this.enterprises = response.resultData.memberList
             }else{
 
-            }           
+            }
           }
         },
         response => {
@@ -66,8 +66,8 @@ import mixins_windowOpen from '@/components/mixins/mixins_windowOpen.js'
       );
     },
     enterBusiness(item){
-        let prams = "?cstId="+item.cstId
-        this.windowOpenUrl('/centerIndex/showHome',prams)
+        var prams = "?cstId="+item.cstId;
+        this.windowOpenUrlNoToken('/centerIndex/showHome',prams)
     }
    }
  }
@@ -88,7 +88,7 @@ import mixins_windowOpen from '@/components/mixins/mixins_windowOpen.js'
         height: 50px;
         background-color: #ffffff;
         cursor: pointer;
-        box-shadow: 1.5px 2.6px 7.8px 0.2px 
+        box-shadow: 1.5px 2.6px 7.8px 0.2px
             rgba(0, 0, 0, 0.1);
         margin-right:50px;
         cursor: pointer;
@@ -111,7 +111,7 @@ import mixins_windowOpen from '@/components/mixins/mixins_windowOpen.js'
         text-align: center;
         .tipspan{
                 display: inline-block;
-                
+
                 font-size: 28px;
                 font-weight: normal;
                 font-stretch: normal;
@@ -125,12 +125,12 @@ import mixins_windowOpen from '@/components/mixins/mixins_windowOpen.js'
             width:40px;
             height:40px;
             line-height: 40px;
-            background: url("../../../assets/newparkimg/home/noresult.png")  no-repeat center center;    
+            background: url("../../../assets/newparkimg/home/noresult.png")  no-repeat center center;
             margin-right:10px;
         }
     }
-    
+
 
  }
- 
+
 </style>

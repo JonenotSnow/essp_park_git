@@ -508,7 +508,7 @@ export default {
   .swiper_inner3 {
     float: left;
     margin-left: 90px;
-    /*font-size: 16px;*/
+    font-size: 16px;
   }
   .swiper_inner2 {
     text-align: center;

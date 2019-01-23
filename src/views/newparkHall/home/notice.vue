@@ -55,10 +55,10 @@
         },
         created(){
             this.getNewsList(1)
-            this.getNewsList(2)            
+            this.getNewsList(2)
         },
         methods:{
-            getNewsList(type){      
+            getNewsList(type){
                 let parkId =  sessionStorage.getItem("parkId") || "";
                 this.$post('/information/getAllInformation',{
                     endDate: "",
@@ -194,8 +194,8 @@
                                         line-height:25px;
                                         color:#fff;
                                         text-align: center;
-                                        background-image: linear-gradient(119deg, 
-                                            #fb7272 0%, 
+                                        background-image: linear-gradient(119deg,
+                                            #fb7272 0%,
                                             #fc9595 100%);
                                         transform: skew(-10deg);
                                         margin:0 7px;
@@ -232,11 +232,11 @@
                     width: 570px;
                     ul {
                         height: 320px;
-                        border-bottom: solid 1px #cccccc;
+                        /*border-bottom: solid 1px #cccccc;*/
                         li {
                             display: flex;
                             justify-content: space-between;
-                            /*border-top: solid 1px #cccccc;*/
+                            border-top: solid 1px #cccccc;
                             line-height: 39px;
                             vertical-align: middle;
                             &:hover {
