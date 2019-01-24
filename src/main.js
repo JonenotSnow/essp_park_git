@@ -121,7 +121,7 @@ router.beforeEach(async (to, from, next) => {
     }
     if (
         (token && token != "null" && to.path !== "/parkList") ||
-        (!menuList && to.path !== "/parkList")
+        (!menuList && to.path !== "/parkList")||(to.query.label)
     ) {
         // 如果有token继而判断是是保定,获取园区信息，其他园区通过label获取
         if (isUrlHasBd || to.query.label) {
