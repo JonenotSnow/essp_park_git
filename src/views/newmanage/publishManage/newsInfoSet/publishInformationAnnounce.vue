@@ -332,6 +332,10 @@
             initTag(tmpTags) {
                 this.textTag = tmpTags;
             },
+            //父级接收子集的数据
+            addTags({name}) {
+                this.setActObj.activityLabel = name;
+            },
             /**
              * 标签相关事件---结束
              *  */
@@ -492,8 +496,9 @@
 
 
                         // 处理标签
-                        console.log("标签",);
-                        this.textTag = response.resultData.tagsTxt.split(",");
+                        console.log("标签",response.resultData.tagsTxt);
+                        this.textTag = response.resultData.tagsTxt ? response.resultData.tagsTxt.split(",") : [];
+                        this.tagprops.entId = window.sessionStorage.getItem("parkId") + "_" + response.resultData.informationId; //获取标签
                         // 删除时间“createTime”这个字段
                         delete this.ruleForm.createTime;
 

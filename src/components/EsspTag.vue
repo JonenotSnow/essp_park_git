@@ -143,6 +143,7 @@
                 this.tagStores = this.tagStores.filter(
                     o => this.dynamicTags.indexOf(o) === -1
                 );
+                console.log(this.tagStores);
 
             },
             findRecomTags() {
@@ -162,6 +163,9 @@
                                 this.tagStores.push(lblInfo[i].lblTxt);
                             }
                             this.gdArr = JSON.parse(JSON.stringify(this.tagStores));
+                            console.log("====",this.gdArr);
+                            console.log("dd====",this.tagStores);
+                            console.log(this.dynamicTags);
                             // 从推荐标签中移除已添加标签，防止推荐标签、已添加标签中出现同内容标签
                             this.removeExistRecomTags();
                         }
@@ -182,6 +186,7 @@
                             for (let i = 0; i < lblInfo.length; i++) {
                                 this.dynamicTags.push(lblInfo[i].lblTxt);
                             }
+                            console.log("this.dynamicTags:;",this.dynamicTags);
                             // 从推荐标签中移除已添加标签，防止推荐标签、已添加标签中出现同内容标签
                             this.removeExistRecomTags();
                         }
@@ -196,6 +201,7 @@
             if (!this.tagprops.getTpCd && this.tagprops.lblTpCd) {
                 this.findRecomTags();
             }
+            console.log("this.tagprops.entId==",this.tagprops.entId);
             if (this.tagprops.entId) {
                 this.findEntityTag();
             }

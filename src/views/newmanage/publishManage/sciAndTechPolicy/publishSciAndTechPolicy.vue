@@ -529,7 +529,7 @@
                         } else {
                             this.showTags = [];
                         }
-
+                        this.tagprops.entId = window.sessionStorage.getItem("parkId") + "_" + response.resultData.id; //获取标签
                         // 处理附件
                         if (this.ruleForm.fileUrl) {
                             let fileList = JSON.parse(this.ruleForm.fileUrl);
