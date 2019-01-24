@@ -244,7 +244,7 @@ export default {
                 });
                 return;
             }
-            this.$router.push({path:'/parkHall/manage/manageZXAuditingDetail',query:{entityId:rows.informationId,content:rows}});
+            this.$router.push({path:'/parkHall/manage/manageZXAuditingDetail',query:{entityId:rows.informationId}});
         }
     }
 };

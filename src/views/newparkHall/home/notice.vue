@@ -170,13 +170,16 @@
                                     white-space: nowrap;
                                 }
                                 .detail {
-                                    display: -webkit-box;
                                     font-size: 14px;
                                     width: 320px;
-                                    line-clamp: 2;
-                                    -webkit-box-orient: vertical;
-                                    -webkit-line-clamp: 2;
                                     overflow: hidden;
+                                    text-overflow: ellipsis;
+                                    display: -webkit-box;
+                                    -webkit-line-clamp: 2;
+                                    -webkit-box-orient: vertical;
+                                    /*! autoprefixer: off */
+                                    -webkit-box-orient: vertical;
+                                    /* autoprefixer: on */
                                     letter-spacing: 1px;
                                     color: #777777;
                                     margin-top: 17px;
@@ -272,7 +275,9 @@
                                 color: #777;
                             }
                         }
-
+                        li:last-child{
+                            border-bottom: 0;
+                        }
                     }
                 }
             }

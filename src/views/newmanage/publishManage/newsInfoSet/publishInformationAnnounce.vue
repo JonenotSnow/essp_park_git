@@ -43,7 +43,7 @@
                         </quill-editor>
                     </div>
                 </el-form-item>
-                <el-form-item label="新闻动态标签：" prop="tags">
+                <el-form-item class="labelxing" label="新闻动态标签：">
                     <div class="inline_div_tag">
                         <essp-add-tag
                             ref="eat"
@@ -55,6 +55,7 @@
                         ></essp-add-tag>
                     </div>
                     <essp-tag @showtag="closetag" :centerDialogVisible="visible" :tagprops="tagprops"></essp-tag>
+                    <div class="el-form-item__error" v-show="isShowTag">请选择标签</div>
                 </el-form-item>
                 <el-form-item label="发布人：">
                     {{userInfo.truename}}
@@ -110,7 +111,7 @@
                         </quill-editor>
                     </div>
                 </el-form-item>
-                <el-form-item label="通知公告标签：" prop="tags">
+                <el-form-item class="labelxing" label="通知公告标签：">
                     <div class="inline_div_tag">
                         <essp-add-tag
                             ref="eat"
@@ -239,6 +240,7 @@
                 id: this.$route.query.id || "",
                 userInfo: this.SSH.getItem("userInfo"), // 获取用户信息
                 textTag:[], // 标签
+                timer: null,
                 //新版上传图片
                 parkUploadData: {
                     title: "新闻动态配图 :",
@@ -255,6 +257,7 @@
                     infoDetail: '',
                     tags: []
                 },
+                isShowTag: false,
 
                 // 编辑器提示语
                 // editorOption: {
@@ -272,9 +275,6 @@
                     ],
                     infoDetail: [
                         {required: true, message: '请输入新闻动态详情', trigger: 'blur'}
-                    ],
-                    tags: [
-                        {required: true, message: '请输入新闻动态标签', trigger: 'blur'}
                     ]
                 },
                 rules_02: {
@@ -287,9 +287,6 @@
                     ],
                     infoDetail: [
                         {required: true, message: '请输入通知公告详情', trigger: 'blur'}
-                    ],
-                    tags: [
-                        {required: true, message: '请输入通知公告标签', trigger: 'blur'}
                     ]
                 },
 
@@ -341,7 +338,19 @@
 
             // 创建事件
             submitForm(formName, saveType) {
+                var _this = this;
                 // 处理标签
+                _this.isShowTag = false;
+                if(this.textTag.length <= 0) {
+                    _this.isShowTag = true;
+                    clearTimeout(this.timer);
+                    _this.timer = setTimeout(function(){
+                        _this.isShowTag = false;
+                    }, 2000)
+
+                    return;
+                }
+
                 let tags = this.textTag.join(',');
                 this.ruleForm.tags = tags;
 
@@ -413,65 +422,59 @@
                 // this.$refs[formName].resetFields();
 
                 // 处理标签
-                let tags = this.textTag.join(',');
-                this.ruleForm.tags = tags;
+                if(this.textTag.length <= 0) {
+                    let tags = this.textTag.join(',');
+                    this.ruleForm.tags = tags;
+                }
 
-                this.$refs[formName].validate((valid) => {
-                    if (valid) {
 
-                        this.ruleForm.parkId = this.parkId;
+                this.ruleForm.parkId = this.parkId;
 
-                        this.ruleForm.saveType = saveType;
+                this.ruleForm.saveType = saveType;
 
-                        // 处理附件上传
-                        this.ruleForm.fileUrl = this.fileList;
+                // 处理附件上传
+                this.ruleForm.fileUrl = this.fileList;
 
-                        // “新闻动态”模块的接口："/information/saveNews"
-                        // “通知公告”模块的接口："information/saveNotice"
-                        let url;
-                        if (this.applyType == '01') {
-                            // 处理动态图片，“新闻动态”模块才有这个字段
-                            this.ruleForm.titleImg = this.parkUploadData.src;
-                            url = '/information/saveNews';
-                        }
+                // “新闻动态”模块的接口："/information/saveNews"
+                // “通知公告”模块的接口："information/saveNotice"
+                let url;
+                if (this.applyType == '01') {
+                    // 处理动态图片，“新闻动态”模块才有这个字段
+                    this.ruleForm.titleImg = this.parkUploadData.src;
+                    url = '/information/saveNews';
+                }
 
-                        if (this.applyType == '02') {
-                            url = '/information/saveNotice';
-                        }
+                if (this.applyType == '02') {
+                    url = '/information/saveNotice';
+                }
 
-                        this.$post(url, this.ruleForm).then(response => {
-                            let codestatus = response.resultCode;
-                            if (codestatus == "CLT000000000") {
-                                if (this.applyType === '01') {
-                                    this.$message.success("新闻动态暂存成功！");
-                                    this.$router.push({
-                                        path: '/parkHall/manage/publicNews',
-                                        query: {
-                                            status: '0'
-                                        }
-                                    });
+                this.$post(url, this.ruleForm).then(response => {
+                    let codestatus = response.resultCode;
+                    if (codestatus == "CLT000000000") {
+                        if (this.applyType === '01') {
+                            this.$message.success("新闻动态暂存成功！");
+                            this.$router.push({
+                                path: '/parkHall/manage/publicNews',
+                                query: {
+                                    status: '0'
                                 }
-                                if (this.applyType === '02') {
-                                    this.$message.success("通知公告暂存成功！");
-                                    this.$router.push({
-                                        path: '/parkHall/manage/publicNotice',
-                                        query: {
-                                            status: '0'
-                                        }
-                                    });
+                            });
+                        }
+                        if (this.applyType === '02') {
+                            this.$message.success("通知公告暂存成功！");
+                            this.$router.push({
+                                path: '/parkHall/manage/publicNotice',
+                                query: {
+                                    status: '0'
                                 }
-                            } else {
-                                this.$message.info(response.resultMsg);
-                            }
-                        }, err => {
-                            this.$message.error("接口异常");
-                        })
-
+                            });
+                        }
                     } else {
-                        console.log('error submit!!');
-                        return false;
+                        this.$message.info(response.resultMsg);
                     }
-                });
+                }, err => {
+                    this.$message.error("接口异常");
+                })
             },
 
             // 获取详情，编辑页面使用
@@ -600,6 +603,17 @@
     .my-detail-edit .el-form-item__content {
         line-height: normal;
     }
+
+    .labelxing {
+        position: relative;
+    }
+    .labelxing .el-form-item__label:before {
+        content: "*";
+        margin-right: 4px;
+        color: #f56c6c;
+    }
+
+
 </style>
 <style lang='less' scoped>
 
@@ -621,7 +635,6 @@
                 top: -6px;
             }
         }
-
         .publist-form {
             padding: 0 125px 60px;
 

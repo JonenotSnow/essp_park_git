@@ -45,7 +45,7 @@
                         <span>报名是否需审核：</span>
                         <span>{{infoList.enterNeedAudit == 0 ? '否' : '是'}}</span>
                     </p>
-                    <p class="ts ql-container ql-snow">
+                    <p class="ts ql-container ql-snow bord-none">
                         <span class="tspan">活动详情：</span>
                         <span style="border: none; padding:0;" class="ql-editor" v-html="infoList.activityDetails"></span>
                     </p>
@@ -394,6 +394,9 @@
 <style scoped lang="less">
     #manageActivityAudit{
         margin-bottom: 50px;
+        .bord-none{
+            border:none;
+        }
     }
     .common_titwrap {
         width: 1200px;
