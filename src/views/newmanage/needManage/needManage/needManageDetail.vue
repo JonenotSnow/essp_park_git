@@ -22,7 +22,9 @@
                     <div class="my-style">{{data.createTime | timerFormat(data.createTime) }}</div>
                 </el-form-item>
                 <el-form-item label="需求详情：">
-                    <div class="my-style" v-html="data.detail"></div>
+                    <div class="ql-container ql-snow my-style bord-none">
+                    <div class="ql-editor" v-html="data.detail"></div>
+                    </div>
                 </el-form-item>
                 <el-form-item label="附件：" v-if="accessory.length>0">
                     <a v-for="(it,i) in accessory" :key="i" :href="it.url" :download="it.name">{{it.name}}</a>
