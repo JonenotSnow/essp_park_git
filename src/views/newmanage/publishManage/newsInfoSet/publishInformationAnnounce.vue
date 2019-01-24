@@ -352,7 +352,9 @@
                 }
 
                 let tags = this.textTag.join(',');
+
                 this.ruleForm.tags = tags;
+
 
 
                 this.$refs[formName].validate((valid) => {
@@ -422,12 +424,10 @@
                 // this.$refs[formName].resetFields();
 
                 // 处理标签
-                if(this.textTag.length <= 0) {
+                if(this.textTag.length > 0) {
                     let tags = this.textTag.join(',');
                     this.ruleForm.tags = tags;
                 }
-
-
                 this.ruleForm.parkId = this.parkId;
 
                 this.ruleForm.saveType = saveType;
@@ -490,15 +490,12 @@
 
                         this.parkUploadData.src = this.ruleForm.titleImg ? this.ruleForm.titleImg : ""; //资讯配图
 
-                        // 删除时间“createTime”这个字段
-                        delete this.ruleForm.createTime;
 
                         // 处理标签
-                        if (response.resultData.tagsTxt) {
-                            this.textTag = response.resultData.tagsTxt.split(",");
-                        } else {
-                            this.textTag = [];
-                        }
+                        console.log("标签",);
+                        this.textTag = response.resultData.tagsTxt.split(",");
+                        // 删除时间“createTime”这个字段
+                        delete this.ruleForm.createTime;
 
                         // 处理附件
                         if (this.ruleForm.fileUrl) {
@@ -662,12 +659,6 @@
                 }
                 &:-ms-input-placeholder { /* Internet Explorer 10-11 */
                     color: #ccc;
-                }
-            }
-            .my-quill-edit-wrap-ss {
-                height: 400px;
-                .quill-editor {
-                    height: 80%;
                 }
             }
             .my-detail-edit {
