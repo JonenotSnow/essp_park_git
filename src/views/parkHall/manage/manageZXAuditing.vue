@@ -36,7 +36,10 @@
                     <span class="lable_span">资讯简介：</span>
                     <span class="line_area">{{infoList.content}}</span>
                 </div>
-
+                <div class="dtcon ql-container ql-snow dtcon bord-none">
+                    <span class="lable_span">资讯详情：</span>
+                    <span class="detail ql-editor " v-html="infoList.infoDetail"></span>
+                </div>
             </div>
         </div>
         <hr class="divider">

@@ -55,7 +55,7 @@
                                     v-else-if="nowTime >= getTime(item.enterStarttime) && nowTime <= getTime(item.enterEndtime)"
                                 >
                                     <span v-if="item.enterSum < item.topLimit"
-                                          @click.stop="signUp(item.activityId)">立即报名</span>
+                                          @click.stop="signUp(item)">立即报名</span>
                                     <span v-else>人数已满</span>
                                 </el-button>
                                 <el-button
@@ -129,10 +129,14 @@
                 let time = new Date(nowTime);
                 return time.getTime();
             },
-            signUp(id) {
+            signUp(item) {
+                //未登录跳登录
+                if (!this.SSH.getItem('loginFlag')) {
+                    this.windowHrefUrl('/userIndex/login')
+                }
                 this.$router.push({
                     path: "/parkIndex/enrollForm",
-                    query: {activeId: id}
+                    query: {activeId: item.id,enrollType:item.enterType}
                 });
             },
             /* 活动  */

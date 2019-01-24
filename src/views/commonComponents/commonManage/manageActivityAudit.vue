@@ -478,7 +478,7 @@
             }
         }
         .contentList1 {
-            width: 1034px;
+            width: 1050px;
             margin: 20px auto;
             height: auto;
             padding-bottom: 20px;
@@ -510,6 +510,11 @@
                 }
             }
         }
+        .k1{
+            .title {
+                margin-left: 0;
+            }
+        }
         .k2 {
             .title {
                 margin: 40px 0 20px;
@@ -520,7 +525,7 @@
                 margin-bottom: 20px;
             }
             .tickInfo {
-                width: 1060px;
+                width: 1050px;
                 margin: 0 auto;
                 border: solid 1px #cccccc;
                 li {
