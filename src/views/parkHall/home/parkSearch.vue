@@ -581,6 +581,11 @@ export default {
                 .head__title {
                     font-size: 16px;
                     color: #222222;
+                    height: 50px;
+                    overflow: hidden;
+                    max-width: 900px;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
                     &:hover {
                         color: #00a0e9;
                         cursor: pointer;
