@@ -21,6 +21,7 @@
                 <el-form-item label="政策法规简介：" prop="approveComment">
                     <!--<el-input type="textarea" v-model="ruleForm.approveComment"/>-->
                     <textarea
+                        maxlength="300"
                         class="my-approve-comment"
                         v-model="ruleForm.approveComment"
                         placeholder="请输入政策法规简介"
@@ -54,7 +55,7 @@
                     <el-upload
                         class="upload-demo"
                         action="#"
-                        :limit="5"
+                        :limit="3"
                         :on-remove="removeList"
                         :before-upload="beforeAvatarUpload"
                         :file-list="fileList">
@@ -99,6 +100,7 @@
                 <el-form-item label="科技服务简介：" prop="approveComment">
                     <!--<el-input type="textarea" v-model="ruleForm.desc"></el-input>-->
                     <textarea
+                        maxlength="300"
                         class="my-approve-comment"
                         v-model="ruleForm.approveComment"
                         placeholder="请输入科技服务简介"
@@ -266,7 +268,8 @@
                         // {min: 10, max: 20, message: '长度在 10 到 20 个字符', trigger: 'blur'}
                     ],
                     approveComment: [
-                        {required: true, message: '请填政策法规简介', trigger: 'blur'}
+                        {required: true, message: '请填政策法规简介', trigger: 'blur'},
+                        {min: 1, max: 300, message: '长度在 1 到 300 个字符', trigger: 'blur'}
                     ],
                     infoDetail: [
                         {required: true, message: '请填写政策法规详情', trigger: 'blur'}
@@ -284,7 +287,8 @@
                         {required: true, message: '请选择科技服务类型', trigger: 'change'}
                     ],
                     approveComment: [
-                        {required: true, message: '请填科技服务简介', trigger: 'blur'}
+                        {required: true, message: '请填科技服务简介', trigger: 'blur'},
+                        {min: 1, max: 300, message: '长度在 1 到 300 个字符', trigger: 'blur'}
                     ],
                     infoDetail: [
                         {required: true, message: '请填写科技服务详情', trigger: 'blur'}
@@ -763,7 +767,7 @@
                     padding: 40px 50px 0;
                     .ql-snow {
                         padding: 0 110px;
-                        .ql-editor{
+                        .ql-editor {
                             border: none;
                         }
                     }
