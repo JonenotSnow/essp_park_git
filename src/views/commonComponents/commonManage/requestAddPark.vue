@@ -424,7 +424,6 @@
             }
         }
         .btn {
-            float: right;
             margin-top: 35px;
             span {
                 text-align: center;

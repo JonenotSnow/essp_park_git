@@ -59,19 +59,21 @@
         </p>
         <!-- 通过审核弹窗 -->
         <el-dialog :visible.sync="access" width='560px' class='access'>
-            <p>是否确认通过审核！</p>
-            <p>
-                <el-button type="primary" size="small" @click="auditFn('02')">确认</el-button>
-                <el-button type="primary" size="small" @click="access =false">取消</el-button>
+            <h2 class="titleTips">提示</h2>
+            <p class="accessP"><i class="el-icon-warning"></i>&nbsp;&nbsp;是否确认通过审核！</p>
+            <p class="btn">
+                <span @click="access = false">取消</span>
+                <span @click="auditFn('02')">确认</span>
             </p>
         </el-dialog>
 
         <!-- 未通过审核弹窗 -->
-        <el-dialog :visible.sync="noAccess" width='560px' class='noAccess'>
-            <p>是否拒绝通过审核！</p>
-            <p>
-                <el-button type="primary" size="small" @click="auditFn('12')">确认</el-button>
-                <el-button type="primary" size="small" @click="noAccess =false">取消</el-button>
+        <el-dialog :visible.sync="noAccess" width='560px' class='access'>
+            <h2 class="titleTips">提示</h2>
+            <p class="accessP"><i class="el-icon-warning"></i>&nbsp;&nbsp;是否拒绝通过审核！</p>
+            <p class="btn">
+                <span @click="noAccess =false">取消</span>
+                <span @click="auditFn('12')">确认</span>
             </p>
         </el-dialog>
 
@@ -198,26 +200,20 @@
     }
 </script>
 <style>
-    #manageZXAuditing .access .el-dialog__body,
-    #manageZXAuditing .noAccess .el-dialog__body {
-        text-align: center;
+    #manageZXAuditing .access .el-dialog__header {
+        display: none;
     }
 
-    #manageZXAuditing .access .el-dialog__body p:nth-of-type(1) span {
-        color: red;
+    #manageZXAuditing .access .el-dialog__body {
+        overflow: hidden;
+        margin: 30px 20px;
     }
 
-    #manageZXAuditing .access .el-dialog__body p:nth-of-type(1),
-    #manageZXAuditing .noAccess .el-dialog__body p:nth-of-type(1) {
-        text-align: left;
-        margin-bottom: 20px;
-        font-size: 16px;
-        color: #444;
-        text-indent: 25px;
+    #manageZXAuditing .access .el-dialog__body p:nth-of-type(1) {
+        line-height: 55px;
     }
-
-    #manageZXAuditing .noAccess .el-dialog__body p:nth-of-type(2) {
-        margin-top: 20px;
+    #manageZXAuditing .line_area p {
+        word-break: break-all;
     }
 </style>
 <style lang='less' scoped>
@@ -379,13 +375,35 @@
         }
     }
 
+    .btn {
+        text-align: center;
+        span {
+            cursor: pointer;
+            display: inline-block;
+            width: 100px;
+            height: 40px;
+            background: linear-gradient(#22a2fa 0%, #10b5ff 100%);
+            border-radius: 5px;
+            line-height: 40px;
+            font-size: 16px;
+            color: #fff;
+            margin-left: 120px;
+            &:nth-of-type(2) {
+                background: #ccc;
+            }
+            &:nth-of-type(1),
+            &:nth-of-type(3) {
+                letter-spacing: 4.8px
+            }
+        }
+    }
     .mark {
         width: 960px;
         margin: 0 auto 40px;
         overflow: hidden;
         span {
             float: left;
-            width: 167px;
+            width: 126px;
             margin-right: 5px;
             text-align: right;
             font-size: 16px;
@@ -404,8 +422,53 @@
             float: left;
         }
     }
-
-
+    .access {
+        .titleTips {
+            text-indent: 36px;
+            font-size: 24px;
+            color: #555;
+            position: relative;
+            font-weight: normal;
+            top: -30px;
+            margin-top: 20px;
+        }
+        .accessP {
+            text-indent: 20px;
+            font-size: 20px;
+            color: #333;
+            line-height: 30px;
+            i {
+                font-size: 28px;
+                color: #00a0e9;
+            }
+        }
+        .btn {
+            text-align:right;
+            margin-top: 35px;
+            span {
+                text-align: center;
+                display: inline-block;
+                width: 100px;
+                height: 35px;
+                border-radius: 2px;
+                line-height: 35px;
+                font-size: 18x;
+                cursor: pointer;
+                color: #fff;
+                letter-spacing: 4.8px;
+                &:nth-of-type(1) {
+                    letter-spacing: 4.8px;
+                    background: #e6f4ff;
+                    color: #00a0e9;
+                }
+                &:nth-of-type(2) {
+                    margin-left: 55px;
+                    background: linear-gradient(31deg, #22a2fa 0%, #10b5ff 100%);
+                    color: #fff;
+                }
+            }
+        }
+    }
     .common_titdes{
         font-weight: normal;
     }

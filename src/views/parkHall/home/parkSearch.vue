@@ -361,7 +361,8 @@ export default {
         //资讯详情页
         goinfoDetail(item) {
             var informationId = item.informationId;
-            this.$router.push({path: "/parkIndex/infoDetail",query: { informationId: informationId }});
+            let url = this.isBdPark ? '/news/newsdetail' : '/parkIndex/infoDetail'
+            this.$router.push({path: url,query: { informationId: informationId }});
         },
         handleSizeChange(val) {
             this.pageSize = val;

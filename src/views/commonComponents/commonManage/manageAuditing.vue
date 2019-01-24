@@ -40,20 +40,22 @@
             </div>
         </div>
         <!-- 通过审核弹窗 -->
-        <el-dialog :visible.sync="access" width='560px' class='noAccess'>
-            <p>是否确认通过审核！</p>
-            <p>
-                <el-button type="primary" size="small" @click="auditFn('02')">确认</el-button>
-                <el-button type="primary" plain size="small" @click="access =false">取消</el-button>
+        <el-dialog :visible.sync="access" width='560px' class='access'>
+            <h2 class="titleTips">提示</h2>
+            <p class="accessP"><i class="el-icon-warning"></i>&nbsp;&nbsp;是否确认通过审核！</p>
+            <p class="btn">
+                <span @click="access = false">取消</span>
+                <span @click="auditFn('02')">确认</span>
             </p>
         </el-dialog>
 
         <!-- 未通过审核弹窗 -->
-        <el-dialog :visible.sync="noAccess" width='560px' class='noAccess'>
-            <p>是否拒绝通过审核！</p>
-            <p>
-                <el-button type="primary" size="small" @click="auditFn('12')">确认</el-button>
-                <el-button type="primary" size="small" @click="noAccess =false">取消</el-button>
+        <el-dialog :visible.sync="noAccess" width='560px' class='access'>
+            <h2 class="titleTips">提示</h2>
+            <p class="accessP"><i class="el-icon-warning"></i>&nbsp;&nbsp;是否拒绝通过审核！</p>
+            <p class="btn">
+                <span @click="noAccess =false">取消</span>
+                <span @click="auditFn('12')">确认</span>
             </p>
         </el-dialog>
     </div>
@@ -184,31 +186,17 @@
     }
 </script>
 <style>
-    #manageAuditing .noAccess .el-dialog__body {
-        text-align: center;
+    #manageAuditing .access .el-dialog__header {
+        display: none;
     }
 
-    #manageAuditing .noAccess .el-dialog__body textarea {
-        width: 460px;
-        min-width: 460px;
-        max-width: 460px;
-        min-height: 80px;
-        border-radius: 10px;
-        border: 1px solid #ddd;
-        outline: none;
-        padding: 20px;
+    #manageAuditing .access .el-dialog__body {
+        overflow: hidden;
+        margin: 30px 20px;
     }
 
-    #manageAuditing .noAccess .el-dialog__body p:nth-of-type(1) {
-        text-align: left;
-        margin-bottom: 20px;
-        font-size: 16px;
-        color: #444;
-        text-indent: 25px;
-    }
-
-    #manageAuditing .noAccess .el-dialog__body p:nth-of-type(2) {
-        margin-top: 20px;
+    #manageAuditing .access .el-dialog__body p:nth-of-type(1) {
+        line-height: 55px;
     }
 </style>
 
@@ -324,57 +312,105 @@
                 line-height: 20px;
             }
         }
-        .mark {
-            width: 1200px;
-            margin: 20px auto 40px;
-            overflow: hidden;
-            span {
-                float: left;
-                width: 145px;
-                margin-right: 5px;
-                text-align: right;
-                font-size: 16px;
-                letter-spacing: 0.4px;
-                color: #666666;
-                line-height: 38px;
-            }
-            textarea {
-                width: 600px;
-                min-width: 560px;
-                max-width: 460px;
-                min-height: 80px;
-                border: 1px solid #ddd;
-                outline: none;
-                padding: 10px 20px;
-                float: left;
-            }
-        }
-        .btn {
-            text-align: center;
-            span {
-                cursor: pointer;
-                display: inline-block;
-                width: 100px;
-                height: 40px;
-                background: linear-gradient(#22a2fa 0%, #10b5ff 100%);
-                border-radius: 5px;
-                line-height: 40px;
-                font-size: 16px;
-                color: #fff;
-                margin-left: 120px;
-                &:nth-of-type(2) {
-                    background: #ccc;
-                }
-                &:nth-of-type(1),
-                &:nth-of-type(3) {
-                    letter-spacing: 4.8px
-                }
-            }
-        }
+        
     }
 
     .common_titdes{
         font-weight: normal;
+    }
+    .btn {
+        text-align: center;
+        span {
+            cursor: pointer;
+            display: inline-block;
+            width: 100px;
+            height: 40px;
+            background: linear-gradient(#22a2fa 0%, #10b5ff 100%);
+            border-radius: 5px;
+            line-height: 40px;
+            font-size: 16px;
+            color: #fff;
+            margin-left: 120px;
+            &:nth-of-type(2) {
+                background: #ccc;
+            }
+            &:nth-of-type(1),
+            &:nth-of-type(3) {
+                letter-spacing: 4.8px
+            }
+        }
+    }
+    .mark {
+        width: 960px;
+        margin: 0 auto 40px;
+        overflow: hidden;
+        span {
+            float: left;
+            width: 126px;
+            margin-right: 5px;
+            text-align: right;
+            font-size: 16px;
+            letter-spacing: 0.4px;
+            color: #666666;
+            line-height: 38px;
+        }
+        textarea {
+            width: 600px;
+            min-width: 560px;
+            max-width: 460px;
+            min-height: 80px;
+            border: 1px solid #ddd;
+            outline: none;
+            padding: 10px 20px;
+            float: left;
+        }
+    }
+    .access {
+        .titleTips {
+            text-indent: 36px;
+            font-size: 24px;
+            color: #555;
+            position: relative;
+            font-weight: normal;
+            top: -30px;
+            margin-top: 20px;
+        }
+        .accessP {
+            text-indent: 20px;
+            font-size: 20px;
+            color: #333;
+            line-height: 30px;
+            i {
+                font-size: 28px;
+                color: #00a0e9;
+            }
+        }
+        .btn {
+            text-align:right;
+            margin-top: 35px;
+            span {
+                text-align: center;
+                display: inline-block;
+                width: 100px;
+                height: 35px;
+                border-radius: 2px;
+                line-height: 35px;
+                font-size: 18x;
+                cursor: pointer;
+                color: #fff;
+                letter-spacing: 4.8px;
+                &:nth-of-type(1) {
+                    letter-spacing: 4.8px;
+                    background: #e6f4ff;
+                    color: #00a0e9;
+                }
+                &:nth-of-type(2) {
+                    margin-left: 55px;
+                    background: linear-gradient(31deg, #22a2fa 0%, #10b5ff 100%);
+                    color: #fff;
+                }
+            }
+        }
     }
 </style>
 
