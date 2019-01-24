@@ -48,7 +48,8 @@
                 <p>采取先到先得的任务领取审核方式</p>
             </div>
             <div class="tabList">
-                <el-table v-if="policieAndRegulationData && policieAndRegulationData.length > 0" :data="policieAndRegulationData" @row-click="getDetail" style="width: 100%">
+                <el-table v-if="policieAndRegulationData && policieAndRegulationData.length > 0"
+                          :data="policieAndRegulationData" @row-click="getDetail" style="width: 100%">
                     <el-table-column align="center" type="index" label="全部" width="85"></el-table-column>
                     <el-table-column show-overflow-tooltip align="center" prop="policyTitle" label="标题名称"
                                      width="200"></el-table-column>
@@ -68,21 +69,25 @@
                     </el-table-column>
                     <el-table-column align="center" prop="" width="100" label="操作">
                         <template slot-scope="scope">
+                            <!--<span v-if="scope.row.status == '02'" class="operation"-->
+                            <!--@click="linkToAuditDetail(scope.row)">查看</span>-->
                             <span v-if="scope.row.status == '02'" class="operation"
-                                  @click="linkToAuditDetail(scope.row)">查看</span>
+                                  @click="linkToPublishDetail(scope.row)">查看</span>
+                            <!--<span v-if="scope.row.status == '12'" class="operation"-->
+                            <!--@click="linkToAuditDetail(scope.row)">查看</span>-->
                             <span v-if="scope.row.status == '12'" class="operation"
-                                  @click="linkToAuditDetail(scope.row)">查看</span>
+                                  @click="linkToPublishDetail(scope.row)">查看</span>
                             <span v-if="scope.row.status == '13'" class="operation"
                                   @click="linkToAuditDetail(scope.row)">领取并审核</span>
                         </template>
                     </el-table-column>
                 </el-table>
-                <div class="noData" v-if="policieAndRegulationData.length == 0 && requestTip == '数据加载中...'" >
+                <div class="noData" v-if="policieAndRegulationData.length == 0 && requestTip == '数据加载中...'">
                     <div class="no-list-desc">
                         {{requestTip}}
                     </div>
                 </div>
-                <div class="noData" v-if="policieAndRegulationData.length == 0 && requestTip == '数据加载完毕'" >
+                <div class="noData" v-if="policieAndRegulationData.length == 0 && requestTip == '数据加载完毕'">
                     <div class="no-list-pic">
                         <img src="@assets/newparkimg/no-list-img.png" alt="">
                     </div>
@@ -154,12 +159,12 @@
 
 
             // 前往发布查看详情页面
-            linkToPublishDetail(id) {
+            linkToPublishDetail(item) {
                 this.$router.push({
                     path: '/parkHall/manage/sciAndTechPolicyAuditDetail',
                     query: {
                         applyType: '01',
-                        id: id
+                        id: item.id
                     }
                 });
             },
