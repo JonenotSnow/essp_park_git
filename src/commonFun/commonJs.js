@@ -14,7 +14,7 @@
  */
 import { Message,MessageBox } from 'element-ui';
 import {post, get, patch, put, del} from '../fetch/http'
-
+var isTipOffClick = true;
 var retrunTipOffReason = function(type){
     // 举报原因汇总
     // 1. 虚假信息  2. 有害信息  3. 违法信息  4.色情淫秽
@@ -126,6 +126,10 @@ export default  {
             } else {
                 Message.error(response.resultMsg);
             }
+            isTipOffClick = true;
+        }, (err) => {
+            isTipOffClick = true;
+            this.$message.error(err.resultMsg);
         });
     },
     tipOffMask: function(param){
@@ -188,6 +192,11 @@ export default  {
                     param.informReason = ids;
 
                     console.log(param);
+                    if(!isTipOffClick) {
+                        return;
+                    }
+                    isTipOffClick = false;
+                    console.log(isTipOffClick);
                     this.tipOffMaskSubmit(param,done);
                 } else {
                     done();

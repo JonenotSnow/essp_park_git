@@ -124,6 +124,7 @@
                 pageSize: 5,//每页条数
                 allTotal: 0,//总条数
                 userInfo: {},
+                isClick: true,
                 userrole: this.userInfo ? this.userInfo.userrole : '11'
             }
         },
@@ -346,7 +347,10 @@
                         content: realcnttext,
                         anonymous: anonymous
                     }
-
+                    if(!this.isClick) {
+                        return;
+                    }
+                    this.isClick = false;
                     this.$post(url, pop).then((response) => {
                         if (response.resultCode == "CLT000000000") {
                             this.$message.success("评论发表成功");
@@ -355,9 +359,11 @@
                         } else {
                             this.$message.info(response.resultMsg);
                         }
-                        }, (err) => {
-                            this.$message.error("接口异常");
-                        })
+                        this.isClick = true;
+                    }, (err) => {
+                        this.$message.error("接口异常");
+                        this.isClick = true;
+                    })
                 }else{
                      var _this = this;
                      this.$message.warning("您尚未登陆，请您先登陆");
