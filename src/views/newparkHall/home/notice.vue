@@ -17,7 +17,7 @@
                                     <div class="time">{{ item.createTime | timerFormat(item.createTime) }}</div>
                                 </div>
                             </div>
-                            <div class="img" :style="'background-image:url('+imgUrl+')'"></div>
+                            <div class="img" :style="'background-image:url('+item.titleImg+')'"></div>
                         </li>
                     </ul>
                     <EsspNoData v-if="newsList.length==0" class="nothing"></EsspNoData>
