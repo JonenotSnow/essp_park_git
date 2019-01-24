@@ -235,7 +235,7 @@
                 .right-aside {
                     width: 570px;
                     ul {
-                        height: 318px;
+                        height: 319px;
                         border-bottom: solid 1px #cccccc;
                         li {
                             display: flex;
@@ -275,7 +275,9 @@
                                 color: #777;
                             }
                         }
-
+                        li:last-child{
+                            border-bottom: 0;
+                        }
                     }
                 }
             }
