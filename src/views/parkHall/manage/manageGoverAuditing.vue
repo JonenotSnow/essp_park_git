@@ -8,39 +8,39 @@
                 <span class="bordertwo"></span>
                 <span class="tittext">惠政发布审核</span>
             </div>
-            <!-- <div class="itemCon">
+            <div class="itemCon">
                 <div class="title">
                     <h3 class="common_titdes" style="font-weight: normal">基本信息</h3>
                 </div>
                 <div class="dtcon">
                     <span class="lable_span">惠政主题：</span>
-                    <span class="line_span">{{content.policyTitle}}</span>
+                    <span class="line_span">{{infoList.policyTitle}}</span>
                 </div>
                 <div class="dtcon">
                     <span class="lable_span">发布机构：</span>
-                    <span class="line_span">{{content.cstNm}}</span>
+                    <span class="line_span">{{infoList.cstNm}}</span>
                 </div>
                 <div class="dtcon">
                     <span class="lable_span">发布人：</span>
-                    <span class="line_span">{{content.userName}}</span>
+                    <span class="line_span">{{infoList.userName}}</span>
                 </div>
                 <div class="dtcon">
                     <span class="lable_span">提交日期：</span>
-                    <span class="line_span">{{content.createTime | timerFormat(content.createTime)}}</span>
+                    <span class="line_span">{{infoList.createTime | timerFormat(infoList.createTime)}}</span>
                 </div>
                  <div class="dtcon">
                     <span class="lable_span">惠政主图：</span>
-                    <span class="line_img"><img v-lazy="content.titleImg"></span>
+                    <span class="line_img"><img v-lazy="infoList.titleImg"></span>
                 </div>
-                 <div class="dtcon">
+                 <div class="dtcon ql-container ql-snow">
                     <span class="lable_span">惠政内容：</span>
-                    <span class="line_area" v-html="content.infoDetail"></span>
+                    <span class="line_area ql-editor" v-html="infoList.infoDetail"></span>
                 </div>
-                <div class="dtcon" v-if="content.avaliableTime && infoList.avaliableEndTime">
+                <div class="dtcon" v-if="infoList.avaliableTime && infoList.avaliableEndTime">
                     <span class="lable_span">惠政有效期：</span>
-                    <span class="line_span">{{content.avaliableTime | timerFormat(content.avaliableTime)}} 至 {{infoList.avaliableEndTime | timerFormat(infoList.avaliableEndTime)}}</span>
+                    <span class="line_span">{{infoList.avaliableTime | timerFormat }} 至 {{infoList.avaliableEndTime | timerFormat(infoList.avaliableEndTime)}}</span>
                 </div>
-            </div> -->
+            </div>
         </div>
         <hr class="divider">
         <div class="mark">
@@ -128,6 +128,7 @@
         },
         created() {
             console.log(this.content)
+            this.getPolById();
         },
         methods: {
             auditFn(status) {
@@ -140,25 +141,44 @@
                     return;
                 }
                 this.$post(this.$apiUrl.manage.auditPolicy, {
-                    entityId: this.$route.query.id,
+                    entityId: this.$route.query.entityId,
                     parkId: window.sessionStorage.getItem("parkId"),
                     status: st,
                     mark: this.mark
                 })
-                    .then((response) => {
+                .then((response) => {
+                    if(response.resultCode == "CLT000000000") {
                         this.$message({
                             type: 'success',
                             message: response.resultMsg
                         });
+                        this.access = false;
+                        this.noAccess = false;
+                        this.$router.push('/parkHall/manage/activityPoolGover')
+                    } else {
+                        this.$message.error(response.resultMsg);
+                    }
+
+
+                }, (err) => {
+                    this.$message.error("数据异常！");
+                })
+
+            },
+            // 惠政审核
+            getPolById() {
+                this.$post('policy/getPolById', {
+                    parkId: window.sessionStorage.getItem("parkId"),
+                    id: this.$route.query.entityId
+                })
+                    .then((response) => {
+                        this.infoList = response.resultData;
                     }, (err) => {
                         this.$message({
-                            type: 'warn',
+                            type: 'success',
                             message: response.resultMsg
                         });
                     })
-                this.access = false;
-                this.noAccess = false;
-                this.$router.push('/parkHall/manage/activityPoolGover')
             },
             //取消审核
             cancelAudit() {

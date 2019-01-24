@@ -206,8 +206,14 @@ export default {
                 });
                 return;
             }
-            this.$router.push({path:'/parkHall/manage/manageGoverAuditing',query:{'id':id,'content':row}})
+            this.$router.push({
+                path:'/parkHall/manage/manageGoverAuditing',
+                query:{
+                    'entityId':id
+                }
+            })
         },
+
         getDetail(rows){
 
             if (!rows.id) {
@@ -217,7 +223,7 @@ export default {
                 });
                 return;
             }
-            this.$router.push({path:'/parkHall/manage/manageGoverAuditingDetail',query:{entityId:rows.id,content:rows}});
+            this.$router.push({path:'/parkHall/manage/manageGoverAuditingDetail',query:{entityId:rows.id}});
         }
     }
 };
