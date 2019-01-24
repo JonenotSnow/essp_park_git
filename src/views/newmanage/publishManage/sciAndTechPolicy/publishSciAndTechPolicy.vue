@@ -29,13 +29,16 @@
                 </el-form-item>
                 <el-form-item label="政策法规详情：" prop="infoDetail" class="my-detail-edit">
                     <div class="my-quill-edit-wrap-ss">
-                        <essp-editor
-                            :editorCont="ruleForm.infoDetail"
-                            @onEditorChange="onEditorChange"
-                        />
+                        <quill-editor
+                            ref="myTextEditor"
+                            :options="editorOption"
+                            v-model="ruleForm.infoDetail"
+                        >
+                            <div id="toolbar" slot="toolbar"></div>
+                        </quill-editor>
                     </div>
                 </el-form-item>
-                <el-form-item label="政策法规标签：" prop="tags">
+                <el-form-item label="政策法规标签：" class="labelxing">
                     <div class="inline_div_tag">
                         <essp-add-tag
                             ref="eat"
@@ -47,6 +50,7 @@
                         ></essp-add-tag>
                     </div>
                     <essp-tag @showtag="closetag" :centerDialogVisible="visible" :tagprops="tagprops"></essp-tag>
+                    <div class="el-form-item__error" v-show="isShowTag">请选择标签</div>
                 </el-form-item>
                 <el-form-item label="发布人：" v-if="userInfo">
                     {{userInfo.truename}}
@@ -108,10 +112,16 @@
                 </el-form-item>
                 <el-form-item label="科技服务详情：" prop="infoDetail" class="my-detail-edit">
                     <div class="my-quill-edit-wrap-ss">
-                        <essp-editor :editorCont="ruleForm.infoDetail" @onEditorChange="onEditorChange"></essp-editor>
+                        <quill-editor
+                            ref="myTextEditor"
+                            :options="editorOption"
+                            v-model="ruleForm.infoDetail"
+                        >
+                            <div id="toolbar" slot="toolbar"></div>
+                        </quill-editor>
                     </div>
                 </el-form-item>
-                <el-form-item label="科技服务标签：" prop="tags">
+                <el-form-item label="科技服务标签：" class="labelxing">
                     <div class="inline_div_tag">
                         <essp-add-tag
                             ref="eat"
@@ -123,6 +133,7 @@
                         ></essp-add-tag>
                     </div>
                     <essp-tag @showtag="closetag" :centerDialogVisible="visible" :tagprops="tagprops"></essp-tag>
+                    <div class="el-form-item__error" v-show="isShowTag">请选择标签</div>
                 </el-form-item>
                 <el-form-item label="发布人：">
                     {{userInfo.truename}}
@@ -248,6 +259,7 @@
                 userInfo: this.SSH.getItem("userInfo"), // 获取用户信息
 
                 showTags: [], // 细节处理，
+                isShowTag: false,
                 ruleForm: {
                     policyTitle: '',
                     classtType: '',
@@ -274,9 +286,9 @@
                     infoDetail: [
                         {required: true, message: '请填写政策法规详情', trigger: 'blur'}
                     ],
-                    tags: [
-                        {required: true, message: '请填写政策法规标签', trigger: 'blur'}
-                    ]
+                    // tags: [
+                    //     {required: true, message: '请填写政策法规标签', trigger: 'blur'}
+                    // ]
                 },
                 rules_02: {
                     policyTitle: [
@@ -293,9 +305,9 @@
                     infoDetail: [
                         {required: true, message: '请填写科技服务详情', trigger: 'blur'}
                     ],
-                    tags: [
-                        {required: true, message: '请填写科技服务标签', trigger: 'blur'}
-                    ]
+                    // tags: [
+                    //     {required: true, message: '请填写科技服务标签', trigger: 'blur'}
+                    // ]
                 },
 
                 // 标签相关字段
@@ -341,6 +353,17 @@
             submitForm(formName, saveType) {
 
                 // 处理标签---先处理，再验证
+                _this.isShowTag = false;
+                if (this.showTags.length <= 0) {
+                    _this.isShowTag = true;
+                    clearTimeout(this.timer);
+                    _this.timer = setTimeout(function () {
+                        _this.isShowTag = false;
+                    }, 2000)
+
+                    return;
+                }
+
                 if (this.showTags && this.showTags.length > 0) {
                     let tags = this.showTags.join(',');
                     this.ruleForm.tags = tags;
@@ -414,6 +437,18 @@
                 // this.$refs[formName].resetFields();
 
                 // 处理标签---先处理，再验证
+
+                _this.isShowTag = false;
+                if (this.showTags.length <= 0) {
+                    _this.isShowTag = true;
+                    clearTimeout(this.timer);
+                    _this.timer = setTimeout(function () {
+                        _this.isShowTag = false;
+                    }, 2000)
+
+                    return;
+                }
+
                 if (this.showTags && this.showTags.length > 0) {
                     let tags = this.showTags.join(',');
                     this.ruleForm.tags = tags;
@@ -584,7 +619,16 @@
         },
     }
 </script>
-
+<style>
+    .labelxing {
+        position: relative;
+    }
+    .labelxing .el-form-item__label:before {
+        content: "*";
+        margin-right: 4px;
+        color: #f56c6c;
+    }
+</style>
 <style lang='less' scoped>
 
     .publish-sciAnd-tech-policy-wrap {
@@ -643,6 +687,8 @@
                 /*line-height: normal;*/
                 /*}*/
             }
+
+
 
             .inline_div_tag {
                 /*border: 1px solid red;*/
