@@ -88,32 +88,39 @@ export default  {
         var param = param;
         console.log(param);
         if(param == undefined) {
+            isTipOffClick = true;
             Message.error("举报参数必传！");
             return;
         }
         if(typeof param != "object") {
+            isTipOffClick = true;
             Message.error("举报参数不为对象！");
             return;
         }
 
         if(param.informContent == undefined || param.informContent == "") {
+            isTipOffClick = true;
             Message.error("举报内容必传并且不能为空！");
             return;
         }
 
         if(param.informReason == undefined || param.informReason == "") {
+            isTipOffClick = true;
             Message.error("举报原因必传并且不能为空！");
             return;
         }
         if(param.byInformer == undefined || param.byInformer == "") {
+            isTipOffClick = true;
             Message.error("被举报人必传并且不能为空！");
             return;
         }
         if(param.informerEnt == undefined || param.informerEnt == "") {
+            isTipOffClick = true;
             Message.error("举报所在企业必传并且不能为空！");
             return;
         }
         if(param.informExplain == undefined || param.informExplain == "") {
+            isTipOffClick = true;
             Message.error("举报说明不能为空！");
             return;
         }
@@ -135,6 +142,7 @@ export default  {
     tipOffMask: function(param){
         var param  = param;
         if(param.informType == undefined || param.informType == "") {
+            isTipOffClick = true;
             Message.error("举报类型必传并且不能为空！");
             return;
         }
