@@ -161,6 +161,7 @@
 </style>
 
 <style lang='less' scoped>
+ @import "../../../assets/css/mixin.less";
     .data_tit {
         text-align: center;
         line-height: 40px;
@@ -271,18 +272,15 @@
                             margin-top: 8px;
                         }
                         .content {
-                            overflow: hidden;
-                            text-overflow: ellipsis; //文本溢出显示省略号
-                            display: -webkit-box;
-                            -webkit-line-clamp: 2;
-                            -webkit-box-orient: vertical;
                             font-size: 14px;
                             font-weight: normal;
                             font-stretch: normal;
                             line-height: 24px;
+                            height: 48px;
                             letter-spacing: 0px;
                             color: #999999;
                             margin-top: 28px;
+                            .esspellipsitwo(2);
                         }
                     }
                     .editorBtn {
