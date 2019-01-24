@@ -77,7 +77,7 @@ export default {
   }
 };
 </script>
-<style lang="less">
+<style lang="less" scoped>
 .ql-container {
   background: #fff;
   height: -ms-calc(100% - 66px) !important;
@@ -85,12 +85,12 @@ export default {
   height: -webkit-calc(100% - 66px) !important;
   height: calc(100% - 66px) !important;
 }
-.ql-container.ql-snow {
-  border: none !important;
-}
-.ql-container.ql-snow .ql-editor {
-  border: 1px solid #ccc;
-}
+// .ql-container.ql-snow {
+//   border: none !important;
+// }
+// .ql-container.ql-snow .ql-editor {
+//   border: 1px solid #ccc;
+// }
 </style>
 
 
