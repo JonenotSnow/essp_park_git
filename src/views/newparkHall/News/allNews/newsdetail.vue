@@ -54,8 +54,8 @@
                 </div>-->
                 <div class="jbnc" v-if="prompt == 1">PS: 该内容因被举报正在取证中，请您谨慎对待。</div>
             </div>
-            <div class="infoDetail ql-container ql-snow bord-none">
-                <div class="realinfo ql-editor" v-html="infoDetail"></div>
+            <div class="infoDetail ql-container ql-snow bord-none" style="border: none">
+                <div class="realinfo ql-editor bord-none" v-html="infoDetail"></div>
             </div>
 
             <div class="pinglun">
@@ -90,7 +90,9 @@
             </el-dialog>
             <!-- 关注事件对话框end -->
         </div>
-        <div style="height:40px;line-height:40px;text-align: center;background-color: #fff;" v-show="!isShow">由于详情内容过大，加载比较慢，请您耐心等候！</div>
+        <div style="height:40px;line-height:40px;text-align: center;background-color: #fff;" v-show="!isShow">
+            由于详情内容过大，加载比较慢，请您耐心等候！
+        </div>
 
 
     </div>
@@ -438,8 +440,9 @@
     .infoDetail {
         .essp_width_auto();
         background: #fff;
-        padding: 34px 0px 0;
-        line-height: 30px;
+        padding: 0 160px;
+        /*padding: 34px 0px 0;*/
+        /*line-height: 30px;*/
         /*text-indent: 2em;*/
         /*border-bottom: 1px solid #ccc;*/
         .content_p {

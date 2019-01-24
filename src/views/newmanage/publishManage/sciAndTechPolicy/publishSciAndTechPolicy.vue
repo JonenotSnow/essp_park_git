@@ -265,7 +265,7 @@
                 rules_01: {
                     policyTitle: [
                         {required: true, message: '请输入政策法规标题', trigger: 'blur'},
-                        // {min: 10, max: 20, message: '长度在 10 到 20 个字符', trigger: 'blur'}
+                        {min: 1, max: 50, message: '长度在 1 到 50 个字符', trigger: 'blur'}
                     ],
                     approveComment: [
                         {required: true, message: '请填政策法规简介', trigger: 'blur'},
@@ -281,7 +281,7 @@
                 rules_02: {
                     policyTitle: [
                         {required: true, message: '请输入科技服务标题', trigger: 'blur'},
-                        // {min: 10, max: 20, message: '长度在 10 到 20 个字符', trigger: 'blur'}
+                        {min: 1, max: 50, message: '长度在 1 到 50 个字符', trigger: 'blur'}
                     ],
                     classtType: [
                         {required: true, message: '请选择科技服务类型', trigger: 'change'}
