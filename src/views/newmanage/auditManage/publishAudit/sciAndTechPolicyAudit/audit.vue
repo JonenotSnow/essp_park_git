@@ -43,10 +43,27 @@
                     >{{item.name}}</a>
                 </el-form-item>
             </el-form>
-            <div class="audit-line" v-if="(userType == '34') && auditStatus== '13'"></div>
+            <div class="audit-line"></div>
             <div class="audit-opinion" v-if="(userType == '34') && auditStatus== '13'">
                 <button class="audit-btn audit-success" @click="showDialog('02')">通过</button>
                 <button class="audit-btn audit-reject" @click="showDialog('12')">不通过</button>
+            </div>
+            <div v-else>
+                <el-form :rules="rules_01" label-width="125px" class="demo-ruleForm demo-ruleForm-Next">
+                    <el-form-item label="审核结果：">
+                        <p v-if="satpDate.status == '12'">
+                            <i class="icon iconfont icon-butongguo"
+                               style="margin-right:10px; color: #fe696c;"></i><span>不通过</span>
+                        </p>
+                        <p v-if="satpDate.status== '02'">
+                            <i class="icon iconfont icon-zhengque"
+                               style="margin-right:10px; color: #6bde73"></i><span>通过</span>
+                        </p>
+                    </el-form-item>
+                    <el-form-item label="审核意见：">
+                        <div class="my-style audit-opinion-show">{{lastComment.mark || '暂无'}}</div>
+                    </el-form-item>
+                </el-form>
             </div>
         </div>
 
@@ -98,10 +115,27 @@
                     >{{item.name}}</a>
                 </el-form-item>
             </el-form>
-            <div class="audit-line" v-if="(userType == '34') && auditStatus== '13'"></div>
+            <div class="audit-line"></div>
             <div class="audit-opinion" v-if="(userType == '34') && auditStatus== '13'">
                 <button class="audit-btn audit-success" @click="showDialog('02')">通过</button>
                 <button class="audit-btn audit-reject" @click="showDialog('12')">不通过</button>
+            </div>
+            <div v-else>
+                <el-form :rules="rules_02" label-width="125px" class="demo-ruleForm demo-ruleForm-Next">
+                    <el-form-item label="审核结果：">
+                        <p v-if="satpDate.status == '12'">
+                            <i class="icon iconfont icon-butongguo"
+                               style="margin-right:10px; color: #fe696c;"></i><span>不通过</span>
+                        </p>
+                        <p v-if="satpDate.status== '02'">
+                            <i class="icon iconfont icon-zhengque"
+                               style="margin-right:10px; color: #6bde73"></i><span>通过</span>
+                        </p>
+                    </el-form-item>
+                    <el-form-item label="审核意见：">
+                        <div class="my-style audit-opinion-show">{{lastComment.mark || '暂无'}}</div>
+                    </el-form-item>
+                </el-form>
             </div>
         </div>
 
@@ -194,6 +228,10 @@
                     }
                 ],
 
+                // 审核详情列表
+                commentList: [],    // 审核详情列表
+                lastComment: {},    // 最新审核意见
+
 
                 // 详情数据
                 satpDate: {},
@@ -234,6 +272,8 @@
                 dialogVisible: false,
                 status: '',
                 mark: '',
+
+
             }
         },
         methods: {
@@ -269,6 +309,31 @@
                         }
                     }
                     else {
+                        this.$message.info(response.resultMsg);
+                    }
+                }, err => {
+                    this.$message.error("接口异常");
+                })
+            },
+
+            /**
+             * 获取“科技政策”的审核详情
+             */
+            getCommentList() {
+                let params = {
+                    parkId: this.parkId,
+                    entityId: this.id
+                };
+                this.$post("/audit/getCommentList", params).then(response => {
+                    let codestatus = response.resultCode;
+                    if (codestatus == "CLT000000000") {
+                        this.commentList = response.resultData;
+
+                        if (this.commentList.length > 0) {
+                            this.lastComment = this.commentList[0];
+                        }
+
+                    } else {
                         this.$message.info(response.resultMsg);
                     }
                 }, err => {
@@ -324,6 +389,7 @@
         },
         created() {
             this.getSatpDate();
+            this.getCommentList();
         },
     }
 </script>
@@ -406,6 +472,15 @@
                 .audit-success {
                     margin-right: 125px;
                 }
+            }
+
+            .audit-opinion-show {
+                padding: 0px 15px;
+                width: 570px;
+                height: 180px;
+                border-radius: 3px;
+                border: solid 1px #00a0e9;
+                background-color: #ffffff;
             }
         }
 
