@@ -25,13 +25,13 @@
                 </div>
                 <div class="right-aside">
                     <div class="title-s">通知公告</div>
-                    <ul>
+                    <ul v-if="noticesList.length > 0">
                         <li v-for="(item,index) in noticesList" :key="index" @click="goToNoticeDetail(item)">
                             <div class="left-p">{{item.informationTitle}}</div>
                             <div class="time">{{ item.createTime | timerFormat(item.createTime) }}</div>
                         </li>
-                        <EsspNoData v-if="noticesList.length==0" class="nothing"></EsspNoData>
                     </ul>
+                    <EsspNoData v-if="noticesList.length==0" class="nothing"></EsspNoData>
                     <div class="more" v-if="noticesList.length>0" @click="linkToNoticeListPage">More></div>
                 </div>
             </div>
