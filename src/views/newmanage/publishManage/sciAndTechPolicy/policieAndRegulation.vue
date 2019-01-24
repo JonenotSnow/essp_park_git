@@ -26,7 +26,7 @@
                 :list="dataList"
                 :type="status"
                 :totalCount="totalCount"
-                :requestTip = 'requestTip'
+                :requestTip='requestTip'
                 :approveType="approveType"
                 @childDeleted="childDeleted"
                 @childSwitchStatus="childSwitchStatus"
@@ -37,7 +37,7 @@
                 :list="dataList"
                 :type="status"
                 :totalCount="totalCount"
-                :requestTip = 'requestTip'
+                :requestTip='requestTip'
                 :approveType="approveType"
                 @childDeleted="childDeleted"
                 v-if="status=='0'"/>
@@ -106,6 +106,7 @@
                 this.type = status;
                 this.searchContent = '';
                 this.approveType = '';
+                this.pageNum = '1';
                 this.getPolicieAndRegulation(status)
             },
 
