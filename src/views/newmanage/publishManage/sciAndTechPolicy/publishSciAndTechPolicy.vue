@@ -185,7 +185,7 @@
                 <div class="main-body">
                     <!--<div v-html="this.ruleForm.infoDetail"></div>-->
                     <div class="ql-container ql-snow bord-none">
-                        <div class="ql-editor bord-none" v-html="this.ruleForm.infoDetail"></div>
+                        <div class="ql-editor" v-html="this.ruleForm.infoDetail"></div>
                     </div>
                 </div>
                 <div class="main-foot" v-if="this.fileList && this.fileList.length > 0">

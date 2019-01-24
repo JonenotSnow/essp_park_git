@@ -165,7 +165,8 @@
             enrollToPage(itemData, item, activeId, enterType, index) {
                 var enterType = enterType || "0";
                 // 活动申请
-                let flag = sessionStorage.getItem('myList').includes(sessionStorage.getItem('parkId'));
+                let user
+                let flag = this.LoginUserRol.indexOf('32')>-1 || this.LoginUserRol.indexOf('31')>-1 || this.LoginUserRol.indexOf('33')>-1||this.LoginUserRol.indexOf('34')>-1
                 if (item.type == 1) {
                     if (!flag && itemData.openScope == '0') {
                         this.$message.warning('本活动仅对本园区开放');

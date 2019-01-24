@@ -128,9 +128,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="activityD border-top ql-container ql-snow">
+                <div class="activityD border-top">
                     <p class="clickTitle" style="margin-bottom: 30px;"><span>活动详情</span></p>
+                <div class=" ql-container ql-snow bord-none">
                     <div style="border: none; padding:0;" class="ql-editor" v-html="activeDetailData.activityDetails"></div>
+                </div>
                 </div>
                 <div class="tipOffBox border-top esspclearfix">
                     <div class="l">

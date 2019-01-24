@@ -513,11 +513,17 @@
         .k1{
             .title {
                 margin-left: 0;
+                h3{
+                    font-weight: 400;
+                }
             }
         }
         .k2 {
             .title {
                 margin: 40px 0 20px;
+                h3{
+                    font-weight: 400;
+                }
             }
             .infoTitle {
                 width: 1000px;
@@ -647,7 +653,7 @@
             }
         }
         .btn {
-            text-align:right;
+            text-align:center;
             margin-top: 35px;
             span {
                 text-align: center;
@@ -659,14 +665,14 @@
                 font-size: 18x;
                 cursor: pointer;
                 color: #fff;
-                letter-spacing: 4.8px;
+                margin: 0 30px;
+                letter-spacing: 0;
                 &:nth-of-type(1) {
-                    letter-spacing: 4.8px;
+                    letter-spacing: 0;
                     background: #e6f4ff;
                     color: #00a0e9;
                 }
                 &:nth-of-type(2) {
-                    margin-left: 55px;
                     background: linear-gradient(31deg, #22a2fa 0%, #10b5ff 100%);
                     color: #fff;
                 }
