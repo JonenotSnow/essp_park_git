@@ -50,7 +50,13 @@
                 <span class="require">*</span>
                 <span class="title">成果详情：</span>
                 <div class="editor_wrap esspclearfix">
-                    <essp-editor :editorCont="form.detail" @onEditorChange="onEditorChange"></essp-editor>
+                    <quill-editor
+                        ref="myTextEditor"
+                        :options="editorOption"
+                        v-model="form.detail"
+                    >
+                        <div id="toolbar" slot="toolbar"></div>
+                    </quill-editor>
                 </div>
             </li>
             <li>
@@ -118,12 +124,10 @@
 
 <script>
     import EsspBreadCrumb from "@/components/EsspBreadCrumb";
-    import EsspEditor from "@/components/EsspEditor";
 
     export default {
         components: {
-            EsspBreadCrumb,
-            EsspEditor
+            EsspBreadCrumb
         },
         data() {
             return {
