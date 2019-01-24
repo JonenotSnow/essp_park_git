@@ -392,7 +392,6 @@
 <style lang='less' scoped>
     .inclusivefinance {
         background: #fff;
-        font-family: MicrosoftYaHei;
         .main_banner {
             height: 500px;
             // background: url(../../../assets/newparkimg/inclusivefinance/inclusiveFinance_banner2.png) center no-repeat;

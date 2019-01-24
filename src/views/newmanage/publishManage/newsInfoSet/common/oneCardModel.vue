@@ -312,7 +312,6 @@
             .maincheck {
                 float: left;
                 margin-right: 16px;
-                font-family: " MicrosoftYaHei";
                 font-size: 14px;
                 font-weight: normal;
                 font-stretch: normal;
@@ -322,7 +321,6 @@
             .numdes {
                 float: left;
                 margin-right: 10px;
-                font-family: " MicrosoftYaHei";
                 font-size: 14px;
                 font-weight: normal;
                 font-stretch: normal;

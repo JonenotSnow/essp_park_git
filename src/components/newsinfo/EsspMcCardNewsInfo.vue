@@ -447,7 +447,6 @@
             text-align: center;
             .tipspan {
                 display: block;
-                font-family: MicrosoftYaHei;
                 color: #666666;
                 margin-top: 85px;
                 font-size: 18px;

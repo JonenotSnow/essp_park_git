@@ -100,7 +100,7 @@
 
         },
         async created(){
-            this.queryEnterpriseList(1)
+            this.queryEnterpriseList(1,5)
         },
         computed: {
             curId(){
@@ -111,10 +111,10 @@
 
         },
         methods:{
-            queryEnterpriseList(pageNum){
+            queryEnterpriseList(pageNum,pageSize){
                 this.$post('/memberManage/getMemInfo', {
                     parkId: this.SSH.getItem('parkId'),
-                    pageSize:this.pageSize,
+                    pageSize:pageSize,
                     pageNum:pageNum
                 }).then(
                     response => {
@@ -144,10 +144,11 @@
             },
             handleSizeChange(val) {
                 this.pageSize = val;
+                this.queryEnterpriseList(this.pageNum,val)
             },
             handleCurrentChange(val) {
                 this.pageNum = val;
-                this.queryEnterpriseList(val)
+                this.queryEnterpriseList(val,this.pageSize)
             },
             showDetail(isTrue,index){
                 let that = this;
