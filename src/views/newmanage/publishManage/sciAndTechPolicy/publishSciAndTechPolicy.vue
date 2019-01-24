@@ -184,7 +184,7 @@ publishSciAndTechPolicy<template>
                 </div>
                 <div class="main-body">
                     <!--<div v-html="this.ruleForm.infoDetail"></div>-->
-                    <div class="ql-container ql-snow">
+                    <div class="ql-container ql-snow bord-none">
                         <div class="ql-editor" v-html="this.ruleForm.infoDetail"></div>
                     </div>
                 </div>

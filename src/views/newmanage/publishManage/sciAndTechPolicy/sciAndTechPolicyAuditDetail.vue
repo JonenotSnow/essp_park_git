@@ -16,7 +16,7 @@
                 </el-form-item>
                 <el-form-item label="政策法规详情：" prop="infoDetail">
                     <div class="my-style">
-                        <div class="ql-container ql-snow">
+                        <div class="ql-container ql-snow bord-none">
                             <div class="ql-editor" v-html="satpDate.infoDetail"></div>
                         </div>
                     </div>
@@ -85,7 +85,7 @@
                 </el-form-item>
                 <el-form-item label="科技服务详情：" prop="infoDetail">
                     <div class="my-style">
-                        <div class="ql-container ql-snow">
+                        <div class="ql-container ql-snow bord-none">
                             <div class="ql-editor bord-none" v-html="satpDate.infoDetail"></div>
                         </div>
                     </div>
