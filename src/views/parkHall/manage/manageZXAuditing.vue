@@ -38,7 +38,7 @@
                 </div>
                 <div class="dtcon ql-container ql-snow dtcon bord-none">
                     <span class="lable_span">资讯详情：</span>
-                    <span class="detail ql-editor " v-html="infoList.infoDetail"></span>
+                    <span class="detail ql-editor dis" v-html="infoList.infoDetail"></span>
                 </div>
             </div>
         </div>
@@ -278,7 +278,7 @@
             }
         }
         .dtcon {
-            width: 100%;
+            width: 76%;
             margin-bottom: 15px;
             overflow: hidden;
         }
@@ -317,7 +317,9 @@
             height: 100px;
             border: 1px solid #ccc;
         }
-
+        .detail{
+            display: block;
+        }
     }
 
     .toolbtn {
