@@ -316,9 +316,9 @@
             // 通过  或者 不通过
             auditOption(type){
                 var reason = this.mark;
-
+                var msg = this.access ? "通过": "拒绝";
                 if(this.mark == "") {
-                    this.$message.error("拒绝理由必填！");
+                    this.$message.error(msg+"理由必填！");
                     return;
                 }
                 this.$post(this.$apiUrl.active.auditOption, {

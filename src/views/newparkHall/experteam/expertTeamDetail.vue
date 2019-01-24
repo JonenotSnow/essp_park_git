@@ -31,7 +31,7 @@
                     <div class="other_info second_title" v-for="(item,index) in moduleData" :key="index">
                         <span class="second_title_name">{{item.title}}</span>
                         <div class="detail_item_content">
-                            <div v-html="item.info ||'暂无'"></div>
+                            <pre v-html="item.info || '暂无'"></pre>
                         </div>
                         <div class="detail_item_img_wrap esspclearfix"v-if="item.isPic == '1'">
                             <div class="detail_item_img" v-for="(itemC,indexC) in item.photoList">
@@ -251,6 +251,11 @@
             line-height: 24px;
             letter-spacing: 0px;
             color: #999999;
+            pre {
+                white-space: pre-wrap!important;
+                word-wrap: break-word!important;
+                *white-space:normal!important;
+            }
         }
 
         .expertcontainer .experinfo .program_experience {

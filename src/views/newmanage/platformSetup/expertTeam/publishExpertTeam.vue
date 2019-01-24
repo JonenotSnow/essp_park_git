@@ -40,7 +40,7 @@
             <li>
                 <span class="require">*</span>
                 <span class="title">联系电话：</span>
-                <input type="text" placeholder="请输入联系电话" v-model="submitUploadInfo.phone">
+                <input type="number" placeholder="请输入联系电话" v-model="submitUploadInfo.phone">
             </li>
 
             <li>
@@ -127,7 +127,7 @@
                         <div class="other_info second_title" v-for="(item,index) in moduleList" :key="index">
                             <span class="second_title_name">{{item.title}}</span>
                             <div class="detail_item_content">
-                                <div v-html="submitUploadInfo.introduction ||'暂无'"></div>
+                                <pre v-html="item.info || '暂无'"></pre>
                             </div>
                             <div class="detail_item_imglist esspclearfix" v-if="item.isPic == '1'">
                                 <div class="img_items" v-for="(itemChild, indexChild) in item.photoList" :key="indexChild">
@@ -277,10 +277,6 @@
                 }
                 if(this.submitUploadInfo.phone == ""){
                     this.$message.error("请填写手机号！");
-                    return flag = false;
-                }
-                if (!/^1[345678]\d{9}$/.test(this.submitUploadInfo.phone)) {
-                    this.$message.error("请正确填写手机号！");
                     return flag = false;
                 }
                 if(this.submitUploadInfo.email == ""){
@@ -965,9 +961,12 @@
         line-height: 24px;
         letter-spacing: 0px;
         color: #999999;
-        div {
-            word-break: break-all;
+        pre {
+            white-space: pre-wrap!important;
+            word-wrap: break-word!important;
+            *white-space:normal!important;
         }
+
     }
 
     .expertcontainers .experinfo .program_experience {
