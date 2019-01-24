@@ -228,7 +228,7 @@ export default {
     }
     .wrap {
         width: 850px;
-        height: 400px;
+        height: 420px;
         margin: 0 auto;
         .quill-editor {
             height: 83%;
