@@ -350,7 +350,7 @@ export default {
         // });
         let that =this
         setTimeout(() => {
-              that.windowOpenNoParams('/userIndex/login')
+              that.windowHrefUrlNormal('/userIndex/login')
         }, 1000);
 
       }
