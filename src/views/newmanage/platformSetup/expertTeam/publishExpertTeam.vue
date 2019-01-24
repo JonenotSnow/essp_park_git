@@ -40,7 +40,7 @@
             <li>
                 <span class="require">*</span>
                 <span class="title">联系电话：</span>
-                <input type="number" placeholder="请输入联系电话" v-model="submitUploadInfo.phone">
+                <input type="text" placeholder="请输入联系电话" v-model="submitUploadInfo.phone">
             </li>
 
             <li>
