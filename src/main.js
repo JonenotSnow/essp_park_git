@@ -146,6 +146,10 @@ router.beforeEach(async (to, from, next) => {
     let name = to.name;
     let menuResource = sessionStorageHandler.getItem("menuResource"); 
     let currentMenu = menuResource[name]; 
+    // console.log('name')
+    // console.log(name)
+    // console.log('currentMenu')
+    // console.log(currentMenu)
     if(!currentMenu && to.name !='park-requestPage'){
         Message.error('暂无权限访问此页面')
         if(!from.name){

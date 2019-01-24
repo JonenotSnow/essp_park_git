@@ -55,7 +55,7 @@
                                     v-else-if="nowTime >= getTime(item.enterStarttime) && nowTime <= getTime(item.enterEndtime)"
                                 >
                                     <span v-if="item.enterSum < item.topLimit"
-                                          @click="signUp(item.activityId)">立即报名</span>
+                                          @click.stop="signUp(item.activityId)">立即报名</span>
                                     <span v-else>人数已满</span>
                                 </el-button>
                                 <el-button
