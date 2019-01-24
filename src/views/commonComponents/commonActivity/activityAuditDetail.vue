@@ -43,7 +43,7 @@
                     </p>
                     <p>
                         <span style="float: left">活动详情：</span>
-                        <span v-html="infoList.activityDetails"></span>
+                        <span style="border: none; padding:0;" class="ql-editor" v-html="infoList.activityDetails"></span>
                     </p>
                     <p class="esspclearfix">
                         <span style="float: left">活动宣传图/海报：</span>

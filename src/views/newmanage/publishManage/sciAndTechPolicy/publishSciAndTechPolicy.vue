@@ -1,4 +1,4 @@
-publishSciAndTechPolicy<template>
+<template>
     <div class="publish-sciAnd-tech-policy-wrap" id="publishAchievement">
         <essp-bread-crumb :breadList="breadlist_01" v-if="applyType === '01'"/>
         <essp-bread-crumb :breadList="breadlist_02" v-if="applyType === '02'"/>
@@ -59,7 +59,7 @@ publishSciAndTechPolicy<template>
                     <el-upload
                         class="upload-demo"
                         action="#"
-                        :limit="3"
+                        :limit="4"
                         :on-remove="removeList"
                         :before-upload="beforeAvatarUpload"
                         :file-list="fileList">
@@ -143,7 +143,7 @@ publishSciAndTechPolicy<template>
                     <el-upload
                         class="upload-demo"
                         action="#"
-                        :limit="5"
+                        :limit="4"
                         :on-remove="removeList"
                         :before-upload="beforeAvatarUpload"
                         :file-list="fileList">
@@ -184,8 +184,8 @@ publishSciAndTechPolicy<template>
                 </div>
                 <div class="main-body">
                     <!--<div v-html="this.ruleForm.infoDetail"></div>-->
-                    <div class="ql-container ql-snow">
-                        <div class="ql-editor" v-html="this.ruleForm.infoDetail"></div>
+                    <div class="ql-container ql-snow bord-none">
+                        <div class="ql-editor bord-none" v-html="this.ruleForm.infoDetail"></div>
                     </div>
                 </div>
                 <div class="main-foot" v-if="this.fileList && this.fileList.length > 0">
@@ -352,7 +352,6 @@ publishSciAndTechPolicy<template>
             // 创建事件
             submitForm(formName, saveType) {
 
-                var _this = this;
                 // 处理标签---先处理，再验证
                 _this.isShowTag = false;
                 if (this.showTags.length <= 0) {
@@ -436,7 +435,7 @@ publishSciAndTechPolicy<template>
             // 暂存事件
             temporaryStorage(formName, saveType) {
                 // this.$refs[formName].resetFields();
-                var _this = this;
+
                 // 处理标签---先处理，再验证
 
                 _this.isShowTag = false;
@@ -581,6 +580,11 @@ publishSciAndTechPolicy<template>
                     return isLt5M;
                 }
 
+                if (this.fileList && this.fileList.length == 3) {
+                    this.$message.warning('附件只能上传的上限为3个');
+                    return false;
+                }
+
                 let param = new FormData(); // 创建form对象
                 param.append("file", file); // 通过append向form对象添加数据
                 param.append("type", "park"); // 通过append向form对象添加数据
@@ -624,6 +628,7 @@ publishSciAndTechPolicy<template>
     .labelxing {
         position: relative;
     }
+
     .labelxing .el-form-item__label:before {
         content: "*";
         margin-right: 4px;
@@ -688,8 +693,6 @@ publishSciAndTechPolicy<template>
                 /*line-height: normal;*/
                 /*}*/
             }
-
-
 
             .inline_div_tag {
                 /*border: 1px solid red;*/
