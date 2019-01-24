@@ -353,6 +353,7 @@
             submitForm(formName, saveType) {
 
                 // 处理标签---先处理，再验证
+                let _this = this;
                 _this.isShowTag = false;
                 if (this.showTags.length <= 0) {
                     _this.isShowTag = true;
@@ -437,7 +438,7 @@
                 // this.$refs[formName].resetFields();
 
                 // 处理标签---先处理，再验证
-
+                let _this = this;
                 _this.isShowTag = false;
                 if (this.showTags.length <= 0) {
                     _this.isShowTag = true;
