@@ -171,7 +171,7 @@
                                         <el-select v-if="formListItem.type=='radio'" v-model="formListItem.tittext"
                                                    clearable placeholder="请选择">
                                             <el-option
-                                                v-for="(item,index) in formListItem.childrens"
+                                                v-for="item in formListItem.childrens"
                                                 :key="item.name"
                                                 :label="item.name"
                                                 :value="item.name">
@@ -181,7 +181,7 @@
                                         <el-select multiple  v-if="formListItem.type=='checkbox'"
                                                    v-model="formListItem.tittext" clearable placeholder="请选择">
                                             <el-option
-                                                v-for="(item,index) in formListItem.childrens"
+                                                v-for="item in formListItem.childrens"
                                                 :key="item.name"
                                                 :label="item.name"
                                                 :value="item.name">
@@ -240,7 +240,7 @@
                             <!--单选框-->
                             <el-select v-if="item.type=='radio'" v-model="item.tittext" clearable placeholder="请选择">
                                 <el-option
-                                    v-for="(item,index) in item.childrens"
+                                    v-for="item in item.childrens"
                                     :key="item.name"
                                     :label="item.name"
                                     :value="item.name">
@@ -250,7 +250,7 @@
                             <el-select multiple v-if="item.type=='checkbox'" v-model="item.tittext"
                                        clearable placeholder="请选择">
                                 <el-option
-                                    v-for="(item,index) in item.childrens"
+                                    v-for="item in item.childrens"
                                     :key="item.name"
                                     :label="item.name"
                                     :value="item.name">
@@ -323,6 +323,7 @@
 
 <script>
     import EsspBreadCrumb from "@/components/EsspBreadCrumb"
+    import mixin from '@/components/mixins/mixins_windowOpen.js'
 
     export default {
         data() {
@@ -367,6 +368,7 @@
                 tableData: []
             }
         },
+        mixins:[mixin],
         components: {
             EsspBreadCrumb
         },
@@ -384,10 +386,7 @@
         methods: {
             //上传表格
             interCc() {
-                this.$router.push({
-                    path: '/centerIndex/showHome',
-                    query: {cstId: this.actData.cstId}
-                })
+                this.windowOpenUrl('/centerIndex/showHome',{cstId: this.actData.cstId})
             },
             btnLink(type) {
               var url = type ==1?'/parkIndex/park/enroll':'/parkHome';
