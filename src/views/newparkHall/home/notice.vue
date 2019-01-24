@@ -177,6 +177,9 @@
                                     display: -webkit-box;
                                     -webkit-line-clamp: 2;
                                     -webkit-box-orient: vertical;
+                                    /*! autoprefixer: off */
+                                    -webkit-box-orient: vertical;
+                                    /* autoprefixer: on */
                                     letter-spacing: 1px;
                                     color: #777777;
                                     margin-top: 17px;
