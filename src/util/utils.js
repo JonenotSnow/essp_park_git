@@ -338,7 +338,7 @@ const utils = {
             let parkLabel = SSH.getItem('bdParkId')
             let currentUrl = ''
             utils.delSSH();
-            currentUrl = utils.setUrlParams({label:parkLabel,chennel:'PARK'})
+            currentUrl = utils.setUrlParams({label:parkLabel,chennel:'PARK',token:''})
             window.location.href = Vue.prototype.$openUrl +'/userIndex/login?returnUrl='+encodeURIComponent(currentUrl);
     
         } else if (router.currentRoute.name != 'login' && SSH.getItem('token')) {
