@@ -425,6 +425,7 @@
         }
         .btn {
             margin-top: 35px;
+            text-align: center;
             span {
                 text-align: center;
                 display: inline-block;

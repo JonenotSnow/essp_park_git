@@ -30,7 +30,7 @@
                 </div>
             </div>
             <div class="main-body">
-                <div class="ql-container ql-snow">
+                <div class="ql-container ql-snow bord-none">
                     <div class="ql-editor bord-none" v-html="satpDate.infoDetail"></div>
                 </div>
             </div>

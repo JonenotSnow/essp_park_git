@@ -151,6 +151,10 @@
                     },
                     {
                         path: "/parkHall/manage/publicNews",
+                        name: "发布管理"
+                    },
+                    {
+                        path: "/parkHall/manage/publicNews",
                         name: "新闻动态"
                     },
                     {
@@ -162,6 +166,10 @@
                     {
                         path: "/parkHall/manage/baseInfo",
                         name: "系统管理"
+                    },
+                    {
+                        path: "/parkHall/manage/publicNews",
+                        name: "发布管理"
                     },
                     {
                         path: "/parkHall/manage/publicNotice",
