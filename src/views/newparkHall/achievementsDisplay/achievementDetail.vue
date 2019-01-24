@@ -27,8 +27,8 @@
                     </div>
                 </div>
             </div>
-            <div class="newscontent ql-container ql-snow" style="border: none; padding: 0 110px">
-                <div class="ql-editor" v-html="achievementResult.detail" v-if="achievementResult.detail != null"></div>
+            <div class="newscontent ql-container ql-snow bord-none" style="border: none; padding: 0 110px">
+                <div class="ql-editor bord-none" v-html="achievementResult.detail" v-if="achievementResult.detail != null"></div>
                 <div v-else>
                     暂无详细内容
                 </div>
@@ -171,9 +171,8 @@
 
                 .remarks {
                     margin-top: 54px;
-                    margin-left: 50px;
                     width: 1100px;
-                    text-align: left;
+                    text-align: center;
                     span {
                         display: inline-block;
                         height: 15px;
