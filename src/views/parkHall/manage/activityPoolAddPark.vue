@@ -252,8 +252,11 @@ export default {
             .then((response) => {
                 if (response.resultCode == 'CLT000000000') {
                     this.$router.push({path:'/parkHall/manage/manageAuditing',query:{id:id}})
-                } else {
-                    this.$message.error(response.resultMsg);
+                } else{
+                    this.$message({
+                        type: 'warn',
+                        message: response.resultMsg
+                    });
                 }
             },(response)=>{
                 this.$message.error(response.resultMsg);

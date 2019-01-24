@@ -16,7 +16,7 @@
                     <div class="my-style">{{satpDate.content}}</div>
                 </el-form-item>
                 <el-form-item label="新闻动态详情：" prop="infoDetail">
-                    <div class="my-style ql-container ql-snow">
+                    <div class="my-style ql-container ql-snow" style="border: none">
                         <div class="ql-editor" v-html="satpDate.infoDetail"></div>
                     </div>
                 </el-form-item>
@@ -55,12 +55,14 @@
                     </p>
                 </el-form-item>
                 <el-form-item label="审核意见：" prop="mark">
-                    <div><textarea class="my-style audit-opinion" name="" placeholder="暂无" v-model="lastComment.mark" v-bind:disabled="satpDate.status!== '13'"></textarea></div>
+                    <div><textarea class="my-style audit-opinion" name="" placeholder="暂无" v-model="lastComment.mark"
+                                   v-bind:disabled="satpDate.status!== '13'"></textarea></div>
                 </el-form-item>
             </el-form>
             <div class="audit-line" v-if="userInfo.userPostList.includes('34') && (satpDate.status== '13')"></div>
             <div class="audit-button" v-if="userInfo.userPostList.includes('34') && (satpDate.status== '13')">
-                <span class="audit-btn audit-success" @click="submit('02')">通过</span><span class="audit-btn audit-reject" @click="submit('12')">不通过</span>
+                <span class="audit-btn audit-success" @click="submit('02')">通过</span><span
+                class="audit-btn audit-reject" @click="submit('12')">不通过</span>
             </div>
         </div>
 
@@ -74,7 +76,7 @@
                     <div class="my-style">{{satpDate.content}}</div>
                 </el-form-item>
                 <el-form-item label="通知公告详情：" prop="infoDetail">
-                    <div class="my-style ql-container ql-snow">
+                    <div class="my-style ql-container ql-snow" style="border: none">
                         <div class="ql-editor" v-html="satpDate.infoDetail"></div>
                     </div>
                 </el-form-item>
@@ -93,7 +95,9 @@
                     <div class="my-style">{{satpDate.userName}}</div>
                 </el-form-item>
                 <el-form-item label="附件：">
-                    <div class="my-style" v-for="(item, index) in fileList" :key="index"><a :href="item.url" :download="item.name">{{item.name}}</a></div>
+                    <div class="my-style" v-for="(item, index) in fileList" :key="index"><a :href="item.url"
+                                                                                            :download="item.name">{{item.name}}</a>
+                    </div>
                 </el-form-item>
             </el-form>
             <div class="audit-line"></div>
@@ -109,12 +113,14 @@
                     </p>
                 </el-form-item>
                 <el-form-item label="审核意见：" prop="mark">
-                    <div><textarea class="my-style audit-opinion" name="" placeholder="暂无" v-model="lastComment.mark" v-bind:disabled="satpDate.status!== '13'"></textarea></div>
+                    <div><textarea class="my-style audit-opinion" name="" placeholder="暂无" v-model="lastComment.mark"
+                                   v-bind:disabled="satpDate.status!== '13'"></textarea></div>
                 </el-form-item>
             </el-form>
             <div class="audit-line" v-if="userInfo.userPostList.includes('34') && (satpDate.status== '13')"></div>
             <div class="audit-button" v-if="userInfo.userPostList.includes('34') && (satpDate.status== '13')">
-                <span class="audit-btn audit-success" @click="submit('02')">通过</span><span class="audit-btn audit-reject" @click="submit('12')">不通过</span>
+                <span class="audit-btn audit-success" @click="submit('02')">通过</span><span
+                class="audit-btn audit-reject" @click="submit('12')">不通过</span>
             </div>
         </div>
 
@@ -279,8 +285,8 @@
                 })
             },
             //审核按钮
-            submit(status){
-                if(!this.lastComment.mark){
+            submit(status) {
+                if (!this.lastComment.mark) {
                     this.$message.error("请填写审核意见");
                     return
                 }
@@ -375,10 +381,10 @@
                 border: solid 1px #00a0e9;
                 background-color: #ffffff;
             }
-            .audit-button{
+            .audit-button {
                 padding: 60px 0;
                 text-align: center;
-                .audit-btn{
+                .audit-btn {
                     width: 100px;
                     height: 40px;
                     line-height: 40px;

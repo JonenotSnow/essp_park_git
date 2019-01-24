@@ -227,12 +227,12 @@ export default {
             .then((response) => {
                 if (response.resultCode == 'CLT000000000') {
                     this.$router.push({path:'/parkHall/manage/manageZXAuditing',query:{id:id}})
+                }else{
+                    this.$message({
+                        type: 'warn',
+                        message: response.resultMsg
+                    });
                 }
-            },(response)=>{
-                this.$message({
-                    type: 'warn',
-                    message: response.resultMsg
-                });
             })
         },
         getDetail(rows){

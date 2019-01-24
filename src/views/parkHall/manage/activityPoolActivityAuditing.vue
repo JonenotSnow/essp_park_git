@@ -250,6 +250,11 @@ export default {
                             path: "/parkHall/manage/manageActivityAudit",
                             query: { id: id }
                         });
+                    }else{
+                        this.$message({
+                            type: 'warn',
+                            message: response.resultMsg
+                        });
                     }
                 }
             );

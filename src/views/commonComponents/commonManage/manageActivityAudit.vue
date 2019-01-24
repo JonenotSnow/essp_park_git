@@ -168,20 +168,22 @@
             </p>
         </div>
         <!-- 通过审核弹窗 -->
-        <el-dialog :visible.sync="access" width='560px' class='noAccess'>
-            <p>是否确认通过审核！</p>
-            <p>
-                <el-button type="primary" size="small" @click="auditFn('02')">确认</el-button>
-                <el-button type="primary" size="small" @click="access =false">取消</el-button>
+        <el-dialog :visible.sync="access" width='560px' class='access'>
+            <h2 class="titleTips">提示</h2>
+            <p class="accessP"><i class="el-icon-warning"></i>&nbsp;&nbsp;是否确认通过审核！</p>
+            <p class="btn">
+                <span @click="access = false">取消</span>
+                <span @click="auditFn('02')">确认</span>
             </p>
         </el-dialog>
 
         <!-- 未通过审核弹窗 -->
-        <el-dialog :visible.sync="noAccess" width='560px' class='noAccess'>
-            <p>是否拒绝通过审核！</p>
-            <p>
-                <el-button type="primary" size="small" @click="auditFn('12')">确认</el-button>
-                <el-button type="primary" size="small" @click="noAccess =false">取消</el-button>
+        <el-dialog :visible.sync="noAccess" width='560px' class='access'>
+            <h2 class="titleTips">提示</h2>
+            <p class="accessP"><i class="el-icon-warning"></i>&nbsp;&nbsp;是否拒绝通过审核！</p>
+            <p class="btn">
+                <span @click="noAccess =false">取消</span>
+                <span @click="auditFn('12')">确认</span>
             </p>
         </el-dialog>
     </div>
@@ -337,7 +339,7 @@
                     })
                 this.access = false;
                 this.noAccess = false;
-                this.$router.push('/parkHall/manage/activityPoolActivityAuditing')
+                this.$router.push('/parkHall/manage/activityPoolActivityAditing')
             },
             //取消审核
             cancelAudit() {
@@ -348,7 +350,7 @@
                     status: '10',
                     flag: "noContent"
                 })
-                this.$router.push('/parkHall/manage/activityPoolActivityAuditing')
+                this.$router.push('/parkHall/manage/activityPoolActivityAditing')
             }
         },
         filters: {
@@ -363,31 +365,18 @@
     }
 </script>
 <style scoped lang="less">
-    #manageActivityAudit .noAccess .el-dialog__body {
-        text-align: center;
+
+    #manageActivityAudit .access .el-dialog__header {
+        display: none;
     }
 
-    #manageActivityAudit .noAccess .el-dialog__body textarea {
-        width: 460px;
-        min-width: 460px;
-        max-width: 460px;
-        min-height: 80px;
-        border-radius: 10px;
-        border: 1px solid #ddd;
-        outline: none;
-        padding: 20px;
+    #manageActivityAudit .access .el-dialog__body {
+        overflow: hidden;
+        margin: 30px 20px;
     }
 
-    #manageActivityAudit .noAccess .el-dialog__body p:nth-of-type(1) {
-        text-align: left;
-        margin-bottom: 20px;
-        font-size: 16px;
-        color: #444;
-        text-indent: 25px;
-    }
-
-    #manageActivityAudit .noAccess .el-dialog__body p:nth-of-type(2) {
-        margin-top: 20px;
+    #manageActivityAudit .access .el-dialog__body p:nth-of-type(1) {
+        line-height: 55px;
     }
 </style>
 
@@ -607,7 +596,6 @@
             }
         }
     }
-
     .mark {
         width: 960px;
         margin: 0 auto 40px;
@@ -631,6 +619,53 @@
             outline: none;
             padding: 10px 20px;
             float: left;
+        }
+    }
+    .access {
+        .titleTips {
+            text-indent: 36px;
+            font-size: 24px;
+            color: #555;
+            position: relative;
+            font-weight: normal;
+            top: -30px;
+            margin-top: 20px;
+        }
+        .accessP {
+            text-indent: 20px;
+            font-size: 20px;
+            color: #333;
+            line-height: 30px;
+            i {
+                font-size: 28px;
+                color: #00a0e9;
+            }
+        }
+        .btn {
+            text-align:right;
+            margin-top: 35px;
+            span {
+                text-align: center;
+                display: inline-block;
+                width: 100px;
+                height: 35px;
+                border-radius: 2px;
+                line-height: 35px;
+                font-size: 18x;
+                cursor: pointer;
+                color: #fff;
+                letter-spacing: 4.8px;
+                &:nth-of-type(1) {
+                    letter-spacing: 4.8px;
+                    background: #e6f4ff;
+                    color: #00a0e9;
+                }
+                &:nth-of-type(2) {
+                    margin-left: 55px;
+                    background: linear-gradient(31deg, #22a2fa 0%, #10b5ff 100%);
+                    color: #fff;
+                }
+            }
         }
     }
 </style>

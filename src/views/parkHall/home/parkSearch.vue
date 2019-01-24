@@ -361,7 +361,8 @@ export default {
         //资讯详情页
         goinfoDetail(item) {
             var informationId = item.informationId;
-            this.$router.push({path: "/parkIndex/infoDetail",query: { informationId: informationId }});
+            let url = this.isBdPark ? '/news/newsdetail' : '/parkIndex/infoDetail'
+            this.$router.push({path: url,query: { informationId: informationId }});
         },
         handleSizeChange(val) {
             this.pageSize = val;
@@ -581,6 +582,11 @@ export default {
                 .head__title {
                     font-size: 16px;
                     color: #222222;
+                    height: 50px;
+                    overflow: hidden;
+                    max-width: 900px;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
                     &:hover {
                         color: #00a0e9;
                         cursor: pointer;
