@@ -71,11 +71,16 @@
                         <!--<template slot-scope="scope">-->
                         <!--<span class="operation" @click="linkToAuditDetail(scope.row.id)">领取并审核</span>-->
                         <!--</template>-->
+
                         <template slot-scope="scope">
+                            <!--<span v-if="scope.row.status == '02'" class="operation"-->
+                                  <!--@click="linkToAuditDetail(scope.row)">查看</span>-->
                             <span v-if="scope.row.status == '02'" class="operation"
-                                  @click="linkToAuditDetail(scope.row)">查看</span>
+                                  @click="linkToPublishDetail(scope.row)">查看</span>
+                            <!--<span v-if="scope.row.status == '12'" class="operation"-->
+                                  <!--@click="linkToAuditDetail(scope.row)">查看</span>-->
                             <span v-if="scope.row.status == '12'" class="operation"
-                                  @click="linkToAuditDetail(scope.row)">查看</span>
+                                  @click="linkToPublishDetail(scope.row)">查看</span>
                             <span v-if="scope.row.status == '13'" class="operation"
                                   @click="linkToAuditDetail(scope.row)">领取并审核</span>
                         </template>
@@ -156,12 +161,12 @@
             },
 
             // 前往发布查看详情页面
-            linkToPublishDetail(id) {
+            linkToPublishDetail(item) {
                 this.$router.push({
                     path: '/parkHall/manage/sciAndTechPolicyAuditDetail',
                     query: {
                         applyType: '01',
-                        id: id
+                        id: item.id
                     }
                 });
             },
