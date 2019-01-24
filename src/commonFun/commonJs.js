@@ -185,6 +185,7 @@ export default  {
                     console.log(ids);
                     if(ids.length == 0) {
                         Message.error("举报原因必选！");
+                        isTipOffClick = true;
                         return;
                     }
                     ids = ids.join(",");
@@ -200,10 +201,12 @@ export default  {
                     this.tipOffMaskSubmit(param,done);
                 } else {
                     done();
+                    isTipOffClick = true;
                 }
             }
         }).then(action => {
             console.log(action);
+            isTipOffClick = true;
         });
     }
 }
