@@ -962,6 +962,10 @@
         letter-spacing: 0px;
         color: #999999;
         pre {
+            white-space: -webkit-pre-wrap!important;
+            white-space: -moz-pre-wrap!important;
+            white-space: -ms-pre-wrap!important;
+            white-space: -o-pre-wrap!important;
             white-space: pre-wrap!important;
             word-wrap: break-word!important;
             *white-space:normal!important;
