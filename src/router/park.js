@@ -468,18 +468,6 @@ export const parkRouter1 = {
 
                 },
                 {
-                    path: '/parkHall/manage/manageGoverAuditing',
-                    name: "park-manageGoverAuditing",
-                    component: manageGoverAuditing,
-
-                },
-                {
-                    path: '/parkHall/manage/manageGoverAuditingDetail',
-                    name: "park-manageGoverAuditingDetail",
-                    component: manageGoverAuditingDetail,
-
-                },
-                {
                     path: '/parkHall/manage/activityPoolActivityAuditing',
                     name: "park-activityPoolActivityAuditing",
                     component: activityPoolActivityAuditing,
@@ -650,6 +638,18 @@ export const parkRouter1 = {
             path: '/parkHall/manage/noAndADDetail',
             name: "park-noAndADDetail",
             component: noAndADDetail,
+
+        },
+        {
+            path: '/parkHall/manage/manageGoverAuditing',
+            name: "park-manageGoverAuditing",
+            component: manageGoverAuditing,
+
+        },
+        {
+            path: '/parkHall/manage/manageGoverAuditingDetail',
+            name: "park-manageGoverAuditingDetail",
+            component: manageGoverAuditingDetail,
 
         },
         {
