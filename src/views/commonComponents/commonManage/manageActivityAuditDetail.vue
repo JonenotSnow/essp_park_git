@@ -57,7 +57,7 @@
                         <span>发布方：</span>
                         <span>{{infoList.cstName}}</span>
                     </p>
-                    <p class="ts ql-container ql-snow">
+                    <p class="ts ql-container ql-snow bord-none">
                         <span class="tspan">活动详情：</span>
                         <span style="border: none; padding:0;" class="ql-editor"  v-html="infoList.activityDetails"></span>
                     </p>
@@ -174,7 +174,9 @@ export default {
                 "12":"园区审核未通过",
                 "21":"企业待审核",
                 "05":"企业审核中",
-                "03":"企业审核未通过"
+                "03":"企业审核未通过",
+                "13":"高级管理员待审核",
+                "14": "高级管理员审核中"
             }
             return statusList[val]?statusList[val]:''
         },
@@ -421,7 +423,9 @@ export default {
             border:1px dashed #ccc;
         }
     }
-
+    .bord-none{
+        border:none;
+    }
     .divider{
         width:100%;
         margin:20px auto;

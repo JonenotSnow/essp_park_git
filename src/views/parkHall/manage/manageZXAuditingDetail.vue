@@ -39,6 +39,10 @@
                     <span class="lable_span">资讯简介：</span>
                     <span class="line_area">{{infoList.content}}</span>
                 </div>
+                <div class="dtcon ql-container ql-snow dtcon bord-none">
+                    <span class="lable_span">资讯详情：</span>
+                    <span class="detail ql-editor " v-html="infoList.infoDetail"></span>
+                </div>
                 <div class="dtcon">
                     <span class="lable_span">审核状态：</span>
                     <span class="line_span">{{infoList.status | statusFormat}}</span>
@@ -87,12 +91,13 @@
                         name: "资讯审核详情"
                     }
                 ],
-                infoList: this.$route.query.content,
+                infoList: {},
                 auditInfo: []
             }
         },
         created() {
             this.getCommentList();
+            this.getInfoById();
         },
         filters: {
             timerFormat(vaule) {
@@ -114,7 +119,9 @@
                     "12": "园区审核未通过",
                     "21": "企业待审核",
                     "05": "企业审核中",
-                    "03": "企业审核未通过"
+                    "03": "企业审核未通过",
+                    "13":"高级管理员待审核",
+                    "14": "高级管理员审核中"
                 }
                 return statusList[val] ? statusList[val] : ''
             }
@@ -127,6 +134,20 @@
                 })
                     .then((response) => {
                         this.auditInfo = response.resultData;
+                    }, (err) => {
+                        this.$message({
+                            type: 'success',
+                            message: response.resultMsg
+                        });
+                    })
+            },
+            getInfoById() {
+                this.$post('/information/getInfoById', {
+                    parkId: window.sessionStorage.getItem("parkId"),
+                    informationId: this.$route.query.entityId
+                })
+                    .then((response) => {
+                        this.infoList = response.resultData;
                     }, (err) => {
                         this.$message({
                             type: 'success',
@@ -200,6 +221,9 @@
             margin-bottom: 15px;
             overflow: hidden;
         }
+        .bord-none{
+            border:none;
+        }
         .lable_span {
             float: left;
             width: 15%;
@@ -238,6 +262,13 @@
             padding: 10px;
             font-size: 16px;
             overflow: auto;
+        }
+        .detail{
+            float: left;
+            width: 600px;
+            padding: 10px;
+            overflow: auto;
+            border:none;
         }
 
     }
