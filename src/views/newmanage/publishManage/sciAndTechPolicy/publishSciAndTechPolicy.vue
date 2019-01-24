@@ -1,4 +1,4 @@
-<template>
+publishSciAndTechPolicy<template>
     <div class="publish-sciAnd-tech-policy-wrap" id="publishAchievement">
         <essp-bread-crumb :breadList="breadlist_01" v-if="applyType === '01'"/>
         <essp-bread-crumb :breadList="breadlist_02" v-if="applyType === '02'"/>
@@ -352,6 +352,7 @@
             // 创建事件
             submitForm(formName, saveType) {
 
+                var _this = this;
                 // 处理标签---先处理，再验证
                 _this.isShowTag = false;
                 if (this.showTags.length <= 0) {
@@ -435,7 +436,7 @@
             // 暂存事件
             temporaryStorage(formName, saveType) {
                 // this.$refs[formName].resetFields();
-
+                var _this = this;
                 // 处理标签---先处理，再验证
 
                 _this.isShowTag = false;
