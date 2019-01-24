@@ -130,6 +130,10 @@
                 return time.getTime();
             },
             signUp(id) {
+                //未登录跳登录
+                if (!this.SSH.getItem('loginFlag')) {
+                    this.windowHrefUrl('/userIndex/login')
+                }
                 this.$router.push({
                     path: "/parkIndex/enrollForm",
                     query: {activeId: id}
