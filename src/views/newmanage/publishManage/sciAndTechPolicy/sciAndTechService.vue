@@ -107,6 +107,7 @@
                 this.type = status;
                 this.searchContent = '';
                 this.approveType = '';
+                this.pageNum = '1';
                 this.getPolicieAndRegulation(this.status);
             },
 
