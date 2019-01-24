@@ -54,7 +54,7 @@
                 </div>-->
                 <div class="jbnc" v-if="prompt == 1">PS: 该内容因被举报正在取证中，请您谨慎对待。</div>
             </div>
-            <div class="infoDetail ql-container ql-snow">
+            <div class="infoDetail ql-container ql-snow bord-none">
                 <div class="realinfo ql-editor" v-html="infoDetail"></div>
             </div>
 
@@ -440,7 +440,7 @@
         background: #fff;
         padding: 34px 0px 0;
         line-height: 30px;
-        text-indent: 2em;
+        /*text-indent: 2em;*/
         /*border-bottom: 1px solid #ccc;*/
         .content_p {
             padding: 0px 50px;

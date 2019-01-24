@@ -177,6 +177,9 @@
                                     display: -webkit-box;
                                     -webkit-line-clamp: 2;
                                     -webkit-box-orient: vertical;
+                                    /*! autoprefixer: off */
+                                    -webkit-box-orient: vertical;
+                                    /* autoprefixer: on */
                                     letter-spacing: 1px;
                                     color: #777777;
                                     margin-top: 17px;
@@ -232,7 +235,7 @@
                 .right-aside {
                     width: 570px;
                     ul {
-                        height: 318px;
+                        height: 319px;
                         border-bottom: solid 1px #cccccc;
                         li {
                             display: flex;
@@ -272,7 +275,9 @@
                                 color: #777;
                             }
                         }
-
+                        li:last-child{
+                            border-bottom: 0;
+                        }
                     }
                 }
             }

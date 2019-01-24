@@ -164,14 +164,15 @@
                     letter-spacing: 0px;
                 }
                 .head__title {
-                    width: 80%;
+                    width: 600px;
+                    height: 100%;
+                    font-size: 16px;
+                    color: #222222;
                     overflow: hidden;
                     text-overflow: ellipsis;
                     display: -webkit-box;
                     -webkit-line-clamp: 1;
                     -webkit-box-orient: vertical;
-                    font-size: 16px;
-                    color: #222222;
                     &:hover {
                         color: #00a0e9;
                         cursor: pointer;
