@@ -148,6 +148,9 @@ router.beforeEach(async (to, from, next) => {
     let currentMenu = menuResource[name]; 
     if(!currentMenu){
         Message.error('暂无权限访问此页面')
+        if(!from.name){
+            router.push('parkHome')
+        }
         return false
     }
     next();
