@@ -111,7 +111,7 @@
             }
         },
         created() {
-            console.log("传入List",this.list);
+            console.log("传入类型",this.type);
         },
         methods: {
             // 改变已选重置
@@ -136,7 +136,7 @@
                     path: '/news/addNews',
                     query: {
                         id: item.informationId,
-                        applyType: '01'
+                        applyType: '0'+this.type
                     }
                 })
             },

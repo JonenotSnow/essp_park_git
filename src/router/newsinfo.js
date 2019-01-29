@@ -87,7 +87,6 @@ export default {
         {
             path: "/news/addNews",
             name: "park-addNews",
-            // component: addNews,
             component: publishInformationAnnounce,
         },
         {

@@ -172,13 +172,13 @@
                         this.$message.warning('本活动仅对本园区开放');
                         return;
                     }
-                    var url = "/parkIndex/enrollForm";
+                    var url = "/parkIndex/activityDetail";
                     //onsole.log(item);
                     this.$router.push({
                         path: url,
                         query: {
-                            activeId: activeId,
-                            enrollType: enterType
+                            activityId: activeId,
+                            opMark: "01s"
                         }
                     });
                 }

@@ -49,7 +49,6 @@
         },
         data() {
             return {
-                msg: '新闻发布',
                 temeTit: "通知公告",
                 currentTime: [],
                 parkId: sessionStorage.getItem("parkId") || "",
