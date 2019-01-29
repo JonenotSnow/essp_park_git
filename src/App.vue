@@ -10,7 +10,7 @@
         <!--<chat></chat>-->
         <!--</div>-->
         <!--</el-dialog>-->
-
+        <essp-ueditor></essp-ueditor>
         <router-view/>
     </div>
 </template>

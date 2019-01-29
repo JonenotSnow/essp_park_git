@@ -108,7 +108,7 @@ export default {
       showPower: false,
       menuList: [
         {
-          name: "发布活动",
+          name: "发布活动测试",
           path: "/parkIndex/launchForm",
           src: require("@/assets/imgs/icon1.png"),
           isShow: true,
