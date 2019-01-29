@@ -198,11 +198,18 @@
         </div>
 
         <p class="btn">
-            <span @click="access =true">通过</span>
+            <span @click="openOne">通过</span>
             <span @click="noAccess = true">不通过</span>
             <span @click="auditOption('01')">取消</span>
         </p>
 
+        <!-- 申报人数判断 -->
+        <el-dialog :visible.sync="accessB" width='560px' class='access'>
+            <p>申报人数大于可申报人数上限，无法通过审核！</p>
+            <p>
+                <el-button type="primary" size="small" @click="accessB = false">好的</el-button>
+            </p>
+        </el-dialog>
         <!-- 通过审核弹窗 -->
         <el-dialog :visible.sync="access" width='560px' class='access'>
             <p>是否确认通过审核！</p>
@@ -297,7 +304,8 @@
                         type: '8',
                         name: '沙龙'
                     }
-                ]
+                ],
+                accessB:false
             }
         },
         components: {
@@ -358,6 +366,13 @@
             },
             handleExceed(files, fileList) {
                 this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
+            },
+            openOne(){
+                if (this.infoList.applyNum > this.infoList.applyMaximum) {
+                    this.accessB = true;
+                    return;
+                }
+                this.access = true;
             },
             // 通过02  或者 不通过03  取消 01
             auditOption(type) {

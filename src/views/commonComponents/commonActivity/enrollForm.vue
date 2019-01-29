@@ -56,6 +56,7 @@
             <div class="piaoj">
                 <div class="pjdiv">
                     <el-table
+                        current-row-key
                         :data="tableData"
                         style="width: 100%">
                         <el-table-column
@@ -88,6 +89,8 @@
                                     </div>
                                     <div class="esspfl plus" @click="plus(scope.$index,scope.row)" v-if="scope.row.maxPNum > scope.row.ticketNum "><i
                                         class="el-icon-plus"></i></div>
+                                        <span class="remain">当前剩余票数
+                                        <span>{{scope.row.ticketRemain}}</span>张</span>
                                 </div>
                             </template>
                         </el-table-column>
@@ -365,7 +368,8 @@
                         name: "活动报名"
                     }
                 ],
-                tableData: []
+                tableData: [],
+                ticketUse:[],
             }
         },
         mixins:[mixin],
@@ -402,21 +406,33 @@
 
             },
             initData() {
+                let _that = this;
                 this.$post(this.$apiUrl.active.activeDetail, {
                     activityId: this.$route.query.activeId,
                     parkId: sessionStorage.getItem("parkId"),
                     opMark: '01'
                 })
                     .then((response) => {
-                        this.actData = response.resultData;
+                        _that.actData = response.resultData;
 
-                        this.tableData = JSON.parse(this.actData.ticketForm);
+                        _that.tableData = JSON.parse(_that.actData.ticketForm); //总票数
+                        _that.ticketUse = JSON.parse(_that.actData.ticketUse); //已使用
 
-                        this.tableData.forEach((item,index) => {
-                            this.$set(item,"maxPNum", item.ticketNum);
+                        _that.tableData.forEach((item,index) => {
+                            let use = _that.ticketUse.length;
+                            //人数校验
+                            for (let j = 0; j <  use; j++) {
+                                if (item.ticketType == _that.ticketUse[j].ticketType) {
+                                    let ticketRemain = item.ticketNum -  _that.ticketUse[j].ticketUse;
+                                    item.ticketRemain = ticketRemain;
+                                }
+                            }
+                            
+                            //初始报名票数0
+                            _that.$set(item,"maxPNum", item.ticketNum);
                             item.ticketNum = 0;
                         })
-                            console.log(this.tableData);
+                        console.log(_that.tableData)
                         var arr = JSON.parse(this.actData.enterForm).formRqList;
                         var arr1 = JSON.parse(this.actData.enterForm).formTypeList;
                         this.maxNum = this.actData.topLimit;
@@ -453,7 +469,6 @@
             creadFormList() {
                 this.tableData.forEach((item, index) => {
                     var arr = [];
-                    console.log(item.ticketNum);
                     if (item.ticketNum == 0) {
                         this.nrollFormList.push(arr);
                         return;
@@ -476,7 +491,6 @@
             },
             changeNum(index, item) {
 
-                console.log(this.enrollType,item.ticketNum);
                 if(item.ticketNum == "") {
                     item.ticketNum = 0;
                 }
@@ -489,14 +503,10 @@
                     this.$message.error("票数量不能大于"+item.ticketNum+'张');
                 }
 
-                console.log(this.nrollFormList[index]);
 
                 var len = this.nrollFormList[index].length;
 
                 var diff = item.ticketNum - len;
-
-
-                console.log(len,diff);
 
                 if (diff > 0) {
                     for (var i = 0; i < diff; i++) {
@@ -575,7 +585,6 @@
             // 检查报名表是否都填写
             rulenrollFormList(nrollFormList) {
                 var isNull = false;
-                console.log(nrollFormList);
                 nrollFormList.forEach((item, index) => {
                     item.forEach((itemChild, indexChild) => {
                         itemChild.formRqList.forEach((itemChilds,indexChild1) => {
@@ -692,7 +701,6 @@
                 var contactPhone = '';   // 联系电话
                 if (this.enrollType == "1") {
                     var enterForm = this.formRqList;
-                    console.log(enterForm);
                     companyName = enterForm[0].tittext;
                     contactName = enterForm[1].tittext;
                     contactPhone = enterForm[2].tittext;
@@ -1355,5 +1363,11 @@
             width: 400px;
         }
     }
-
+.remain{
+    margin-left:10px;
+    &>span{
+        color:#00a0e9;
+        padding:0 2px;
+    }
+}
 </style>
