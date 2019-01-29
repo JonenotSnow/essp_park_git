@@ -20,7 +20,7 @@
                             <div class="img" :style="'background-image:url('+item.titleImg+')'"></div>
                         </li>
                     </ul>
-                    <EsspNoData v-if="newsList.length==0" class="nothing"></EsspNoData>
+                    <essp-loading :nodata="newsList.length==0" class="nothing"></essp-loading>
                     <div class="more" v-if="newsList.length>0" @click="linkToNewsListPage">More ></div>
                 </div>
                 <div class="right-aside">
@@ -31,7 +31,7 @@
                             <div class="time">{{ item.createTime | timerFormat(item.createTime) }}</div>
                         </li>
                     </ul>
-                    <EsspNoData v-if="noticesList.length==0" class="nothing"></EsspNoData>
+                    <essp-loading :nodata="noticesList.length==0" class="nothing"></essp-loading>
                     <div class="more" v-if="noticesList.length>0" @click="linkToNoticeListPage">More></div>
                 </div>
             </div>
@@ -40,10 +40,8 @@
 </template>
 <script>
     import Moment from "moment";
-    import EsspNoData from '@/components/EsspNoData';
     export default {
         components:{
-            EsspNoData
         },
         data(){
             return {
