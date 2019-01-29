@@ -2,7 +2,7 @@
     <div>
         <div class="comnoData" v-if="nodata && !loading">
             <div class="no-list-pic">
-                <img src="@/assets/newparkimg/no-list-img.png" :width="width" :height="height" alt="">
+                <img src="@/assets/newparkimg/no-list-img.png" :width="width" alt="">
             </div>
             <div class="no-list-desc">
                 {{nodataMsg}}
@@ -37,10 +37,6 @@ export default {
         width: {
         type: Number,
         default: 245
-        },
-        height: {
-        type: Number,
-        default: 189
         }
     }
 }
