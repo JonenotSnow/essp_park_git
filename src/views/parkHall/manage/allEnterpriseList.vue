@@ -10,9 +10,9 @@
                 <div class="listcon">
                     <div class="listitem" v-for="(item,index) in enterprises" :key="index" @mouseenter="showDetail(item.isShowDetail,index)" @mouseleave="showDetail(item.isShowDetail,index)">
                         <img class="enter_child" :src="item.cstLogo">
-                        <div class="detailinfo" v-if="item.isShowDetail" >
-                            <p>{{item.cstNm}}</p>
-                            <p>{{item.idyTpcd}}</p>
+                        <div class="detailinfo" :class="{cur:item.isShowDetail}">
+                            <p class="enterprisename">{{item.cstNm}}</p>
+                            <p class="enterprisetype">{{item.idyTpcd}}</p>
                             <div class="checkenterprise" @click="enterBusiness(item)">进入企业橱窗</div>
                         </div>
                     </div>
@@ -206,7 +206,50 @@
                             width:100%;
                             height:100%;
                         }
-                        .detailinfo{
+                        .detailinfo{   
+                            opacity: 0;                 
+                            .enterprisename{
+                                margin:20px auto 10px;
+                                height: 20px;
+                                display: -webkit-box;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                                //white-space: nowrap;
+                                -webkit-line-clamp:1;
+                                -webkit-box-orient:vertical;
+                                width:100%;
+                                text-align: center;
+                                position:absolute;
+                                left:0;
+                                top:-60px;
+                                transition: all ease .8s ;
+                            }
+                            .enterprisetype{
+                                margin-bottom: 5px;
+                                width:100%;
+                                text-align: center;
+                                position:absolute;
+                                left:0;
+                                top:-60px;
+                                transition: all ease .8s ;
+                            }
+                            p{
+                                font-size: 14px;
+                                color: #ffffff;
+                            }
+                            .checkenterprise{
+                                position:absolute;
+                                left:40px;
+                                top:120px;
+                                border:1px solid #fff;
+                                width: 120px;
+                                height: 30px;
+                                line-height:30px;
+                                margin: 0 auto;
+                                transition: all ease .8s ;
+                            }
+                        }
+                        .detailinfo.cur{
                             position:absolute;
                             left:0;
                             top:0;
@@ -217,19 +260,15 @@
                             font-size: 16px;
                             width:100%;
                             height: 100%;
-                            p{
-                                margin: 14px 0;
+                            .enterprisename{
+                                top:0px;
+                            }
+                            .enterprisetype{
+                                top:50px;
                             }
                             .checkenterprise{
-                                border:1px solid #fff;
-                                width: 120px;
-                                height: 30px;
-                                line-height:30px;
-                                margin: 0 auto;
+                                top:80px;
                             }
-                        }
-                        .detailinfo.cur{
-                            display: block;
                         }
                     }
                 }
