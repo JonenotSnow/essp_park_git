@@ -27,6 +27,12 @@ import VueLazyload from "vue-lazyload"; //引入这个懒加载插件
 Vue.use(VueLazyload);
 
 Vue.use(quillEditor, quillConfig);
+
+
+//无数据公共组件
+import EsspLoading from './components/EsspLoading/index'
+Vue.use(EsspLoading)
+
 // 或者添加VueLazyload 选项
 Vue.use(VueLazyload, {
     loading: "./assets/loading.png",

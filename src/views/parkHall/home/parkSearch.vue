@@ -50,6 +50,7 @@
                 <h2 class="tit-tool">筛选结果</h2>
                 <div class="rescon">
                     <!-- 资讯 -->
+                    <essp-loading :loading="loading" :nodata="searchData.length==0"></essp-loading>
                     <ul v-if="this.typeselect=='park_information'">
                         <li v-for="(items,index) in searchData" :key="index" class="itemli esspclearfix">
                             <div class="itemli_wrap_div esspclearfix">
@@ -128,8 +129,7 @@
                             </div>
                         </li>
                     </ul>
-                    <NoData v-if="searchData.length==0 && !loading" />
-                    <Loading v-if="loading" />
+                    
                 </div>
             </div>
             <div class="pageList">
@@ -152,12 +152,8 @@
 <script>
 import Moment from "moment";
 import { classtType } from "./../../../util/classtType";
-import NoData from '@/components/EsspNoData';
-import Loading from '@/components/EsspLoading';
 export default {
     components: {
-        NoData,
-        Loading
     },
     data() {
         return {
