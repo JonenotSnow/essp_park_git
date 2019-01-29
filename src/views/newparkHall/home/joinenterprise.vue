@@ -5,13 +5,9 @@
         <div class="com-tit">入驻企业</div>
         <div class="com-brf">入驻企业400+，在职人员10000+</div>
         <div class="entercons">
-            <!-- 逻辑是 一行最多显示5个，超过5个显示more 否则不必要
-
-            现在固定显示6个
-             -->
             <div class="hasenters" v-if="enterprises.length>0">
                 <div class="listcon">
-                    <div class="listitem" v-for="(item,index) in enterprises" :key="index" @mouseenter="showDetail(item.isShowDetail,index)" @mouseleave="showDetail(item.isShowDetail,index)">
+                    <div class="listitem" v-for="(item,index) in enterprises" :key="index" v-if="index<=5" @mouseenter="showDetail(item.isShowDetail,index)" @mouseleave="showDetail(item.isShowDetail,index)">
                         <img class="enter_child" :src="item.cstLogo">
                         <div class="detailinfo" :class="{cur:item.isShowDetail}">
                             <p class="enterprisename">{{item.cstNm}}</p>
@@ -127,7 +123,7 @@ import mixins_windowOpen from '@/components/mixins/mixins_windowOpen.js'
      }
      //更多的样式
      .entermore{
-        width: 976px;
+        width: 1180px;
         margin:0 auto;
         text-align: right;
         line-height: 50px;
@@ -165,7 +161,7 @@ import mixins_windowOpen from '@/components/mixins/mixins_windowOpen.js'
     }
     .hasenters{
         .listcon{
-            width: 976px;
+            width: 1180px;
             height: 120px;
             margin:0 auto;
             .listitem{

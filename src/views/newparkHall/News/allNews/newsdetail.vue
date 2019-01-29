@@ -6,26 +6,26 @@
             <div class="newscon">
                 <h2>{{informationTitle}}</h2>
                 <div class="newstatus esspclearfix">
-        <span class="statusitemsA">
-          <label>发布时间：</label>
-          <em>{{createTime | timerFormat(createTime)}}</em>
-        </span>
-                    <span class="statusitemsB">
-          <label>浏览量：</label>
-          <em>{{viewTime}}</em>
-        </span>
+                <span class="statusitemsA">
+                  <label>发布时间：</label>
+                  <em>{{createTime | timerFormat(createTime)}}</em>
+                </span>
+                            <span class="statusitemsB">
+                  <label>浏览量：</label>
+                  <em>{{viewTime}}</em>
+                </span>
                     <!--<span class="statusitems">-->
                     <!--<div class="follow">-->
                     <!--<i class="icon iconfont icon-liulan"></i>-->
                     <!--<em>{{viewTime}}</em>-->
                     <!--</div>-->
-                    <div class="follow cursor guanzhu" @click="showDialog()">
-                        <i class="icon iconfont"
-                           :class="followStatus == 0 ?'icon-aixin-xianxing':'icon-collect2'"
-                           style="font-size: 14px"></i>
-                        <span>{{followStatus == 0 ? "关注" : "已关注"}}</span>
-                        <span>(已关注{{countFollower || 0}})</span>
-                    </div>
+                <div class="follow cursor guanzhu" @click="showDialog()">
+                    <i class="icon iconfont"
+                       :class="followStatus == 0 ?'icon-aixin-xianxing':'icon-collect2'"
+                       style="font-size: 14px"></i>
+                    <span>{{followStatus == 0 ? "关注" : "已关注"}}</span>
+                    <span>(已关注{{countFollower || 0}})</span>
+                </div>
                     <!--<div-->
                     <!--class="follow cursor"-->
                     <!--@click="tipOffFn(3,infoDetailData.informationId,infoDetailData.informationTitle)"-->
@@ -34,25 +34,25 @@
                     <!--<em>举报</em>-->
                     <!--</div>-->
                     <!-- </span> -->
-                </div>
-                <div class="tagscon" v-show="tags.length">
-                    <div class="tags_con esspclearfix">
-                        <div class="tagssubcon">
-                            <essp-park-tag
-                                v-for="(item, eptIndex) in tags"
-                                :value="item"
-                                :key="eptIndex"
-                            />
-                        </div>
-                        <!--<button class="infojb"-->
-                        <!--@click="tipOffFn(3,infoDetailData.informationId,infoDetailData.informationTitle)">举报-->
-                        <!--</button>-->
+            </div>
+            <div class="tagscon" v-show="tags.length">
+                <div class="tags_con esspclearfix">
+                    <div class="tagssubcon">
+                        <essp-park-tag
+                            v-for="(item, eptIndex) in tags"
+                            :value="item"
+                            :key="eptIndex"
+                        />
                     </div>
+                    <!--<button class="infojb"-->
+                    <!--@click="tipOffFn(3,infoDetailData.informationId,infoDetailData.informationTitle)">举报-->
+                    <!--</button>-->
                 </div>
-                <!-- <div class="btncon">
-                          <el-button type="primary" @click="upDatefollowStatus(followStatus)">{{followStatus==0?"关注":"取消关注"}}</el-button>
-                </div>-->
-                <div class="jbnc" v-if="prompt == 1">PS: 该内容因被举报正在取证中，请您谨慎对待。</div>
+            </div>
+            <!-- <div class="btncon">
+                      <el-button type="primary" @click="upDatefollowStatus(followStatus)">{{followStatus==0?"关注":"取消关注"}}</el-button>
+            </div>-->
+            <div class="jbnc" v-if="prompt == 1">PS: 该内容因被举报正在取证中，请您谨慎对待。</div>
             </div>
             <div class="infoDetail ql-container ql-snow bord-none" style="border: none">
                 <div class="realinfo ql-editor bord-none" v-html="infoDetail"></div>

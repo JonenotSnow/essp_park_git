@@ -7,7 +7,7 @@
                 <div class="comment">
                     <div class="fundes">我来说两句</div>
                     <div class="border">
-                        <textarea class="cnptext" v-model.trim="cnttext"></textarea>
+                        <textarea class="cnptext" v-model.trim="cnttext" placeholder="评论字数在300字以内！" maxlength="300"></textarea>
                         <div class="cnptool esspclearfix">
                             <div class="toolleft">
                                 <!-- <i class="iconfont icon-biaoqing"></i> -->
@@ -81,7 +81,7 @@
                             </div>
                         </div>
                         <div class="recon esspclearfix" v-if="item.showBox">
-                            <textarea class="recon_box" v-model.trim="item.replytext"></textarea>
+                            <textarea class="recon_box" v-model.trim="item.replytext" placeholder="评论字数在300字以内！" maxlength="300"></textarea>
                             <div class="rebtntool">
                                 <el-button class="recon_cnbtncancel"  @click="reconclosecancel(item)">取消</el-button>
                                 <el-button class="recon_cnbtn" type="info" @click="reconclose(item)">提交</el-button>
