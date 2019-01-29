@@ -66,8 +66,7 @@
                                     </button>
                                     <button
                                         v-else-if="activeDetailData.status == '02' && btnText==1">
-                                        <em class="btn_text_i" :class="!loginFlag ? 'sel':''"  @click="signUp(activeDetailData.enterType)" v-if="activeDetailData.topLimit != 0">立即报名</em>
-                                        <em class="btn_text_i" v-else>人数已满</em>
+                                        <em class="btn_text_i" :class="!loginFlag ? 'sel':''"  @click="signUp(activeDetailData.enterType)">立即报名</em>
                                     </button>
                                     <button
                                         v-else-if="activeDetailData.status == '02' && btnText == 2"
@@ -449,6 +448,10 @@
 
                 if (!this.loginFlag && enrollType == '0') {
                     this.$message.warning('本活动仅对本园区开放');
+                    return;
+                }
+                if(this.activeDetailData.topLimit == 0) {
+                    this.$message.warning('本活动报名人数已达到上限');
                     return;
                 }
                 this.$router.push({

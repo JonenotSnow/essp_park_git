@@ -669,6 +669,8 @@
     import EsspAddTag from "@/components/EsspAddTag";
     import ParkUpload from "@/views/parkHall/parkUpload"; // 上传图片控件
 
+    import Moment from "moment";
+
     export default {
         name: "",
         data() {
@@ -799,11 +801,11 @@
                     {
                         id: "0",
                         name: "仅对本园区开放"
-                    },
-                    {
-                        id: "1",
-                        name: "全开放"
                     }
+//                    ,{
+//                        id: "1",
+//                        name: "全开放"
+//                    }
                 ],
 
                 dialogVisible: false,

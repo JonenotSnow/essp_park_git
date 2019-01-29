@@ -218,15 +218,7 @@
 
                         if(btnType === 3) {
                             arr = [{
-                                name: '活动结束',
-                                type: 2,
-                                clicked: false,
-                                show: true
-                            }]
-                        }
-                        if(btnType === 4) {
-                            arr = [{
-                                name: '人数已满',
+                                name: '已结束',
                                 type: 2,
                                 clicked: false,
                                 show: true
@@ -300,13 +292,8 @@
                                 btnTyp = 1;
                             }
                             if(thisTime >= enterStarttime && thisTime <= enterEndtime) {
-                               if(item.enterSum != item.topLimit) {
-                                   this.itemSet(item,2);  // 设置属性兼容处理
-                                   btnTyp = 2;
-                               } else {
-                                    this.itemSet(item,4);  // 设置属性兼容处理
-                                    btnTyp = 4;
-                                }
+                                this.itemSet(item,2);  // 设置属性兼容处理
+                                btnTyp = 2;
                             }
                             if(thisTime > enterEndtime) {
                                 this.itemSet(item,3);  // 设置属性兼容处理

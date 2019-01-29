@@ -50,7 +50,6 @@
         data() {
             return {
                 // {"resultCode":"CLT000000000","resultMsg":"获取已发布列表成功！","resultData":{"total":1.0,"informationList":[{"informationId":"20190110171457655557","informationTitle":"测试一下接口","content":"1","infoDetail":"<p>肉肉肉让</p>","creator":1.000188039E9,"createTime":1.547111697E12,"status":"13","approveType":"0","parkId":"20181220204119007","viewTime":0.0,"titleImg":"/static/img/cjxw3.297af1c.jpg","countFollower":"0","countComment":"0","followStatus":"0","userName":"苏2","deleteFlag":"0","cstNm":"富康发展控股有限公司","phone":"15809990002","tagsTxt":"资讯","pubUserType":"0","parkName":"淮安高新技术产业开发区","pubCstName":"916331003109772204"}]}}
-                msg: '新闻发布',
                 temeTit: "新闻动态",
                 currentTime: [],
                 parkId: sessionStorage.getItem("parkId") || "",

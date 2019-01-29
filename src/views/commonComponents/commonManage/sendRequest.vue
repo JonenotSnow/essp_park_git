@@ -7,15 +7,15 @@
                 <span>邀请函</span>
                 <span>INVITATION</span>
             </p>
-            <div class="wrap">
+            <!-- <div class="wrap">
                 <quill-editor  v-model="content"></quill-editor>
-            </div>
+            </div> -->
             <p style="display:none;"><span>*</span>请使用编辑器自带功能编辑</p>
             <p class="scan">
                 <span @click="scan = true">预览</span>
             </p>
             <p class="save">
-                <span @click="inviteMember">确认发送</span>
+                <span @click="access = true">确认发送</span>
             </p>
         </div>
         <!-- 确认发送 -->
@@ -42,11 +42,21 @@
                 </p>
             </div>
         </el-dialog>
+        <!-- 发送邀请函提示 -->
+        <el-dialog :visible.sync="access" width='560px' class='access'>
+            <h2 class="titleTips">提示</h2>
+            <p class="accessP"><i class="el-icon-warning"></i>&nbsp;&nbsp;确认邀请该企业加入园区？</p>
+            <p class="btn">
+                <span @click="access = false">取消</span>
+                <span @click="inviteMember">确认</span>
+            </p>
+        </el-dialog>
     </div>
 </template>
 
 <script>
 import EsspBreadCrumb from "@/components/EsspBreadCrumb";
+
 export default {
     components: {
         EsspBreadCrumb
@@ -75,7 +85,8 @@ export default {
                     <p class="ql-align-right" style="font-size:16px;">xxxx年xx月xx日</p>`,
             confirmSend: false,
             scan: false,
-            parkNm:''
+            parkNm:'',
+            access:false
         };
     },
     created () {
@@ -97,6 +108,7 @@ export default {
                     }, 2000);
                 }
             });
+            this.access = false;
         },
         getParkById() {
             this.$post(this.$apiUrl.manage.getParkById, {
@@ -150,6 +162,19 @@ export default {
 }
 #sendRequest .el-dialog__body{
     padding: 0!important;
+}
+
+#sendRequest .access .el-dialog__header {
+    display: none;
+}
+
+#sendRequest .access .el-dialog__body {
+    overflow: hidden;
+    margin: 30px 20px;
+}
+
+#sendRequest .access .el-dialog__body p:nth-of-type(1) {
+    line-height: 55px;
 }
 </style>
 
@@ -346,4 +371,51 @@ export default {
     }
 }
 
+.access {
+    .titleTips {
+        text-indent: 36px;
+        font-size: 24px;
+        color: #555;
+        position: relative;
+        font-weight: normal;
+        top: -30px;
+        margin-top: 20px;
+    }
+    .accessP {
+        text-indent: 20px;
+        font-size: 20px;
+        color: #333;
+        line-height: 30px;
+        i {
+            font-size: 28px;
+            color: #00a0e9;
+        }
+    }
+    .btn {
+        text-align:center;
+        margin-top: 35px;
+        span {
+            text-align: center;
+            display: inline-block;
+            width: 100px;
+            height: 35px;
+            border-radius: 2px;
+            line-height: 35px;
+            font-size: 18x;
+            cursor: pointer;
+            color: #fff;
+            margin: 0 30px;
+            letter-spacing: 0;
+            &:nth-of-type(1) {
+                letter-spacing: 0;
+                background: #e6f4ff;
+                color: #00a0e9;
+            }
+            &:nth-of-type(2) {
+                background: linear-gradient(31deg, #22a2fa 0%, #10b5ff 100%);
+                color: #fff;
+            }
+        }
+    }
+}
 </style>

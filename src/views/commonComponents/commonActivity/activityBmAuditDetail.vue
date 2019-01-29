@@ -148,7 +148,7 @@
                 </div>
 
                 <p class="btn" v-if="type != '01'">
-                    <span  @click="access =true">通过</span>
+                    <span  @click="openOne">通过</span>
                     <span @click="noAccess = true">不通过</span>
                     <span @click="cancelOption">取消</span>
                     <!--<el-button type="primary" size="small">通过</el-button>-->
@@ -159,6 +159,13 @@
 
         </div>
 
+        <!-- 报名人数判断 -->
+        <el-dialog :visible.sync="accessB" width='560px' class='access'>
+            <p>报名人数大于可报名人数上限，无法通过审核！</p>
+            <p>
+                <el-button type="primary" size="small" @click="accessB = false">好的</el-button>
+            </p>
+        </el-dialog>
         <!-- 通过审核弹窗 -->
         <el-dialog :visible.sync="access" width='560px' class='noAccess'>
             <p>报名审核通过意见</p>
@@ -253,7 +260,10 @@
                         type: '8',
                         name: '沙龙'
                     }
-                ]
+                ],
+                ticketUse:[],
+                remain:0,
+                accessB:false
             }
         },
         components: {
@@ -265,6 +275,7 @@
         methods: {
             /*获取企业活动审核详情页面的活动信息 */
             getInfo() {
+                let _that = this;
                 var opMark = this.type == "01" ? '01' : '03';
                 this.$post(this.$apiUrl.active.getByKeyId, {
                     activityId: this.$route.query.id,
@@ -273,8 +284,26 @@
                     opMark: opMark
                 }).then((response) => {
                     if (response.resultCode == 'CLT000000000') {
-                        this.infoList = response.resultData;
-                        this.items = JSON.parse(this.infoList.ticketForm);//票务信息
+                        _that.infoList = response.resultData;
+                        _that.items = JSON.parse(_that.infoList.ticketForm);//总票数
+                        if (_that.infoList && _that.infoList.ticketUse) {
+                            _that.ticketUse = JSON.parse(_that.infoList.ticketUse);//已用票
+                        }
+                        //人数校验
+                        let len = _that.items.length;
+                        let leng = _that.ticketUse.leng;
+                        let sum = []; //剩余可报名人数
+                        for (let i = 0; i < len.length; i++) {
+                            for (let j = 0; j < leng.length; j++) {
+                                if (_that.items[i].ticketType == _that.items[j].ticketType) {
+                                    let use = _that.items[i].ticketNum - _that.ticketUse[j].ticketUse;
+                                    sum.push(use);
+                                }
+                            }
+                        }
+                        for (let i = 0; i < sum.length; i++) {
+                            this.remain += sum[i];
+                        }
                         var enterForm = JSON.parse(this.infoList.enterForm); //申报信息
 
                         this.enrollType =  this.infoList.enterType;
@@ -312,6 +341,13 @@
             savePeopleInfo(item){
 
                 item.isShow = false
+            },
+            openOne(){
+                if (this.infoList.enterNumber > this.remain ) {
+                    this.accessB = true;
+                    return;
+                }
+                this.access = true;
             },
             // 通过  或者 不通过
             auditOption(type){
@@ -387,6 +423,21 @@
 
     #manageActivityAudit .noAccess .el-dialog__body p:nth-of-type(2) {
         margin-top: 20px;
+    }
+    
+    #manageActivityAudit .access .el-dialog__header {
+        display: none;
+    }
+
+    #manageActivityAudit .access .el-dialog__body {
+        overflow: hidden;
+        margin: 30px 20px;
+    }
+    #manageActivityAudit .access .el-dialog__body p{
+        text-align: center;
+    }
+    #manageActivityAudit .access .el-dialog__body p:nth-of-type(1) {
+        line-height: 100px;
     }
 </style>
 
@@ -960,6 +1011,53 @@
             -ms-transform: rotate(180deg);
         }
 
+    }
+    .access {
+        .titleTips {
+            text-indent: 36px;
+            font-size: 24px;
+            color: #555;
+            position: relative;
+            font-weight: normal;
+            top: -30px;
+            margin-top: 20px;
+        }
+        .accessP {
+            text-indent: 20px;
+            font-size: 20px;
+            color: #333;
+            line-height: 30px;
+            i {
+                font-size: 28px;
+                color: #00a0e9;
+            }
+        }
+        .btn {
+            text-align:right;
+            margin-top: 35px;
+            span {
+                text-align: center;
+                display: inline-block;
+                width: 100px;
+                height: 35px;
+                border-radius: 2px;
+                line-height: 35px;
+                font-size: 18x;
+                cursor: pointer;
+                color: #fff;
+                letter-spacing: 4.8px;
+                &:nth-of-type(1) {
+                    letter-spacing: 4.8px;
+                    background: #e6f4ff;
+                    color: #00a0e9;
+                }
+                &:nth-of-type(2) {
+                    margin-left: 55px;
+                    background: linear-gradient(31deg, #22a2fa 0%, #10b5ff 100%);
+                    color: #fff;
+                }
+            }
+        }
     }
 </style>
 

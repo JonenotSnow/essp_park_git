@@ -42,7 +42,7 @@
         <!-- 通过审核弹窗 -->
         <el-dialog :visible.sync="access" width='560px' class='access'>
             <h2 class="titleTips">提示</h2>
-            <p class="accessP"><i class="el-icon-warning"></i>&nbsp;&nbsp;是否确认通过审核！</p>
+            <p class="accessP"><i class="el-icon-warning"></i>&nbsp;&nbsp;是否确认通过该入园申请？</p>
             <p class="btn">
                 <span @click="access = false">取消</span>
                 <span @click="auditFn('02')">确认</span>
@@ -52,7 +52,7 @@
         <!-- 未通过审核弹窗 -->
         <el-dialog :visible.sync="noAccess" width='560px' class='access'>
             <h2 class="titleTips">提示</h2>
-            <p class="accessP"><i class="el-icon-warning"></i>&nbsp;&nbsp;是否拒绝通过审核！</p>
+            <p class="accessP"><i class="el-icon-warning"></i>&nbsp;&nbsp;您确认拒绝该入园申请？</p>
             <p class="btn">
                 <span @click="noAccess =false">取消</span>
                 <span @click="auditFn('12')">确认</span>
