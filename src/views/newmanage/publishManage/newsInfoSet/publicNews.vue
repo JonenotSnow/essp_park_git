@@ -21,7 +21,7 @@
             </div>
         </div>
         <div class="policie-and-regulation-main">
-            <oneCardModel ref="listModule" :list="list" :classtType="approveType" :type="type" :allChecks="allCheck" :selectCheckItem="selectCheckItem" @changeStatusList="changeStatusList" @delectList="getPublicedNews" :customopts={status,temeTit,allTotal}></oneCardModel>
+            <oneCardModel ref="listModule" :list="list" :requestTip="requestTip" :classtType="approveType" :type="type" :allChecks="allCheck" :selectCheckItem="selectCheckItem" @changeStatusList="changeStatusList" @delectList="getPublicedNews" :customopts={status,temeTit,allTotal}></oneCardModel>
         </div>
         <div class="pageList" v-if="list.length > 0">
             <el-pagination
@@ -58,6 +58,7 @@
                 pageSize: 5,//每页条数
                 allTotal: 0,//总条数
                 isAllChecked: false,
+                requestTip: "数据加载中...",
                 selectCheckItem:[], // 已选多少项
                 type: '1',  // 类型（新闻与公告）新闻1，公告2
                 status: this.$route.query.status || '1',                // 状态值
@@ -99,7 +100,9 @@
                     type: this.type,
                     statusType: this.approveType
                 }
+                this.requestTip = '数据加载中...'
                 this.$post(url, pop).then(res => {
+                    this.requestTip = '数据加载完毕';
                     var arr = res.resultData.informationList;
                     arr.forEach((item,index) => {
                         if(!item.isChecked) {

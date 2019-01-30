@@ -23,7 +23,8 @@
                 </ul>
             </div>
         </div>
-        <div v-else style="text-align:center;color:#999; padding:20px 0">暂无数据</div>
+        <!-- <div v-else style="text-align:center;color:#999; padding:20px 0">暂无数据</div> -->
+        <essp-loading v-else :nodata="true"></essp-loading>
     </div>
 </template>
 

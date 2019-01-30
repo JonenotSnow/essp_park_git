@@ -30,8 +30,8 @@
                         </div>
                     </div>
                 </li>
-                <li v-if="list.length == 0 && ajaxTit != '数据加载中……'" class="no_odata">暂无数据！</li>
-                <li v-if="list.length == 0 && ajaxTit == '数据加载中……'" class="data_tit">{{ajaxTit}}</li>
+                <li v-if="list.length == 0 && ajaxTit != '数据加载中……'"><essp-loading :nodata="true"></essp-loading></li>
+                <li v-if="list.length == 0 && ajaxTit == '数据加载中……'"><essp-loading :loading="true" :loadingMsg="ajaxTit"></essp-loading></li>
 
             </ul>
         </div>

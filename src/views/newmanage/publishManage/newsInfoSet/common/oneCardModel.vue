@@ -55,7 +55,11 @@
                 </div>
             </div>
         </div>
-        <div v-else  class="no_odata">暂无数据！</div>
+        <!-- <div v-else  class="no_odata">
+            
+        </div> -->
+        <essp-loading :loading="requestTip == '数据加载中...'" :loadingMsg="requestTip" :nodata="list.length == 0 && requestTip == '数据加载完毕'"></essp-loading>
+       
     </div>
 </template>
 
@@ -81,6 +85,10 @@
             },
             classtType: {
                 type: String(),
+                default: ''
+            },
+            requestTip: {
+                type: String,
                 default: ''
             }
         },

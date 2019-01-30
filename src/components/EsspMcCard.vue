@@ -60,7 +60,8 @@
             </div>
         </div>
         <div v-show="mcCardList.length==0" v-cloak>
-            <div style="text-align: center">{{lodingMsg}}</div>
+            <!-- <div style="text-align: center">{{lodingMsg}}</div> -->
+            <essp-loading :loading="lodingMsg == '数据加载中~'" :nodata="lodingMsg == '数据加载完毕！'"></essp-loading>
         </div>
 
         <!-- 关注事件对话框start -->

@@ -54,15 +54,8 @@
                 </li>
             </ul>
         </div>
-        <div class="noData" v-if="list.length == 0 && requestTip == '数据加载中...'">
-            <p>{{requestTip}}</p>
-        </div>
-        <div class="noData" v-if="list.length == 0 && requestTip == '数据加载完毕'">
-
-            <!--<img src="@assets/newparkimg/newmanage/achievementSet/no_list.png" alt="">-->
-            <p class="no-data-img"><img src="@assets/newparkimg/no-list-img.png" alt=""></p>
-            <p class="no-data-desc">暂无数据</p>
-        </div>
+        <essp-loading :loading="requestTip == '数据加载中...'" :loadingMsg="requestTip" :nodata="list.length == 0 && requestTip == '数据加载完毕'"></essp-loading>
+       
 
         <!-- 删除事件对话框start -->
         <el-dialog

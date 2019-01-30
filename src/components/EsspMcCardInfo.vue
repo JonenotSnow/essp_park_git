@@ -38,7 +38,8 @@
             </div>
         </div>
         <div v-else>
-            <div style="text-align: center">暂无数据</div>
+            <!-- <div style="text-align: center">暂无数据</div> -->
+            <essp-loading :nodata="true"></essp-loading>
         </div>
 
         <!-- 关注事件对话框start -->

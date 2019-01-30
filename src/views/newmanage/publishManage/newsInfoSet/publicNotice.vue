@@ -21,7 +21,7 @@
             </div>
         </div>
         <div class="policie-and-regulation-main">
-            <oneCardModel :list="list" :classtType="approveType" :allCheck="isAllChecked" :type="type" @changeStatusList="changeStatusList" @delectList="getPublicedNews" :customopts={status,temeTit,allTotal}></oneCardModel>
+            <oneCardModel :list="list" :requestTip="requestTip" :classtType="approveType" :allCheck="isAllChecked" :type="type" @changeStatusList="changeStatusList" @delectList="getPublicedNews" :customopts={status,temeTit,allTotal}></oneCardModel>
         </div>
         <div class="pageList">
             <el-pagination
@@ -51,6 +51,7 @@
             return {
                 temeTit: "通知公告",
                 currentTime: [],
+                requestTip: "数据加载中...",
                 parkId: sessionStorage.getItem("parkId") || "",
                 pageRanges: [5, 10, 20],//默认每页10条数区间
                 pageNum: 1,//当前页码
@@ -85,7 +86,7 @@
         },
         methods: {
             getPublicedNews() {
-
+                this.requestTip = '数据加载中...'
                 var url = this.$apiUrl.newsinfo.getMyPubInfo;
                 var pop = {
                     pageNum: this.pageNum,
@@ -99,6 +100,7 @@
                     statusType: this.approveType
                 }
                 this.$post(url, pop).then(res => {
+                    this.requestTip = '数据加载完毕';
                     var arr = res.resultData.informationList;
                     arr.forEach((item,index) => {
                         if(!item.isChecked) {

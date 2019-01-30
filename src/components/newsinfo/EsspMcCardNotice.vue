@@ -18,14 +18,15 @@
                 </div>
             </div>
         </div>
-        <div v-else class="noDataInfo">
+        <!-- <div v-else class="noDataInfo">
             <div class="no-list-pic">
                 <img src="@/assets/newparkimg/no-list-img.png" alt="">
                 <div class="no-list-desc">
                     暂无数据
                 </div>
             </div>
-        </div>
+        </div> -->
+        <essp-loading v-else :nodata="true"></essp-loading>
     </div>
 </template>
 

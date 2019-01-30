@@ -155,7 +155,8 @@
                 </li>
             </ul>
             <div v-if="type == 0 && mcCardDataList && mcCardDataList && mcCardDataList.length==0">
-                <div style="text-align: center">暂无数据</div>
+                <!-- <div style="text-align: center">暂无数据</div> -->
+                <essp-loading :nodata="true"></essp-loading>
             </div>
         </div>
         <div class="pageList">
