@@ -200,7 +200,10 @@
         <p class="btn">
             <span @click="openOne">通过</span>
             <span @click="noAccess = true">不通过</span>
-            <span @click="auditOption('01')">取消</span>
+
+            <!--需求更改，这个取消按钮不需要调用接口了-->
+            <!--<span @click="auditOption('01')">取消</span>-->
+            <span @click="auditOption('')">取消</span>
         </p>
 
         <!-- 申报人数判断 -->
@@ -305,7 +308,7 @@
                         name: '沙龙'
                     }
                 ],
-                accessB:false
+                accessB: false
             }
         },
         components: {
@@ -367,7 +370,7 @@
             handleExceed(files, fileList) {
                 this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
             },
-            openOne(){
+            openOne() {
                 if (this.infoList.applyNum > this.infoList.applyMaximum) {
                     this.accessB = true;
                     return;
@@ -376,6 +379,12 @@
             },
             // 通过02  或者 不通过03  取消 01
             auditOption(type) {
+
+                if (type == '') {
+                    this.$router.push("/parkIndex/goverReviewBm");
+                    return;
+                }
+
                 var reason = (type == "02") ? "" : this.mark;
                 var resultMsg = '';
                 if (type == "01") {
@@ -393,8 +402,8 @@
                 }
                 this.$post(this.$apiUrl.goverBene.approvePolicy, {
                     id: this.$route.query.id,
-//                    reason: reason,
-                    status: type
+                    status: type,
+                    auditComment: this.mark
                 })
                     .then(response => {
                         this.access = false;
@@ -1000,7 +1009,7 @@
 
     }
 
-    .common_titdes{
+    .common_titdes {
         font-weight: normal;
     }
 </style>
