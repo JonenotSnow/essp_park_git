@@ -86,7 +86,7 @@
     export default {
         data() {
             return {
-                isShowBtn: this.$route.query.type == '01'? false:true,
+                isShowBtn: this.$route.query.type == '01' ? false : true,
                 breadlist: [
                     {
                         path: "/parkIndex/parkInformation/all",
@@ -260,6 +260,12 @@
             },
             //取消锁定
             cCancel() {
+
+                // 需求变动，“取消锁定”功能不需要了，这里直接返回审核列表页面
+                this.$router.push({path: "/parkIndex/parkInformation/auditing"});
+                // 这里直接返回了
+                return;
+
                 var informationId = this.$route.query.informationId;
                 this.$confirm('是否取消审核?', '提示', {
                     confirmButtonText: '确认',

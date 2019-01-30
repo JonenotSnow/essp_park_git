@@ -27,7 +27,7 @@
                     <!--@click="getNoticeDetail()"-->
                     <!--&gt;</div>-->
                     <!--</marquee>-->
-                    <essp-roll :list="infoList" class="swiper_inner1"/>
+                    <essp-roll :list="infoList" class="swiper_inner1" style="width: 430px"/>
                     <div
                         class="swiper_inner2"
                         v-if="infoList && infoList[0].createTime"
@@ -48,11 +48,13 @@
             >
                 <div class="swiper_inner">{{isBdPark?'审核管理':'任务池'}}：</div>
                 <div class="esspclearfix" v-if="lastApplyParkFlag">
+                    <!--<div class="esspclearfix">-->
                     <div
                         class="swiper_inner3"
                         @click="cancelAudit(lastApplyPark.id)"
                     >{{lastApplyPark.cstNm}}申请入园
                     </div>
+                    <!--<essp-roll :list="infoList" class="swiper_inner3" style="width: 430px"/>-->
                     <div class="swiper_inner2">{{lastApplyPark.joinTime | timerFormat}}</div>
                     <span
                         class="more"
@@ -60,7 +62,7 @@
                         @click="linkToPage"
                     >More&gt;</span>
                 </div>
-                <div class="noData" v-else>您当前暂无要处理入园申请~~</div>
+                <div class="noData" v-else style="height: 35px;line-height: 35px">您当前暂无要处理入园申请~~</div>
             </div>
         </div>
         <!-- 快捷菜单 -->
@@ -500,6 +502,7 @@
         .swiper_inner {
             float: left;
             width: 80px;
+            line-height: 35px;
             color: #333;
             font-size: 14px;
             overflow: hidden;
