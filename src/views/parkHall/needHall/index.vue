@@ -49,7 +49,8 @@
           </div>
         </div>
         <div class="result_list" v-else>
-           <div class="result_item no-data-tip" >暂无数据</div>
+           <!-- <div class="result_item no-data-tip" >暂无数据</div> -->
+           <essp-loading :nodata="true"></essp-loading>
            </div>
         <div class="pageList">
           <el-pagination

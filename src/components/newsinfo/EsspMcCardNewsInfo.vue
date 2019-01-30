@@ -39,13 +39,14 @@
                 </div>
             </div>
         </div>
-        <div v-else class="noDataInfo">
-            <div class="no-list-pic">
+        <div v-else>
+            <!-- <div class="no-list-pic">
                 <img src="@/assets/newparkimg/no-list-img.png" alt="">
                 <div class="no-list-desc">
                     暂无数据
                 </div>
-            </div>
+            </div> -->
+            <essp-loading :nodata="true"></essp-loading>
         </div>
         <!-- 关注事件对话框start -->
         <el-dialog class="quguanbox"

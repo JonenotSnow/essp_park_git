@@ -20,7 +20,7 @@
                 </div>
             </div>
         </div>
-        <div class="noData" v-if="mcCardList.length == 0 && requestTip == '数据加载中...'">
+        <!-- <div class="noData" v-if="mcCardList.length == 0 && requestTip == '数据加载中...'">
             <div class="no-list-desc">
                 {{requestTip}}
             </div>
@@ -32,7 +32,8 @@
             <div class="no-list-desc">
                 暂无数据
             </div>
-        </div>
+        </div> -->
+        <essp-loading :loading="requestTip == '数据加载中...'" :loadingMsg="requestTip" :nodata="mcCardList.length == 0 && requestTip == '数据加载完毕'"></essp-loading>
     </div>
 </template>
 
