@@ -7,7 +7,7 @@
                 <div class="comment">
                     <div class="fundes">我来说两句</div>
                     <div class="border">
-                        <textarea class="cnptext" v-model.trim="cnttext" placeholder="评论字数在300字以内！" maxlength="300"></textarea>
+                        <textarea class="cnptext" maxlength="300" v-model.trim="cnttext"></textarea>
                         <div class="cnptool esspclearfix">
                             <div class="toolleft">
                                 <!-- <i class="iconfont icon-biaoqing"></i> -->
@@ -24,7 +24,7 @@
             </div>
         </div>
         <div class="commentlist">
-            <div class="fundes">所有评论</div>
+            <div class="fundes">所有评论&nbsp;({{cnts.length}})</div>
             <div class="nocnslist" v-if="cnts.length==0">
                 <i class="iconfont icon-shafa"></i>
                 <p class="nocntops">还没评论，来抢个沙发</p>
@@ -36,7 +36,7 @@
                         <!-- <img src="../assets/avatar.png" class="logoface" alt=""> -->
                     </div>
                     <div class="main_about">
-                        <div class="username">{{item.state == "1" ? "匿名" : item.userName}}</div>
+                        <div class="username">{{item.state == "1" ? "匿名" : item.userName+"-"+item.cstNm}}</div>
                         <div class="comm">{{item.content}}</div>
                         <!-- 回复框内容 -->
                         <div class="recommbox" v-for="(it,indexChild) in item.replyList" v-show="indexChild<item.replyLen"
@@ -44,10 +44,10 @@
                             <div class="recomm">
                                 <div class="replyname esspclearfix">
                                     <!-- 回复者 -->
-                                    <span class="re_person">{{it.userName}}</span>
+                                    <span class="re_person">{{it.state == "1"? "匿名" : it.userName+"-"+it.cstNm}}</span>
                                     <span class="re_funs">回复</span>
                                     <!-- 初始评论 -->
-                                    <span class="re_reUserName">{{item.state == "1"? "匿名" : it.reUserName}}</span>
+                                    <span class="re_reUserName">{{item.state == "1"? "匿名" : it.reUserName+"-"+item.cstNm}}</span>
                                 </div>
                                 <div class="replytext">{{it.content}}</div>
                                 <div class="replytool esspclearfix"  v-if="userInfo">
@@ -71,7 +71,7 @@
                                          <i class="el-icon-more"></i>
                                     </span>
                                     <el-dropdown-menu slot="dropdown">
-                                        <el-dropdown-item :command="{item,keyindex:0}">回复</el-dropdown-item>
+                                        <el-dropdown-item :command="{item,keyindex:0,index:index}">回复</el-dropdown-item>
                                         <el-dropdown-item :command="{item,keyindex:1,index:index}"
                                                           v-if="userrole == '33' || userrole == '34' || item.userId == userInfo.id">删除
                                         </el-dropdown-item>
@@ -80,13 +80,33 @@
                                 </el-dropdown>
                             </div>
                         </div>
-                        <div class="recon esspclearfix" v-if="item.showBox">
-                            <textarea class="recon_box" v-model.trim="item.replytext" placeholder="评论字数在300字以内！" maxlength="300"></textarea>
+                        <div class="border_nm" v-if="item.showBox && index===reIndex">
+                            <div class="border">
+                                <textarea class="cnptext" :placeholder="item.state == '1'?'//@匿名':'//@'+item.userName+'-'+item.cstNm" maxlength="300" v-model.trim="item.replytext">
+                                </textarea>
+                                <div class="cnptool esspclearfix">
+                                    <div class="toolleft">
+                                        <!-- <i class="iconfont icon-biaoqing"></i> -->
+                                        <!-- <i class="iconfont icon-tupian1"></i> -->
+                                    </div>
+                                    <div class="toolright">
+                                        <el-checkbox v-model="anonymous2" class="cnanony">匿名评论</el-checkbox>
+                                        <!--<el-button评论</el-button>-->
+                                        <span  class="cnbtn" @click="reconclose(item)">评论</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--<div class="recon esspclearfix" v-if="item.showBox">
+                            <textarea class="recon_box" v-model.trim="item.replytext">
+                            </textarea>
                             <div class="rebtntool">
+
                                 <el-button class="recon_cnbtncancel"  @click="reconclosecancel(item)">取消</el-button>
                                 <el-button class="recon_cnbtn" type="info" @click="reconclose(item)">提交</el-button>
                             </div>
-                        </div>
+                        </div>-->
                     </div>
                 </div>
 
@@ -115,7 +135,9 @@
         mixins: [mixin],
         data() {
             return {
+                reIndex:"",
                 anonymous: false,//默认不匿名
+                anonymous2: false,//回复评论默认不匿名
                 cnttext: "",//评论的内容
                 entityId: this.$route.query.informationId || this.$route.query.activityId,
                 cnts: [],
@@ -152,6 +174,7 @@
                 // 回复
                 if (command.keyindex == "0") {
                     item.showBox = true;
+                    this.reIndex=command.index
                 }
                 // 删除
                 if (command.keyindex == "1") {
@@ -182,7 +205,7 @@
                     });
                 }else{
                      var _this = this;
-                     this.$message.warning("您尚未登陆，请您先登陆");
+                     this.$message.warning("您尚未登录，请您先登录");
                      setTimeout(function(){
                          _this.windowHrefUrl('/userIndex/login')
                      },2000)
@@ -199,8 +222,13 @@
             //添加回复
             addReply(item) {
                 if(this.utils.isLoginMode()){
+                    this.cstBscInf()
                     if(this.utils.isVisitorMode()){
                         this.$message.warning("您暂无权限进行回复");
+                        return;
+                    }
+                    if(item.replytext.length===0){
+                        this.$message.warning("回复内容不能为空");
                         return;
                     }
                     var isClick = true;
@@ -224,6 +252,14 @@
                         return
                     }
                     var pop = {entityId: item.entityId, content: realcnttext, reUserId: item.userId, commentId: item.id}
+                    var anonymous2=""
+                    //匿名对匿名
+                    if(item.state==='1' && this.anonymous2){
+                        anonymous2='3'
+                    }else{
+                        anonymous2 = this.anonymous2 ? "1" : "0";//后台约定 匿名为1，不匿名为0
+                    }
+                    pop['anonymous']=anonymous2
                     this.$post(url, pop)
                         .then((response) => {
                             isClick = true;
@@ -241,7 +277,7 @@
 
                 }else{
                     var _this = this;
-                     this.$message.warning("您尚未登陆，请您先登陆");
+                     this.$message.warning("您尚未登录，请您先登录");
                      setTimeout(function(){
                          _this.windowHrefUrl('/userIndex/login')
                      },2000)
@@ -269,7 +305,7 @@
                         })
                 }else{
                      var _this = this;
-                     this.$message.warning("您尚未登陆，请您先登陆");
+                     this.$message.warning("您尚未登录，请您先登录");
                      setTimeout(function(){
                          _this.windowHrefUrl('/userIndex/login')
                      },2000)
@@ -297,7 +333,7 @@
                         })
                 }else{
                      var _this = this;
-                     this.$message.warning("您尚未登陆，请您先登陆");
+                     this.$message.warning("您尚未登录，请您先登录");
                      setTimeout(function(){
                          _this.windowHrefUrl('/userIndex/login')
                      },2000)
@@ -318,9 +354,36 @@
                         this.$message.error(response.resultMsg);
                     })
             },
+            //判断是否企业认证
+            cstBscInf(){
+                var _this = this;
+                if (!this.SSH.getItem("enterpriseFlag")|| !this.SSH.getItem("cetificateFlag")){
+                    this.$confirm('您未进行实名认证，无法评论，请先进行认证，再评论', '提示', {
+                        confirmButtonText: '去实名认证',
+                        cancelButtonText: '暂不认证',
+                        type:"warning",
+                        center: true
+                    }).then(() => {
+                    //去实名认证
+                        if(!this.SSH.getItem("cetificateFlag")){//个人
+                            _this.windowHrefUrl('/certInfor/personalCert')
+                        }else if(!this.SSH.getItem("enterpriseFlag")){//企业
+                            _this.windowHrefUrl('/certInfor/enterpriseCertApply')
+                        }
+                    }).catch(() => {
+                        this.$message({
+                            type: 'info',
+                            message: '暂不认证'
+                        });
+                    });
+
+                    return;
+                };
+            },
             //添加评论
             addCnt() {
-                //alert("是否登陆"+this.utils.isLoginMode())
+                this.cstBscInf()
+                //alert("是否登录"+this.utils.isLoginMode())
                 // alert("是否游客模式"+this.utils.isVisitorMode())
                 if(this.utils.isLoginMode()){
                     //游客模式不能评论
@@ -332,7 +395,7 @@
                     // var realcnttext = this.cnttext.replace(/\s+/g, "");
                     var realcnttext = this.cnttext;
                     if (realcnttext.length == 0) {
-                        this.$message.warning("评论内容不能为空")
+                        this.$message.warning("请输入评论内容")
                         return
                     }
                     if (realcnttext.length > 300){
@@ -366,7 +429,7 @@
                     })
                 }else{
                      var _this = this;
-                     this.$message.warning("您尚未登陆，请您先登陆");
+                     this.$message.warning("您尚未登录，请您先登录");
                      setTimeout(function(){
                          _this.windowHrefUrl('/userIndex/login')
                      },2000)
@@ -587,6 +650,7 @@
                     font-size: 14px;
                     line-height: 30px;
                     color: #444444;
+                    word-break: break-word;
                 }
                 .recommbox {
                     margin-bottom: 10px;
@@ -601,7 +665,7 @@
                             .re_person {
                                 float: left;
                                 margin-right: 5px;
-                                color: #999999;
+                                color: #00a0e9;
                             }
                             .re_funs {
                                 float: left;
@@ -610,7 +674,7 @@
                             .re_reUserName {
                                 float: left;
                                 margin-right: 5px;
-                                color: #999999;
+                                color: #00a0e9;
                             }
 
                         }
@@ -707,6 +771,53 @@
     .reply_more_btn_c span {
         cursor: pointer;
     }
+.border_nm{
+    .border {
+        border: 1px solid #00a0e9;
+    }
+    .cnptext{
+        width: 100%;
+        height: 66px;
+        resize: none;
+        text-indent: 10px;
+        display: block;
+        outline: none;
+        background-color: transparent;
+        scrollbar-arrow-color: yellow;
+        scrollbar-base-color: lightsalmon;
+        color: #666464;
+        border: 0;
+        padding: 10px 0px;
+    }
+    .cnptool{
+        width: 100%;
+        background-color: #fafafa;
+        .toolleft{
+            float: left;
+            padding: 0 15px;
+            height: 40px;
+            line-height: 40px;
+        }
+        .toolright{
+            float: right;
+            .cnbtn{
+                float: right;
+                width: 110px;
+                text-align: center;
+                line-height: 40px;
+                height: 40px;
+                background-image: linear-gradient(31deg, #22a2fa 0%, #10b5ff 100%);
+                color: #fff;
+                cursor: pointer;
+            }
+            .cnanony {
+                margin-right: 16px;
+                font-size: 14px;
+                line-height: 40px;
 
+            }
+        }
+    }
+}
 
 </style>
