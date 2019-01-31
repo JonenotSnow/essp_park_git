@@ -31,9 +31,9 @@
                     <span class="lable_span">惠政主图：</span>
                     <span class="line_img"><img v-lazy="infoList.titleImg"></span>
                 </div>
-                <div class="dtcon ql-container ql-snow">
+                <div class="dtcon">
                     <span class="lable_span">惠政内容：</span>
-                    <span class="line_area ql-editor" v-html="infoList.infoDetail"></span>
+                    <span class="line_area" v-html="infoList.infoDetail"></span>
                 </div>
                 <div class="dtcon"  v-if="infoList.avaliableTime && infoList.avaliableEndTime">
                     <span class="lable_span">惠政有效期：</span>

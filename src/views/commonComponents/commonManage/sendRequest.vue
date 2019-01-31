@@ -7,9 +7,9 @@
                 <span>邀请函</span>
                 <span>INVITATION</span>
             </p>
-            <!-- <div class="wrap">
-                <quill-editor  v-model="content"></quill-editor>
-            </div> -->
+            <div class="wrap">
+                <quill-editor :option='toolOptions'  v-model="content"></quill-editor>
+            </div>
             <p style="display:none;"><span>*</span>请使用编辑器自带功能编辑</p>
             <p class="scan">
                 <span @click="scan = true">预览</span>
@@ -80,7 +80,23 @@ export default {
             confirmSend: false,
             scan: false,
             parkNm:'',
-            access:false
+            access:false,
+            toolOptions : [
+                // ['link', 'image', 'video'],
+                [{ header: 1 }, { header: 2 }],
+                ["blockquote", "code-block"],
+                ["bold", "italic", "underline", "strike"],
+                [{ list: "ordered" }, { list: "bullet" }],
+                [{ script: "sub" }, { script: "super" }],
+                [{ indent: "-1" }, { indent: "+1" }],
+                [{ direction: "rtl" }],
+                [{ header: [1, 2, 3, 4, 5, 6, false] }],
+                [{ size: ["small", false, "large", "huge"] }],
+                [{ color: [] }, { background: [] }],
+                [{ font: [] }],
+                [{ align: [] }],
+                ["clean"]
+            ]
         };
     },
     created () {

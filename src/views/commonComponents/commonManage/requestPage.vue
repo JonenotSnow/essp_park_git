@@ -7,15 +7,24 @@
                     <p class="infoing" v-html='content'></p>
                     <p class="toDetail">
                         <i></i>
-                            <img src="./re2.png" alt="">
-                            <span @click="$router.push({path:'/parkIndex/scanIndex',query:{id:parkId}})">查看园区详情</span>
+                        <img src="./re2.png" alt="">
+                        <span @click="$router.push({path:'/parkIndex/scanIndex',query:{id:parkId}})">查看园区详情</span>
                         <i></i>
                     </p>
-                    <p class="btn btnA">
-                        <span @click="agreeInvite">接受邀请</span>
+                    <div v-if="!mark && mark != 0">
+                        <p class="btn btnA">
+                            <button @click="agreeInvite">接受邀请</button>
+                        </p>
+                        <p class="btn btnB">
+                            <button @click="disagreeInvite">拒绝邀请</button>
+                        </p>
+                    </div>
+                    <p v-if="mark == 0" class="btn btnA">
+                        <button>已接受邀请</button>
                     </p>
-                    <p class="btn btnB">
-                        <span @click="disagreeInvite">拒绝邀请</span>
+
+                    <p v-if="mark == 1" class="btn btnA">
+                        <button>已拒绝邀请</button>
                     </p>
                 </div>
             </div>
@@ -24,144 +33,143 @@
 </template>
 
 <script>
-    import mixin from '@/components/mixins/mixins_windowOpen.js'
-    export default {
-        mixins:[mixin],
-        data() {
-            return {
-                content: '',
-                scan: true,
-                key: '',
-                mark: '',
-                parkId: '',
-                parkNm: '',
-                notice:false
-            }
+import mixin from "@/components/mixins/mixins_windowOpen.js";
+export default {
+    mixins: [mixin],
+    data() {
+        return {
+            content: "",
+            scan: true,
+            key: "",
+            mark: "", //空表示未做接受或拒绝操作，0表示已接受邀请，1表示已拒绝邀请
+            parkId: "",
+            parkNm: "",
+            notice: false
+        };
+    },
+    async created() {
+        await this.getInviteByKey();
+    },
+    filters: {
+        // markfike(value) {
+        //     let save = {
+        //         '': false,
+        //         '0': true,
+        //         '1': true,
+        //     }
+        //     return save[value] ? save[value] : false;
+        // }
+    },
+    methods: {
+        getInviteByKey() {
+            this.$post(this.$apiUrl.manage.getInviteByKey, {
+                key: this.$route.query.key
+            }).then(response => {
+                if (response.resultCode == "CLT000000000") {
+                    this.content = response.resultData.content;
+                    this.parkId = response.resultData.parkId;
+                    this.mark = response.resultData.mark;
+                    this.getParkById(this.parkId);
+                } else {
+                    this.$message({
+                        type: "error",
+                        message: response.resultMsg
+                    });
+                }
+            });
         },
-        async created() {
-            await this.getInviteByKey();
+        agreeInvite() {
+            let that = this;
+            this.$post(this.$apiUrl.manage.agreeInvite, {
+                parkId: this.parkId,
+                key: this.$route.query.key,
+                fromUserId: this.$route.query.fromUserId
+            }).then(response => {
+                if (response.resultCode == "CLT000000000") {
+                    this.$message({
+                        type: "success",
+                        message: "加入成功"
+                    });
+                } else {
+                    this.$message({
+                        type: "error",
+                        message: response.resultMsg
+                    });
+                }
+            });
+            setTimeout(() => {
+                that.toOut();
+            }, 2000);
         },
-        filters: {
-            // markfike(value) {
-            //     let save = {
-            //         '': false,
-            //         '0': true,
-            //         '1': true,
-            //     }
-            //     return save[value] ? save[value] : false;
-            // }
+        disagreeInvite() {
+            let that = this;
+            this.$post(this.$apiUrl.manage.disagreeInvite, {
+                parkId: this.parkId,
+                key: this.$route.query.key,
+                fromUserId: this.$route.query.fromUserId
+            }).then(response => {
+                if (response.resultCode == "CLT000000000") {
+                    this.$message({
+                        type: "success",
+                        message: `已拒绝${this.parkNm}的入园邀请`
+                    });
+                } else {
+                    this.$message({
+                        type: "error",
+                        message: response.resultMsg
+                    });
+                }
+            });
+            setTimeout(() => {
+                that.toOut();
+            }, 2000);
         },
-        methods: {
-            getInviteByKey() {
-                this.$post(this.$apiUrl.manage.getInviteByKey, {
-                    key: this.$route.query.key,
-                })
-                .then((response) => {
-                    if (response.resultCode == 'CLT000000000') {
-                        this.content = response.resultData.content;
-                        this.parkId = response.resultData.parkId;
-                        this.mark = response.resultData.mark;
-                        this.getParkById(this.parkId)
-                    }else{
-                        this.$message({
-                            type: "error",
-                            message: response.resultMsg
-                        });
-                    }
-                })
-            },
-            agreeInvite() {
-                let that = this;
-                this.$post(this.$apiUrl.manage.agreeInvite, {
-                    parkId: this.parkId,
-                    key: this.$route.query.key,
-                    fromUserId:this.$route.query.fromUserId
-                }).then((response) => {
-                    if (response.resultCode == 'CLT000000000') {
-                        this.$message({
-                            type: "success",
-                            message: "加入成功"
-                        });
-                    }else{
-                        this.$message({
-                            type: "error",
-                            message: response.resultMsg
-                        });
-                    }
-                })
-                setTimeout(()=>{
-                    that.toOut();
-                },1000)
-            },
-            disagreeInvite(){
-                let that = this;
-                this.$post(this.$apiUrl.manage.disagreeInvite, {
-                    parkId: this.parkId,
-                    key: this.$route.query.key,
-                    fromUserId: this.$route.query.fromUserId
-                }).then((response) => {
-                    if (response.resultCode == 'CLT000000000') {
-                        this.$message({
-                            type: "success",
-                            message: `已拒绝${this.parkNm}的入园邀请`
-                        });
-                    }else{
-                        this.$message({
-                            type: "error",
-                            message: response.resultMsg
-                        });
-                    }
-                })
-                setTimeout(()=>{
-                    that.toOut();
-                },1000)
-            },
-            getParkById(parkId) {
-                this.$post(this.$apiUrl.manage.getParkById, {
-                    parkId: parkId
-                }).then(
-                    response => {
-                        this.parkNm = response.resultData.parkNm
-                    },
-                    err => {
-                        this.$message({
-                            type: "warn",
-                            message: response.resultMsg
-                        });
-                    }
-                );
-            },
-            toOut(){
-                this.windowOpenNoParams('/messageCenter/sysMsg');
-            }
+        getParkById(parkId) {
+            this.$post(this.$apiUrl.manage.getParkById, {
+                parkId: parkId
+            }).then(
+                response => {
+                    this.parkNm = response.resultData.parkNm;
+                },
+                err => {
+                    this.$message({
+                        type: "warn",
+                        message: response.resultMsg
+                    });
+                }
+            );
+        },
+        toOut() {
+            this.windowOpenNoParams("/messageCenter/sysMsg");
         }
     }
+};
 </script>
 
 <style>
-    #requestPage .re .el-dialog{
-        margin-top: 5vh!important;
-    }
-    #requestPage .re .el-dialog__header{
-        display:none;
-    }
-    #requestPage .re .el-dialog__body {
-        padding:0;
-    }
+#requestPage .re .el-dialog {
+    margin-top: 5vh !important;
+}
+#requestPage .re .el-dialog__header {
+    display: none;
+}
+#requestPage .re .el-dialog__body {
+    padding: 0;
+}
 </style>
 <style lang="less" scoped>
 #requestPage {
-    .re{
-        .bg{
+    .re {
+        .bg {
             position: absolute;
         }
-        .contentn{
+        .contentn {
             position: relative;
             z-index: 101;
-            .infoing{
+            .infoing {
                 width: 350px;
-                margin:0 auto;
-                line-height:34px;
+                margin: 0 auto;
+                line-height: 34px;
                 font-size: 16px;
                 font-weight: normal;
                 font-stretch: normal;
@@ -169,70 +177,73 @@
                 letter-spacing: 0px;
                 color: #409fa3;
                 position: relative;
-                top:197px;
+                top: 197px;
                 text-indent: 32px;
             }
-            .toDetail{
-                position:relative;
+            .toDetail {
+                position: relative;
                 width: 191px;
-                margin-left:142px;
-                top:246px;
-                i{
+                margin-left: 142px;
+                top: 246px;
+                i {
                     display: inline-block;
                     width: 54px;
                     height: 4px;
                     border-bottom: solid 1px #cccccc;
-                    position:relative;
-                    top:-6px;
-                    &:nth-of-type(2){
+                    position: relative;
+                    top: -6px;
+                    &:nth-of-type(2) {
                         left: 194px;
                         top: -24px;
-                        margin-left:11px;
+                        margin-left: 11px;
                     }
                 }
-                span{
+                span {
                     cursor: pointer;
                 }
-                img{
+                img {
                     position: relative;
                     top: 2px;
-                    margin:0 12px;
+                    margin: 0 12px;
                 }
-                &:hover{
-                    span{
+                &:hover {
+                    span {
                         color: #00a0e9;
                     }
                 }
             }
-            .btn{
+            .btn {
                 text-align: center;
             }
-            .btnA span,.btnB span{
+            .btnA button,
+            .btnB button {
+                outline: none;
+                border: none;
                 display: inline-block;
-                position:relative;
+                position: relative;
                 width: 167px;
                 height: 46px;
                 border-radius: 23px;
                 font-size: 18.4px;
                 font-weight: normal;
                 font-stretch: normal;
-                line-height:46px;
+                line-height: 46px;
                 letter-spacing: 0.4px;
                 text-align: center;
                 cursor: pointer;
             }
-            .btnA span{
+            .btnA button {
                 background-color: #dbb992;
                 color: #ffffff;
-                top:266px;
+                top: 266px;
             }
-            .btnB span{
+            .btnB button {
                 color: #7cbfc2;
-                top:271px;
+                top: 271px;
+                background: #f5f5f5;
             }
         }
     }
 }
-
 </style>
 
