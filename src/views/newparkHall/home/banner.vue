@@ -17,7 +17,7 @@
             <div class='swiper-pagination'></div>
         </div>
 
-        <div class="indexSeach">
+        <div class="indexSeach" v-if="isBdPark">
             <el-input placeholder="请输入搜索关键词" v-model="indexSeachKW">
                 <el-select
                     v-model="typeselect"

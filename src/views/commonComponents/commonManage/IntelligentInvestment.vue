@@ -85,6 +85,16 @@
                 </el-pagination>
             </div>
         </div>
+        
+        <!-- 发送邀请函提示 -->
+        <el-dialog :visible.sync="access" width='560px' class='access'>
+            <h2 class="titleTips">提示</h2>
+            <p class="accessP"><i class="el-icon-warning"></i>&nbsp;&nbsp;确认邀请该企业加入园区？</p>
+            <p class="btn">
+                <span @click="access = false">取消</span>
+                <span @click="inviteMember">确认</span>
+            </p>
+        </el-dialog>
     </div>
 </template>
 
@@ -125,12 +135,16 @@ export default {
                 bngProvCd: "",
                 bngCityCd: ""
             },
-            rzz:JSON.parse(localStorage.getItem('rzz'))
+            rzz:JSON.parse(localStorage.getItem('rzz')),
+            access:false,
+            curcstId:'',//当前邀请企业信用代码
+            parkNm:''// 当前园区名称
         };
     },
     created() {
         this.getCasParentList();
         this.getInviteByInfo();
+        this.getParkById();
     },
     filters:{
         idType(value){
@@ -157,7 +171,8 @@ export default {
             this.getInviteByInfo();
         },
         handleClick(row) {
-            this.$router.push({path:"/parkHall/manage/sendRequest",query:{cstId:row.cstId}});
+            this.access = true;
+            this.curcstId = row.cstId;
         },
         getInviteByInfo() {
             let address = '';
@@ -246,7 +261,42 @@ export default {
                 bngCityCd: ""
             }
             this.getInviteByInfo();
-        }
+        },
+        inviteMember() {
+            this.$post(this.$apiUrl.manage.inviteMember, {
+                cstId: this.curcstId,
+                parkId: sessionStorage.getItem("parkId"),
+                parkName: this.SSH.getItem("parkName")
+            }).then(response => {
+                if (response.resultCode == "CLT000000000") {
+                    this.$message({
+                        type: "success",
+                        message: response.resultMsg
+                    });
+                }else{
+                    this.$message({
+                        type: "warn",
+                        message: response.resultMsg
+                    });
+                }
+            });
+            this.access = false;
+        },
+        getParkById() {
+            this.$post(this.$apiUrl.manage.getParkById, {
+                parkId: sessionStorage.getItem("parkId")
+            }).then(
+                response => {
+                    this.parkNm = response.resultData.parkNm
+                },
+                err => {
+                    this.$message({
+                        type: "warn",
+                        message: response.resultMsg
+                    });
+                }
+            );
+        },
     }
 };
 </script>
@@ -256,6 +306,19 @@ export default {
     height: 40px!important;
     line-height: 40px!important;
     border-radius: 6px!important;
+}
+
+#IntelligentInvestment .access .el-dialog__header {
+    display: none;
+}
+
+#IntelligentInvestment .access .el-dialog__body {
+    overflow: hidden;
+    margin: 30px 20px;
+}
+
+#IntelligentInvestment .access .el-dialog__body p:nth-of-type(1) {
+    line-height: 55px;
 }
 </style>
 
@@ -267,6 +330,7 @@ export default {
     .wrap {
         width: 1040px;
         margin: 0 auto;
+        overflow: hidden;
         & > p {
             &:nth-of-type(1) {
                 width: 100%;
@@ -362,5 +426,52 @@ export default {
     margin: 30px auto 0;
     text-align: right;
     padding-bottom: 40px;
+}
+.access {
+    .titleTips {
+        text-indent: 36px;
+        font-size: 24px;
+        color: #555;
+        position: relative;
+        font-weight: normal;
+        top: -30px;
+        margin-top: 20px;
+    }
+    .accessP {
+        text-indent: 20px;
+        font-size: 20px;
+        color: #333;
+        line-height: 30px;
+        i {
+            font-size: 28px;
+            color: #00a0e9;
+        }
+    }
+    .btn {
+        text-align:center;
+        margin-top: 35px;
+        span {
+            text-align: center;
+            display: inline-block;
+            width: 100px;
+            height: 35px;
+            border-radius: 2px;
+            line-height: 35px;
+            font-size: 18x;
+            cursor: pointer;
+            color: #fff;
+            margin: 0 30px;
+            letter-spacing: 0;
+            &:nth-of-type(1) {
+                letter-spacing: 0;
+                background: #e6f4ff;
+                color: #00a0e9;
+            }
+            &:nth-of-type(2) {
+                background: linear-gradient(31deg, #22a2fa 0%, #10b5ff 100%);
+                color: #fff;
+            }
+        }
+    }
 }
 </style>
