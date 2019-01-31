@@ -1,5 +1,5 @@
 <template>
-    <div class="indexMenu">
+    <div class="noticeBar">
         <!--/parkHall/manage/activityPoolAddPark-->
         <!--  公告快捷入口的模块-->
         <div class="noticeBox">
@@ -182,9 +182,8 @@
 </script>
 <style lang="less" scoped>
     @import "../../../assets/css/mixin";
-    .indexMenu {
+    .noticeBar {
         position: relative;
-        background: #fff url("../../../assets/imgs/ar-background.png") no-repeat center bottom;
         background-size: contain;
         /*padding-top: 110px;*/
         /*padding-bottom: 16px;*/

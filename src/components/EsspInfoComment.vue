@@ -255,7 +255,7 @@
                     var anonymous2=""
                     //匿名对匿名
                     if(item.state==='1' && this.anonymous2){
-                        anonymous2='3'
+                        anonymous2='2'
                     }else{
                         anonymous2 = this.anonymous2 ? "1" : "0";//后台约定 匿名为1，不匿名为0
                     }

@@ -435,9 +435,6 @@
                 if (!this.loginFlag) {
                     var _this = this;
                     this.$message.warning("您尚未登陆，请您先登陆");
-                    setTimeout(function () {
-                        _this.windowHrefUrl('/userIndex/login')
-                    }, 2000);
                     return;
                 }
                 // 游客没权限参与活动
