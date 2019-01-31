@@ -270,7 +270,7 @@ export default {
                 });
                 return;
             }
-            this.$router.push({path:'/parkHall/manage/manageParkAuditDetail',query:{entityId:rows.id}});
+            this.$router.push({path:'/parkHall/manage/manageParkAuditDetail',query:{entityId:rows.id,cstId:rows.cstId}});
         }
     }
 };

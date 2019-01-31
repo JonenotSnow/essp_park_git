@@ -88,7 +88,8 @@ export default {
             this.$post(this.$apiUrl.manage.getNoticeList,{
                 parkId : window.sessionStorage.getItem("parkId"),
                 pageNum : this.pageNum,
-                pageSize : this.pageSize
+                pageSize : this.pageSize,
+                flag:'1',
             })
             .then((response) => {
                 this.list = [];

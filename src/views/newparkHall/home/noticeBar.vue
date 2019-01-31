@@ -106,6 +106,7 @@
             getNoticeList() {
                 this.$post(this.$apiUrl.manage.getNoticeList, {
                     parkId: window.sessionStorage.getItem("parkId"),
+                    flag:'0',
                     pageSize: 10,
                     pageNum: 1
                 }).then(response => {

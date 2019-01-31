@@ -153,7 +153,8 @@
                     parkId: window.sessionStorage.getItem("parkId"),
                     status: st,
                     mark: this.mark,
-                    isReview: this.isReview
+                    isReview: this.isReview,
+                    cstId:this.$route.query.cstId
                 })
                     .then((response) => {
                         this.$message({

@@ -9,19 +9,23 @@
                 </li>
             </ul>
         </div>
+
         <div class="search" v-if="!isBdPark">
-            <div class="searchBox">
-                <span class="left" slot="reference" @click="show = !show">{{typeName}}<i class="el-icon-arrow-down" :class="{'iActive':show}"></i></span>
-                <input type="text" placeholder="请输入搜索关键字" v-model="indexSeachKW">
-                <i class="el-icon-search" @click="goSearchPage"></i>
-            </div>
-            <transition name="el-zoom-in-top">
-                <div class="pop" v-if="show">
-                    <ul v-for="(item,i) in searchList" :key="i">
-                        <li @click="getListInfoTags(item)">{{item.name}}</li>
-                    </ul>
+            <i class="el-icon-search open" v-if="!tab" @click="tab = !tab"></i>
+            <div v-else>
+                <div class="searchBox">
+                    <span class="left" slot="reference" @click="show = !show">{{typeName}}<i class="el-icon-arrow-down" :class="{'iActive':show}"></i></span>
+                    <input type="text" placeholder="请输入搜索关键字" v-model="indexSeachKW">
+                    <i class="el-icon-search" @click="goSearchPage"></i>
                 </div>
-            </transition>
+                <transition name="el-zoom-in-top">
+                    <div class="pop" v-if="show">
+                        <ul v-for="(item,i) in searchList" :key="i">
+                            <li @click.self="getListInfoTags(item)">{{item.name}}</li>
+                        </ul>
+                    </div>
+                </transition>
+            </div>
         </div>
     </div>
 </template>
@@ -55,6 +59,7 @@
                 ],
                 indexSeachKW:'',//搜索框内容
                 isBdPark: this.utils.isBdPark(),
+                tab:false
             };
         },
         watch: {
@@ -192,6 +197,13 @@
         width: 290px;
         position: relative;
         top:3px;
+    }
+    .open{
+        color:#00a0e9;
+        position: absolute;
+        top:6px;
+        font-size: 18px;
+        left: 15px;
     }
     .searchBox{
         width: 210px;

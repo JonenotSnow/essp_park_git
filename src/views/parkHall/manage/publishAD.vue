@@ -31,7 +31,7 @@
             <el-button type="primary" plain size="small" @click="scan=true">预览</el-button>
         </p>
         <p class="save">
-            <el-button type="primary" size="small" @click="access = true">保存发布</el-button>
+            <el-button type="primary" size="small" @click="check">保存发布</el-button>
             <el-button type="primary" size="small" @click="$router.go(-1)">取&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;消</el-button>
         </p>
         <!-- 预览通知公告 -->
@@ -126,8 +126,7 @@
                 this.pageNum = val;
                 this.getList();
             },
-            addNotice() {
-                let that = this;
+            check(){
                 if (!this.params.title) {
                     this.$message({
                         type: "error",
@@ -156,6 +155,10 @@
                     });
                     return;
                 }
+                this.access = true;
+            },
+            addNotice() {
+                let that = this;
                 this.$post(this.$apiUrl.manage.addNotice, {
                     parkId: window.sessionStorage.getItem("parkId"),
                     title: this.params.title,
