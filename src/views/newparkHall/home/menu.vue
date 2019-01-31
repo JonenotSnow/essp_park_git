@@ -1,5 +1,5 @@
 <template>
-    <div class="indexMenu">
+    <div class="indexMenu" :class="isBdPark?'':'noBackgroundImg'">
         <!--/parkHall/manage/activityPoolAddPark-->
         <!--<marquee-->
         <!--v-else-->
@@ -18,7 +18,7 @@
         <!--</marquee>-->
         <notice-bar></notice-bar>
         <!-- 快捷菜单 -->
-        <div class="row_width_auto">
+        <div class="row_width_auto" v-if="isBdPark">
             <el-row :gutter="0">
                 <el-col
                     :span="isBdPark?'6':'8'"
@@ -34,6 +34,20 @@
                     </div>
                 </el-col>
             </el-row>
+        </div>
+        <div  class="standard-menu" v-else>
+           
+                <el-carousel height="170px" indicator-position="none" arrow="always" :autoplay="false">
+                    <el-carousel-item v-for="(items,indexs) in menuListStandard" :key="indexs">
+                        <div class="standard-menu-wrap" >
+                            <div class="standard-item" v-for="(item,index) in items" :key="index">
+                                <img :src="item.url" alt="" @mouseover="imgHover(item)" @mouseleave="imgOut(item)" @click="linkTo(item)">
+                                <div class="name" @click="linkTo(item)">{{item.name}}</div>
+                            </div>
+                        </div>
+                    </el-carousel-item>
+                </el-carousel>
+           
         </div>
         <el-dialog :visible.sync="showPower" width="650px" height="350px" class="noAccess">
             <p class="color1">
@@ -68,105 +82,6 @@
                 showPower: false,
                 menuList: [
                     {
-                        name: "发布活动",
-                        path: "/parkIndex/launchForm",
-                        src: require("@/assets/imgs/icon1.png"),
-                        isShow: true,
-                        query: {}
-                    },
-                    {
-                        name: "发布惠政",
-                        path: "parkIndex/publishGover",
-                        src: require("@/assets/imgs/icon2.png"),
-                        isShow: true,
-                        query: {}
-                    },
-                    {
-                        name: "发布资讯",
-                        path: "/parkIndex/publishNewInfo",
-                        src: require("@/assets/imgs/icon3.png"),
-                        isShow: true,
-                        query: {}
-                    },
-                    {
-                        name: "任务池",
-                        path: "/parkHall/manage/activityPoolAddPark",
-                        src: require("@/assets/imgs/icon4.png"),
-                        isShow: true,
-                        query: {
-                            type: 1
-                        }
-                    },
-                    {
-                        name: "惠政管理",
-                        path: "/parkIndex/goverBene/all",
-                        src: require("@/assets/imgs/icon5.png"),
-                        isShow: true,
-                        query: {}
-                    },
-                    {
-                        name: "成员管理",
-                        path: "/parkHall/manage/userManage",
-                        src: require("@/assets/imgs/icon6.png"),
-                        isShow: true,
-                        query: {}
-                    }
-                ],
-                ccbUser: this.SSH.getItem("LoginUserRol") || [],
-            };
-        },
-        created() {
-            this.setMenuList();
-        },
-        methods: {
-            linkToPage() {
-                this.$router.push("/parkHall/manage/activityPoolAddPark");
-            },
-            linkTo(item) {
-                let isInPark = !(this.SSH.getItem("LoginUserRol").indexOf("11") > -1);
-                let query = isInPark
-                    ? {
-                        linkSrc: sessionStorage.getItem("parkId")
-                    }
-                    : {};
-                console.log(isInPark);
-                if (item.name === "需求发布") {
-                    this.showNeedRange = true;
-                    return false;
-                }
-
-                if (item.name === "入驻申请") {
-                    if (isInPark) {
-                        return this.$message("已入驻园区,请勿重复申请");
-                    } else {
-                        this.showPower = true;
-                        return false;
-                    }
-                }
-                //园区管理员才有任务池和入驻审核的权限
-                if (item.name == "任务池" || item.name == "入驻审核") {
-                    if (
-                        !(
-                            this.LoginUserRole.includes("33") ||
-                            this.LoginUserRole.includes("34")
-                        )
-                    ) {
-                        this.$message("只有园区管理员才有此权限");
-                        return;
-                    }
-                    this.$router.push(item.path);
-                    return;
-                }
-                if (item.name == "") {
-                    this.$message("暂无该栏目");
-                    return;
-                }
-                this.$router.push(item.path);
-            },
-            setMenuList() {
-                if (this.isBdPark) {
-                    this.menuList = [
-                        {
                             name: "关于我们",
                             path: "/parkIndex/scanIndex",
                             src: require("@/assets/newparkimg/home/img0.png"),
@@ -224,7 +139,128 @@
                             isShow: false,
                             query: {}
                         }
-                    ];
+                ],
+                menuListStandard: [
+                    [{
+                        name: "发布活动",
+                        path: "/parkIndex/launchForm",
+                        url: require("@/assets/imgs/home/activityPublish.png"),
+                        src: require("@/assets/imgs/home/activityPublish.png"),
+                        srcHover: require("@/assets/imgs/home/activityPublishHover.png"),
+                        isShow: true,
+                        query: {}
+                    },
+                    {
+                        name: "发布惠政",
+                        path: "parkIndex/publishGover",
+                        url: require("@/assets/imgs/home/servicePublish.png"),
+                        src: require("@/assets/imgs/home/servicePublish.png"),
+                        srcHover: require("@/assets/imgs/home/servicePublishHover.png"),
+                        isShow: true,
+                        query: {}
+                    },
+                    {
+                        name: "发布资讯",
+                        path: "/parkIndex/publishNewInfo",
+                        url: require("@/assets/imgs/home/newsPublish.png"),
+                        src: require("@/assets/imgs/home/newsPublish.png"),
+                        srcHover: require("@/assets/imgs/home/newsPublishHover.png"),
+                        isShow: true,
+                        query: {}
+                    }],
+                    [{
+                        name: "任务池",
+                        path: "/parkHall/manage/activityPoolAddPark",
+                        url: require("@/assets/imgs/home/joinAudit.png"),
+                        src: require("@/assets/imgs/home/joinAudit.png"),
+                        srcHover: require("@/assets/imgs/home/joinAuditHover.png"),
+                        isShow: true,
+                        query: {
+                            type: 1
+                        }
+                    },
+                    {
+                        name: "惠政管理",
+                        path: "/parkIndex/goverBene/all",
+                        url: require("@/assets/imgs/home/servicePublish.png"),
+                        src: require("@/assets/imgs/home/servicePublish.png"),
+                        srcHover: require("@/assets/imgs/home/servicePublishHover.png"),
+                        isShow: true,
+                        query: {}
+                    },
+                    {
+                        name: "成员管理",
+                        path: "/parkHall/manage/userManage",
+                        url: require("@/assets/imgs/home/managePeople.png"),
+                        src: require("@/assets/imgs/home/managePeople.png"),
+                        srcHover: require("@/assets/imgs/home/managePeopleHover.png"),
+                        isShow: true,
+                        query: {}
+                    }]
+                ],
+                ccbUser: this.SSH.getItem("LoginUserRol") || [],
+            };
+        },
+        created() {
+            this.setMenuList();
+            let userRol = this.SSH.getItem("LoginUserRol").indexOf("11") > -1
+            console.log(this.menuListStandard)
+            userRol?(this.menuListStandard=this.menuListStandard.slice(0,1)):''
+            console.log(this.menuListStandard)
+        },
+        methods: {
+            imgHover(item){
+                item.url = item.srcHover
+            },
+            imgOut(item){
+                item.url = item.src
+            },
+            linkToPage() {
+                this.$router.push("/parkHall/manage/activityPoolAddPark");
+            },
+            linkTo(item) {
+                let isInPark = !(this.SSH.getItem("LoginUserRol").indexOf("11") > -1);
+                let query = isInPark
+                    ? {
+                        linkSrc: sessionStorage.getItem("parkId")
+                    }
+                    : {};
+                console.log(isInPark);
+                if (item.name === "需求发布") {
+                    this.showNeedRange = true;
+                    return false;
+                }
+
+                if (item.name === "入驻申请") {
+                    if (isInPark) {
+                        return this.$message("已入驻园区,请勿重复申请");
+                    } else {
+                        this.showPower = true;
+                        return false;
+                    }
+                }
+                //园区管理员才有任务池和入驻审核的权限
+                if (item.name == "任务池" || item.name == "入驻审核") {
+                    if (
+                        !(
+                            this.LoginUserRole.includes("33") ||
+                            this.LoginUserRole.includes("34")
+                        )
+                    ) {
+                        this.$message("只有园区管理员才有此权限");
+                        return;
+                    }
+                    this.$router.push(item.path);
+                    return;
+                }
+                if (item.name == "") {
+                    this.$message("暂无该栏目");
+                    return;
+                }
+                this.$router.push(item.path);
+            },
+            setMenuList() {
+                if (this.isBdPark) {
                     if (
                         this.SSH.getItem("LoginUserRol").indexOf("33") > -1 ||
                         this.SSH.getItem("LoginUserRol").indexOf("34") > -1
@@ -232,7 +268,6 @@
                         this.menuList.forEach((item, index) => {
                             this.$set(this.menuList[index], "isShow", true);
                         });
-                        console.log(this.menuList);
                     }
                 }
             },
@@ -322,5 +357,60 @@
         font-size: 18px;
         color: #666;
     }
+    .standard-menu{
+        width: 1200px;
+        height: 170px;
+        margin: 0 auto;
+        padding: 60px 0;
+        .standard-menu-wrap{
+            display: flex;
+             width: 930px;
+             height: 160px;
+            margin: 5px auto;
+            box-shadow: 0 0 14.2px 0.8px 
+        rgba(0, 0, 0, 0.08);
+        .standard-item{
+            position: relative;
+            width: 310px;
+            height: 160px;
+            // background-color: #333;
+            img {
+                display: block;
+                margin: 20px auto;
+                cursor: pointer;
+                width: 80px;
+            }
+            .name{
+                text-align: center;
+                cursor: pointer;
+                font-size: 20px;
+                color: #333
+            }
+            &::before{
+                position: absolute;
+                right: 0;
+                top: 20px;
+                content: ' ';
+                height: 120px;
+                width: 1px;
+                background-color: #eeeeee
+            }
+             
+        }
+        &:last-child{
+            &::before{
+                display: none
+            }
+        }
+       }
+    }
+    .noBackgroundImg{
+        background-image: none;
+        // overflow: hidden;
+    }
+    /deep/.el-carousel__arrow:hover{
+        
+                 background-color: #409EFF
+             }
 </style>
 
