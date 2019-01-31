@@ -234,6 +234,7 @@
                 .tip_time {
                     float: right;
                     font-size: 14px;
+                    color:#999;
                 }
 
             }
