@@ -16,7 +16,7 @@
                                 <div class="tip_time">{{item.createTime | timerFormat(item.createTime)}}</div>
                             </div>
                             <div class="newsdetail">
-                                <p>{{item.infoDetail}}fasdf阿斯蒂芬阿斯蒂芬阿斯蒂芬阿萨德发双方都盎司，大是大非，阿斯蒂芬，阿斯蒂芬，阿斯蒂芬，手动阀问问，人情味，二，去玩儿，千万人群翁，认为，人，去玩儿，玩儿，我去二，玩儿，去玩儿玩儿群，问问， 去玩儿，人情味</p>
+                                <p>{{item.infoDetail}}</p>
                             </div>
                         </div>
                     </div>
