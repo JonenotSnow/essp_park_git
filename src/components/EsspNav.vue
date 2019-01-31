@@ -9,9 +9,9 @@
                 </li>
             </ul>
         </div>
-        <div class="search" v-if="isBdPark">
+        <div class="search" v-if="!isBdPark">
             <div class="searchBox">
-                <span class="left" slot="reference" @click="show = !show">{{typeName}}<i class="el-icon-arrow-down"></i></span>
+                <span class="left" slot="reference" @click="show = !show">{{typeName}}<i class="el-icon-arrow-down" :class="{'iActive':show}"></i></span>
                 <input type="text" placeholder="请输入搜索关键字" v-model="indexSeachKW">
                 <i class="el-icon-search" @click="goSearchPage"></i>
             </div>
@@ -213,6 +213,10 @@
             border-right:1px solid #ccc;
             i{
                 padding:0 9px;
+                transform: rotate(0deg);
+            }
+            .iActive{
+                transform: rotate(180deg)
             }
         }
         input{
