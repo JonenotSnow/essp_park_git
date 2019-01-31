@@ -9,125 +9,40 @@
 
         </div>
     </div>
-    <div class="home_active_items_wrap">
-        <div class="home_active_items_inner esspclearfix">
-            <div class="home_active_item" v-for="(item,index) in activityList" v-if="index < 8">
-                <div class="home_active_img" @click="toDetail(0,item.activityId)">
-                    <img :src="item.activityPhoto" alt="活动图片">
-                    <div class="home_active_mask esspclearfix">
-                        <span class="home_avtive_f home_avtive_f_w1"><i class="el-icon-location"></i>{{item.activityPlace}}</span>
-                        <span class="home_avtive_f home_avtive_f_w2">{{item.isCharge === '0' ? '免费':'收费'}}</span>
+        <div class="home_active_items_wrap">
+            <div class="home_active_items_inner esspclearfix" v-if="activityList.length > 0">
+                <div class="home_active_item" v-for="(item,index) in activityList" v-if="index < 8">
+                    <div class="home_active_img" @click="toDetail(0,item.activityId)">
+                        <img :src="item.activityPhoto" alt="活动图片">
+                        <div class="home_active_mask esspclearfix">
+                            <span class="home_avtive_f home_avtive_f_w1"><i class="el-icon-location"></i>{{item.activityPlace}}</span>
+                            <span class="home_avtive_f home_avtive_f_w2">{{item.isCharge === '0' ? '免费':'收费'}}</span>
+                        </div>
                     </div>
-                </div>
-                <div class="home_avtive_con">
-                    <div class="home_active_name" @click="toDetail(0,item.activityId)">{{item.activityTheme}}</div>
-                    <div class="home_active_icon esspclearfix">
-                        <span >
-                            <i :class="icons[2]" style="color: #ccc"></i>{{item.viewSum}}</span>
-                                <span>
-                            <i :class="icons[3]" style="color: #ccc"></i>{{item.attentionSum}}
-                        </span>
-                        <span>
-                             <i :class="icons[5]" style="color: #ccc"></i>{{item.commentSum}}
-                         </span>
+                    <div class="home_avtive_con">
+                        <div class="home_active_name" @click="toDetail(0,item.activityId)">{{item.activityTheme}}</div>
+                        <div class="home_active_icon esspclearfix">
+                            <span >
+                                <i :class="icons[2]" style="color: #ccc"></i>{{item.viewSum}}</span>
+                                    <span>
+                                <i :class="icons[3]" style="color: #ccc"></i>{{item.attentionSum}}
+                            </span>
+                            <span>
+                                 <i :class="icons[5]" style="color: #ccc"></i>{{item.commentSum}}
+                             </span>
+                        </div>
                     </div>
-                </div>
 
-                <div class="home_active_footer esspclearfix">
-                    <span class="home_avtive_f home_avtive_f_w1">活动时间 {{item.activityStarttime}}</span>
-                    <span class="home_avtive_f home_avtive_f_w2" :style="{color: item.timeStatus.color}">{{item.timeStatus.msg}}</span>
+                    <div class="home_active_footer esspclearfix">
+                        <span class="home_avtive_f home_avtive_f_w1">活动时间 {{item.activityStarttime}}</span>
+                        <span class="home_avtive_f home_avtive_f_w2" :style="{color: item.timeStatus.color}">{{item.timeStatus.msg}}</span>
+                    </div>
                 </div>
             </div>
+            <essp-loading v-if="activityList.length == 0" :nodata="true"></essp-loading>
         </div>
-    </div>
-    <div class="home_avtive_more"><span @click="goActivityList()">More <i class="el-icon-arrow-right"></i></span></div>
-    <!--&lt;!&ndash; 淮安活动，旧园区样式 &ndash;&gt;-->
-        <!--<div class="title_home esspclearfix">-->
-            <!--<div>-->
-                <!--<h3>园区活动</h3>-->
-                <!--<p>Campus Activities</p>-->
-            <!--</div>-->
-            <!--<div>-->
-                <!--<a href="javascript:void(0);" :class="activeTabIndex==0?'sel':''" @click="activeTab(0)">最新活动</a>-->
-                <!--丨-->
-                <!--<a-->
-                    <!--href="javascript:void(0);"-->
-                    <!--:class="activeTabIndex==1?'sel':''"-->
-                    <!--@click="activeTab(1)"-->
-                <!--&gt;热门活动</a>-->
-            <!--</div>-->
-        <!--</div>-->
-        <!--<div class="swiperwrap">-->
-            <!--<div class="swipercon esspclearfix">-->
-                <!--<swiper :options="swiperOption" ref="mySwiper">-->
-                    <!--<swiper-slide v-for="(item,index) in activityList" :key="index" style="float:left">-->
-                        <!--<div class="swiper_item" @click="toDetail(0,item.activityId)">-->
-                            <!--&lt;!&ndash; 跳转到活动详情 &ndash;&gt;-->
-                            <!--<div class="itempic">-->
-                                <!--<img :src="item.activityPhoto" alt>-->
-                                <!--<div class="index_mask_item">-->
-                                    <!--<div class="index_l">-->
-                                        <!--<i class="el-icon-location"></i>-->
-                                        <!--{{item.activityPlace}}-->
-                                    <!--</div>-->
-                                    <!--<div class="index_r">{{item.activityStarttime}}</div>-->
-                                <!--</div>-->
-                                <!--<span v-if="activeTabIndex==0" class="index_item_tag index_item_tag1">最新</span>-->
-                                <!--<span v-else class="index_item_tag">热门</span>-->
-                            <!--</div>-->
-                            <!--<h3>{{item.activityTheme}}</h3>-->
-                            <!--<p>-->
-                                <!--<span v-html="item.activityDetails"></span>-->
-                                <!--&lt;!&ndash;  为进一步加强安全生产宣传工作，普及安全生产常识，强化安全生产意识，软件园一期深入开展2018年“安全···产月”活动。6月11日，软投公司邀请市安全生产协会技术专家到园区为大家开设“生命至上、安全发展”主题讲座。 &ndash;&gt;-->
-                            <!--</p>-->
-                            <!--<div class="gn">-->
-                                <!--<el-button-->
-                                    <!--type="primary"-->
-                                    <!--size="small"-->
-                                    <!--v-if="nowTime < getTime(item.enterStarttime)"-->
-                                    <!--disabled-->
-                                <!--&gt;预告中-->
-                                <!--</el-button>-->
-                                <!--<el-button-->
-                                    <!--type="primary"-->
-                                    <!--size="small"-->
-                                    <!--class="ljbm_btn"-->
-                                    <!--:disabled="item.enterSum == item.topLimit"-->
-                                    <!--v-else-if="nowTime >= getTime(item.enterStarttime) && nowTime <= getTime(item.enterEndtime)"-->
-                                <!--&gt;-->
-                                    <!--<span v-if="item.enterSum < item.topLimit"-->
-                                          <!--@click.stop="signUp(item)">立即报名</span>-->
-                                    <!--<span v-else>人数已满</span>-->
-                                <!--</el-button>-->
-                                <!--<el-button-->
-                                    <!--type="primary"-->
-                                    <!--size="small"-->
-                                    <!--v-else-if="nowTime > getTime(item.enterEndtime)"-->
-                                    <!--disabled-->
-                                <!--&gt;已结束-->
-                                <!--</el-button>-->
-                                <!--&lt;!&ndash; <el-button type="primary" size="small" @click="signUp(item.activityId)">立即报名</el-button> &ndash;&gt;-->
-                                <!--&lt;!&ndash; <span class="bm">已报名: <strong>{{item.enterNumber}}</strong>人</span> &ndash;&gt;-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</swiper-slide>-->
-                <!--</swiper>-->
-                <!--<div class="swiper-button-next" tabindex="0" role="button" aria-label="Next slide"></div>-->
-                <!--<div class="swiper-button-prev" tabindex="0" role="button" aria-label="Previous slide"></div>-->
-                <!--&lt;!&ndash; <div class="swiper-button-next" v-if="activityList.length > 3"></div>-->
-                <!--<div class="swiper-button-prev" v-if="activityList.length > 3"></div>&ndash;&gt;-->
-                <!--<div class="view_more">-->
-                    <!--<el-button-->
-                        <!--type="primary"-->
-                        <!--plain-->
-                        <!--size="small"-->
-                        <!--style="font-size:14px;"-->
-                        <!--@click="goActivityList()"-->
-                    <!--&gt;查看更多园区活动-->
-                    <!--</el-button>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
+
+        <div class="home_avtive_more"><span @click="goActivityList()">More <i class="el-icon-arrow-right"></i></span></div>
     </div>
 </template>
 <script>
@@ -205,7 +120,7 @@
                 //0:表示活动1:表示惠政2:表示资讯 this.$post(url,param)
                 this.$post(this.$apiUrl.home.homeInfo, {
                     pageNum: 0,
-                    pageSize: 10,
+                    pageSize: 8,
                     type: 0,
                     parkId: window.sessionStorage.getItem("parkId")
                 }).then(response => {
@@ -214,9 +129,9 @@
                     var thisTime = this.getMillisecond(new Date());
                     if(response.resultData.hot && arr.length > 0) {
                         arr.forEach((item,index) => {
-                            var activityStarttime = this.getMillisecond(item.activityStarttime);  // 活动开始时间
-                            var enterEndtime = this.getMillisecond(item.enterEndtime);           // 活动报名截止时间
-                            var enterStarttime = this.getMillisecond(item.enterStarttime);      // 活动报名开始时间
+                            var activityStarttime = this.getMillisecond(item.activityStarttime || 0);  // 活动开始时间
+                            var enterEndtime = this.getMillisecond(item.enterEndtime || 0);           // 活动报名截止时间
+                            var enterStarttime = this.getMillisecond(item.enterStarttime || 0);      // 活动报名开始时间
                             if(thisTime < enterStarttime) {
                                 this.$set(item,"timeStatus",this.timerStatus(1));
                             }
@@ -340,7 +255,7 @@
                 margin-right: -20px;
                 .home_active_item {
                     float: left;
-                    width: 280px;
+                    width: 284px;
                     margin-right: 20px;
                     .esspborder-radius(6px);
                     overflow: hidden;
