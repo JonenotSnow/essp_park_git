@@ -1,20 +1,23 @@
 <template>
     <div id="requestPage">
-        <el-dialog :visible.sync="scan" width='850px' height='273px' class='requestPage'>
-            <div class="scanWrap">
-                <img src="../../../assets/request_bg.png" alt="">
-                <div v-html='content' class='scanContent'></div>
-                <p class="check">
-                    <span @click="$router.push({path:'/parkIndex/scanIndex',query:{id:parkId}})">点击查看{{parkNm}}园区详情</span>
-                </p>
-                <p class="save">
-                    <el-button type="primary" size='small' @click="agreeInvite" :disabled="mark|markfike(mark)">确认加入
-                        <span style="display:none">检查是否独立园区页面</span>
-                    </el-button>
-                    <el-button type="primary" size='small' @click="toOut">
-                        取&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;消
-                    </el-button>
-                </p>
+        <el-dialog :visible.sync="scan" width='510px' height='280px' class='re' :show-close='true'>
+            <div>
+                <img class='bg' src="./re1.png" alt="">
+                <div class="contentn">
+                    <p class="infoing" v-html='content'></p>
+                    <p class="toDetail">
+                        <i></i>
+                            <img src="./re2.png" alt="">
+                            <span @click="$router.push({path:'/parkIndex/scanIndex',query:{id:parkId}})">查看园区详情</span>
+                        <i></i>
+                    </p>
+                    <p class="btn btnA">
+                        <span @click="agreeInvite">接受邀请</span>
+                    </p>
+                    <p class="btn btnB">
+                        <span @click="disagreeInvite">拒绝邀请</span>
+                    </p>
+                </div>
             </div>
         </el-dialog>
     </div>
@@ -39,60 +42,79 @@
             await this.getInviteByKey();
         },
         filters: {
-            markfike(value) {
-                let save = {
-                    '': false,
-                    '0': true,
-                    '1': true,
-                }
-                return save[value] ? save[value] : false;
-            }
+            // markfike(value) {
+            //     let save = {
+            //         '': false,
+            //         '0': true,
+            //         '1': true,
+            //     }
+            //     return save[value] ? save[value] : false;
+            // }
         },
         methods: {
             getInviteByKey() {
                 this.$post(this.$apiUrl.manage.getInviteByKey, {
                     key: this.$route.query.key,
                 })
-                    .then((response) => {
+                .then((response) => {
+                    if (response.resultCode == 'CLT000000000') {
                         this.content = response.resultData.content;
                         this.parkId = response.resultData.parkId;
                         this.mark = response.resultData.mark;
                         this.getParkById(this.parkId)
-                    }, (error) => {
+                    }else{
                         this.$message({
                             type: "error",
                             message: response.resultMsg
                         });
-                    })
+                    }
+                })
             },
             agreeInvite() {
                 let that = this;
                 this.$post(this.$apiUrl.manage.agreeInvite, {
                     parkId: this.parkId,
-                    key: this.$route.query.key
-                })
-                    .then((response) => {
+                    key: this.$route.query.key,
+                    fromUserId:this.$route.query.fromUserId
+                }).then((response) => {
+                    if (response.resultCode == 'CLT000000000') {
                         this.$message({
                             type: "success",
                             message: "加入成功"
                         });
-                        this.notice = true;
-                    }, (error) => {
+                    }else{
                         this.$message({
                             type: "error",
                             message: response.resultMsg
                         });
-                        this.notice = false;
-                    })
-                    setTimeout(()=>{
-                        if (that.notice) {
-                            this.$message({
-                                type: "success",
-                                message: "加入成功"
-                            });
-                        }
-                        that.toOut();
-                    },1000)
+                    }
+                })
+                setTimeout(()=>{
+                    that.toOut();
+                },1000)
+            },
+            disagreeInvite(){
+                let that = this;
+                this.$post(this.$apiUrl.manage.disagreeInvite, {
+                    parkId: this.parkId,
+                    key: this.$route.query.key,
+                    fromUserId: this.$route.query.fromUserId
+                }).then((response) => {
+                    if (response.resultCode == 'CLT000000000') {
+                        this.$message({
+                            type: "success",
+                            message: `已拒绝${this.parkNm}的入园邀请`
+                        });
+                    }else{
+                        this.$message({
+                            type: "error",
+                            message: response.resultMsg
+                        });
+                    }
+                })
+                setTimeout(()=>{
+                    that.toOut();
+                },1000)
             },
             getParkById(parkId) {
                 this.$post(this.$apiUrl.manage.getParkById, {
@@ -117,123 +139,100 @@
 </script>
 
 <style>
-    #requestPage .el-dialog__body {
-        padding: 0 !important;
+    #requestPage .re .el-dialog{
+        margin-top: 5vh!important;
     }
-
-    #requestPage .requestPage .el-dialog__header {
-        padding: 0 !important;
+    #requestPage .re .el-dialog__header{
+        display:none;
     }
-
-    #requestPage .scanContent p {
-        line-height: 0;
-        padding: 0;
-        margin: 0;
-    }
-
-    #requestPage .scanContent .ql-indent-1 {
-        line-height: 35px;
-        padding-left: 3em;
-    }
-
-    #requestPage .scanContent .ql-indent-2 {
-        line-height: 35px;
-        padding-left: 3em;
-        text-indent: 2em;
-    }
-
-    #requestPage .scanContent .ql-indent-3 {
-        line-height: 35px;
-        padding-left: 5em;
-    }
-
-    #requestPage .scanContent .ql-align-right {
-        line-height: 25px;
-        text-align: right;
-    }
-
-    #requestPage .sd {
-        margin-top: 35px !important;
+    #requestPage .re .el-dialog__body {
+        padding:0;
     }
 </style>
 <style lang="less" scoped>
-    .requestPage {
-        .scanWrap {
+#requestPage {
+    .re{
+        .bg{
+            position: absolute;
+        }
+        .contentn{
             position: relative;
-            background: #ddd;
-            & > img {
-                position: absolute;
-                top: 0;
-                z-index: 101;
+            z-index: 101;
+            .infoing{
+                width: 350px;
+                margin:0 auto;
+                line-height:34px;
+                font-size: 16px;
+                font-weight: normal;
+                font-stretch: normal;
+                line-height: 36px;
+                letter-spacing: 0px;
+                color: #409fa3;
+                position: relative;
+                top:197px;
+                text-indent: 32px;
             }
-            .scanContent {
-                width: 560px;
-                margin: 0 auto;
-                position: absolute;
-                top: 130px;
-                left: 145px;
-                z-index: 102;
-                & > p {
-                    font-size: 16px;
-                    color: #666666;
-                    &:nth-of-type(1) {
-                        line-height: 50px;
+            .toDetail{
+                position:relative;
+                width: 191px;
+                margin-left:142px;
+                top:246px;
+                i{
+                    display: inline-block;
+                    width: 54px;
+                    height: 4px;
+                    border-bottom: solid 1px #cccccc;
+                    position:relative;
+                    top:-6px;
+                    &:nth-of-type(2){
+                        left: 194px;
+                        top: -24px;
+                        margin-left:11px;
                     }
-                ;
-                    &:nth-of-type(2) {
-                        text-indent: 90px;
-                        margin-bottom: 10px;
+                }
+                span{
+                    cursor: pointer;
+                }
+                img{
+                    position: relative;
+                    top: 2px;
+                    margin:0 12px;
+                }
+                &:hover{
+                    span{
+                        color: #00a0e9;
                     }
-                ;
-                    &:nth-of-type(3) {
-                        line-height: 30px;
-                        width: 474px;
-                        margin: 0 auto;
-                        text-indent: 41px;
-                        word-wrap: break-word;
-                    }
-                ;
-                    &:nth-of-type(4) {
-                        margin-top: 70px;
-                        text-align: right;
-                    }
-                ;
-                    &:nth-of-type(5) {
-                        line-height: 40px;
-                        text-align: right;
-                    }
-                ;
-                    &:nth-of-type(6) {
-                        line-height: 40px;
-                        text-align: right;
-                    }
-                ;
-                    &:nth-of-type(7) {
-                        line-height: 40px;
-                        text-align: right;
-                    }
-                ;
                 }
             }
-            .check, .save {
-                width: 560px;
-                margin: 0 auto;
-                position: absolute;
-                left: 145px;
-                z-index: 102;
-            }
-            .save {
-                top: 450px;
+            .btn{
                 text-align: center;
             }
-            .check {
-                top: 420px;
-                width: 670px;
-                text-align: right;
+            .btnA span,.btnB span{
+                display: inline-block;
+                position:relative;
+                width: 167px;
+                height: 46px;
+                border-radius: 23px;
+                font-size: 18.4px;
+                font-weight: normal;
+                font-stretch: normal;
+                line-height:46px;
+                letter-spacing: 0.4px;
+                text-align: center;
                 cursor: pointer;
-                color: #409EFF;
+            }
+            .btnA span{
+                background-color: #dbb992;
+                color: #ffffff;
+                top:266px;
+            }
+            .btnB span{
+                color: #7cbfc2;
+                top:271px;
             }
         }
     }
+}
+
 </style>
 

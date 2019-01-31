@@ -67,6 +67,7 @@
                 </el-pagination>
             </div>
         </div>
+
         <!-- 确认下载 -->
         <el-dialog :visible.sync="toGether" width='520px' height='280px' class='toGether' :show-close='true'>
             <h2></h2>
@@ -76,6 +77,16 @@
                 <el-upload ref='upload' class="upload-demo" :show-file-list='false' style="" :before-upload="beforeAvatarUpload" :action='uploads'>
                     上传表格
                 </el-upload>
+            </p>
+        </el-dialog>
+        
+        <!-- 发送邀请函提示 -->
+        <el-dialog :visible.sync="access" width='560px' class='access'>
+            <h2 class="titleTips">提示</h2>
+            <p class="accessP"><i class="el-icon-warning"></i>&nbsp;&nbsp;确认邀请该企业加入园区？</p>
+            <p class="btn">
+                <span @click="access = false">取消</span>
+                <span @click="inviteMember">确认</span>
             </p>
         </el-dialog>
     </div>
@@ -117,12 +128,16 @@ export default {
                 cstName : '',
                 cstId : ''
             },
-            rzz:JSON.parse(localStorage.getItem('rzz'))
+            rzz:JSON.parse(localStorage.getItem('rzz')),
+            access:false,
+            curcstId:'',//当前邀请企业信用代码
+            parkNm:''// 当前园区名称
         };
     },
     created() {
         this.uploads = this.$apiUrl.upload.upload;
         this.getCstInfo();
+        this.getParkById();
     },
     filters:{
         idType(value){
@@ -168,12 +183,43 @@ export default {
             this.getCstInfo();
         },
         handleClick(row) {
-            this.$router.push({path:"/parkHall/manage/sendRequest",query:{cstId:row.cstId}});
+            this.access = true;
+            this.curcstId = row.cstId;
         },
-        getRowClass({ row, column, rowIndex, columnIndex }) {
-            if (rowIndex == 0) {
-                return "background:#e6f4ff;color:#333;font-size:16px;";
-            }
+        inviteMember() {
+            this.$post(this.$apiUrl.manage.inviteMember, {
+                cstId: this.curcstId,
+                parkId: sessionStorage.getItem("parkId"),
+                parkName: this.SSH.getItem("parkName")
+            }).then(response => {
+                if (response.resultCode == "CLT000000000") {
+                    this.$message({
+                        type: "success",
+                        message: response.resultMsg
+                    });
+                }else{
+                    this.$message({
+                        type: "warn",
+                        message: response.resultMsg
+                    });
+                }
+            });
+            this.access = false;
+        },
+        getParkById() {
+            this.$post(this.$apiUrl.manage.getParkById, {
+                parkId: sessionStorage.getItem("parkId")
+            }).then(
+                response => {
+                    this.parkNm = response.resultData.parkNm
+                },
+                err => {
+                    this.$message({
+                        type: "warn",
+                        message: response.resultMsg
+                    });
+                }
+            );
         },
         beforeAvatarUpload(file) {
             if (file.type !="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet") {
@@ -198,6 +244,7 @@ export default {
 };
 </script>
 <style>
+
 #requestEnterprice .toGether .el-dialog__header {
     padding: 0;
 }
@@ -211,6 +258,19 @@ export default {
     border: solid 1px #cccccc;
     border-radius: 5px;
 }
+
+#requestEnterprice .access .el-dialog__header {
+    display: none;
+}
+
+#requestEnterprice .access .el-dialog__body {
+    overflow: hidden;
+    margin: 30px 20px;
+}
+
+#requestEnterprice .access .el-dialog__body p:nth-of-type(1) {
+    line-height: 55px;
+}
 </style>
 
 <style lang='less' scoped>
@@ -222,6 +282,7 @@ export default {
         width: 1040px;
         height: auto !important;
         margin: 0 auto;
+        overflow: hidden;
         & > p {
             &:nth-of-type(1) {
                 width: 100%;
@@ -397,4 +458,52 @@ export default {
         }
     }
 }
+.access {
+    .titleTips {
+        text-indent: 36px;
+        font-size: 24px;
+        color: #555;
+        position: relative;
+        font-weight: normal;
+        top: -30px;
+        margin-top: 20px;
+    }
+    .accessP {
+        text-indent: 20px;
+        font-size: 20px;
+        color: #333;
+        line-height: 30px;
+        i {
+            font-size: 28px;
+            color: #00a0e9;
+        }
+    }
+    .btn {
+        text-align:center;
+        margin-top: 35px;
+        span {
+            text-align: center;
+            display: inline-block;
+            width: 100px;
+            height: 35px;
+            border-radius: 2px;
+            line-height: 35px;
+            font-size: 18x;
+            cursor: pointer;
+            color: #fff;
+            margin: 0 30px;
+            letter-spacing: 0;
+            &:nth-of-type(1) {
+                letter-spacing: 0;
+                background: #e6f4ff;
+                color: #00a0e9;
+            }
+            &:nth-of-type(2) {
+                background: linear-gradient(31deg, #22a2fa 0%, #10b5ff 100%);
+                color: #fff;
+            }
+        }
+    }
+}
+
 </style>

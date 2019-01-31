@@ -455,7 +455,7 @@ export default {
 
 .header_nav {
   float: left;
-  width: 604px;
+  // width: 604px;
 }
 
 .headulcon {

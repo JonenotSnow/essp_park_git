@@ -77,12 +77,6 @@ export default {
                     name: "邀请函填写"
                 }
             ],
-            content: `<p class="ql-indent-1" style="font-size:16px;">尊敬的企业管理员：</p>
-                    <p class="ql-indent-3" style="font-size:16px;">您好！</p>
-                    <p class="ql-indent-2" style="font-size:16px;">我们诚挚地邀请您加入xxxxxx园区与我们共创辉煌未来，真诚的期待您的加入。</p>
-                    <p><br></p>
-                    <p class="ql-align-right sd style="font-size:16px;"">邀请单位：xxxxxx园区</p>
-                    <p class="ql-align-right" style="font-size:16px;">xxxx年xx月xx日</p>`,
             confirmSend: false,
             scan: false,
             parkNm:'',
@@ -97,8 +91,7 @@ export default {
             this.$post(this.$apiUrl.manage.inviteMember, {
                 cstId: this.$route.query.cstId,
                 parkId: sessionStorage.getItem("parkId"),
-                parkName: this.SSH.getItem("parkName"),
-                mark:this.content
+                parkName: this.SSH.getItem("parkName")
             }).then(response => {
                 if (response.resultCode == "CLT000000000") {
                     this.confirmSend = true;
