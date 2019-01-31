@@ -62,7 +62,7 @@
         <div class="common_titwrap esspclearfix">
             <div class="moreinfo esspclearfix">
                 <h3 class="common_titdesa">更多热门资讯</h3>
-                <div class="info_more" @click="goParkInfoAll">查看更多></div>
+                <!-- <div class="info_more" @click="goParkInfoAll">查看更多></div> -->
             </div>
             <!-- 更多资讯模块 -->
             <div class="newscard_con">
@@ -468,7 +468,9 @@
     }
 
     .newscard_con {
-        .essp_width_auto();
+        //.essp_width_auto();
+        width:1180px;
+        margin:0 auto;
         background: #fff;
         margin-bottom: 30px;
     }
