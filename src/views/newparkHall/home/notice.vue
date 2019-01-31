@@ -170,6 +170,7 @@
                                 .detail {
                                     font-size: 14px;
                                     width: 320px;
+                                    height: 40px;
                                     overflow: hidden;
                                     text-overflow: ellipsis;
                                     display: -webkit-box;
