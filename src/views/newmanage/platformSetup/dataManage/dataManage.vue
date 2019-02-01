@@ -3,305 +3,322 @@
     <div class="baseInfo">
       <p>数据管理</p>
     </div>
-    <el-collapse class="accordion">
-      <el-collapse-item v-for="(item,i) in list" :key="i">
-        <template slot="title" style="font">{{item.title}}</template>
-        <div class="list">
-          <ul v-for="(is,j) in item.content" :key="j" :class="{'top':j>0}">
-            <li>
-              <span class="require">
-                <span>*</span>年份：
-              </span>
-              <!-- <el-date-picker
-                v-model="is.year"
-                type="date"
-                placeholder="选择日期"
-                format="yyyy 年"
-                value-format="yyyy"
-              ></el-date-picker>-->
-              <el-select v-model="is.year" placeholder="请选择">
-                <el-option
-                  v-for="dataItem in dataSelect"
-                  :key="dataItem.value"
-                  :label="dataItem.value"
-                  :value="dataItem.value"
-                ></el-option>
-              </el-select>
-            </li>
-            <li>
-              <span class="require">
-                <span>*</span>
-                {{is.subTitle}}
-              </span>
-              <div>
-                <input type="number" v-model="is.dataNum">
-                <span class="sub1" v-if="is.sub && is.sub.length == 1">{{is.sub}}</span>
-                <span class="sub2" v-if="is.sub && is.sub.length == 2">{{is.sub}}</span>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </el-collapse-item>
-    </el-collapse>
-    <p class="save" @click="saveUp">
-      <span>保存上传</span>
-    </p>
+    <el-form ref="accordionForm" :model="form" label-width="150px">
+      <el-collapse class="accordion" v-model="activeNames">
+        <el-collapse-item v-for="(item,i) in form.list" :key="i" :name="i">
+          <template slot="title" style="font">{{item.title}}</template>
+          <div class="list">
+            <ul v-for="(is,j) in item.content" :key="j" :class="{'top':j>0}">
+              <li>
+                <span class="require">
+                  <span>*</span>年份：
+                </span>
+                <!-- <el-date-picker
+                  v-model="is.year"
+                  type="date"
+                  placeholder="选择日期"
+                  format="yyyy 年"
+                  value-format="yyyy"
+                ></el-date-picker>-->
+                <el-select v-model="is.year" placeholder="请选择">
+                  <el-option
+                    v-for="dataItem in dataSelect"
+                    :key="dataItem.value"
+                    :label="dataItem.value"
+                    :value="dataItem.value"
+                  ></el-option>
+                </el-select>
+              </li>
+              <li>
+                <el-form-item 
+                  :label="is.subTitle" 
+                  :prop="'list.' + i + '.content.' + j + '.dataNum'"
+                  :rules="rulesData(i)"
+                >
+                  <el-input type="number" v-model="is.dataNum"></el-input>
+                  <span class="sub1" v-if="is.sub && is.sub.length == 1">{{is.sub}}</span>
+                  <span class="sub2" v-if="is.sub && is.sub.length == 2">{{is.sub}}</span>
+                </el-form-item>
+                <!-- <span class="require">
+                  <span>*</span>
+                  {{is.subTitle}}
+                </span>
+                <div>
+                  <input type="number" v-model="is.dataNum">
+                  <span class="sub1" v-if="is.sub && is.sub.length == 1">{{is.sub}}</span>
+                  <span class="sub2" v-if="is.sub && is.sub.length == 2">{{is.sub}}</span>
+                </div> -->
+              </li>
+            </ul>
+          </div>
+        </el-collapse-item>
+      </el-collapse>
+      <p class="save" @click="saveUp">
+        <span>保存上传</span>
+      </p>
+    </el-form>
   </div>
 </template>
 
 <script>
 export default {
   components: {},
+  computed: {
+    
+  },
   data() {
     return {
-      list: [
-        {
-          title: "研究与发展（R&D）人员数（万人）",
-          content: [
-            {
-              id: 0,
-              year: "",
-              dataNum: "",
-              sub: "万人",
-              subTitle: "R&D人员：",
-              type:0
-            },{
-              id: 0,
-              year: "",
-              dataNum: "",
-              sub: "万人",
-              subTitle: "R&D人员：",
-              type:0
-            },{
-              id: 0,
-              year: "",
-              dataNum: "",
-              sub: "万人",
-              subTitle: "R&D人员：",
-              type:0
-            },{
-              id: 0,
-              year: "",
-              dataNum: "",
-              sub: "万人",
-              subTitle: "R&D人员：",
-              type:0
-            },{
-              id: 0,
-              year: "",
-              dataNum: "",
-              sub: "万人",
-              subTitle: "R&D人员：",
-              type:0
-            }
-          ]
-        },
-        {
-          title: "企业研究与发展（R&D）经费支出（亿元）",
-          content: [
-            {
-              id: 0,
-              year: "",
-              dataNum: "",
-              sub: "亿元",
-              subTitle: "R&D投入：",
-              type:1
-            },{
-              id: 0,
-              year: "",
-              dataNum: "",
-              sub: "亿元",
-              subTitle: "R&D投入：",
-              type:1
-            },{
-              id: 0,
-              year: "",
-              dataNum: "",
-              sub: "亿元",
-              subTitle: "R&D投入：",
-              type:1
-            },{
-              id: 0,
-              year: "",
-              dataNum: "",
-              sub: "亿元",
-              subTitle: "R&D投入：",
-              type:1
-            },{
-              id: 0,
-              year: "",
-              dataNum: "",
-              sub: "亿元",
-              subTitle: "R&D投入：",
-              type:1
-            }
-          ]
-        },
-        {
-          title: "专利申请量",
-          content: [
-            {
-              id: 0,
-              year: "",
-              dataNum: "",
-              sub: "项",
-              subTitle: "专利申请量：",
-              type:2
-            },{
-              id: 0,
-              year: "",
-              dataNum: "",
-              sub: "项",
-              subTitle: "专利申请量：",
-              type:2
-            },{
-              id: 0,
-              year: "",
-              dataNum: "",
-              sub: "项",
-              subTitle: "专利申请量：",
-              type:2
-            },{
-              id: 0,
-              year: "",
-              dataNum: "",
-              sub: "项",
-              subTitle: "专利申请量：",
-              type:2
-            },{
-              id: 0,
-              year: "",
-              dataNum: "",
-              sub: "个",
-              subTitle: "专利申请量：",
-              type:2
-            }
-          ]
-        },
-        {
-          title: "发明专利申请量",
-          content: [
-            {
-              id: 0,
-              year: "",
-              dataNum: "",
-              sub: "项",
-              subTitle: "发明专利申请量：",
-              type:3
-            },{
-              id: 0,
-              year: "",
-              dataNum: "",
-              sub: "项",
-              subTitle: "发明专利申请量：",
-              type:3
-            },{
-              id: 0,
-              year: "",
-              dataNum: "",
-              sub: "项",
-              subTitle: "发明专利申请量：",
-              type:3
-            },{
-              id: 0,
-              year: "",
-              dataNum: "",
-              sub: "项",
-              subTitle: "发明专利申请量：",
-              type:3
-            },{
-              id: 0,
-              year: "",
-              dataNum: "",
-              sub: "项",
-              subTitle: "发明专利申请量：",
-              type:3
-            }
-          ]
-        },
-        {
-          title: "高新技术企业数量",
-          content: [
-            {
-              id: 0,
-              year: "",
-              dataNum: "",
-              sub: "家",
-              subTitle: "高新技术企业数量：",
-              type:4
-            },{
-              id: 0,
-              year: "",
-              dataNum: "",
-              sub: "家",
-              subTitle: "高新技术企业数量：",
-              type:4
-            },{
-              id: 0,
-              year: "",
-              dataNum: "",
-              sub: "家",
-              subTitle: "高新技术企业数量：",
-              type:4
-            },{
-              id: 0,
-              year: "",
-              dataNum: "",
-              sub: "家",
-              subTitle: "高新技术企业数量：",
-              type:4
-            },{
-              id: 0,
-              year: "",
-              dataNum: "",
-              sub: "家",
-              subTitle: "高新技术企业数量：",
-              type:4
-            }
-          ]
-        },
-        {
-          title: "技术合同登记额",
-          content: [
-            {
-              id: 0,
-              year: "",
-              dataNum: "",
-              sub: "亿元",
-              subTitle: "技术合同登记额：",
-              type:5
-            },{
-              id: 0,
-              year: "",
-              dataNum: "",
-              sub: "亿元",
-              subTitle: "技术合同登记额：",
-              type:5
-            },{
-              id: 0,
-              year: "",
-              dataNum: "",
-              sub: "亿元",
-              subTitle: "技术合同登记额：",
-              type:5
-            },{
-              id: 0,
-              year: "",
-              dataNum: "",
-              sub: "亿元",
-              subTitle: "技术合同登记额：",
-              type:5
-            },{
-              id: 0,
-              year: "",
-              dataNum: "",
-              sub: "亿元",
-              subTitle: "技术合同登记额：",
-              type:5
-            }
-          ]
-        }
-      ],
+      activeNames: [0],
+      form:{
+        list: [
+          {
+            title: "研究与发展（R&D）人员数（万人）",
+            content: [
+              {
+                id: 0,
+                year: "",
+                dataNum: "",
+                sub: "万人",
+                subTitle: "R&D人员：",
+                type:0
+              },{
+                id: 0,
+                year: "",
+                dataNum: "",
+                sub: "万人",
+                subTitle: "R&D人员：",
+                type:0
+              },{
+                id: 0,
+                year: "",
+                dataNum: "",
+                sub: "万人",
+                subTitle: "R&D人员：",
+                type:0
+              },{
+                id: 0,
+                year: "",
+                dataNum: "",
+                sub: "万人",
+                subTitle: "R&D人员：",
+                type:0
+              },{
+                id: 0,
+                year: "",
+                dataNum: "",
+                sub: "万人",
+                subTitle: "R&D人员：",
+                type:0
+              }
+            ]
+          },
+          {
+            title: "企业研究与发展（R&D）经费支出（亿元）",
+            content: [
+              {
+                id: 0,
+                year: "",
+                dataNum: "",
+                sub: "亿元",
+                subTitle: "R&D投入：",
+                type:1
+              },{
+                id: 0,
+                year: "",
+                dataNum: "",
+                sub: "亿元",
+                subTitle: "R&D投入：",
+                type:1
+              },{
+                id: 0,
+                year: "",
+                dataNum: "",
+                sub: "亿元",
+                subTitle: "R&D投入：",
+                type:1
+              },{
+                id: 0,
+                year: "",
+                dataNum: "",
+                sub: "亿元",
+                subTitle: "R&D投入：",
+                type:1
+              },{
+                id: 0,
+                year: "",
+                dataNum: "",
+                sub: "亿元",
+                subTitle: "R&D投入：",
+                type:1
+              }
+            ]
+          },
+          {
+            title: "专利申请量（项）",
+            content: [
+              {
+                id: 0,
+                year: "",
+                dataNum: "",
+                sub: "项",
+                subTitle: "专利申请量：",
+                type:2
+              },{
+                id: 0,
+                year: "",
+                dataNum: "",
+                sub: "项",
+                subTitle: "专利申请量：",
+                type:2
+              },{
+                id: 0,
+                year: "",
+                dataNum: "",
+                sub: "项",
+                subTitle: "专利申请量：",
+                type:2
+              },{
+                id: 0,
+                year: "",
+                dataNum: "",
+                sub: "项",
+                subTitle: "专利申请量：",
+                type:2
+              },{
+                id: 0,
+                year: "",
+                dataNum: "",
+                sub: "个",
+                subTitle: "专利申请量：",
+                type:2
+              }
+            ]
+          },
+          {
+            title: "发明专利申请量（项）",
+            content: [
+              {
+                id: 0,
+                year: "",
+                dataNum: "",
+                sub: "项",
+                subTitle: "发明专利申请量：",
+                type:3
+              },{
+                id: 0,
+                year: "",
+                dataNum: "",
+                sub: "项",
+                subTitle: "发明专利申请量：",
+                type:3
+              },{
+                id: 0,
+                year: "",
+                dataNum: "",
+                sub: "项",
+                subTitle: "发明专利申请量：",
+                type:3
+              },{
+                id: 0,
+                year: "",
+                dataNum: "",
+                sub: "项",
+                subTitle: "发明专利申请量：",
+                type:3
+              },{
+                id: 0,
+                year: "",
+                dataNum: "",
+                sub: "项",
+                subTitle: "发明专利申请量：",
+                type:3
+              }
+            ]
+          },
+          {
+            title: "高新技术企业数量（家）",
+            content: [
+              {
+                id: 0,
+                year: "",
+                dataNum: "",
+                sub: "家",
+                subTitle: "高新技术企业数量：",
+                type:4
+              },{
+                id: 0,
+                year: "",
+                dataNum: "",
+                sub: "家",
+                subTitle: "高新技术企业数量：",
+                type:4
+              },{
+                id: 0,
+                year: "",
+                dataNum: "",
+                sub: "家",
+                subTitle: "高新技术企业数量：",
+                type:4
+              },{
+                id: 0,
+                year: "",
+                dataNum: "",
+                sub: "家",
+                subTitle: "高新技术企业数量：",
+                type:4
+              },{
+                id: 0,
+                year: "",
+                dataNum: "",
+                sub: "家",
+                subTitle: "高新技术企业数量：",
+                type:4
+              }
+            ]
+          },
+          {
+            title: "技术合同登记额（亿元）",
+            content: [
+              {
+                id: 0,
+                year: "",
+                dataNum: "",
+                sub: "亿元",
+                subTitle: "技术合同登记额：",
+                type:5
+              },{
+                id: 0,
+                year: "",
+                dataNum: "",
+                sub: "亿元",
+                subTitle: "技术合同登记额：",
+                type:5
+              },{
+                id: 0,
+                year: "",
+                dataNum: "",
+                sub: "亿元",
+                subTitle: "技术合同登记额：",
+                type:5
+              },{
+                id: 0,
+                year: "",
+                dataNum: "",
+                sub: "亿元",
+                subTitle: "技术合同登记额：",
+                type:5
+              },{
+                id: 0,
+                year: "",
+                dataNum: "",
+                sub: "亿元",
+                subTitle: "技术合同登记额：",
+                type:5
+              }
+            ]
+          }
+        ],
+      },
       dataSelect: [
         { value: "2013" },
         { value: "2014" },
@@ -318,13 +335,33 @@ export default {
     this.getData();
   },
   methods: {
+    rulesData: (type) => {
+      var rules
+      switch(type) {
+        case 0:
+        case 1:
+        case 5:
+          rules = [
+            { required: true, trigger: 'blur', message: ' '},
+            { pattern: /^(([1-9][0-9]*)|(([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,2})))$/, trigger: 'blur', message: ' '},
+          ]
+          break;
+        default:
+          rules = [
+            { required: true, trigger: 'blur', message: ' '},
+            { pattern: /^[1-9]+\d*$/, trigger: 'blur', message: ' '},
+          ]
+          break;
+      }
+      return rules
+    },
     getData() {
       this.$post("/dataIndex/getIndexData", {
         parkId: sessionStorage.getItem("parkId")
       }).then(res => {
         if (res.resultCode === "CLT000000000") {
           if (res.resultData.length > 0) {
-            this.list.forEach(item => {
+            this.form.list.forEach(item => {
               item.content = [];
             });
           }
@@ -333,7 +370,7 @@ export default {
             let itemIndex = Number(item.type);
             if (itemIndex > 5) return false;
             let itemObj = Object.assign({},this.switchFn(itemIndex,0),item)
-            if(this.list[itemIndex].content.length<5){this.list[itemIndex].content.push(itemObj);}
+            if(this.form.list[itemIndex].content.length<5){this.form.list[itemIndex].content.push(itemObj);}
           });
         }
       });
@@ -341,8 +378,8 @@ export default {
     addItem(index, jIndex) {
       let obj = this.switchFn(index, jIndex);
       console.log(index, jIndex, obj);
-      this.list[index].content.push(obj);
-      console.log(this.list);
+      this.form.list[index].content.push(obj);
+      console.log(this.form.list);
     },
     switchFn(index, jIndex) {
       let tmp = {};
@@ -388,7 +425,7 @@ export default {
             id: 1 + jIndex,
             year: "",
             dataNum: "",
-            sub: "项",
+            sub: "家",
             subTitle: "高新技术企业数量："
           };
           break;
@@ -410,31 +447,38 @@ export default {
     saveUp() {
       let parkId = this.SSH.getItem("parkId");
       let params = [];
-
-      try{
-        this.list.forEach((item, index) => {
-        if (item.content.length > 0) {
-          item.content.forEach(items => {
-            if(!items.dataNum || !items.year){
-              throw '数据不完整'
-              return false
-            }
-            let obj = Object.assign({}, items, {
-              parkId: parkId,
-              type: index
+      this.$refs['accordionForm'].validate((valid) => {
+          if (valid) {
+             try{
+              this.form.list.forEach((item, index) => {
+              if (item.content.length > 0) {
+                item.content.forEach(items => {
+                  if(!items.dataNum || !items.year){
+                    throw '数据不完整'
+                    return false
+                  }
+                  let obj = Object.assign({}, items, {
+                    parkId: parkId,
+                    type: index
+                  });
+                  params.push(obj);
+                });
+              }
             });
-            params.push(obj);
-          });
-        }
-      });
-      }catch(err){
-          this.$message('数据完整设置后，才可上传')
-          return false
-      }
+            }catch(err){
+                this.$message('数据完整设置后，才可上传')
+                return false
+            }
 
-      this.$post("/dataIndex/saveData", params).then(res => {
-        this.$message.success("数据上传成功");
-      });
+            this.$post("/dataIndex/saveData", params).then(res => {
+              this.$message.success("数据上传成功");
+            });
+          } else {
+            this.$message('数据完整设置后，才可上传')
+            return false;
+          }
+        });
+     
     }
   }
 };
@@ -556,7 +600,7 @@ export default {
           .sub1,
           .sub2 {
             position: relative;
-            left: -41px;
+            left: -44px;
             display: inline-block;
             width: 30px;
             background: #fff;
@@ -565,9 +609,16 @@ export default {
             padding-left: 5px;
           }
           .sub1 {
-            left: -28px;
+            left: -30px;
             width: 15px;
           }
+          .el-form-item{
+            width: 350px;
+            .el-input{
+              width: 160px;
+            }
+          }
+
         }
       }
       .addYear {
