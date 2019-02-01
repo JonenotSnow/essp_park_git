@@ -167,6 +167,7 @@
     }
     .newslastest{
         height: 440px;
+        background-color:#fff;
         .newslist{
           float:left;
           width:580px;
@@ -215,12 +216,12 @@
                 line-height: 50px;
                 border-bottom:1px solid #ccc;
                 transition:all 2s;
-                .esspopacity(0.6);
                 cursor: pointer;
                 &:hover{
                     .esspopacity(0.8);
                 }
                 .tip_tit {
+                    font-family: "Microsoft YaHei";
                     float: left;
                     font-size: 16px;
                     width:210px;
@@ -230,6 +231,7 @@
                     text-overflow: ellipsis;
                     -webkit-box-orient: vertical;
                     -webkit-line-clamp:1;
+                    letter-spacing: 1.6px;
                 }
                 .tip_time {
                     float: right;
