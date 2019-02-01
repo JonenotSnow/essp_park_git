@@ -171,8 +171,8 @@
                             aduit: '',
                             startDate: '',
                         };
+                        this.access = false;
                         this.confirmSend = true;
-
                         // 先注释
                         // setTimeout(() => {
                         //     this.$router.push('/parkHall/manage/noticeAndAD');
