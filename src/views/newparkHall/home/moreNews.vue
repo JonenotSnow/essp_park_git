@@ -38,23 +38,27 @@ export default {
     text-align: center;
     .newsfirtitle{
       font-size: 28px;
+      height: 28px;
+      line-height: 28px;
+      font-weight: normal;
+      letter-spacing: 2.8px;
+      color: #333;
     }
     .newssectitle{
+      padding-top:15px;
+      font-family: MicrosoftYaHei;
       font-size: 16px;
+      height: 16px;
+      line-height:16px;
+      font-weight: normal;
+      font-stretch: normal;
+      letter-spacing: 1.6px;
+      color: #999999;
+
     }
   }
   .essp_width_auto();
   padding-top: 50px;
-  div:nth-child(1) {
-      h3 {
-          font-weight: normal;
-          margin-bottom: 8px;
-      }
-      p {
-          color: #999;
-          font-size: 14px;
-      }
-  }
   div:nth-child(2) {
     float: right;
     line-height: 63px;

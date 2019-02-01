@@ -153,7 +153,7 @@
             font-size: 16px;
             width: 55px;
             height: 35px;
-            line-height: 33px;
+            line-height: 35px;
             text-align: center;
             cursor:pointer;
             background-color:#e1e1e1;
@@ -167,11 +167,11 @@
     }
     .newslastest{
         height: 440px;
-        background-color:#fff;
         .newslist{
           float:left;
           width:580px;
           height: 440px;
+          background-color:#fff;
           box-shadow: 0px 0px 19px 1px 
             rgba(0, 0, 0, 0.08);
           border-radius: 6px;
