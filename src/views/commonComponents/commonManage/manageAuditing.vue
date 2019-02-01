@@ -33,8 +33,8 @@
                     <textarea v-model="mark" placeholder="请输入审核意见（必填）"></textarea>
                 </div>
                 <p class="btn">
-                    <span @click="access = true">通过</span>
-                    <span @click="noAccess = true">不通过</span>
+                    <span @click="openOne">通过</span>
+                    <span @click="openTwo">不通过</span>
                     <span @click="cancelAudit">取消</span>
                 </p>
             </div>
@@ -135,6 +135,26 @@
                             message: response.returnMsg
                         })
                     })
+            },
+            openOne(){
+                if (!this.mark) {
+                    this.$message({
+                        type: 'warn',
+                        message: '审核意见不能为空'
+                    });
+                    return;
+                }
+                this.access = true;
+            },
+            openTwo(){
+                if (!this.mark) {
+                    this.$message({
+                        type: 'warn',
+                        message: '审核意见不能为空'
+                    });
+                    return;
+                }
+                this.noAccess = true;
             },
             auditFn(status) {
                 let st = status;
