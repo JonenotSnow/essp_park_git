@@ -176,10 +176,12 @@
             .link {
                 margin-top: 20px;
                 margin-bottom: 60px;
+                height: 90px;
                 .link__li {
                     display: inline-block;
+                    float:left;
                     width: 160px;
-                    height: 90px;
+                    height: 100%;
                     text-align: justify;
                     vertical-align: top;
                     .link__li--word {
