@@ -191,7 +191,7 @@
                                 btn_l:{
                                     showFlag:true,
                                     isRouerPush:false,
-                                    path:'http://tj.ctp.gov.cn/tl/login.aspx'
+                                    path:'https://tyrz.chinatorch.gov.cn/hjismp/a/login#tj'
                                 },
                                 btn_r:{
                                     showFlag:true,
