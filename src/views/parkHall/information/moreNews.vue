@@ -16,7 +16,7 @@
                                 <div class="tip_time">{{item.createTime | timerFormat(item.createTime)}}</div>
                             </div>
                             <div class="newsdetail">
-                                <p>{{item.infoDetail}}</p>
+                                {{item.infoDetail}}
                             </div>
                         </div>
                     </div>
@@ -30,7 +30,7 @@
                                 <div class="tip_time">{{item.createTime | timerFormat(item.createTime)}}</div>
                             </div>
                             <div class="newsdetail">
-                                <p>{{item.infoDetail}}</p>
+                                {{item.infoDetail}}
                             </div>
                         </div>
                     </div>
@@ -46,7 +46,7 @@
                                 <div class="tip_time">{{its.createTime | timerFormat(its.createTime)}}</div>
                             </div>
                             <div class="newsdetail">
-                                <p>{{its.infoDetail}}</p>
+                                {{its.infoDetail}}
                             </div>
                         </div>
                     </div>
@@ -60,7 +60,7 @@
                                 <div class="tip_time">{{its.createTime | timerFormat(its.createTime)}}</div>
                             </div>
                             <div class="newsdetail">
-                                <p>{{its.infoDetail}}</p>
+                                {{its.infoDetail}}
                             </div>
                         </div>
                     </div>
@@ -186,7 +186,7 @@
         margin:0 auto;
         text-align: right;
         line-height: 50px;
-        font-size: 14px;
+        font-size: 16px;
         font-weight: normal;
         font-stretch: normal;
         letter-spacing: 0px;
@@ -242,17 +242,16 @@
             }
             .newsdetail{
                 height: 60px;
-                p{
-                    display: -webkit-box;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    -webkit-box-orient:vertical;
-                    -webkit-line-clamp:2;
-                    font-size: 14px;
-                    line-height:30px;
-                    color:#999;
-                    padding-top: 5px;
-                }
+                display: -webkit-box;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                -webkit-box-orient:vertical;
+                -webkit-line-clamp:2;
+                font-size: 14px;
+                line-height:30px;
+                color:#999;
+                padding-top: 5px;
+                
             }
         }
     }
