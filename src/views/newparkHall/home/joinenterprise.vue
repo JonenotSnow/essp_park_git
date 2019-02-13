@@ -103,6 +103,9 @@ import mixins_windowOpen from '@/components/mixins/mixins_windowOpen.js'
  .warp_join{
      //height: 260px;
      background: #ffff;
+    .main_inter{
+        width:1180px;
+    }
  }
  .entercons{
      overflow: hidden;
@@ -127,7 +130,7 @@ import mixins_windowOpen from '@/components/mixins/mixins_windowOpen.js'
         margin:0 auto;
         text-align: right;
         line-height: 50px;
-        font-size: 14px;
+        font-size: 16px;
         font-weight: normal;
         font-stretch: normal;
         letter-spacing: 0px;
