@@ -217,6 +217,7 @@
                     background-color: #e1e1e1;
                     color: #aaa;
                     cursor: pointer;
+                    font-size: 16px;
                 }
                 .sel {
                     background-color: #f3f3f3;

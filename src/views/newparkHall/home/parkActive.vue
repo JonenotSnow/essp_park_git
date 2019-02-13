@@ -23,12 +23,12 @@
                         <div class="home_active_name" @click="toDetail(0,item.activityId)">{{item.activityTheme}}</div>
                         <div class="home_active_icon esspclearfix">
                             <span >
-                                <i :class="icons[2]" style="color: #ccc"></i>{{item.viewSum}}</span>
+                                <i :class="icons[2]" style="color: #ccc"></i>{{item.viewSum || '0'}}</span>
                                     <span>
-                                <i :class="icons[3]" style="color: #ccc"></i>{{item.attentionSum}}
+                                <i :class="icons[3]" style="color: #ccc"></i>{{item.attentionSum || '0'}}
                             </span>
                             <span>
-                                 <i :class="icons[5]" style="color: #ccc"></i>{{item.commentSum}}
+                                 <i :class="icons[5]" style="color: #ccc"></i>{{item.commentSum || '0'}}
                              </span>
                         </div>
                     </div>
@@ -240,6 +240,7 @@
                     background-color: #e1e1e1;
                     color: #aaa;
                     cursor: pointer;
+                    font-size: 16px;
                 }
                 .sel {
                     background-color: #f3f3f3;
