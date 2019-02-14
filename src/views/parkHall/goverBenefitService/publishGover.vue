@@ -941,7 +941,7 @@
                     approveComment: this.formTicketList.t_notes  // 备注
 
                 }).then(response => {
-                    if (response.resultCode == "CLT000000000") {
+                    if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                         this.$confirm(
                             msg,
                             maskConfig
@@ -1039,7 +1039,7 @@
                         approveComment: this.formTicketList.t_notes  // 备注
 
                     }).then(response => {
-                        if (response.resultCode == "CLT000000000") {
+                        if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                             this.$router.push(url);
                         } else {
                             this.$message.error(response.resultMsg);
@@ -1188,7 +1188,7 @@
                     this.$post(this.$apiUrl.goverBene.getPolById, {id: draftid}).then(
                         response => {
                             var codestatus = response.resultCode;
-                            if (codestatus == "CLT000000000") {
+                            if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
                                 let data = response.resultData;
                                 this.formBaseList.action_theme = data.policyTitle;
                                 this.parkUploadData.src = data.titleImg;

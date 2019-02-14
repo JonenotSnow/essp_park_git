@@ -152,7 +152,7 @@
                     status: "01"
                 }).then(
                     response => {
-                        if (response.resultCode == "CLT000000000") {
+                        if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                             this.$router.push({
                                 path: "/parkHall/manage/manageAuditing",
                                 query: {id: id}

@@ -1165,7 +1165,7 @@
                     this.$post(this.$apiUrl.active.actEdit, pop).then(
                         response => {
                             var codestatus = response.resultCode;
-                            if (codestatus == "CLT000000000") {
+                            if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
                                 let data = response.resultData;
                                 this.activityTheme = data.activityTheme || '';
                                 this.activityType = data.activityType;
@@ -1526,7 +1526,7 @@
                     status: type
                 }).then(
                     response => {
-                        if (response.resultCode == "CLT000000000") {
+                        if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                             this.$confirm(msg, maskConfig).then(() => {
                                 this.$router.push(url);
                             });
@@ -1596,7 +1596,7 @@
                             status: type
                         }).then(
                             response => {
-                                if (response.resultCode == "CLT000000000") {
+                                if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                                     this.$alert(response.resultMsg, {
                                         confirmButtonText: "确定",
                                         callback: action => {

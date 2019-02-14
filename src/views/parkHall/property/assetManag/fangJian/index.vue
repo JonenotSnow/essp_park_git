@@ -912,7 +912,7 @@
 
                         this.$post("/space/addRoom", params).then(
                             response => {
-                                if (response.resultCode === "CLT000000000") {
+                                if (response.resultCode === "CLT000000000" || response.resultCode === "0000000000") {
                                     // this.$message(response.resultMsg);
                                     if (this.idType == 'update') {
                                         this.$message.success("修改房间成功！");
@@ -979,7 +979,7 @@
                     id: this.deleteId,
                 }).then(
                     response => {
-                        if (response.resultCode === "CLT000000000") {
+                        if (response.resultCode === "CLT000000000" || response.resultCode === "0000000000") {
                             this.dialogVisible = false;
                             // this.$message(response.resultMsg);
                             this.$message.success('删除成功');
@@ -1009,7 +1009,7 @@
             getBuildingInfoData(builddingId) {
                 this.$post("/space/getBuildingById", {id: builddingId}).then(
                     response => {
-                        if (response.resultCode === "CLT000000000") {
+                        if (response.resultCode === "CLT000000000" || response.resultCode === "0000000000") {
                             this.buildingInfoData = response.resultData;
                         }
                     },
@@ -1037,7 +1037,7 @@
 
                 this.$post("/space/getRooms", this.ruleFormSearch).then(
                     response => {
-                        if (response.resultCode === "CLT000000000") {
+                        if (response.resultCode === "CLT000000000" || response.resultCode === "0000000000") {
                             this.total = response.resultData.count;
                             this.tableData = response.resultData.list;
                         }

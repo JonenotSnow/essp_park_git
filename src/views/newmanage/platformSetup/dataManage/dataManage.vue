@@ -359,7 +359,7 @@ export default {
       this.$post("/dataIndex/getIndexData", {
         parkId: sessionStorage.getItem("parkId")
       }).then(res => {
-        if (res.resultCode === "CLT000000000") {
+        if (res.resultCode === "CLT000000000" || res.resultCode === "0000000000") {
           if (res.resultData.length > 0) {
             this.form.list.forEach(item => {
               item.content = [];

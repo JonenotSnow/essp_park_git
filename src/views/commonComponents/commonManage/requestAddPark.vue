@@ -177,7 +177,7 @@
             getFxContent() {
                 this.$post(this.$apiUrl.manage.getCstIdByUserId, {}).then(
                     response => {
-                        if (response.resultCode != 'CLT000000000') {
+                        if (response.resultCode != 'CLT000000000' && response.resultCode != '0000000000') {
                             this.$message({
                                 type: 'warn',
                                 message: response.returnMsg

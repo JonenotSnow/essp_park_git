@@ -145,7 +145,7 @@
                 }).then(
                     response => {
                         var codestatus = response.resultCode;
-                        if (codestatus == "CLT000000000") {
+                        if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
                             var data = response.resultData;
                             this.tagItems = data;
                             this.resometags(data);

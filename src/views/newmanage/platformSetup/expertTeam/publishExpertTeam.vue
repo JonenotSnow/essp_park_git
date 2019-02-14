@@ -337,7 +337,7 @@
                         parkId: this.submitUploadInfo.parkId
                     }).then(
                         response => {
-                            if (response.resultCode == "CLT000000000") {
+                            if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                                 this.$message.success("保存成功");
                                 this.$router.push("/parkHall/manage/expertTeam");
                             }

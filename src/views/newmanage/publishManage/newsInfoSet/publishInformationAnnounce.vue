@@ -388,7 +388,7 @@
 
                         this.$post(url, this.ruleForm).then(response => {
                             let codestatus = response.resultCode;
-                            if (codestatus == "CLT000000000") {
+                            if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
                                 if (this.applyType === '01') {
                                     if (this.id) {
                                         this.$message.success("新闻动态修改成功！");
@@ -454,7 +454,7 @@
 
                 this.$post(url, this.ruleForm).then(response => {
                     let codestatus = response.resultCode;
-                    if (codestatus == "CLT000000000") {
+                    if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
                         if (this.applyType === '01') {
                             this.$message.success("新闻动态暂存成功！");
                             this.$router.push({
@@ -488,7 +488,7 @@
                 };
                 this.$post("/information/getInfoById", params).then(response => {
                     let codestatus = response.resultCode;
-                    if (codestatus == "CLT000000000") {
+                    if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
 
                         this.ruleForm = response.resultData;
 

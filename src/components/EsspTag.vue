@@ -152,7 +152,7 @@
                     lblTpCd: this.tagprops.lblTpCd
                 }).then(response => {
                     if (
-                        response.resultCode == "CLT000000000" &&
+                        (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") &&
                         response.resultData["lblInfo"]
                     ) {
                         let lblInfo = response.resultData.lblInfo;
@@ -179,7 +179,7 @@
                         entId: this.tagprops.entId
                     }).then(response => {
                         if (
-                            response.resultCode == "CLT000000000" &&
+                            (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") &&
                             response.resultData["lblInfo"]
                         ) {
                             let lblInfo = response.resultData.lblInfo;

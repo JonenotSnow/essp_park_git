@@ -496,7 +496,7 @@ export default {
                 applyInfo: enterForm // 报名表
             }).then(response => {
                 this.btnBloon = true;
-                if (response.resultCode == "CLT000000000") {
+                if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                     this.$alert(response.resultMsg, "报名提示", {
                         confirmButtonText: "确定",
                         callback: action => {

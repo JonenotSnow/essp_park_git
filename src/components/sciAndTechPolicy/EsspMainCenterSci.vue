@@ -168,7 +168,7 @@
                 })
                     .then(response => {
                         var codestatus = response.resultCode;
-                        if (codestatus == "CLT000000000") {
+                        if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
                             var data = response.resultData;
                             _this.tagItems = data;
                         } else {
@@ -211,7 +211,7 @@
 
                 this.$post("/policy/getAllPolicy", params).then(response => {
                     let codestatus = response.resultCode;
-                    if (codestatus == "CLT000000000") {
+                    if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
                         let resultData = response.resultData;
                         this.allTotal = resultData.total;
                         this.mcCardDataList = resultData.policyList;

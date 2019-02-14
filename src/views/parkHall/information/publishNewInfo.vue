@@ -288,7 +288,7 @@
                     this.$post(this.$apiUrl.parkInfo.infoById, pop).then(
                         response => {
                             var codestatus = response.resultCode;
-                            if (codestatus == "CLT000000000") {
+                            if (codestatus == "CLT000000000" || codestatus == "0000000000") {
                                 let data = response.resultData;
                                 this.informationTitle = data.informationTitle; //资讯标题
                                 this.contentbrif = data.content; //资讯简介
@@ -376,7 +376,7 @@
                         infoDetail: this.content,
                         informationId: this.informationId
                     }).then(response => {
-                        if (response.resultCode == "CLT000000000") {
+                        if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                             this.$router.push({path: url});
                         } else {
                             // this.$message.error(response.resultMsg);
@@ -412,7 +412,7 @@
                     infoDetail: this.content,
                     informationId: this.informationId
                 }).then(response => {
-                    if (response.resultCode == "CLT000000000") {
+                    if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                         this.$confirm(msg, maskConfig).then(() => {
                             this.$refs.eat.saveTags();
                             this.$router.push({path: url});

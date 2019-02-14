@@ -200,7 +200,7 @@ async function getLoginUserRole(options) {
     };
     await post(urlapi, pop).then(
         response => {
-            if (response.resultCode == "CLT000000000") {
+            if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                 LoginUserRol = response.resultData;
                 sessionStorageHandler.setItem("LoginUserRol", LoginUserRol);
             } else {
@@ -223,7 +223,7 @@ async function selectResMenu(options, next) {
     };
     await post(urlapi, pop).then(
         response => {
-            if (response.resultCode == "CLT000000000") {
+            if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                 var menuList = response.resultData.menuList[0] || {};
                 sessionStorageHandler.setItem("menuList", menuList);
                 sessionStorageHandler.setItem(
@@ -254,7 +254,7 @@ async function getParkById(parkId) {
     await post("/parkManage/getParkById", {
         parkId: parkId
     }).then(res => {
-        if (res.resultCode == "CLT000000000") {
+        if (res.resultCode == "CLT000000000" || res.resultCode == "0000000000") {
             if (res.resultData) {
                 sessionStorageHandler.setItem("parkId", res.resultData.parkId);
                 sessionStorageHandler.setItem(

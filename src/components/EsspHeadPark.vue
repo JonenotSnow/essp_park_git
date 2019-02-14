@@ -366,7 +366,7 @@ export default {
         await this.$post(urlapi, pop).then(
             response => {
                 console.log(4);
-                if (response.resultCode == "CLT000000000") {
+                if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                     var menuList = response.resultData.menuList[0] || {};
                     this.SSH.setItem("menuList", menuList);
                     this.SSH.setItem(

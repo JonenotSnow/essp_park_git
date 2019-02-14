@@ -271,7 +271,7 @@ export default {
             this.$post(url, pop).then(response => {
                 this.loading = false
                 var codestatus = response.resultCode;
-                    if (codestatus == "CLT000000000") {
+                    if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
                         this.searchData = response.resultData.activityList;
                         this.resetSerchA();
                         this.allTotal = response.resultData.total; //总条数
@@ -300,7 +300,7 @@ export default {
             this.$post(url, pop).then(response => {
                 this.loading = false
                 var codestatus = response.resultCode;
-                    if (codestatus == "CLT000000000") {
+                    if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
                         this.searchData = response.resultData.policyList;
                         this.resetSerchA();
                         this.allTotal = response.resultData.total; //总条数
@@ -332,7 +332,7 @@ export default {
             this.$post(url, pop).then(response => {
                 this.loading = false
                 var codestatus = response.resultCode;
-                    if (codestatus == "CLT000000000") {
+                    if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
                         this.searchData = response.resultData.informationList;
                         this.resetSerchA();
                         this.allTotal = response.resultData.total; //总条数
@@ -381,7 +381,7 @@ export default {
             var pop = {tagTp,parkId}
             this.$post(url,pop).then(response => {
                 var codestatus = response.resultCode;
-                    if (codestatus == "CLT000000000") {
+                    if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
                         this.resetSearch();//彻底重置搜索条件
                         var data = response.resultData;
                         this.tagItems = data;

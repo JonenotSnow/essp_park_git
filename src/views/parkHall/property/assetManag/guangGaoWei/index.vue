@@ -299,7 +299,7 @@
                             this.ruleForm
                         ).then(
                             response => {
-                                if (response.resultCode === "CLT000000000") {
+                                if (response.resultCode === "CLT000000000" || response.resultCode === "0000000000") {
                                     // this.$message(response.resultMsg);
                                     this.$message.success('发布成功');
                                     this.$refs[formName].resetFields();
@@ -351,7 +351,7 @@
 
                 this.$post("/parkAsset/getAssetAd", this.ruleFormSearch).then(
                     response => {
-                        if (response.resultCode === "CLT000000000") {
+                        if (response.resultCode === "CLT000000000" || response.resultCode === "0000000000") {
                             this.total = response.resultData.totalNumber;
                             this.tableData = response.resultData.listData;
                         }
@@ -380,7 +380,7 @@
                     id: this.deleteId,
                 }).then(
                     response => {
-                        if (response.resultCode === "CLT000000000") {
+                        if (response.resultCode === "CLT000000000" || response.resultCode === "0000000000") {
                             this.dialogVisible = false;
                             // this.$message(response.resultMsg);
                             this.$message.success('删除成功');

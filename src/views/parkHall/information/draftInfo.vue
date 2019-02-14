@@ -117,7 +117,7 @@ export default {
       var url = this.$apiUrl.parkInfo.delInfoes;
       this.$post(url, pop).then(
         response => {
-          if (response.resultCode == "CLT000000000") {
+          if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
             this.$message.success("删除成功");
             this.getDraftInfoList();
           } else {
@@ -142,7 +142,7 @@ export default {
         parkId: parkId
       }).then(
         response => {
-          if (response.resultCode == "CLT000000000") {
+          if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
             this.timeRange = [];
             this.mcCardDataList = response.resultData.informationList;
             this.allTotal = response.resultData.total;

@@ -170,7 +170,7 @@
                 this.$post(this.$apiUrl.parkInfo.infoById, pop)
                     .then((response) => {
                         var codestatus = response.resultCode;
-                        if (codestatus == "CLT000000000") {
+                        if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
                             var result = response.resultData;
                             this.draftInfo = {
                                 informationTitle: result.informationTitle,
@@ -291,7 +291,7 @@
                 this.$post(this.$apiUrl.parkInfo.auditDetail, pop)
                     .then((response) => {
                         var codestatus = response.resultCode;
-                        if (codestatus == "CLT000000000") {
+                        if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
                             this.$message.success(successMsg);
                             setTimeout(function () {
                                 _this.$router.push({path: "/parkIndex/parkInformation/auditing"})

@@ -126,7 +126,7 @@
                 })
                 .then(response => {
                     var codestatus = response.resultCode;
-                    if(codestatus=="CLT000000000"){
+                    if(codestatus=="CLT000000000" || codestatus=="0000000000"){
                         var data = response.resultData;
                         _this.tagItems= data;
 
@@ -276,7 +276,7 @@
                     activityLabel:this.tagTxt,//根据标签搜索
                 })
                 .then((response) => {
-                    if(response.resultCode == "CLT000000000"){
+                    if(response.resultCode == "CLT000000000" || response.resultCode == "0000000000"){
                         this.mcCardDataList = [];
                         var arr = response.resultData.activityList;
                         arr.forEach((item,index)=>{
@@ -324,7 +324,7 @@
                     parkId: window.sessionStorage.getItem('parkId')
                 }).then((response) => {
                     //onsole.log(response)
-                    if(response.resultCode == "CLT000000000"){
+                    if(response.resultCode == "CLT000000000" || response.resultCode == "0000000000"){
                     }else{
                         this.$message.info(response.resultMsg);
                     }

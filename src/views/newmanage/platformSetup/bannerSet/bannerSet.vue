@@ -149,7 +149,7 @@
                 let paramsObj = this.radio ==="0"?{slidesImage:urlList,parkId: this.parkId}:{appBanner:urlList,parkId: this.parkId}
 
                 this.$post("/parkManage/updatePark", paramsObj).then((response) => {
-                    if (response.resultCode == "CLT000000000") {
+                    if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                         this.$message.success(response.resultMsg);
                     } else {
                         this.$message.error(response.resultMsg);
@@ -183,7 +183,7 @@
                 this.$post(this.$apiUrl.upload.upload, param).then(
                     response => {
                         this.isClick = true;
-                        if (response.resultCode == 'CLT000000000') {
+                        if (response.resultCode == 'CLT000000000' || response.resultCode == '0000000000') {
                             console.log(this.getBannerSetIndexNum)
                             this.bannerSetList[this.getBannerSetIndexNum].img_url = response.resultData[0].url;
                         } else {
@@ -202,7 +202,7 @@
                 this.$post("/parkManage/getParkById", {
                     parkId: this.parkId
                 }).then(res => {
-                    if (res.resultCode == "CLT000000000") {
+                    if (res.resultCode == "CLT000000000" || res.resultCode == "0000000000") {
                         this.bannerSetList = JSON.parse(res.resultData.slidesImage);
                         console.log(this.bannerSetList);
                     }

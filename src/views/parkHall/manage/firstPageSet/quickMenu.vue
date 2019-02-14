@@ -201,7 +201,7 @@
                     response => {
 
                         this.duringloading = false;
-                        if (response.resultCode == 'CLT000000000') {
+                        if (response.resultCode == 'CLT000000000' || response.resultCode == '0000000000') {
                             this.bannerSetList[this.getBannerSetIndexNum].img_url = response.resultData[0].url;
                         } else {
                             this.$message.error(response.resultMsg);
@@ -223,7 +223,7 @@
                     parkId: this.parkId,
                     quickMenu: JSON.stringify(this.bannerSetList)
                 }).then((response) => {
-                    if (response.resultCode == "CLT000000000") {
+                    if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
 
                     } else {
                         this.$message.error(response.resultMsg);
@@ -236,7 +236,7 @@
                 this.$post("/parkManage/getParkById", {
                     parkId: this.parkId
                 }).then((response) => {
-                    if (response.resultCode == "CLT000000000") {
+                    if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                         this.$message.error(response.resultMsg);
                     } else {
                         this.$message.error(response.resultMsg);

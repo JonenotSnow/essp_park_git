@@ -205,7 +205,7 @@
                     parkId: window.sessionStorage.getItem("parkId")
 
                 }).then(res => {
-                    if (res.resultCode == "CLT000000000") {
+                    if (res.resultCode == "CLT000000000" || res.resultCode == "0000000000") {
                         if (res.resultData.slidesImage) {
                             let list = JSON.parse(res.resultData.slidesImage)
                             this.bannerDisList = list;

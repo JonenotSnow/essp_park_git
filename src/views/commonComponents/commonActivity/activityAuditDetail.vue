@@ -257,7 +257,7 @@ export default {
                 opMark: this.$route.query.opMark
             }).then(
                 response => {
-                    if (response.resultCode == "CLT000000000") {
+                    if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                         this.infoList = Object.assign({}, response.resultData);
                         this.items = JSON.parse(this.infoList.ticketForm); //票务信息
                         var enterForm = JSON.parse(this.infoList.enterForm); //申报信息
@@ -301,7 +301,7 @@ export default {
                 reason: this.mark
             }).then(
                 response => {
-                    if (response.resultCode == "CLT000000000") {
+                    if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                         this.$message.success(response.resultMsg);
                     } else {
                         this.$message.error(response.resultMsg);

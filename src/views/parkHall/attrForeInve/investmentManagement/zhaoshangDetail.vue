@@ -193,7 +193,7 @@
             getDetail() {
                 this.$post(this.$apiUrl.investment.getAttracById, {id: this.id})
                     .then(result => {
-                        if (result.resultCode === "CLT000000000") {
+                        if (result.resultCode === "CLT000000000" || codestatus == "0000000000") {
                             this.attractInvestion = result.resultData.attractInvestion;
                         }
                     })
@@ -204,7 +204,7 @@
                 this.$post(this.$apiUrl.processTrack.getAttractFollowPage, {
                     followNumber: this.id
                 }).then(response => {
-                    if (response.resultCode === "CLT000000000") {
+                    if (response.resultCode === "CLT000000000" || response.resultCode === "0000000000") {
                         this.followHistory = response.resultData.list;
                         this.input = '';
                         console.log(this.followHistory);
@@ -236,7 +236,7 @@
                     followAccessory: [],                                  // 附件
                     parkId: this.attractInvestion.parkId                // 园区ID（必填）
                 }).then(response => {
-                    if (response.resultCode == 'CLT000000000') {
+                    if (response.resultCode == 'CLT000000000' || response.resultCode == '0000000000') {
                         this.geiAttractFollowPage()
                     } else {
                         this.$message.error(response.resultMsg)

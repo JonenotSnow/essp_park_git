@@ -153,7 +153,7 @@
                 })
                 .then(response => {
                     var codestatus = response.resultCode;
-                    if(codestatus=="CLT000000000"){
+                    if(codestatus=="CLT000000000" || codestatus=="0000000000"){
                         var data = response.resultData;
                         _this.tagItems= data;
                     }else{
@@ -193,7 +193,7 @@
                 })
                 .then(response => {
                     var codestatus = response.resultCode;
-                    if(codestatus=="CLT000000000"){
+                    if(codestatus=="CLT000000000" || codestatus=="0000000000"){
                         this.mcCardDataList = response.resultData.informationList;//数据源
                             console.log(this.mcCardDataList)
                         this.allTotal = response.resultData.total;//总条数

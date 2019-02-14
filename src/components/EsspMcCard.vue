@@ -230,7 +230,7 @@
                     parkId: window.sessionStorage.getItem("parkId")
                 }).then(
                     response => {
-                        if (response.resultCode == "CLT000000000") {
+                        if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                             this.dialogVisible = false;
                             this.$message.success(response.resultMsg);
                             this.$router.go(0);

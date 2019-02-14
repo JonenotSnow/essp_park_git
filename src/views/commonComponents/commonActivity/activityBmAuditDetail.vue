@@ -256,7 +256,7 @@ export default {
                 opMark: opMark
             }).then(
                 response => {
-                    if (response.resultCode == "CLT000000000") {
+                    if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                         _that.infoList = response.resultData;
                         _that.items = JSON.parse(
                             _that.infoList.activityTicketForm
@@ -312,7 +312,7 @@ export default {
                 opMark: "03"
             }).then(
                 response => {
-                    if (response.resultCode == "CLT000000000") {
+                    if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                         this.$router.push("/parkIndex/park/auditingBm");
                     } else {
                         this.$message.error(response.resultMsg);
@@ -353,7 +353,7 @@ export default {
             }).then(
                 response => {
                     this.access = false;
-                    if (response.resultCode == "CLT000000000") {
+                    if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                         this.$alert(response.resultMsg, "审核", {
                             confirmButtonText: "确定",
                             callback: action => {

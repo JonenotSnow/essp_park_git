@@ -301,7 +301,7 @@
                 this.dialogTableVisible = false
                 this.$post(url, pop).then(
                     response => {
-                        if (response.resultCode == "CLT000000000") {
+                        if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                             this.$message.success("资讯删除成功");
                             this.getLanchInfoList();
                         }
@@ -360,7 +360,7 @@
                 }).then(
                     response => {
                         var codestatus = response.resultCode;
-                        if (codestatus == "CLT000000000") {
+                        if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
                             this.mcCardDataList = response.resultData.informationList;
                             this.allTotal = response.resultData.total;
                         } else {
@@ -387,7 +387,7 @@
                 var url = this.$apiUrl.parkInfo.delInfoes;
                 this.$post(url, pop).then(
                     response => {
-                        if (response.resultCode == "CLT000000000") {
+                        if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                             this.$message.success("删除成功");
                             this.getDraftInfoList();
                         }
@@ -415,7 +415,7 @@
                     parkId: parkId
                 }).then(
                     response => {
-                        if (response.resultCode == "CLT000000000") {
+                        if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                             this.timeRange = [];
                             this.mcCardDataList = response.resultData.informationList;
                             this.allTotal = response.resultData.total;
