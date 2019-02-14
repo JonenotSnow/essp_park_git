@@ -3,10 +3,9 @@
         <div class="home_active_head">
             <h3>园区活动</h3>
             <p>Campus Activities</p>
-            <div class="home_active_tag_hot esspclearfix">
+            <div class="home_active_tag_hot esspclearfix" v-if="activity_hot.length != 0 || activity_newest.length != 0">
                 <span :class="activeTabIndex==0?'sel':''" @click="activeTab(0)">最新</span>
                 <span :class="activeTabIndex==1?'sel':''" @click="activeTab(1)">热门</span>
-
         </div>
     </div>
         <div class="home_active_items_wrap">
@@ -132,6 +131,7 @@
                 }).then(response => {
                     var arr = response.resultData.hot;
                     var arr1 = response.resultData.newest;
+
                     var thisTime = this.getMillisecond(new Date());
                     if(response.resultData.hot && arr.length > 0) {
                         arr.forEach((item,index) => {

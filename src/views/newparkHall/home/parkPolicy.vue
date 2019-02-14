@@ -3,8 +3,8 @@
         <div class="park_home_policy">
             <div class="home_active_head">
                 <h3>园区惠政</h3>
-                <p>Preferential Policy</p>
-                <div class="home_active_tag_hot esspclearfix">
+                <p>Preferential Policies</p>
+                <div class="home_active_tag_hot esspclearfix" v-if="huizheng_hot.length != 0 || huizheng_newest.length != 0">
                     <span :class="huizhengTabIndex==0?'sel':''" @click="huizhengTab(0)">最新</span>
                     <span :class="huizhengTabIndex==1?'sel':''" @click="huizhengTab(1)">热门</span>
 
@@ -12,7 +12,7 @@
             </div>
             <div class="home_active_items_wrap">
                 <div class="home_active_items_inner esspclearfix"  v-if="huizhengList.length > 0">
-                    <div class="home_active_item" v-for="(item,index) in huizhengList">
+                    <div class="home_active_item" v-for="(item,index) in huizhengList" v-if="index < maxListLength">
                         <div class="home_active_img" @click="toDetail(1,item.id)">
                             <img :src="item.titleImg" alt="惠政图片">
                             <div class="home_active_mask esspclearfix">
@@ -30,7 +30,7 @@
                         </div>
 
                         <div class="home_active_footer esspclearfix">
-                            <span class="home_avtive_f home_avtive_f_w1">发布时间 {{item.createTime | timerFormat(item.createTime)}}</span>
+                            <span class="home_avtive_f home_avtive_f_w1">发布日期 {{item.createTime | timerFormat(item.createTime)}}</span>
                             <span class="home_avtive_f home_avtive_f_w2" v-if="item.timeStatus"
                                   :style="{color: item.timeStatus.color}">{{item.timeStatus.msg}}</span>
                         </div>
@@ -51,6 +51,7 @@
             huizheng_newest: [],
             huizhengList: [],
             huizhengTabIndex: 0,
+            maxListLength: 4, // 默认最多
             icons: [
                 "icon iconfont icon-riqi1",
                 "icon iconfont icon-dizhi",
@@ -68,7 +69,7 @@
         },
         filters: {
             timerFormat(vaule) {
-                return Moment(vaule).format("YYYY-MM-DD HH:mm");
+                return Moment(vaule).format("YYYY-MM-DD");
             }
         },
         methods: {
@@ -94,6 +95,11 @@
                     this.huizhengList = this.huizheng_newest;
                 } else {
                     this.huizhengList = this.huizheng_hot;
+                }
+                if(this.huizhengList.length < 8){
+                    this.maxListLength = 4;
+                } else {
+                    this.maxListLength = 8;
                 }
             },
             getInfo() {
