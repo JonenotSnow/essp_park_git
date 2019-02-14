@@ -267,7 +267,7 @@ export default {
     },
     login() {},
     toHome() {
-      this.windowOpenNoParams('/home')
+      this.windowOpenNoParams('/')
     },
     tolink() {
         this.$router.push("/parkHome");
@@ -297,7 +297,7 @@ export default {
       if (flag) {
         this.userName = data.truename;
         this.SSH.setItem("userName", data.truename);
-      } 
+      }
       this.loginShow = flag;
     },
     toOAsys() {

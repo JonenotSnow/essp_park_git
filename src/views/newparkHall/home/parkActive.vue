@@ -11,7 +11,7 @@
     </div>
         <div class="home_active_items_wrap">
             <div class="home_active_items_inner esspclearfix" v-if="activityList.length > 0">
-                <div class="home_active_item" v-for="(item,index) in activityList" v-if="index < 8">
+                <div class="home_active_item" v-for="(item,index) in activityList" v-if="index < maxListLength">
                     <div class="home_active_img" @click="toDetail(0,item.activityId)">
                         <img :src="item.activityPhoto" alt="活动图片">
                         <div class="home_active_mask esspclearfix">
@@ -62,6 +62,7 @@
                 list: [],
                 activity_hot: [],
                 activity_newest: [],
+                maxListLength: 4, // 默认最多
                 icons: [
                     "icon iconfont icon-riqi1",
                     "icon iconfont icon-dizhi",
@@ -95,6 +96,11 @@
                     this.activityList = this.activity_newest;
                 } else {
                     this.activityList = this.activity_hot;
+                }
+                if(this.activityList.length < 8){
+                    this.maxListLength = 4;
+                } else {
+                    this.maxListLength = 8;
                 }
             },
             keyWordSeach(index) {
@@ -162,6 +168,7 @@
                     }
                     this.activity_hot = arr; //热门活动
                     this.activity_newest = arr1; //最新活动
+
                 });
             },
             timerStatus(value) {
