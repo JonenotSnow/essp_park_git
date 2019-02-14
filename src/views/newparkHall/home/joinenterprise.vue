@@ -193,7 +193,7 @@ import mixins_windowOpen from '@/components/mixins/mixins_windowOpen.js'
                         //white-space: nowrap;
                         -webkit-line-clamp:1;
                         -webkit-box-orient:vertical;
-                        width:100%;
+                        padding:0 15px;
                         text-align: center;
                         position:absolute;
                         left:0;

@@ -16,7 +16,7 @@
                                 <div class="tip_time">{{item.createTime | timerFormat(item.createTime)}}</div>
                             </div>
                             <div class="newsdetail">
-                                {{item.infoDetail}}
+                                {{item.content}}
                             </div>
                         </div>
                     </div>
@@ -30,7 +30,7 @@
                                 <div class="tip_time">{{item.createTime | timerFormat(item.createTime)}}</div>
                             </div>
                             <div class="newsdetail">
-                                {{item.infoDetail}}
+                                {{item.content}}
                             </div>
                         </div>
                     </div>
@@ -46,7 +46,7 @@
                                 <div class="tip_time">{{its.createTime | timerFormat(its.createTime)}}</div>
                             </div>
                             <div class="newsdetail">
-                                {{its.infoDetail}}
+                                {{its.content}}
                             </div>
                         </div>
                     </div>
@@ -60,7 +60,7 @@
                                 <div class="tip_time">{{its.createTime | timerFormat(its.createTime)}}</div>
                             </div>
                             <div class="newsdetail">
-                                {{its.infoDetail}}
+                                {{its.content}}
                             </div>
                         </div>
                     </div>
