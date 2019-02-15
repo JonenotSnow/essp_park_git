@@ -32,7 +32,7 @@
                 <span class="spanWrap" v-if="hascheckedNum>0">已选
                 <span class="total">{{hascheckedNum}}</span>
                 条</span>
-                <span class="removeBtn" @click="exportData" :class="{'active':touch}">导出</span>
+                <span class="removeBtn" @click="exportData" :class="{'active': hascheckedNum > 0}">导出</span>
             </div>
             <div class="tabList">
                 <el-table :data="list" style="width: 100%">
@@ -209,6 +209,9 @@
         },
         //批量导出
         exportData () {
+            if(this.hascheckedNum == 0) {
+                return
+            }
             if (this.checkedIds.length == 0) {
                 this.$message.error('请选择要导出的内容');
                 return;

@@ -47,7 +47,7 @@
                         @click="linkToPage"
                     >More&gt;</span>
                 </div>
-                <div class="noData" v-else style="height: 35px;line-height: 35px">您当前暂无要处理入园申请~~</div>
+                <div class="noData" v-else style="height: 35px;line-height: 35px">暂无任务~~</div>
             </div>
         </div>
     </div>
@@ -152,7 +152,7 @@
                     status: "01"
                 }).then(
                     response => {
-                        if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
+                        if (response.resultCode == "CLT000000000") {
                             this.$router.push({
                                 path: "/parkHall/manage/manageAuditing",
                                 query: {id: id}
