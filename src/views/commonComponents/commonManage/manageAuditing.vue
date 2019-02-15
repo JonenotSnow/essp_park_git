@@ -73,7 +73,7 @@
                     },
                     {
                         path: `/parkHall/manage/activityPoolAddPark`,
-                        name: this.utils.isBdPark() ? "审核管理:" : "任务池:"
+                        name: this.utils.isBdPark() ? "审核管理" : "任务池"
                     },
                     {
                         path: '',
@@ -333,7 +333,7 @@
                 line-height: 20px;
             }
         }
-        
+
     }
 
     .common_titdes{

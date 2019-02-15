@@ -38,7 +38,7 @@
                     </div>
                 </div>
             </div>
-            <essp-loading v-if="activityList.length == 0" :nodata="true"></essp-loading>
+            <essp-loading :loading="isLoding" :nodata="!isLoding && activityList.length == 0"></essp-loading>
         </div>
 
         <div class="home_avtive_more"><span @click="goActivityList()">More <i class="el-icon-arrow-right"></i></span></div>
@@ -61,6 +61,7 @@
                 list: [],
                 activity_hot: [],
                 activity_newest: [],
+                isLoding: true,         // 是显示数据加载中
                 maxListLength: 4, // 默认最多
                 icons: [
                     "icon iconfont icon-riqi1",
@@ -123,6 +124,7 @@
 
             getInfo() {
                 //0:表示活动1:表示惠政2:表示资讯 this.$post(url,param)
+                this.isLoding = true;
                 this.$post(this.$apiUrl.home.homeInfo, {
                     pageNum: 0,
                     pageSize: 8,
@@ -168,6 +170,9 @@
                     }
                     this.activity_hot = arr; //热门活动
                     this.activity_newest = arr1; //最新活动
+
+                    // 加载完毕
+                    this.isLoding = false;
 
                 });
             },
