@@ -78,6 +78,7 @@
         data() {
             return {
                 showNeedRange: false,
+                LoginUserRole: this.SSH.getItem("LoginUserRol"),
                 isBdPark: this.utils.isBdPark(),
                 showPower: false,
                 menuList: [
@@ -239,6 +240,7 @@
                         return false;
                     }
                 }
+
                 //园区管理员才有任务池和入驻审核的权限
                 if (item.name == "任务池" || item.name == "入驻审核") {
                     if (

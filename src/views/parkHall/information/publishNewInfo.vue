@@ -632,7 +632,7 @@
     //编辑器样式
     .wrap {
         width: 850px;
-        height: 400px;
+        height: 470px;
         margin: 0 auto 20px;
         .quill-editor {
             height: 83%;
