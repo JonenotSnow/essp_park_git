@@ -44,10 +44,10 @@
                             <div class="recomm">
                                 <div class="replyname esspclearfix">
                                     <!-- 回复者 -->
-                                    <span class="re_person">{{it.state == "1"? "匿名" : it.userName+"-"+it.cstNm}}</span>
+                                    <span class="re_person">{{it.state == "1" || it.state == "2"? it.userName : it.userName+"-"+it.cstNm}}</span>
                                     <span class="re_funs">回复</span>
                                     <!-- 初始评论 -->
-                                    <span class="re_reUserName">{{item.state == "1"? "匿名" : it.reUserName+"-"+item.cstNm}}</span>
+                                    <span class="re_reUserName">{{item.state == "1" || it.state == "2"? it.reUserName : it.reUserName+"-"+item.cstNm}}</span>
                                 </div>
                                 <div class="replytext">{{it.content}}</div>
                                 <div class="replytool esspclearfix"  v-if="userInfo">
@@ -148,7 +148,8 @@
                 userInfo: {},
                 isClick: true,
                 userrole: this.userInfo ? this.userInfo.userrole : '11',
-                showDel:false
+                showDel:false,
+                authticate:true
             }
         },
         props:[
@@ -158,9 +159,11 @@
         computed: {},
         created() {
             this.userInfo = this.SSH.getItem('userInfo');
-            if(this.utils.arrayIsContain('33,',this.SSH.getItem('userInfo').userPostList)
-                ||this.utils.arrayIsContain('34,',this.SSH.getItem('userInfo').userPostList)){
-                this.showDel=true
+            for(let o of this.SSH.getItem('LoginUserRol')){
+                if(o==='33' || o==='34'){
+                    this.showDel=true
+                    break
+                }
             }
             console.log(this.userInfo);
             this.getCnt();
@@ -228,6 +231,7 @@
             addReply(item) {
                 if(this.utils.isLoginMode()){
                     this.cstBscInf()
+                    if(!this.authticate)return
                     if(item.replytext.length===0){
                         this.$message.warning("回复内容不能为空");
                         return;
@@ -362,6 +366,7 @@
             cstBscInf(){
                 var _this = this;
                 if (!this.SSH.getItem("enterpriseFlag")|| !this.SSH.getItem("cetificateFlag")){
+                    this.authticate=false
                     this.$confirm('您未进行实名认证，无法评论，请先进行认证，再评论', '提示', {
                         confirmButtonText: '去实名认证',
                         cancelButtonText: '暂不认证',
@@ -371,7 +376,8 @@
                         //去实名认证
                         if(!this.SSH.getItem("cetificateFlag")){//个人
                             _this.windowHrefUrl('/certInfor/personalCert')
-                        }else if(!this.SSH.getItem("enterpriseFlag")){//企业
+                        }
+                        if(!this.SSH.getItem("enterpriseFlag")){//企业
                             _this.windowHrefUrl('/certInfor/enterpriseCertApply')
                         }
                     }).catch(() => {
@@ -380,8 +386,6 @@
                             message: '暂不认证'
                         });
                     });
-
-                    return;
                 };
             },
             //添加评论
@@ -390,6 +394,7 @@
                 // alert("是否游客模式"+this.utils.isVisitorMode())
                 if(this.utils.isLoginMode()){
                     this.cstBscInf()
+                    if(!this.authticate)return
                     var url = this.$apiUrl.parkInfo.addComment;
                     // var realcnttext = this.cnttext.replace(/\s+/g, "");
                     var realcnttext = this.cnttext;
