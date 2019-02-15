@@ -466,7 +466,7 @@ export default {
               }
             });
             }catch(err){
-                this.$message('数据完整设置后，才可上传')
+                this.$message('请确保所有数据都已填写！')
                 return false
             }
 
@@ -474,7 +474,7 @@ export default {
               this.$message.success("数据上传成功");
             });
           } else {
-            this.$message('数据完整设置后，才可上传')
+            this.$message('请确保所有数据都已填写！')
             return false;
           }
         });
