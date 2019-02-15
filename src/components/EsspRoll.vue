@@ -60,7 +60,7 @@
                         query: {id: item.id}
                     });
                 }
-            },
+            }
 
         },
         mounted() {
@@ -80,10 +80,6 @@
             li {
                 height: 35px;
                 line-height: 35px;
-                &:hover {
-                    color: #00a0e9;
-                    cursor: pointer;
-                }
             }
         }
 
