@@ -9,9 +9,8 @@
                 </li>
             </ul>
         </div>
-
         <div class="search" v-if="!isBdPark">
-            <i class="el-icon-search open" v-if="!tab" @click="tab = !tab"></i>
+            <i class="el-icon-search open" v-if="!tab" @click="changeTab"></i>
             <div v-else>
                 <div class="searchBox">
                     <span class="left" slot="reference" @click="show = !show">{{typeName}}<i class="el-icon-arrow-down" :class="{'iActive':show}"></i></span>
@@ -59,7 +58,6 @@
                 ],
                 indexSeachKW:'',//搜索框内容
                 isBdPark: this.utils.isBdPark(),
-                tab:false
             };
         },
         watch: {
@@ -71,7 +69,27 @@
         created() {
             this.getNavIndex();
         },
+        mounted () { 
+            this.ready();
+        },
+        computed: {
+            tab(){
+                return this.$store.state.park.searchState;
+            }
+        },
         methods: {
+            changeTab(){
+                this.$store.commit('getSearchState',{show:!this.tab})
+            },
+            ready() {
+                document.addEventListener('click', (e) => {
+                    if (e.path[0].className == 'el-icon-arrow-down' || e.path[0].className == 'left') {
+                        this.show = true
+                    }else{
+                        this.show = false
+                    }
+                })
+            },
             getNavIndex(){
                 // 直接从本地获取菜单权限
                 let name = this.$router.currentRoute.name;
@@ -89,13 +107,24 @@
                 })
             },
             getListInfoTags(item){
-                this.typeselect = item.id;
-                this.typeName =  item.name;
+                this.$store.commit('getSelectItem',item);
+                var pop = {
+                    pageNum: 1,
+                    pageSize: 10,
+                    startDate: "",
+                    endDate: "",
+                    tagTxt: this.tagTxt,
+                    parkId: sessionStorage.getItem("parkId") || "",
+                    title: this.indexSeachKW || ''
+                };
+                this.$store.dispatch('getSearchPageData',{pop:pop,loading:true});
+                this.typeName = this.$store.state.park.selectItem.name;
                 this.show = false;
             },
             goSearchPage() {
+                this.$store.commit('getSearchState',{show:!this.tab})
                 let _this = this;
-                var type = this.typeselect; //类型
+                var type = this.$store.state.park.selectItem.id; //类型
                 var tagTxt = this.tagTxt; //标签内容
                 var title = this.indexSeachKW;
                 setTimeout(() => {
@@ -204,6 +233,7 @@
         top:6px;
         font-size: 18px;
         left: 15px;
+        cursor: pointer;
     }
     .searchBox{
         width: 210px;
