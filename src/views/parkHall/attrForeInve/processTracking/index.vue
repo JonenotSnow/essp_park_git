@@ -169,7 +169,7 @@
                     followAccessory: this.form.fileList3,       // 附件
                     parkId: this.form.parkId                    // 园区ID（必填）
                 }).then(response => {
-                    if (response.resultCode == 'CLT000000000') {
+                    if (response.resultCode == 'CLT000000000' || response.resultCode == '0000000000') {
                         this.$alert(response.resultMsg, '提示', {
                             confirmButtonText: '确定',
                             callback: action => {
@@ -215,7 +215,7 @@
                     parkId: this.form.parkId,
                     pageSize: 1000,
                 }).then((response) => {
-                    if (response.resultCode == 'CLT000000000') {
+                    if (response.resultCode == 'CLT000000000' || response.resultCode == '0000000000') {
                         this.restaurants = response.resultData.listData;
                         this.restaurants.forEach((item, index) => {
                             if (item.id == this.form.followNumber) {

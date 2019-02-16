@@ -228,7 +228,7 @@ export default {
         pageSize: this.page.pageSize,
         parkId: this.parkId
       }).then(response => {
-        if (response.resultCode == "CLT000000000") {
+        if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
           this.constractList = response.resultData.list;
           this.total = response.resultData.total;
         }
@@ -309,7 +309,7 @@ export default {
             contractStatus: 4
           })
         ).then(response => {
-          if (response.resultCode == "CLT000000000") {
+          if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
             this.$message.success("退租成功！");
             this.getContractList();
           }
@@ -346,7 +346,7 @@ export default {
           contractStatus: 1
         })
       ).then(response => {
-        if (response.resultCode == "CLT000000000") {
+        if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
           this.$message.success("成功变更合同！");
           this.handleClick({ index: 1 });
           this.activeName = "second";
@@ -374,7 +374,7 @@ export default {
           contractStatus: 1
         })
       ).then(response => {
-        if (response.resultCode == "CLT000000000") {
+        if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
           this.$message.success("成功签订新合同！");
           this.handleClick({ index: 1 });
           this.activeName = "second";

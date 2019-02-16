@@ -169,6 +169,7 @@
                             title: '',
                             content: '',
                             aduit: '',
+                            userName: this.SSH.getItem('userName'),
                             startDate: '',
                         };
                         this.access = false;
@@ -197,9 +198,6 @@
 </script>
 
 <style>
-#publishAD .ql-toolbar.ql-snow + .ql-container.ql-snow {
-    height: 240px;
-}
 #publishAD .access .el-dialog__header {
     display: none;
 }

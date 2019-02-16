@@ -76,7 +76,7 @@
                 };
                 this.$post(this.$apiUrl.manageNeed.getNeedByKey, params).then(response => {
                     let codestatus = response.resultCode;
-                    if (codestatus == "CLT000000000") {
+                    if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
                         this.data = response.resultData;
                         console.log(typeof(this.data.accessory));
                         if (this.data.accessory !== null) {

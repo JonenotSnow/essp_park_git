@@ -24,7 +24,7 @@
             </div>
         </div>
         <div class="commentlist">
-            <div class="fundes">所有评论&nbsp;({{cnts.length}})</div>
+            <div class="fundes">所有评论&nbsp;({{allTotal}})</div>
             <div class="nocnslist" v-if="cnts.length==0">
                 <i class="iconfont icon-shafa"></i>
                 <p class="nocntops">还没评论，来抢个沙发</p>
@@ -44,16 +44,16 @@
                             <div class="recomm">
                                 <div class="replyname esspclearfix">
                                     <!-- 回复者 -->
-                                    <span class="re_person">{{it.state == "1"? "匿名" : it.userName+"-"+it.cstNm}}</span>
+                                    <span class="re_person">{{it.state == "1" || it.state == "2"? it.userName : it.userName+"-"+it.cstNm}}</span>
                                     <span class="re_funs">回复</span>
                                     <!-- 初始评论 -->
-                                    <span class="re_reUserName">{{item.state == "1"? "匿名" : it.reUserName+"-"+item.cstNm}}</span>
+                                    <span class="re_reUserName">{{item.state == "1" || it.state == "2"? it.reUserName : it.reUserName+"-"+item.cstNm}}</span>
                                 </div>
                                 <div class="replytext">{{it.content}}</div>
                                 <div class="replytool esspclearfix"  v-if="userInfo">
                                     <div class="relytoolleft">
                                         <em class="replytimeicon">{{it.createTime | timerFormat(it.createTime)}}</em>
-                                        <span style="padding-left: 10px;" v-if="userrole == '33' || userrole == '34' || it.userId == userInfo.id" @click="delReply(it,item,index,indexChild)">删除</span>
+                                        <span style="padding-left: 10px;" v-if="showDel || it.userId == userInfo.id" @click="delReply(it,item,index,indexChild)">删除</span>
                                         <span @click="tipOffFn(5,it.id,it.content,it.cstNm,it.usrNm)" v-if="it.userId != userInfo.id">举报</span>
                                     </div>
                                 </div>
@@ -73,7 +73,7 @@
                                     <el-dropdown-menu slot="dropdown">
                                         <el-dropdown-item :command="{item,keyindex:0,index:index}">回复</el-dropdown-item>
                                         <el-dropdown-item :command="{item,keyindex:1,index:index}"
-                                                          v-if="userrole == '33' || userrole == '34' || item.userId == userInfo.id">删除
+                                                          v-if="showDel || item.userId == userInfo.id">删除
                                         </el-dropdown-item>
                                         <el-dropdown-item :command="{item,keyindex:2}" v-if="item.userId != userInfo.id">举报</el-dropdown-item>
                                     </el-dropdown-menu>
@@ -147,7 +147,9 @@
                 allTotal: 0,//总条数
                 userInfo: {},
                 isClick: true,
-                userrole: this.userInfo ? this.userInfo.userrole : '11'
+                userrole: this.userInfo ? this.userInfo.userrole : '11',
+                showDel:false,
+                authticate:true
             }
         },
         props:[
@@ -157,7 +159,13 @@
         computed: {},
         created() {
             this.userInfo = this.SSH.getItem('userInfo');
-            console.log( this.userInfo);
+            for(let o of this.SSH.getItem('LoginUserRol')){
+                if(o==='33' || o==='34'){
+                    this.showDel=true
+                    break
+                }
+            }
+            console.log(this.userInfo);
             this.getCnt();
         },
         methods: {
@@ -204,11 +212,11 @@
                         entId: id                                              //  实体编号  类似id比如 活动id， 评论id等（必填）
                     });
                 }else{
-                     var _this = this;
-                     this.$message.warning("您尚未登录，请您先登录");
-                     setTimeout(function(){
-                         _this.windowHrefUrl('/userIndex/login')
-                     },2000)
+                    var _this = this;
+                    this.$message.warning("您尚未登录，请您先登录");
+                    setTimeout(function(){
+                        _this.windowHrefUrl('/userIndex/login')
+                    },2000)
                 }
             },
             reconclose(item) {
@@ -223,10 +231,7 @@
             addReply(item) {
                 if(this.utils.isLoginMode()){
                     this.cstBscInf()
-                    if(this.utils.isVisitorMode()){
-                        this.$message.warning("您暂无权限进行回复");
-                        return;
-                    }
+                    if(!this.authticate)return
                     if(item.replytext.length===0){
                         this.$message.warning("回复内容不能为空");
                         return;
@@ -263,7 +268,7 @@
                     this.$post(url, pop)
                         .then((response) => {
                             isClick = true;
-                            if (response.resultCode == "CLT000000000") {
+                            if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                                 this.$message.success("回复发表成功");
                                 this.getCnt();
                                 item.replytext = "";
@@ -277,38 +282,40 @@
 
                 }else{
                     var _this = this;
-                     this.$message.warning("您尚未登录，请您先登录");
-                     setTimeout(function(){
-                         _this.windowHrefUrl('/userIndex/login')
-                     },2000)
+                    this.$message.warning("您尚未登录，请您先登录");
+                    setTimeout(function(){
+                        _this.windowHrefUrl('/userIndex/login')
+                    },2000)
                 }
             },
             delReply(item,parentItem,index,childIndex) {
                 if(this.utils.isLoginMode()){
-                    if(this.utils.isVisitorMode()){
+                    if(!this.utils.isVisitorMode()){
                         this.$message.warning("您暂无权限删除回复");
                         return;
                     }
-                    var url = this.$apiUrl.parkInfo.delReply;
-                    var pop = {id: item.id}
-                    //onsole.log(item,parentItem,index);
-                    this.$post(url, pop)
-                        .then((response) => {
-                            if (response.resultCode == "CLT000000000") {
-                                this.cnts[index].replyList.splice(childIndex,1);
-                                this.$message.success("该条评论删除成功");
-                            } else {
-                                this.$message.info(response.resultMsg);
-                            }
-                        }, (err) => {
-                            this.$message.error(err.resultMsg);
-                        })
+                    this.$confirm("是否删除该评论?","删除").then(() => {
+                        var url = this.$apiUrl.parkInfo.delReply;
+                        var pop = {id: item.id}
+                        //onsole.log(item,parentItem,index);
+                        this.$post(url, pop)
+                            .then((response) => {
+                                if (response.resultCode == "CLT000000000") {
+                                    this.cnts[index].replyList.splice(childIndex,1);
+                                    this.$message.success("该条评论删除成功");
+                                } else {
+                                    this.$message.info(response.resultMsg);
+                                }
+                            }, (err) => {
+                                this.$message.error(err.resultMsg);
+                            })
+                    });
                 }else{
-                     var _this = this;
-                     this.$message.warning("您尚未登录，请您先登录");
-                     setTimeout(function(){
-                         _this.windowHrefUrl('/userIndex/login')
-                     },2000)
+                    var _this = this;
+                    this.$message.warning("您尚未登录，请您先登录");
+                    setTimeout(function(){
+                        _this.windowHrefUrl('/userIndex/login')
+                    },2000)
                 }
             },
             // 删除评论
@@ -320,9 +327,10 @@
                     }
                     var url = this.$apiUrl.parkInfo.delComment;
                     var pop = {id: item.id}
+
                     this.$post(url, pop)
                         .then((response) => {
-                            if (response.resultCode == "CLT000000000") {
+                            if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                                 this.$message.success("该条评论删除成功");
                                 this.getCnt();
                             } else {
@@ -332,11 +340,11 @@
                             this.$message.error(response.resultMsg);
                         })
                 }else{
-                     var _this = this;
-                     this.$message.warning("您尚未登录，请您先登录");
-                     setTimeout(function(){
-                         _this.windowHrefUrl('/userIndex/login')
-                     },2000)
+                    var _this = this;
+                    this.$message.warning("您尚未登录，请您先登录");
+                    setTimeout(function(){
+                        _this.windowHrefUrl('/userIndex/login')
+                    },2000)
                 }
             },
             //获取回复
@@ -345,7 +353,7 @@
                 var pop = {commentId: item.id}
                 this.$post(url, pop)
                     .then((response) => {
-                        if (response.resultCode == "CLT000000000") {
+                        if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                             this.$message.success("获取回复成功");
                         } else {
                             this.$message.info(response.resultMsg);
@@ -358,16 +366,18 @@
             cstBscInf(){
                 var _this = this;
                 if (!this.SSH.getItem("enterpriseFlag")|| !this.SSH.getItem("cetificateFlag")){
+                    this.authticate=false
                     this.$confirm('您未进行实名认证，无法评论，请先进行认证，再评论', '提示', {
                         confirmButtonText: '去实名认证',
                         cancelButtonText: '暂不认证',
                         type:"warning",
                         center: true
                     }).then(() => {
-                    //去实名认证
+                        //去实名认证
                         if(!this.SSH.getItem("cetificateFlag")){//个人
                             _this.windowHrefUrl('/certInfor/personalCert')
-                        }else if(!this.SSH.getItem("enterpriseFlag")){//企业
+                        }
+                        if(!this.SSH.getItem("enterpriseFlag")){//企业
                             _this.windowHrefUrl('/certInfor/enterpriseCertApply')
                         }
                     }).catch(() => {
@@ -376,21 +386,15 @@
                             message: '暂不认证'
                         });
                     });
-
-                    return;
                 };
             },
             //添加评论
             addCnt() {
-                this.cstBscInf()
                 //alert("是否登录"+this.utils.isLoginMode())
                 // alert("是否游客模式"+this.utils.isVisitorMode())
                 if(this.utils.isLoginMode()){
-                    //游客模式不能评论
-                    if(this.utils.isVisitorMode()){
-                        this.$message.warning("您暂无权限进行评论");
-                        return;
-                    }
+                    this.cstBscInf()
+                    if(!this.authticate)return
                     var url = this.$apiUrl.parkInfo.addComment;
                     // var realcnttext = this.cnttext.replace(/\s+/g, "");
                     var realcnttext = this.cnttext;
@@ -415,7 +419,7 @@
                     }
                     this.isClick = false;
                     this.$post(url, pop).then((response) => {
-                        if (response.resultCode == "CLT000000000") {
+                        if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                             this.$message.success("评论发表成功");
                             this.getCnt();
                             this.cnttext = "";
@@ -428,11 +432,11 @@
                         this.isClick = true;
                     })
                 }else{
-                     var _this = this;
-                     this.$message.warning("您尚未登录，请您先登录");
-                     setTimeout(function(){
-                         _this.windowHrefUrl('/userIndex/login')
-                     },2000)
+                    var _this = this;
+                    this.$message.warning("您尚未登录，请您先登录");
+                    setTimeout(function(){
+                        _this.windowHrefUrl('/userIndex/login')
+                    },2000)
                 }
             },
             reply_more_btn(item) {
@@ -444,7 +448,7 @@
                 var url = this.$apiUrl.parkInfo.getComment;
                 var pop = {entityId: this.entityId, type: this.commentSty, pageNum: this.pageNum, pageSize: this.pageSize}
                 this.$post(url, pop).then((response) => {
-                    if (response.resultCode == "CLT000000000") {
+                    if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                         this.allTotal = response.resultData.total;
                         this.cnts = response.resultData.commentList;
                         this.cnts.map(item => {
@@ -457,15 +461,15 @@
                         this.$message.info(response.resultMsg);
                     }
                 }, (err) => {
-                        this.$message.error(err.resultMsg);
+                    this.$message.error(err.resultMsg);
                 })
             },
         },
         watch:{
             $route(to,from){
-               this.cnttext = "";
-               this.entityId = to.query.informationId||to.query.activityId;
-               this.getCnt();
+                this.cnttext = "";
+                this.entityId = to.query.informationId||to.query.activityId;
+                this.getCnt();
             }
         }
     }
@@ -476,7 +480,7 @@
     @con_bg: #fff;
     //评论区域样式
     .cnbox{
-//        .essp_width_auto();
+        //        .essp_width_auto();
         background: @con_bg;
         /*margin-bottom: 30px;*/
         /*border-bottom: 1px solid #ccc;*/
@@ -771,53 +775,53 @@
     .reply_more_btn_c span {
         cursor: pointer;
     }
-.border_nm{
-    .border {
-        border: 1px solid #00a0e9;
-    }
-    .cnptext{
-        width: 100%;
-        height: 66px;
-        resize: none;
-        text-indent: 10px;
-        display: block;
-        outline: none;
-        background-color: transparent;
-        scrollbar-arrow-color: yellow;
-        scrollbar-base-color: lightsalmon;
-        color: #666464;
-        border: 0;
-        padding: 10px 0px;
-    }
-    .cnptool{
-        width: 100%;
-        background-color: #fafafa;
-        .toolleft{
-            float: left;
-            padding: 0 15px;
-            height: 40px;
-            line-height: 40px;
+    .border_nm{
+        .border {
+            border: 1px solid #00a0e9;
         }
-        .toolright{
-            float: right;
-            .cnbtn{
-                float: right;
-                width: 110px;
-                text-align: center;
-                line-height: 40px;
+        .cnptext{
+            width: 100%;
+            height: 66px;
+            resize: none;
+            text-indent: 10px;
+            display: block;
+            outline: none;
+            background-color: transparent;
+            scrollbar-arrow-color: yellow;
+            scrollbar-base-color: lightsalmon;
+            color: #666464;
+            border: 0;
+            padding: 10px 0px;
+        }
+        .cnptool{
+            width: 100%;
+            background-color: #fafafa;
+            .toolleft{
+                float: left;
+                padding: 0 15px;
                 height: 40px;
-                background-image: linear-gradient(31deg, #22a2fa 0%, #10b5ff 100%);
-                color: #fff;
-                cursor: pointer;
-            }
-            .cnanony {
-                margin-right: 16px;
-                font-size: 14px;
                 line-height: 40px;
+            }
+            .toolright{
+                float: right;
+                .cnbtn{
+                    float: right;
+                    width: 110px;
+                    text-align: center;
+                    line-height: 40px;
+                    height: 40px;
+                    background-image: linear-gradient(31deg, #22a2fa 0%, #10b5ff 100%);
+                    color: #fff;
+                    cursor: pointer;
+                }
+                .cnanony {
+                    margin-right: 16px;
+                    font-size: 14px;
+                    line-height: 40px;
 
+                }
             }
         }
     }
-}
 
 </style>

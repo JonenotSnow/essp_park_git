@@ -179,7 +179,7 @@
                 };
                 this.$post('/policy/delBatchPol', params).then(response => {
                     var codestatus = response.resultCode;
-                    if (codestatus == "CLT000000000") {
+                    if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
                         this.dialogVisible = false;
                         this.$message.success(response.resultMsg);
 

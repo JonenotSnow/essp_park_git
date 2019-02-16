@@ -169,7 +169,7 @@
                     informType: 3,
                     entId: informationId
                 }).then(response => {
-                    if (response.resultCode == "CLT000000000") {
+                    if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                         this.prompt = response.resultData.prompt;
                         //                        this.prompt = 1
                     }
@@ -265,7 +265,7 @@
                     this.$post(this.$apiUrl.parkInfo.infoById, pop).then(
                         response => {
                             var codestatus = response.resultCode;
-                            if (codestatus == "CLT000000000") {
+                            if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
                                 let data = response.resultData;
                                 this.infoDetailData = response.resultData;
                                 this.source = data;

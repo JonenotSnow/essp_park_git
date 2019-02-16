@@ -244,7 +244,7 @@
 
                 this.$post("/attractFollow/getAttractFollowPage", this.ruleFormSearch).then(
                     response => {
-                        if (response.resultCode === "CLT000000000") {
+                        if (response.resultCode === "CLT000000000" || response.resultCode === "0000000000") {
                             this.total = response.resultData.total;
                             this.tableData = response.resultData.list;
                         }
@@ -259,7 +259,7 @@
                 this.dialogFormVisible_detail = true;
                 this.$post("/attractFollow/getAttractFollowByKey", {afId: item.afId}).then(
                     response => {
-                        if (response.resultCode === "CLT000000000") {
+                        if (response.resultCode === "CLT000000000" || response.resultCode === "0000000000") {
                             this.afDeatil = response.resultData;
                             this.afDeatil.followAccessory = JSON.parse(this.afDeatil.followAccessory);
                             this.afDeatil.followIntention = JSON.parse(this.afDeatil.followIntention);
@@ -290,7 +290,7 @@
                     afId: this.deleteId,
                 }).then(
                     response => {
-                        if (response.resultCode === "CLT000000000") {
+                        if (response.resultCode === "CLT000000000" || response.resultCode === "0000000000") {
                             this.dialogVisible_delete = false;
                             // this.$message(response.resultMsg);
                             this.$message.success('删除成功');

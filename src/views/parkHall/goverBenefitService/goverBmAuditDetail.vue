@@ -283,7 +283,7 @@ export default {
                 id: this.$route.query.id
             }).then(
                 response => {
-                    if (response.resultCode == "CLT000000000") {
+                    if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                         this.infoList = response.resultData;
 
                         this.enrollType = this.infoList.applyType;
@@ -312,7 +312,7 @@ export default {
                 opMark: "03"
             }).then(
                 response => {
-                    if (response.resultCode == "CLT000000000") {
+                    if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                         this.$router.push("/parkIndex/park/auditingBm");
                     } else {
                         this.$message.error(response.resultMsg);
@@ -366,7 +366,7 @@ export default {
             }).then(
                 response => {
                     this.access = false;
-                    if (response.resultCode == "CLT000000000") {
+                    if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                         this.$alert(resultMsg, "审核", {
                             confirmButtonText: "确定",
                             callback: action => {

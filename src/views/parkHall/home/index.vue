@@ -153,7 +153,7 @@
 
                 ],
                 defaultModules: [
-                    1, 2, 6, 12, 13
+                    1, 2, 6, 12, 13, 10
                 ],
                 bdModules: [
                     1, 2, 3, 4, 5, 11, 7, 8, 9, 10
@@ -205,7 +205,7 @@
                     parkId: window.sessionStorage.getItem("parkId")
 
                 }).then(res => {
-                    if (res.resultCode == "CLT000000000") {
+                    if (res.resultCode == "CLT000000000" || res.resultCode == "0000000000") {
                         if (res.resultData.slidesImage) {
                             let list = JSON.parse(res.resultData.slidesImage)
                             this.bannerDisList = list;

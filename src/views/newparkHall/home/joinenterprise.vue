@@ -57,7 +57,7 @@ import mixins_windowOpen from '@/components/mixins/mixins_windowOpen.js'
         pageNum:this.pageNum
       }).then(
         response => {
-          if (response.resultCode == "CLT000000000") {
+          if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
             /*if(response.resultData.memInfoCount > 0){
               this.enterprises = response.resultData.memberList
             }else{
@@ -103,6 +103,9 @@ import mixins_windowOpen from '@/components/mixins/mixins_windowOpen.js'
  .warp_join{
      //height: 260px;
      background: #ffff;
+    .main_inter{
+        width:1180px;
+    }
  }
  .entercons{
      overflow: hidden;
@@ -127,7 +130,7 @@ import mixins_windowOpen from '@/components/mixins/mixins_windowOpen.js'
         margin:0 auto;
         text-align: right;
         line-height: 50px;
-        font-size: 14px;
+        font-size: 16px;
         font-weight: normal;
         font-stretch: normal;
         letter-spacing: 0px;
@@ -190,7 +193,7 @@ import mixins_windowOpen from '@/components/mixins/mixins_windowOpen.js'
                         //white-space: nowrap;
                         -webkit-line-clamp:1;
                         -webkit-box-orient:vertical;
-                        width:100%;
+                        padding:0 15px;
                         text-align: center;
                         position:absolute;
                         left:0;

@@ -77,7 +77,7 @@ axios.interceptors.response.use((res) => {
             });
             utils.logoutDelSSH(401)
             return Promise.reject(res);
-        } else if (res.data.resultCode != 'CLT000000000') {
+        } else if (res.data.resultCode != 'CLT000000000' && res.data.resultCode != '0000000000') {
             let msg = '服务器开小差了..请稍后再试。报错参数：' + res.request.responseURL + ' -- ' + res.data.resultMsg
             // Message.error({
             //     message: msg,

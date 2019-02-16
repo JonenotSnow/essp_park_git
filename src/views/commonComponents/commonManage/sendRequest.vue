@@ -109,7 +109,7 @@ export default {
                 parkId: sessionStorage.getItem("parkId"),
                 parkName: this.SSH.getItem("parkName")
             }).then(response => {
-                if (response.resultCode == "CLT000000000") {
+                if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                     this.confirmSend = true;
                     setTimeout(() => {
                         this.confirmSend = false;

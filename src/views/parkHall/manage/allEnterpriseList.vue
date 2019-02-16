@@ -118,7 +118,7 @@
                     pageNum:pageNum
                 }).then(
                     response => {
-                        if (response.resultCode == "CLT000000000") {
+                        if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                             if(response.resultData.memInfoCount > 0){
                                 this.totalCount =response.resultData.memInfoCount
                                 this.enterprises = response.resultData.memberList

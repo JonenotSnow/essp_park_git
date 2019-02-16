@@ -62,7 +62,7 @@
             dealWith() {
                 let url;
                 if (this.type == '0') {
-                    url = 'http://tj.ctp.gov.cn/tl/login.aspx';
+                    url = 'https://tyrz.chinatorch.gov.cn/hjismp/a/login#tj';
                 }
                 if (this.type == '1') {
                     url = 'http://gxtj.heinfo.gov.cn/Index/Main.asp';

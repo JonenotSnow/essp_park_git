@@ -359,7 +359,7 @@ export default {
       this.$post("/dataIndex/getIndexData", {
         parkId: sessionStorage.getItem("parkId")
       }).then(res => {
-        if (res.resultCode === "CLT000000000") {
+        if (res.resultCode === "CLT000000000" || res.resultCode === "0000000000") {
           if (res.resultData.length > 0) {
             this.form.list.forEach(item => {
               item.content = [];
@@ -466,7 +466,7 @@ export default {
               }
             });
             }catch(err){
-                this.$message('数据完整设置后，才可上传')
+                this.$message('请确保所有数据都已填写！')
                 return false
             }
 
@@ -474,7 +474,7 @@ export default {
               this.$message.success("数据上传成功");
             });
           } else {
-            this.$message('数据完整设置后，才可上传')
+            this.$message('请确保所有数据都已填写！')
             return false;
           }
         });

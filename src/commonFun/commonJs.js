@@ -128,7 +128,7 @@ export default  {
         post("/inform/insertInform", param).then(response => {
             console.log(response);
             done();
-            if(response.resultCode == "CLT000000000") {
+            if(response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                 Message.success(response.resultMsg);
             } else {
                 Message.error(response.resultMsg);

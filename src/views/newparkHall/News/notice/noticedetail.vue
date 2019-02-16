@@ -89,7 +89,7 @@
                 };
                 this.$post(this.$apiUrl.newsinfo.getInfoById, params).then(response => {
                     let codestatus = response.resultCode;
-                    if (codestatus == "CLT000000000") {
+                    if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
 
                         this.satpDate = response.resultData;
 

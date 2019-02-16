@@ -192,7 +192,7 @@ export default {
                 parkId: sessionStorage.getItem("parkId"),
                 parkName: this.SSH.getItem("parkName")
             }).then(response => {
-                if (response.resultCode == "CLT000000000") {
+                if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                     this.$message({
                         type: "success",
                         message: response.resultMsg

@@ -5,8 +5,9 @@
                 v-for="(item, index) in list"
                 :key="index"
                 ref="esspRoll"
+                @click.stop="getNoticeDetail(item)"
             >
-                {{item.informationTitle}}
+                {{item.title || item.informationTitle}}
             </li>
         </ul>
     </div>
@@ -16,24 +17,17 @@
     export default {
         name: 'essp-roll',
         props: {
-            // list: {
-            //     type: Array,
-            //     default: []
-            // }
+            list: {
+                type: Array,
+                default: []
+            }
         },
         components: {},
         data() {
             return {
                 msg: 'essp-roll',
                 animate: true,
-                list: [
-                    {informationTitle: '标题111111'},
-                    {informationTitle: '标题222222'},
-                    {informationTitle: '标题333333'},
-                    {informationTitle: '标题444444'},
-                    {informationTitle: '标题555555'},
-                    {informationTitle: '标题666666'}
-                ]
+                list: []
             }
         },
         methods: {
@@ -53,6 +47,21 @@
                 }, 0);
             },
 
+            // 前往详情
+            getNoticeDetail(item) {
+                if (this.isBdPark) {
+                    this.$router.push({
+                        path: "/news/noticedetail",
+                        query: {informationId: item.informationId}
+                    });
+                } else {
+                    this.$router.push({
+                        path: "/parkHall/manage/noAndADDetail",
+                        query: {id: item.id}
+                    });
+                }
+            }
+
         },
         mounted() {
             setInterval(this.scroll, 2000);
@@ -71,6 +80,10 @@
             li {
                 height: 35px;
                 line-height: 35px;
+                &:hover {
+                    color: #00a0e9;
+                    cursor: pointer;
+                }
             }
         }
 

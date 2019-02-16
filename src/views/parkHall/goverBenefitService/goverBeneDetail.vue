@@ -166,7 +166,7 @@
                     entId: this.$route.query.id
                 }).then(response => {
                     let _self = this;
-                    if (response.resultCode == "CLT000000000") {
+                    if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                         let lblInfo = response.resultData.lblInfo;
                         if (response.resultData.lblInfo) {
 

@@ -239,7 +239,7 @@
                 };
                 this.$post("/information/getInfoById", params).then(response => {
                     let codestatus = response.resultCode;
-                    if (codestatus == "CLT000000000") {
+                    if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
                         this.satpDate = response.resultData;
                         console.log(this.satpDate.status)
                         // 对标签进行处理
@@ -278,7 +278,7 @@
                 };
                 this.$post("/audit/getCommentList", params).then(response => {
                     let codestatus = response.resultCode;
-                    if (codestatus == "CLT000000000") {
+                    if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
                         this.commentList = response.resultData;
 
                         if (this.commentList.length > 0) {
@@ -306,7 +306,7 @@
                 }
                 this.$post("/audit/infomation", params).then(response => {
                     let codestatus = response.resultCode;
-                    if (codestatus == "CLT000000000") {
+                    if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
                         this.$message.info(response.resultMsg);
                         this.$router.push({
                             path: '/parkHall/manage/newsNoticeAudit'

@@ -145,7 +145,7 @@
                     parkId: window.sessionStorage.getItem("parkId")
                 }).then(
                     response => {
-                        if (response.resultCode == "CLT000000000") {
+                        if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                             this.dialogVisible = false;
                             this.$message.success(response.resultMsg);
                             this.$router.go(0);
@@ -180,7 +180,7 @@
             //         this.$post(url,pop)
             //         .then((response) => {
             //              var codestatus = response.resultCode;
-            //              if(codestatus=="CLT000000000"){
+            //              if(codestatus=="CLT000000000" || codestatus=="0000000000"){
             //                 this.$message.success(successMsg);
             //                 this.$router.go(0);
             //              }else{

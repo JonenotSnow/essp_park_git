@@ -165,7 +165,6 @@ const mutations = {
                     console.log('CLT000000004！')
                     state.heartOpen = false
                     state.ws.close();
-                } else if (datajson.resultCode != "CLT000000000") {
                 }
             } else {
                 if (datajson.type == 'notice') {
@@ -928,7 +927,7 @@ const mutations = {
             receiver: receiver,
             type: value,
         }).then((response) => {
-            if (response.resultCode == 'CLT000000000') {
+            if (response.resultCode == 'CLT000000000' || response.resultCode == '0000000000') {
 
                 result.messages = []
                 SSH.setItem('messageList', state.chatlist);

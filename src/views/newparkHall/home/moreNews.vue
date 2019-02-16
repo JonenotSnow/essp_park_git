@@ -38,23 +38,19 @@ export default {
     text-align: center;
     .newsfirtitle{
       font-size: 28px;
+      color: #333;
+      letter-spacing: 2.8px;
+      font-weight: normal;
     }
     .newssectitle{
       font-size: 16px;
+      color: #999;
+      letter-spacing: 1.6px;
+      padding-top: 15px;
     }
   }
   .essp_width_auto();
   padding-top: 50px;
-  div:nth-child(1) {
-      h3 {
-          font-weight: normal;
-          margin-bottom: 8px;
-      }
-      p {
-          color: #999;
-          font-size: 14px;
-      }
-  }
   div:nth-child(2) {
     float: right;
     line-height: 63px;

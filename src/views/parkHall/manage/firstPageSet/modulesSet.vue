@@ -115,7 +115,7 @@
                     parkId: parkId,
                     moduleSet: JSON.stringify(selectArr)
                 }).then((response) => {
-                    if (response.resultCode == "CLT000000000") {
+                    if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
 
                     } else {
                         this.$message.error(response.resultMsg);
@@ -129,7 +129,7 @@
                 this.$post("/parkManage/getParkById", {
                     parkId: parkId
                 }).then((response) => {
-                    if (response.resultCode == "CLT000000000") {
+                    if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                         this.$message.error(response.resultMsg);
                     } else {
                         this.$message.error(response.resultMsg);

@@ -52,7 +52,7 @@ export default {
             this.$post(this.$apiUrl.processTrack.getPManagerByParkId,{
                 parkId: this.parkId                    // 园区ID（必填）
             }).then(response => {
-                if (response.resultCode == 'CLT000000000') {
+                if (response.resultCode == 'CLT000000000' || response.resultCode == '0000000000') {
                     this.restaurants = response.resultData;
                 } else {
                     this.$message.error(response.resultMsg)

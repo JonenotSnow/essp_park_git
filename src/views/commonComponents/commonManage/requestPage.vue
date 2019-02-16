@@ -65,7 +65,7 @@ export default {
             this.$post(this.$apiUrl.manage.getInviteByKey, {
                 key: this.$route.query.key
             }).then(response => {
-                if (response.resultCode == "CLT000000000") {
+                if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                     this.content = response.resultData.content;
                     this.parkId = response.resultData.parkId;
                     this.mark = response.resultData.mark;
@@ -85,7 +85,7 @@ export default {
                 key: this.$route.query.key,
                 fromUserId: this.$route.query.fromUserId
             }).then(response => {
-                if (response.resultCode == "CLT000000000") {
+                if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                     this.$message({
                         type: "success",
                         message: "加入成功"
@@ -108,7 +108,7 @@ export default {
                 key: this.$route.query.key,
                 fromUserId: this.$route.query.fromUserId
             }).then(response => {
-                if (response.resultCode == "CLT000000000") {
+                if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                     this.$message({
                         type: "success",
                         message: `已拒绝${this.parkNm}的入园邀请`

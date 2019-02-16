@@ -3,8 +3,8 @@
         <div class="park_home_policy">
             <div class="home_active_head">
                 <h3>园区惠政</h3>
-                <p>Preferential Policy</p>
-                <div class="home_active_tag_hot esspclearfix">
+                <p>Preferential Policies</p>
+                <div class="home_active_tag_hot esspclearfix" v-if="huizheng_hot.length != 0 || huizheng_newest.length != 0">
                     <span :class="huizhengTabIndex==0?'sel':''" @click="huizhengTab(0)">最新</span>
                     <span :class="huizhengTabIndex==1?'sel':''" @click="huizhengTab(1)">热门</span>
 
@@ -12,7 +12,7 @@
             </div>
             <div class="home_active_items_wrap">
                 <div class="home_active_items_inner esspclearfix"  v-if="huizhengList.length > 0">
-                    <div class="home_active_item" v-for="(item,index) in huizhengList">
+                    <div class="home_active_item" v-for="(item,index) in huizhengList" v-if="index < maxListLength">
                         <div class="home_active_img" @click="toDetail(1,item.id)">
                             <img :src="item.titleImg" alt="惠政图片">
                             <div class="home_active_mask esspclearfix">
@@ -30,13 +30,13 @@
                         </div>
 
                         <div class="home_active_footer esspclearfix">
-                            <span class="home_avtive_f home_avtive_f_w1">发布时间 {{item.createTime | timerFormat(item.createTime)}}</span>
+                            <span class="home_avtive_f home_avtive_f_w1">发布日期 {{item.createTime | timerFormat(item.createTime)}}</span>
                             <span class="home_avtive_f home_avtive_f_w2" v-if="item.timeStatus"
                                   :style="{color: item.timeStatus.color}">{{item.timeStatus.msg}}</span>
                         </div>
                     </div>
                 </div>
-                <essp-loading v-if="huizhengList.length == 0" :nodata="true"></essp-loading>
+                <essp-loading :loading="isLoding" :nodata="!isLoding && huizhengList.length == 0"></essp-loading>
             </div>
             <div class="home_avtive_more"><span @click="getHuiZhengList()">More <i
                 class="el-icon-arrow-right"></i></span></div>
@@ -51,6 +51,8 @@
             huizheng_newest: [],
             huizhengList: [],
             huizhengTabIndex: 0,
+            maxListLength: 4, // 默认最多
+            isLoding: true,
             icons: [
                 "icon iconfont icon-riqi1",
                 "icon iconfont icon-dizhi",
@@ -68,7 +70,7 @@
         },
         filters: {
             timerFormat(vaule) {
-                return Moment(vaule).format("YYYY-MM-DD HH:mm");
+                return Moment(vaule).format("YYYY-MM-DD");
             }
         },
         methods: {
@@ -95,9 +97,15 @@
                 } else {
                     this.huizhengList = this.huizheng_hot;
                 }
+                if(this.huizhengList.length < 8){
+                    this.maxListLength = 4;
+                } else {
+                    this.maxListLength = 8;
+                }
             },
             getInfo() {
                 //0:表示活动1:表示惠政2:表示资讯 this.$post(url,param)
+                this.isLoding = true;
                 this.$post(this.$apiUrl.home.homeInfo, {
                     pageNum: 0,
                     pageSize: 8,
@@ -141,6 +149,9 @@
                     }
                     this.huizheng_hot = arr; //热门惠政
                     this.huizheng_newest = arr1; //最新惠政
+
+                    // 加载完毕
+                    this.isLoding = false;
                 });
             },
             timerStatus(value) {
@@ -217,6 +228,7 @@
                     background-color: #e1e1e1;
                     color: #aaa;
                     cursor: pointer;
+                    font-size: 16px;
                 }
                 .sel {
                     background-color: #f3f3f3;

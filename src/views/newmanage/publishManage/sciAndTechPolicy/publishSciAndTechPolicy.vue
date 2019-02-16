@@ -390,7 +390,7 @@
 
                         this.$post("/policy/savePolicyTech", this.ruleForm).then(response => {
                             let codestatus = response.resultCode;
-                            if (codestatus == "CLT000000000") {
+                            if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
                                 if (this.applyType === '01') {
                                     if (this.id) {
                                         if (this.nuType === '0') {
@@ -476,7 +476,7 @@
 
                         this.$post("/policy/savePolicyTech", this.ruleForm).then(response => {
                             let codestatus = response.resultCode;
-                            if (codestatus == "CLT000000000") {
+                            if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
                                 if (this.applyType === '01') {
                                     this.$message.success("政策法规暂存成功！");
                                     this.$router.push({
@@ -516,7 +516,7 @@
                 };
                 this.$post("/policy/getPolById", params).then(response => {
                     let codestatus = response.resultCode;
-                    if (codestatus == "CLT000000000") {
+                    if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
 
                         this.ruleForm = response.resultData;
 

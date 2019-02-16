@@ -383,7 +383,7 @@
                     informType: 4,
                     entId: entId
                 }).then((response) => {
-                    if (response.resultCode == 'CLT000000000') {
+                    if (response.resultCode == 'CLT000000000' || response.resultCode == '0000000000') {
                         this.prompt = response.resultData.prompt;
                     }
                 });
@@ -510,7 +510,7 @@
                     parkId: window.sessionStorage.getItem("parkId")
                 }).then((response) => {
                     isClick = true;
-                    if (response.resultCode == "CLT000000000") {
+                    if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                         this.dialogVisible = false;
                         this.$message.success(response.resultMsg);
                     } else {
@@ -533,7 +533,7 @@
                     parkId: sessionStorage.getItem("parkId"),
                     opMark: op
                 }).then((response) => {
-                    if (response.resultCode == "CLT000000000") {
+                    if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
 
                         this.activeDetailData = response.resultData;
                         this.activeDetailData.ticketForm= JSON.parse(this.activeDetailData.ticketForm)
@@ -560,7 +560,7 @@
                     activityId: this.$route.query.activityId,
                     parkId: sessionStorage.getItem("parkId")
                 }).then((response) => {
-                    if (response.resultCode == "CLT000000000") {
+                    if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
 //                        var obj = [
 //                            {
 //                                cstId: "9131011205506145X2",
@@ -648,7 +648,7 @@
                     type: 0,
                     parkId: window.sessionStorage.getItem("parkId")
                 }).then((response) => {
-                    if (response.resultCode == "CLT000000000") {
+                    if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                         this.imglist1 = response.resultData.hot;
                     } else {
                         this.$message({

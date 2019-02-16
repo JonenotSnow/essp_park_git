@@ -321,7 +321,7 @@ d<template>
                 }).then(
                     response => {
 
-                        if (response.resultCode == "CLT000000000") {
+                        if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                             this.activedata = response.resultData.activityList;
 
                             this.allTotal = response.resultData.total;
@@ -357,7 +357,7 @@ d<template>
                 var url = this.$apiUrl.active.delActivity;
                 this.$post(url, pop).then(
                     response => {
-                        if (response.resultCode == "CLT000000000") {
+                        if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                             this.$message.success("删除成功");
                             this.activedata=[];
                             this.getActiveList();
@@ -414,7 +414,7 @@ d<template>
                 this.$post(url, pop).then(
                     response => {
 
-                        if (response.resultCode == "CLT000000000") {
+                        if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                             this.$message.success("删除成功");
                             this.getActDraftList();
                         } else {

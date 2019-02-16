@@ -3,15 +3,14 @@
         <div class="home_active_head">
             <h3>园区活动</h3>
             <p>Campus Activities</p>
-            <div class="home_active_tag_hot esspclearfix">
+            <div class="home_active_tag_hot esspclearfix" v-if="activity_hot.length != 0 || activity_newest.length != 0">
                 <span :class="activeTabIndex==0?'sel':''" @click="activeTab(0)">最新</span>
                 <span :class="activeTabIndex==1?'sel':''" @click="activeTab(1)">热门</span>
-
         </div>
     </div>
         <div class="home_active_items_wrap">
             <div class="home_active_items_inner esspclearfix" v-if="activityList.length > 0">
-                <div class="home_active_item" v-for="(item,index) in activityList" v-if="index < 8">
+                <div class="home_active_item" v-for="(item,index) in activityList" v-if="index < maxListLength">
                     <div class="home_active_img" @click="toDetail(0,item.activityId)">
                         <img :src="item.activityPhoto" alt="活动图片">
                         <div class="home_active_mask esspclearfix">
@@ -23,12 +22,12 @@
                         <div class="home_active_name" @click="toDetail(0,item.activityId)">{{item.activityTheme}}</div>
                         <div class="home_active_icon esspclearfix">
                             <span >
-                                <i :class="icons[2]" style="color: #ccc"></i>{{item.viewSum}}</span>
+                                <i :class="icons[2]" style="color: #ccc"></i>{{item.viewSum || '0'}}</span>
                                     <span>
-                                <i :class="icons[3]" style="color: #ccc"></i>{{item.attentionSum}}
+                                <i :class="icons[3]" style="color: #ccc"></i>{{item.attentionSum || '0'}}
                             </span>
                             <span>
-                                 <i :class="icons[5]" style="color: #ccc"></i>{{item.commentSum}}
+                                 <i :class="icons[5]" style="color: #ccc"></i>{{item.commentSum || '0'}}
                              </span>
                         </div>
                     </div>
@@ -39,7 +38,7 @@
                     </div>
                 </div>
             </div>
-            <essp-loading v-if="activityList.length == 0" :nodata="true"></essp-loading>
+            <essp-loading :loading="isLoding" :nodata="!isLoding && activityList.length == 0"></essp-loading>
         </div>
 
         <div class="home_avtive_more"><span @click="goActivityList()">More <i class="el-icon-arrow-right"></i></span></div>
@@ -62,6 +61,8 @@
                 list: [],
                 activity_hot: [],
                 activity_newest: [],
+                isLoding: true,         // 是显示数据加载中
+                maxListLength: 4, // 默认最多
                 icons: [
                     "icon iconfont icon-riqi1",
                     "icon iconfont icon-dizhi",
@@ -96,6 +97,11 @@
                 } else {
                     this.activityList = this.activity_hot;
                 }
+                if(this.activityList.length < 8){
+                    this.maxListLength = 4;
+                } else {
+                    this.maxListLength = 8;
+                }
             },
             keyWordSeach(index) {
                 this.active = index;
@@ -118,6 +124,7 @@
 
             getInfo() {
                 //0:表示活动1:表示惠政2:表示资讯 this.$post(url,param)
+                this.isLoding = true;
                 this.$post(this.$apiUrl.home.homeInfo, {
                     pageNum: 0,
                     pageSize: 8,
@@ -126,6 +133,7 @@
                 }).then(response => {
                     var arr = response.resultData.hot;
                     var arr1 = response.resultData.newest;
+
                     var thisTime = this.getMillisecond(new Date());
                     if(response.resultData.hot && arr.length > 0) {
                         arr.forEach((item,index) => {
@@ -162,6 +170,10 @@
                     }
                     this.activity_hot = arr; //热门活动
                     this.activity_newest = arr1; //最新活动
+
+                    // 加载完毕
+                    this.isLoding = false;
+
                 });
             },
             timerStatus(value) {
@@ -240,6 +252,7 @@
                     background-color: #e1e1e1;
                     color: #aaa;
                     cursor: pointer;
+                    font-size: 16px;
                 }
                 .sel {
                     background-color: #f3f3f3;

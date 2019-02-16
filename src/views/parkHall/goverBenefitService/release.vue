@@ -300,7 +300,7 @@
                     parkId: sessionStorage.getItem("parkId") || ""
                 }).then(
                     response => {
-                        if (response.resultCode == "CLT000000000") {
+                        if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                             this.activedata = response.resultData.policyList;
                             this.allTotal = response.resultData.total;
                             this.tag = this.activedata.tagsTxt ? this.activedata.tagsTxt : [];
@@ -328,7 +328,7 @@
                 }).then(() => {
                     this.$post(url, pop).then(
                         response => {
-                            if (response.resultCode == "CLT000000000") {
+                            if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                                 this.$message.success("删除成功");
                                 this.getMyPubPolList();
                             } else {
@@ -384,7 +384,7 @@
                 var url = this.$apiUrl.goverBene.delPolicy;
                 this.$post(url, pop).then(
                     response => {
-                        if (response.resultCode == "CLT000000000") {
+                        if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                             this.getGoverList();
                         } else {
                             this.$message.info(response.resultMsg);

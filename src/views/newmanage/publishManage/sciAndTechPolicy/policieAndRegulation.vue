@@ -140,7 +140,7 @@
                 };
                 this.$post("/policy/getMyPubPol", params).then(response => {
                     let codestatus = response.resultCode;
-                    if (codestatus == "CLT000000000") {
+                    if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
                         let resultData = response.resultData;
                         this.totalCount = resultData.total;
                         this.dataList = resultData.policyList;

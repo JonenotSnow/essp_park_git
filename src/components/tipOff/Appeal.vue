@@ -52,7 +52,7 @@
                 this.$post(apiUrl.rqmList.insertUserComplainUrl,this.tipObj)
                     .then((response) => {
                         //onsole.log(response)
-                        if(response.resultCode==="CLT000000000"){
+                        if(response.resultCode==="codestatus == "CLT000000000" || codestatus == "0000000000"){
                             this.$message.success("申诉提交成功！")
                             this.$router.push('/messageCenter/sysMsg');//跳转到消息中心
                         }

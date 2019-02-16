@@ -258,7 +258,7 @@
                             type: 1,
                         }
                     ).then((response) => {
-                        if (response.resultCode != 'CLT000000000') {
+                        if (response.resultCode != 'CLT000000000' && response.resultCode != '0000000000') {
                             vm.addFriendList[index].isAdd = '添加'
                         } else {
                             vm.$message({
@@ -299,7 +299,7 @@
                             type: 'refuseFriend'
                         }
                     ).then((response) => {
-                        if (response.resultCode != 'CLT000000000') {
+                        if (response.resultCode != 'CLT000000000' && response.resultCode != '0000000000') {
                             vm.addFriendList[index].isDisagree = '已拒绝'
                         } else {
                             vm.$message({

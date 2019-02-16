@@ -6,19 +6,21 @@
             <div class="swiper_com esspclearfix">
                 <div class="swiper_inner">通知公告：</div>
                 <div v-if="infoList.length>0">
+                    <!--<div-->
+                    <!--v-if="(infoList[0].title && infoList[0].title.length<28)||(infoList[0].informationTitle&& infoList[0].informationTitle.length<28)"-->
+                    <!--class="swiper_inner3"-->
+                    <!--v-html="infoList[0].title||infoList[0].informationTitle"-->
+                    <!--@click="getNoticeDetail()"-->
+                    <!--&gt;</div>-->
+                    <essp-roll :list="infoList" class="swiper_inner3" style="width: 430px"/>
                     <div
-                        v-if="(infoList[0].title && infoList[0].title.length<28)||(infoList[0].informationTitle&& infoList[0].informationTitle.length<28)"
-                        class="swiper_inner3"
-                        v-html="infoList[0].title||infoList[0].informationTitle"
-                        @click="getNoticeDetail()"
-                    ></div>
-                    <essp-roll :list="infoList" class="swiper_inner1" style="width: 430px"/>
-                    <div
+                        style="padding-top: 8px"
                         class="swiper_inner2"
                         v-if="infoList && infoList[0].createTime"
                     >{{infoList[0].createTime | timerFormat}}
                     </div>
                     <span
+                        style="display: inline-block; padding-top: 9px"
                         class="more"
                         v-if="LoginUserRole.includes('33') || LoginUserRole.includes('34')"
                         @click="goNoticeList()"
@@ -47,15 +49,20 @@
                         @click="linkToPage"
                     >More&gt;</span>
                 </div>
-                <div class="noData" v-else style="height: 35px;line-height: 35px">您当前暂无要处理入园申请~~</div>
+                <div class="noData" v-else style="height: 35px;line-height: 35px">暂无任务~~</div>
             </div>
         </div>
     </div>
 </template>
 <script>
     import Moment from "moment";
+    import EsspRoll from "@/components/EsspRoll";
+
     export default {
         name: "",
+        components: {
+            EsspRoll
+        },
         data() {
             return {
                 infoList: [],
@@ -106,11 +113,13 @@
             getNoticeList() {
                 this.$post(this.$apiUrl.manage.getNoticeList, {
                     parkId: window.sessionStorage.getItem("parkId"),
-                    flag:'0',
+                    flag: '0',
                     pageSize: 10,
                     pageNum: 1
                 }).then(response => {
                     if (response.resultData.list.length > 0) {
+                        console.log('response.resultData.list======');
+                        console.log(response.resultData.list);
                         this.infoList = response.resultData.list;
                     }
                 });
@@ -183,6 +192,7 @@
 </script>
 <style lang="less" scoped>
     @import "../../../assets/css/mixin";
+
     .noticeBar {
         position: relative;
         background-size: contain;
@@ -207,6 +217,7 @@
             .esspborder-radius(6px);
         }
     }
+
     .swiper_com {
         height: 20px;
         line-height: 20px;
@@ -271,9 +282,11 @@
             }
         }
     }
+
     .swiper_com1 {
         margin-top: 15px;
     }
+
     .noAccess {
         box-shadow: 1.5px 2.6px 3px 0px rgba(0, 160, 233, 0.15),
             -1.5px -2.6px 3px 0px rgba(0, 102, 179, 0.15);
@@ -317,6 +330,7 @@
         font-size: 16px;
         color: #444;
     }
+
     .more {
         font-size: 14px;
         color: #999;
