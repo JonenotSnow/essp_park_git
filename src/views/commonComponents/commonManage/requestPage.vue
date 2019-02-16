@@ -3,6 +3,7 @@
         <el-dialog :visible.sync="scan" width='510px' height='280px' class='re' :show-close='true'>
             <div>
                 <img class='bg' src="./re1.png" alt="">
+                <i @click="toOut" class="el-icon-close close"></i>
                 <div class="contentn">
                     <p class="infoing" v-html='content'></p>
                     <p class="toDetail">
@@ -12,19 +13,19 @@
                         <i></i>
                     </p>
                     <div v-if="!mark && mark != 0">
-                        <p class="btn btnA">
+                        <p class="btn btnB">
                             <button @click="agreeInvite">接受邀请</button>
                         </p>
-                        <p class="btn btnB">
+                        <p class="btn btnC">
                             <button @click="disagreeInvite">拒绝邀请</button>
                         </p>
                     </div>
                     <p v-if="mark == 0" class="btn btnA">
-                        <button>已接受邀请</button>
+                        <button>已接受</button>
                     </p>
 
                     <p v-if="mark == 1" class="btn btnA">
-                        <button>已拒绝邀请</button>
+                        <button>已拒绝</button>
                     </p>
                 </div>
             </div>
@@ -163,6 +164,19 @@ export default {
         .bg {
             position: absolute;
         }
+        .close{
+            position: absolute;    
+            top: -24px;
+            right: 8px;
+            z-index: 102;
+            font-size: 16px;
+            font-weight: normal;
+            font-stretch: normal;
+            line-height: 81px;
+            letter-spacing: 0.3px;
+            color: #f8f8f8;
+            cursor: pointer;
+        }
         .contentn {
             position: relative;
             z-index: 101;
@@ -214,33 +228,49 @@ export default {
             }
             .btn {
                 text-align: center;
+                button{
+                    outline: none;
+                    border: none;
+                    display: inline-block;
+                    position: relative;
+                    width: 167px;
+                    height: 46px;
+                    border-radius: 23px;
+                    font-size: 18.4px;
+                    font-weight: normal;
+                    font-stretch: normal;
+                    line-height: 46px;
+                    letter-spacing: 0.4px;
+                    text-align: center;
+                }
             }
-            .btnA button,
-            .btnB button {
-                outline: none;
-                border: none;
-                display: inline-block;
-                position: relative;
-                width: 167px;
-                height: 46px;
-                border-radius: 23px;
-                font-size: 18.4px;
-                font-weight: normal;
-                font-stretch: normal;
-                line-height: 46px;
-                letter-spacing: 0.4px;
-                text-align: center;
-                cursor: pointer;
+            .btnB{
+                button{
+                    background-color: #dbb992;
+                    color:#fff;
+                    cursor: pointer;
+                    top: 271px;
+                }
+            }
+            .btnC{
+                button{
+                    background-color: #fff;
+                    color: #7cbfc2;
+                    cursor: pointer;
+                    top: 271px;
+                }
             }
             .btnA button {
-                background-color: #dbb992;
+                background-image: linear-gradient(256deg, 
+                    #dddee2 0%, 
+                    #c9ccd3 100%), 
+                linear-gradient(
+                    #c4d6d4, 
+                    #c4d6d4);
+                background-blend-mode: normal, 
+                    normal;
                 color: #ffffff;
                 top: 266px;
-            }
-            .btnB button {
-                color: #7cbfc2;
-                top: 271px;
-                background: #f5f5f5;
             }
         }
     }
