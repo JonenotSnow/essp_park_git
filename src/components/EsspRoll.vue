@@ -1,22 +1,42 @@
 <template>
     <div class="esspRoll-wrap">
         <ul class="roll-content">
-            <li :class="{anim : animate == true}"
+            <li
+                v-if="listType == 'infoList'"
+                :class="{anim : animate == true}"
                 v-for="(item, index) in list"
                 :key="index"
                 ref="esspRoll"
                 @click.stop="getNoticeDetail(item)"
             >
-                {{item.title || item.informationTitle}}
+                <span style="display: inline-block">{{item.title || item.informationTitle}}</span>
+                <span style="display: inline-block; float: right; color: #999;">{{item.createTime | timerFormat}}</span>
+            </li>
+            <li
+                v-if="listType == 'applyParkList'"
+                :class="{anim : animate == true}"
+                v-for="(item, index) in list"
+                :key="index"
+                ref="esspRoll"
+                @click.stop="cancelAudit(item)"
+            >
+                <span style="display: inline-block">{{item.cstNm}}</span>
+                <span style="display: inline-block; float: right; color: #999;">{{item.joinTime | timerFormat}}</span>
             </li>
         </ul>
     </div>
 </template>
 
 <script>
+    import Moment from "moment";
+
     export default {
         name: 'essp-roll',
         props: {
+            listType: {
+                type: String,
+                default: ''
+            },
             list: {
                 type: Array,
                 default: []
@@ -60,8 +80,36 @@
                         query: {id: item.id}
                     });
                 }
-            }
+            },
 
+            // 获取该审核权限
+            cancelAudit(item) {
+                this.$post(this.$apiUrl.manage.auditCancer, {
+                    entityId: item.id,
+                    type: "01",
+                    status: "01"
+                }).then(
+                    response => {
+                        if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
+                            this.$router.push({
+                                path: "/parkHall/manage/manageAuditing",
+                                query: {id: item.id}
+                            });
+                        } else {
+                            this.$message.error(response.resultMsg);
+                        }
+                    },
+                    response => {
+                        this.$message.error(response.resultMsg);
+                    }
+                );
+            },
+
+        },
+        filters: {
+            timerFormat(vaule) {
+                return Moment(vaule).format("YYYY-MM-DD");
+            }
         },
         mounted() {
             setInterval(this.scroll, 2000);
