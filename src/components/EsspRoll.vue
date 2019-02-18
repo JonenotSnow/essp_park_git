@@ -22,6 +22,9 @@
             >
                 <span style="display: inline-block">{{item.cstNm}}</span>
                 <span style="display: inline-block; float: right; color: #999;">{{item.joinTime | timerFormat}}</span>
+
+                <!--<span style="display: inline-block">{{item.title || item.informationTitle}}</span>-->
+                <!--<span style="display: inline-block; float: right; color: #999;">{{item.createTime | timerFormat}}</span>-->
             </li>
         </ul>
     </div>
