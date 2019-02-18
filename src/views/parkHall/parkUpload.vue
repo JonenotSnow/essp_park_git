@@ -677,7 +677,7 @@
     }
     .showUpload {
         display: block;
-        width: 50%;
+        width: 270px;
         margin: 2px auto 15px;
     }
     .park_upload_mask {

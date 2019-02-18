@@ -237,9 +237,7 @@
                 mcCardDataList: [],
                 timeRange: [],
                 ids: "",
-                flag: sessionStorage
-                    .getItem("myList")
-                    .includes(sessionStorage.getItem("parkId")),
+                flag: sessionStorage.getItem("loginFlag"),
                 type: 0
             };
         },

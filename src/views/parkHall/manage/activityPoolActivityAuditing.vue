@@ -238,26 +238,7 @@ export default {
         },
         //校验审核状态
         cancelAudit(id) {
-            this.$post(this.$apiUrl.manage.auditCancer, {
-                parkId: sessionStorage.getItem("parkId"),
-                entityId: id,
-                type: "02",
-                status: "01"
-            }).then(
-                response => {
-                    if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
-                        this.$router.push({
-                            path: "/parkHall/manage/manageActivityAudit",
-                            query: { id: id }
-                        });
-                    }else{
-                        this.$message({
-                            type: 'warn',
-                            message: response.resultMsg
-                        });
-                    }
-                }
-            );
+            this.$router.push({path: "/parkHall/manage/manageActivityAudit",query: { id: id }});
         },
         getDetail(rows) {
             if (!rows.activityId) {

@@ -94,13 +94,6 @@
         filters: {
             timerFormat(vaule) {
                 var d = new Date(vaule);
-                // var times=d.getFullYear() +
-                //     '-' + (parseInt((d.getMonth() + 1))<10?'0'+(d.getMonth() + 1):(d.getMonth() + 1)) +
-                //     '-' + (parseInt(d.getDate())<10?'0'+d.getDate():d.getDate()) + ' ' +
-                //     (parseInt(d.getHours())<10?'0'+d.getHours():d.getHours()) + ':' +
-                //     (parseInt(d.getMinutes())<10?'0'+d.getMinutes():d.getMinutes()) + ':' +
-                //     (parseInt(d.getSeconds())<10?'0'+d.getSeconds():d.getSeconds());
-
                 var times = d.getFullYear() +
                     '-' + (parseInt((d.getMonth() + 1)) < 10 ? '0' + (d.getMonth() + 1) : (d.getMonth() + 1)) +
                     '-' + (parseInt(d.getDate()) < 10 ? '0' + d.getDate() : d.getDate());
@@ -193,13 +186,6 @@
             },
             //取消审核
             cancelAudit() {
-                this.$post(this.$apiUrl.manage.auditCancer, {
-                    entityId: this.$route.query.id,
-                    parkId: window.sessionStorage.getItem("parkId"),
-                    type: '01',
-                    status: '10',
-                    flag: "noContent"
-                })
                 this.$router.push('/parkHall/manage/activityPoolAddPark')
             }
         }
