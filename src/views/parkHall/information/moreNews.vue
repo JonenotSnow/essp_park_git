@@ -1,8 +1,8 @@
 <template>
     <!-- 更多资讯的更多模块 -->
     <div>
-        <div class="title_home_btn">
-            <div class="title_type_btn" :class="{sel:newsTabIndex==0}" @click="newTitleTab(0)" >最新</div>
+        <div class="title_home_btn">        
+            <div class="title_type_btn" :class="{sel:newsTabIndex==0}" @click="newTitleTab(0)" >最新</div> 
             <div class="title_type_btn" :class="{sel:newsTabIndex==1}" @click="newTitleTab(1)" >热门</div>
         </div>
         <div class="more_newscon esspclearfix" v-if="moreNewDates.length>0">
@@ -24,7 +24,7 @@
                 <div class="newslist right_side">
                     <div class="newsitem" @click="goinfoDetail(item)" v-for="(item,index) in moreNewDates" :key="index" v-if="index<6&&index>=3">
                         <img class="newsimg" :src="item.titleImg" :alt="item.informationTitle">
-                        <div class="newinfo">
+                        <div class="newinfo">                         
                             <div class="img_tips">
                                 <div class="tip_tit">{{item.informationTitle}}</div>
                                 <div class="tip_time">{{item.createTime | timerFormat(item.createTime)}}</div>
@@ -40,7 +40,7 @@
                 <div class="newslist left_side">
                     <div class="newsitem" @click="goinfoDetail(its)" v-for="(its,index) in hotNewDates" :key="index" v-if="index<3">
                         <img class="newsimg" :src="its.titleImg" :alt="its.informationTitle">
-                        <div class="newinfo">
+                        <div class="newinfo">                                
                             <div class="img_tips">
                                 <div class="tip_tit">{{its.informationTitle}}</div>
                                 <div class="tip_time">{{its.createTime | timerFormat(its.createTime)}}</div>
@@ -113,7 +113,7 @@
                 this.$post(url, pop)
                     .then((response) => {
                         let codestatus = response.resultCode;
-                        if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
+                        if (codestatus == "CLT000000000") {
                             let data = response.resultData;
                             that.moreNewDates = data.newest
                             that.hotNewDates = data.hot
@@ -140,7 +140,7 @@
 
     .title_home_btn {
         float: right;
-        line-height: 63px;
+        line-height: 63px; 
         /*position: relative;
         top: -16px;*/
         margin-top:-16px;
@@ -172,7 +172,7 @@
           width:580px;
           height: 440px;
           background-color:#fff;
-          box-shadow: 0px 0px 19px 1px
+          box-shadow: 0px 0px 19px 1px 
             rgba(0, 0, 0, 0.08);
           border-radius: 6px;
         }
@@ -191,7 +191,7 @@
         font-stretch: normal;
         letter-spacing: 0px;
         color: #999999;
-    }
+    } 
     .more_newscon {
         padding: 40px 0 10px;
     }
@@ -209,7 +209,7 @@
         .newinfo{
 
             width: 310px;
-            float: left;
+            float: left;    
             .img_tips {
                 font-size: 12px;
                 height: 50px;
@@ -251,7 +251,7 @@
                 line-height:30px;
                 color:#999;
                 padding-top: 5px;
-
+                
             }
         }
     }
