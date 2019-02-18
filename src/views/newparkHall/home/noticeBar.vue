@@ -12,13 +12,13 @@
                     <!--v-html="infoList[0].title||infoList[0].informationTitle"-->
                     <!--@click="getNoticeDetail()"-->
                     <!--&gt;</div>-->
-                    <essp-roll :list="infoList" class="swiper_inner3" style="width: 430px"/>
-                    <div
-                        style="padding-top: 8px"
-                        class="swiper_inner2"
-                        v-if="infoList && infoList[0].createTime"
-                    >{{infoList[0].createTime | timerFormat}}
-                    </div>
+                    <essp-roll listType="infoList" :list="infoList" class="swiper_inner3"/>
+                    <!--<div-->
+                    <!--style="padding-top: 8px"-->
+                    <!--class="swiper_inner2"-->
+                    <!--v-if="infoList && infoList[0].createTime"-->
+                    <!--&gt;{{infoList[0].createTime | timerFormat}}-->
+                    <!--</div>-->
                     <span
                         style="display: inline-block; padding-top: 9px"
                         class="more"
@@ -34,19 +34,17 @@
                 v-if="LoginUserRole.includes('33') || LoginUserRole.includes('34')"
             >
                 <div class="swiper_inner">{{isBdPark?'审核管理':'任务池'}}：</div>
-                <div class="esspclearfix" v-if="lastApplyParkFlag">
+                <div class="esspclearfix" v-if="applyParkList.length>0">
                     <!--<div class="esspclearfix">-->
-                    <div
-                        class="swiper_inner3"
-                        @click="cancelAudit(lastApplyPark.id)"
-                    >{{lastApplyPark.cstNm}}申请入园
-                    </div>
-                    <!--<essp-roll :list="infoList" class="swiper_inner3" style="width: 430px"/>-->
-                    <div class="swiper_inner2">{{lastApplyPark.joinTime | timerFormat}}</div>
+                    <!--<div class="swiper_inner3" @click="cancelAudit(applyParkList[0].id)">-->
+                    <!--{{applyParkList[0].cstNm}}-->
+                    <!--</div>-->
+                    <essp-roll listType="applyParkList" :list="applyParkList" class="swiper_inner3"/>
+
                     <span
+                        style="display: inline-block; padding-top: 9px"
                         class="more"
                         v-if="LoginUserRole.includes('33') || LoginUserRole.includes('34')"
-                        @click="linkToPage"
                     >More&gt;</span>
                 </div>
                 <div class="noData" v-else style="height: 35px;line-height: 35px">暂无任务~~</div>
@@ -67,9 +65,190 @@
             return {
                 infoList: [],
                 // 首页任务池---最新申请入园消息
-                lastApplyPark: {},
+                applyParkList: [],
+                // applyParkList: [
+                //     {
+                //         "id": "20190215105156011",
+                //         "title": "cccc",
+                //         "parkId": "20181220204119007",
+                //         "type": null,
+                //         "status": "0",
+                //         "issuer": "1579ya",
+                //         "content": "<p>asdas </p>",
+                //         "createTime": 1550199116767,
+                //         "updateTime": null,
+                //         "access_token": null,
+                //         "pageNum": null,
+                //         "pageSize": null,
+                //         "watch": 0,
+                //         "tbl": null,
+                //         "accessoryUrl": null,
+                //         "remark": "",
+                //         "issuerId": "1000150011",
+                //         "flag": null
+                //     },
+                //     {
+                //         "id": "20190215105014009",
+                //         "title": "大城市的",
+                //         "parkId": "20181220204119007",
+                //         "type": null,
+                //         "status": "0",
+                //         "issuer": "1579ya",
+                //         "content": "<p>啛啛喳喳错</p>",
+                //         "createTime": 1550199014435,
+                //         "updateTime": null,
+                //         "access_token": null,
+                //         "pageNum": null,
+                //         "pageSize": null,
+                //         "watch": 0,
+                //         "tbl": null,
+                //         "accessoryUrl": null,
+                //         "remark": "",
+                //         "issuerId": "1000150011",
+                //         "flag": null
+                //     },
+                //     {
+                //         "id": "20190215104945008",
+                //         "title": "阿萨德",
+                //         "parkId": "20181220204119007",
+                //         "type": null,
+                //         "status": "0",
+                //         "issuer": "1579ya",
+                //         "content": "<p>啛啛喳喳错错 </p>",
+                //         "createTime": 1550198985730,
+                //         "updateTime": null,
+                //         "access_token": null,
+                //         "pageNum": null,
+                //         "pageSize": null,
+                //         "watch": 0,
+                //         "tbl": null,
+                //         "accessoryUrl": null,
+                //         "remark": "",
+                //         "issuerId": "1000150011",
+                //         "flag": null
+                //     },
+                //     {
+                //         "id": "20190215104654007",
+                //         "title": null,
+                //         "parkId": "20181220204119007",
+                //         "type": null,
+                //         "status": "0",
+                //         "issuer": "1579ya",
+                //         "content": null,
+                //         "createTime": 1550198814033,
+                //         "updateTime": null,
+                //         "access_token": null,
+                //         "pageNum": null,
+                //         "pageSize": null,
+                //         "watch": 0,
+                //         "tbl": null,
+                //         "accessoryUrl": null,
+                //         "remark": "",
+                //         "issuerId": "1000150011",
+                //         "flag": null
+                //     },
+                //     {
+                //         "id": "20190215104643006",
+                //         "title": "测试公告",
+                //         "parkId": "20181220204119007",
+                //         "type": null,
+                //         "status": "0",
+                //         "issuer": "1579ya",
+                //         "content": "<p>啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊</p>",
+                //         "createTime": 1550198803888,
+                //         "updateTime": null,
+                //         "access_token": null,
+                //         "pageNum": null,
+                //         "pageSize": null,
+                //         "watch": 0,
+                //         "tbl": null,
+                //         "accessoryUrl": null,
+                //         "remark": "",
+                //         "issuerId": "1000150011",
+                //         "flag": null
+                //     },
+                //     {
+                //         "id": "20190215104403005",
+                //         "title": null,
+                //         "parkId": "20181220204119007",
+                //         "type": null,
+                //         "status": "0",
+                //         "issuer": "1579ya",
+                //         "content": null,
+                //         "createTime": 1550198643586,
+                //         "updateTime": null,
+                //         "access_token": null,
+                //         "pageNum": null,
+                //         "pageSize": null,
+                //         "watch": 0,
+                //         "tbl": null,
+                //         "accessoryUrl": null,
+                //         "remark": "",
+                //         "issuerId": "1000150011",
+                //         "flag": null
+                //     },
+                //     {
+                //         "id": "20190215104346004",
+                //         "title": "标题测试1",
+                //         "parkId": "20181220204119007",
+                //         "type": null,
+                //         "status": "0",
+                //         "issuer": "沐2",
+                //         "content": "<p><strong>标题测试1标题测试1标题测试1 </strong></p><p><strong><u>发大恶 </u><em><u>烦诶份额</u></em></strong></p>",
+                //         "createTime": 1550198626442,
+                //         "updateTime": null,
+                //         "access_token": null,
+                //         "pageNum": null,
+                //         "pageSize": null,
+                //         "watch": 0,
+                //         "tbl": null,
+                //         "accessoryUrl": null,
+                //         "remark": "",
+                //         "issuerId": "1000170012",
+                //         "flag": null
+                //     },
+                //     {
+                //         "id": "20190215104337003",
+                //         "title": "今日份公告",
+                //         "parkId": "20181220204119007",
+                //         "type": null,
+                //         "status": "0",
+                //         "issuer": "1579ya",
+                //         "content": "<p>啊啊啊啊啊啊啊啊啊啊啊啊啊</p>",
+                //         "createTime": 1550198617978,
+                //         "updateTime": null,
+                //         "access_token": null,
+                //         "pageNum": null,
+                //         "pageSize": null,
+                //         "watch": 0,
+                //         "tbl": null,
+                //         "accessoryUrl": null,
+                //         "remark": "",
+                //         "issuerId": "1000150011",
+                //         "flag": null
+                //     },
+                //     {
+                //         "id": "20190214143107001",
+                //         "title": "0214发布 tongzhi公告测试",
+                //         "parkId": "20181220204119007",
+                //         "type": null,
+                //         "status": "0",
+                //         "issuer": "沐3",
+                //         "content": "<p>0214发布 tongzhi公告测试</p>",
+                //         "createTime": 1550125867357,
+                //         "updateTime": null,
+                //         "access_token": null,
+                //         "pageNum": null,
+                //         "pageSize": null,
+                //         "watch": 0,
+                //         "tbl": null,
+                //         "accessoryUrl": null,
+                //         "remark": "",
+                //         "issuerId": "1000190018",
+                //         "flag": null
+                //     }
+                // ],
                 isBdPark: this.utils.isBdPark(),
-                lastApplyParkFlag: false,
                 LoginUserRole: this.SSH.getItem("LoginUserRol").toString(),
             }
         },
@@ -87,7 +266,7 @@
                 this.LoginUserRole.includes("33") ||
                 this.LoginUserRole.includes("34")
             ) {
-                this.getLastApplyPark();
+                this.getapplyParkList();
             }
         },
         methods: {
@@ -118,8 +297,6 @@
                     pageNum: 1
                 }).then(response => {
                     if (response.resultData.list.length > 0) {
-                        console.log('response.resultData.list======');
-                        console.log(response.resultData.list);
                         this.infoList = response.resultData.list;
                     }
                 });
@@ -127,16 +304,12 @@
             /**
              * 首页任务池---最新申请入园消息
              */
-            getLastApplyPark() {
-                console.log(this.$apiUrl.manage.getLastApplyPark);
-                this.$post(this.$apiUrl.manage.getLastApplyPark, {
+            getapplyParkList() {
+                this.$post(this.$apiUrl.manage.getapplyParkList, {
                     parkId: window.sessionStorage.getItem("parkId")
                 }).then(response => {
                     if (response.resultData) {
-                        this.lastApplyPark = response.resultData;
-                        if (this.lastApplyPark.cstNm && this.lastApplyPark.joinTime) {
-                            this.lastApplyParkFlag = true;
-                        }
+                        this.applyParkList = response.resultData;
                     }
                 });
             },
@@ -249,7 +422,8 @@
         }
         .swiper_inner3 {
             /*text-align: center;*/
-            width: 430px;
+            /*width: 430px;*/
+            width: 550px;
         }
         ul,
         li,
