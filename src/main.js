@@ -41,6 +41,8 @@ Vue.use(VueLazyload, {
 });
 import VueUeditorWrap from 'vue-ueditor-wrap'
 Vue.component('vue-ueditor-wrap', VueUeditorWrap)
+
+
 // ajax全局配置
 import { post, get, patch, put, del } from "./fetch/http";
 import { apiUrl } from "./fetch/apiUrl";
@@ -55,6 +57,8 @@ import { setting } from "./util/serveHttp";
 import fontIcon from "./assets/font/iconfont.css";
 // 引入公共的举报弹窗
 import commonJs from "./commonFun/commonJs";
+
+require('./mock/index.js')
 
 //定义全局变量
 Vue.prototype.$apiUrl = apiUrl;
