@@ -62,7 +62,7 @@
                     <el-table-column align="center" prop="" width="100" label="操作">
                         <template slot-scope="scope">
                             <el-button type="text" v-if="',10,01,13,14,'.indexOf(`,${scope.row.status},`) == -1" disabled>领取并审核</el-button>
-                            <el-button type="text" v-else @click.stop="cancelAudit(scope.row.id)">领取并审核</el-button>
+                            <el-button type="text" v-else @click.stop="cancelAudit(scope.row)">领取并审核</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -259,22 +259,8 @@ export default {
             this.getList()
         },
         //校验审核状态
-        cancelAudit(id){
-            this.$post(this.$apiUrl.manage.auditCancer,{
-                entityId:id,
-                type:'01',
-                status : '01'
-            })
-            .then((response) => {
-                if (response.resultCode == 'CLT000000000' || response.resultCode == '0000000000') {
-                    this.$router.push({path:'/parkHall/manage/manageAuditing',query:{id:id}})
-                }
-            },(err)=>{
-                this.$message({
-                    type: 'warn',
-                    message: response.resultMsg
-                });
-            })
+        cancelAudit(rows){
+            this.$router.push({path:'/parkHall/manage/manageParkAuditDetail',query:{entityId:rows.id,cstId:rows.cstId}});
         },
         getDetail(rows){
             if (!rows.id) {
