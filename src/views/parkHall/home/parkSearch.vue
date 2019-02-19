@@ -550,7 +550,7 @@ export default {
 @con_bg: #fff;
 .ffbox {
     position: relative;
-    z-index: 1;
+    z-index: 101;
     margin-bottom: 20px;
     .listbox {
         .essp_width_auto();
