@@ -183,7 +183,7 @@ import mixins_windowOpen from '@/components/mixins/mixins_windowOpen.js'
                     height:100%;
                 }
                 .detailinfo{   
-                    opacity: 0;                 
+                    //opacity: 0;                 
                     .enterprisename{
                         margin:20px auto 10px;
                         height: 20px;
@@ -193,6 +193,9 @@ import mixins_windowOpen from '@/components/mixins/mixins_windowOpen.js'
                         //white-space: nowrap;
                         -webkit-line-clamp:1;
                         -webkit-box-orient:vertical;
+                        /*! autoprefixer: off */
+                        -webkit-box-orient: vertical;
+                        /* autoprefixer: on */
                         padding:0 15px;
                         text-align: center;
                         position:absolute;
@@ -218,6 +221,7 @@ import mixins_windowOpen from '@/components/mixins/mixins_windowOpen.js'
                         left:20px;
                         top:120px;
                         border:1px solid #fff;
+                        text-align: center;
                         width: 120px;
                         height: 30px;
                         line-height:30px;
@@ -229,8 +233,7 @@ import mixins_windowOpen from '@/components/mixins/mixins_windowOpen.js'
                     position:absolute;
                     left:0;
                     top:0;
-                    background-color: #00a0e9;
-                    opacity: 0.8;
+                    background-color:rgba(0,160,233,0.8);
                     color:#fff;
                     text-align: center;
                     font-size: 16px;

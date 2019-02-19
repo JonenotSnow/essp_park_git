@@ -110,7 +110,6 @@
                     </div>
                 </div>
 
-                {{publishId}}
             </div>
             <div class="pageList">
                 <el-pagination
@@ -136,29 +135,15 @@
         props:[
             "commentSty",// 评论类型 1. 活动  2. 资讯
             "info",
-            "publishId",'fresh'
+            "publishId",
         ],
-        watch: {
-            publishId: {
-                handler(newValue){
-                    console.log('----',newValue)
-                },
-                deep:true
-            },
-            puId:{
-                handler(newValue){
-                    console.log('----',newValue)
-                },
-                deep:true
-            }
-        },
         created() {
             //定时器
             this.setTime();
             console.log('1111',this.publishId)
             this.userInfo = this.SSH.getItem('userInfo');
             for(let o of this.SSH.getItem('LoginUserRol')){
-                if(o==='33' || o==='34' || this.publishId===this.userInfo.id){
+                if(o==='33' || o==='34'){
                     this.showDel=true
                     break
                 }
@@ -190,12 +175,13 @@
         methods: {
             setTime(){
                 let _this = this;
+                // console.log("监听成功",this.publishId)
+                // console.log("监听成功",this.userInfo.id)
                 if(this.publishId.length>1){
-                    if(this.publishId===this.userInfo.id){
+                    if(this.publishId===this.userInfo.id.toString()){
                         this.showDel=true
-                        //console.log("监听成功")
-                    }else{
-                        //console.log("监听成功")
+                        // console.log("监听成功2",this.showDel)
+                        // console.log("监听成功",this.userInfo.id)
                     }
                     //clearTimeout(_this.timer);
                     return
@@ -235,7 +221,8 @@
                         this.$message.warning("您暂无权限进行举报");
                         return;
                     }
-                    var cstNm = cstNm || this.infoDetailData.cstNm;
+                    //var cstNm = cstNm || this.infoDetailData.cstNm;
+                    var cstNm = cstNm
                     if(this.utils.isEmpty(cstNm)){
                         cstNm='ddsd'
                     }
@@ -340,11 +327,11 @@
                     }
                     this.$confirm("是否删除该评论?","删除").then(() => {
                         var url = this.$apiUrl.parkInfo.delReply;
-                        var pop = {id: item.id}
+                        var pop = {id: item.id,parkId:this.SSH.getItem('parkId')}
                         //onsole.log(item,parentItem,index);
                         this.$post(url, pop)
                             .then((response) => {
-                                if (response.resultCode == "CLT000000000") {
+                                if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                                     this.cnts[index].replyList.splice(childIndex,1);
                                     this.$message.success("该条评论删除成功");
                                 } else {
