@@ -57,44 +57,7 @@
                 totalCount: 0,
                 pageNum: 1,
                 pageSize: 5,
-                enterprises:[
-                    /*{
-                        cstLogo: require('@/views/newparkHall/home/imgs/logo_b1.png'),
-                        cstNm:'德意志银行',
-                        isShowDetail:false,
-                        idyTpcd:'金融/IT'
-                    },
-                    {
-                        cstLogo: require('@/views/newparkHall/home/imgs/logo_b2.png'),
-                        cstNm:'德意志银行',
-                        isShowDetail:false,
-                        idyTpcd:'金融/IT'
-                    },
-                    {
-                      cstLogo: require('@/views/newparkHall/home/imgs/logo_b3.png'),
-                      cstNm:'德意志银行',
-                      isShowDetail:false,
-                        idyTpcd:'金融/IT'
-                    },
-                    {
-                        cstLogo: require('@/views/newparkHall/home/imgs/logo_b4.png'),
-                        cstNm:'德意志银行',
-                        isShowDetail:false,
-                        idyTpcd:'金融/IT'
-                    },
-                    {
-                      cstLogo: require('@/views/newparkHall/home/imgs/logo_b5.png'),
-                      cstNm:'德意志银行',
-                      isShowDetail:false,
-                        idyTpcd:'金融/IT'
-                    },
-                    {
-                      cstLogo: require('@/views/newparkHall/home/imgs/logo_b6.png'),
-                      cstNm:'德意志银行',
-                      isShowDetail:false,
-                        idyTpcd:'金融/IT'
-                    }*/
-                ]      ,
+                enterprises:[],
                 rzzMap:new Map()
             }
 
