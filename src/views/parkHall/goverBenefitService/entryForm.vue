@@ -194,8 +194,12 @@
                             <!--复选框-->
                             <el-select multiple collapse-tags v-if="item.type=='checkbox'" v-model="item.tittext"
                                        clearable placeholder="请选择">
-                                <el-option v-for="(item,index) in item.childrens" :key="item.value" :label="index"
-                                           :value="item.name">
+                                <el-option
+                                    v-for="(item,index) in item.childrens"
+                                    :key="item.value"
+                                    :label="item.name"
+                                    :value="item.name"
+                                >
                                 </el-option>
                             </el-select>
                             <!--日期模版-->
