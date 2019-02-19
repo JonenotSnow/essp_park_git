@@ -1,5 +1,8 @@
 import axios from 'axios';
 import {Message} from "element-ui";
+
+import {storeApi} from "../../fetch/storeApi/storeApi";
+
 // initial state
 // 状态值
 const state = {
@@ -36,15 +39,15 @@ const actions = {
         let type = state.selectItem.id
         //活动
         if (type == "park_activity") {
-            url = "/activity/getAllActivity";
+            url = storeApi.getAllActivity;
         }
         //惠政
         if (type == "park_gover") {
-            url = '/policy/getAllPolicy';
+            url = storeApi.getAllPolicy;
         }
         //资讯
         if (type == "park_information") {
-            url = "/information/getAllInformation";
+            url = storeApi.getAllInformation;
         }
         var pop = payload.pop;
         state.allLoading = payload.loading;

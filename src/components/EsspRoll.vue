@@ -84,28 +84,9 @@
                     });
                 }
             },
-
-            // 获取该审核权限
-            cancelAudit(item) {
-                this.$post(this.$apiUrl.manage.auditCancer, {
-                    entityId: item.id,
-                    type: "01",
-                    status: "01"
-                }).then(
-                    response => {
-                        if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
-                            this.$router.push({
-                                path: "/parkHall/manage/manageAuditing",
-                                query: {id: item.id}
-                            });
-                        } else {
-                            this.$message.error(response.resultMsg);
-                        }
-                    },
-                    response => {
-                        this.$message.error(response.resultMsg);
-                    }
-                );
+            //校验审核状态
+            cancelAudit(rows){
+                this.$router.push({path:'/parkHall/manage/manageParkAuditDetail',query:{entityId:rows.id,cstId:rows.cstId}});
             },
 
         },
