@@ -26,7 +26,7 @@
                         @click="goNoticeList()"
                     >More&gt;</span>
                 </div>
-                <div v-else class="noData">暂无通知公告~~</div>
+                <div v-else class="noData">暂无公告~~</div>
             </div>
             <!-- 有新入园通知 -->
             <div
