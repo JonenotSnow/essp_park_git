@@ -66,188 +66,6 @@
                 infoList: [],
                 // 首页任务池---最新申请入园消息
                 applyParkList: [],
-                // applyParkList: [
-                //     {
-                //         "id": "20190215105156011",
-                //         "title": "cccc",
-                //         "parkId": "20181220204119007",
-                //         "type": null,
-                //         "status": "0",
-                //         "issuer": "1579ya",
-                //         "content": "<p>asdas </p>",
-                //         "createTime": 1550199116767,
-                //         "updateTime": null,
-                //         "access_token": null,
-                //         "pageNum": null,
-                //         "pageSize": null,
-                //         "watch": 0,
-                //         "tbl": null,
-                //         "accessoryUrl": null,
-                //         "remark": "",
-                //         "issuerId": "1000150011",
-                //         "flag": null
-                //     },
-                //     {
-                //         "id": "20190215105014009",
-                //         "title": "大城市的",
-                //         "parkId": "20181220204119007",
-                //         "type": null,
-                //         "status": "0",
-                //         "issuer": "1579ya",
-                //         "content": "<p>啛啛喳喳错</p>",
-                //         "createTime": 1550199014435,
-                //         "updateTime": null,
-                //         "access_token": null,
-                //         "pageNum": null,
-                //         "pageSize": null,
-                //         "watch": 0,
-                //         "tbl": null,
-                //         "accessoryUrl": null,
-                //         "remark": "",
-                //         "issuerId": "1000150011",
-                //         "flag": null
-                //     },
-                //     {
-                //         "id": "20190215104945008",
-                //         "title": "阿萨德",
-                //         "parkId": "20181220204119007",
-                //         "type": null,
-                //         "status": "0",
-                //         "issuer": "1579ya",
-                //         "content": "<p>啛啛喳喳错错 </p>",
-                //         "createTime": 1550198985730,
-                //         "updateTime": null,
-                //         "access_token": null,
-                //         "pageNum": null,
-                //         "pageSize": null,
-                //         "watch": 0,
-                //         "tbl": null,
-                //         "accessoryUrl": null,
-                //         "remark": "",
-                //         "issuerId": "1000150011",
-                //         "flag": null
-                //     },
-                //     {
-                //         "id": "20190215104654007",
-                //         "title": null,
-                //         "parkId": "20181220204119007",
-                //         "type": null,
-                //         "status": "0",
-                //         "issuer": "1579ya",
-                //         "content": null,
-                //         "createTime": 1550198814033,
-                //         "updateTime": null,
-                //         "access_token": null,
-                //         "pageNum": null,
-                //         "pageSize": null,
-                //         "watch": 0,
-                //         "tbl": null,
-                //         "accessoryUrl": null,
-                //         "remark": "",
-                //         "issuerId": "1000150011",
-                //         "flag": null
-                //     },
-                //     {
-                //         "id": "20190215104643006",
-                //         "title": "测试公告",
-                //         "parkId": "20181220204119007",
-                //         "type": null,
-                //         "status": "0",
-                //         "issuer": "1579ya",
-                //         "content": "<p>啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊</p>",
-                //         "createTime": 1550198803888,
-                //         "updateTime": null,
-                //         "access_token": null,
-                //         "pageNum": null,
-                //         "pageSize": null,
-                //         "watch": 0,
-                //         "tbl": null,
-                //         "accessoryUrl": null,
-                //         "remark": "",
-                //         "issuerId": "1000150011",
-                //         "flag": null
-                //     },
-                //     {
-                //         "id": "20190215104403005",
-                //         "title": null,
-                //         "parkId": "20181220204119007",
-                //         "type": null,
-                //         "status": "0",
-                //         "issuer": "1579ya",
-                //         "content": null,
-                //         "createTime": 1550198643586,
-                //         "updateTime": null,
-                //         "access_token": null,
-                //         "pageNum": null,
-                //         "pageSize": null,
-                //         "watch": 0,
-                //         "tbl": null,
-                //         "accessoryUrl": null,
-                //         "remark": "",
-                //         "issuerId": "1000150011",
-                //         "flag": null
-                //     },
-                //     {
-                //         "id": "20190215104346004",
-                //         "title": "标题测试1",
-                //         "parkId": "20181220204119007",
-                //         "type": null,
-                //         "status": "0",
-                //         "issuer": "沐2",
-                //         "content": "<p><strong>标题测试1标题测试1标题测试1 </strong></p><p><strong><u>发大恶 </u><em><u>烦诶份额</u></em></strong></p>",
-                //         "createTime": 1550198626442,
-                //         "updateTime": null,
-                //         "access_token": null,
-                //         "pageNum": null,
-                //         "pageSize": null,
-                //         "watch": 0,
-                //         "tbl": null,
-                //         "accessoryUrl": null,
-                //         "remark": "",
-                //         "issuerId": "1000170012",
-                //         "flag": null
-                //     },
-                //     {
-                //         "id": "20190215104337003",
-                //         "title": "今日份公告",
-                //         "parkId": "20181220204119007",
-                //         "type": null,
-                //         "status": "0",
-                //         "issuer": "1579ya",
-                //         "content": "<p>啊啊啊啊啊啊啊啊啊啊啊啊啊</p>",
-                //         "createTime": 1550198617978,
-                //         "updateTime": null,
-                //         "access_token": null,
-                //         "pageNum": null,
-                //         "pageSize": null,
-                //         "watch": 0,
-                //         "tbl": null,
-                //         "accessoryUrl": null,
-                //         "remark": "",
-                //         "issuerId": "1000150011",
-                //         "flag": null
-                //     },
-                //     {
-                //         "id": "20190214143107001",
-                //         "title": "0214发布 tongzhi公告测试",
-                //         "parkId": "20181220204119007",
-                //         "type": null,
-                //         "status": "0",
-                //         "issuer": "沐3",
-                //         "content": "<p>0214发布 tongzhi公告测试</p>",
-                //         "createTime": 1550125867357,
-                //         "updateTime": null,
-                //         "access_token": null,
-                //         "pageNum": null,
-                //         "pageSize": null,
-                //         "watch": 0,
-                //         "tbl": null,
-                //         "accessoryUrl": null,
-                //         "remark": "",
-                //         "issuerId": "1000190018",
-                //         "flag": null
-                //     }
-                // ],
                 isBdPark: this.utils.isBdPark(),
                 LoginUserRole: this.SSH.getItem("LoginUserRol").toString(),
             }
@@ -266,7 +84,7 @@
                 this.LoginUserRole.includes("33") ||
                 this.LoginUserRole.includes("34")
             ) {
-                this.getapplyParkList();
+                this.getApplyParkList();
             }
         },
         methods: {
@@ -304,8 +122,8 @@
             /**
              * 首页任务池---最新申请入园消息
              */
-            getapplyParkList() {
-                this.$post(this.$apiUrl.manage.getapplyParkList, {
+            getApplyParkList() {
+                this.$post(this.$apiUrl.manage.getLastApplyPark, {
                     parkId: window.sessionStorage.getItem("parkId")
                 }).then(response => {
                     if (response.resultData) {
