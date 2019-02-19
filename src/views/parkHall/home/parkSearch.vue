@@ -2,8 +2,18 @@
  <div>
      <!-- 园区搜索页面 -->
      <div class="banner_index">
-        <div class="banner_bg"></div>
-        <div class="indexSeach">
+        <!-- <div class="banner_bg"></div> -->
+        <div style="position: relative;height: 500px;overflow: hidden;">
+            <el-carousel indicator-position="none" height="500px">
+                <el-carousel-item v-for="item in bannerDisList" :key="item.id">
+                    <div class="banner_bg" :style="'background-image:url('+item.img_url+')'" @click="swiperLink(item,index)"></div>
+                </el-carousel-item>
+            </el-carousel>
+            <div class="swiper-button-next2" tabindex="0" role="button" aria-label="Next slide"></div>
+            <div class="swiper-button-prev2" tabindex="0" role="button" aria-label="Previous slide"></div>
+            <div class='swiper-pagination'></div>
+        </div>
+        <div class="indexSeach" v-if="isBdPark">
             <el-input placeholder="请输入标题关键字" v-model="indexSeachKW">
                 <el-select v-model="typeselect" slot="prepend" placeholder="请选择" class="typecon" @change="changetype">
                     <el-option label="活动" value="park_activity"></el-option>
@@ -159,24 +169,25 @@ export default {
         return {
             isBdPark: this.utils.isBdPark(),
             currentIndex: "", //默认选第一个
-            typeselect: this.$route.query.type || "park_activity", //关键类型判断，默认采用活动
             indexSeachKW: this.$route.query.title || "", //关键词搜索
             tagTxt: this.$route.query.tagTxt || "", //标签搜索
             parkId:sessionStorage.getItem("parkId") || "",//园区id
-            searchData: [], //搜索的数据源头
             tagItems: [], //接纳标签所有数据
             sometags: [], //加工处理标签内容
             pageRanges: [5, 10, 20, 50], //默认每页10条数区间
             pageNum: 1, //当前页码
             pageSize: 10, //每页条数
-            allTotal: 0, //总条数
             timeRange: [], //时间区间
             classtType: "", //明细分类条件
-            loading: false
+            loading: false,
+            bannerDisList:[]
             
         };
     },
     computed: {
+        typeselect(){
+            return this.$store.state.park.selectItem.id || "park_activity";
+        },
         //判断类型
         typeName() {
             let nameObj = {
@@ -184,7 +195,7 @@ export default {
                 park_gover: "惠政", //惠政标签
                 park_information: "资讯" //资讯标签
             };
-            return nameObj[this.typeselect];
+            return nameObj[this.$store.state.park.selectItem.id];
         },
         typeitems() {
             let itemTypeObj = {
@@ -193,9 +204,19 @@ export default {
                 park_information: classtType.infoType //资讯标签
             };
             return itemTypeObj[this.typeselect];
+        },
+        searchData(){
+            console.log('searchData')
+            console.log(this.$store.state)
+            return this.$store.state.park.searchPageData.searchData;
+        },
+        allTotal(){
+            return this.$store.state.park.searchPageData.allTotal;
         }
     },
     created() {
+        this.$store.commit('getSearchState',{show:false})
+        this.getAllData();
         this.changetype();
     },
     methods: {
@@ -236,7 +257,7 @@ export default {
             await this.getListResult();
         },
         async getListResult() {
-        let type = this.typeselect;
+            let type = this.typeselect;
             //活动
             if (type == "park_activity") {
                 await this.getParkActiveList();
@@ -252,11 +273,12 @@ export default {
                 await this.getParkInfoList();
                 return;
             }
+            this.resetSerchA();
             return
         },
         //全部活动
         getParkActiveList() {
-            var url = this.$apiUrl.active.actAll;
+            // var url = this.$apiUrl.active.actAll;
             var pop = {
                 pageNum: this.pageNum,
                 pageSize: this.pageSize,
@@ -267,25 +289,28 @@ export default {
                 activityTheme: this.indexSeachKW,
                 activityType: this.classtType
             };
-            this.loading = true
-            this.$post(url, pop).then(response => {
-                this.loading = false
-                var codestatus = response.resultCode;
-                    if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
-                        this.searchData = response.resultData.activityList;
-                        this.resetSerchA();
-                        this.allTotal = response.resultData.total; //总条数
-                    } else {
-                        this.$message.info(response.resultMsg);
-                    }
-                },err => {
-                    this.$message.error("接口异常");
-                }
-            );
+            this.$store.dispatch('getSearchPageData',{
+                pop:pop,
+                loading:true
+            })
+            // this.$post(url, pop).then(response => {
+            //     this.loading = false
+            //     var codestatus = response.resultCode;
+            //         if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
+            //             this.searchData = response.resultData.activityList;
+            //             this.resetSerchA();
+            //             this.allTotal = response.resultData.total; //总条数
+            //         } else {
+            //             this.$message.info(response.resultMsg);
+            //         }
+            //     },err => {
+            //         this.$message.error("接口异常");
+            //     }
+            // );
         },
         //全部惠政
         getParkGoverList() {
-            var url = this.$apiUrl.goverBene.allPolicy;
+            // var url = this.$apiUrl.goverBene.allPolicy;
             var pop = {
                 pageNum: this.pageNum,
                 pageSize: this.pageSize,
@@ -296,25 +321,29 @@ export default {
                 title: this.indexSeachKW
             };
             this.isBdPark ? '' : pop.classtType = this.classtType
-            this.loading = true
-            this.$post(url, pop).then(response => {
-                this.loading = false
-                var codestatus = response.resultCode;
-                    if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
-                        this.searchData = response.resultData.policyList;
-                        this.resetSerchA();
-                        this.allTotal = response.resultData.total; //总条数
-                    } else {
-                        this.$message.info(response.resultMsg);
-                    }
-                },err => {
-                this.$message.error("接口异常");
-                }
-            );
+            
+            this.$store.dispatch('getSearchPageData',{
+                pop:pop,
+                loading:true
+            })
+            // this.$post(url, pop).then(response => {
+            //     this.loading = false
+            //     var codestatus = response.resultCode;
+            //         if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
+            //             this.searchData = response.resultData.policyList;
+            //             this.resetSerchA();
+            //             this.allTotal = response.resultData.total; //总条数
+            //         } else {
+            //             this.$message.info(response.resultMsg);
+            //         }
+            //     },err => {
+            //     this.$message.error("接口异常");
+            //     }
+            // );
         },
         //全部资讯
         getParkInfoList() {
-            var url = this.$apiUrl.parkInfo.allInfos;
+            // var url = this.$apiUrl.parkInfo.allInfos;
             var pop = {
                 pageNum: this.pageNum,
                 pageSize: this.pageSize,
@@ -329,20 +358,24 @@ export default {
                 pop.type = '1'
             }
             this.loading = true
-            this.$post(url, pop).then(response => {
-                this.loading = false
-                var codestatus = response.resultCode;
-                    if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
-                        this.searchData = response.resultData.informationList;
-                        this.resetSerchA();
-                        this.allTotal = response.resultData.total; //总条数
-                    } else {
-                        this.$message.info(response.resultMsg);
-                    }
-                },err => {
-                this.$message.error("接口异常");
-                }
-            );
+            this.$store.dispatch('getSearchPageData',{
+                pop:pop,
+                loading:true
+            })
+            // this.$post(url, pop).then(response => {
+            //     this.loading = false
+            //     var codestatus = response.resultCode;
+            //         if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
+            //             this.searchData = response.resultData.informationList;
+            //             this.resetSerchA();
+            //             this.allTotal = response.resultData.total; //总条数
+            //         } else {
+            //             this.$message.info(response.resultMsg);
+            //         }
+            //     },err => {
+            //     this.$message.error("接口异常");
+            //     }
+            // );
         },
         //活动详情页
         gotoActiveDetail(item) {
@@ -411,6 +444,19 @@ export default {
                 query: {
                     applyType: item.applyType,
                     id: item.id
+                }
+            });
+        },
+        getAllData() {
+            this.$post("/parkManage/getParkById", {
+                parkId: window.sessionStorage.getItem("parkId")
+
+            }).then(res => {
+                if (res.resultCode == "CLT000000000" || res.resultCode == "0000000000") {
+                    if (res.resultData.slidesImage) {
+                        let list = JSON.parse(res.resultData.slidesImage)
+                        this.bannerDisList = list;
+                    }
                 }
             });
         }

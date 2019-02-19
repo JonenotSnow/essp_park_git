@@ -1,586 +1,1467 @@
 <template>
-  <div class="actauditpage" id="manageActivityAudit">
-    <essp-bread-crumb class="detailNav" :breadList="breadlist"></essp-bread-crumb>
-    <div class="common_titwrap">
-      <p class='Otitle'>活动发布审核</p>
-      <div class="k1">
-        <div class="title">
-          <h3 class="common_tit_des">基本信息</h3>
+    <div id="ActivityDetail">
+        <essp-bread-crumb class="detailNav" :breadList="breadlist"></essp-bread-crumb>
+        <!-- <p class="detailNav">园区活动>活动详情</p> -->
+        <div class="wrap">
+
+            <div class="activemain">
+                <div class="activemain_con esspclearfix">
+                    <!-- 活动介绍模块 -->
+                    <div class="actleft">
+                        <div>
+                            <div class="acttit">主办方</div>
+                            <div>
+                                <img class="actlogo" :src="logo" alt="">
+                                <p class="actcpname login_con_a" @click="interCc()">{{activeDetailData.cstName
+                                    ?activeDetailData.cstName:"进入企业橱窗>>"}}</p>
+                                <!--<a href="javascript:void(0)" class="login_con_a" @click="interCc()">进入企业橱窗 <i-->
+                                <!--class="el-icon-d-arrow-right"></i></a>-->
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="actright">
+                        <div class="maininfo esspclearfix">
+                            <div class="logocon">
+                                <img class="detaillogo" :src="activeDetailData.activityPhoto" alt="">
+                            </div>
+                            <div class="detailcon">
+                                <h2>{{activeDetailData.activityTheme}}</h2>
+                                <div class="tagcon esspclearfix" v-if="activityLabelList.length">
+                                    <essp-park-tag
+                                        v-for="(item, eptIndex) in activityLabelList"
+                                        :value="item"
+                                        v-if="eptIndex < 3"
+                                        :key="eptIndex"
+                                    ></essp-park-tag>
+                                </div>
+                                <div class="infos">
+                                    <div class="infos_item">
+                                        <i class="icon iconfont icon-riqi1" style="color: #ccc;"></i>
+                                        <b>时间：</b><em>{{activeDetailData.activityStarttime}}</em></div>
+                                    <div class="btns">
+                                        <i class="icon iconfont icon-dizhi" style="color: #ccc;"></i>
+                                        <b>地点：</b><em>{{activeDetailData.activityPlace}}</em>
+                                    </div>
+                                    <!--<div><i class="iconcoom el-icon-zoom-in"></i>-->
+                                    <!--<b>发起人：</b><em>{{activeDetailData.initiatorName || '暂无发起人'}}</em></div>-->
+                                    <div style="margin-bottom: 20px;">
+                                        <i class="icon iconfont icon-piaozhong" style="color: #ccc;"></i>
+                                        <b>票种：</b>
+                                    </div>
+                                </div>
+                                <div class="infobtn esspclearfix">
+                                    <div class="btnitem"
+                                         v-for="(item,index) in activeDetailData.ticketForm"
+                                         v-if=" activeDetailData.ticketForm != null && index<10" :key="index">
+                                        ￥{{item.ticketPirce || "0.00"}} {{item.ticketType}}
+                                    </div>
+                                </div>
+                                <div class="status_btn">
+                                    <button
+                                        v-if="activeDetailData.status == '02' && btnText == 0"
+                                        disabled
+                                    >预告中
+                                    </button>
+                                    <button
+                                        v-else-if="activeDetailData.status == '02' && btnText==1">
+                                        <em class="btn_text_i" :class="!loginFlag ? 'sel':''"  @click="signUp(activeDetailData.enterType)">立即报名</em>
+                                    </button>
+                                    <button
+                                        v-else-if="activeDetailData.status == '02' && btnText == 2"
+                                        disabled
+                                    >已结束
+                                    </button>
+                                    <button v-else disabled>未审核</button>
+
+                                    <span @click="showDialog()" v-if="flollowStatus === '0'" round><i
+                                        class="iconfont icon-aixin-xianxing"
+                                        style="margin-right:5px;color:#fc1878;font-size: 12px;"></i>关注</span>
+                                    <span class="btn-icon-star-on" size="mini" @click="showDialog()"
+                                          v-if="flollowStatus === '1'" round><i class="iconfont icon-collect2"
+                                                                                style="margin-right:5px;color:#fc1878;font-size: 12px;"></i>已关注</span>
+                                    <span
+                                        @click="tipOffFn(4,activeDetailData.activityId,activeDetailData.activityTheme)"
+                                        style="cursor: pointer;"><i class="iconfont icon-warning"
+                                                                    style="margin-right:5px;"></i>举报</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="jbnc" v-if="prompt == 1">
+                PS: 该内容因被举报正在取证中，请您谨慎对待。
+            </div>
+            <div class="active_detail_div">
+                <div>
+                    <p class="clickTitle">
+                        <span style="margin-right: 50px;">报名情况</span>
+                        <span>已报名 <strong>{{allEnterCount}}</strong>人</span>
+                    </p>
+                </div>
+                <div class="swiperwrap swiperwrap2">
+                    <!--少于6个，防止滑动-->
+                    <div class="no_swiper" v-if="signUpList.length< 6"></div>
+                    <div class="swipercon" v-if="signUpList.length>0" style="margin-bottom: 20px;">
+                        <swiper :options="swiperOption" ref="mySwiper">
+                            <swiper-slide v-for="(item,index) in signUpList" :key="index">　　　　　　
+                                <div class="swiper_item">
+                                    <div class="itempic">
+                                        <img :src="item.cstLogo" alt=""></div>
+                                    <h3>报名人数: <span>{{item.enterCount}}</span>人</h3>
+                                    <p>{{item.timeShow}}</p>
+                                </div>
+                            </swiper-slide>
+                        </swiper>
+                        <div class="swiper-button-next"></div>
+                        <div class="swiper-button-prev"></div>
+                    </div>
+                    <div class="swipercon" v-if="signUpList.length==0" style="padding-bottom: 20px;">
+                        <div style="text-align: center">
+                            <p style="display: inline-block"><img src="./noEroll.png" alt=""></p>
+                            <p style="display: inline-block; margin-left: 40px; height: 98px; line-height: 98px;">
+                                <span>暂无人报名，点击报名按钮，立即报名吧</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="activityD border-top">
+                    <p class="clickTitle" style="margin-bottom: 30px;"><span>活动详情</span></p>
+                <div class=" ql-container ql-snow bord-none">
+                    <div style="border: none; padding:0;" class="ql-editor" v-html="activeDetailData.activityDetails"></div>
+                </div>
+                </div>
+                <div class="tipOffBox border-top esspclearfix">
+                    <div class="l">
+                        <p><strong>收费说明 :</strong>{{activeDetailData.chargeInfo || "无收费说明"}}</p>
+                        <p><strong>发起单位 :</strong>{{activeDetailData.initiateUnits || "暂无"}}</p>
+                        <p>
+                            <strong>活动标签 :</strong>
+                            <essp-park-tag
+                                v-for="(item, eptIndex) in activityLabelList"
+                                :value="item"
+                                :key="eptIndex"
+                            />
+                        </p>
+                    </div>
+                    <!--<div class="r">-->
+                    <!--<el-button type="danger" size="mini" round @click="tipOffFn(4,activeDetailData.activityId,activeDetailData.activityTheme)">举报</el-button>-->
+                    <!--</div>-->
+                </div>
+                <!--commentSty 传入的类型-->
+                <essp-info-comment commentSty="1" :publishId ="publishId"></essp-info-comment>
+            </div>
+            <div class="active_detail_div active_detail_div1">
+                <div class="moreActive">
+                    <p class="clickTitle">
+                        <span>更多热门活动</span>
+                        <span><router-link to="/parkIndex/park/all"
+                                           style="color: #00a0e9;font-size: 14px;">更多>></router-link></span>
+                    </p>
+                </div>
+                <div class="swiperwrap swiperwrap1">
+                    <div class="swipercon" v-if="imglist1.length > 0">
+
+                        <swiper :options="swiperOption1" ref="mySwiper1" style="width: 100%;">
+                            <swiper-slide v-for="(item,index) in imglist1" :key="index">　　　　　　
+                                <div class="swiper_item" @click="lineTo(item.activityId)">
+                                    <div class="itempic">
+                                        <img :src="item.activityPhoto" alt="">
+                                        <span>{{item.activityStarttime.substring(0,11)}}</span>
+                                    </div>
+                                    <h3>{{item.activityTheme}}</h3>
+                                    <!--<router-link :to="{path:'/parkIndex/activityDetail',query:{activityId:item.activityId}}">-->
+                                    <!---->
+                                    <!--</router-link>-->
+                                </div>
+                            </swiper-slide>
+                        </swiper>
+                        <div class="swiper-button-next1"></div>
+                        <div class="swiper-button-prev1"></div>
+                    </div>
+                    <div class="swipercon" v-if="imglist1.length==0">暂无热门活动！</div>
+                </div>
+            </div>
         </div>
-        <div class="contentList">
-          <p>
-            <span>活动主题：</span>
-            <span>{{infoList.activityTheme}}</span>
-          </p>
-          <p>
-            <span>活动类别：</span>
-            <span v-if="infoList.activityType == it.type" v-for="(it,i) in typeList" :key="i">{{it.name}}</span>
-          </p>
-          <p>
-            <span>活动开始时间：</span>
-            <span>{{infoList.activityStarttime}}</span>
-          </p>
-          <p>
-            <span>活动天数：</span>
-            <span>{{infoList.activityDays}}</span>
-          </p>
-          <p>
-            <span>活动地点：</span>
-            <span>{{infoList.activityPlace}}</span>
-          </p>
-          <p>
-            <span>是否收费：</span>
-            <span>{{infoList.isCharge == 1 ? '是' : '否'}}</span>
-          </p>
-          <p v-if="infoList.isCharge==1">
-            <span>收费说明：</span>
-            <span>{{infoList.chargeInfo}}</span>
-          </p>
-          <p>
-            <span>报名是否需审核：</span>
-            <span>{{infoList.enterNeedAudit == 0 ? '否' : '是'}}</span>
-          </p>
-          <p>
-            <span style="float: left">活动详情：</span>
-            <span style="border: none; padding:0;" class="ql-editor" v-html="infoList.activityDetails"></span>
-          </p>
-          <p class="esspclearfix">
-            <span style="float: left">活动宣传图/海报：</span>
-            <img style="float: left;width: 245px;" :src="infoList.activityPhoto" alt="">
-          </p>
-          <p>
-            <span>活动标签：</span>
-            <span>{{infoList.activityLabel || "无"}}</span>
-          </p>
-          <p>
-            <span>发起单位：</span>
-            <span>{{infoList.initiateUnits}}</span>
-          </p>
-          <p v-if="infoList.cstNam">
-            <span>发布方：</span>
-            <span>{{infoList.cstName}}</span>
-          </p>
-        </div>
-      </div>
-      <div class="k1">
-        <div class="title">
-          <h3 class="common_tit_des">报名表设置</h3>
-        </div>
-        <p class="radioBtn">
-          <el-radio v-model="radio" disabled label="0">个人实名分页申报</el-radio>
-          <el-radio v-model="radio" disabled label="1">企业实名分页申报</el-radio>
-        </p>
-        <div class="contentList1">
-          <div v-for=" (item,index)  in formRqList" :key="index">
-            <p>
-              <i v-if="item.requir">*</i>
-              <span>{{item.name}}：</span>
-            </p>
-            <p><input type="text" v-model="item.tittext" disabled></p>
-            <!-- <input type="text" disabled> -->
-          </div>
-        </div>
-      </div>
-      <div class="k2">
-        <div class="title">
-          <h3 class="common_tit_des">其他设置</h3>
-        </div>
-        <p class="infoTitle">票务信息：</p>
-        <ul class="tickInfo">
-          <li>
-            <span>票种名称</span>
-            <span>价格</span>
-            <span>数量</span>
-            <span>操作</span>
-          </li>
-          <li v-for="item in items" :key="item.ticketType">
-            <span>{{item.ticketType}}</span>
-            <span>￥{{item.ticketPirce}}</span>
-            <span>{{item.ticketNum}}</span>
-            <span>
-              <i class="el-icon-delete" style="color:#ddd;"></i>
+
+        <!-- 关注事件对话框start -->
+        <el-dialog class="quguanbox"
+                   title="提示"
+                   :visible.sync="dialogVisible"
+                   width="30%"
+                   :before-close="handleClose">
+            <!-- <span style="display: inline-block; width: 100%; text-align: center;font-size: 16px">确定取消该关注？</span> -->
+            <div>
+                <i class="icon iconfont icon-tishi"></i><span class="quguan">是否取消该关注</span>
+            </div>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="dialogVisible = false">取 消</el-button>
+                <el-button type="primary" @click="cancleFocus()">确 认</el-button>
             </span>
-          </li>
-        </ul>
-        <div class="contentList2">
-          <p>
-            <span>活动开放范围：</span>
-            <span>{{infoList.openScope | openStatus(infoList.openScope)}}</span>
-          </p>
-          <p>
-            <span>报名人数上限：</span>
-            <span>{{numberToplimit}}</span>
-          </p>
-          <p>
-            <span>报名开始时间：</span>
-            <span>{{infoList.enterStarttime}}</span>
-          </p>
-          <p>
-            <span>报名截止时间：</span>
-            <span>{{infoList.enterEndtime}}</span>
-          </p>
-          <!--<p>-->
-          <!--<span>邀请对象：</span>-->
-          <!--<span>xxxxxxxxxxx</span>-->
-          <!--</p>-->
-        </div>
-      </div>
-      <hr>
-      <p class="submitMark">
-        <span>提交审核备注：</span>
-        <span>{{infoList.activityRemarks || "无"}}</span>
-      </p>
-      <p class="markReason esspclearfix">
-        <span>
-          <i style="color: red;margin-right: 5px;">*</i>审核原因：</span>
-        <textarea v-model="mark" :disabled="$route.query.opMark==='01'"></textarea>
-      </p>
-      <p class="btn" v-if="$route.query.opMark==='03'">
-        <span @click="access = true">通过</span>
-        <span @click="noAccess = true">不通过</span>
-        <span @click="$router.go(-1)">取消</span>
-        <!--<el-button type="primary" size="small" @click="access = true"></el-button>-->
-        <!--<el-button type="primary" size="small" @click="noAccess = true">不通过</el-button>-->
-        <!--<el-button type="primary" size="small" @click="$router.go(-1)">取消</el-button>-->
-      </p>
+        </el-dialog>
+        <!-- 关注事件对话框end -->
     </div>
-    <!-- 通过审核弹窗 -->
-    <el-dialog :visible.sync="access" width='560px' class='access'>
-      <p>是否确认通过审核！</p>
-      <p>
-        <el-button type="primary" size="small" @click="access =false">取消</el-button>
-        <el-button type="primary" size="small" @click="auditFn('10')">确认</el-button>
-      </p>
-    </el-dialog>
-
-    <!-- 未通过审核弹窗 -->
-    <el-dialog :visible.sync="noAccess" width='560px' class='noAccess'>
-      <p>是否拒绝通过审核</p>
-      <p>
-        <el-button type="primary" size="small" @click="noAccess =false">取消</el-button>
-        <el-button type="primary" size="small" @click="auditFn('03')">确认</el-button>
-      </p>
-    </el-dialog>
-  </div>
 </template>
-<script>
-import EsspBreadCrumb from "@/components/EsspBreadCrumb";
 
-export default {
-    data() {
-        return {
-            breadlist: [
-                {
-                    path: "/parkIndex/park/all",
-                    name: this.utils.isBdPark() ? "平台活动" : "园区活动"
-                },
-                {
-                    path: `/parkIndex/park/auditing`,
-                    name: "我审核的活动"
-                },
-                {
-                    path: "",
-                    name: "活动发布审核"
+<script>
+    import EsspBreadCrumb from "@/components/EsspBreadCrumb"
+    import EsspInfoComment from "@/components/EsspInfoComment"
+
+    import 'swiper/dist/css/swiper.css' ////这里注意具体看使用的版本是否需要引入样式，以及具体位置。
+    import {swiper, swiperSlide} from 'vue-awesome-swiper'
+    import Moment from "moment";
+    import EsspParkTag from "@/components/EsspParkTag";
+    import mixin from '@/components/mixins/mixins_windowOpen.js'
+    export default {
+        mixins:[mixin],
+        components: {
+            EsspBreadCrumb,
+            swiper,
+            swiperSlide,
+            EsspInfoComment,
+            EsspParkTag
+        },
+        filters: {
+            fromDates(vaule) {
+                var a = Moment(vaule);
+                var b = Moment(new Date());
+                var day = b.diff(a, 'days');
+                var hour = b.diff(a, 'hour');
+                var minutes = b.diff(a, 'minutes');
+                var second = b.diff(a, 'second');
+                var str = "之前";
+                if (day > 0) {
+                    return day + "天" + str;
                 }
-            ],
-            numberToplimit: 0, //人数上限
-            items: [], //票务列表信息
-            formRqList: [], //申报表列表信息
-            auditType: "", //审核类型（企业审核、园区审核）
-            infoList: {},
-            access: false,
-            noAccess: false,
-            radio: "",
-            mark: "",
-            typeList: [
-                {
-                    type: "1",
-                    name: "培训"
-                },
-                {
-                    type: "2",
-                    name: "论坛"
-                },
-                {
-                    type: "3",
-                    name: "比赛"
-                },
-                {
-                    type: "4",
-                    name: "聚会"
-                },
-                {
-                    type: "5",
-                    name: "研讨会"
-                },
-                {
-                    type: "6",
-                    name: "发布会"
-                },
-                {
-                    type: "7",
-                    name: "分享会"
-                },
-                {
-                    type: "8",
-                    name: "沙龙"
+                if (hour > 0) {
+                    return hour + "小时" + str;
                 }
-            ],
-            userId: ""
-        };
-    },
-    components: {
-        EsspBreadCrumb
-    },
-    created() {
-        this.userId = this.SSH.getItem("userInfo").id;
-        this.getInfo();
-    },
-    methods: {
-        toggleSelection(rows) {
-            if (rows) {
-                rows.forEach(row => {
-                    this.$refs.multipleTable.toggleRowSelection(row);
-                });
-            } else {
-                this.$refs.multipleTable.clearSelection();
+                if (minutes > 0) {
+                    return minutes + "分钟" + str;
+                }
+                if (second > 0) {
+                    return second + "秒" + str;
+                }
+                return
             }
         },
-        handleSelectionChange(val) {
-            this.multipleSelection = val;
-        },
-        /*获取企业活动审核详情页面的活动信息 */
-        getInfo() {
-            this.$post(this.$apiUrl.manage.activityAduit, {
-                activityId: this.$route.query.id,
-                parkId: sessionStorage.getItem("parkId"),
-                opMark: this.$route.query.opMark
-            }).then(
-                response => {
-                    if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
-                        this.infoList = Object.assign({}, response.resultData);
-                        this.items = JSON.parse(this.infoList.ticketForm); //票务信息
-                        var enterForm = JSON.parse(this.infoList.enterForm); //申报信息
+        data() {
+            return {
+                publishId:"1",//长度为1不能改
+                logo: "",
+                icons: [
+                    "icon iconfont icon-riqi1",
+                    "icon iconfont icon-dizhi",
+                    "icon iconfont icon-liulan",
+                    "icon iconfont icon-collect2",
+                    "icon iconfont icon-faburen",
+                    "icon iconfont icon-pinglun"
+                ],
+                userInfo: {},
+                activityLabelList: [],
+                flollowStatus: "0",
+                flollowStatusCn: "关注",
+                dataModel: {},  //活动详情model
+                signUpList: [],//报名情况列表
+                hotActivityList: [],//热门活动列表
+                active: 0,
+                companyName: this.$route.query.cstName,
+                showBtnV: true,
+                activeDetailData: {},
 
-                        this.formRqList = enterForm.formRqList.concat(
-                            enterForm.formTypeList
-                        );
-                        var number = 0;
-                        for (var i = 0; i < this.items.length; i++) {
-                            number = number + this.items[i].ticketNum;
-                        }
-                        this.numberToplimit = number;
-                        this.radio = this.infoList.enterType;
-                        this.mark = this.infoList.reason || "";
-                        console.log(this.mark, this.infoList.reason);
-                    } else {
-                        this.$message.error(response.resultMsg);
+                prompt: 0,
+                plist: [],
+                showBtn: false,
+                selist: [
+                    {
+                        id: '0',
+                        name: '美食'
+                    },
+                    {
+                        id: '1',
+                        name: '交流'
+                    },
+                    {
+                        id: '2',
+                        name: '创业'
+                    }
+                ],
+                imglist: [],// 报名情况
+                imglist1: [],  // 热门活动
+                currAttenStatus: '0',  // 是否已关注  0 未关注  1已关注
+                allEnterCount: 0,
+                swiperOption: {
+                    nitialSlide: 0,//设定初始化时slide的索引
+                    notNextTick: true,
+                    slidesPerView: 6,
+                    slidesPerGroup: 6,
+                    spaceBetween: 0,
+                    navigation: {
+                        nextEl: '.swiper-button-next', //前进按钮的css选择器或HTML元素。
+                        prevEl: '.swiper-button-prev', //后退按钮的css选择器或HTML元素。
                     }
                 },
-                response => {
-                    this.$message.error(response.resultMsg);
-                }
-            );
+                swiperOption1: {
+                    nitialSlide: 0,//设定初始化时slide的索引
+                    notNextTick: true,
+                    slidesPerView: 4,
+                    slidesPerGroup: 4,
+                    spaceBetween: 18,
+                    navigation: {
+                        nextEl: '.swiper-button-next1', //前进按钮的css选择器或HTML元素。
+                        prevEl: '.swiper-button-prev1', //后退按钮的css选择器或HTML元素。
+                    }
+                },
+                breadlist: [
+                    {
+                        path: '/parkIndex/park/all',
+                        name: this.utils.isBdPark()?'平台活动':"园区活动"
+                    },
+                    {
+                        path: '/parkIndex/activityDetail',
+                        name: "活动详情"
+                    }
+                ],
+                btnText: 0,
+                nowTime: new Date().getTime(),
+
+                // 关注
+                dialogVisible: false,
+                flollowStatus: "", //资讯关注状态，非0 就是关注了,
+                LoginUserRol: this.SSH.getItem("LoginUserRol")?this.SSH.getItem("LoginUserRol").toString():'',
+                loginFlag: this.SSH.getItem("loginFlag") ? this.SSH.getItem("loginFlag") : false
+            }
         },
-        /* 点击通过或者不通过按钮操作触发 */
-        auditFn(status) {
-            console.log(this.mark);
-            if (this.mark == "") {
-                this.$message.error("请填写审核原因");
-                return;
+        created() {
+            this.userInfo = this.SSH.getItem('userInfo');
+
+            // 判断是否显示提示
+            this.isPit(this.$route.query.activityId);
+            this.getActListSource();
+
+        },
+        computed: {
+            swiper() {
+                return this.$refs.mySwiper.swiper;
             }
-            if (this.mark.length > 100) {
-                this.$message.error("填写的审核原因不能大于1oo字！");
-                return;
+        },
+        watch: {
+            '$route'(to, from) {
+                this.getActListSource();
             }
-            /* ========企业审核========================= */
-            this.$post(this.$apiUrl.active.activityAudit, {
-                activityId: this.$route.query.id,
-                parkId: window.sessionStorage.getItem("parkId"),
-                status: status,
-                reason: this.mark
-            }).then(
-                response => {
+        },
+        methods: {
+            getTime(timeValue) {
+                let nowTime = timeValue.replace(/-/g, '/');
+                let time = new Date(nowTime);
+                return time.getTime();
+            },
+            getBtnText() {
+                if (this.nowTime < this.getTime(this.activeDetailData.enterStarttime)) {
+                    this.btnText = 0;
+                } else if (this.nowTime >= this.getTime(this.activeDetailData.enterStarttime) && this.nowTime <= this.getTime(this.activeDetailData.enterEndtime)) {
+                    this.btnText = 1;
+                } else if (this.nowTime > this.getTime(this.activeDetailData.enterEndtime)) {
+                    this.btnText = 2;
+                }
+                console.log( this.btnText);
+
+            },
+            lineTo(activityId) {
+                this.$router.push({
+                    path: '/parkIndex/activityDetail',
+                    query: {
+                        activityId: activityId
+                    }
+                })
+            },
+            // 举报是否需要提示
+            isPit(entId) {
+                // 举报 3. 资讯模块  4. 活动模块  5. 评论模块
+                this.$post("/inform/findPrompt", {
+                    informType: 4,
+                    entId: entId
+                }).then((response) => {
+                    if (response.resultCode == 'CLT000000000' || response.resultCode == '0000000000') {
+                        this.prompt = response.resultData.prompt;
+                    }
+                });
+            },
+            // 举报 3. 资讯模块  4. 活动模块  5. 评论模块
+            tipOffFn(type, id, title, cstNm, byInformer) {
+                //未登录
+                if (!this.utils.isLoginMode()) {
+                    var _this = this;
+                    this.$message.warning("您尚未登陆，请您先登陆");
+                    setTimeout(function () {
+                        _this.windowHrefUrl('/userIndex/login')
+                    }, 2000);
+                    return;
+                }
+                if(this.utils.isVisitorMode()){
+                    this.$message.warning("您暂无权限进行举报");
+                    return;
+                }
+                var parkId = sessionStorage.getItem("parkId");
+                var cstNm = cstNm || this.activeDetailData.initiatorWay;
+                var byInformer = byInformer || this.activeDetailData.initiatorUsername;
+                console.log(id + '_' + parkId);
+
+                this.$commonJs.tipOffMask({
+                    informType: type,                                      // 类型（必填）
+                    informContent: title,                                  // 举报标题
+                    byInformer: byInformer,                                // 被举报人（必填）
+                    informerEnt: cstNm,                                    // 被举报人所在企业（必填）
+                    entId: id                                               //  实体编号  类似id比如 活动id， 评论id等（必填）
+                });
+            },
+            interCc() {
+                this.windowOpenUrl('/centerIndex/showHome',{cstId:this.activeDetailData.cstId})
+            },
+            /* 获取企业logo */
+            getLogo() {
+                /* 获取企业logo */
+                this.$post(this.$apiUrl.active.getLogo, {
+                    cstId: this.activeDetailData.cstId
+                }).then((response) => {
+                    this.logo = response.resultData.logo;
+
+                });
+            },
+            /* 立即报名 */
+            signUp(enrollType) {
+
+                if (!this.loginFlag) {
+                    var _this = this;
+                    this.$message.warning("您尚未登陆，请您先登陆");
+                    return;
+                }
+                // 游客没权限参与活动
+                if (this.loginFlag && this.LoginUserRol.includes('11')) {
+                    this.$message.error('园区成员才能做此操作');
+                    return;
+                }
+
+                if (!this.loginFlag && enrollType == '0') {
+                    this.$message.warning('本活动仅对本园区开放');
+                    return;
+                }
+                if(this.activeDetailData.topLimit == 0) {
+                    this.$message.warning('本活动报名人数已达到上限');
+                    return;
+                }
+                this.$router.push({
+                    path: '/parkIndex/enrollForm',
+                    query: {
+                        activeId: this.$route.query.activityId,
+                        enrollType: enrollType
+                    }
+                })
+
+            },
+
+            // 弹窗
+            showDialog() {
+                // if (!this.loginFlag) {
+                //     this.$message.error('登录并且入驻园区才能关注');
+                // }
+                // if (this.LoginUserRol == '11' && this.loginFlag) {
+                //     this.$message.error('入驻园区才能关注');
+                // }
+                //未登录
+                if (!this.utils.isLoginMode()) {
+                    var _this = this;
+                    this.$message.warning("您尚未登陆，请您先登陆");
+                    setTimeout(function () {
+                        _this.windowHrefUrl('/userIndex/login')
+                    }, 2000);
+                    return;
+                }
+                //游客模式暂不支持关注
+                if(this.utils.isVisitorMode()){
+                    this.$message.warning("您暂无权限进行关注/取消关注");
+                    return;
+                }
+                if (this.flollowStatus == '1') {
+                    this.dialogVisible = true;
+                }
+                if (this.flollowStatus != '1') {
+                    this.follow();
+                }
+            },
+            cancleFocus() {
+                this.follow();
+            },
+            follow() {
+                // this.activeDetailData.currAttenStatus === "1" 1 已关注  0 未关注
+                var isClick = true;
+                if (!isClick) {
+                    return;
+                }
+                isClick = false;
+
+                this.flollowStatus = this.flollowStatus === "1" ? "0" : "1";
+
+                var url = this.flollowStatus === "0" ? "/attention/removeAttention" : this.$apiUrl.active.addAttention;
+
+                this.$post(url, {
+                    activityId: this.$route.query.activityId,
+                    parkId: window.sessionStorage.getItem("parkId")
+                }).then((response) => {
+                    isClick = true;
                     if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
+                        this.dialogVisible = false;
                         this.$message.success(response.resultMsg);
                     } else {
-                        this.$message.error(response.resultMsg);
+                        this.$message({
+                            type: "info",
+                            message: response.resultMsg
+                        });
                     }
-                },
-                response => {
-                    this.$message.error(response.resultMsg);
-                }
-            );
-            this.access = false;
-            this.noAccess = false;
-            this.$router.push("/parkIndex/park/auditing");
-        }
-    },
-    filters: {
-        openStatus(value) {
-            if (value == "0") {
-                return "仅对本园区开放";
-            } else if (value == "1") {
-                return "全开放";
+                }, response => {
+                    isClick = true;
+                    this.$message.error(response.resultMsg)
+                });
+            },
+
+            getActListSource() {
+                var op = this.$route.query.op || '01'
+                /* =======获取活动详情信息 ================================================*/
+                this.$post(this.$apiUrl.active.activeDetail, {
+                    activityId: this.$route.query.activityId,
+                    parkId: sessionStorage.getItem("parkId"),
+                    opMark: op
+                }).then((response) => {
+                    if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
+
+                        this.activeDetailData = response.resultData;
+                        this.activeDetailData.ticketForm= JSON.parse(this.activeDetailData.ticketForm)
+                        this.flollowStatus = response.resultData.currAttenStatus;
+
+                        if (response.resultData.activityLabel) {
+                            this.activityLabelList = response.resultData.activityLabel.split(",");
+                        } else {
+                            this.activityLabelList = [];
+                        }
+                        this.getLogo();
+                        this.getBtnText();
+                        this.publishId=""
+                        this.publishId=response.resultData.initiator
+                        console.log(this.btnText)
+                        console.log('444',this.publishId)
+                    } else {
+                        this.$message({
+                            type: "info",
+                            message: response.resultMsg
+                        });
+                    }
+
+                });
+                /*============= 获取报名情况列表 ====================================*/
+                this.$post(this.$apiUrl.active.getEnterSum, {
+                    activityId: this.$route.query.activityId,
+                    parkId: sessionStorage.getItem("parkId")
+                }).then((response) => {
+                    if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
+//                        var obj = [
+//                            {
+//                                cstId: "9131011205506145X2",
+//                                cstLogo: null,
+//                                cstName: "上海依图网络科技有限公司",
+//                                enterCount: 1,
+//                                firstTime: "2018-12-05 19:01:59"
+//                            },
+//                            {
+//                                cstId: "9131011205506145X2",
+//                                cstLogo: null,
+//                                cstName: "上海依图网络科技有限公司",
+//                                enterCount: 1,
+//                                firstTime: "2018-12-05 19:01:59"
+//                            },
+//                            {
+//                                cstId: "9131011205506145X2",
+//                                cstLogo: null,
+//                                cstName: "上海依图网络科技有限公司",
+//                                enterCount: 1,
+//                                firstTime: "2018-12-05 19:01:59"
+//                            },
+//                            {
+//                                cstId: "9131011205506145X2",
+//                                cstLogo: null,
+//                                cstName: "上海依图网络科技有限公司",
+//                                enterCount: 1,
+//                                firstTime: "2018-12-05 19:01:59"
+//                            },
+//                            {
+//                                cstId: "9131011205506145X2",
+//                                cstLogo: null,
+//                                cstName: "上海依图网络科技有限公司",
+//                                enterCount: 1,
+//                                firstTime: "2018-12-05 19:01:59"
+//                            },
+//                            {
+//                                cstId: "9131011205506145X2",
+//                                cstLogo: null,
+//                                cstName: "上海依图网络科技有限公司",
+//                                enterCount: 1,
+//                                firstTime: "2018-12-05 19:01:59"
+//                            },
+//                            {
+//                                cstId: "9131011205506145X2",
+//                                cstLogo: null,
+//                                cstName: "上海依图网络科技有限公司",
+//                                enterCount: 1,
+//                                firstTime: "2018-12-05 19:01:59"
+//                            },
+//                            {
+//                                cstId: "9131011205506145X2",
+//                                cstLogo: null,
+//                                cstName: "上海依图网络科技有限公司",
+//                                enterCount: 1,
+//                                firstTime: "2018-12-05 19:01:59"
+//                            },
+//                            {
+//                                cstId: "9131011205506145X2",
+//                                cstLogo: null,
+//                                cstName: "上海依图网络科技有限公司",
+//                                enterCount: 1,
+//                                firstTime: "2018-12-05 19:01:59"
+//                            }
+//                        ]
+//                        this.signUpList = obj;
+                        this.signUpList = response.resultData;
+                        var num = 0;
+                        this.signUpList.forEach((item, index) => {
+                            num += parseInt(item.enterCount);
+                        })
+                        this.allEnterCount = num;
+                    } else {
+                        this.$message({
+                            type: "info",
+                            message: response.resultMsg
+                        });
+                    }
+
+                });
+                /*============= 获取更多热门活动 ==================================*/
+                this.$post(this.$apiUrl.active.getHotActivity, {
+                    pageNum: 0,
+                    pageSize: 10,
+                    type: 0,
+                    parkId: window.sessionStorage.getItem("parkId")
+                }).then((response) => {
+                    if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
+                        this.imglist1 = response.resultData.hot;
+                    } else {
+                        this.$message({
+                            type: "info",
+                            message: response.resultMsg
+                        });
+                    }
+                });
+
             }
+
+
         }
     }
-};
 </script>
-<style>
-#manageActivityAudit .access .el-dialog__body,
-#manageActivityAudit .noAccess .el-dialog__body {
-    text-align: center;
-}
 
-#manageActivityAudit .access .el-dialog__body p:nth-of-type(1) {
-    line-height: 100px;
-}
-
-#manageActivityAudit .noAccess .el-dialog__body textarea {
-    width: 460px;
-    min-width: 460px;
-    max-width: 460px;
-    min-height: 80px;
-    border-radius: 10px;
-    border: 1px solid #ddd;
-    outline: none;
-    padding: 20px;
-}
-
-#manageActivityAudit .noAccess .el-dialog__body p:nth-of-type(1) {
-    text-align: left;
-    margin-bottom: 20px;
-    font-size: 16px;
-    color: #444;
-    text-indent: 25px;
-}
-
-#manageActivityAudit .noAccess .el-dialog__body p:nth-of-type(2) {
-    margin-top: 20px;
-}
-.markReason {
-    width: 990px;
-    margin: 0 auto;
-    line-height: 50px;
-}
-.markReason span,
-.markReason textarea {
-    float: left;
-}
-.markReason span {
-    width: 140px;
-    font-size: 16px;
-    margin-right: 10px;
-    color: #666666;
-    text-align: right;
-}
-.markReason textarea {
-    width: 350px;
-    height: 80px;
-    resize: none;
-    padding: 5px 10px;
-}
-</style>
-
-<style scoped lang="less">
-.common_tit_des {
-    float: left;
-    font-size: 20px;
-    margin-left: 82px;
-    padding: 0 12px 4px;
-    font-weight: normal;
-    border-left: 10px solid #00a0e9;
-}
-.common_titwrap {
-    width: 1200px;
-    margin: 0 auto;
-    background: #fff;
-    .Otitle {
-        font-size: 24px;
-        line-height: 36px;
-        margin-bottom: 20px;
-        color: #333333;
-        text-align: center;
-    }
-    .title {
-        width: 102 0px;
-        margin: 0 auto;
-        overflow: hidden;
-    }
-    .contentList,
-    .contentList1,
-    .contentList2 {
-        width: 990px;
-        margin: 20px auto;
-        & > p {
-            line-height: 50px;
-            span {
-                display: inline-block;
-                width: 140px;
-                font-size: 16px;
-                line-height: 40px;
-                margin-right: 10px;
-                color: #666666;
-                text-align: right;
-                &:nth-of-type(2) {
-                    width: 700px;
-                    font-size: 16px;
-                    line-height: 30px;
-                    color: #333333;
-                    text-align: left;
-                }
-            }
-            &.texta {
-                position: relative;
-                overflow: hidden;
-                span {
-                    float: left;
-                }
-                textarea {
-                    width: 820px;
-                    float: left;
-                    min-width: 820px;
-                    max-width: 820px;
-                    padding: 5px;
-                    min-height: 140px;
-                }
-            }
-        }
-    }
-    .radioBtn {
-        width: 1034px;
-        margin: 20px auto;
-        margin-bottom: 20px;
-        label {
-            cursor: pointer;
-            margin-right: 20px;
-            input {
-                position: relative;
-                top: 2px;
-                margin-right: 5px;
-            }
-        }
-    }
-    .contentList1 {
-        width: 1034px;
-        margin: 0 auto;
-        padding-bottom: 20px;
-        /*height: 404px;*/
-        border-radius: 6px;
-        border: solid 1px #cccccc;
-        & > div {
-            width: 550px;
-            margin: 0 auto;
-            line-height: 35px;
-            & > p {
-                i {
-                    color: #ff9900;
-                    margin-right: 5px;
-                    font-size: 16px;
-                }
-                span {
-                    color: #666;
-                    font-size: 16px;
-                }
-                input {
-                    width: 550px;
-                    height: 35px;
-                    background-color: #f6f9fb;
-                    border: solid 1px #eaeff2;
-                }
-            }
-            &:nth-of-type(1) {
-                margin-top: 20px;
-            }
-        }
-    }
-    .k2 {
-        .title {
-            margin: 40px 0 20px;
-        }
-        .infoTitle {
-            width: 1000px;
-            margin: 20px auto;
-            margin-bottom: 20px;
-        }
-        .tickInfo {
-            width: 1032px;
-            margin: 0 auto;
-            border: solid 1px #cccccc;
-            li {
-                display: flex;
-                height: 50px;
-                line-height: 50px;
-                border-top: solid 1px #cccccc;
-                span {
-                    flex: 1;
-                    text-align: center;
-                }
-                &:nth-of-type(1) {
-                    border-top: none;
-                }
-            }
-            li:nth-child(1) {
-                background: #f5f5f5;
-                font-size: 16px;
-            }
-        }
-    }
-}
-
-hr {
-    color: #666;
-}
-
-.submitMark {
-    width: 990px;
-    margin: 0 auto;
-    line-height: 50px;
-    span {
-        display: inline-block;
-        width: 140px;
-        font-size: 16px;
-        line-height: 40px;
-        margin-right: 10px;
-        color: #666666;
-        text-align: right;
-        &:nth-of-type(2) {
-            width: 700px;
-            font-size: 14px;
-            line-height: 30px;
-            color: #333333;
-            text-align: left;
-        }
-    }
-}
-
-.btn {
-    text-align: center;
-    line-height: 100px;
-    span {
-        display: inline-block;
-        width: 100px;
-        height: 40px;
-        line-height: 40px;
-        text-align: center;
+<style lang='less' scoped>
+    @import "../../../assets/css/mixin";
+    /*取关弹窗的样式*/
+    .btn_text_i {
         color: #fff;
-        cursor: pointer;
-        -webkit-border-radius: 5px;
-        -moz-border-radius: 5px;
-        border-radius: 5px;
-        margin-right: 130px;
+        display: inline-block;
+        height: 100%;
+        width: 100%;
+        font-style: normal;
     }
-    span:nth-child(1) {
-        background: #00a0e9;
+    .btn_text_i.sel {
+        background-color: #999;
+        -webkit-border-radius: 30px;
+        -moz-border-radius: 30px;
+        border-radius: 30px;
     }
-    span:nth-child(2) {
-        background: #999;
+    .jbnc {
+        .essp_width_auto();
+        height: 32px;
+        line-height: 32px;
+        color: #f22;
+        font-size: 16px;
+        font-weight: bold;
     }
-    span:nth-child(3) {
-        background: #00a0e9;
-        margin-right: 0;
-    }
-}
-</style>
 
+    .active_detail_div {
+        position: relative;
+        .essp_width_auto();
+        background: #fff;
+        margin-top: 10px;
+        padding: 45px 50px;
+        width: 1100px;
+        .no_swiper {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 100;
+        }
+    }
+
+    .active_detail_div {
+        margin-bottom: 10px;
+        .swipercon {
+            margin-bottom: 0;
+        }
+    }
+
+    .swiperwrap2 {
+        position: relative;
+
+    }
+
+    .status_btn {
+        padding-left: 26px;
+        span {
+            margin-left: 30px;
+            cursor: pointer;
+        }
+        button {
+            width: 100px;
+            height: 30px;
+            line-height: 30px;
+            color: #fff;
+            border: none;
+            border-radius: 20px;
+            background-color: #04a2ea;
+            cursor: pointer;
+            outline: none;
+        }
+        i {
+            font-size: 14px;
+            margin-right: 2px;
+            color: #999;
+        }
+        .icon-collect2, .icon-aixin-xianxing {
+            font-size: 12px;
+        }
+        .icon-warning {
+            font-size: 16px;
+        }
+    }
+
+    #ActivityDetail {
+
+        background: #f5f5f5;
+        .detailNav {
+            font-size: 16px;
+            line-height: 30px;
+            color: #666;
+        }
+        .icon_p_font {
+            span {
+                margin-right: 27px;
+            }
+            i {
+                margin-right: 10px;
+                color: #ff9900;
+                font-size: 14px;
+            }
+            .icon-collect2:before {
+                font-size: 12px;
+            }
+            .icon-pinglun {
+                font-size: 12px;
+            }
+        }
+        .tipOffBox {
+            padding: 30px 0 20px;
+            //            .essp_width_auto();
+            .l {
+                float: left;
+                width: 80%;
+                p {
+                    height: 30px;
+                    line-height: 30px;
+                    color: #444;
+                }
+                strong {
+                    padding-right: 6px;
+                    font-weight: normal;
+                    font-size: 16px;
+                }
+                span {
+                    padding: 0 6px;
+                    min-width: 65px;
+                    height: 20px;
+                    color: #fff;
+                    margin-right: 10px;
+                    background-color: #cccccc;
+                    -webkit-border-radius: 3px;
+                    -moz-border-radius: 3px;
+                    border-radius: 3px;
+                    font-size: 12px;
+
+                }
+            }
+            .r {
+                float: right;
+                button {
+                    width: 80px;
+                    height: 30px;
+                    background-color: #f56c6c !important;
+                    border-radius: 15px;
+                }
+            }
+        }
+        .wrap {
+            .headerItem {
+                width: 1151px;
+                height: 302px;
+                overflow: hidden;
+                margin: 0 22px 30px 27px;
+                overflow: hidden;
+                .headerLeft {
+                    width: 180px;
+                    padding-top: 36px;
+                    float: left;
+                    button {
+                        outline: none;
+                        border: none;
+                        width: 180px;
+                        height: 40px;
+                        font-size: 20px;
+                        background-color: #0066b3;
+                        line-height: 30px;
+                        color: #ffffff;
+                    }
+                    img {
+                        width: 180px;
+                        height: 180px;
+                        margin-top: 20px;
+                    }
+                    p {
+                        line-heihgt: 30px;
+                        &:nth-of-type(1) {
+                            font-size: 18px;
+                            color: #333;
+                        }
+                        &:nth-of-type(2) {
+                            font-size: 18px;
+                            margin-top: 10px;
+                            color: #666;
+                            margin-bottom: 20px;
+                        }
+                    }
+                }
+                .headerMiddle {
+                    padding-top: 36px;
+                    margin-left: 38px;
+                    float: left;
+                    img {
+                        width: 420px;
+                        height: 240px;
+                    }
+                }
+                .headerRight {
+                    padding-top: 36px;
+                    margin-left: 14px;
+                    float: left;
+                    p.title {
+                        width: 499px;
+                        height: 56px;
+                        font-size: 20px;
+                        font-weight: normal;
+                        font-stretch: normal;
+                        line-height: 36px;
+                        letter-spacing: 0px;
+                        color: #333333;
+                    }
+                    p.sel {
+                        line-height: 40px;
+                        margin-top: 18px;
+                        span {
+                            display: inline-block;
+                            width: 40px;
+                            height: 20px;
+                            line-height: 20px;
+                            margin-left: 20px;
+                            text-align: center;
+                            background-color: #cccccc;
+                            cursor: pointer;
+                        }
+                    }
+                    p.rightCommon {
+                        font-size: 12px;
+                        line-height: 30px;
+                        color: #666666;
+                    }
+                    p.tickSelect {
+                        overflow: hidden;
+                        span {
+                            display: inline-block;
+                            float: left;
+                            width: 110px;
+                            height: 30px;
+                            overflow: hidden;
+                            font-size: 12px;
+                            line-height: 30px;
+                            text-align: center;
+                            color: #ccc;
+                            border: solid 1px #ccc;
+                            cursor: pointer;
+                            &:nth-of-type(1) {
+                                margin-left: 15px;
+                            }
+                            &:nth-of-type(2) {
+                                margin-left: 10px;
+                            }
+                            & > i {
+                                font-size: 10px;
+                                -moz-transform: rotate(90deg);
+                                -ms-transform: rotate(90deg);
+                                -o-transform: rotate(90deg);
+                                -webkit-transform: rotate(90deg);
+                                position: relative;
+                                top: 13px;
+                                right: -18px
+                            }
+                            &.active {
+                                color: #ff9900;
+                                border: solid 1px #ff9900;
+                                & > i {
+                                    color: #ff9900;
+                                }
+                            }
+                        }
+                    }
+                    p:nth-last-of-type(1) {
+                        margin-top: 30px;
+                        & > button {
+                            width: 100px;
+                            height: 30px;
+                            background-color: #00a0e9;
+                            border-radius: 15px;
+                            outline: none;
+                            border: none;
+                            font-size: 12px;
+                            line-height: 25px;
+                            color: #fff;
+                            cursor: pointer;
+                            margin-left: 20px;
+                            &:nth-of-type(2) {
+                                width: 100px;
+                                height: 30px;
+                                border-radius: 15px;
+                                border: solid 1px #cccccc;
+                                background: #fff;
+                                color: #999;
+                                & > i {
+                                    color: #fc1878;
+                                    margin: 0 5px 0 -5px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            .clickItem {
+                width: 1180px;
+                height: 261px;
+                margin: 0 auto;
+                padding: 40px 0 50px;
+                border-top: 1px solid #ccc;
+                border-bottom: 1px solid #ccc;
+                .clickPic {
+                    width: 1108px;
+                    overflow: hidden;
+                    margin: 20px auto 0;
+                    & > img {
+                        float: left;
+                        position: relative;
+                        top: 50px;
+                        margin: 0 5px;
+                    }
+                    & > ul {
+                        overflow: hidden;
+                        float: left;
+                        li {
+                            float: left;
+                            margin-right: 35px;
+                            img {
+                                width: 150px;
+                                height: 150px;
+                            }
+                            & > p {
+                                font-size: 16px;
+                                line-height: 36px;
+                                color: #333333;
+                                text-align: center;
+                                &:nth-of-type(2) {
+                                    font-size: 12px;
+                                    color: #999;
+                                }
+                            }
+                            &:nth-last-of-type(1) {
+                                margin-right: 0;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .activityD {
+                position: relative;
+                //                .essp_width_auto();
+                padding: 40px 0 50px;
+                /*border-bottom: 1px solid #ccc;*/
+                & > p {
+                    &:nth-of-type(1) {
+                        span {
+                            font-size: 20px;
+                            margin-left: 0 !important;
+                            line-height: 36px;
+                            color: #333333;
+                            /*border-bottom: 4px solid #0066b3;*/
+                        }
+                    }
+                    &:nth-of-type(2) {
+                        margin-top: 15px;
+                        span {
+                            display: block;
+                            font-size: 13px;
+                            line-height: 15px;
+                            color: #666666;
+                        }
+                    }
+                }
+                .content {
+                    margin: 15px auto;
+                    width: 1098px;
+                    height: auto;
+                    font-size: 14px;
+                    line-height: 30px;
+                    color: #777777
+                }
+                .imgA {
+                    width: 880px;
+                    height: 378px;
+                    margin: 0 auto;
+                    & > img {
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
+                .dList {
+                    width: 1098px;
+                    height: auto;
+                    font-size: 14px;
+                    margin: 20px auto 0;
+                    h3 {
+                        font-size: 16px;
+                        line-height: 40px;
+                        color: #333333;
+                    }
+                    p {
+                        line-height: 30px;
+                    }
+                }
+                .detailT, .detailO {
+                    font-size: 14px;
+                    line-height: 30px;
+                }
+                .detailO {
+                    margin-top: 30px;
+                }
+            }
+            .border-top {
+                position: relative;
+            }
+            .border-top:before {
+                position: absolute;
+                left: -3%;
+                top: 0;
+                content: "";
+                height: 1px;
+                width: 106%;
+                background: #ccc;
+            }
+            .clickTitle {
+                line-height: 36px;
+                color: #333333;
+                span {
+                    padding-bottom: 5px;
+                    &:nth-of-type(1) {
+                        font-size: 20px;
+                        /*border-bottom: 4px solid #0066b3;*/
+                        line-height: 20px;
+                    }
+                    &:nth-of-type(2) {
+                        font-size: 16px;
+                    }
+                }
+            }
+            .moreActive {
+                margin-bottom: 35px;
+                .clickTitle {
+                    span {
+                        &:nth-of-type(2) {
+                            float: right;
+                            line-height: 36px;
+                            font-size: 20px;
+                            color: #666;
+                            cursor: pointer;
+                        }
+                    }
+                }
+                .clickItem {
+                    border-top: none;
+                    border-bottom: none;
+                    margin-top: 0;
+                    padding: 0;
+                }
+                .more {
+                    ul {
+                        li {
+                            img {
+                                width: 246px;
+                                height: 141px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .activemain {
+        .essp_width_auto();
+    }
+
+    .activemain_con {
+        padding: 38px 34px 42px;
+        background: #fff;
+    }
+
+    .login_con_a {
+        .esspsc(16px);
+        cursor: pointer;
+        font-size: 18px;
+        width: 180px;
+        overflow: hidden;
+        margin-top: 10px;
+    }
+
+    .bmbtn {
+        margin-left: 20px;
+        em {
+            padding-right: 5px;
+        }
+    }
+
+    .swiperwrap {
+        position: relative;
+    }
+
+    .swiperwrap h3 {
+        text-align: center;
+    }
+
+    .swiperwrap1 .swiper_item .itempic {
+        position: relative;
+        width: 246px;
+        height: 142px;
+        overflow: hidden;
+        span {
+            position: absolute;
+            width: 98%;
+            left: 0;
+            bottom: 0;
+            padding-right: 2%;
+            background: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            text-align: right;
+        }
+    }
+
+    .swiper_item {
+        /*padding: 8px;*/
+        background: #fff;
+        /*border: 1px solid #999;*/
+
+    }
+
+    .swipercon {
+        width: 1016px;
+        margin: 33px auto 38px;
+    }
+
+    .swiperwrap {
+        .swiper-button-prev, .swiper-button-next,
+        .swiper-button-prev1, .swiper-button-next1 {
+            width: 50px;
+            height: 72px;
+        }
+
+        .swiperwrap .swiper-button-prev1, .swiperwrap .swiper-button-next1 {
+            margin-top: -35px;
+        }
+        /*Swiper原样式 */
+        .swiper-button-prev, .swiper-container-rtl .swiper-button-next {
+            background-image: url("l1.jpg");
+            left: -9px;
+            right: auto;
+        }
+        .swiper-button-next, .swiper-container-rtl .swiper-button-prev {
+            background-image: url("r1.jpg");
+            right: -9px;
+            left: auto;
+        }
+        .swiper-button-prev1, .swiper-container-rtl .swiper-button-next1 {
+            /*background-image: url("l2.jpg");*/
+            background-image: url("l1.jpg");
+            left: -9px;
+            right: auto;
+        }
+        .swiper-button-next1, .swiper-container-rtl .swiper-button-prev1 {
+            /*background-image: url("r2.jpg");*/
+            background-image: url("r1.jpg");
+            right: -9px;
+            left: auto;
+        }
+        .swiper-button-prev1, .swiper-button-next1, .swiper-button-prev, .swiper-button-next {
+            position: absolute;
+            top: 35%;
+            margin-top: -22px;
+            z-index: 10;
+            cursor: pointer;
+            background-size: 100%;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        .itempic {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto;
+            overflow: hidden;
+            img {
+                display: block;
+                width: 100%;
+                min-height: 100%;
+            }
+        }
+        h3 {
+            font-size: 16px;
+            margin-top: 8px;
+            margin-bottom: 10px;
+            text-align: center;
+            font-weight: normal;
+            .esspellipsis();
+            padding: 0 10px;
+        }
+        p {
+            font-size: 12px;
+            .esspellipsis();
+            text-align: center;
+            color: #999;
+        }
+        .gn {
+            padding: 15px 0;
+            text-align: right;
+            .bm {
+                margin-left: 36px;
+                strong {
+                    font-size: 24px;
+                    color: @essp_nav_bg;
+                }
+            }
+        }
+        .swiper-button-prev, .swiper-button-next {
+            margin-top: -35px;
+        }
+
+    }
+
+    // 左侧部分
+    .actleft {
+        float: left;
+        padding: 0 0 10px;
+        margin-right: 31px;
+        /*border: 1px solid #ccc;*/
+
+        .acttit {
+            width: 180px;
+            height: 40px;
+            background-color: @essp_nav_bg;
+            color: #fff;
+            text-align: center;
+            line-height: 40px;
+            margin-bottom: 20px;
+            font-size: 20px;
+            background: rgb(21, 152, 255); /* Old browsers */
+            background: -moz-linear-gradient(right, rgba(21, 152, 255, 1) 0%, rgba(54, 191, 253, 1) 100%); /* FF3.6-15 */
+            background: -webkit-linear-gradient(right, rgba(21, 152, 255, 1) 0%, rgba(54, 191, 253, 1) 100%); /* Chrome10-25,Safari5.1-6 */
+            background: linear-gradient(to right, rgba(21, 152, 255, 1) 0%, rgba(54, 191, 253, 1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#1598ff', endColorstr='#36bffd', GradientType=0); /* IE6-9 */
+        }
+        .actlogo {
+            display: block;
+            width: 180px;
+            height: 180px;
+        }
+    }
+
+    // 右侧部分
+    .actright {
+        float: left;
+    }
+
+    .logocon {
+        width: 420px;
+        height: 240px;
+        float: left;
+        margin-right: 14px;
+        .detaillogo {
+            display: block;
+            width: 100%;
+            height: 100%;
+            cursor: none;
+        }
+    }
+
+    .detailcon {
+        float: left;
+        width: 485px;
+        h2 {
+            font-size: 20px;
+            color: #333333;
+            margin-bottom: 20px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            -moz-line-clamp: 2;
+            -moz-box-orient: vertical;
+            -ms-line-clamp: 2;
+            -ms-box-orient: vertical;
+            font-weight: normal;
+        }
+    }
+
+    //标签模块
+    .tagcon {
+        margin-bottom: 5px;
+        padding-left: 22px;
+        min-height: 25px;
+        span {
+            float: left;
+            margin-right: 20px;
+            margin-bottom: 10px;
+            padding: 2px 10px;
+            font-size: 12px;
+            background-color: #cccccc;
+            text-align: center;
+            color: #fff;
+        }
+
+    }
+
+    .infos {
+        margin-bottom: 5px;
+        .iconcoom {
+            margin-right: 4px;
+        }
+        i {
+            font-size: 12px;
+        }
+        > div {
+            margin-bottom: 6px;
+        }
+        .icon-piaozhong {
+            font-size: 14px;
+            b {
+                padding-left: 0;
+                margin-left: -3px;
+            }
+        }
+        .icon-dizhi {
+            font-size: 14px;
+        }
+        b {
+            padding-left: 5px;
+        }
+        b, em {
+            font-weight: normal;
+            font-size: 14px;
+            line-height: 24px;
+            font-style: normal;
+
+        }
+    }
+
+    .infobtn {
+        margin-bottom: 20px;
+        padding-left: 15px;
+        .btnitem {
+            float: left;
+            width: 125px;
+            overflow: hidden;
+            padding: 0 5px;
+            margin-bottom: 5px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            height: 30px;
+            line-height: 30px;
+            margin-left: 10px;
+            text-align: center;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            margin-bottom: 5px;
+            &:hover {
+                cursor: pointer
+            }
+        }
+        .selecrborder {
+            position: relative;
+            color: #ff9900;
+            border: 1px solid #ff9900;
+        }
+        .selecrborder:before {
+            position: absolute;
+            content: ' ';
+            bottom: 0px;
+            right: 0px;
+            width: 0;
+            height: 0;
+            border-width: 0 10px 10px;
+            border-style: solid;
+            border-color: transparent transparent transparent #fc0; /*透明 透明 透明 黄*/
+            transform: rotate(180deg);
+            -webkit-transform: rotate(180deg);
+            -moz-transform: rotate(180deg);
+            -ms-transform: rotate(180deg);
+        }
+
+    }
+
+    .btns {
+        overflow: hidden;
+        i {
+            float: left;
+            position: relative;
+            top: 5px;
+        }
+        b {
+            float: left;
+        }
+        em {
+            float: left;
+            display: inline-block;
+            width: 400px;
+        }
+    }
+</style>

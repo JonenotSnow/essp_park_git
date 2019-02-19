@@ -271,7 +271,7 @@ export default {
                 if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                     this.$message({
                         type: "success",
-                        message: response.resultMsg
+                        message: '邀请函已发送'
                     });
                 }else{
                     this.$message({

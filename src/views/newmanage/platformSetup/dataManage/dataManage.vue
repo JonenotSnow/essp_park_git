@@ -337,6 +337,19 @@ export default {
   methods: {
     rulesData: (type) => {
       var rules
+      var validateNumber1 = (rule, value, callback) => {
+        if(value > 999999999.99) {
+          callback(new Error(' '))
+        }
+        callback()
+      }
+      var validateNumber2 = (rule, value, callback) => {
+        if(value > 999999999) {
+          callback(new Error(' '))
+        }
+        callback()
+      }
+      
       switch(type) {
         case 0:
         case 1:
@@ -344,12 +357,14 @@ export default {
           rules = [
             { required: true, trigger: 'blur', message: ' '},
             { pattern: /^(([1-9][0-9]*)|(([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,2})))$/, trigger: 'blur', message: ' '},
+            { validator: validateNumber1, trigger: 'blur', message: ' '},
           ]
           break;
         default:
           rules = [
             { required: true, trigger: 'blur', message: ' '},
             { pattern: /^[1-9]+\d*$/, trigger: 'blur', message: ' '},
+            { validator: validateNumber2, trigger: 'blur', message: ' '},
           ]
           break;
       }
@@ -474,7 +489,7 @@ export default {
               this.$message.success("数据上传成功");
             });
           } else {
-            this.$message('请确保所有数据都已填写！')
+            this.$message('请确保所有数据都已按要求填写完整！')
             return false;
           }
         });

@@ -11,7 +11,7 @@
                         <li class="item" v-for="(item,index) in newsList" :key="index">
                             <div class="word-part" @click="goToNewsDetail(item)">
                                 <div class="title-ss">{{item.informationTitle}}</div>
-                                <div class="detail">{{item.content}}</div>
+                                <div class="detail">{{(item.content && item.content.length>40)?item.content.slice(0,40)+'...':item.content}}</div>
                                 <div class="part-b">
                                     <div class="label" v-if="item.tagsTxt && item.tagsTxt.length > 0"><span>{{item.tagsTxt.split(',')[0]}}</span></div>
                                     <div class="time">{{ item.createTime | timerFormat(item.createTime) }}</div>
@@ -158,6 +158,9 @@
                             }
                             .word-part {
                                 width: 340px;
+                                height: 130px;
+                                overflow: hidden;
+                                margin-top: 4px;
                                 .title-ss {
                                     font-size: 16px;
                                     letter-spacing: 1px;
@@ -173,6 +176,8 @@
                                     height: 40px;
                                     overflow: hidden;
                                     text-overflow: ellipsis;
+                                    -o-text-overflow:ellipsis;
+                                    display:block;
                                     display: -webkit-box;
                                     -webkit-line-clamp: 2;
                                     -webkit-box-orient: vertical;

@@ -157,8 +157,8 @@ router.beforeEach(async (to, from, next) => {
     }
     //
     let name = to.name;
-    let menuResource = sessionStorageHandler.getItem("menuResource"); 
-    let currentMenu = menuResource[name]; 
+    let menuResource = sessionStorageHandler.getItem("menuResource");
+    let currentMenu = menuResource[name];
     // console.log('name')
     // console.log(name)
     // console.log('currentMenu')

@@ -110,7 +110,7 @@
                     </div>
                 </div>
 
-
+                {{publishId}}
             </div>
             <div class="pageList">
                 <el-pagination
@@ -133,6 +133,39 @@
 
     export default {
         mixins: [mixin],
+        props:[
+            "commentSty",// 评论类型 1. 活动  2. 资讯
+            "info",
+            "publishId",'fresh'
+        ],
+        watch: {
+            publishId: {
+                handler(newValue){
+                    console.log('----',newValue)
+                },
+                deep:true
+            },
+            puId:{
+                handler(newValue){
+                    console.log('----',newValue)
+                },
+                deep:true
+            }
+        },
+        created() {
+            //定时器
+            this.setTime();
+            console.log('1111',this.publishId)
+            this.userInfo = this.SSH.getItem('userInfo');
+            for(let o of this.SSH.getItem('LoginUserRol')){
+                if(o==='33' || o==='34' || this.publishId===this.userInfo.id){
+                    this.showDel=true
+                    break
+                }
+            }
+            console.log(this.userInfo);
+            this.getCnt();
+        },
         data() {
             return {
                 reIndex:"",
@@ -152,23 +185,23 @@
                 authticate:true
             }
         },
-        props:[
-            "commentSty",// 评论类型 1. 活动  2. 资讯
-            "info"
-        ],
-        computed: {},
-        created() {
-            this.userInfo = this.SSH.getItem('userInfo');
-            for(let o of this.SSH.getItem('LoginUserRol')){
-                if(o==='33' || o==='34'){
-                    this.showDel=true
-                    break
-                }
-            }
-            console.log(this.userInfo);
-            this.getCnt();
+        computed: {
         },
         methods: {
+            setTime(){
+                let _this = this;
+                if(this.publishId.length>1){
+                    if(this.publishId===this.userInfo.id){
+                        this.showDel=true
+                        //console.log("监听成功")
+                    }else{
+                        //console.log("监听成功")
+                    }
+                    //clearTimeout(_this.timer);
+                    return
+                }
+                _this.timer=setTimeout(this.setTime,500);
+            },
             handleSizeChange(val) {
                 this.pageSize = val;
                 this.getCnt();
@@ -203,6 +236,9 @@
                         return;
                     }
                     var cstNm = cstNm || this.infoDetailData.cstNm;
+                    if(this.utils.isEmpty(cstNm)){
+                        cstNm='ddsd'
+                    }
                     var byInformer = byInformer || this.infoDetailData.usrNm;
                     this.$commonJs.tipOffMask({
                         informType: type,                                      // 类型（必填）
@@ -226,6 +262,7 @@
                 item.showBox = false;
                 item.content = "";
             },
+
 
             //添加回复
             addReply(item) {
@@ -290,7 +327,14 @@
             },
             delReply(item,parentItem,index,childIndex) {
                 if(this.utils.isLoginMode()){
-                    if(!this.utils.isVisitorMode()){
+                    let f=false
+                    for(let o of this.SSH.getItem('LoginUserRol')){
+                        if(o==='33' || o==='34'){
+                            f=true
+                            break
+                        }
+                    }
+                    if(!f){
                         this.$message.warning("您暂无权限删除回复");
                         return;
                     }
@@ -321,12 +365,19 @@
             // 删除评论
             delComment(item) {
                 if(this.utils.isLoginMode()){
-                    if(this.utils.isVisitorMode()){
+                    let f=false
+                    for(let o of this.SSH.getItem('LoginUserRol')){
+                        if(o==='33' || o==='34'){
+                            f=true
+                            break
+                        }
+                    }
+                    if(!f){
                         this.$message.warning("您暂无权限删除评论");
                         return;
                     }
                     var url = this.$apiUrl.parkInfo.delComment;
-                    var pop = {id: item.id}
+                    var pop = {id: item.id,parkId:this.SSH.getItem('parkId')}
 
                     this.$post(url, pop)
                         .then((response) => {
