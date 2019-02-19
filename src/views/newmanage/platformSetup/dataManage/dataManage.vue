@@ -374,7 +374,7 @@ export default {
       this.$post("/dataIndex/getIndexData", {
         parkId: sessionStorage.getItem("parkId")
       }).then(res => {
-        if (res.resultCode === "CLT000000000" || res.resultCode === "0000000000") {
+        // if (res.resultCode === "CLT000000000" || res.resultCode === "0000000000") {
           if (res.resultData.length > 0) {
             this.form.list.forEach(item => {
               item.content = [];
@@ -387,7 +387,7 @@ export default {
             let itemObj = Object.assign({},this.switchFn(itemIndex,0),item)
             if(this.form.list[itemIndex].content.length<5){this.form.list[itemIndex].content.push(itemObj);}
           });
-        }
+        // }
       });
     },
     addItem(index, jIndex) {

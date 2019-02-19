@@ -1,5 +1,4 @@
 import axios from 'axios';
-import qs from 'qs'
 import store from '../store/index'
 import router from '../router'
 import SSH from '../util/sessionStorageHandler'
@@ -13,7 +12,7 @@ import 'nprogress/nprogress.css'
 axios.defaults.timeout = 20000;
 axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8';
 axios.defaults.baseURL = '/api';
-
+var id = 0;
 
 let loadinginstance,
     loadCount = 0,
@@ -22,22 +21,27 @@ axios.interceptors.request.use(
     config => {
         //判断用户是否被冻结
         if (SSH.getItem('freezeFlag') === '1') {
-            var freezeUrl = constants.urlList
             if (utils.isFreeze(config.url)) {
-                Message.error({
-                    message: '您已被限制使用该功能，若需继续使用，请与您的建行客户经理联系或在线发起申诉。',
-                    duration: 3000
-                });
+                let msg = {};
+                msg['id'] = id++;
+                msg['message'] = '您已被限制使用该功能，若需继续使用，请与您的建行客户经理联系或在线发起申诉';
+                msg['type'] = constants.RETURN_CODE.ERROR_BUSINESS_TYPE;
+                msg['time'] = 0;
+                msg['show'] = false;
+                store.commit('pushMessageList', msg);
                 return Promise.reject(config)
             }
         }
-        config.headers.requester = 'PC'
+        config.headers.requester = 'PC';
         if (!utils.isEmpty(SSH.getItem('grayFlag')))
-            config.headers.GrayFlag = SSH.getItem('grayFlag')
+            config.headers.GrayFlag = SSH.getItem('grayFlag');
         if (SSH.getItem('token')) {
             config.headers.Authorization = `${'bearer '}${SSH.getItem('token')}`;
         }
-        loadCount++
+        if (SSH.getItem('location')) {
+            config.headers.location = SSH.getItem('location')
+        }
+        loadCount++;
         // 正式请求需要加上
         // loadinginstance = Loading.service({
         //     target: '.content-wrapper',
@@ -54,7 +58,7 @@ axios.interceptors.request.use(
         return Object.assign({}, config, cstCfg);
     },
     err => {
-        loadCount--
+        loadCount--;
         if (!loadCount) {
             loadingArray.forEach(item => item.close())
         }
@@ -70,95 +74,125 @@ axios.interceptors.response.use((res) => {
         loadingArray.forEach(item => item.close())
     }
     if (!!res.data["resultCode"]) {
-        if (res.data.resultCode == 'CLT000000004') {
-            Message.error({
-                message: res.data.resultMsg,
-                duration: 3000
-            });
-            utils.logoutDelSSH(401)
+        if (res.data.resultCode === 'CLT000000004') {
+            let msg = {};
+            msg['id'] = id++;
+            msg['message'] = res.data.resultMsg;
+            msg['type'] = constants.RETURN_CODE.ERROR_OTHER_LOGIN_TYPE;
+            msg['time'] = 0;
+            msg['show'] = false;
+            store.commit('pushMessageList', msg);
+            utils.logoutDelSSH(401);
             return Promise.reject(res);
-        } else if (res.data.resultCode != 'CLT000000000' && res.data.resultCode != '0000000000') {
-            let msg = '服务器开小差了..请稍后再试。报错参数：' + res.request.responseURL + ' -- ' + res.data.resultMsg
-            // Message.error({
-            //     message: msg,
-            //     duration: 3000
-            // });
-            Message.error({
-                message: res.data.resultMsg,
-                duration: 3000
-            });
+        } else if (!utils.arrayIsContain(res.data.resultCode, constants.RETURN_CODE.SUCCESS_CODE)) {
+            if (constants.RETURN_CODE.BUSINESS_RULE.test(res.data.resultCode)) {
+                let msg = {};
+                msg['id'] = id++;
+                msg['message'] = res.data.resultMsg;
+                msg['type'] = constants.RETURN_CODE.ERROR_BUSINESS_TYPE;
+                msg['time'] = 0;
+                msg['show'] = false;
+                store.commit('pushMessageList', msg)
+            } else if (constants.RETURN_CODE.TECHNOLOGY_RULE.test(res.data.resultCode) || res.data.resultCode === constants.RETURN_CODE.ERROR_CODE) {
+                let msg = {};
+                msg['id'] = id++;
+                msg['message'] = '服务器感冒了，点击查看病因';
+                msg['detailMessage'] = '报错参数：' + res.request.responseURL + ' ;报错码：' + res.data.resultCode + ' ;报错类型：' + constants.RETURN_CODE.ERROR_SYSTEM_TYPE + ' ;报错详情：' + res.data.resultMsg;
+                msg['type'] = constants.RETURN_CODE.ERROR_SYSTEM_TYPE;
+                msg['time'] = 0;
+                store.commit('pushErrMsgList', msg)
+            } else {
+                Message.error({
+                    message: res.data.resultMsg,
+                    duration: 3000
+                });
+            }
             return Promise.reject(res);
         }
     }
     else if (res === null) {
-        Message.error({
-            message: '连接服务器失败,请检查网络是否正常',
-            duration: 3000
-        })
+        let msg = {}
+        msg['id'] = id++
+        msg['message'] = '连接服务器失败,请检查网络是否正常'
+        msg['detailMessage'] = '报错参数：' + res.request.responseURL + ' ;报错类型：' + constants.RETURN_CODE.ERROR_NETWORK_TYPE
+        msg['type'] = constants.RETURN_CODE.ERROR_NETWORK_TYPE
+        msg['time'] = 0
+        store.commit('pushTimeOutMsgList', msg)
         return Promise.reject(res);
     }
-    return res;
+    return res
 }, (error) => {
     NProgress.done();
     loadCount--;
     if (!loadCount) {
         loadingArray.forEach(item => item.close())
     }
-    // console.log('error.response',error.response)
     //404等问题可以在这里处理
     if (error.response) {
-        if (error.response.status == 401 && error.response.data.error == 'invalid_token') {
-            Message.error({
-                message: '身份令牌失效，请重新登录',
-                duration: 3000
-            });
-            utils.logoutDelSSH(401)
-            // router.replace({
-            //     path: '/userIndex/login',
-            // })
-        } else if (error.response.config.url) {
-            if (SSH.getItem('freezeFlag') != '1' || !utils.isFreeze(error.response.config.url.toString().substring(4, error.response.config.url.length))) {
-                if (error.response.data && error.response.data.toString().indexOf('Error occured while trying to proxy to:') > -1) {
-                    Message.error({
-                        message: '连接服务器失败,请检查网络是否正常',
-                        duration: 3000
-                    })
-                } else {
-                    // if(error.response.data.path){
-                    //     let msg = '服务器开小差了..请稍后再试。报错参数：' + error.response.data.path+' -- ' + error.response.data.error
-                    //     Message.error({
-                    //         message: msg,
-                    //         duration: 3000
-                    //     })
-                    // }else{
-                    Message.error({
-                        message: error.response.data,
-                        duration: 3000
-                    })
-                    // }
-                }
+        if (error.response.status === 401) {
+            if (error.response.data.error === 'invalid_token') {
+                let msg = {};
+                msg['id'] = id++;
+                msg['message'] = '身份令牌失效，请重新登录';
+                msg['type'] = constants.RETURN_CODE.ERROR_INVALID_TOKEN_TYPE;
+                msg['time'] = 0;
+                msg['show'] = false;
+                store.commit('pushMessageList', msg);
+                utils.logoutDelSSH(401)
+            } else {
+                let msg = {};
+                msg['id'] = id++;
+                msg['message'] = '服务器感冒了，点击查看病因';
+                msg['detailMessage'] = '报错参数：' + (error.response && error.response.config && error.response.config.url ? error.response.config.url : null) +
+                    ' ;报错类型：' + constants.RETURN_CODE.ERROR_SYSTEM_TYPE +
+                    ' ;报错状态码：' + (error.response && error.response.status ? error.response.status : null) +
+                    ' ;报错详情：' + error.response.data.message;
+                msg['type'] = constants.RETURN_CODE.ERROR_SYSTEM_TYPE;
+                msg['time'] = 0;
+                store.commit('pushErrMsgList', msg)
             }
+        } else if (error.response.status === 500) {
+            let msg = {}
+            msg['id'] = id++
+            msg['message'] = '连接服务器失败,请检查网络是否正常'
+            msg['detailMessage'] = '报错参数：' + (error.response && error.response.config && error.response.config.url ? error.response.config.url : null) +
+                ' ;报错状态码：' + (error.response && error.response.status ? error.response.status : null) +
+                ' ;报错类型：' + constants.RETURN_CODE.ERROR_NETWORK_TYPE
+            msg['type'] = constants.RETURN_CODE.ERROR_NETWORK_TYPE
+            msg['time'] = 0
+            console.log('msg', msg)
+            store.commit('pushTimeOutMsgList', msg)
+        } else if (error.response.status === 502 || error.response.status === 504) {
+            let msg = {};
+            msg['id'] = id++;
+            msg['message'] = '服务器开小差';
+            msg['type'] = constants.RETURN_CODE.ERROR_SERVICE_TYPE;
+            msg['time'] = 0;
+            msg['show'] = false;
+            store.commit('pushMessageList', msg)
         } else {
-            // if(error.response.data.path){
-            //     let msg = '服务器开小差了..请稍后再试。报错参数：' + error.response.data.path+' -- ' + error.response.data.error
-            //     Message.error({
-            //         message: msg,
-            //         duration: 3000
-            //     })
-            // }else{
-            Message.error({
-                message: error.response.data,
-                duration: 3000
-            })
-            // }
+            let msg = {};
+            msg['id'] = id++;
+            msg['message'] = '服务器感冒了，点击查看病因';
+            msg['detailMessage'] = '报错参数：' + error.response && error.response.config && error.response.config.url ? error.response.config.url : null +
+                ' ;报错类型：' + constants.RETURN_CODE.ERROR_UNKNOWN_TYPE +
+                ' ;报错状态码：' + (error.response && error.response.status ? error.response.status : null) +
+                ' ;报错详情：' + error.response.data
+            msg['type'] = constants.RETURN_CODE.ERROR_UNKNOWN_TYPE
+            msg['time'] = 0
+            store.commit('pushErrMsgList', msg)
         }
+    } else {
+        let msg = {}
+        msg['id'] = id++
+        msg['message'] = '连接服务器失败,请检查网络是否正常'
+        msg['detailMessage'] = '报错参数：' + (error.response && error.response.config && error.response.config.url ? error.response.config.url : null) +
+            ' ;报错状态码：' + (error.response && error.response.status ? error.response.status : null) +
+            ' ;报错类型：' + constants.RETURN_CODE.ERROR_NETWORK_TYPE
+        msg['type'] = constants.RETURN_CODE.ERROR_NETWORK_TYPE
+        msg['time'] = 0
+        store.commit('pushTimeOutMsgList', msg)
     }
-    // else {
-    //     Message.error({
-    //         message: '连接服务器失败,请检查网络是否正常',
-    //         duration: 3000
-    //     })
-    // }
     return Promise.reject(error);
 });
 

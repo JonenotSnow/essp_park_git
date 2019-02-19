@@ -148,13 +148,13 @@ export default {
           }
           let params = Object.assign({parkId:sessionStorage.getItem('parkId')}, that.form);
           that.$post("/need/saveNeed", params).then(res => {
-            if (res.resultCode === "CLT000000000" || res.resultCode === "0000000000") {
+            // if (res.resultCode === "CLT000000000" || res.resultCode === "0000000000") {
               that.$message.success("发布成功!");
               this.$router.push('/needHall')
               // this.windowOpenUrl('requIndex/display-own?bsnRqmId='+res.resultData.id)
-            } else {
-              that.$message.warning("发布失败");
-            }
+            // } else {
+            //   that.$message.warning("发布失败");
+            // }
           });
         }
       });

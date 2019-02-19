@@ -252,10 +252,10 @@ export default {
                 this.$post(this.$apiUrl.parkInfo.infoById, pop).then(
                     response => {
                         var codestatus = response.resultCode;
-                        if (
-                            codestatus == "CLT000000000" ||
-                            codestatus == "0000000000"
-                        ) {
+                        // if (
+                        //     codestatus == "CLT000000000" ||
+                        //     codestatus == "0000000000"
+                        // ) {
                             let data = response.resultData;
                             this.informationTitle = data.informationTitle; //资讯标题
                             this.contentbrif = data.content; //资讯简介
@@ -270,9 +270,9 @@ export default {
                             this.tags = data.tagsTxt
                                 ? data.tagsTxt.split(",")
                                 : [];
-                        } else {
-                            this.$message.info(response.resultMsg);
-                        }
+                        // } else {
+                        //     this.$message.info(response.resultMsg);
+                        // }
                     },
                     err => {
                         this.$message.error("接口异常");
@@ -347,14 +347,14 @@ export default {
                     infoDetail: this.content,
                     informationId: this.informationId
                 }).then(response => {
-                    if (
-                        response.resultCode == "CLT000000000" ||
-                        response.resultCode == "0000000000"
-                    ) {
+                    // if (
+                    //     response.resultCode == "CLT000000000" ||
+                    //     response.resultCode == "0000000000"
+                    // ) {
                         this.$router.push({ path: url });
-                    } else {
-                        // this.$message.error(response.resultMsg);
-                    }
+                    // } else {
+                    //     // this.$message.error(response.resultMsg);
+                    // }
                 });
                 this.$refs.eat.saveTags();
             });
@@ -387,17 +387,17 @@ export default {
                 infoDetail: this.content,
                 informationId: this.informationId
             }).then(response => {
-                if (
-                    response.resultCode == "CLT000000000" ||
-                    response.resultCode == "0000000000"
-                ) {
+                // if (
+                //     response.resultCode == "CLT000000000" ||
+                //     response.resultCode == "0000000000"
+                // ) {
                     this.$confirm(msg, maskConfig).then(() => {
                         this.$refs.eat.saveTags();
                         this.$router.push({ path: url });
                     });
-                } else {
-                    // this.$message.error(response.resultMsg);
-                }
+                // } else {
+                //     // this.$message.error(response.resultMsg);
+                // }
             });
         }
     }

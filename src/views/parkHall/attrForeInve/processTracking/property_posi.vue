@@ -180,16 +180,16 @@
                     parkId: sessionStorage.getItem("parkId"),
                     pageSize: 2000
                 }).then((response) => {
-                    if (response.resultCode == 'CLT000000000' || response.resultCode == '0000000000') {
+                    // if (response.resultCode == 'CLT000000000' || response.resultCode == '0000000000') {
                         this.projectList = response.resultData;
                         console.log(this.projectList);
                         if(this.projectList.length != 0) {
                             this.getBuildings();
                         }
 
-                    } else {
-                        this.$message.error(response.message)
-                    }
+                    // } else {
+                    //     this.$message.error(response.message)
+                    // }
                 }, (response) => {
                     this.$message.error(response.message)
                 })
@@ -201,13 +201,13 @@
                     spaceProjectId: id,
                     pageSize: 2000
                 }).then((response) => {
-                    if (response.resultCode == 'CLT000000000' || response.resultCode == '0000000000') {
+                    // if (response.resultCode == 'CLT000000000' || response.resultCode == '0000000000') {
                         this.buildingList = response.resultData.list;
                         this.getRooms();
 
-                    } else {
-                        this.$message.error(response.message)
-                    }
+                    // } else {
+                    //     this.$message.error(response.message)
+                    // }
                 }, (response) => {
                     this.$message.error(response.message)
                 })
@@ -224,7 +224,7 @@
                     buildingId: id,
                     pageSize: 2000
                 }).then((response) => {
-                    if (response.resultCode == 'CLT000000000' || response.resultCode == '0000000000') {
+                    // if (response.resultCode == 'CLT000000000' || response.resultCode == '0000000000') {
                         var list = response.resultData.list;
                         var roomMaxNumData = this.getMaxFloorNumData(list);
                         console.log(roomMaxNumData)
@@ -251,9 +251,9 @@
 
                             console.log(this.roomIdList);
                         }
-                    } else {
-                        this.$message.error(response.message)
-                    }
+                    // } else {
+                    //     this.$message.error(response.message)
+                    // }
                 }, (response) => {
                     this.$message.error(response.message)
                 })

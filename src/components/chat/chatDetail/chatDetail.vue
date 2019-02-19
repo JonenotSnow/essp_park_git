@@ -222,7 +222,7 @@
                         remarks: this.nickName
                     }
                 ).then((response) => {
-                    if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
+                    // if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                         vm.$store.dispatch('changeNickName', vm.nickName);
                         let msg = {
                             "senderId": vm.SSH.getItem('userInfo').id + '',
@@ -238,7 +238,7 @@
                         };
                         let param = JSON.stringify(msg);
                         vm.$store.dispatch('sendWs', param);
-                    }
+                    // }
                 })
             },
             saveChatName() {
@@ -255,7 +255,7 @@
                                     groupname: this.groupName
                                 }
                             ).then((response) => {
-                                if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
+                                // if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                                     vm.$store.dispatch('modifyGroup', vm.groupName);
                                     let msg = {
                                         "senderId": vm.SSH.getItem('userInfo').id + '',
@@ -271,9 +271,11 @@
                                     };
                                     let param = JSON.stringify(msg);
                                     vm.$store.dispatch('sendWs', param);
-                                } else {
-                                    vm.groupName = vm.user.receiver
-                                }
+                                // } else {
+                                //     vm.groupName = vm.user.receiver
+                                // }
+                            }, err => {
+                                vm.groupName = vm.user.receiver
                             })
                         }
                     } else {

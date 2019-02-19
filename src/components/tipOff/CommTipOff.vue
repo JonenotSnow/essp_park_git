@@ -129,10 +129,10 @@
                 this.$post(apiUrl.rqmList.insertInformUrl,this.tipObj)
                     .then((response) => {
                         //onsole.log(response)
-                        if(response.resultCode==="codestatus == "CLT000000000" || codestatus == "0000000000"){
+                        // if(response.resultCode =="CLT000000000" || response.resultCode == "0000000000"){
                             this.$message.success(response.resultMsg)
                             this.button=new Date()
-                        }
+                        // }
                     },(err)=>{
                     })
             },

@@ -635,7 +635,7 @@ export default {
                 var url = this.$apiUrl.active.importData;
                 this.$post(url, param).then(
                     response => {
-                        if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
+                        // if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                             //                            this.$message.success("批量报名")
                             this.$alert("批量报名成功！", "报名提示", {
                                 confirmButtonText: "确定",
@@ -643,9 +643,9 @@ export default {
                                     this.$router.push("/parkIndex/park/all");
                                 }
                             });
-                        } else {
-                            this.$message.error(response.resultMsg);
-                        }
+                        // } else {
+                        //     this.$message.error(response.resultMsg);
+                        // }
                     },
                     err => {
                         this.$message.error(err.resultMsg);
@@ -740,11 +740,11 @@ export default {
             })
                 .then(response => {
                     this.btnBloon = true;
-                    if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
+                    // if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                         this.enrollFormMask = true;
-                    } else {
-                        this.$message.error(response.resultMsg);
-                    }
+                    // } else {
+                    //     this.$message.error(response.resultMsg);
+                    // }
                 })
                 .catch(response => {
                     this.btnBloon = true;

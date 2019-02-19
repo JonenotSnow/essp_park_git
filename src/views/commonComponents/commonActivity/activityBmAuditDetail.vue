@@ -256,7 +256,7 @@ export default {
                 opMark: opMark
             }).then(
                 response => {
-                    if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
+                    // if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                         _that.infoList = response.resultData;
                         _that.items = JSON.parse(
                             _that.infoList.activityTicketForm
@@ -294,9 +294,9 @@ export default {
 
                         this.enrollType = this.infoList.enterType;
                         this.nrollFormList = enterForm;
-                    } else {
-                        this.$message.error(response.resultMsg);
-                    }
+                    // } else {
+                    //     this.$message.error(response.resultMsg);
+                    // }
                 },
                 response => {
                     this.$message.error(response.resultMsg);
@@ -312,11 +312,11 @@ export default {
                 opMark: "03"
             }).then(
                 response => {
-                    if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
+                    // if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                         this.$router.push("/parkIndex/park/auditingBm");
-                    } else {
-                        this.$message.error(response.resultMsg);
-                    }
+                    // } else {
+                    //     this.$message.error(response.resultMsg);
+                    // }
                     this.noAccess = false;
                 },
                 response => {
@@ -353,16 +353,16 @@ export default {
             }).then(
                 response => {
                     this.access = false;
-                    if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
+                    // if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                         this.$alert(response.resultMsg, "审核", {
                             confirmButtonText: "确定",
                             callback: action => {
                                 this.$router.push("/parkIndex/park/auditingBm");
                             }
                         });
-                    } else {
-                        this.$message.error(response.resultMsg);
-                    }
+                    // } else {
+                    //     this.$message.error(response.resultMsg);
+                    // }
                 },
                 response => {
                     this.access = false;

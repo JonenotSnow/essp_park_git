@@ -136,13 +136,13 @@
                     parkId:parkId
                 })
                 .then(response => {
-                    var codestatus = response.resultCode;
-                    if(codestatus=="CLT000000000" || codestatus=="0000000000"){
+                    // var codestatus = response.resultCode;
+                    // if(codestatus=="CLT000000000" || codestatus=="0000000000"){
                         var data = response.resultData;
                         _this.tagItems= data;
-                    }else{
-                        this.$message.info(response.resultMsg);
-                    }
+                    // }else{
+                    //     this.$message.info(response.resultMsg);
+                    // }
                 },err =>{
                     this.$message.error("接口异常");
                 })
@@ -173,13 +173,13 @@
                     tagTxt:this.tagTxt,//根据标签搜索
                 })
                 .then(response => {
-                    var codestatus = response.resultCode;
-                    if(codestatus=="CLT000000000" || codestatus=="0000000000"){
+                    // var codestatus = response.resultCode;
+                    // if(codestatus=="CLT000000000" || codestatus=="0000000000"){
                         this.mcCardDataList = response.resultData.informationList;//数据源
                         this.allTotal = response.resultData.total;//总条数
-                    }else{
-                        this.$message.info(response.resultMsg);
-                    }
+                    // }else{
+                    //     this.$message.info(response.resultMsg);
+                    // }
                 },err =>{
                     this.$message.info(err.resultMsg);
                 })

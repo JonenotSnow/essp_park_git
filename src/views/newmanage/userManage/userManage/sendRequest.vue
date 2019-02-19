@@ -110,13 +110,13 @@ export default {
                 parkName: this.SSH.getItem("parkName"),
                 mark:this.content
             }).then(response => {
-                if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
+                // if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                     this.confirmSend = true;
                     setTimeout(() => {
                         this.confirmSend = false;
                         this.$router.push('/parkHall/manage/requestEnterprice');
                     }, 2000);
-                }
+                // }
             });
         },
         getParkById() {

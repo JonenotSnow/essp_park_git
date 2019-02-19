@@ -413,15 +413,15 @@ export default {
             var tagTp = tagTpObj[this.typeselect]||"3000003";
             var pop = {tagTp,parkId}
             this.$post(url,pop).then(response => {
-                var codestatus = response.resultCode;
-                    if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
+                // var codestatus = response.resultCode;
+                //     if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
                         this.resetSearch();//彻底重置搜索条件
                         var data = response.resultData;
                         this.tagItems = data;
                         this.resometags(data);
-                    } else {
-                        this.$message.info(response.resultMsg);
-                    }
+                    // } else {
+                    //     this.$message.info(response.resultMsg);
+                    // }
                 },err => {
                 this.$message.error("接口异常");
                 }
@@ -452,12 +452,12 @@ export default {
                 parkId: window.sessionStorage.getItem("parkId")
 
             }).then(res => {
-                if (res.resultCode == "CLT000000000" || res.resultCode == "0000000000") {
+                // if (res.resultCode == "CLT000000000" || res.resultCode == "0000000000") {
                     if (res.resultData.slidesImage) {
                         let list = JSON.parse(res.resultData.slidesImage)
                         this.bannerDisList = list;
                     }
-                }
+                // }
             });
         }
     },

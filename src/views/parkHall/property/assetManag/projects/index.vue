@@ -251,7 +251,7 @@
                         let form = Object.assign({}, {parkId: this.parkId}, this.form);
                         this.$post(this.$apiUrl.building.addProject, form).then(
                             response => {
-                                if (response.resultCode === "CLT000000000" || response.resultCode === "0000000000") {
+                                // if (response.resultCode === "CLT000000000" || response.resultCode === "0000000000") {
                                     if (this.form.id) {
                                         this.$message.success("修改项目成功！");
                                     } else {
@@ -259,7 +259,7 @@
                                     }
                                     this.dialogFormVisible = false;
                                     this.getList();
-                                }
+                                // }
                             },
                             err => {
                             }
@@ -274,12 +274,12 @@
                 this.$post(this.$apiUrl.building.getProjects, {
                     parkId: this.parkId
                 }).then(res => {
-                    if (res.resultCode === "CLT000000000" || res.resultCode === "0000000000") {
+                    // if (res.resultCode === "CLT000000000" || res.resultCode === "0000000000") {
                         this.listData = [];
                         res.resultData.forEach(item => {
                             this.listData.push(item);
                         });
-                    }
+                    // }
                 });
             }
         },

@@ -383,9 +383,9 @@
                     informType: 4,
                     entId: entId
                 }).then((response) => {
-                    if (response.resultCode == 'CLT000000000' || response.resultCode == '0000000000') {
+                    // if (response.resultCode == 'CLT000000000' || response.resultCode == '0000000000') {
                         this.prompt = response.resultData.prompt;
-                    }
+                    // }
                 });
             },
             // 举报 3. 资讯模块  4. 活动模块  5. 评论模块
@@ -510,15 +510,15 @@
                     parkId: window.sessionStorage.getItem("parkId")
                 }).then((response) => {
                     isClick = true;
-                    if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
+                    // if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                         this.dialogVisible = false;
                         this.$message.success(response.resultMsg);
-                    } else {
-                        this.$message({
-                            type: "info",
-                            message: response.resultMsg
-                        });
-                    }
+                    // } else {
+                    //     this.$message({
+                    //         type: "info",
+                    //         message: response.resultMsg
+                    //     });
+                    // }
                 }, response => {
                     isClick = true;
                     this.$message.error(response.resultMsg)
@@ -533,7 +533,7 @@
                     parkId: sessionStorage.getItem("parkId"),
                     opMark: op
                 }).then((response) => {
-                    if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
+                    // if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
 
                         this.activeDetailData = response.resultData;
                         this.activeDetailData.ticketForm= JSON.parse(this.activeDetailData.ticketForm)
@@ -547,12 +547,12 @@
                         this.getLogo();
                         this.getBtnText();
                         console.log(this.btnText)
-                    } else {
-                        this.$message({
-                            type: "info",
-                            message: response.resultMsg
-                        });
-                    }
+                    // } else {
+                    //     this.$message({
+                    //         type: "info",
+                    //         message: response.resultMsg
+                    //     });
+                    // }
 
                 });
                 /*============= 获取报名情况列表 ====================================*/
@@ -560,7 +560,7 @@
                     activityId: this.$route.query.activityId,
                     parkId: sessionStorage.getItem("parkId")
                 }).then((response) => {
-                    if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
+                    // if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
 //                        var obj = [
 //                            {
 //                                cstId: "9131011205506145X2",
@@ -633,12 +633,12 @@
                             num += parseInt(item.enterCount);
                         })
                         this.allEnterCount = num;
-                    } else {
-                        this.$message({
-                            type: "info",
-                            message: response.resultMsg
-                        });
-                    }
+                    // } else {
+                    //     this.$message({
+                    //         type: "info",
+                    //         message: response.resultMsg
+                    //     });
+                    // }
 
                 });
                 /*============= 获取更多热门活动 ==================================*/
@@ -648,14 +648,14 @@
                     type: 0,
                     parkId: window.sessionStorage.getItem("parkId")
                 }).then((response) => {
-                    if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
+                    // if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                         this.imglist1 = response.resultData.hot;
-                    } else {
-                        this.$message({
-                            type: "info",
-                            message: response.resultMsg
-                        });
-                    }
+                    // } else {
+                    //     this.$message({
+                    //         type: "info",
+                    //         message: response.resultMsg
+                    //     });
+                    // }
                 });
 
             }

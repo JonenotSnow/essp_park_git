@@ -529,7 +529,7 @@
                             params
                         ).then(
                             response => {
-                                if (response.resultCode === "CLT000000000" || response.resultCode === "0000000000") {
+                                // if (response.resultCode === "CLT000000000" || response.resultCode === "0000000000") {
                                     // this.$message(response.resultMsg);
 
                                     if (this.idType == 'update') {
@@ -542,7 +542,7 @@
                                     this.dialogFormVisible_update = false;
                                     this.fileList.length = 0;   // 清空图片
                                     this.getLdInfoData(this.pageNumber);
-                                }
+                                // }
                             },
                             err => {
                             }
@@ -576,10 +576,10 @@
             getBuildingDeatil(spaceProjectId) {
                 this.$post("/space/getBuildingById", {id: spaceProjectId}).then(
                     response => {
-                        if (response.resultCode === "CLT000000000" || response.resultCode === "0000000000") {
+                        // if (response.resultCode === "CLT000000000" || response.resultCode === "0000000000") {
                             console.log('根据项目项目id获取楼宇');
                             console.log(response);
-                        }
+                        // }
                     },
                     err => {
                     }
@@ -590,13 +590,13 @@
             getProjectInfoData(spaceProjectId) {
                 this.$post("/space/getProjectById", {id: spaceProjectId}).then(
                     response => {
-                        if (response.resultCode === "CLT000000000" || response.resultCode === "0000000000") {
+                        // if (response.resultCode === "CLT000000000" || response.resultCode === "0000000000") {
                             this.projectInfoData = response.resultData;
 
                             console.log('获取单个项目的数据=====');
                             console.log(this.projectInfoData);
 
-                        }
+                        // }
                     },
                     err => {
                     }
@@ -622,10 +622,10 @@
 
                 this.$post("/space/getBuildings", this.ruleFormSearch).then(
                     response => {
-                        if (response.resultCode === "CLT000000000" || response.resultCode === "0000000000") {
+                        // if (response.resultCode === "CLT000000000" || response.resultCode === "0000000000") {
                             this.total = response.resultData.count;
                             this.tableData = response.resultData.list;
-                        }
+                        // }
                     },
                     err => {
                     }
@@ -644,14 +644,14 @@
                     id: this.deleteId,
                 }).then(
                     response => {
-                        if (response.resultCode === "CLT000000000" || response.resultCode === "0000000000") {
+                        // if (response.resultCode === "CLT000000000" || response.resultCode === "0000000000") {
                             this.dialogVisible = false;
                             // this.$message(response.resultMsg);
                             this.$message.success('删除成功');
                             this.getLdInfoData(this.pageNumber);
                             // this.handleCurrentChange(this.pageNumber);
 
-                        }
+                        // }
                     },
                     err => {
                     }

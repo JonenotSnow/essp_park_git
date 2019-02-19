@@ -224,11 +224,11 @@ export default {
             parkId:this.parkId,
             dealPersonNumber: this.userInfo.cstId
         }).then(response =>{
-            if(response.resultCode == 'CLT000000000' || response.resultCode == '0000000000')
-            {
+            // if(response.resultCode == 'CLT000000000' || response.resultCode == '0000000000')
+            // {
                 this.dispatchList = response.resultData.list;
                 this.total = response.resultData.total;
-            }
+            // }
         });
     },
     updateCompaintClick(row){
@@ -240,11 +240,11 @@ export default {
         let newCompaint = this.newCompaint;
         this.newCompaint.repairStatus = 4
         this.$post(this.$apiUrl.merchant.updateTenementRepairInfo,this.newCompaint).then(response =>{
-            if(response.resultCode == 'CLT000000000' || response.resultCode == '0000000000')
-            {
+            // if(response.resultCode == 'CLT000000000' || response.resultCode == '0000000000')
+            // {
                 this.$message('成功变更报修表！');
                 this.updateFlag = false;
-            }
+            // }
         });
     }
   },

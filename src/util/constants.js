@@ -244,7 +244,35 @@ const constants = {
         parkId: '20181220204119007',
         parkFlag: 'haPark2018',
         parkName: '淮安高新技术产业开发区'
-    }
+    },
+    // 返回码定义
+    RETURN_CODE: {
+        // 正确码
+        SUCCESS_CODE: [
+            'CLT000000000',
+            '0000000000'
+        ],
+        ERROR_CODE: '1111111111',
+        // 业务错误校验规则
+        BUSINESS_RULE: /^Y.*$/,
+        // 系统错误校验规则
+        TECHNOLOGY_RULE: /^X.*$/,
+        // 错误-业务类型
+        ERROR_BUSINESS_TYPE: 'BUSINESS',
+        // 错误-技术类型
+        ERROR_SYSTEM_TYPE: 'SYSTEM',
+        // 错误-被他人登录类型
+        ERROR_OTHER_LOGIN_TYPE: 'OTHER_LOGIN',
+        // 错误-未知错误类型
+        ERROR_UNKNOWN_TYPE: 'UNKNOWN',
+        // 错误-网络异常类型
+        ERROR_NETWORK_TYPE: 'NETWORK',
+        // 错误-非法token身份令牌失效类型
+        ERROR_INVALID_TOKEN_TYPE: 'INVALID_TOKEN',
+        // 错误-服务器异常（重启，服务器挂了）
+        ERROR_SERVICE_TYPE: 'SERVICE'
+
+    },
 }
 
 

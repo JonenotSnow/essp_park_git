@@ -4,6 +4,7 @@ import utils from "./utils";
 import sessionStorageHandler from "./sessionStorageHandler";
 import {Message} from "element-ui";
 import {platform} from './initAndLogin'
+import store from "../store";
 
 export function checkResource(to, from, next){
 
@@ -53,6 +54,7 @@ export function checkResource(to, from, next){
             sessionStorageHandler.delItem('toUrlResource')
         }else if(utils.arrayIsContain(to.query.channel, constants.srcCode) && !sessionStorageHandler.getItem('token') && !utils.isEmpty(to.query.remoteToken)){
             sessionStorageHandler.setItem('inFullUrl',to.path)
+            store.commit('clearAllMsgList')
             next();
         }else{
             next({
@@ -105,6 +107,7 @@ export function checkResource(to, from, next){
                 if (!utils.isEmpty(sessionStorageHandler.getItem('userInfo'))) {
                     if (utils.roleExist(constants.userRole.entAdmin.key)) {
                         NProgress.start();
+                        store.commit('clearAllMsgList')
                         next();
                     } else {
                         Message.error('无权限登录，请使用注册会员管理员岗位登录！')
@@ -114,11 +117,13 @@ export function checkResource(to, from, next){
                 }
             } else {
                 NProgress.start();
+                store.commit('clearAllMsgList')
                 next();
             }
         } else if (!loginPermission) {
             // 未登录跳转至登录界面
             // if(isEsscFlag){
+                store.commit('clearAllMsgList')
                 next({
                     path: '/userIndex/login',
                     query: { redirect: to.fullPath }

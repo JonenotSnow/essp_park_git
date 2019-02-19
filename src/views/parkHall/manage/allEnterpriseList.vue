@@ -57,7 +57,44 @@
                 totalCount: 0,
                 pageNum: 1,
                 pageSize: 5,
-                enterprises:[],
+                enterprises:[
+                    /*{
+                        cstLogo: require('@/views/newparkHall/home/imgs/logo_b1.png'),
+                        cstNm:'德意志银行',
+                        isShowDetail:false,
+                        idyTpcd:'金融/IT'
+                    },
+                    {
+                        cstLogo: require('@/views/newparkHall/home/imgs/logo_b2.png'),
+                        cstNm:'德意志银行',
+                        isShowDetail:false,
+                        idyTpcd:'金融/IT'
+                    },
+                    {
+                      cstLogo: require('@/views/newparkHall/home/imgs/logo_b3.png'),
+                      cstNm:'德意志银行',
+                      isShowDetail:false,
+                        idyTpcd:'金融/IT'
+                    },
+                    {
+                        cstLogo: require('@/views/newparkHall/home/imgs/logo_b4.png'),
+                        cstNm:'德意志银行',
+                        isShowDetail:false,
+                        idyTpcd:'金融/IT'
+                    },
+                    {
+                      cstLogo: require('@/views/newparkHall/home/imgs/logo_b5.png'),
+                      cstNm:'德意志银行',
+                      isShowDetail:false,
+                        idyTpcd:'金融/IT'
+                    },
+                    {
+                      cstLogo: require('@/views/newparkHall/home/imgs/logo_b6.png'),
+                      cstNm:'德意志银行',
+                      isShowDetail:false,
+                        idyTpcd:'金融/IT'
+                    }*/
+                ]      ,
                 rzzMap:new Map()
             }
 
@@ -81,7 +118,7 @@
                     pageNum:pageNum
                 }).then(
                     response => {
-                        if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
+                        // if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                             if(response.resultData.memInfoCount > 0){
                                 this.totalCount =response.resultData.memInfoCount
                                 this.enterprises = response.resultData.memberList
@@ -98,7 +135,7 @@
                             }else{
 
                             }
-                        }
+                        // }
                     },
                     response => {
                         this.$message.error(response.resultMsg);

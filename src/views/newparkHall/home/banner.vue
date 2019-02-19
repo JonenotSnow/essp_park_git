@@ -144,14 +144,14 @@
                     parkId: parkId
                 }).then(
                     response => {
-                        var codestatus = response.resultCode;
-                        if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
+                        // var codestatus = response.resultCode;
+                        // if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
                             var data = response.resultData;
                             this.tagItems = data;
                             this.resometags(data);
-                        } else {
-                            this.$message.info(response.resultMsg);
-                        }
+                        // } else {
+                        //     this.$message.info(response.resultMsg);
+                        // }
                     },
                     err => {
                         this.$message.error("接口异常");
