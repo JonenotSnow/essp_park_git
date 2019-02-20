@@ -438,6 +438,7 @@ export default {
   .headinfo {
     .auto {
       .essp_width_auto();
+      overflow: hidden;
     }
     background-color: #ffffff;
     border-bottom: 1px solid #eeeeee;
