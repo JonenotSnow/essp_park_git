@@ -329,7 +329,7 @@ export default {
             let parkId = this.SSH.getItem('parkId');
             let bdParkId= this.SSH.getItem('bdParkId');
             let cur = bdParkId?bdParkId:parkId;
-            let params = {label:cur,id:cstId}
+            let params = {label:cur,cstId:cstId}
             this.windowOpenUrl('/centerIndex/showHome',params);
         },
     }
