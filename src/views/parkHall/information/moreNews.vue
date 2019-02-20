@@ -225,11 +225,15 @@
                     float: left;
                     font-size: 16px;
                     width:210px;
+                    height: 50px;
                     color:#333;
                     display: -webkit-box;
                     overflow: hidden;
                     text-overflow: ellipsis;
                     -webkit-box-orient: vertical;
+                    /*! autoprefixer: off */
+                    -webkit-box-orient: vertical;
+                    /* autoprefixer: on */
                     -webkit-line-clamp:1;
                     letter-spacing: 1.6px;
                 }
