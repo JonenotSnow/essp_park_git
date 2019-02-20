@@ -177,7 +177,7 @@
                 let _this = this;
                 // console.log("监听成功",this.publishId)
                 // console.log("监听成功",this.userInfo.id)
-                if(this.publishId.length>1){
+                if(!this.utils.isEmpty(this.publishId) && this.publishId.length>1){
                     if(this.publishId===this.userInfo.id.toString()){
                         this.showDel=true
                         // console.log("监听成功2",this.showDel)
