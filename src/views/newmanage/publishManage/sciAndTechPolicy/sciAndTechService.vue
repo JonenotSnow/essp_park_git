@@ -140,15 +140,15 @@
                     // classtType: this.classtType     // 科技服务才会有这个字段---
                 };
                 this.$post("/policy/getMyPubPol", params).then(response => {
-                    let codestatus = response.resultCode;
-                    if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
+                    // let codestatus = response.resultCode;
+                    // if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
                         let resultData = response.resultData;
                         this.totalCount = resultData.total;
                         this.dataList = resultData.policyList;
                         this.requestTip = '数据加载完毕';
-                    } else {
-                        this.$message.info(response.resultMsg);
-                    }
+                    // } else {
+                    //     this.$message.info(response.resultMsg);
+                    // }
                 }, err => {
                     this.$message.error("接口异常");
                 })

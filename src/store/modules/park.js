@@ -53,7 +53,7 @@ const actions = {
         state.allLoading = payload.loading;
         await axios.post(url, pop).then(response => {
             state.allLoading = false;
-            if (response.resultCode ==  "CLT000000000" || response.data.resultCode == "0000000000") {
+            // if (response.resultCode ==  "CLT000000000" || response.resultCode == "0000000000") {
                 if (type == "park_activity") {
                     state.searchPageData.searchData = response.data.resultData.activityList;
                 }else if(type == "park_gover"){
@@ -62,9 +62,9 @@ const actions = {
                     state.searchPageData.searchData = response.data.resultData.informationList;
                 }
                 state.searchPageData.allTotal = response.data.resultData.total; //总条数
-            } else {
-                Message.info(response.resultMsg);
-            }
+            // } else {
+            //     Message.info(response.resultMsg);
+            // }
             },err => {
                 Message.error("接口异常");
             }

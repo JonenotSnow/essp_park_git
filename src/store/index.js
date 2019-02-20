@@ -14,12 +14,14 @@ import login from './modules/login';
 import admin from './modules/admin';
 import chat from './modules/chat';
 import park from './modules/park';
+import errMsg from './modules/errorMsg';
 
 export default new Vuex.Store({
     modules: {
         login,
         admin,
         chat,
-        park
+        park,
+        errMsg
     }
 });

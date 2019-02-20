@@ -266,18 +266,18 @@ export default {
                 parkId: sessionStorage.getItem("parkId") || ""
             }).then(
                 response => {
-                    if (
-                        response.resultCode == "CLT000000000" ||
-                        response.resultCode == "0000000000"
-                    ) {
+                    // if (
+                    //     response.resultCode == "CLT000000000" ||
+                    //     response.resultCode == "0000000000"
+                    // ) {
                         this.activedata = response.resultData.policyList;
                         this.allTotal = response.resultData.total;
                         this.tag = this.activedata.tagsTxt
                             ? this.activedata.tagsTxt
                             : [];
-                    } else {
-                        this.$message.info(response.resultMsg);
-                    }
+                    // } else {
+                    //     this.$message.info(response.resultMsg);
+                    // }
                 },
                 err => {
                     this.$message.error("接口异常");
@@ -299,16 +299,16 @@ export default {
             }).then(() => {
                 this.$post(url, pop).then(
                     response => {
-                        if (
-                            response.resultCode == "CLT000000000" ||
-                            response.resultCode == "0000000000"
-                        ) {
+                        // if (
+                        //     response.resultCode == "CLT000000000" ||
+                        //     response.resultCode == "0000000000"
+                        // ) {
                             this.$message.success("删除成功");
                             this.activedata = [];
                             this.getMyPubPolList();
-                        } else {
-                            this.$message.info(response.resultMsg);
-                        }
+                        // } else {
+                        //     this.$message.info(response.resultMsg);
+                        // }
                     },
                     err => {
                         this.$message.error("接口异常");
@@ -359,14 +359,14 @@ export default {
             var url = this.$apiUrl.goverBene.delPolicy;
             this.$post(url, pop).then(
                 response => {
-                    if (
-                        response.resultCode == "CLT000000000" ||
-                        response.resultCode == "0000000000"
-                    ) {
+                    // if (
+                    //     response.resultCode == "CLT000000000" ||
+                    //     response.resultCode == "0000000000"
+                    // ) {
                         this.getGoverList();
-                    } else {
-                        this.$message.info(response.resultMsg);
-                    }
+                    // } else {
+                    //     this.$message.info(response.resultMsg);
+                    // }
                 },
                 err => {
                     this.$message.error("接口异常");

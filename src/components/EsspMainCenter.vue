@@ -125,14 +125,14 @@
                     parkId: parkId
                 })
                 .then(response => {
-                    var codestatus = response.resultCode;
-                    if(codestatus=="CLT000000000" || codestatus=="0000000000"){
+                    // var codestatus = response.resultCode;
+                    // if(codestatus=="CLT000000000" || codestatus=="0000000000"){
                         var data = response.resultData;
                         _this.tagItems= data;
 
-                    }else{
-                        this.$message.error(response.resultMsg);
-                    }
+                    // }else{
+                    //     this.$message.error(response.resultMsg);
+                    // }
                 },err =>{
                     this.$message.error(err.resultMsg);
                 })
@@ -276,7 +276,7 @@
                     activityLabel:this.tagTxt,//根据标签搜索
                 })
                 .then((response) => {
-                    if(response.resultCode == "CLT000000000" || response.resultCode == "0000000000"){
+                    // if(response.resultCode == "CLT000000000" || response.resultCode == "0000000000"){
                         this.mcCardDataList = [];
                         var arr = response.resultData.activityList;
                         arr.forEach((item,index)=>{
@@ -307,9 +307,9 @@
                         this.mcCardDataList = arr;
                         this.allTotal = response.resultData.total;
                         this.loadMsg = "数据加载完毕！";
-                    } else {
-                        this.$message.info(response.resultMsg);
-                    }
+                    // } else {
+                    //     this.$message.info(response.resultMsg);
+                    // }
 
                 })
 
@@ -324,10 +324,10 @@
                     parkId: window.sessionStorage.getItem('parkId')
                 }).then((response) => {
                     //onsole.log(response)
-                    if(response.resultCode == "CLT000000000" || response.resultCode == "0000000000"){
-                    }else{
-                        this.$message.info(response.resultMsg);
-                    }
+                    // if(response.resultCode == "CLT000000000" || response.resultCode == "0000000000"){
+                    // }else{
+                    //     this.$message.info(response.resultMsg);
+                    // }
                 },response=>{
                     this.$message.info(response.resultMsg);
                 })

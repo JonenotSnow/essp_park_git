@@ -387,8 +387,8 @@
                         }
 
                         this.$post(url, this.ruleForm).then(response => {
-                            let codestatus = response.resultCode;
-                            if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
+                            // let codestatus = response.resultCode;
+                            // if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
                                 if (this.applyType === '01') {
                                     if (this.id) {
                                         this.$message.success("新闻动态修改成功！");
@@ -409,9 +409,9 @@
                                         path: '/parkHall/manage/publicNotice'
                                     });
                                 }
-                            } else {
-                                this.$message.info(response.resultMsg);
-                            }
+                            // } else {
+                            //     this.$message.info(response.resultMsg);
+                            // }
                         }, err => {
                             this.$message.info(this.resultMsg);
                         })
@@ -453,8 +453,8 @@
                 }
 
                 this.$post(url, this.ruleForm).then(response => {
-                    let codestatus = response.resultCode;
-                    if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
+                    // let codestatus = response.resultCode;
+                    // if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
                         if (this.applyType === '01') {
                             this.$message.success("新闻动态暂存成功！");
                             this.$router.push({
@@ -473,9 +473,9 @@
                                 }
                             });
                         }
-                    } else {
-                        this.$message.info(response.resultMsg);
-                    }
+                    // } else {
+                    //     this.$message.info(response.resultMsg);
+                    // }
                 }, err => {
                     this.$message.error("接口异常");
                 })
@@ -487,8 +487,8 @@
                     informationId: this.id
                 };
                 this.$post("/information/getInfoById", params).then(response => {
-                    let codestatus = response.resultCode;
-                    if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
+                    // let codestatus = response.resultCode;
+                    // if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
 
                         this.ruleForm = response.resultData;
 
@@ -516,9 +516,9 @@
                         }
 
 
-                    } else {
-                        this.$message.info(response.resultMsg);
-                    }
+                    // } else {
+                    //     this.$message.info(response.resultMsg);
+                    // }
                 }, err => {
                     this.$message.error("接口异常");
                 })

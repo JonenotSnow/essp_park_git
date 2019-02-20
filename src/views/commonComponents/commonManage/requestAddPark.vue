@@ -177,14 +177,14 @@
             getFxContent() {
                 this.$post(this.$apiUrl.manage.getCstIdByUserId, {}).then(
                     response => {
-                        if (response.resultCode != 'CLT000000000' && response.resultCode != '0000000000') {
-                            this.$message({
-                                type: 'warn',
-                                message: response.returnMsg
-                            })
-                            this.$router.go(-1);
-                            return;
-                        }
+                        // if (response.resultCode != 'CLT000000000' && response.resultCode != '0000000000') {
+                        //     this.$message({
+                        //         type: 'warn',
+                        //         message: response.returnMsg
+                        //     })
+                        //     this.$router.go(-1);
+                        //     return;
+                        // }
                         this.show = true;
                         if (response.resultData) {
                             this.fxContent = Object.assign({}, response.resultData);
@@ -205,6 +205,12 @@
                                 }
                             }
                         }
+                    }, err => {
+                        this.$message({
+                            type: 'warn',
+                            message: response.returnMsg
+                        })
+                        this.$router.go(-1);
                     }
                 );
             },

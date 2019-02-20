@@ -144,11 +144,11 @@
                 var url = this.$apiUrl.goverBene.delPolicy;
                 this.$post(url, pop).then(
                     response => {
-                        if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
+                        // if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                             this.getGoverList();
-                        } else {
-                            this.$message.info(response.resultMsg);
-                        }
+                        // } else {
+                        //     this.$message.info(response.resultMsg);
+                        // }
                     },
                     err => {
                         this.$message.error("接口异常");

@@ -927,12 +927,12 @@ const mutations = {
             receiver: receiver,
             type: value,
         }).then((response) => {
-            if (response.resultCode == 'CLT000000000' || response.resultCode == '0000000000') {
+            // if (response.resultCode == 'CLT000000000' || response.resultCode == '0000000000') {
 
                 result.messages = []
                 SSH.setItem('messageList', state.chatlist);
                 Message.success('聊天记录清空成功!')
-            }
+            // }
 
         })
     },

@@ -88,8 +88,8 @@
                     informationId: this.id
                 };
                 this.$post(this.$apiUrl.newsinfo.getInfoById, params).then(response => {
-                    let codestatus = response.resultCode;
-                    if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
+                    // let codestatus = response.resultCode;
+                    // if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
 
                         this.satpDate = response.resultData;
 
@@ -111,9 +111,9 @@
                             })
                         }
 
-                    } else {
-                        this.$message.info(response.resultMsg);
-                    }
+                    // } else {
+                    //     this.$message.info(response.resultMsg);
+                    // }
                 }, err => {
                     this.$message.error("接口异常");
                 })

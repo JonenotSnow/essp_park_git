@@ -292,13 +292,13 @@
                     this.$post(url, pop)
                         .then((response) => {
                             isClick = true;
-                            if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
+                            // if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                                 this.$message.success("回复发表成功");
                                 this.getCnt();
                                 item.replytext = "";
-                            } else {
-                                this.$message.info(response.resultMsg);
-                            }
+                            // } else {
+                            //     this.$message.info(response.resultMsg);
+                            // }
                         }, (err) => {
                             isClick = true;
                             this.$message.error(response.resultMsg);
@@ -331,12 +331,12 @@
                         //onsole.log(item,parentItem,index);
                         this.$post(url, pop)
                             .then((response) => {
-                                if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
+                                // if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                                     this.cnts[index].replyList.splice(childIndex,1);
                                     this.$message.success("该条评论删除成功");
-                                } else {
-                                    this.$message.info(response.resultMsg);
-                                }
+                                // } else {
+                                //     this.$message.info(response.resultMsg);
+                                // }
                             }, (err) => {
                                 this.$message.error(err.resultMsg);
                             })
@@ -368,12 +368,12 @@
 
                     this.$post(url, pop)
                         .then((response) => {
-                            if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
+                            // if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                                 this.$message.success("该条评论删除成功");
                                 this.getCnt();
-                            } else {
-                                this.$message.info(response.resultMsg);
-                            }
+                            // } else {
+                            //     this.$message.info(response.resultMsg);
+                            // }
                         }, (err) => {
                             this.$message.error(response.resultMsg);
                         })
@@ -391,11 +391,11 @@
                 var pop = {commentId: item.id}
                 this.$post(url, pop)
                     .then((response) => {
-                        if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
+                        // if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                             this.$message.success("获取回复成功");
-                        } else {
-                            this.$message.info(response.resultMsg);
-                        }
+                        // } else {
+                        //     this.$message.info(response.resultMsg);
+                        // }
                     }, (err) => {
                         this.$message.error(response.resultMsg);
                     })
@@ -457,13 +457,13 @@
                     }
                     this.isClick = false;
                     this.$post(url, pop).then((response) => {
-                        if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
+                        // if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                             this.$message.success("评论发表成功");
                             this.getCnt();
                             this.cnttext = "";
-                        } else {
-                            this.$message.info(response.resultMsg);
-                        }
+                        // } else {
+                        //     this.$message.info(response.resultMsg);
+                        // }
                         this.isClick = true;
                     }, (err) => {
                         this.$message.error("接口异常");
@@ -486,7 +486,7 @@
                 var url = this.$apiUrl.parkInfo.getComment;
                 var pop = {entityId: this.entityId, type: this.commentSty, pageNum: this.pageNum, pageSize: this.pageSize}
                 this.$post(url, pop).then((response) => {
-                    if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
+                    // if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                         this.allTotal = response.resultData.total;
                         this.cnts = response.resultData.commentList;
                         this.cnts.map(item => {
@@ -495,9 +495,9 @@
                             this.$set(item, "maxReplyLen", item.replyList.length);
                             this.$set(item, "btn_name", "查看更多回复")
                         })
-                    } else {
-                        this.$message.info(response.resultMsg);
-                    }
+                    // } else {
+                    //     this.$message.info(response.resultMsg);
+                    // }
                 }, (err) => {
                     this.$message.error(err.resultMsg);
                 })

@@ -53,6 +53,7 @@ export function checkResource(to, from, next){
             sessionStorageHandler.delItem('toUrlResource')
         }else if(utils.arrayIsContain(to.query.channel, constants.srcCode) && !sessionStorageHandler.getItem('token') && !utils.isEmpty(to.query.remoteToken)){
             sessionStorageHandler.setItem('inFullUrl',to.path)
+            store.commit('clearAllMsgList')
             next();
         }else{
             next({
@@ -105,6 +106,7 @@ export function checkResource(to, from, next){
                 if (!utils.isEmpty(sessionStorageHandler.getItem('userInfo'))) {
                     if (utils.roleExist(constants.userRole.entAdmin.key)) {
                         NProgress.start();
+                        store.commit('clearAllMsgList')
                         next();
                     } else {
                         Message.error('无权限登录，请使用注册会员管理员岗位登录！')
@@ -123,6 +125,7 @@ export function checkResource(to, from, next){
                     path: '/userIndex/login',
                     query: { redirect: to.fullPath }
                 })
+                store.commit('clearAllMsgList')
             // }else{
             //     if(platform()===constants.platformType.parkType.key && sessionStorageHandler.getItem('parkId')){
             //         if(to.fullPath.indexOf('?')>-1){

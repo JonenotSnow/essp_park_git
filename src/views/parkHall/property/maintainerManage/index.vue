@@ -161,11 +161,11 @@ export default {
             pageSize:this.page.pageSize,
             parkId:this.parkId
         }).then(response =>{
-            if(response.resultCode == 'CLT000000000' || response.resultCode == '0000000000')
-            {
+            // if(response.resultCode == 'CLT000000000' || response.resultCode == '0000000000')
+            // {
                 this.maintainerList = response.resultData.list;
                 this.total = response.resultData.total;
-            }
+            // }
         });
     },
     validateMaintainer(){
@@ -206,11 +206,11 @@ export default {
             this.$post(this.$apiUrl.merchant.deleteMaintenanceManInfo, {
                 mmiId: row.mmiId,
             }).then(response =>{
-                if(response.resultCode == 'CLT000000000' || response.resultCode == '0000000000')
-                {
+                // if(response.resultCode == 'CLT000000000' || response.resultCode == '0000000000')
+                // {
                     this.$message('删除成功！');
                     this.getMaintainerList();
-                }
+                // }
             });
         })
     },
@@ -230,13 +230,13 @@ export default {
         let newMaintainer = this.newMaintainer;
         this.$post(this.$apiUrl.merchant.updateMaintenanceManInfo,  newMaintainer
          ).then(response =>{
-            if(response.resultCode == 'CLT000000000' || response.resultCode == '0000000000')
-            {
+            // if(response.resultCode == 'CLT000000000' || response.resultCode == '0000000000')
+            // {
                 this.$message('成功变更维修人员信息！');
                 this.handleClick({index:1});
                 this.updateFlag = false;
                 this.activeName = 'second';
-            }
+            // }
         });
     },
     // 新增维修人员信息
@@ -249,13 +249,13 @@ export default {
         this.$post(this.$apiUrl.merchant.addMaintenanceManInfo,Object.assign({}, newMaintainer,{
             parkId:this.parkId
         })).then(response =>{
-            if(response.resultCode == 'CLT000000000' || response.resultCode == '0000000000')
-            {
+            // if(response.resultCode == 'CLT000000000' || response.resultCode == '0000000000')
+            // {
                 this.$message('成功新增维修人员信息！');
                 this.handleClick({index:1});
                 this.updateFlag = false;
                 this.activeName = 'second';
-            }
+            // }
         });
     },
   },

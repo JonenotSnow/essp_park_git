@@ -166,16 +166,16 @@ export default {
                 followId: followId
             }).then(
                 response => {
-                    var codestatus = response.resultCode;
-                    if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
+                    // var codestatus = response.resultCode;
+                    // if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
                         this.dialogVisible = false;
                         this.$message.success(response.resultMsg);
                         // this.mcCardList.splice(index, 1);
                         this.$emit("deleteCardList", {});
                         // alert("后台待优化中,需要返回更新的关注成功后，需要followId+followStatus非0，取消关注成功后需要followId 重置，followStatus为0")
-                    } else {
-                        this.$message.error(response.resultMsg);
-                    }
+                    // } else {
+                    //     this.$message.error(response.resultMsg);
+                    // }
                 },
                 err => {
                     this.$message.error(err.resultMsg);

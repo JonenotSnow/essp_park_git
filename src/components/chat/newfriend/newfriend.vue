@@ -258,9 +258,9 @@
                             type: 1,
                         }
                     ).then((response) => {
-                        if (response.resultCode != 'CLT000000000' && response.resultCode != '0000000000') {
-                            vm.addFriendList[index].isAdd = '添加'
-                        } else {
+                        // if (response.resultCode != 'CLT000000000' && response.resultCode != '0000000000') {
+                        //     vm.addFriendList[index].isAdd = '添加'
+                        // } else {
                             vm.$message({
                                 type: 'success',
                                 message: '添加成功！'
@@ -283,7 +283,9 @@
                             if (!result) {
                                 vm.SSH.setItem('friendList', vm.$store.state.chat.friendlist.push(vm.addFriendList[index]));
                             }
-                        }
+                        // }
+                    }, err => {
+                        vm.addFriendList[index].isAdd = '添加'
                     });
                 }
             },
@@ -299,9 +301,9 @@
                             type: 'refuseFriend'
                         }
                     ).then((response) => {
-                        if (response.resultCode != 'CLT000000000' && response.resultCode != '0000000000') {
-                            vm.addFriendList[index].isDisagree = '已拒绝'
-                        } else {
+                        // if (response.resultCode != 'CLT000000000' && response.resultCode != '0000000000') {
+                        //     vm.addFriendList[index].isDisagree = '已拒绝'
+                        // } else {
                             vm.$message({
                                 type: 'success',
                                 message: '拒绝成功！'
@@ -319,7 +321,9 @@
                             };
                             let param = JSON.stringify(msg);
                             vm.$store.dispatch('sendWs', param);
-                        }
+                        // }
+                    }, err => {
+                        vm.addFriendList[index].isDisagree = '已拒绝'
                     });
                 }
             }

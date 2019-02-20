@@ -147,10 +147,10 @@ export default {
         status: 1,
         parkId: this.parkId
       }).then(response => {
-        if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
+        // if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
           this.innovationList = response.resultData.listData;
           this.total = response.resultData.totalNumber;
-        }
+        // }
       });
     }
   },
@@ -174,10 +174,10 @@ export default {
           status: 1,
           parkId: this.parkId
         }).then(response => {
-          if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
+          // if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
             this.innovationList = response.resultData.listData;
             this.total = response.resultData.totalNumber;
-          }
+          // }
         });
       }
     }
@@ -237,10 +237,10 @@ export default {
         pageSize: this.page.pageSize,
         parkId: this.parkId
       }).then(response => {
-        if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
+        // if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
           this.innovationList = response.resultData.listData;
           this.total = response.resultData.totalNumber;
-        }
+        // }
       });
     },
     // 点击删除招商
@@ -254,10 +254,10 @@ export default {
           id: id,
           parkId: this.parkId
         }).then(response => {
-          if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
+          // if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
             this.$message("删除成功！");
             this.getInnovationList();
-          }
+          // }
         });
       });
     },
@@ -286,13 +286,13 @@ export default {
           parkId: this.parkId
         })
       ).then(response => {
-        if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
+        // if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
           this.$message("成功变更招商信息！");
           this.newInnovation = {};
           this.activeName = "second";
           this.innovationList = [];
           this.handleClick({ index: 1 });
-        }
+        // }
       });
     },
     publicInnovation() {
@@ -317,13 +317,13 @@ export default {
           parkId: this.parkId
         })
       ).then(response => {
-        if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
+        // if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
           this.$message.success("成功发布新招商！");
           this.newInnovation = {};
           this.activeName = "second";
           this.innovationList = [];
           this.handleClick({ index: 1 });
-        }
+        // }
       });
     },
     previewInnovationDetail(item) {

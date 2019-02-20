@@ -160,10 +160,10 @@
                     informType: 3,
                     entId: informationId
                 }).then(response => {
-                    if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
+                    // if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                         this.prompt = response.resultData.prompt;
                         //                        this.prompt = 1
-                    }
+                    // }
                 });
             },
             tipOffFn(type, id, title, cstNm, byInformer) {
@@ -250,8 +250,8 @@
                     };
                     this.$post(this.$apiUrl.parkInfo.infoById, pop).then(
                         response => {
-                            var codestatus = response.resultCode;
-                            if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
+                            // var codestatus = response.resultCode;
+                            // if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
                                 let data = response.resultData;
                                 this.infoDetailData = response.resultData;
                                 this.source = data;
@@ -269,9 +269,9 @@
                                 this.countFollower = data.countFollower; //关注数
                                 this.countComment = data.countComment; //评论数
                                 this.followId = data.followId; //关注id，供取消关注用
-                            } else {
-                                this.$message.info(response.resultMsg);
-                            }
+                            // } else {
+                            //     this.$message.info(response.resultMsg);
+                            // }
                         },
                         err => {
                             this.$message.error("接口异常");

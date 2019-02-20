@@ -152,7 +152,7 @@ import mixin from '@/components/mixins/mixins_windowOpen.js'
                     this.$post("/requirement/requirement_other_detail_head", {
                         bsnId: val.bsnRqmId
                     }).then(response => {
-                        if (response.resultCode === "CLT000000000" || response.resultCode === "0000000000") {
+                        // if (response.resultCode === "CLT000000000" || response.resultCode === "0000000000") {
                             usrid = response.resultData.param.usrid;
                             if (
                                 !this.utils.isEmpty(this.userInfo.id) &&
@@ -190,7 +190,7 @@ import mixin from '@/components/mixins/mixins_windowOpen.js'
                                 tplId:val.tplId}
                                 this.windowOpenUrl(displayUrl,params)
                             }
-                        }
+                        // }
                     });
                 } else {
                     displayUrl = "/requIndex/display-other";

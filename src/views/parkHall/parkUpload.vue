@@ -629,12 +629,12 @@
                     response => {
                         clearTimeout(fivemstime);
                         this.duringloading = false;
-                        if (response.resultCode == 'CLT000000000' || response.resultCode == '0000000000') {
+                        // if (response.resultCode == 'CLT000000000' || response.resultCode == '0000000000') {
                             this.activityPhoto = response.resultData[0].url;
                             this.isUpload = true;
-                        } else {
-                            this.$message.error(response.resultMsg);
-                        }
+                        // } else {
+                        //     this.$message.error(response.resultMsg);
+                        // }
                     },
                     err => {
                         clearTimeout(fivemstime);

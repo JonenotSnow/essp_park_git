@@ -206,12 +206,12 @@ async function getLoginUserRole(options) {
     };
     await post(urlapi, pop).then(
         response => {
-            if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
+            // if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                 LoginUserRol = response.resultData;
                 sessionStorageHandler.setItem("LoginUserRol", LoginUserRol);
-            } else {
-                Message.info(response.resultMsg);
-            }
+            // } else {
+            //     Message.info(response.resultMsg);
+            // }
         },
         response => {
             Message.info(response.resultMsg);
@@ -229,16 +229,16 @@ async function selectResMenu(options, next) {
     };
     await post(urlapi, pop).then(
         response => {
-            if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
+            // if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                 var menuList = response.resultData.menuList[0] || {};
                 sessionStorageHandler.setItem("menuList", menuList);
                 sessionStorageHandler.setItem(
                     "menuResource",
                     response.resultData.routerResMap
                 );
-            } else {
-                Message.info(response.resultMsg);
-            }
+            // } else {
+            //     Message.info(response.resultMsg);
+            // }
         },
         response => {
             Message.info(response.resultMsg);
@@ -260,7 +260,7 @@ async function getParkById(parkId) {
     await post("/parkManage/getParkById", {
         parkId: parkId
     }).then(res => {
-        if (res.resultCode == "CLT000000000" || res.resultCode == "0000000000") {
+        // if (res.resultCode == "CLT000000000" || res.resultCode == "0000000000") {
             if (res.resultData) {
                 sessionStorageHandler.setItem("parkId", res.resultData.parkId);
                 sessionStorageHandler.setItem(
@@ -276,7 +276,7 @@ async function getParkById(parkId) {
                     ? bdParkId
                     : sessionStorageHandler.getItem("parkId");
             }
-        }
+        // }
     });
 }
 

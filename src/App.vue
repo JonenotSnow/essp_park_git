@@ -1,5 +1,8 @@
 <template>
     <div class="app" id="app" v-loading="loading2">
+        <div :class="messageFixed == true ? 'init_isFixed' :''"  v-if="msgList.length>0">
+            <essp-message :messageList="msgList" :errMsgList="errMsgList" :timeOutMsgList="timeOutMsgList"></essp-message>
+        </div>
         <div class="myChat" :style="getTheWidth()" v-show="chat.openChat" @mousedown="moveChat" id='myChat'>
             <chat></chat>
         </div>
@@ -23,23 +26,37 @@
     import {mapState} from 'vuex'
     import mixins from '@/components/mixins/mixins_windowOpen.js'
     // import baseLogin from "@/views/user/login/loginCommon.js";
+    import EsspMessage from '@/components/EsspMessage'
 
     export default {
         name: 'App',
         mixins: [mixins],
         components: {
-            chat
+            chat,
+            EsspMessage
         },
         data() {
             return {
                 loginFlag: this.SSH.getItem('loginFlag'),
                 time: null,
+                msgList: [],
+                errMsgList: [],
+                timeOutMsgList: [],
+                messageFixed:false
             }
         },
         computed: {
             ...mapState([
                 'chat',
             ]),
+            messageListChange() {
+                let msgData = {
+                    messageList: this.$store.state.errMsg.messageList,
+                    errMsgList: this.$store.state.errMsg.errMsgList,
+                    timeOutMsgList: this.$store.state.errMsg.timeOutMsgList
+                }
+                return msgData;
+            }
         },
         watch: {
             $route() {
@@ -50,6 +67,11 @@
                     window.clearInterval(this.time);
                     this.time = null;
                 }
+            },
+            messageListChange: function(newVal, oldVal){
+                this.msgList = newVal.messageList
+                this.errMsgList = newVal.errMsgList
+                this.timeOutMsgList = newVal.timeOutMsgList
             },
         },
         created() {
@@ -62,6 +84,24 @@
             }
         },
         methods: {
+            addEvent(ev, fn) {
+                if (window.attachEvent) {
+                    window.attachEvent("on" + ev, fn);
+                } else {
+                    window.addEventListener(ev, fn, false);
+                }
+            },
+            handleScroll() {
+                var scrollTop =
+                    window.pageYOffset ||
+                    document.documentElement.scrollTop ||
+                    document.body.scrollTop;
+                if (scrollTop > 35) {
+                    this.messageFixed = true;
+                } else {
+                    this.messageFixed = false;
+                }
+            },
             getTheWidth() {
                 if (this.$store.state.chat.openDetail) {
                     return {width: "1188px",}
@@ -251,6 +291,18 @@
 </script>
 
 <style lang="less">
+    @import "./assets/css/mixin";
+    .app{
+        .init_isFixed {
+            position: fixed;
+            background-color: @essp_con_bg;
+            top: 0;
+            width: 100%;
+            min-width: @essp_width_auto;
+            z-index: 1002;
+            box-shadow: 0px 4px 21px 0px rgba(116, 116, 116, 0.12);
+        }
+    }
     .esspchat {
         .el-dialog__header {
             display: none;
