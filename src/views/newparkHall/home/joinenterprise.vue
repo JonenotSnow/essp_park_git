@@ -10,7 +10,7 @@
                     <div class="listitem" v-for="(item,index) in enterprises" :key="index" v-if="index<=5" @mouseenter="showDetail(item.isShowDetail,index)" @mouseleave="showDetail(item.isShowDetail,index)">
                         <img class="enter_child" :src="item.cstLogo">
                         <div class="detailinfo" :class="{cur:item.isShowDetail}">
-                            <p class="enterprisename">{{item.cstNm}}</p>
+                            <p class="enterprisename">{{item.cstNm.length>8?item.cstNm.substr(0,8) + '...':item.cstNm}}</p>
                             <p class="enterprisetype">{{item.idyTpcd}}</p>
                             <div class="checkenterprise" @click="enterBusiness(item)">进入企业橱窗</div>
                         </div>
@@ -100,6 +100,7 @@ import mixins_windowOpen from '@/components/mixins/mixins_windowOpen.js'
 
 <style lang='less' scoped >
  @import "../../../assets/css/newpark/home.common.less";
+ @import "../../../assets/css/mixin.less";
  .warp_join{
      //height: 260px;
      background: #ffff;
@@ -114,11 +115,11 @@ import mixins_windowOpen from '@/components/mixins/mixins_windowOpen.js'
         float: left;
         width: 150px;
         height: 50px;
+        margin-right: 50px;
         background-color: #ffffff;
         cursor: pointer;
         box-shadow: 1.5px 2.6px 7.8px 0.2px
             rgba(0, 0, 0, 0.1);
-        margin-right:50px;
         cursor: pointer;
         &:last-child{
             margin-right: 0px;
@@ -183,33 +184,27 @@ import mixins_windowOpen from '@/components/mixins/mixins_windowOpen.js'
                     height:100%;
                 }
                 .detailinfo{   
-                    //opacity: 0;                 
                     .enterprisename{
-                        margin:20px auto 10px;
                         height: 20px;
+                        width:130px;
                         display: -webkit-box;
                         overflow: hidden;
                         text-overflow: ellipsis;
-                        //white-space: nowrap;
                         -webkit-line-clamp:1;
                         -webkit-box-orient:vertical;
                         /*! autoprefixer: off */
                         -webkit-box-orient: vertical;
                         /* autoprefixer: on */
+                        //white-space: nowrap;
                         padding:0 15px;
                         text-align: center;
-                        position:absolute;
-                        left:0;
-                        top:-60px;
+                        margin:-60px auto 10px;
                         transition: all ease .8s ;
                     }
                     .enterprisetype{
-                        margin-bottom: 5px;
                         width:100%;
                         text-align: center;
-                        position:absolute;
-                        left:0;
-                        top:-60px;
+                        margin:-60px auto 5px;
                         transition: all ease .8s ;
                     }
                     p{
@@ -217,15 +212,12 @@ import mixins_windowOpen from '@/components/mixins/mixins_windowOpen.js'
                         color: #ffffff;
                     }
                     .checkenterprise{
-                        position:absolute;
-                        left:20px;
-                        top:120px;
+                        margin:260px auto 0;
                         border:1px solid #fff;
                         text-align: center;
                         width: 120px;
                         height: 30px;
                         line-height:30px;
-                        margin: 0 auto;
                         transition: all ease .8s ;
                     }
                 }
@@ -240,13 +232,17 @@ import mixins_windowOpen from '@/components/mixins/mixins_windowOpen.js'
                     width:100%;
                     height: 100%;
                     .enterprisename{
-                        top:0px;
+                        margin:20px auto 10px;
+                        .esspellipsitwo(1);
+                        overflow: hidden;
+                        text-overflow:ellipsis;
+                        white-space: nowrap;
                     }
                     .enterprisetype{
-                        top:50px;
+                        margin:0 auto 5px;
                     }
                     .checkenterprise{
-                        top:80px;
+                        margin:10px auto 0;
                     }
                 }
             }
