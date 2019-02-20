@@ -1,6 +1,6 @@
 <template>
     <div id='wrap' class="occupancyApplication">
-        <p >
+        <p>
             <span :class="{'differ':isBdPark}">申请表设置</span>
         </p>
         <p style="margin-bottom:8px;">
@@ -17,7 +17,9 @@
             </ul>
             <ul v-for="(it,i) in displayList.slice(0,6)" :key="i" class="require">
                 <li>{{it.name}}</li>
-                <li><el-checkbox v-model="it.requir" :disabled="i<6">必填</el-checkbox></li>
+                <li>
+                    <el-checkbox v-model="it.requir" :disabled="i<6">必填</el-checkbox>
+                </li>
                 <li v-if="it.fx" style="color:#999;">系统反显</li>
                 <li v-else>
                     <input v-if="it.type == 'text' || it.type == 'textarea'" type="text" :placeholder="`请输入${it.name}`" disabled>
@@ -30,9 +32,7 @@
                     <i class='el-icon-delete' style="color:#ccc;"></i>
                 </li>
             </ul>
-            <ul v-if="displayList.length > 6" v-for="(item,index) in displayList.slice(6,displayList.length)"
-                :class="{'downSel':',radio,checkbox,radioDown,checkboxDown,'.indexOf(','+item.type+',')>-1}"
-                class="addItem" :key="index">
+            <ul v-if="displayList.length > 6" v-for="(item,index) in displayList.slice(6,displayList.length)" :class="{'downSel':',radio,checkbox,radioDown,checkboxDown,'.indexOf(','+item.type+',')>-1}" class="addItem" :key="index">
 
                 <!-- 申请表第一列 -->
                 <li v-if="item.own == 'common' && ',注册资本,实收资本,成立日期,经营范围,企业规模,'.indexOf(','+item.name+',')>-1">
@@ -55,7 +55,7 @@
                     </div>
                 </li>
                 <!-- 单选框 -->
-                <li v-else-if="item.own != 'common' && item.type == 'radio'" class="downSelClass"  style="padding-top:15px;">
+                <li v-else-if="item.own != 'common' && item.type == 'radio'" class="downSelClass" style="padding-top:15px;">
                     <div>
                         <span class="title">
                             <input type="text" style="
@@ -66,9 +66,7 @@
                         <div class="ro_tiem" style="margin-top: 10px;" v-for="(it,index) in item.childrens" :key="index">
                             <i class="tsb"></i>
                             <input type="text" class="orderinput" v-model="it.name" :requir="it.requir" :placeholder="it.placeholder">
-                            <i v-if="item.childrens.length>2" class="delitems el-icon-remove"
-                                style="position: relative;left: 0;color: rgb(204, 204, 204);cursor:pointer;"
-                                @click="delChidrens(item.childrens,index)"></i>
+                            <i v-if="item.childrens.length>2" class="delitems el-icon-remove" style="position: relative;left: 0;color: rgb(204, 204, 204);cursor:pointer;" @click="delChidrens(item.childrens,index)"></i>
                         </div>
                         <i class="additems el-icon-circle-plus" style="color:#ccc;cursor:pointer;" @click="addChidrens(item)"></i>
                     </div>
@@ -84,9 +82,7 @@
                         <div class="ro_tiem" style="margin-top: 10px;" v-for="(it,index) in item.childrens" :key="index">
                             <i class="tsb"></i>
                             <input type="text" class="orderinput" v-model="it.name" :requir="it.requir" :placeholder="it.placeholder">
-                            <i v-if="item.childrens.length>2" class="delitems el-icon-remove"
-                                style="position: relative;left: 0;color: rgb(204, 204, 204);cursor:pointer;"
-                                @click="delChidrens(item.childrens,index)"></i>
+                            <i v-if="item.childrens.length>2" class="delitems el-icon-remove" style="position: relative;left: 0;color: rgb(204, 204, 204);cursor:pointer;" @click="delChidrens(item.childrens,index)"></i>
                         </div>
                         <i class="additems el-icon-circle-plus" style="color:#ccc;cursor:pointer;" @click="addChidrens(item)"></i>
                     </div>
@@ -115,24 +111,25 @@
                     <el-checkbox-group>
                         <el-checkbox :label="item.name" disabled v-for="(is,j) in item.childrens.slice(0,2)" :key="j">{{is.name}}</el-checkbox>
                     </el-checkbox-group>
-                <!-- 单行文本 --> <!-- 多行文本 -->
-                <li v-if="item.type == 'text' || item.type == 'textarea'"><input type="text" :value="`请输入${item.name}`" disabled></li>
-                <!-- 日期模版 -->
-                <li v-if="item.type == 'dateTime' || item.type == 'dataTime'">
-                    <el-date-picker class="selectTime" type="date" placeholder="选择日期" disabled></el-date-picker>
-                </li>
-                <!-- 数字模版 -->
-                <li v-if="',numberBox,number,'.indexOf(','+item.type+',')>-1"><input type="text" disabled :placeholder='`请输入${item.name}`'></li>
-                <!-- 企业规模 -->
-                <li class="title" v-else-if="item.type == 'selectTS'">
-                    <select :placeholder="item.name" disabled>
-                        <option :value="is.id" :label="is.name" v-for="(is,j) in item.childrens" :key="j">{{is.name}}</option>
-                    </select>
-                </li>
-                <!-- 申请表第四列 -->
-                <li>
-                    <i class='el-icon-delete personCursor' @click="getIndex(item,index)"></i>
-                </li>
+                    <!-- 单行文本 -->
+                    <!-- 多行文本 -->
+                    <li v-if="item.type == 'text' || item.type == 'textarea'"><input type="text" :value="`请输入${item.name}`" disabled></li>
+                    <!-- 日期模版 -->
+                    <li v-if="item.type == 'dateTime' || item.type == 'dataTime'">
+                        <el-date-picker class="selectTime" type="date" placeholder="选择日期" disabled></el-date-picker>
+                    </li>
+                    <!-- 数字模版 -->
+                    <li v-if="',numberBox,number,'.indexOf(','+item.type+',')>-1"><input type="text" disabled :placeholder='`请输入${item.name}`'></li>
+                    <!-- 企业规模 -->
+                    <li class="title" v-else-if="item.type == 'selectTS'">
+                        <select :placeholder="item.name" disabled>
+                            <option :value="is.id" :label="is.name" v-for="(is,j) in item.childrens" :key="j">{{is.name}}</option>
+                        </select>
+                    </li>
+                    <!-- 申请表第四列 -->
+                    <li>
+                        <i class='el-icon-delete personCursor' @click="getIndex(item,index)"></i>
+                    </li>
             </ul>
         </div>
         <div class="selectO">
@@ -155,7 +152,7 @@
             </ul>
         </div>
         <p class="scan">
-            <span  @click="displayY"> 预&nbsp;&nbsp;览</span>
+            <span @click="displayY"> 预&nbsp;&nbsp;览</span>
         </p>
         <p class="submit">
             <span @click="submitForm">保&nbsp;&nbsp;&nbsp;&nbsp;存</span>
@@ -187,7 +184,7 @@
                                     <el-radio :label="is.name" disabled v-for="(is,j) in it.childrens.slice(0,2)" :key="j">{{is.name}}</el-radio>
                                 </el-radio-group>
                             </p>
-                            <p v-else-if="!it.fx && it.type == 'checkbox'"  class="downSel">
+                            <p v-else-if="!it.fx && it.type == 'checkbox'" class="downSel">
                                 <el-checkbox-group>
                                     <el-checkbox :label="is.name" disabled v-for="(is,j) in it.childrens" :key="j">{{is.name}}</el-checkbox>
                                 </el-checkbox-group>
@@ -221,11 +218,22 @@
                 自定义申请表设置说明
             </p>
             <p class="titleC" style="text-indent:29px;">
-                园区管理员可在“<span>新增报名项</span>”处，可添加常用栏位如：<span>实收资本</span>、
-                <span>企业规模</span>、<span>成立日期</span>、<span>注册资本</span>、<span>联系电话</span>、
-                <span>联系人姓名</span>等。自定义添加报名表信息项，支持类型包括：<span>单行文本框</span>、
-                <span>多行文本框</span>、<span>单选下拉框</span>、<span>单选框</span>、<span>复选框</span>、
-                <span>多选下拉框</span>、<span>日期选择框</span>和<span>数值输入框</span>。
+                园区管理员可在“
+                <span>新增报名项</span>”处，可添加常用栏位如：
+                <span>实收资本</span>、
+                <span>企业规模</span>、
+                <span>成立日期</span>、
+                <span>注册资本</span>、
+                <span>联系电话</span>、
+                <span>联系人姓名</span>等。自定义添加报名表信息项，支持类型包括：
+                <span>单行文本框</span>、
+                <span>多行文本框</span>、
+                <span>单选下拉框</span>、
+                <span>单选框</span>、
+                <span>复选框</span>、
+                <span>多选下拉框</span>、
+                <span>日期选择框</span>和
+                <span>数值输入框</span>。
             </p>
             <div class="select">
                 <p>新增报名项</p>
@@ -246,8 +254,11 @@
                     </li>
                 </ul>
             </div>
-            <p class="titleC">添加自定义信息项后后，须对信息项进行编辑。须填写信息项<span>公司名称</span>、
-            <span>公司地址</span>、<span>行业</span>，<span>申请说明</span>对申请人进行填写提示。</p>
+            <p class="titleC">添加自定义信息项后后，须对信息项进行编辑。须填写信息项
+                <span>公司名称</span>、
+                <span>公司地址</span>、
+                <span>行业</span>，
+                <span>申请说明</span>对申请人进行填写提示。</p>
             <ul class="ulModule">
                 <li>
                     <span>名称</span>
@@ -267,7 +278,7 @@
                         <el-radio-group v-model="it.value" v-else-if="it.type == 'radio'">
                             <el-radio :label="is.name" v-for="(is,j) in it.childrens" :key="j">{{is.name}}</el-radio>
                         </el-radio-group>
-                        <select v-else-if="it.type == 'checkbox'"  v-model="it.name" :placeholder="`请输入${it.name}`" disabled></select>
+                        <select v-else-if="it.type == 'checkbox'" v-model="it.name" :placeholder="`请输入${it.name}`" disabled></select>
                         <el-date-picker class="selectTime" v-else-if="it.type == 'dateTime'" v-model="it.value" type="date" placeholder="选择日期" disabled></el-date-picker>
                     </span>
                     <span>
@@ -371,7 +382,7 @@ export default {
             commonList: [
                 {
                     name: "注册资本",
-                    type: "number", //输入框类型 
+                    type: "number", //输入框类型
                     requir: false, //是否必填
                     sub: "单位：万元", //备注说明（如单位等）
                     value: "", //绑定值
@@ -379,7 +390,7 @@ export default {
                     id: "0",
                     show: true,
                     fx: false,
-                    own:'common'
+                    own: "common"
                 },
                 {
                     name: "成立日期",
@@ -391,11 +402,11 @@ export default {
                     id: "1",
                     show: true,
                     fx: false,
-                    own:'common'
+                    own: "common"
                 },
                 {
                     name: "经营范围",
-                    type: "text", //输入框类型 
+                    type: "text", //输入框类型
                     requir: false, //是否必填
                     sub: "", //备注说明（如单位等）
                     value: "", //绑定值
@@ -403,7 +414,7 @@ export default {
                     id: "4",
                     show: true,
                     fx: false,
-                    own:'common'
+                    own: "common"
                 },
                 {
                     name: "企业规模",
@@ -415,7 +426,7 @@ export default {
                     id: "5",
                     show: true,
                     fx: false,
-                    own:'common',
+                    own: "common",
                     childrens: [
                         {
                             name: "0-50人",
@@ -461,7 +472,7 @@ export default {
                     id: "6",
                     show: true,
                     fx: false,
-                    own:'common'
+                    own: "common"
                 }
             ],
             selfDefined: [
@@ -472,7 +483,7 @@ export default {
                     requir: false,
                     tittext: "",
                     fx: false,
-                    del:true
+                    del: true
                 },
                 {
                     type: "textarea",
@@ -481,7 +492,7 @@ export default {
                     requir: false,
                     tittext: "",
                     fx: false,
-                    del:true
+                    del: true
                 },
                 {
                     type: "radioDown",
@@ -491,7 +502,7 @@ export default {
                     tittext: "",
                     fx: false,
                     vaule: "",
-                    del:true,
+                    del: true,
                     childrens: [
                         {
                             name: "",
@@ -513,7 +524,7 @@ export default {
                     tittext: "",
                     fx: false,
                     vaule: [],
-                    del:true,
+                    del: true,
                     childrens: [
                         {
                             name: "",
@@ -535,7 +546,7 @@ export default {
                     tittext: "",
                     fx: false,
                     vaule: "",
-                    del:true,
+                    del: true,
                     childrens: [
                         {
                             name: "",
@@ -557,7 +568,7 @@ export default {
                     tittext: "",
                     fx: false,
                     vaule: [],
-                    del:true,
+                    del: true,
                     childrens: [
                         {
                             name: "",
@@ -579,7 +590,7 @@ export default {
                     tittext: "",
                     dayDate: new Date(),
                     fx: false,
-                    del:true
+                    del: true
                 },
                 {
                     type: "numberBox",
@@ -588,13 +599,13 @@ export default {
                     requir: false,
                     tittext: "",
                     fx: false,
-                    del:true
+                    del: true
                 }
             ],
             addList: [],
             displayList: [],
-            confirmSend:false,
-            isBdPark: this.utils.isBdPark(),//是否是保定园区
+            confirmSend: false,
+            isBdPark: this.utils.isBdPark() //是否是保定园区
         };
     },
     computed: {},
@@ -604,29 +615,32 @@ export default {
     methods: {
         //获取初始模板
         getForm() {
-
             this.$post(this.$apiUrl.manage.applyParkForm, {
                 parkId: window.sessionStorage.getItem("parkId")
             }).then(
                 response => {
                     if (response.resultData && response.resultData.entryForm) {
                         if (response.resultData.entryForm.length > 6) {
-                            this.displayList = JSON.parse(response.resultData.entryForm);
-                            console.log(this.displayList)
+                            this.displayList = JSON.parse(
+                                response.resultData.entryForm
+                            );
+                            console.log(this.displayList);
                             let dl = this.displayList.length;
                             let cl = this.commonList.length;
                             for (let i = 0; i < dl; i++) {
                                 for (let j = 0; j < cl; j++) {
-                                    if (this.displayList[i].name == this.commonList[j].name) {
+                                    if (
+                                        this.displayList[i].name ==
+                                        this.commonList[j].name
+                                    ) {
                                         this.commonList[j].show = false;
                                     }
                                 }
-
                             }
-                        }else{
+                        } else {
                             this.displayList = this.requireList;
                         }
-                    }else{
+                    } else {
                         this.displayList = this.requireList;
                     }
                 },
@@ -675,7 +689,7 @@ export default {
                     btn_name: "单选框",
                     requir: false,
                     tittext: "",
-                    value:'',
+                    value: "",
                     childrens: [
                         {
                             name: "",
@@ -697,7 +711,7 @@ export default {
                     btn_name: "复选框",
                     requir: false,
                     tittext: "",
-                    value:[],
+                    value: [],
                     childrens: [
                         {
                             name: "",
@@ -722,7 +736,7 @@ export default {
                     tittext: "",
                     fx: false,
                     vaule: "",
-                    del:true,
+                    del: true,
                     childrens: [
                         {
                             name: "",
@@ -746,7 +760,7 @@ export default {
                     tittext: "",
                     fx: false,
                     vaule: [],
-                    del:true,
+                    del: true,
                     childrens: [
                         {
                             name: "",
@@ -785,21 +799,21 @@ export default {
         //删除已添加的自定义栏位
         getIndex(it, index) {
             //如果该项是常用栏位
-            if (it.own && it.own == 'common') {
+            if (it.own && it.own == "common") {
                 let dl = this.displayList.length;
                 let cl = this.commonList.length;
                 for (let i = 0; i < cl; i++) {
                     if (it.id == this.commonList[i].id) {
                         this.commonList[i].show = true;
-                        this.displayList.splice(index+6, 1);
+                        this.displayList.splice(index + 6, 1);
                     }
                 }
-            }else{
-                this.displayList.splice(index+6, 1);
+            } else {
+                this.displayList.splice(index + 6, 1);
             }
         },
         addChidrens(item) {
-            console.log(item)
+            console.log(item);
             var childrens = item.childrens || [];
             var i = childrens.length + 1;
             var type = item.btn_name;
@@ -827,19 +841,22 @@ export default {
         },
         //保存模板
         submitForm() {
-            let  _this = this;
+            let _this = this;
             this.$post(this.$apiUrl.manage.updatePark, {
                 parkId: window.sessionStorage.getItem("parkId"),
                 entryForm: this.displayList
             }).then(response => {
-                if (response.resultCode == 'CLT000000000' || response.resultCode == '0000000000') {
+                if (
+                    response.resultCode == "CLT000000000" ||
+                    response.resultCode == "0000000000"
+                ) {
                     _this.confirmSend = true;
                 }
-                setTimeout(()=>{
+                setTimeout(() => {
                     _this.confirmSend = false;
                     this.getForm();
                     // this.$router.push("/parkIndex/scanIndex");
-                },2000)
+                }, 2000);
             });
         }
     }
@@ -852,8 +869,8 @@ export default {
 #wrap .dataS {
     width: 680px !important;
 }
-#settingDetail .el-dialog--center .el-dialog__body{
-    padding:0!important;
+#settingDetail .el-dialog--center .el-dialog__body {
+    padding: 0 !important;
 }
 </style>
 
@@ -868,7 +885,7 @@ export default {
         padding-top: 25px;
         overflow: hidden;
         &:nth-of-type(1) {
-            padding-top:42px;
+            padding-top: 42px;
             & > span {
                 padding-left: 24px;
                 font-size: 24px;
@@ -876,15 +893,15 @@ export default {
                 color: #333333;
                 border-left: 10px solid #10b5ff;
                 letter-spacing: 4.8px;
-                &.differ{
-                        font-size: 18px;
-                        padding-left: 0;
-                        line-height: 30px;
-                        color: #333;
-                        border-left: 8px solid #10b5ff;
-                        text-indent: 22px;
-                        letter-spacing: 3.6px;
-                        display: block;
+                &.differ {
+                    font-size: 18px;
+                    padding-left: 0;
+                    line-height: 30px;
+                    color: #333;
+                    border-left: 8px solid #10b5ff;
+                    text-indent: 22px;
+                    letter-spacing: 3.6px;
+                    display: block;
                 }
             }
         }
@@ -900,7 +917,7 @@ export default {
             }
         }
     }
-    .tableTitle{
+    .tableTitle {
         background-color: #f5f5f5;
         font-size: 16px;
         color: #333333;
@@ -908,9 +925,11 @@ export default {
     .tableContent {
         width: 910px;
         margin: 0 auto;
-        .require,.addItem,.tableTitle{
+        .require,
+        .addItem,
+        .tableTitle {
             border-top: 1px solid #ccc;
-            border-left:1px solid #ccc;
+            border-left: 1px solid #ccc;
             overflow: hidden;
             li {
                 min-height: 60px;
@@ -920,7 +939,7 @@ export default {
                 float: left;
                 &:nth-of-type(1) {
                     width: 325px;
-                    border-left:none;
+                    border-left: none;
                 }
                 &:nth-of-type(2) {
                     width: 128px;
@@ -930,7 +949,7 @@ export default {
                 }
                 &:nth-of-type(4) {
                     width: 129px;
-                    border-right:1px solid #ccc;
+                    border-right: 1px solid #ccc;
                 }
                 & > input[type="text"],
                 & > select {
@@ -976,10 +995,10 @@ export default {
                 //     }
                 // }
             }
-            &:nth-last-of-type(1){
-                border-bottom:1px solid #ccc;
+            &:nth-last-of-type(1) {
+                border-bottom: 1px solid #ccc;
             }
-            .personCursor{
+            .personCursor {
                 cursor: pointer;
             }
         }
@@ -996,13 +1015,13 @@ export default {
                 }
             }
         }
-        .downSel{
+        .downSel {
             border-right: 1px solid #ccc;
-            li{
+            li {
                 &.downSelClass {
                     overflow: hidden;
-                    line-height:0;
-                    width:325px;
+                    line-height: 0;
+                    width: 325px;
                     & > div {
                         &:nth-of-type(1) {
                             & > span {
@@ -1040,10 +1059,10 @@ export default {
                                     border: solid 1px #027edc;
                                     opacity: 0.4;
                                 }
-                                &:nth-last-of-type(1){
-                                    margin-bottom:10px;
+                                &:nth-last-of-type(1) {
+                                    margin-bottom: 10px;
                                 }
-                                .tsb{
+                                .tsb {
                                     display: inline-block;
                                     width: 10px;
                                     height: 10px;
@@ -1156,7 +1175,7 @@ export default {
                         i {
                             font-size: 14px;
                             color: #0066b3;
-                            margin-right:4px;
+                            margin-right: 4px;
                         }
                         &:hover {
                             background: #00a0e9;
@@ -1183,15 +1202,15 @@ export default {
         width: 910px;
         margin: 10px auto 10px;
         position: relative;
-        top:-25px;
-        span{
+        top: -25px;
+        span {
             background: #e6f4ff;
-            color:#00a0e9;
+            color: #00a0e9;
             font-size: 16x;
             text-align: center;
-            display:inline-block;
+            display: inline-block;
             width: 100px;
-            height:40px;
+            height: 40px;
             line-height: 40px;
             cursor: pointer;
         }
@@ -1199,14 +1218,14 @@ export default {
     .submit {
         text-align: center;
         padding-bottom: 60px;
-        position:relative;
-        top:-10px;
-        span{
+        position: relative;
+        top: -10px;
+        span {
             text-align: center;
-            display:inline-block;
+            display: inline-block;
             width: 100px;
-            height:40px;
-            background:linear-gradient(#22a2fa 0%, #10b5ff 100%);
+            height: 40px;
+            background: linear-gradient(#22a2fa 0%, #10b5ff 100%);
             border-radius: 3px;
             line-height: 40px;
             font-size: 16px;
@@ -1298,12 +1317,12 @@ export default {
         }
     }
 }
-#settingDetail{
-    padding-bottom:30px;
-    .title{
+#settingDetail {
+    padding-bottom: 30px;
+    .title {
         font-size: 24px;
         line-height: 36px;
-        margin-bottom:20px;
+        margin-bottom: 20px;
         color: #333333;
         text-align: center;
         i {
@@ -1314,28 +1333,27 @@ export default {
             top: -6px;
         }
     }
-    .oTitle{
+    .oTitle {
         font-size: 20px;
         line-height: 30px;
-        margin:42px 0 50px 40px;
+        margin: 42px 0 50px 40px;
         color: #333;
-        border-left:10px solid #10b5ff;
-        text-indent:22px;
-
+        border-left: 10px solid #10b5ff;
+        text-indent: 22px;
     }
-    .titleC{
-        width:86%;
-        margin:0 auto;
+    .titleC {
+        width: 86%;
+        margin: 0 auto;
         font-size: 14px;
         color: #777777;
-        span{
+        span {
             font-weight: normal;
             letter-spacing: 0px;
             color: #00a0e9;
         }
     }
     .select {
-        width:82%;
+        width: 82%;
         margin: 20px auto;
         background-color: #f5f5f5;
         border: 1px solid #ccc;
@@ -1395,7 +1413,7 @@ export default {
         }
     }
     .ulModule {
-        width:84%;
+        width: 84%;
         padding: 6px;
         margin: 20px auto;
         li {
@@ -1477,13 +1495,13 @@ export default {
             }
         }
     }
-    .titleE{
-        width:86%;
+    .titleE {
+        width: 86%;
         margin: 20px auto;
         font-size: 14px;
         line-height: 16px;
         color: #777777;
-        padding-bottom:50px;
+        padding-bottom: 50px;
     }
 }
 .confirmRequest {
@@ -1498,13 +1516,13 @@ export default {
                 color: #c7c7c7;
             }
             &:nth-of-type(1) {
-                height:30px;
-                margin-top:30px;
+                height: 30px;
+                margin-top: 30px;
                 border-top: 5px solid #00a0e9;
             }
             &:nth-of-type(2) {
-                margin-top:30px;
-                margin-bottom:15px;
+                margin-top: 30px;
+                margin-bottom: 15px;
             }
             &:nth-of-type(3) {
                 font-size: 20px;
