@@ -237,9 +237,7 @@
                 mcCardDataList: [],
                 timeRange: [],
                 ids: "",
-                flag: sessionStorage
-                    .getItem("myList")
-                    .includes(sessionStorage.getItem("parkId")),
+                flag: sessionStorage.getItem("loginFlag"),
                 type: 0
             };
         },
@@ -301,10 +299,10 @@
                 this.dialogTableVisible = false
                 this.$post(url, pop).then(
                     response => {
-                        if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
+                        // if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                             this.$message.success("资讯删除成功");
                             this.getLanchInfoList();
-                        }
+                        // }
                     },
                     err => {
                         this.$message.info(response.resultMsg);
@@ -359,13 +357,13 @@
                     parkId: parkId
                 }).then(
                     response => {
-                        var codestatus = response.resultCode;
-                        if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
+                        // var codestatus = response.resultCode;
+                        // if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
                             this.mcCardDataList = response.resultData.informationList;
                             this.allTotal = response.resultData.total;
-                        } else {
-                            this.$message.info(response.resultMsg);
-                        }
+                        // } else {
+                        //     this.$message.info(response.resultMsg);
+                        // }
                     },
                     err => {
                         this.$message.error("接口异常");
@@ -387,10 +385,10 @@
                 var url = this.$apiUrl.parkInfo.delInfoes;
                 this.$post(url, pop).then(
                     response => {
-                        if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
+                        // if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                             this.$message.success("删除成功");
                             this.getDraftInfoList();
-                        }
+                        // }
                     },
                     err => {
                         if (err && err.data.resultMsg) {
@@ -415,13 +413,13 @@
                     parkId: parkId
                 }).then(
                     response => {
-                        if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
+                        // if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                             this.timeRange = [];
                             this.mcCardDataList = response.resultData.informationList;
                             this.allTotal = response.resultData.total;
-                        } else {
-                            this.$message.info(failMsg + response.resultMsg);
-                        }
+                        // } else {
+                        //     this.$message.info(failMsg + response.resultMsg);
+                        // }
                     },
                     err => {
                         this.$message.error("接口异常");

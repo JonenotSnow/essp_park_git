@@ -216,8 +216,8 @@
                     informationId: this.id
                 };
                 this.$post("/information/getInfoById", params).then(response => {
-                    let codestatus = response.resultCode;
-                    if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
+                    // let codestatus = response.resultCode;
+                    // if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
                         this.satpDate = response.resultData;
 
                         // 对标签进行处理
@@ -238,9 +238,9 @@
                             })
                         }
 
-                    } else {
-                        this.$message.info(response.resultMsg);
-                    }
+                    // } else {
+                    //     this.$message.info(response.resultMsg);
+                    // }
                 }, err => {
                     this.$message.error("接口异常");
                 })
@@ -255,17 +255,17 @@
                     entityId: this.id
                 };
                 this.$post("/audit/getCommentList", params).then(response => {
-                    let codestatus = response.resultCode;
-                    if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
+                    // let codestatus = response.resultCode;
+                    // if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
                         this.commentList = response.resultData;
 
                         if (this.commentList.length > 0) {
                             this.lastComment = this.commentList[0];
                         }
 
-                    } else {
-                        this.$message.info(response.resultMsg);
-                    }
+                    // } else {
+                    //     this.$message.info(response.resultMsg);
+                    // }
                 }, err => {
                     this.$message.error("接口异常");
                 })

@@ -1,5 +1,8 @@
 <template>
     <div class="app" id="app" v-loading="loading2">
+        <div :class="messageFixed == true ? 'init_isFixed' :''"  v-if="msgList.length>0">
+            <essp-message :messageList="msgList" :errMsgList="errMsgList" :timeOutMsgList="timeOutMsgList"></essp-message>
+        </div>
         <div class="myChat" :style="getTheWidth()" v-show="chat.openChat" @mousedown="moveChat" id='myChat'>
             <chat></chat>
         </div>
@@ -23,23 +26,38 @@
     import {mapState} from 'vuex'
     import mixins from '@/components/mixins/mixins_windowOpen.js'
     // import baseLogin from "@/views/user/login/loginCommon.js";
+    import EsspMessage from '@/components/EsspMessage'
 
     export default {
         name: 'App',
         mixins: [mixins],
         components: {
-            chat
+            chat,
+            EsspMessage
         },
         data() {
             return {
                 loginFlag: this.SSH.getItem('loginFlag'),
                 time: null,
+                buriedTime: 0,
+                msgList: [],
+                errMsgList: [],
+                timeOutMsgList: [],
+                messageFixed:false
             }
         },
         computed: {
             ...mapState([
                 'chat',
             ]),
+            messageListChange() {
+                let msgData = {
+                    messageList: this.$store.state.errMsg.messageList,
+                    errMsgList: this.$store.state.errMsg.errMsgList,
+                    timeOutMsgList: this.$store.state.errMsg.timeOutMsgList
+                }
+                return msgData;
+            }
         },
         watch: {
             $route() {
@@ -50,6 +68,11 @@
                     window.clearInterval(this.time);
                     this.time = null;
                 }
+            },
+            messageListChange: function(newVal, oldVal){
+                this.msgList = newVal.messageList
+                this.errMsgList = newVal.errMsgList
+                this.timeOutMsgList = newVal.timeOutMsgList
             },
         },
         created() {
@@ -62,6 +85,24 @@
             }
         },
         methods: {
+            addEvent(ev, fn) {
+                if (window.attachEvent) {
+                    window.attachEvent("on" + ev, fn);
+                } else {
+                    window.addEventListener(ev, fn, false);
+                }
+            },
+            handleScroll() {
+                var scrollTop =
+                    window.pageYOffset ||
+                    document.documentElement.scrollTop ||
+                    document.body.scrollTop;
+                if (scrollTop > 35) {
+                    this.messageFixed = true;
+                } else {
+                    this.messageFixed = false;
+                }
+            },
             getTheWidth() {
                 if (this.$store.state.chat.openDetail) {
                     return {width: "1188px",}
@@ -140,59 +181,68 @@
                 const self = this;
                 let time = 60;
                 let userInfo = this.SSH.getItem('userInfo')
-                let timer = null
+                let timer = null;
+                this.buriedTime++;
+
                 if (!this.utils.isEmpty(userInfo) && userInfo.userType !== this.constants.userType.backgroundUser) {
-                    this.$post(apiUrl.user.getUnreadMessageUrl, {})
-                        .then((response) => {
-                            let data = response.resultData
-                            if (!this.utils.isEmpty(data.rqmMessageList) && data.rqmMessageList.length > 0) {
-                                for (let i = 0; i < data.rqmMessageList.length; i++) {
-                                    if (data.rqmMessageList[i].freeze) {
-                                        self.getUserSSH('self')
-                                    }
-                                    setTimeout(function () {
-                                        self.businessMsg(data.rqmMessageList[i])
-                                    }, 1000)
-                                }
-                            }
-                            if (!this.utils.isEmpty(data.sysMessageList) && data.sysMessageList.length > 0) {
-                                for (let i = 0; i < data.sysMessageList.length; i++) {
-                                    if (data.sysMessageList[i].freeze) {
-                                        self.getUserSSH('self')
-                                    }
-                                    setTimeout(function () {
-                                        self.sysMsg(data.sysMessageList[i])
-                                    }, 1000)
-                                }
-                            }
-                            if (!this.utils.isEmpty(data.subMessageList) && data.subMessageList.length > 0) {
-                                for (let i = 0; i < data.subMessageList.length; i++) {
-                                    if (data.subMessageList[i].freeze) {
-                                        self.getUserSSH('self')
-                                    }
-                                    setTimeout(function () {
-                                        self.subMsg(data.subMessageList[i])
-                                    }, 1000)
-                                }
-                            }
-                            timer = setInterval(function () {
-                                time--;
-                                if (time < 0) {
-                                    clearInterval(timer);
-                                    time = 60;
-                                    self.getMessage()
-                                }
-                            }, 1000)
-                        }, err => {
-                            timer = setInterval(function () {
-                                time--;
-                                if (time < 0) {
-                                    clearInterval(timer);
-                                    time = 60;
-                                    self.getMessage()
-                                }
-                            }, 1000)
+                    if(this.buriedTime >= 5 && historyArr){
+                        this.$post("/intermediary/termnl/insert", {
+                            usrBhvrAnlParamList: historyArr.path
                         })
+                        historyArr = {path: []}
+                        this.LSH.setItem('history', historyArr)
+                        this.buriedTime = 0
+                    }
+                    this.$post(apiUrl.user.getUnreadMessageUrl, {}).then((response) => {
+                        let data = response.resultData
+                        if (!this.utils.isEmpty(data.rqmMessageList) && data.rqmMessageList.length > 0) {
+                            for (let i = 0; i < data.rqmMessageList.length; i++) {
+                                if (data.rqmMessageList[i].freeze) {
+                                    self.getUserSSH('self')
+                                }
+                                setTimeout(function () {
+                                    self.businessMsg(data.rqmMessageList[i])
+                                }, 1000)
+                            }
+                        }
+                        if (!this.utils.isEmpty(data.sysMessageList) && data.sysMessageList.length > 0) {
+                            for (let i = 0; i < data.sysMessageList.length; i++) {
+                                if (data.sysMessageList[i].freeze) {
+                                    self.getUserSSH('self')
+                                }
+                                setTimeout(function () {
+                                    self.sysMsg(data.sysMessageList[i])
+                                }, 1000)
+                            }
+                        }
+                        if (!this.utils.isEmpty(data.subMessageList) && data.subMessageList.length > 0) {
+                            for (let i = 0; i < data.subMessageList.length; i++) {
+                                if (data.subMessageList[i].freeze) {
+                                    self.getUserSSH('self')
+                                }
+                                setTimeout(function () {
+                                    self.subMsg(data.subMessageList[i])
+                                }, 1000)
+                            }
+                        }
+                        timer = setInterval(function () {
+                            time--;
+                            if (time < 0) {
+                                clearInterval(timer);
+                                time = 60;
+                                self.getMessage()
+                            }
+                        }, 1000)
+                    }, err => {
+                        timer = setInterval(function () {
+                            time--;
+                            if (time < 0) {
+                                clearInterval(timer);
+                                time = 60;
+                                self.getMessage()
+                            }
+                        }, 1000)
+                    })
                 } else {
                     timer = setInterval(function () {
                         time--;
@@ -251,6 +301,18 @@
 </script>
 
 <style lang="less">
+    @import "./assets/css/mixin";
+    .app{
+        .init_isFixed {
+            position: fixed;
+            background-color: @essp_con_bg;
+            top: 0;
+            width: 100%;
+            min-width: @essp_width_auto;
+            z-index: 1002;
+            box-shadow: 0px 4px 21px 0px rgba(116, 116, 116, 0.12);
+        }
+    }
     .esspchat {
         .el-dialog__header {
             display: none;

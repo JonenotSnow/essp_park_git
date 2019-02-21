@@ -142,6 +142,14 @@
         },
         methods: {
             linkTo(id) {
+                if (!this.utils.isLoginMode()) {
+                    var _this = this;
+                    this.$message.warning("您尚未登陆，请您先登陆");
+                    setTimeout(function () {
+                        _this.windowHrefUrl('/userIndex/login')
+                    }, 2000);
+                    return;
+                }
                 this.$router.push({
                     path: '/parkIndex/goverEnrollForm',
                     query: {
@@ -166,7 +174,7 @@
                     entId: this.$route.query.id
                 }).then(response => {
                     let _self = this;
-                    if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
+                    // if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                         let lblInfo = response.resultData.lblInfo;
                         if (response.resultData.lblInfo) {
 
@@ -175,7 +183,7 @@
                                 _self.tags.push(lblInfo[i].lblTxt);
                             }
                         }
-                    }
+                    // }
                 });
             },
 

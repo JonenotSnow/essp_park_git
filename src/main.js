@@ -39,8 +39,10 @@ Vue.use(VueLazyload, {
     loading: "./assets/loading.png",
     error: "./assets/error.png"
 });
-import VueUeditorWrap from 'vue-ueditor-wrap'
-Vue.component('vue-ueditor-wrap', VueUeditorWrap)
+// import VueUeditorWrap from 'vue-ueditor-wrap'
+// Vue.component('vue-ueditor-wrap', VueUeditorWrap)
+
+
 // ajax全局配置
 import { post, get, patch, put, del } from "./fetch/http";
 import { apiUrl } from "./fetch/apiUrl";
@@ -55,6 +57,7 @@ import { setting } from "./util/serveHttp";
 import fontIcon from "./assets/font/iconfont.css";
 // 引入公共的举报弹窗
 import commonJs from "./commonFun/commonJs";
+
 
 //定义全局变量
 Vue.prototype.$apiUrl = apiUrl;
@@ -81,7 +84,9 @@ Vue.filter("timerFormat", function(value) {
 let openUrl = "http://128.196.235.132:1345/essp/#";
 
 if (process.env.NODE_ENV === "production") {
-    openUrl = window.location.origin+'/essp/'+"#";;
+    openUrl = window.location.origin+'/essp/'+"#";
+} else {
+    // require('./mock/index.js')
 }
 Vue.prototype.$openUrl = openUrl;
 
@@ -109,6 +114,26 @@ router.beforeEach(async (to, from, next) => {
     // }
 
     // let query  = getQueryObjuect()
+    /* 埋点方案  start   */
+    // let pathname = window.location.pathname
+    // let historyArr = localStorageHandler.getItem('history')?localStorageHandler.getItem('history'):{path: []}
+    // if (sessionStorageHandler.getItem("loginFlag")) {
+    //     let userArr = {
+    //         userName: sessionStorageHandler.getItem('userInfo').userName,
+    //         url: pathname+'#'+to.path,
+    //         accessTime: Moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
+    //         channel: '01',
+    //         system: '',
+    //         opttype: 'url'
+    //     }
+    //     // if (historyArr && historyArr.path && historyArr.path.length && userArr.url === historyArr.path[historyArr.path.length-1].url) { // 过滤刷新
+    //     //     return
+    //     // }
+    //     historyArr.path.push(userArr)
+    //     localStorageHandler.setItem('history', historyArr)
+    // }
+    /* 埋点方案  end  */
+
     console.log(to)
     let menuList = sessionStorageHandler.getItem("menuList");
 
@@ -153,8 +178,8 @@ router.beforeEach(async (to, from, next) => {
     }
     //
     let name = to.name;
-    let menuResource = sessionStorageHandler.getItem("menuResource"); 
-    let currentMenu = menuResource[name]; 
+    let menuResource = sessionStorageHandler.getItem("menuResource");
+    let currentMenu = menuResource[name];
     // console.log('name')
     // console.log(name)
     // console.log('currentMenu')
@@ -202,12 +227,12 @@ async function getLoginUserRole(options) {
     };
     await post(urlapi, pop).then(
         response => {
-            if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
+            // if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                 LoginUserRol = response.resultData;
                 sessionStorageHandler.setItem("LoginUserRol", LoginUserRol);
-            } else {
-                Message.info(response.resultMsg);
-            }
+            // } else {
+            //     Message.info(response.resultMsg);
+            // }
         },
         response => {
             Message.info(response.resultMsg);
@@ -225,16 +250,16 @@ async function selectResMenu(options, next) {
     };
     await post(urlapi, pop).then(
         response => {
-            if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
+            // if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                 var menuList = response.resultData.menuList[0] || {};
                 sessionStorageHandler.setItem("menuList", menuList);
                 sessionStorageHandler.setItem(
                     "menuResource",
                     response.resultData.routerResMap
                 );
-            } else {
-                Message.info(response.resultMsg);
-            }
+            // } else {
+            //     Message.info(response.resultMsg);
+            // }
         },
         response => {
             Message.info(response.resultMsg);
@@ -256,7 +281,7 @@ async function getParkById(parkId) {
     await post("/parkManage/getParkById", {
         parkId: parkId
     }).then(res => {
-        if (res.resultCode == "CLT000000000" || res.resultCode == "0000000000") {
+        // if (res.resultCode == "CLT000000000" || res.resultCode == "0000000000") {
             if (res.resultData) {
                 sessionStorageHandler.setItem("parkId", res.resultData.parkId);
                 sessionStorageHandler.setItem(
@@ -272,7 +297,7 @@ async function getParkById(parkId) {
                     ? bdParkId
                     : sessionStorageHandler.getItem("parkId");
             }
-        }
+        // }
     });
 }
 

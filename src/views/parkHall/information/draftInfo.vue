@@ -117,12 +117,12 @@ export default {
       var url = this.$apiUrl.parkInfo.delInfoes;
       this.$post(url, pop).then(
         response => {
-          if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
+          // if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
             this.$message.success("删除成功");
             this.getDraftInfoList();
-          } else {
-            this.$message.info(failMsg + response.resultMsg);
-          }
+          // } else {
+          //   this.$message.info(failMsg + response.resultMsg);
+          // }
         },
         err => {
           this.$message.error("接口异常");
@@ -142,13 +142,13 @@ export default {
         parkId: parkId
       }).then(
         response => {
-          if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
+          // if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
             this.timeRange = [];
             this.mcCardDataList = response.resultData.informationList;
             this.allTotal = response.resultData.total;
-          } else {
-            this.$message.info(failMsg + response.resultMsg);
-          }
+          // } else {
+          //   this.$message.info(failMsg + response.resultMsg);
+          // }
         },
         err => {
           this.$message.error("接口异常");

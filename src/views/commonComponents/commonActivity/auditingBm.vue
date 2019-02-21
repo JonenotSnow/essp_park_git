@@ -184,13 +184,13 @@
                     endTime: this.timeEnd //提交结束时间
                 }).then(
                     response => {
-                        if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
+                        // if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                             this.auditingLoading = false;
                             this.auditconData = response.resultData.list;
                             this.allTotal = response.resultData.total;
-                        } else {
-                            this.$message.error(err.resultMsg);
-                        }
+                        // } else {
+                        //     this.$message.error(err.resultMsg);
+                        // }
                     },
                     err => {
                         this.$message.error(err.resultMsg);

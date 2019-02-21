@@ -35,7 +35,7 @@
                   :prop="'list.' + i + '.content.' + j + '.dataNum'"
                   :rules="rulesData(i)"
                 >
-                  <el-input type="number" v-model="is.dataNum"></el-input>
+                  <el-input type="number" @blur="numberLimit(i, j, is.dataNum)" v-model="is.dataNum"></el-input>
                   <span class="sub1" v-if="is.sub && is.sub.length == 1">{{is.sub}}</span>
                   <span class="sub2" v-if="is.sub && is.sub.length == 2">{{is.sub}}</span>
                 </el-form-item>
@@ -337,6 +337,20 @@ export default {
   methods: {
     rulesData: (type) => {
       var rules
+      var validateNumber1 = (rule, value, callback) => {
+        if(value > 999999999.99) {
+          callback(new Error(' '))
+        }
+        callback()
+      }
+      var validateNumber2 = (rule, value, callback) => {
+        if(value > 999999999) {
+          callback(new Error(' '))
+        }
+        callback()
+      }
+      
+      
       switch(type) {
         case 0:
         case 1:
@@ -344,43 +358,73 @@ export default {
           rules = [
             { required: true, trigger: 'blur', message: ' '},
             { pattern: /^(([1-9][0-9]*)|(([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,2})))$/, trigger: 'blur', message: ' '},
+            { validator: validateNumber1, trigger: 'blur', message: ' '},
           ]
           break;
         default:
           rules = [
             { required: true, trigger: 'blur', message: ' '},
             { pattern: /^[1-9]+\d*$/, trigger: 'blur', message: ' '},
+            { validator: validateNumber2, trigger: 'blur', message: ' '},
           ]
           break;
       }
       return rules
     },
+    numberLimit(index, i, item) {
+      switch(index) {
+        case 0:
+        case 1:
+        case 5:
+          var x = String(item).indexOf('.') + 1;   //小数点的位置
+          var y = String(item).length - x;  //小数的位数
+          if(x == 0) {
+            this.form.list[index].content[i].dataNum = item + '.00'
+          } else if (x > 0 && y == 1) {
+            this.form.list[index].content[i].dataNum = item + '0'
+          }
+          //this.form.list[index].content[i].dataNum = 8888
+          break;
+        default:
+         
+          break;
+      }
+      
+    },
     getData() {
       this.$post("/dataIndex/getIndexData", {
         parkId: sessionStorage.getItem("parkId")
       }).then(res => {
-        if (res.resultCode === "CLT000000000" || res.resultCode === "0000000000") {
+        // if (res.resultCode === "CLT000000000" || res.resultCode === "0000000000") {
           if (res.resultData.length > 0) {
             this.form.list.forEach(item => {
               item.content = [];
             });
           }
-
           res.resultData.forEach(item => {
             let itemIndex = Number(item.type);
+            if(itemIndex == 0 || itemIndex == 1 || itemIndex == 5) {
+                var x = String(item.dataNum).indexOf('.') + 1;   //小数点的位置
+                var y = String(item.dataNum).length - x;  //小数的位数
+                if(x == 0) {
+                  item.dataNum = item.dataNum + '.00'
+                } else if (x > 0 && y == 1) {
+                  item.dataNum = item.dataNum + '0'
+                }
+            }
             if (itemIndex > 5) return false;
             let itemObj = Object.assign({},this.switchFn(itemIndex,0),item)
             if(this.form.list[itemIndex].content.length<5){this.form.list[itemIndex].content.push(itemObj);}
           });
-        }
+        // }
       });
     },
-    addItem(index, jIndex) {
-      let obj = this.switchFn(index, jIndex);
-      console.log(index, jIndex, obj);
-      this.form.list[index].content.push(obj);
-      console.log(this.form.list);
-    },
+    // addItem(index, jIndex) {
+    //   let obj = this.switchFn(index, jIndex);
+    //   console.log(index, jIndex, obj);
+    //   this.form.list[index].content.push(obj);
+    //   console.log(this.form.list);
+    // },
     switchFn(index, jIndex) {
       let tmp = {};
       switch (index) {
@@ -474,7 +518,7 @@ export default {
               this.$message.success("数据上传成功");
             });
           } else {
-            this.$message('请确保所有数据都已填写！')
+            this.$message('请确保所有数据都已按要求填写完整！')
             return false;
           }
         });

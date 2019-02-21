@@ -140,10 +140,10 @@ export default {
         timeEnd: this.timeEnd //提交结束时间
       }).then(
         response => {
-          if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
+          // if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
             this.auditconData = response.resultData.list;
             this.allTotal = response.resultData.activityList;
-          }
+          // }
           this.auditingLoading = false;
         },
         err => {

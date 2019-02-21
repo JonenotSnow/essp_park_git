@@ -1165,7 +1165,7 @@
                     this.$post(this.$apiUrl.active.actEdit, pop).then(
                         response => {
                             var codestatus = response.resultCode;
-                            if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
+                            // if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
                                 let data = response.resultData;
                                 this.activityTheme = data.activityTheme || '';
                                 this.activityType = data.activityType;
@@ -1197,9 +1197,9 @@
                                 console.log(tickNums);
                                 this.enrolTopNum = tickNums;
 
-                            } else {
-                                this.$message.error(response.resultMsg);
-                            }
+                            // } else {
+                            //     this.$message.error(response.resultMsg);
+                            // }
                         },
                         err => {
                             this.$message.error(err.resultMsg);
@@ -1526,13 +1526,13 @@
                     status: type
                 }).then(
                     response => {
-                        if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
+                        // if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                             this.$confirm(msg, maskConfig).then(() => {
                                 this.$router.push(url);
                             });
-                        } else {
-                            this.$message.error(response.resultMsg);
-                        }
+                        // } else {
+                        //     this.$message.error(response.resultMsg);
+                        // }
                     },
                     response => {
                         this.$message.error(response.resultMsg);
@@ -1596,16 +1596,16 @@
                             status: type
                         }).then(
                             response => {
-                                if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
+                                // if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                                     this.$alert(response.resultMsg, {
                                         confirmButtonText: "确定",
                                         callback: action => {
                                             this.$router.push(url);
                                         }
                                     });
-                                } else {
-                                    this.$message.error(response.resultMsg);
-                                }
+                                // } else {
+                                //     this.$message.error(response.resultMsg);
+                                // }
                             },
                             response => {
                                 this.$message.error(response.resultMsg);

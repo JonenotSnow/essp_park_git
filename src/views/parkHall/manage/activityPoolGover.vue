@@ -59,7 +59,7 @@
                     </el-table-column>
                     <el-table-column align="center" prop="" width="100" label="操作">
                         <template slot-scope="scope">
-                            <el-button type="text" v-if="',10,01,13,14,'.indexOf(`,${scope.row.status},`) == -1" disabled>领取并审核</el-button>
+                            <el-button type="text" v-if="',10,13,'.indexOf(`,${scope.row.status},`) == -1" disabled>领取并审核</el-button>
                             <el-button type="text" v-else @click.stop="cancelAudit(scope.row,scope.row.id)">领取并审核</el-button>
                         </template>
                     </el-table-column>
@@ -91,25 +91,22 @@ export default {
             count:{},
             list:[],
             statusList:[
+                
                 {
-                    id:'',
-                    name:'全部'
+                    id: "",
+                    name: "全部"
                 },
                 {
-                    id:'02',
-                    name:'发布中'
+                    id: "02",
+                    name: "发布中"
                 },
                 {
-                    id:'12',
-                    name:'园区审核未通过'
+                    id: "12",
+                    name: "园区审核未通过"
                 },
                 {
                     id:'13',
-                    name:'高级管理员待审核'
-                },
-                {
-                    id:'14',
-                    name:'高级管理员审核中'
+                    name:'审核中' //高级管理员
                 }
             ],
             searchCondition:{
@@ -138,8 +135,7 @@ export default {
             let statusList={
                 "02":"发布中",
                 "12":"园区审核未通过",
-                "13": "高级管理员待审核",
-                "14": "高级管理员审核中"
+                "13": "审核中"
             }
             return statusList[value]?statusList[value]:''
         }

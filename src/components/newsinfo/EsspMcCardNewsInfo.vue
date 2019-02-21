@@ -151,17 +151,17 @@
                     followId: followId
                 }).then(
                     response => {
-                        if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
+                        // if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                             this.dialogVisible = false;
                             this.$message.success(response.resultMsg);
                             this.$emit("getCardList");
 //                            this.$router.go(0);
-                        } else {
-                            this.$message({
-                                type: "info",
-                                message: response.resultMsg
-                            });
-                        }
+                        // } else {
+                        //     this.$message({
+                        //         type: "info",
+                        //         message: response.resultMsg
+                        //     });
+                        // }
                     },
                     err => {
                         this.$message({
@@ -374,13 +374,13 @@
                     text-overflow: ellipsis;
                 }
                 .cont-detail-l-content {
-                    height: 42px;
+                    height: 45px;
                     line-height: 24px;
                     overflow: hidden;
                 }
                 p {
                     font-size: 12px;
-                    margin-top: 23px;
+                    margin-top: 15px;
                     font-weight: normal;
                     font-stretch: normal;
                     letter-spacing: 0;

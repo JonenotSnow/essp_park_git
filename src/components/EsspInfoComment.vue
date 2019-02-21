@@ -110,7 +110,6 @@
                     </div>
                 </div>
 
-
             </div>
             <div class="pageList">
                 <el-pagination
@@ -133,6 +132,25 @@
 
     export default {
         mixins: [mixin],
+        props:[
+            "commentSty",// 评论类型 1. 活动  2. 资讯
+            "info",
+            "publishId",
+        ],
+        created() {
+            //定时器
+            this.setTime();
+            console.log('1111',this.publishId)
+            this.userInfo = this.SSH.getItem('userInfo');
+            for(let o of this.SSH.getItem('LoginUserRol')){
+                if(o==='33' || o==='34'){
+                    this.showDel=true
+                    break
+                }
+            }
+            console.log(this.userInfo);
+            this.getCnt();
+        },
         data() {
             return {
                 reIndex:"",
@@ -152,23 +170,24 @@
                 authticate:true
             }
         },
-        props:[
-            "commentSty",// 评论类型 1. 活动  2. 资讯
-            "info"
-        ],
-        computed: {},
-        created() {
-            this.userInfo = this.SSH.getItem('userInfo');
-            for(let o of this.SSH.getItem('LoginUserRol')){
-                if(o==='33' || o==='34'){
-                    this.showDel=true
-                    break
-                }
-            }
-            console.log(this.userInfo);
-            this.getCnt();
+        computed: {
         },
         methods: {
+            setTime(){
+                let _this = this;
+                // console.log("监听成功",this.publishId)
+                // console.log("监听成功",this.userInfo.id)
+                if(!this.utils.isEmpty(this.publishId) && this.publishId.length>1){
+                    if(this.publishId===this.userInfo.id.toString()){
+                        this.showDel=true
+                        // console.log("监听成功2",this.showDel)
+                        // console.log("监听成功",this.userInfo.id)
+                    }
+                    //clearTimeout(_this.timer);
+                    return
+                }
+                _this.timer=setTimeout(this.setTime,500);
+            },
             handleSizeChange(val) {
                 this.pageSize = val;
                 this.getCnt();
@@ -202,7 +221,11 @@
                         this.$message.warning("您暂无权限进行举报");
                         return;
                     }
-                    var cstNm = cstNm || this.infoDetailData.cstNm;
+                    //var cstNm = cstNm || this.infoDetailData.cstNm;
+                    var cstNm = cstNm
+                    if(this.utils.isEmpty(cstNm)){
+                        cstNm='ddsd'
+                    }
                     var byInformer = byInformer || this.infoDetailData.usrNm;
                     this.$commonJs.tipOffMask({
                         informType: type,                                      // 类型（必填）
@@ -226,6 +249,7 @@
                 item.showBox = false;
                 item.content = "";
             },
+
 
             //添加回复
             addReply(item) {
@@ -268,13 +292,9 @@
                     this.$post(url, pop)
                         .then((response) => {
                             isClick = true;
-                            if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
-                                this.$message.success("回复发表成功");
-                                this.getCnt();
-                                item.replytext = "";
-                            } else {
-                                this.$message.info(response.resultMsg);
-                            }
+                            this.$message.success("回复发表成功");
+                            this.getCnt();
+                            item.replytext = "";
                         }, (err) => {
                             isClick = true;
                             this.$message.error(response.resultMsg);
@@ -290,22 +310,18 @@
             },
             delReply(item,parentItem,index,childIndex) {
                 if(this.utils.isLoginMode()){
-                    if(!this.utils.isVisitorMode()){
-                        this.$message.warning("您暂无权限删除回复");
-                        return;
-                    }
+                    // if(!this.showDel){
+                    //     this.$message.warning("您暂无权限删除回复");
+                    //     return;
+                    // }
                     this.$confirm("是否删除该评论?","删除").then(() => {
                         var url = this.$apiUrl.parkInfo.delReply;
-                        var pop = {id: item.id}
+                        var pop = {id: item.id,parkId:this.SSH.getItem('parkId')}
                         //onsole.log(item,parentItem,index);
                         this.$post(url, pop)
                             .then((response) => {
-                                if (response.resultCode == "CLT000000000") {
-                                    this.cnts[index].replyList.splice(childIndex,1);
-                                    this.$message.success("该条评论删除成功");
-                                } else {
-                                    this.$message.info(response.resultMsg);
-                                }
+                                this.cnts[index].replyList.splice(childIndex,1);
+                                this.$message.success("该条评论删除成功");
                             }, (err) => {
                                 this.$message.error(err.resultMsg);
                             })
@@ -321,21 +337,14 @@
             // 删除评论
             delComment(item) {
                 if(this.utils.isLoginMode()){
-                    if(this.utils.isVisitorMode()){
-                        this.$message.warning("您暂无权限删除评论");
-                        return;
-                    }
                     var url = this.$apiUrl.parkInfo.delComment;
-                    var pop = {id: item.id}
+                    var pop = {id: item.id,parkId:this.SSH.getItem('parkId')}
 
                     this.$post(url, pop)
                         .then((response) => {
-                            if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
-                                this.$message.success("该条评论删除成功");
-                                this.getCnt();
-                            } else {
-                                this.$message.info(response.resultMsg);
-                            }
+                            this.$message.success("该条评论删除成功");
+                            this.getCnt();
+
                         }, (err) => {
                             this.$message.error(response.resultMsg);
                         })
@@ -353,11 +362,7 @@
                 var pop = {commentId: item.id}
                 this.$post(url, pop)
                     .then((response) => {
-                        if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
-                            this.$message.success("获取回复成功");
-                        } else {
-                            this.$message.info(response.resultMsg);
-                        }
+                        this.$message.success("获取回复成功");
                     }, (err) => {
                         this.$message.error(response.resultMsg);
                     })
@@ -419,13 +424,9 @@
                     }
                     this.isClick = false;
                     this.$post(url, pop).then((response) => {
-                        if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
-                            this.$message.success("评论发表成功");
-                            this.getCnt();
-                            this.cnttext = "";
-                        } else {
-                            this.$message.info(response.resultMsg);
-                        }
+                        this.$message.success("评论发表成功");
+                        this.getCnt();
+                        this.cnttext = "";
                         this.isClick = true;
                     }, (err) => {
                         this.$message.error("接口异常");
@@ -448,18 +449,14 @@
                 var url = this.$apiUrl.parkInfo.getComment;
                 var pop = {entityId: this.entityId, type: this.commentSty, pageNum: this.pageNum, pageSize: this.pageSize}
                 this.$post(url, pop).then((response) => {
-                    if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
-                        this.allTotal = response.resultData.total;
-                        this.cnts = response.resultData.commentList;
-                        this.cnts.map(item => {
-                            this.$set(item, "replytext", '');
-                            this.$set(item, "replyLen", 2);
-                            this.$set(item, "maxReplyLen", item.replyList.length);
-                            this.$set(item, "btn_name", "查看更多回复")
-                        })
-                    } else {
-                        this.$message.info(response.resultMsg);
-                    }
+                    this.allTotal = response.resultData.total;
+                    this.cnts = response.resultData.commentList;
+                    this.cnts.map(item => {
+                        this.$set(item, "replytext", '');
+                        this.$set(item, "replyLen", 2);
+                        this.$set(item, "maxReplyLen", item.replyList.length);
+                        this.$set(item, "btn_name", "查看更多回复")
+                    })
                 }, (err) => {
                     this.$message.error(err.resultMsg);
                 })

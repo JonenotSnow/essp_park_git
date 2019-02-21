@@ -178,8 +178,8 @@
                     ids: this.deleteId
                 };
                 this.$post('/policy/delBatchPol', params).then(response => {
-                    var codestatus = response.resultCode;
-                    if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
+                    // var codestatus = response.resultCode;
+                    // if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
                         this.dialogVisible = false;
                         this.$message.success(response.resultMsg);
 
@@ -189,9 +189,9 @@
                         // 通知父组件，重新获取数据
                         this.$emit("childDeleted", this.type);
 
-                    } else {
-                        this.$message.error(response.resultMsg);
-                    }
+                    // } else {
+                    //     this.$message.error(response.resultMsg);
+                    // }
                 }, err => {
                     this.$message.error(err.resultMsg);
                 });

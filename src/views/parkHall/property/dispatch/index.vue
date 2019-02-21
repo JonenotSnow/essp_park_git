@@ -520,10 +520,10 @@ export default {
         pageSize: this.page.pageSize,
         parkId: this.parkId
       }).then(response => {
-        if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
+        // if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
           this.dispatchList = response.resultData.list;
           this.total = response.resultData.total;
-        }
+        // }
       });
     },
     validateCompaint() {
@@ -634,12 +634,12 @@ export default {
         this.$apiUrl.merchant.updateTenementRepairInfo,
         Object.assign({}, this.newCompaint, assignObject)
       ).then(response => {
-        if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
+        // if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
           this.$message.success("成功变更报修表！");
           this.handleClick({ index: 1 });
           this.activeName = "second";
           this.updateFlag = false;
-        }
+        // }
       });
     },
     // 新增报修表
@@ -667,12 +667,12 @@ export default {
         this.$apiUrl.merchant.addTenementRepairInfo,
         Object.assign({}, this.newCompaint, assignObject)
       ).then(response => {
-        if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
+        // if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
           this.$message.success("成功添加新报修表！");
           this.handleClick({ index: 1 });
           this.activeName = "second";
           this.updateFlag = false;
-        }
+        // }
       });
     },
     // 上传文件
@@ -699,14 +699,14 @@ export default {
         pageSize: 100,
         parkId: this.parkId
       }).then(response => {
-        if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
+        // if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
           if (response.resultData.memberList.length > 0) {
             this.maintainerList = response.resultData.memberList;
             this.total = response.resultData.total;
           } else {
             this.$message("暂无维护人员信息！");
           }
-        }
+        // }
       });
     }
   },

@@ -203,13 +203,13 @@
             },
             //取消审核
             cancelAudit() {
-                this.$post(this.$apiUrl.manage.auditCancer, {
-                    entityId: this.$route.query.id,
-                    parkId: window.sessionStorage.getItem("parkId"),
-                    type: '03',
-                    status: '10',
-                    flag: "noContent"
-                });
+                // this.$post(this.$apiUrl.manage.auditCancer, {
+                //     entityId: this.$route.query.id,
+                //     parkId: window.sessionStorage.getItem("parkId"),
+                //     type: '03',
+                //     status: '10',
+                //     flag: "noContent"
+                // });
                 this.$router.push('/parkHall/manage/activityPoolZX')
             }
         }

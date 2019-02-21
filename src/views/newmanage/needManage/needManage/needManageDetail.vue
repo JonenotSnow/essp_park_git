@@ -75,16 +75,16 @@
                     id: this.id
                 };
                 this.$post(this.$apiUrl.manageNeed.getNeedByKey, params).then(response => {
-                    let codestatus = response.resultCode;
-                    if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
+                    // let codestatus = response.resultCode;
+                    // if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
                         this.data = response.resultData;
                         console.log(typeof(this.data.accessory));
                         if (this.data.accessory !== null) {
                             this.accessory = JSON.parse(this.data.accessory);
                         }
-                    } else {
-                        this.$message.info(response.resultMsg);
-                    }
+                    // } else {
+                    //     this.$message.info(response.resultMsg);
+                    // }
                 }, err => {
                     this.$message.error("接口异常");
                 })

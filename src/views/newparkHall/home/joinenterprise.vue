@@ -58,7 +58,7 @@ import mixins_windowOpen from '@/components/mixins/mixins_windowOpen.js'
         pageNum:this.pageNum
       }).then(
         response => {
-          if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
+        //   if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
             /*if(response.resultData.memInfoCount > 0){
               this.enterprises = response.resultData.memberList
             }else{
@@ -80,7 +80,7 @@ import mixins_windowOpen from '@/components/mixins/mixins_windowOpen.js'
             }else{
 
             }
-          }
+        //   }
         },
         response => {
           this.$message.error(response.resultMsg);

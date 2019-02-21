@@ -64,7 +64,7 @@
                                 </option>
                             </select>
                         </p>
-                        <p v-else-if="!it.fx && it.type == 'dataTime'">
+                        <p v-else-if="!it.fx && (it.type == 'dateTime' ||  it.type == 'dataTime')">
                             <span class="sub">{{it.sub}}</span>
                             <el-date-picker class="dataS" v-model="it.value" type="date"
                                             :placeholder="`请选择${it.name}`"></el-date-picker>
@@ -209,13 +209,15 @@
                 );
             },
             toPop() {
+                let _that = this;
                 if (this.getFormList.length == 0) {
                     this.$message({
                         type: "warning",
                         message: "请联系管理员设置入园申请表模板"
                     });
-
-                    this.$router.go(-1);
+                    setTimeout(() => {
+                        _that.$router.go(-1);
+                    }, 1500);
                     return;
                 }
                 let list = this.getFormList.slice(2, this.getFormList.length);
@@ -255,7 +257,9 @@
                         type: "success",
                         message: response.resultMsg
                     });
-                    this.$router.go(-1);
+                    setTimeout(() => {
+                        _that.$router.go(-1);
+                    }, 1500);
                 });
             }
         }

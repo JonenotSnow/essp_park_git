@@ -268,17 +268,17 @@ export default {
                 parkId: sessionStorage.getItem("parkId"),
                 parkName: this.SSH.getItem("parkName")
             }).then(response => {
-                if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
+                // if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                     this.$message({
                         type: "success",
                         message: '邀请函已发送'
                     });
-                }else{
-                    this.$message({
-                        type: "warn",
-                        message: response.resultMsg
-                    });
-                }
+                // }else{
+                //     this.$message({
+                //         type: "warn",
+                //         message: response.resultMsg
+                //     });
+                // }
             });
             this.access = false;
         },

@@ -169,8 +169,8 @@
                 var pop = {informationId: informationId, flag: "1", parkId};
                 this.$post(this.$apiUrl.parkInfo.infoById, pop)
                     .then((response) => {
-                        var codestatus = response.resultCode;
-                        if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
+                        // var codestatus = response.resultCode;
+                        // if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
                             var result = response.resultData;
                             this.draftInfo = {
                                 informationTitle: result.informationTitle,
@@ -187,9 +187,9 @@
                                 pubComment: result.pubComment || "暂无备注信息"//备注内容
                             }
 
-                        } else {
-                            this.$message.info(response.resultMsg);
-                        }
+                        // } else {
+                        //     this.$message.info(response.resultMsg);
+                        // }
                     }, (err) => {
                         this.$message.error(err.resultMsg);
                     })
@@ -290,15 +290,15 @@
                 var successMsg = options.successtips;//前端提示语
                 this.$post(this.$apiUrl.parkInfo.auditDetail, pop)
                     .then((response) => {
-                        var codestatus = response.resultCode;
-                        if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
+                        // var codestatus = response.resultCode;
+                        // if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
                             this.$message.success(successMsg);
                             setTimeout(function () {
                                 _this.$router.push({path: "/parkIndex/parkInformation/auditing"})
                             }, 1500)
-                        } else {
-                            this.$message.info(response.resultMsg);
-                        }
+                        // } else {
+                        //     this.$message.info(response.resultMsg);
+                        // }
                     }, (err) => {
                         this.$message.error(err);
                     })

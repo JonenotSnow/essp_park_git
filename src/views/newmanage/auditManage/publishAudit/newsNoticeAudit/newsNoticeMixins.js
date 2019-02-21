@@ -64,14 +64,14 @@ export default {
             };
 
             this.$post("/audit/getAuditList", params).then(response => {
-                let codestatus = response.resultCode;
-                if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
+                // let codestatus = response.resultCode;
+                // if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
                     let resultData = response.resultData;
                     this.totalCount = resultData.infomationCount;
                     this.list = resultData.infomationList;
-                } else {
-                    this.$message.info(response.resultMsg);
-                }
+                // } else {
+                //     this.$message.info(response.resultMsg);
+                // }
             }, err => {
                 this.$message.error("接口异常");
             })

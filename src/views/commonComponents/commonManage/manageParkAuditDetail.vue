@@ -106,12 +106,12 @@ export default {
                 id:this.$route.query.entityId
             })
             .then((response) => {
-                if (response.resultCode == 'CLT000000000' || response.resultCode == '0000000000') {
+                // if (response.resultCode == 'CLT000000000' || response.resultCode == '0000000000') {
                     console.log(JSON.parse(response.resultData))
                     this.infoList = JSON.parse(response.resultData);
                     console.log(123)
                     console.log(this.infoList)
-                }
+                // }
             },(err)=>{
                 this.$message({
                     type: 'warn',

@@ -283,12 +283,12 @@
                             this.ruleFormDc
                         ).then(
                             response => {
-                                if (response.resultCode === "CLT000000000" || response.resultCode === "0000000000") {
+                                // if (response.resultCode === "CLT000000000" || response.resultCode === "0000000000") {
                                     alert(response.resultMsg);
                                     // this.$refs[formName].resetFields();
                                     // this.activeName = "second";
                                     // this.getFollowInfoData(this.custInfoData.parkId, this.custInfoData.customerNumber, this.pageNum);
-                                }
+                                // }
                             },
                             err => {
                             }
@@ -310,10 +310,10 @@
                     pageSize: this.pageSize
                 }).then(
                     response => {
-                        if (response.resultCode === "CLT000000000" || response.resultCode === "0000000000") {
+                        // if (response.resultCode === "CLT000000000" || response.resultCode === "0000000000") {
                             this.total = response.resultData.total;
                             this.tableData = response.resultData.list;
-                        }
+                        // }
                     },
                     err => {
                     }

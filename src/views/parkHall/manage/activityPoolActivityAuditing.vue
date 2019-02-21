@@ -61,7 +61,7 @@
                         </el-table-column>
                         <el-table-column align="center" prop="" width="100" label="操作">
                             <template slot-scope="scope">
-                                <el-button type="text" v-if="',10,01,13,14,'.indexOf(`,${scope.row.status},`) == -1" disabled>领取并审核</el-button>
+                                <el-button type="text" v-if="',10,13,'.indexOf(`,${scope.row.status},`) == -1" disabled>领取并审核</el-button>
                                 <el-button type="text" v-else @click.stop="cancelAudit(scope.row.activityId)">领取并审核</el-button>
                             </template>
                         </el-table-column>
@@ -101,15 +101,7 @@ export default {
             statusList: [
                 {
                     id: "",
-                    name: "全部"
-                },
-                {
-                    id: "10",
-                    name: "园区待审核"
-                },
-                {
-                    id: "01",
-                    name: "园区审核中"
+                    name: "全部",
                 },
                 {
                     id: "02",
@@ -118,26 +110,6 @@ export default {
                 {
                     id: "12",
                     name: "园区审核未通过"
-                },
-                {
-                    id: "21",
-                    name: "企业待审核"
-                },
-                {
-                    id: "05",
-                    name: "企业审核中"
-                },
-                {
-                    id: "03",
-                    name: "企业审核未通过"
-                },
-                {
-                    id:'13',
-                    name:'高级管理员待审核'
-                },
-                {
-                    id:'14',
-                    name:'高级管理员审核中'
                 }
             ],
             searchCondition: {
@@ -152,6 +124,22 @@ export default {
         };
     },
     async created() {
+        if (sessionStorage.getItem('LoginUserRol').includes('33')) {
+            this.statusList.push(
+                {
+                    id: "10",
+                    name: "审核中" //初级管理员
+                }
+            )
+        }
+        if (sessionStorage.getItem('LoginUserRol').includes('34')) {
+            this.statusList.push(
+                {
+                    id:'13',
+                    name:'审核中' //高级管理员
+                }
+            )
+        }
         await this.getCount();
         await this.getList();
     },
@@ -162,15 +150,10 @@ export default {
         },
         statusFormat(value) {
             let statusList = {
-                "10": "园区待审核",
-                "01": "园区审核中",
+                "10": "审核中",
                 "02": "发布中",
                 "12": "园区审核未通过",
-                "21": "企业待审核",
-                "05": "企业审核中",
-                "03": "企业审核未通过",
-                "13": "高级管理员待审核",
-                "14": "高级管理员审核中"
+                "13": "审核中"
             };
             return statusList[value] ? statusList[value] : "";
         }
@@ -238,26 +221,7 @@ export default {
         },
         //校验审核状态
         cancelAudit(id) {
-            this.$post(this.$apiUrl.manage.auditCancer, {
-                parkId: sessionStorage.getItem("parkId"),
-                entityId: id,
-                type: "02",
-                status: "01"
-            }).then(
-                response => {
-                    if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
-                        this.$router.push({
-                            path: "/parkHall/manage/manageActivityAudit",
-                            query: { id: id }
-                        });
-                    }else{
-                        this.$message({
-                            type: 'warn',
-                            message: response.resultMsg
-                        });
-                    }
-                }
-            );
+            this.$router.push({path: "/parkHall/manage/manageActivityAudit",query: { id: id }});
         },
         getDetail(rows) {
             if (!rows.activityId) {

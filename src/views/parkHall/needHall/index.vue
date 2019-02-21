@@ -153,7 +153,7 @@ export default {
       ).then(
         response => {
           console.log(response.resultData.visitor)
-          if ((response.resultCode == "CLT000000000" || response.resultCode == "0000000000") && !response.resultData.visitor) {
+          if (!response.resultData.visitor) {
           that.hotRqmList = response.resultData.searchResultList;
           that.totalCount = response.resultData.page.total;
             //onsole.log('that.resultList',that.resultList)
@@ -193,7 +193,7 @@ export default {
         this.$post("/requirement/requirement_other_detail_head", {
           bsnId: val.simRqmInfVo.bsnRqmID
         }).then(response => {
-          if (response.resultCode === "CLT000000000" || response.resultCode === "0000000000") {
+          // if (response.resultCode === "CLT000000000" || response.resultCode === "0000000000") {
             usrid = response.resultData.param.usrid;
             if (
               !this.utils.isEmpty(this.userInfo.id) &&
@@ -231,7 +231,7 @@ export default {
                                 tplId:val.simRqmInfVo.tplID}
                                 this.windowOpenUrl(displayUrl,params)
             }
-          }
+          // }
         });
       } else {
         displayUrl = "/requIndex/display-other";

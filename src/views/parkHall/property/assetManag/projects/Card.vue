@@ -72,10 +72,10 @@ export default {
           id: id
         }).then(
           response => {
-            if (response.resultCode === "CLT000000000" || response.resultCode === "0000000000") {
+            // if (response.resultCode === "CLT000000000" || response.resultCode === "0000000000") {
               this.$message.success("删除成功");
               this.$emit("tip-event", { type: 1 });
-            }
+            // }
           },
           err => {}
         );
@@ -95,13 +95,13 @@ export default {
         id: this.deleteId
       }).then(
         response => {
-          if (response.resultCode === "CLT000000000" || response.resultCode === "0000000000") {
+          // if (response.resultCode === "CLT000000000" || response.resultCode === "0000000000") {
             this.dialogVisible = false;
             // this.$message(response.resultMsg);
             this.$message.success("删除成功");
             this.getFjInfoData(this.pageNumber);
             // this.handleCurrentChange(this.pageNumber);
-          }
+          // }
         },
         err => {}
       );

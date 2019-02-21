@@ -24,7 +24,7 @@
                     <select v-else-if="it.type == 'radioDown'" disabled :placeholder="`请选择${it.name}`">
                     </select>
                     <select v-else-if="it.type == 'checkbox'" :placeholder="`请输入${it.name}`" disabled></select>
-                    <el-date-picker class="selectTime" v-else-if="it.type == 'dataTime'" v-model="it.value" type="date" placeholder="选择日期" disabled></el-date-picker>
+                    <el-date-picker class="selectTime" v-else-if="it.type == 'dateTime'" v-model="it.value" type="date" placeholder="选择日期" disabled></el-date-picker>
                 </li>
                 <li>
                     <i class='el-icon-delete' style="color:#ccc;"></i>
@@ -84,7 +84,6 @@
                         <div class="ro_tiem" style="margin-top: 10px;" v-for="(it,index) in item.childrens" :key="index">
                             <i class="tsb"></i>
                             <input type="text" class="orderinput" v-model="it.name" :requir="it.requir" :placeholder="it.placeholder">
-                            <!-- <el-input style="height: 30px;" class="orderinput" v-model="it.name" :requir="it.requir" :placeholder="it.placeholder"></el-input> -->
                             <i v-if="item.childrens.length>2" class="delitems el-icon-remove"
                                 style="position: relative;left: 0;color: rgb(204, 204, 204);cursor:pointer;"
                                 @click="delChidrens(item.childrens,index)"></i>
@@ -104,26 +103,26 @@
 
                 <!-- 申请表第三列 -->
                 <!-- 下拉框 -->
-                <li class="title" v-if="',radioDown,checkboxDown,selectTS，'.indexOf(','+item.type+',')>-1">
+                <li class="title" v-if="',radioDown,checkboxDown,selectTS,'.indexOf(','+item.type+',')>-1">
                     <select :placeholder="`请选择${item.name}`" disabled></select>
                 </li>
                 <li v-if="item.type == 'radio'">
                     <el-radio-group>
-                        <el-radio :label="is.name" disabled v-for="(is,j) in item.childrens.slice(0,2)" :key="j">{{is.placeholder}}</el-radio>
+                        <el-radio :label="is.name" disabled v-for="(is,j) in item.childrens.slice(0,2)" :key="j">{{is.name}}</el-radio>
                     </el-radio-group>
                 </li>
                 <li v-if="item.type == 'checkbox'">
                     <el-checkbox-group>
-                        <el-checkbox :label="item.name" disabled v-for="(is,j) in item.childrens.slice(0,2)" :key="j">{{is.placeholder}}</el-checkbox>
+                        <el-checkbox :label="item.name" disabled v-for="(is,j) in item.childrens.slice(0,2)" :key="j">{{is.name}}</el-checkbox>
                     </el-checkbox-group>
                 <!-- 单行文本 --> <!-- 多行文本 -->
                 <li v-if="item.type == 'text' || item.type == 'textarea'"><input type="text" :value="`请输入${item.name}`" disabled></li>
                 <!-- 日期模版 -->
-                <li v-if="item.type == 'dataTime'">
+                <li v-if="item.type == 'dateTime' || item.type == 'dataTime'">
                     <el-date-picker class="selectTime" type="date" placeholder="选择日期" disabled></el-date-picker>
                 </li>
                 <!-- 数字模版 -->
-                <li v-if="item.type == 'numberBox'"><input type="text" disabled placeholder="请输入内容"></li>
+                <li v-if="',numberBox,number,'.indexOf(','+item.type+',')>-1"><input type="text" disabled :placeholder='`请输入${item.name}`'></li>
                 <!-- 企业规模 -->
                 <li class="title" v-else-if="item.type == 'selectTS'">
                     <select :placeholder="item.name" disabled>
@@ -185,15 +184,15 @@
                             </p>
                             <p v-else-if="!it.fx && it.type == 'radio'" class="downSel">
                                 <el-radio-group>
-                                    <el-radio :label="is.name" disabled v-for="(is,j) in it.childrens.slice(0,2)" :key="j">{{is.placeholder}}</el-radio>
+                                    <el-radio :label="is.name" disabled v-for="(is,j) in it.childrens.slice(0,2)" :key="j">{{is.name}}</el-radio>
                                 </el-radio-group>
                             </p>
                             <p v-else-if="!it.fx && it.type == 'checkbox'"  class="downSel">
                                 <el-checkbox-group>
-                                    <el-checkbox :label="is.name" disabled v-for="(is,j) in it.childrens" :key="j">{{is.placeholder}}</el-checkbox>
+                                    <el-checkbox :label="is.name" disabled v-for="(is,j) in it.childrens" :key="j">{{is.name}}</el-checkbox>
                                 </el-checkbox-group>
                             </p>
-                            <p v-else-if="!it.fx && it.type == 'dataTime'">
+                            <p v-else-if="!it.fx && (it.type == 'dateTime' || it.type == 'dataTime')">
                                 <span class="sub">{{it.sub}}</span>
                                 <el-date-picker class="dataS" v-model="it.value" disabled type="date" :placeholder="`请选择${it.name}`"></el-date-picker>
                             </p>
@@ -269,7 +268,7 @@
                             <el-radio :label="is.name" v-for="(is,j) in it.childrens" :key="j">{{is.name}}</el-radio>
                         </el-radio-group>
                         <select v-else-if="it.type == 'checkbox'"  v-model="it.name" :placeholder="`请输入${it.name}`" disabled></select>
-                        <el-date-picker class="selectTime" v-else-if="it.type == 'dataTime'" v-model="it.value" type="date" placeholder="选择日期" disabled></el-date-picker>
+                        <el-date-picker class="selectTime" v-else-if="it.type == 'dateTime'" v-model="it.value" type="date" placeholder="选择日期" disabled></el-date-picker>
                     </span>
                     <span>
                         <i v-if="i>5" class='el-icon-delete ableRemove'></i>
@@ -372,8 +371,8 @@ export default {
             commonList: [
                 {
                     name: "注册资本",
-                    type: "text", //输入框类型
-                    requir: true, //是否必填
+                    type: "number", //输入框类型 
+                    requir: false, //是否必填
                     sub: "单位：万元", //备注说明（如单位等）
                     value: "", //绑定值
                     holder: "请输入注册资本",
@@ -384,8 +383,8 @@ export default {
                 },
                 {
                     name: "成立日期",
-                    type: "dataTime", //输入框类型
-                    requir: true, //是否必填
+                    type: "dateTime", //输入框类型
+                    requir: false, //是否必填
                     sub: "", //备注说明（如单位等）
                     value: "", //绑定值
                     holder: "请输入成立日期",
@@ -396,8 +395,8 @@ export default {
                 },
                 {
                     name: "经营范围",
-                    type: "text", //输入框类型
-                    requir: true, //是否必填
+                    type: "text", //输入框类型 
+                    requir: false, //是否必填
                     sub: "", //备注说明（如单位等）
                     value: "", //绑定值
                     holder: "请输入经营范围",
@@ -408,8 +407,8 @@ export default {
                 },
                 {
                     name: "企业规模",
-                    type: "selectTS", //输入框类型
-                    requir: true, //是否必填
+                    type: "selectTS", //输入框类型  //text
+                    requir: false, //是否必填
                     sub: "", //备注说明（如单位等）
                     value: [], //绑定值
                     holder: "请输入企业规模",
@@ -455,7 +454,7 @@ export default {
                 {
                     name: "实收资本",
                     type: "text", //输入框类型
-                    requir: true, //是否必填
+                    requir: false, //是否必填
                     sub: "单位：万元", //备注说明（如单位等）
                     value: "", //绑定值
                     holder: "请输入实收资本",
@@ -613,6 +612,7 @@ export default {
                     if (response.resultData && response.resultData.entryForm) {
                         if (response.resultData.entryForm.length > 6) {
                             this.displayList = JSON.parse(response.resultData.entryForm);
+                            console.log(this.displayList)
                             let dl = this.displayList.length;
                             let cl = this.commonList.length;
                             for (let i = 0; i < dl; i++) {
@@ -761,7 +761,7 @@ export default {
                     ]
                 };
             }
-            if (content.type == "dataTime") {
+            if (content.type == "dateTime") {
                 obj = {
                     type: "dataTime",
                     name: "日期选择框",
@@ -782,15 +782,6 @@ export default {
             }
             this.displayList.push(obj);
         },
-        //删除已添加的常用栏位
-        getIndexCommon(it, id, index, show) {
-            for (let i = 0; i < this.commonList.length; i++) {
-                if (parseInt(this.commonList[i].id) == parseInt(id)) {
-                    this.commonList[i].show = true;
-                    this.displayList.splice(index, 1);
-                }
-            }
-        },
         //删除已添加的自定义栏位
         getIndex(it, index) {
             //如果该项是常用栏位
@@ -808,6 +799,7 @@ export default {
             }
         },
         addChidrens(item) {
+            console.log(item)
             var childrens = item.childrens || [];
             var i = childrens.length + 1;
             var type = item.btn_name;
@@ -840,9 +832,9 @@ export default {
                 parkId: window.sessionStorage.getItem("parkId"),
                 entryForm: this.displayList
             }).then(response => {
-                if (response.resultCode == 'CLT000000000' || response.resultCode == '0000000000') {
+                // if (response.resultCode == 'CLT000000000' || response.resultCode == '0000000000') {
                     _this.confirmSend = true;
-                }
+                // }
                 setTimeout(()=>{
                     _this.confirmSend = false;
                     this.getForm();
@@ -937,7 +929,7 @@ export default {
                     width: 325px;
                 }
                 &:nth-of-type(4) {
-                    width: 130px;
+                    width: 129px;
                     border-right:1px solid #ccc;
                 }
                 & > input[type="text"],
@@ -1010,7 +1002,7 @@ export default {
                 &.downSelClass {
                     overflow: hidden;
                     line-height:0;
-                    width:318px;
+                    width:325px;
                     & > div {
                         &:nth-of-type(1) {
                             & > span {
@@ -1243,7 +1235,7 @@ export default {
                     padding: 60px 0 60px;
                     & > button {
                         &:nth-of-type(2) {
-                            margin-left: 130px;
+                            margin-left: 129px;
                         }
                     }
                 }

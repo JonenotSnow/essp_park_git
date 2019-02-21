@@ -321,13 +321,13 @@ d<template>
                 }).then(
                     response => {
 
-                        if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
+                        // if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                             this.activedata = response.resultData.activityList;
 
                             this.allTotal = response.resultData.total;
-                        } else {
-                            this.$message.error(response.resultMsg);
-                        }
+                        // } else {
+                        //     this.$message.error(response.resultMsg);
+                        // }
                     },
                     response => {
                         this.$message.info(response.resultMsg);
@@ -357,13 +357,13 @@ d<template>
                 var url = this.$apiUrl.active.delActivity;
                 this.$post(url, pop).then(
                     response => {
-                        if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
+                        // if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                             this.$message.success("删除成功");
                             this.activedata=[];
                             this.getActiveList();
-                        } else {
-                            this.$message.error(failMsg + response.resultMsg);
-                        }
+                        // } else {
+                        //     this.$message.error(failMsg + response.resultMsg);
+                        // }
                     },
                     err => {
                         this.$message.error(err.resultMsg);
@@ -414,12 +414,12 @@ d<template>
                 this.$post(url, pop).then(
                     response => {
 
-                        if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
+                        // if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                             this.$message.success("删除成功");
                             this.getActDraftList();
-                        } else {
-                            this.$message.error(failMsg + response.resultMsg);
-                        }
+                        // } else {
+                        //     this.$message.error(failMsg + response.resultMsg);
+                        // }
                     },
                     response => {
                         this.$message.error(response.resultMsg);
