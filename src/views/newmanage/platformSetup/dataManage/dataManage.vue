@@ -352,7 +352,6 @@ export default {
       
       
       switch(type) {
-        case 0:
         case 1:
         case 5:
           rules = [
@@ -373,7 +372,6 @@ export default {
     },
     numberLimit(index, i, item) {
       switch(index) {
-        case 0:
         case 1:
         case 5:
           var x = String(item).indexOf('.') + 1;   //小数点的位置
@@ -403,7 +401,7 @@ export default {
           }
           res.resultData.forEach(item => {
             let itemIndex = Number(item.type);
-            if(itemIndex == 0 || itemIndex == 1 || itemIndex == 5) {
+            if(itemIndex == 1 || itemIndex == 5) {
                 var x = String(item.dataNum).indexOf('.') + 1;   //小数点的位置
                 var y = String(item.dataNum).length - x;  //小数的位数
                 if(x == 0) {

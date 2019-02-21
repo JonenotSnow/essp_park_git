@@ -41,11 +41,11 @@
                     <!--</div>-->
                     <essp-roll listType="applyParkList" :list="applyParkList" class="swiper_inner3"/>
 
-                    <span
+                    <!-- <span
                         style="display: inline-block; padding-top: 9px"
                         class="more"
                         v-if="LoginUserRole.includes('33') || LoginUserRole.includes('34')"
-                    >More&gt;</span>
+                    >More&gt;</span> -->
                 </div>
                 <div class="noData" v-else style="height: 35px;line-height: 35px">暂无任务~~</div>
             </div>
@@ -182,6 +182,7 @@
             margin-left: -400px;
             background: rgba(255,255,255,0.8);
             z-index: 2;
+            font-size: 14px;
             /*box-shadow: 2.5px 4.3px 4.8px 0.2px rgba(0, 0, 0, 0.2);
             -webkit-box-shadow: 2.5px 4.3px 4.8px 0.2px rgba(0, 0, 0, 0.2);
             -moz-box-shadow: 2.5px 4.3px 4.8px 0.2px rgba(0, 0, 0, 0.2);
@@ -220,7 +221,7 @@
         .swiper_inner3 {
             float: left;
             margin-left: 90px;
-            font-size: 16px;
+            font-size: 14px;
         }
         .swiper_inner2 {
             text-align: center;
@@ -309,7 +310,8 @@
         float: left;
         margin-left: 90px;
         width: 430px;
-        font-size: 16px;
+        line-height: 35px;
+        font-size: 14px;
         color: #444;
     }
 

@@ -242,6 +242,7 @@ export default {
                 parkId: sessionStorage.getItem("parkId") || ""
             }).then(response => {
                 this.mcCardDataList = response.resultData.policyList;
+
                 this.allTotal = response.resultData.total;
                 this.mcCardDataList.forEach((item, index) => {
                     var thisTime = this.getMillisecond(new Date());
@@ -279,6 +280,10 @@ export default {
                     this.getStatusBtn(item, btnTyp);
                 });
                 this.isLodingTxt = "数据完毕!";
+            },
+            response => {
+                this.isLodingTxt = "数据完毕!";
+                this.$message.info(response.resultMsg);
             });
         },
         getListGoverBeneTags() {

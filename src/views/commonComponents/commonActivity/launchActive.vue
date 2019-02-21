@@ -19,7 +19,7 @@ d<template>
             </div>
             <div v-show="type == 0">
                 <ul class="esspclearfix">
-                    <li class="itemli" v-for="(item, index) in activedata" :key="index">
+                    <li  v-if="activedata.length!=0" class="itemli" v-for="(item, index) in activedata" :key="index">
                         <div class="infostit esspclearfix">
                         <span>发布人:
                             <em>{{item.initiatorName}}</em>
@@ -88,7 +88,10 @@ d<template>
                             </div>
                         </div>
                     </li>
-
+                    <li v-if="activedata.length==0">
+                        <!-- <div style="text-align: center">{{lodingMsg}}</div> -->
+                        <essp-loading :loading="!isLoginEnd"  :nodata="activedata.length==0 && isLoginEnd"></essp-loading>
+                    </li>
                 </ul>
                 <div class="pageList">
                     <el-pagination
@@ -186,10 +189,11 @@ d<template>
                 btn: ["编辑", "报名审核"],
                 activedata: [],
                 pageNumber: 1,
+                lodingMsg:'',
                 pageSize: 10, // 每一页条数
                 allTotal: 0,
                 pageRanges: [5, 10, 20, 50], //默认每页10条数区间
-
+                isLoginEnd: false,
                 pageNumber1: 1,
                 pageRanges1: [5, 10, 20, 50], //默认每页10条数区间
                 pageSize1: 10,
@@ -314,6 +318,7 @@ d<template>
             },
             getActiveList() {
                 var url = this.$apiUrl.active.actLanch;
+                this.isLoginEnd = false;
                 this.$post(url, {
                     pageNum: this.pageNumber,
                     pageSize: this.pageSize,
@@ -322,14 +327,16 @@ d<template>
                     response => {
 
                         // if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
-                            this.activedata = response.resultData.activityList;
+                        this.activedata = response.resultData.activityList;
 
-                            this.allTotal = response.resultData.total;
+                        this.allTotal = response.resultData.total;
+                        this.isLoginEnd = true;
                         // } else {
                         //     this.$message.error(response.resultMsg);
                         // }
                     },
                     response => {
+                        this.isLoginEnd = true;
                         this.$message.info(response.resultMsg);
                     }
                 );

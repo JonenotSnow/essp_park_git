@@ -104,7 +104,7 @@ import mixins_windowOpen from '@/components/mixins/mixins_windowOpen.js'
  @import "../../../assets/css/mixin.less";
  .warp_join{
      //height: 260px;
-     background: #ffff;
+     background: #fff;
     .main_inter{
         width:1180px;
     }
