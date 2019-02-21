@@ -2,10 +2,9 @@
  <div>
      <!-- 园区搜索页面 -->
      <div class="banner_index">
-        <!-- <div class="banner_bg"></div> -->
         <div style="position: relative;height: 500px;overflow: hidden;">
             <el-carousel indicator-position="none" height="500px">
-                <el-carousel-item v-for="item in bannerDisList" :key="item.id">
+                <el-carousel-item v-if='bannerDisList && bannerDisList.length>0' v-for="item in bannerDisList" :key="item.id">
                     <div class="banner_bg" :style="'background-image:url('+item.img_url+')'" @click="swiperLink(item,index)"></div>
                 </el-carousel-item>
             </el-carousel>
@@ -37,15 +36,25 @@
                     <h2 class="tit-tool">筛选条件</h2>
                     <el-button type="text" class="reset-tool" @click="resetHandelSearch()">重置条件</el-button>
                 </div>
-                <div class="tdcon esspclearfix" v-if="!isBdPark || typeselect == 'park_activity'">
-                    <span class="inline_span"><em></em>{{typeName}}类型 :</span>
-                     <el-select v-model="classtType" placeholder="请选择" class="inline_select" @change="getListResult">
-                        <el-option v-for="(item,index) in typeitems" :key="index" :label="item.name"
-                                   :value="item.id">
-                        </el-option>
-                    </el-select>
+                <div id="searchBox_page">
+                    <div class="tdcon esspclearfix aa" v-if="!isBdPark || typeselect == 'park_activity'">
+                        <span class="inline_span"><em></em>关键字搜索 :</span>
+                        <el-input placeholder="请输入内容" v-model="indexSeachKW" class="input-with-select">
+                            <el-select v-model="typeselect" slot="prepend" placeholder="请选择" @change="getListResult">
+                                <el-option v-for="(item,index) in searchList" :key="index" :label="item.name" :value="item.id"></el-option>
+                            </el-select>
+                        </el-input>
+                    </div>
+                    <div class="tdcon esspclearfix bb" v-if="!isBdPark || typeselect == 'park_activity'">
+                        <span class="inline_span"><em></em>{{typeName}}类型 :</span>
+                        <el-select v-model="classtType" placeholder="请选择" class="inline_select" @change="getListResult">
+                            <el-option v-for="(item,index) in typeitems" :key="index" :label="item.name"
+                                    :value="item.id">
+                            </el-option>
+                        </el-select>
+                    </div>
                 </div>
-                <div class="tdcon esspclearfix">
+                <div class="tdcon esspclearfix" id="el-date-editor">
                     <span class="inline_span"><em></em>发布日期 :</span>
                      <el-date-picker @change="changeTimeSeach()"
                         v-model="timeRange"
@@ -133,8 +142,8 @@
                                     </div>
                                 </div>
                                 <div class="funbtncn">
-                                    <i :class="items.attentionSum==0?'iconfont icon-aixin-xianxing':'iconfont icon-collect2'"></i>
-                                    <span class="btntext">{{items.attentionSum==0?"未关注":"已关注"}}</span>
+                                    <i :class="items.currAttenStatus==0?'iconfont icon-aixin-xianxing':'iconfont icon-collect2'"></i>
+                                    <span class="btntext">{{items.currAttenStatus==0?"未关注":"已关注"}}</span>
                                 </div>
                             </div>
                         </li>
@@ -169,25 +178,38 @@ export default {
         return {
             isBdPark: this.utils.isBdPark(),
             currentIndex: "", //默认选第一个
+            typeselect: this.$route.query.type || "park_activity", //关键类型判断，默认采用活动
             indexSeachKW: this.$route.query.title || "", //关键词搜索
             tagTxt: this.$route.query.tagTxt || "", //标签搜索
             parkId:sessionStorage.getItem("parkId") || "",//园区id
+            searchData: [], //搜索的数据源头
             tagItems: [], //接纳标签所有数据
             sometags: [], //加工处理标签内容
             pageRanges: [5, 10, 20, 50], //默认每页10条数区间
             pageNum: 1, //当前页码
             pageSize: 10, //每页条数
+            allTotal: 0, //总条数
             timeRange: [], //时间区间
             classtType: "", //明细分类条件
             loading: false,
-            bannerDisList:[]
-            
+            bannerDisList:[],
+            searchList:[
+                {
+                    name:'活动',
+                    id:'park_activity'
+                },
+                {
+                    name:'惠政',
+                    id:'park_gover'
+                },
+                {
+                    name:'资讯',
+                    id:'park_information'
+                }
+            ],
         };
     },
     computed: {
-        typeselect(){
-            return this.$store.state.park.selectItem.id || "park_activity";
-        },
         //判断类型
         typeName() {
             let nameObj = {
@@ -195,7 +217,7 @@ export default {
                 park_gover: "惠政", //惠政标签
                 park_information: "资讯" //资讯标签
             };
-            return nameObj[this.$store.state.park.selectItem.id];
+            return nameObj[this.typeselect];
         },
         typeitems() {
             let itemTypeObj = {
@@ -204,19 +226,9 @@ export default {
                 park_information: classtType.infoType //资讯标签
             };
             return itemTypeObj[this.typeselect];
-        },
-        searchData(){
-            console.log('searchData')
-            console.log(this.$store.state)
-            return this.$store.state.park.searchPageData.searchData;
-        },
-        allTotal(){
-            return this.$store.state.park.searchPageData.allTotal;
         }
     },
     created() {
-        this.$store.commit('getSearchState',{show:false})
-        this.getAllData();
         this.changetype();
     },
     methods: {
@@ -230,7 +242,6 @@ export default {
             this.classtType = "";
             this.currentIndex = "";
             this.tagTxt = "";
-            this.indexSeachKW = "";
             this.timeRange = [];
         },
         //按重置的操作
@@ -240,7 +251,6 @@ export default {
         },
         //清空标签，清空类型
         resetSerchA(){
-            // this.classtType = "";
             this.currentIndex = "";
             this.tagTxt = "";
 
@@ -256,29 +266,31 @@ export default {
             await this.getListInfoTags();
             await this.getListResult();
         },
-        async getListResult() {
+        getListResult() {
             let type = this.typeselect;
             //活动
             if (type == "park_activity") {
-                await this.getParkActiveList();
+                this.getParkActiveList();
+                this.resetSerchA();
                 return;
             }
             //惠政
             if (type == "park_gover") {
-                await this.getParkGoverList();
+                this.getParkGoverList();
+                this.resetSerchA();
                 return;
             }
             //资讯
             if (type == "park_information") {
-                await this.getParkInfoList();
+                this.getParkInfoList();
+                this.resetSerchA();
                 return;
             }
-            this.resetSerchA();
             return
         },
         //全部活动
         getParkActiveList() {
-            // var url = this.$apiUrl.active.actAll;
+            var url = this.$apiUrl.active.actAll;
             var pop = {
                 pageNum: this.pageNum,
                 pageSize: this.pageSize,
@@ -289,28 +301,17 @@ export default {
                 activityTheme: this.indexSeachKW,
                 activityType: this.classtType
             };
-            this.$store.dispatch('getSearchPageData',{
-                pop:pop,
-                loading:true
-            })
-            // this.$post(url, pop).then(response => {
-            //     this.loading = false
-            //     var codestatus = response.resultCode;
-            //         if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
-            //             this.searchData = response.resultData.activityList;
-            //             this.resetSerchA();
-            //             this.allTotal = response.resultData.total; //总条数
-            //         } else {
-            //             this.$message.info(response.resultMsg);
-            //         }
-            //     },err => {
-            //         this.$message.error("接口异常");
-            //     }
-            // );
+            this.loading = true
+            this.$post(url, pop).then(response => {
+                this.loading = false
+                var codestatus = response.resultCode;
+                this.searchData = response.resultData.activityList;
+                this.allTotal = response.resultData.total; //总条数
+            });
         },
         //全部惠政
         getParkGoverList() {
-            // var url = this.$apiUrl.goverBene.allPolicy;
+            var url = this.$apiUrl.goverBene.allPolicy;
             var pop = {
                 pageNum: this.pageNum,
                 pageSize: this.pageSize,
@@ -321,29 +322,17 @@ export default {
                 title: this.indexSeachKW
             };
             this.isBdPark ? '' : pop.classtType = this.classtType
-            
-            this.$store.dispatch('getSearchPageData',{
-                pop:pop,
-                loading:true
-            })
-            // this.$post(url, pop).then(response => {
-            //     this.loading = false
-            //     var codestatus = response.resultCode;
-            //         if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
-            //             this.searchData = response.resultData.policyList;
-            //             this.resetSerchA();
-            //             this.allTotal = response.resultData.total; //总条数
-            //         } else {
-            //             this.$message.info(response.resultMsg);
-            //         }
-            //     },err => {
-            //     this.$message.error("接口异常");
-            //     }
-            // );
+            this.loading = true
+            this.$post(url, pop).then(response => {
+                this.loading = false
+                var codestatus = response.resultCode;
+                this.searchData = response.resultData.policyList;
+                this.allTotal = response.resultData.total; //总条数
+            });
         },
         //全部资讯
         getParkInfoList() {
-            // var url = this.$apiUrl.parkInfo.allInfos;
+            var url = this.$apiUrl.parkInfo.allInfos;
             var pop = {
                 pageNum: this.pageNum,
                 pageSize: this.pageSize,
@@ -358,24 +347,12 @@ export default {
                 pop.type = '1'
             }
             this.loading = true
-            this.$store.dispatch('getSearchPageData',{
-                pop:pop,
-                loading:true
-            })
-            // this.$post(url, pop).then(response => {
-            //     this.loading = false
-            //     var codestatus = response.resultCode;
-            //         if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
-            //             this.searchData = response.resultData.informationList;
-            //             this.resetSerchA();
-            //             this.allTotal = response.resultData.total; //总条数
-            //         } else {
-            //             this.$message.info(response.resultMsg);
-            //         }
-            //     },err => {
-            //     this.$message.error("接口异常");
-            //     }
-            // );
+            this.$post(url, pop).then(response => {
+                this.loading = false
+                var codestatus = response.resultCode;
+                this.searchData = response.resultData.informationList;
+                this.allTotal = response.resultData.total; //总条数
+            });
         },
         //活动详情页
         gotoActiveDetail(item) {
@@ -413,15 +390,15 @@ export default {
             var tagTp = tagTpObj[this.typeselect]||"3000003";
             var pop = {tagTp,parkId}
             this.$post(url,pop).then(response => {
-                // var codestatus = response.resultCode;
-                //     if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
+                var codestatus = response.resultCode;
+                    if (codestatus == "CLT000000000") {
                         this.resetSearch();//彻底重置搜索条件
                         var data = response.resultData;
                         this.tagItems = data;
                         this.resometags(data);
-                    // } else {
-                    //     this.$message.info(response.resultMsg);
-                    // }
+                    } else {
+                        this.$message.info(response.resultMsg);
+                    }
                 },err => {
                 this.$message.error("接口异常");
                 }
@@ -450,14 +427,11 @@ export default {
         getAllData() {
             this.$post("/parkManage/getParkById", {
                 parkId: window.sessionStorage.getItem("parkId")
-
             }).then(res => {
-                // if (res.resultCode == "CLT000000000" || res.resultCode == "0000000000") {
-                    if (res.resultData.slidesImage) {
-                        let list = JSON.parse(res.resultData.slidesImage)
-                        this.bannerDisList = list;
-                    }
-                // }
+                if (res.resultData.slidesImage) {
+                    let list = JSON.parse(res.resultData.slidesImage)
+                    this.bannerDisList = list;
+                }
             });
         }
     },
@@ -469,6 +443,22 @@ export default {
 };
 </script>
 <style>
+    #searchBox_page .aa{
+        float: left;
+    }
+    #searchBox_page .aa .el-input-group{
+        width: 350px;
+        margin-right:40px;
+    }
+    #searchBox_page .aa .el-select .el-input {
+        width: 74px;
+    }
+    #searchBox_page .input-with-select .el-input-group__prepend {
+        background-color: #fff;
+    }
+    #el-date-editor .el-date-editor{
+        margin-left:15px;
+    }
     .indexSeach .el-input-group__append button {
         margin: -10px -21px;
     }
@@ -550,7 +540,7 @@ export default {
 @con_bg: #fff;
 .ffbox {
     position: relative;
-    z-index: 101;
+    z-index: 1;
     margin-bottom: 20px;
     .listbox {
         .essp_width_auto();

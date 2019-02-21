@@ -107,24 +107,13 @@
                 })
             },
             getListInfoTags(item){
-                this.$store.commit('getSelectItem',item);
-                var pop = {
-                    pageNum: 1,
-                    pageSize: 10,
-                    startDate: "",
-                    endDate: "",
-                    tagTxt: this.tagTxt,
-                    parkId: sessionStorage.getItem("parkId") || "",
-                    title: this.indexSeachKW || ''
-                };
-                this.$store.dispatch('getSearchPageData',{pop:pop,loading:true});
-                this.typeName = this.$store.state.park.selectItem.name;
+                this.typeselect = item.id;
                 this.show = false;
             },
             goSearchPage() {
                 this.$store.commit('getSearchState',{show:!this.tab})
                 let _this = this;
-                var type = this.$store.state.park.selectItem.id; //类型
+                var type = this.typeselect; //类型
                 var tagTxt = this.tagTxt; //标签内容
                 var title = this.indexSeachKW;
                 setTimeout(() => {

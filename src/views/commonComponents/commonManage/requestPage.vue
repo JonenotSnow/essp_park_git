@@ -3,7 +3,7 @@
         <el-dialog :visible.sync="scan" width='510px' height='280px' class='re' :show-close='true'>
             <div>
                 <img class='bg' src="./re1.png" alt="">
-                <i @click="toOut" class="el-icon-close close"></i>
+                <i @click="toHis" class="el-icon-close close"></i>
                 <div class="contentn">
                     <p class="infoing" v-html='content'></p>
                     <p class="toDetail">
@@ -142,6 +142,9 @@ export default {
         },
         toOut() {
             this.windowOpenNoParams("/messageCenter/sysMsg");
+        },
+        toHis() {
+            window.history.go(-1);
         }
     }
 };

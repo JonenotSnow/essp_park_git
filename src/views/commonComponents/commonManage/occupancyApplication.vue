@@ -196,7 +196,7 @@
                                 <span class="sub">{{it.sub}}</span>
                                 <el-date-picker class="dataS" v-model="it.value" disabled type="date" :placeholder="`请选择${it.name}`"></el-date-picker>
                             </p>
-                            <p v-else-if="!it.fx && it.type == 'numberBox'">
+                            <p v-else-if="!it.fx && ',numberBox,number,'.indexOf(','+it.type+',')>-1">
                                 <span class="sub">{{it.sub}}</span>
                                 <input type="text" v-model='it.value' disabled :placeholder="`请输入${it.name}`">
                             </p>
