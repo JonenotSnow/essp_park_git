@@ -1,7 +1,7 @@
 <template>
     <!-- 更多资讯的更多模块 -->
     <div>
-        <div class="title_home_btn">        
+        <div class="title_home_btn" v-if="moreNewDates.length>0">        
             <div class="title_type_btn" :class="{sel:newsTabIndex==0}" @click="newTitleTab(0)" >最新</div> 
             <div class="title_type_btn" :class="{sel:newsTabIndex==1}" @click="newTitleTab(1)" >热门</div>
         </div>
@@ -66,8 +66,7 @@
                     </div>
                 </div>
             </div>
-            <router-link to="/parkIndex/parkInformation/all" class="entermore">More <i
-                class="el-icon-arrow-right"></i></router-link>
+            <router-link to="/parkIndex/parkInformation/all" class="entermore" >More <i class="el-icon-arrow-right"></i></router-link>
         </div>
         <!-- <div v-else style="text-align:center;color:#999; padding:20px 0">暂无数据</div> -->
         <essp-loading v-else :nodata="true"></essp-loading>
