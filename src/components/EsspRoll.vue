@@ -132,26 +132,6 @@ export default {
           });
           break;
 
-<<<<<<< HEAD
-            // 前往详情
-            getNoticeDetail(item) {
-                if (this.isBdPark) {
-                    this.$router.push({
-                        path: "/news/noticedetail",
-                        query: {informationId: item.informationId}
-                    });
-                } else {
-                    this.$router.push({
-                        path: "/parkHall/manage/noAndADDetail",
-                        query: {id: item.id}
-                    });
-                }
-            },
-            //校验审核状态
-            cancelAudit(rows){
-                this.$router.push({path:'/parkHall/manage/manageAuditing',query:{entityId:rows.id,cstId:rows.cstId}});
-            },
-=======
         case 4:
         Object.assign(selectObj, {
             path: "/parkIndex/park/auditingBm",
@@ -172,7 +152,6 @@ export default {
         default:
           break;
       }
->>>>>>> dev-zyb-/2
 
       this.$router.push(selectObj);
     }
@@ -184,7 +163,7 @@ export default {
   },
   mounted() {
     setInterval(this.scroll, 2500);
-    // this.listTemp = this.list
+    this.listTemp = this.list
   }
 };
 </script>
