@@ -125,7 +125,7 @@
 </script>
 
 <style lang='less' scoped>
-@import "../../../assets/css/mixin.less";
+@import "../../../assets/css/mixin";
     .allenterprise{
         .breadcrumbtrail{
             margin:44px auto 0;
@@ -166,19 +166,18 @@
                         border-right: 1px solid #ccc;
                         border-bottom:1px solid #ccc;
                         position:relative;
-                        background-color:#fff;
                         .enter_child{
                             width:100%;
                             height:100%;
                         }
                         .detailinfo{   
+                            background-color:#fff;
                             .enterprisename{
-                                height: 20px;
-                                width:130px;
-                                .esspellipsis();
-                                padding:0 15px;
-                                text-align: center;
                                 margin:-60px auto 10px;
+                                height: 20px;
+                                padding:0 15px;
+                                .esspellipsis();
+                                text-align: center;
                                 transition: all ease .8s ;
                             }
                             .enterprisetype{
@@ -194,7 +193,6 @@
                             .checkenterprise{
                                 margin:260px auto 0;
                                 border:1px solid #fff;
-                                text-align: center;
                                 width: 120px;
                                 height: 30px;
                                 line-height:30px;
@@ -212,7 +210,7 @@
                             width:100%;
                             height: 100%;
                             .enterprisename{
-                                margin:20px auto 10px;
+                                margin:36px auto 10px;
                                 .esspellipsis();
                             }
                             .enterprisetype{

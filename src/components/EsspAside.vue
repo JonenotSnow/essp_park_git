@@ -83,7 +83,7 @@
                     }
                 }
                 //当前横向导航下 菜单入口
-                let child = menuList.children[this.firstLevel];debugger
+                let child = menuList.children[this.firstLevel];
                 if (child.children[0].id.length == 8) {//子菜单第一个id长度为8时(三级导航，如管理)
                     for (let i = 0;i < child.children.length;i++) {
                         tmp.push(child.children[i]);

@@ -3,7 +3,7 @@
         <div class="park_home_policy">
             <div class="home_active_head">
                 <h3>园区惠政</h3>
-                <p>Preferential Policies</p>
+                <p>Campus preferential policies</p>
                 <div class="home_active_tag_hot esspclearfix" v-if="huizheng_hot.length != 0 || huizheng_newest.length != 0">
                     <span :class="huizhengTabIndex==0?'sel':''" @click="huizhengTab(0)">最新</span>
                     <span :class="huizhengTabIndex==1?'sel':''" @click="huizhengTab(1)">热门</span>

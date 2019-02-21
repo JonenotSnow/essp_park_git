@@ -4,7 +4,7 @@
     <div class="title_home esspclearfix">
       <div class="newstitle">
         <h3 class="newsfirtitle">园区资讯</h3>
-        <p class="newssectitle">Latest News</p>
+        <p class="newssectitle">Campus info</p>
       </div>
       <div class="title_home_btn">
         <!-- <router-link to="/parkIndex/parkInformation/all" class="link_more">查看更多</router-link> -->

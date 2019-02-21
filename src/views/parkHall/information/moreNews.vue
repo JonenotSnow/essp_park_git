@@ -38,7 +38,7 @@
             </div>
             <div class="newslastest" v-if="newsTabIndex==1">
                 <div class="newslist left_side">
-                    <div class="newsitem" @click="goinfoDetail(its)" v-for="(its,index) in hotNewDates" :key="index" v-if="index<3">
+                    <div class="newsitem" @click="goinfoDetail(its)" v-for="(its,index) in hotNewDates" :key="index" v-if="index%2==0">
                         <img class="newsimg" :src="its.titleImg" :alt="its.informationTitle">
                         <div class="newinfo">                                
                             <div class="img_tips">
@@ -52,7 +52,7 @@
                     </div>
                 </div>
                 <div class="newslist right_side">
-                    <div class="newsitem" @click="goinfoDetail(its)" v-for="(its,index) in hotNewDates" :key="index" v-if="index<6&&index>=3">
+                    <div class="newsitem" @click="goinfoDetail(its)" v-for="(its,index) in hotNewDates" :key="index" v-if="index%2 !=0">
                         <img class="newsimg" :src="its.titleImg" :alt="its.informationTitle">
                         <div class="newinfo">
                             <div class="img_tips">
@@ -66,7 +66,8 @@
                     </div>
                 </div>
             </div>
-            <router-link to="/parkIndex/parkInformation/all" class="entermore">More ></router-link>
+            <router-link to="/parkIndex/parkInformation/all" class="entermore">More <i
+                class="el-icon-arrow-right"></i></router-link>
         </div>
         <!-- <div v-else style="text-align:center;color:#999; padding:20px 0">暂无数据</div> -->
         <essp-loading v-else :nodata="true"></essp-loading>

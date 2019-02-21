@@ -2,7 +2,7 @@
     <div class="noticeBar">
         <!--/parkHall/manage/activityPoolAddPark-->
         <!--  公告快捷入口的模块-->
-        <div class="noticeBox">
+        <div class="noticeBox" :class="{lineTwo:(LoginUserRole.includes('33') || LoginUserRole.includes('34'))?true:false}">
             <div class="swiper_com esspclearfix">
                 <div class="swiper_inner">通知公告：</div>
                 <div v-if="infoList.length>0">
@@ -371,23 +371,31 @@
         background-size: contain;
         /*padding-top: 110px;*/
         /*padding-bottom: 16px;*/
-        .noticeBox {
+        .noticeBox{
             position: relative;
             overflow: hidden;
             cursor: pointer;
             width: 800px;
-            padding: 30px 11px 30px 45px;
+            padding: 5px 11px 5px 45px;
             left: 50%;
-            top: -30px;
+            top: -45px;
             margin-left: -400px;
-            background: #fff;
+            background: rgba(255,255,255,0.8);
             z-index: 2;
-            box-shadow: 2.5px 4.3px 4.8px 0.2px rgba(0, 0, 0, 0.2);
+            /*box-shadow: 2.5px 4.3px 4.8px 0.2px rgba(0, 0, 0, 0.2);
             -webkit-box-shadow: 2.5px 4.3px 4.8px 0.2px rgba(0, 0, 0, 0.2);
             -moz-box-shadow: 2.5px 4.3px 4.8px 0.2px rgba(0, 0, 0, 0.2);
             -ms-box-shadow: 2.5px 4.3px 4.8px 0.2px rgba(0, 0, 0, 0.2);
             -o-box-shadow: 2.5px 4.3px 4.8px 0.2px rgba(0, 0, 0, 0.2);
-            .esspborder-radius(6px);
+            .esspborder-radius(6px);*/
+            -wekit-border-radius: 6px 6px 0px 0px;
+            -moz-border-radius: 6px 6px 0px 0px;
+            -ms-border-radius: 6px 6px 0px 0px;
+            -o-border-radius: 6px 6px 0px 0px;
+            border-radius: 6px 6px 0px 0px;
+        }
+        .noticeBox.lineTwo{
+            top: -80px;
         }
     }
 

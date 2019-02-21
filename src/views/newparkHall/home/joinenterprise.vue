@@ -3,7 +3,7 @@
      <!-- 加入的企业模块 -->
      <div class="main_inter">
         <div class="com-tit">入驻企业</div>
-        <div class="com-brf">入驻企业400+，在职人员10000+</div>
+        <div class="com-brf">Entered enterprises</div>
         <div class="entercons">
             <div class="hasenters" v-if="enterprises.length>0">
                 <div class="listcon">
@@ -16,7 +16,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="entermore" @click="linkToPage"><span>More > </span></div>
+                <div class="entermore" @click="linkToPage"><span>More <i
+                class="el-icon-arrow-right"></i></span></div>
             </div>
             <div v-else class="nobox"><i class="myicon"></i><span class="tipspan">暂无数据</span></div>
         </div>

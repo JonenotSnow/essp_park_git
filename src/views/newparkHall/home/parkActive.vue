@@ -2,7 +2,7 @@
     <div class="park_home_active">
         <div class="home_active_head">
             <h3>园区活动</h3>
-            <p>Campus Activities</p>
+            <p>Campus activities</p>
             <div class="home_active_tag_hot esspclearfix" v-if="activity_hot.length != 0 || activity_newest.length != 0">
                 <span :class="activeTabIndex==0?'sel':''" @click="activeTab(0)">最新</span>
                 <span :class="activeTabIndex==1?'sel':''" @click="activeTab(1)">热门</span>
