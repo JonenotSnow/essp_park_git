@@ -113,7 +113,7 @@ export default {
       switch (Number(rows.type)) {
         case 1:
           Object.assign(selectObj, {
-            path: "/parkHall/manage/manageParkAuditDetail",
+            path: "/parkHall/manage/manageAuditing",
             query: { entityId: rows.id, cstId: rows.cstId }
           });
           break;
