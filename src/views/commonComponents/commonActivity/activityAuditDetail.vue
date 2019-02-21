@@ -1,208 +1,167 @@
 <template>
-    <div id="ActivityDetail">
-        <essp-bread-crumb class="detailNav" :breadList="breadlist"></essp-bread-crumb>
-        <!-- <p class="detailNav">园区活动>活动详情</p> -->
-        <div class="wrap">
-
-            <div class="activemain">
-                <div class="activemain_con esspclearfix">
-                    <!-- 活动介绍模块 -->
-                    <div class="actleft">
-                        <div>
-                            <div class="acttit">主办方</div>
-                            <div>
-                                <img class="actlogo" :src="logo" alt="">
-                                <p class="actcpname login_con_a" @click="interCc()">{{activeDetailData.cstName
-                                    ?activeDetailData.cstName:"进入企业橱窗>>"}}</p>
-                                <!--<a href="javascript:void(0)" class="login_con_a" @click="interCc()">进入企业橱窗 <i-->
-                                <!--class="el-icon-d-arrow-right"></i></a>-->
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="actright">
-                        <div class="maininfo esspclearfix">
-                            <div class="logocon">
-                                <img class="detaillogo" :src="activeDetailData.activityPhoto" alt="">
-                            </div>
-                            <div class="detailcon">
-                                <h2>{{activeDetailData.activityTheme}}</h2>
-                                <div class="tagcon esspclearfix" v-if="activityLabelList.length">
-                                    <essp-park-tag
-                                        v-for="(item, eptIndex) in activityLabelList"
-                                        :value="item"
-                                        v-if="eptIndex < 3"
-                                        :key="eptIndex"
-                                    ></essp-park-tag>
-                                </div>
-                                <div class="infos">
-                                    <div class="infos_item">
-                                        <i class="icon iconfont icon-riqi1" style="color: #ccc;"></i>
-                                        <b>时间：</b><em>{{activeDetailData.activityStarttime}}</em></div>
-                                    <div class="btns">
-                                        <i class="icon iconfont icon-dizhi" style="color: #ccc;"></i>
-                                        <b>地点：</b><em>{{activeDetailData.activityPlace}}</em>
-                                    </div>
-                                    <!--<div><i class="iconcoom el-icon-zoom-in"></i>-->
-                                    <!--<b>发起人：</b><em>{{activeDetailData.initiatorName || '暂无发起人'}}</em></div>-->
-                                    <div style="margin-bottom: 20px;">
-                                        <i class="icon iconfont icon-piaozhong" style="color: #ccc;"></i>
-                                        <b>票种：</b>
-                                    </div>
-                                </div>
-                                <div class="infobtn esspclearfix">
-                                    <div class="btnitem"
-                                         v-for="(item,index) in activeDetailData.ticketForm"
-                                         v-if=" activeDetailData.ticketForm != null && index<10" :key="index">
-                                        ￥{{item.ticketPirce || "0.00"}} {{item.ticketType}}
-                                    </div>
-                                </div>
-                                <div class="status_btn">
-                                    <button
-                                        v-if="activeDetailData.status == '02' && btnText == 0"
-                                        disabled
-                                    >预告中
-                                    </button>
-                                    <button
-                                        v-else-if="activeDetailData.status == '02' && btnText==1">
-                                        <em class="btn_text_i" :class="!loginFlag ? 'sel':''"  @click="signUp(activeDetailData.enterType)">立即报名</em>
-                                    </button>
-                                    <button
-                                        v-else-if="activeDetailData.status == '02' && btnText == 2"
-                                        disabled
-                                    >已结束
-                                    </button>
-                                    <button v-else disabled>未审核</button>
-
-                                    <span @click="showDialog()" v-if="flollowStatus === '0'" round><i
-                                        class="iconfont icon-aixin-xianxing"
-                                        style="margin-right:5px;color:#fc1878;font-size: 12px;"></i>关注</span>
-                                    <span class="btn-icon-star-on" size="mini" @click="showDialog()"
-                                          v-if="flollowStatus === '1'" round><i class="iconfont icon-collect2"
-                                                                                style="margin-right:5px;color:#fc1878;font-size: 12px;"></i>已关注</span>
-                                    <span
-                                        @click="tipOffFn(4,activeDetailData.activityId,activeDetailData.activityTheme)"
-                                        style="cursor: pointer;"><i class="iconfont icon-warning"
-                                                                    style="margin-right:5px;"></i>举报</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="jbnc" v-if="prompt == 1">
-                PS: 该内容因被举报正在取证中，请您谨慎对待。
-            </div>
-            <div class="active_detail_div">
-                <div>
-                    <p class="clickTitle">
-                        <span style="margin-right: 50px;">报名情况</span>
-                        <span>已报名 <strong>{{allEnterCount}}</strong>人</span>
-                    </p>
-                </div>
-                <div class="swiperwrap swiperwrap2">
-                    <!--少于6个，防止滑动-->
-                    <div class="no_swiper" v-if="signUpList.length< 6"></div>
-                    <div class="swipercon" v-if="signUpList.length>0" style="margin-bottom: 20px;">
-                        <swiper :options="swiperOption" ref="mySwiper">
-                            <swiper-slide v-for="(item,index) in signUpList" :key="index">　　　　　　
-                                <div class="swiper_item">
-                                    <div class="itempic">
-                                        <img :src="item.cstLogo" alt=""></div>
-                                    <h3>报名人数: <span>{{item.enterCount}}</span>人</h3>
-                                    <p>{{item.timeShow}}</p>
-                                </div>
-                            </swiper-slide>
-                        </swiper>
-                        <div class="swiper-button-next"></div>
-                        <div class="swiper-button-prev"></div>
-                    </div>
-                    <div class="swipercon" v-if="signUpList.length==0" style="padding-bottom: 20px;">
-                        <div style="text-align: center">
-                            <p style="display: inline-block"><img src="./noEroll.png" alt=""></p>
-                            <p style="display: inline-block; margin-left: 40px; height: 98px; line-height: 98px;">
-                                <span>暂无人报名，点击报名按钮，立即报名吧</span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="activityD border-top">
-                    <p class="clickTitle" style="margin-bottom: 30px;"><span>活动详情</span></p>
-                <div class=" ql-container ql-snow bord-none">
-                    <div style="border: none; padding:0;" class="ql-editor" v-html="activeDetailData.activityDetails"></div>
-                </div>
-                </div>
-                <div class="tipOffBox border-top esspclearfix">
-                    <div class="l">
-                        <p><strong>收费说明 :</strong>{{activeDetailData.chargeInfo || "无收费说明"}}</p>
-                        <p><strong>发起单位 :</strong>{{activeDetailData.initiateUnits || "暂无"}}</p>
-                        <p>
-                            <strong>活动标签 :</strong>
-                            <essp-park-tag
-                                v-for="(item, eptIndex) in activityLabelList"
-                                :value="item"
-                                :key="eptIndex"
-                            />
-                        </p>
-                    </div>
-                    <!--<div class="r">-->
-                    <!--<el-button type="danger" size="mini" round @click="tipOffFn(4,activeDetailData.activityId,activeDetailData.activityTheme)">举报</el-button>-->
-                    <!--</div>-->
-                </div>
-                <!--commentSty 传入的类型-->
-                <essp-info-comment commentSty="1" :publishId ="publishId"></essp-info-comment>
-            </div>
-            <div class="active_detail_div active_detail_div1">
-                <div class="moreActive">
-                    <p class="clickTitle">
-                        <span>更多热门活动</span>
-                        <span><router-link to="/parkIndex/park/all"
-                                           style="color: #00a0e9;font-size: 14px;">更多>></router-link></span>
-                    </p>
-                </div>
-                <div class="swiperwrap swiperwrap1">
-                    <div class="swipercon" v-if="imglist1.length > 0">
-
-                        <swiper :options="swiperOption1" ref="mySwiper1" style="width: 100%;">
-                            <swiper-slide v-for="(item,index) in imglist1" :key="index">　　　　　　
-                                <div class="swiper_item" @click="lineTo(item.activityId)">
-                                    <div class="itempic">
-                                        <img :src="item.activityPhoto" alt="">
-                                        <span>{{item.activityStarttime.substring(0,11)}}</span>
-                                    </div>
-                                    <h3>{{item.activityTheme}}</h3>
-                                    <!--<router-link :to="{path:'/parkIndex/activityDetail',query:{activityId:item.activityId}}">-->
-                                    <!---->
-                                    <!--</router-link>-->
-                                </div>
-                            </swiper-slide>
-                        </swiper>
-                        <div class="swiper-button-next1"></div>
-                        <div class="swiper-button-prev1"></div>
-                    </div>
-                    <div class="swipercon" v-if="imglist1.length==0">暂无热门活动！</div>
-                </div>
-            </div>
+  <div class="actauditpage" id="manageActivityAudit">
+    <essp-bread-crumb class="detailNav" :breadList="breadlist"></essp-bread-crumb>
+    <div class="common_titwrap">
+      <p class='Otitle'>活动发布审核</p>
+      <div class="k1">
+        <div class="title">
+          <h3 class="common_tit_des">基本信息</h3>
         </div>
-
-        <!-- 关注事件对话框start -->
-        <el-dialog class="quguanbox"
-                   title="提示"
-                   :visible.sync="dialogVisible"
-                   width="30%"
-                   :before-close="handleClose">
-            <!-- <span style="display: inline-block; width: 100%; text-align: center;font-size: 16px">确定取消该关注？</span> -->
-            <div>
-                <i class="icon iconfont icon-tishi"></i><span class="quguan">是否取消该关注</span>
-            </div>
-            <span slot="footer" class="dialog-footer">
-                <el-button @click="dialogVisible = false">取 消</el-button>
-                <el-button type="primary" @click="cancleFocus()">确 认</el-button>
+        <div class="contentList">
+          <p>
+            <span>活动主题：</span>
+            <span>{{activeDetailData.activityTheme}}</span>
+          </p>
+          <p>
+            <span>活动类别：</span>
+            <span v-if="activeDetailData.activityType == it.type" v-for="(it,i) in typeList" :key="i">{{it.name}}</span>
+          </p>
+          <p>
+            <span>活动开始时间：</span>
+            <span>{{activeDetailData.activityStarttime}}</span>
+          </p>
+          <p>
+            <span>活动天数：</span>
+            <span>{{activeDetailData.activityDays}}</span>
+          </p>
+          <p>
+            <span>活动地点：</span>
+            <span>{{activeDetailData.activityPlace}}</span>
+          </p>
+          <p>
+            <span>是否收费：</span>
+            <span>{{activeDetailData.isCharge == 1 ? '是' : '否'}}</span>
+          </p>
+          <p v-if="activeDetailData.isCharge==1">
+            <span>收费说明：</span>
+            <span>{{activeDetailData.chargeInfo}}</span>
+          </p>
+          <p>
+            <span>报名是否需审核：</span>
+            <span>{{activeDetailData.enterNeedAudit == 0 ? '否' : '是'}}</span>
+          </p>
+          <p>
+            <span style="float: left">活动详情：</span>
+            <span style="border: none; padding:0;" class="ql-editor" v-html="activeDetailData.activityDetails"></span>
+          </p>
+          <p class="esspclearfix">
+            <span style="float: left">活动宣传图/海报：</span>
+            <img style="float: left;width: 245px;" :src="activeDetailData.activityPhoto" alt="">
+          </p>
+          <p>
+            <span>活动标签：</span>
+            <span>{{activeDetailData.activityLabel || "无"}}</span>
+          </p>
+          <p>
+            <span>发起单位：</span>
+            <span>{{activeDetailData.initiateUnits}}</span>
+          </p>
+          <p v-if="activeDetailData.cstNam">
+            <span>发布方：</span>
+            <span>{{activeDetailData.cstName}}</span>
+          </p>
+        </div>
+      </div>
+      <div class="k1">
+        <div class="title">
+          <h3 class="common_tit_des">报名表设置</h3>
+        </div>
+        <p class="radioBtn">
+          <el-radio v-model="radio" disabled label="0">个人实名分页申报</el-radio>
+          <el-radio v-model="radio" disabled label="1">企业实名分页申报</el-radio>
+        </p>
+        <div class="contentList1">
+          <div v-for=" (item,index)  in formRqList" :key="index">
+            <p>
+              <i v-if="item.requir">*</i>
+              <span>{{item.name}}：</span>
+            </p>
+            <p><input type="text" v-model="item.tittext" disabled></p>
+            <!-- <input type="text" disabled> -->
+          </div>
+        </div>
+      </div>
+      <div class="k2">
+        <div class="title">
+          <h3 class="common_tit_des">其他设置</h3>
+        </div>
+        <p class="infoTitle">票务信息：</p>
+        <ul class="tickInfo">
+          <li>
+            <span>票种名称</span>
+            <span>价格</span>
+            <span>数量</span>
+            <span>操作</span>
+          </li>
+          <li v-for="item in items" :key="item.ticketType">
+            <span>{{item.ticketType}}</span>
+            <span>￥{{item.ticketPirce}}</span>
+            <span>{{item.ticketNum}}</span>
+            <span>
+              <i class="el-icon-delete" style="color:#ddd;"></i>
             </span>
-        </el-dialog>
-        <!-- 关注事件对话框end -->
+          </li>
+        </ul>
+        <div class="contentList2">
+          <p>
+            <span>活动开放范围：</span>
+            <span>{{activeDetailData.openScope | openStatus(activeDetailData.openScope)}}</span>
+          </p>
+          <p>
+            <span>报名人数上限：</span>
+            <span>{{numberToplimit}}</span>
+          </p>
+          <p>
+            <span>报名开始时间：</span>
+            <span>{{activeDetailData.enterStarttime}}</span>
+          </p>
+          <p>
+            <span>报名截止时间：</span>
+            <span>{{activeDetailData.enterEndtime}}</span>
+          </p>
+          <!--<p>-->
+          <!--<span>邀请对象：</span>-->
+          <!--<span>xxxxxxxxxxx</span>-->
+          <!--</p>-->
+        </div>
+      </div>
+      <hr>
+      <p class="submitMark">
+        <span>提交审核备注：</span>
+        <span>{{activeDetailData.activityRemarks || "无"}}</span>
+      </p>
+      <p class="markReason esspclearfix">
+        <span>
+          <i style="color: red;margin-right: 5px;">*</i>审核原因：</span>
+        <textarea v-model="mark" :disabled="$route.query.opMark==='01'"></textarea>
+      </p>
+      <p class="btn" v-if="$route.query.opMark==='03'">
+        <span @click="access = true">通过</span>
+        <span @click="noAccess = true">不通过</span>
+        <span @click="$router.go(-1)">取消</span>
+        <!--<el-button type="primary" size="small" @click="access = true"></el-button>-->
+        <!--<el-button type="primary" size="small" @click="noAccess = true">不通过</el-button>-->
+        <!--<el-button type="primary" size="small" @click="$router.go(-1)">取消</el-button>-->
+      </p>
     </div>
+    <!-- 通过审核弹窗 -->
+    <el-dialog :visible.sync="access" width='560px' class='access'>
+      <p>是否确认通过审核！</p>
+      <p>
+        <el-button type="primary" size="small" @click="access =false">取消</el-button>
+        <el-button type="primary" size="small" @click="auditFn('10')">确认</el-button>
+      </p>
+    </el-dialog>
+
+    <!-- 未通过审核弹窗 -->
+    <el-dialog :visible.sync="noAccess" width='560px' class='noAccess'>
+      <p>是否拒绝通过审核</p>
+      <p>
+        <el-button type="primary" size="small" @click="noAccess =false">取消</el-button>
+        <el-button type="primary" size="small" @click="auditFn('03')">确认</el-button>
+      </p>
+    </el-dialog>
+  </div>
 </template>
 
 <script>

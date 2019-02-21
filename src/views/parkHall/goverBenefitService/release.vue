@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- 我发布的惠政 页面模版 -->
-        <div class="launchcon">
+        <div class="launchcon launchcon_hz">
             <div class="toolcon esspclearfix">
                 <div class="toolleft">
                     <span :class="{'showblue': type == 0}" @click="changeType(0)">已发布</span>
@@ -51,7 +51,7 @@
             </div>
             <!-- 已发布 -->
             <ul v-if="type == 0" class="esspclearfix">
-                <li class="itemli" v-for="(item, index) in activedata" :key="index">
+                <li v-if="activedata.length!=0" class="itemli" v-for="(item, index) in activedata" :key="index">
                     <div class="infostit esspclearfix">
                         <span class="spanfabu">发布人:
                             <em>{{item.userName}}</em>
@@ -101,6 +101,10 @@
                         </div>
                     </div>
                 </li>
+                <li v-if="activedata.length==0">
+                    <!-- <div style="text-align: center">{{lodingMsg}}</div> -->
+                    <essp-loading :loading="!isLoginEnd"  :nodata="activedata.length==0 && isLoginEnd"></essp-loading>
+                </li>
             </ul>
         </div>
         <div class="pageList">
@@ -132,6 +136,7 @@ export default {
             pageType: "releaseGover", //发起的惠政列表页
             activedata: [],
             tag: [],
+            isLoginEnd:false,
             curent_toolspan: 0,
             toolspans: [
                 {
@@ -257,6 +262,7 @@ export default {
         },
         getMyPubPolList() {
             var url = this.$apiUrl.goverBene.getMyPubPol;
+            this.isLoginEnd = false;
             this.$post(url, {
                 pageNum: this.pageNum,
                 pageSize: this.pageSize,
@@ -270,6 +276,7 @@ export default {
                     //     response.resultCode == "CLT000000000" ||
                     //     response.resultCode == "0000000000"
                     // ) {
+                        this.isLoginEnd = true;
                         this.activedata = response.resultData.policyList;
                         this.allTotal = response.resultData.total;
                         this.tag = this.activedata.tagsTxt
@@ -280,6 +287,7 @@ export default {
                     // }
                 },
                 err => {
+                    this.isLoginEnd = true;
                     this.$message.error("接口异常");
                 }
             );
@@ -457,7 +465,7 @@ export default {
 
 // 消息简介汇总
 .itemli {
-    margin-bottom: 25px;
+    margin-top: 25px;
 }
 
 .infostit {
@@ -707,8 +715,11 @@ export default {
             }
         }
     }
-}
 
+}
+.launchcon_hz ul li:nth-child(1) {
+    margin-top: 0;
+}
 .edit-btn {
     padding: 5px 15px;
     width: 85px;
