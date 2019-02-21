@@ -144,9 +144,10 @@
             background-color: #fff;
 
             .main-head {
-                .head-title {
-                    height: 25px;
-                    line-height: 25px;
+                .head-title {    
+                    width: 880px;
+                    margin: 0 auto;
+                    line-height: 35px;
                     text-align: center;
                     font-size: 24px;
                     font-weight: normal;
