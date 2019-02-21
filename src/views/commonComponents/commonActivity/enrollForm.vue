@@ -29,13 +29,8 @@
                                     <span><i :class="icons[3]" style="color: #ccc"></i>{{actData.attentionSum}}</span>
                                     <span><i :class="icons[5]" style="color: #ccc"></i>{{actData.commentSum}}</span>
                                 </p>
-                                <div class="tagcon esspclearfix" v-if="actData.length">
-                                    <essp-park-tag
-                                        v-for="(item, eptIndex) in activityLabelList"
-                                        :value="item"
-                                        v-if="eptIndex < 3"
-                                        :key="eptIndex"
-                                    ></essp-park-tag>
+                                <div class="tagcon esspclearfix">
+                                    <span v-for="(item,index) in activityLabelList" v-if="index < 3" :key="index">{{item}}</span>
                                 </div>
                                 <div class="infos">
                                     <div class="infos_item">
@@ -330,6 +325,7 @@
 <script>
     import EsspBreadCrumb from "@/components/EsspBreadCrumb";
     import mixin from "@/components/mixins/mixins_windowOpen.js";
+    import EsspParkTag from "@/components/EsspParkTag";
 
     export default {
         data() {
@@ -385,7 +381,8 @@
         },
         mixins: [mixin],
         components: {
-            EsspBreadCrumb
+            EsspBreadCrumb,
+            EsspParkTag
         },
         filters: {
             changePrice: function (value) {
@@ -1316,17 +1313,18 @@
         margin-bottom: 5px;
         min-height: 25px;
         span {
-            float: left;
-            margin-right: 20px;
-            margin-bottom: 10px;
-            padding: 2px 10px;
+            display: inline-block;
+            padding: 4px 8px;
+            height: 10px;
+            line-height: 10px;
             font-size: 12px;
-            background-color: #cccccc;
-            text-align: center;
-            color: #fff;
-            -webkit-border-radius: 2px;
-            -moz-border-radius: 2px;
-            border-radius: 2px;
+            font-weight: normal;
+            font-stretch: normal;
+            letter-spacing: 0px;
+            color: #36c0ff;
+            background-color: #d9f3ff;
+            border-radius: 3px;
+            border: solid 1px #c3ecff;
         }
 
     }
