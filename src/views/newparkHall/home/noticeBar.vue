@@ -41,11 +41,11 @@
                     <!--</div>-->
                     <essp-roll listType="applyParkList" :list="applyParkList" class="swiper_inner3"/>
 
-                    <span
+                    <!-- <span
                         style="display: inline-block; padding-top: 9px"
                         class="more"
                         v-if="LoginUserRole.includes('33') || LoginUserRole.includes('34')"
-                    >More&gt;</span>
+                    >More&gt;</span> -->
                 </div>
                 <div class="noData" v-else style="height: 35px;line-height: 35px">暂无任务~~</div>
             </div>

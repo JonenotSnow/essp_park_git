@@ -174,7 +174,7 @@
 
 
                 }, (err) => {
-                    this.$message.error("数据异常！");
+                    this.$message.error(err.resultMsg);
                 })
 
             },
