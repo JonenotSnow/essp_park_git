@@ -86,7 +86,7 @@
             },
             //校验审核状态
             cancelAudit(rows){
-                this.$router.push({path:'/parkHall/manage/manageParkAuditDetail',query:{entityId:rows.id,cstId:rows.cstId}});
+                this.$router.push({path:'/parkHall/manage/manageAuditing',query:{entityId:rows.id,cstId:rows.cstId}});
             },
 
         },

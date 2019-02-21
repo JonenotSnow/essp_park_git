@@ -131,23 +131,23 @@
             this.getFxContent();
             this.getForm();
             
-            let filterList = ['0410','0411','0412','0413','0414','0415'];
-            let menuList = this.SSH.getItem("menuList");
-            let arr = [];
-            if (!this.bdFlag && menuList.length>0) {
-                menuList.forEach(el => {
-                    if (el.name == 'parkList' && el.children  && el.children.length>0) {
-                        el.children.forEach((element,index)=>{
-                            if (!filterList.includes(element.id)) {
-                                arr.push(element)
-                            }
-                        })
-                        el.children = arr;
-                    }
-                    return;
-                });
-            }
-            this.SSH.setItem("menuList",menuList)
+            // let filterList = ['0410','0411','0412','0413','0414','0415'];
+            // let menuList = this.SSH.getItem("menuList");
+            // let arr = [];
+            // if (!this.bdFlag && menuList.length>0) {
+            //     menuList.forEach(el => {
+            //         if (el.name == 'parkList' && el.children  && el.children.length>0) {
+            //             el.children.forEach((element,index)=>{
+            //                 if (!filterList.includes(element.id)) {
+            //                     arr.push(element)
+            //                 }
+            //             })
+            //             el.children = arr;
+            //         }
+            //         return;
+            //     });
+            // }
+            // this.SSH.setItem("menuList",menuList)
         },
         methods: {
             getForm() {
@@ -171,10 +171,10 @@
                 );
             },
             goShowHome(){
-                //path:'/centerIndex/showHome',query:{cstId:curCstId
                 this.windowOpenUrl('/centerIndex/showHome',{cstId:this.curCstId})
             },
             getFxContent() {
+                //area,linkMan,linkPhone 反显可修改
                 this.$post(this.$apiUrl.manage.getCstIdByUserId, {}).then(
                     response => {
                         if (response.resultCode != 'CLT000000000' && response.resultCode != '0000000000') {
@@ -248,6 +248,7 @@
                 this.accessT = true;
             },
             submitForm() {
+                let _that = this;
                 this.$post(this.$apiUrl.manage.applyPark, {
                     parkId: window.sessionStorage.getItem("parkId"),
                     entryForm: this.getFormList,

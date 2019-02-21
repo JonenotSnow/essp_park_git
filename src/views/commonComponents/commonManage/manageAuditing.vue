@@ -118,7 +118,8 @@
             },
             getInfo() {
                 this.$post(this.$apiUrl.manage.getCstForm, {
-                    id: this.$route.query.id,
+                    id: this.$route.query.entityId,
+                    cstId: this.$route.query.cstId,
                 })
                     .then((response) => {
                         this.infoList = JSON.parse(response.resultData)
