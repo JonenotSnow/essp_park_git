@@ -363,7 +363,7 @@
         width: 1200px;
         height: 170px;
         margin: 0 auto;
-        padding: 60px 0;
+        padding: 15px 0 60px;
         .standard-menu-wrap{
             display: flex;
              width: 930px;
