@@ -365,7 +365,6 @@
                     //                        this.$set(item,"isShow",index == 0? true:false);
                     //                    })
                     this.formRqList = allArr;
-
                     /**
                      * 这循环的作用是干啥用的？打开会卡死
                      * */
@@ -465,6 +464,21 @@
             submitForm() {
                 this.grSubmit();
             },
+             ruleForm() {
+                // this.formRqList.forEach((item, index) => {
+                //     if(item.requir && !item.tittext) {
+                //         this.$message.error(item.name + "不能为空");
+                //         return false
+                //     }
+                // });
+                for(let i = 0; i< this.formRqList.length; i++){
+                    if(this.formRqList[i].requir && !this.formRqList[i].tittext) {
+                        this.$message.error(this.formRqList[i].name + "不能为空");
+                        return false
+                    }
+                }
+                return true
+            },
             // 个人提交
             grSubmit() {
                 var parkId = sessionStorage.getItem("parkId") || "";
@@ -508,6 +522,9 @@
                         //this.$message.error("报名人数不能大于总申报人数");
                         return;
                     }
+                    if(!this.ruleForm()){
+                        return
+                    }
                 } else {
                     if (!this.btnBloon) {
                         return;
@@ -533,7 +550,7 @@
                     contactName = this.inputName;
                     contactPhone = this.inputTel;
                 }
-
+                debugger
                 /* var isNull = this.rulenrollFormList();
                     if(isNull) {
                         this.btnBloon = true;
