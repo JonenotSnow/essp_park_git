@@ -7,18 +7,18 @@
             <div class="activemain">
                 <div class="activemain_con esspclearfix">
                     <!-- 活动介绍模块 -->
-                    <div class="actleft">
-                        <div>
-                            <div class="acttit">主办方</div>
-                            <div>
-                                <img class="actlogo" :src="logo" alt="">
-                                <p class="actcpname login_con_a" @click="interCc()">{{activeDetailData.cstName
-                                    ?activeDetailData.cstName:"进入企业橱窗>>"}}</p>
-                                <!--<a href="javascript:void(0)" class="login_con_a" @click="interCc()">进入企业橱窗 <i-->
-                                <!--class="el-icon-d-arrow-right"></i></a>-->
-                            </div>
-                        </div>
-                    </div>
+                    <!--<div class="actleft">-->
+                        <!--<div>-->
+                            <!--<div class="acttit">主办方</div>-->
+                            <!--<div>-->
+                                <!--<img class="actlogo" :src="logo" alt="">-->
+                                <!--<p class="actcpname login_con_a" @click="interCc()">{{activeDetailData.cstName-->
+                                    <!--?activeDetailData.cstName:"进入企业橱窗>>"}}</p>-->
+                                <!--&lt;!&ndash;<a href="javascript:void(0)" class="login_con_a" @click="interCc()">进入企业橱窗 <i&ndash;&gt;-->
+                                <!--&lt;!&ndash;class="el-icon-d-arrow-right"></i></a>&ndash;&gt;-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
 
 
                     <div class="actright">
@@ -28,13 +28,13 @@
                             </div>
                             <div class="detailcon">
                                 <h2>{{activeDetailData.activityTheme}}</h2>
+                                <p class="icon_p_font">
+                                    <span><i :class="icons[2]" style="color: #ccc"></i>{{activeDetailData.viewSum}}</span>
+                                    <span><i :class="icons[3]" style="color: #ccc"></i>{{activeDetailData.attentionSum}}</span>
+                                    <span><i :class="icons[5]" style="color: #ccc"></i>{{activeDetailData.commentSum}}</span>
+                                </p>
                                 <div class="tagcon esspclearfix" v-if="activityLabelList.length">
-                                    <essp-park-tag
-                                        v-for="(item, eptIndex) in activityLabelList"
-                                        :value="item"
-                                        v-if="eptIndex < 3"
-                                        :key="eptIndex"
-                                    ></essp-park-tag>
+                                    <span v-if="eptIndex < 3" :key="eptIndex" v-for="(item, eptIndex) in activityLabelList" >{{item}}</span>
                                 </div>
                                 <div class="infos">
                                     <div class="infos_item">
@@ -48,7 +48,7 @@
                                     <!--<b>发起人：</b><em>{{activeDetailData.initiatorName || '暂无发起人'}}</em></div>-->
                                     <div style="margin-bottom: 20px;">
                                         <i class="icon iconfont icon-piaozhong" style="color: #ccc;"></i>
-                                        <b>票种：</b>
+                                        <b style="padding-left: 7px;">票种：</b>
                                     </div>
                                 </div>
                                 <div class="infobtn esspclearfix">
@@ -60,6 +60,7 @@
                                 </div>
                                 <div class="status_btn">
                                     <button
+                                        class="no_begin_active_btn"
                                         v-if="activeDetailData.status == '02' && btnText == 0"
                                         disabled
                                     >预告中
@@ -69,6 +70,7 @@
                                         <em class="btn_text_i" :class="!loginFlag ? 'sel':''"  @click="signUp(activeDetailData.enterType)">立即报名</em>
                                     </button>
                                     <button
+                                        class="end_activ_btn"
                                         v-else-if="activeDetailData.status == '02' && btnText == 2"
                                         disabled
                                     >已结束
@@ -435,11 +437,14 @@
                 if (!this.loginFlag) {
                     var _this = this;
                     this.$message.warning("您尚未登陆，请您先登陆");
+                    setTimeout(function () {
+                        _this.windowHrefUrl('/userIndex/login')
+                    }, 2000);
                     return;
                 }
                 // 游客没权限参与活动
                 if (this.loginFlag && this.LoginUserRol.includes('11')) {
-                    this.$message.error('园区成员才能做此操作');
+                    this.$message.error('您不是园区企业，可先申请加入园区');
                     return;
                 }
 
@@ -448,7 +453,7 @@
                     return;
                 }
                 if(this.activeDetailData.topLimit == 0) {
-                    this.$message.warning('本活动报名人数已达到上限');
+                    this.$message.warning('报名人数已达到上限,无法进行报名');
                     return;
                 }
                 this.$router.push({
@@ -526,7 +531,7 @@
             },
 
             getActListSource() {
-                var op = this.$route.query.op || '01'
+                var op = this.$route.query.op || '01';
                 /* =======获取活动详情信息 ================================================*/
                 this.$post(this.$apiUrl.active.activeDetail, {
                     activityId: this.$route.query.activityId,
@@ -720,21 +725,35 @@
     }
 
     .status_btn {
-        padding-left: 26px;
         span {
             margin-left: 30px;
             cursor: pointer;
         }
         button {
-            width: 100px;
-            height: 30px;
-            line-height: 30px;
+            width: 140px;
+            height: 40px;
+            line-height: 40px;
             color: #fff;
             border: none;
-            border-radius: 20px;
-            background-color: #04a2ea;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
             cursor: pointer;
             outline: none;
+            font-size: 14px;
+            background-image: linear-gradient(31deg, #22a2fa 0%, #10b5ff 100%),
+            linear-gradient(#00a0e9, #00a0e9);
+            background-blend-mode: normal, normal;
+        }
+        .no_begin_active_btn {
+            background-image: linear-gradient(40deg, #fbba1e 0%, #fcc518 50%, #fccd11 100%),
+            linear-gradient(#00a0e9, #00a0e9);
+            background-blend-mode: normal, normal;
+        }
+        .end_activ_btn {
+            background-image: linear-gradient(256deg, #dddee2 0%, #c9ccd3 100%),
+            linear-gradient(#00a0e9, #00a0e9);
+            background-blend-mode: normal, normal;
         }
         i {
             font-size: 14px;
@@ -1319,7 +1338,7 @@
         width: 420px;
         height: 240px;
         float: left;
-        margin-right: 14px;
+        margin-right: 41px;
         .detaillogo {
             display: block;
             width: 100%;
@@ -1330,7 +1349,7 @@
 
     .detailcon {
         float: left;
-        width: 485px;
+        width: 665px;
         h2 {
             font-size: 20px;
             color: #333333;
@@ -1346,12 +1365,14 @@
             -ms-box-orient: vertical;
             font-weight: normal;
         }
+        .icon_p_font {
+            margin-bottom: 15px;
+        }
     }
 
     //标签模块
     .tagcon {
         margin-bottom: 5px;
-        padding-left: 22px;
         min-height: 25px;
         span {
             float: left;
@@ -1362,6 +1383,9 @@
             background-color: #cccccc;
             text-align: center;
             color: #fff;
+            -webkit-border-radius: 2px;
+            -moz-border-radius: 2px;
+            border-radius: 2px;
         }
 
     }
@@ -1388,7 +1412,7 @@
             font-size: 14px;
         }
         b {
-            padding-left: 5px;
+            padding-left: 15px;
         }
         b, em {
             font-weight: normal;
@@ -1401,7 +1425,6 @@
 
     .infobtn {
         margin-bottom: 20px;
-        padding-left: 15px;
         .btnitem {
             float: left;
             width: 125px;
@@ -1410,13 +1433,17 @@
             margin-bottom: 5px;
             text-overflow: ellipsis;
             white-space: nowrap;
+            color: #999;
             height: 30px;
             line-height: 30px;
-            margin-left: 10px;
+            margin-right: 10px;
             text-align: center;
             background-color: #fff;
             border: 1px solid #ccc;
             margin-bottom: 5px;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;
             &:hover {
                 cursor: pointer
             }
