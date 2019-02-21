@@ -7,18 +7,18 @@
             <div class="activemain">
                 <div class="activemain_con esspclearfix">
                     <!-- 活动介绍模块 -->
-                    <!--<div class="actleft">-->
-                        <!--<div>-->
-                            <!--<div class="acttit">主办方</div>-->
-                            <!--<div>-->
-                                <!--<img class="actlogo" :src="logo" alt="">-->
-                                <!--<p class="actcpname login_con_a" @click="interCc()">{{activeDetailData.cstName-->
-                                    <!--?activeDetailData.cstName:"进入企业橱窗>>"}}</p>-->
-                                <!--&lt;!&ndash;<a href="javascript:void(0)" class="login_con_a" @click="interCc()">进入企业橱窗 <i&ndash;&gt;-->
-                                <!--&lt;!&ndash;class="el-icon-d-arrow-right"></i></a>&ndash;&gt;-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</div>-->
+                    <div class="actleft">
+                        <div>
+                            <div class="acttit">主办方</div>
+                            <div>
+                                <img class="actlogo" :src="logo" alt="">
+                                <p class="actcpname login_con_a" @click="interCc()">{{activeDetailData.cstName
+                                    ?activeDetailData.cstName:"进入企业橱窗>>"}}</p>
+                                <!--<a href="javascript:void(0)" class="login_con_a" @click="interCc()">进入企业橱窗 <i-->
+                                <!--class="el-icon-d-arrow-right"></i></a>-->
+                            </div>
+                        </div>
+                    </div>
 
 
                     <div class="actright">
@@ -34,7 +34,12 @@
                                     <span><i :class="icons[5]" style="color: #ccc"></i>{{activeDetailData.commentSum}}</span>
                                 </p>
                                 <div class="tagcon esspclearfix" v-if="activityLabelList.length">
-                                    <span v-if="eptIndex < 3" :key="eptIndex" v-for="(item, eptIndex) in activityLabelList" >{{item}}</span>
+                                    <essp-park-tag
+                                        v-for="(item, eptIndex) in activityLabelList"
+                                        :value="item"
+                                        v-if="eptIndex < 3"
+                                        :key="eptIndex"
+                                    ></essp-park-tag>
                                 </div>
                                 <div class="infos">
                                     <div class="infos_item">
@@ -682,9 +687,6 @@
     }
     .btn_text_i.sel {
         background-color: #999;
-        -webkit-border-radius: 30px;
-        -moz-border-radius: 30px;
-        border-radius: 30px;
     }
     .jbnc {
         .essp_width_auto();
@@ -735,6 +737,7 @@
             line-height: 40px;
             color: #fff;
             border: none;
+            overflow: hidden;
             -webkit-border-radius: 5px;
             -moz-border-radius: 5px;
             border-radius: 5px;
@@ -1349,7 +1352,7 @@
 
     .detailcon {
         float: left;
-        width: 665px;
+        width: 450px;
         h2 {
             font-size: 20px;
             color: #333333;
@@ -1484,7 +1487,7 @@
         em {
             float: left;
             display: inline-block;
-            width: 400px;
+            width: 356px;
         }
     }
 </style>
