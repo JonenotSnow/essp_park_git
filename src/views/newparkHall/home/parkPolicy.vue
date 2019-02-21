@@ -303,6 +303,7 @@
                             i {
                                 font-size: 14px;
                                 margin-right: 3px;
+                                color: #ccc;
                             }
                             .icon-collect2:before {
                                 font-size: 12px;

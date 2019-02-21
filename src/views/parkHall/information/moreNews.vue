@@ -227,15 +227,7 @@
                     width:210px;
                     height: 50px;
                     color:#333;
-                    display: -webkit-box;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    -webkit-box-orient: vertical;
-                    /*! autoprefixer: off */
-                    -webkit-box-orient: vertical;
-                    height: 50px;
-                    /* autoprefixer: on */
-                    -webkit-line-clamp:1;
+                    .esspellipsis();
                     letter-spacing: 1.6px;
                 }
                 .tip_time {

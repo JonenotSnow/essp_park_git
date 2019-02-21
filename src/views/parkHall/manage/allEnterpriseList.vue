@@ -125,6 +125,7 @@
 </script>
 
 <style lang='less' scoped>
+@import "../../../assets/css/mixin.less";
     .allenterprise{
         .breadcrumbtrail{
             margin:44px auto 0;
@@ -165,35 +166,25 @@
                         border-right: 1px solid #ccc;
                         border-bottom:1px solid #ccc;
                         position:relative;
+                        background-color:#fff;
                         .enter_child{
                             width:100%;
                             height:100%;
                         }
                         .detailinfo{   
-                            opacity: 0;                 
                             .enterprisename{
-                                margin:20px auto 10px;
                                 height: 20px;
-                                display: -webkit-box;
-                                overflow: hidden;
-                                text-overflow: ellipsis;
-                                //white-space: nowrap;
-                                -webkit-line-clamp:1;
-                                -webkit-box-orient:vertical;
-                                width:100%;
+                                width:130px;
+                                .esspellipsis();
+                                padding:0 15px;
                                 text-align: center;
-                                position:absolute;
-                                left:0;
-                                top:-60px;
+                                margin:-60px auto 10px;
                                 transition: all ease .8s ;
                             }
                             .enterprisetype{
-                                margin-bottom: 5px;
                                 width:100%;
                                 text-align: center;
-                                position:absolute;
-                                left:0;
-                                top:-60px;
+                                margin:-60px auto 5px;
                                 transition: all ease .8s ;
                             }
                             p{
@@ -201,14 +192,12 @@
                                 color: #ffffff;
                             }
                             .checkenterprise{
-                                position:absolute;
-                                left:40px;
-                                top:120px;
+                                margin:260px auto 0;
                                 border:1px solid #fff;
+                                text-align: center;
                                 width: 120px;
                                 height: 30px;
                                 line-height:30px;
-                                margin: 0 auto;
                                 transition: all ease .8s ;
                             }
                         }
@@ -216,21 +205,21 @@
                             position:absolute;
                             left:0;
                             top:0;
-                            background-color: #00a0e9;
-                            opacity: 0.8;
+                            background-color:rgba(0,160,233,0.8);
                             color:#fff;
                             text-align: center;
                             font-size: 16px;
                             width:100%;
                             height: 100%;
                             .enterprisename{
-                                top:0px;
+                                margin:20px auto 10px;
+                                .esspellipsis();
                             }
                             .enterprisetype{
-                                top:50px;
+                                margin:0 auto 5px;
                             }
                             .checkenterprise{
-                                top:80px;
+                                margin:10px auto 0;
                             }
                         }
                     }

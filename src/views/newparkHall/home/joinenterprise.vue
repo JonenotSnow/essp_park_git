@@ -10,7 +10,7 @@
                     <div class="listitem" v-for="(item,index) in enterprises" :key="index" v-if="index<=5" @mouseenter="showDetail(item.isShowDetail,index)" @mouseleave="showDetail(item.isShowDetail,index)">
                         <img class="enter_child" :src="item.cstLogo">
                         <div class="detailinfo" :class="{cur:item.isShowDetail}">
-                            <p class="enterprisename">{{item.cstNm.length>8?item.cstNm.substr(0,8) + '...':item.cstNm}}</p>
+                            <p class="enterprisename">{{item.cstNm}}</p>
                             <p class="enterprisetype">{{item.idyTpcd}}</p>
                             <div class="checkenterprise" @click="enterBusiness(item)">进入企业橱窗</div>
                         </div>
@@ -145,7 +145,6 @@ import mixins_windowOpen from '@/components/mixins/mixins_windowOpen.js'
         text-align: center;
         .tipspan{
                 display: inline-block;
-
                 font-size: 28px;
                 font-weight: normal;
                 font-stretch: normal;
@@ -187,15 +186,7 @@ import mixins_windowOpen from '@/components/mixins/mixins_windowOpen.js'
                     .enterprisename{
                         height: 20px;
                         width:130px;
-                        display: -webkit-box;
-                        overflow: hidden;
-                        text-overflow: ellipsis;
-                        -webkit-line-clamp:1;
-                        -webkit-box-orient:vertical;
-                        /*! autoprefixer: off */
-                        -webkit-box-orient: vertical;
-                        /* autoprefixer: on */
-                        //white-space: nowrap;
+                        .esspellipsis();
                         padding:0 15px;
                         text-align: center;
                         margin:-60px auto 10px;
@@ -233,10 +224,7 @@ import mixins_windowOpen from '@/components/mixins/mixins_windowOpen.js'
                     height: 100%;
                     .enterprisename{
                         margin:20px auto 10px;
-                        .esspellipsitwo(1);
-                        overflow: hidden;
-                        text-overflow:ellipsis;
-                        white-space: nowrap;
+                        .esspellipsis();
                     }
                     .enterprisetype{
                         margin:0 auto 5px;
