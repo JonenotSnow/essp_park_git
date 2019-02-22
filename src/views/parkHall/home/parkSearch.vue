@@ -4,7 +4,7 @@
      <div class="banner_index">
         <div style="position: relative;height: 500px;overflow: hidden;">
             <el-carousel indicator-position="none" height="500px">
-                <el-carousel-item v-if='bannerDisList && bannerDisList.length>0' v-for="item in bannerDisList" :key="item.id">
+                <el-carousel-item v-if="bannerDisList && bannerDisList.length>0" v-for="item in bannerDisList" :key="item.id">
                     <div class="banner_bg" :style="'background-image:url('+item.img_url+')'" @click="swiperLink(item,index)"></div>
                 </el-carousel-item>
             </el-carousel>
@@ -31,13 +31,13 @@
     </div>
     <div class="ffbox">
         <div class="listbox">
-            <div class="toollist">
+            <div class="toollist" id="toollist">
                 <div class="tit-toolcon esspclearfix">
                     <h2 class="tit-tool">筛选条件</h2>
                     <el-button type="text" class="reset-tool" @click="resetHandelSearch()">重置条件</el-button>
                 </div>
-                <div id="searchBox_page">
-                    <div class="tdcon esspclearfix aa" v-if="!isBdPark || typeselect == 'park_activity'">
+                <div id="el-date-editor">
+                    <div class="tdcon esspclearfix aa" v-if="!isBdPark">
                         <span class="inline_span"><em></em>关键字搜索 :</span>
                         <el-input placeholder="请输入内容" v-model="indexSeachKW" class="input-with-select">
                             <el-select v-model="typeselect" slot="prepend" placeholder="请选择" @change="getListResult">
@@ -54,7 +54,7 @@
                         </el-select>
                     </div>
                 </div>
-                <div class="tdcon esspclearfix" id="el-date-editor">
+                <div class="tdcon esspclearfix" :class="{'ccc':!isBdPark}">
                     <span class="inline_span"><em></em>发布日期 :</span>
                      <el-date-picker @change="changeTimeSeach()"
                         v-model="timeRange"
@@ -63,6 +63,7 @@
                         start-placeholder="开始日期"
                         end-placeholder="结束日期" value-format="yyyy-MM-dd">
                     </el-date-picker>
+                    <el-button type="primary" style="margin-left:40px;" @click="getListResult">查询</el-button>
                 </div>
             </div>
             <div class="resultlist">
@@ -263,6 +264,7 @@ export default {
         },
         async changetype() {
             this.classtType = "";
+            this.getAllData();
             await this.getListInfoTags();
             await this.getListResult();
         },
@@ -400,10 +402,10 @@ export default {
                         this.tagItems = data;
                         this.resometags(data);
                     } else {
-                        this.$message.info(response.resultMsg);
+                        // this.$message.info(response.resultMsg);
                     }
                 },err => {
-                this.$message.error("接口异常");
+                    this.$message.error("接口异常");
                 }
             );
         },
@@ -446,20 +448,20 @@ export default {
 };
 </script>
 <style>
-    #searchBox_page .aa{
+    #el-date-editor .aa{
         float: left;
     }
-    #searchBox_page .aa .el-input-group{
+    #el-date-editor .aa .el-input-group{
         width: 350px;
         margin-right:40px;
     }
-    #searchBox_page .aa .el-select .el-input {
+    #el-date-editor .aa .el-select .el-input {
         width: 74px;
     }
-    #searchBox_page .input-with-select .el-input-group__prepend {
+    #el-date-editor .input-with-select .el-input-group__prepend {
         background-color: #fff;
     }
-    #el-date-editor .el-date-editor{
+    #toollist .ccc{
         margin-left:15px;
     }
     .indexSeach .el-input-group__append button {
@@ -543,14 +545,14 @@ export default {
 @con_bg: #fff;
 .ffbox {
     position: relative;
-    z-index: 1;
+    z-index: 102;
     margin-bottom: 20px;
     .listbox {
         .essp_width_auto();
         min-height: 100px;
         margin-top: -110px;
         background: @con_bg;
-        border: 1px solid #ccc;
+        // border: 1px solid #ccc;
     }
     .toollist {
         padding: 20px 40px;
