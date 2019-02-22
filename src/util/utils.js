@@ -3,7 +3,8 @@ import SSH from './sessionStorageHandler'
 import LSH from './localStorageHandler'
 import {del} from '../fetch/http'
 import {apiUrl} from '../fetch/apiUrl'
-import {Message} from 'element-ui';
+//import {Message} from 'element-ui';
+import Message from './message'
 import store from '../store'
 import router from '../router'
 import Vue from 'vue'

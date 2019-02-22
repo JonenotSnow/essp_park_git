@@ -1,4 +1,5 @@
 import constants from "../../util/constants";
+import Message from '../../util/message';
 
 // 状态值
 const state = {
@@ -19,33 +20,35 @@ const actions = {
 const mutations = {
     pushErrMsgList(state, errMsg) {
         state.errMsgList.push(errMsg)
-        if(state.messageList.findIndex(o => o.type === constants.RETURN_CODE.ERROR_SYSTEM_TYPE)<0) {
-            let msg = {
-                message: '服务器感冒了，点击查看病因',
-                time: 0,
-                type: constants.RETURN_CODE.ERROR_SYSTEM_TYPE,
-                show: true,
-                downShow: true
-            }
-            state.messageList.push(msg)
+        if(state.messageList.findIndex(o => o.errType === constants.RETURN_CODE.ERROR_SYSTEM_TYPE)<0) {
+            state.messageList.push({
+                id: 0,
+                message: '很抱歉服务器感冒了，点击查看病因',
+                type: 'error',
+                duration: constants.RETURN_CODE.MSG_TIME,
+                errType: constants.RETURN_CODE.ERROR_SYSTEM_TYPE,
+                detailShow: true,
+                downShow: true,
+            })
         }
     },
     pushTimeOutMsgList(state, errMsg){
         state.timeOutMsgList.push(errMsg)
-        if(state.messageList.findIndex(o => o.type === constants.RETURN_CODE.ERROR_NETWORK_TYPE)<0) {
-            let msg = {
+        if(state.messageList.findIndex(o => o.errType === constants.RETURN_CODE.ERROR_NETWORK_TYPE)<0) {
+            state.messageList.push({
+                id: 1,
                 message: '连接服务器失败,请检查网络是否正常',
-                time: 0,
-                type: constants.RETURN_CODE.ERROR_NETWORK_TYPE,
-                show: true,
-                downShow: true
-            }
-            state.messageList.push(msg)
+                type: 'error',
+                duration: constants.RETURN_CODE.MSG_TIME,
+                errType: constants.RETURN_CODE.ERROR_NETWORK_TYPE,
+                detailShow: true,
+                downShow: true,
+            })
         }
     },
     pushMessageList(state, msg) {
-        if(msg.type !== constants.RETURN_CODE.ERROR_BUSINESS_TYPE && state.messageList.findIndex(o => o.type === msg.type)>=0){
-            let num = state.messageList.findIndex(o => o.type === msg.type)
+        if(msg.errType !== constants.RETURN_CODE.ERROR_BUSINESS_TYPE && state.messageList.findIndex(o => o.errType === msg.errType)>=0){
+            let num = state.messageList.findIndex(o => o.errType === msg.errType)
             if(num>=0){
                 state.messageList[num].time = 0
             }
@@ -55,10 +58,10 @@ const mutations = {
     },
     clearMessageList(state, msg) {
         state.messageList = state.messageList.filter(o => o.id !== msg.id)
-        if(msg.type === constants.RETURN_CODE.ERROR_SYSTEM_TYPE){
+        if(msg.errType === constants.RETURN_CODE.ERROR_SYSTEM_TYPE){
             state.errMsgList = []
         }
-        if(msg.type === constants.RETURN_CODE.ERROR_NETWORK_TYPE){
+        if(msg.errType === constants.RETURN_CODE.ERROR_NETWORK_TYPE){
             state.timeOutMsgList = []
         }
     },
@@ -70,43 +73,68 @@ const mutations = {
     messageTime(state){
         if(state.errMsgList.length>0){
             state.errMsgList.forEach(row=>{
-                row.time++
+                row.duration--
             })
-            state.errMsgList = state.errMsgList.filter(o => o.time < 10)
+            state.errMsgList = state.errMsgList.filter(o => o.duration > 0)
         }
         if(state.timeOutMsgList.length>0){
             state.timeOutMsgList.forEach(row=>{
-                row.time++
+                row.duration--
             })
-            state.timeOutMsgList = state.timeOutMsgList.filter(o => o.time < 10)
+            state.timeOutMsgList = state.timeOutMsgList.filter(o => o.duration > 0)
         }
         if(state.messageList.length>0){
             state.messageList.forEach(row=>{
-                row.time++
+                row.duration--
             })
-            state.messageList = state.messageList.filter(o => o.time < 10 && o.type !== constants.RETURN_CODE.ERROR_SYSTEM_TYPE && o.type !== constants.RETURN_CODE.ERROR_NETWORK_TYPE)
+            let messageListTmp = state.messageList.filter(o => o.duration > 0 && o.errType !== constants.RETURN_CODE.ERROR_SYSTEM_TYPE && o.errType !== constants.RETURN_CODE.ERROR_NETWORK_TYPE)
+
+            // state.messageList = state.messageList.filter(o => o.duration > 0 && o.errType !== constants.RETURN_CODE.ERROR_SYSTEM_TYPE && o.errType !== constants.RETURN_CODE.ERROR_NETWORK_TYPE)
             if(state.timeOutMsgList.length>0){
-                state.messageList.push({
-                    message: '连接服务器失败,请检查网络是否正常',
-                    time: 0,
-                    type: constants.RETURN_CODE.ERROR_NETWORK_TYPE,
-                    show: true,
-                    downShow: true
-                })
+                if(state.messageList.findIndex(o => o.errType === constants.RETURN_CODE.ERROR_NETWORK_TYPE)<0){
+                    messageListTmp.push({
+                        id: 1,
+                        message: '连接服务器失败,请检查网络是否正常',
+                        type: 'error',
+                        duration: constants.RETURN_CODE.MSG_TIME,
+                        errType: constants.RETURN_CODE.ERROR_NETWORK_TYPE,
+                        detailShow: true,
+                        downShow: true,
+                    })
+                }else{
+                    state.messageList.forEach(row=>{
+                        if(row.errType === constants.RETURN_CODE.ERROR_NETWORK_TYPE){
+                            row.duration = constants.RETURN_CODE.MSG_TIME
+                            messageListTmp.push(row)
+                        }
+                    })
+                }
             }else{
                 state.timeOutMsgList = []
             }
             if(state.errMsgList.length>0){
-                state.messageList.push({
-                    message: '服务器感冒了，点击查看病因',
-                    time: 0,
-                    type: constants.RETURN_CODE.ERROR_SYSTEM_TYPE,
-                    show: true,
-                    downShow: true
-                })
+                if(state.messageList.findIndex(o => o.errType === constants.RETURN_CODE.ERROR_SYSTEM_TYPE)<0){
+                    messageListTmp.push({
+                        id: 0,
+                        message: '很抱歉服务器感冒了，点击查看病因',
+                        type: 'error',
+                        duration: constants.RETURN_CODE.MSG_TIME,
+                        errType: constants.RETURN_CODE.ERROR_SYSTEM_TYPE,
+                        detailShow: true,
+                        downShow: true,
+                    })
+                }else{
+                    state.messageList.forEach(row=>{
+                        if(row.errType === constants.RETURN_CODE.ERROR_SYSTEM_TYPE){
+                            row.duration = constants.RETURN_CODE.MSG_TIME
+                            messageListTmp.push(row)
+                        }
+                    })
+                }
             }else{
                 state.errMsgList = []
             }
+            state.messageList = messageListTmp
         }else{
             state.errMsgList = []
             state.messageList = []

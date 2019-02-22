@@ -290,6 +290,7 @@ export default {
         },
         //全部活动
         getParkActiveList() {
+            this.searchData = [];
             var url = this.$apiUrl.active.actAll;
             var pop = {
                 pageNum: this.pageNum,
@@ -311,6 +312,7 @@ export default {
         },
         //全部惠政
         getParkGoverList() {
+            this.searchData = [];
             var url = this.$apiUrl.goverBene.allPolicy;
             var pop = {
                 pageNum: this.pageNum,
@@ -332,6 +334,7 @@ export default {
         },
         //全部资讯
         getParkInfoList() {
+            this.searchData = [];
             var url = this.$apiUrl.parkInfo.allInfos;
             var pop = {
                 pageNum: this.pageNum,

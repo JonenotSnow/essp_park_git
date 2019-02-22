@@ -3,7 +3,7 @@ import Vue from "vue";
 import App from "./App";
 import router from "./router";
 // import VueRouter from 'vue-router'
-import ElementUI,{Message} from "element-ui";
+import ElementUI from "element-ui";
 import echarts from "echarts";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
@@ -57,7 +57,8 @@ import { setting } from "./util/serveHttp";
 import fontIcon from "./assets/font/iconfont.css";
 // 引入公共的举报弹窗
 import commonJs from "./commonFun/commonJs";
-
+import Message from './util/message';
+Vue.prototype.$message = Message;
 
 //定义全局变量
 Vue.prototype.$apiUrl = apiUrl;

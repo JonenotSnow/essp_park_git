@@ -247,6 +247,8 @@ const constants = {
     },
     // 返回码定义
     RETURN_CODE: {
+        //消息默认时间5s
+        MSG_TIME: 5000,
         // 正确码
         SUCCESS_CODE: [
             'CLT000000000',
