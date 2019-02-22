@@ -164,7 +164,7 @@
                     st = '13'
                 }
                 this.$post(this.$apiUrl.manage.auditApplyPark, {
-                    entityId: this.$route.query.id,
+                    entityId: this.$route.query.entityId,
                     parkId: window.sessionStorage.getItem("parkId"),
                     status: st,
                     mark: this.mark,
