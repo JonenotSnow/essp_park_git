@@ -151,6 +151,7 @@
                 this.noAccess = true;
             },
             auditFn(status) {
+                let _that = this;
                 let st = status;
                 if (!this.mark) {
                     this.$message({
@@ -183,7 +184,9 @@
                     });
                 this.access = false;
                 this.noAccess = false;
-                this.$router.push('/parkHall/manage/activityPoolAddPark')
+                setTimeout(() => {
+                    _that.$router.push('/parkHall/manage/activityPoolAddPark')
+                }, 1500);
             },
             //取消审核
             cancelAudit() {

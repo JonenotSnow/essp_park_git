@@ -56,7 +56,7 @@
                             <el-date-picker class="dataS" v-model="it.value" type="date" :placeholder="`请选择${it.name}`"></el-date-picker>
                         </p>
                         <p v-else-if="!it.fx && ',numberBox,number,'.indexOf(','+it.type+',')>-1">
-                            <span class="sub">{{it.sub}}</span>
+                            <!-- <span class="sub">{{it.sub}}</span> -->
                             <input type="text" v-model='it.value' :placeholder="`请输入${it.name}`">
                         </p>
                     </div>
@@ -188,11 +188,11 @@ export default {
                         if (this.getFormList[2] && !this.getFormList[2].value) {
                             this.getFormList[2].value = this.fxContent.area;
                         }
-                        if (this.getFormList[4] && !this.getFormList[4].value) {
-                            this.getFormList[4].value = this.fxContent.linkMan;
+                        if (this.getFormList[3] && !this.getFormList[3].value) {
+                            this.getFormList[3].value = this.fxContent.linkMan;
                         }
-                        if (this.getFormList[5] && !this.getFormList[5].value) {
-                            this.getFormList[5].value = this.fxContent.linkPhone;
+                        if (this.getFormList[4] && !this.getFormList[5].value) {
+                            this.getFormList[4].value = this.fxContent.linkPhone;
                         }
                     }
                 }
