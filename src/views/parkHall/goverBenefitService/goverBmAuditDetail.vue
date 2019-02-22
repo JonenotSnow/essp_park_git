@@ -162,22 +162,25 @@
                         <el-input type="textarea" v-if="item.type=='textarea'" :rows="2" :placeholder="'请输入'+item.name"
                                   v-model="item.tittext" readonly="true"></el-input>
                         <!--单选框-->
-                        <el-select v-if="item.type=='radio'" v-model="item.tittext" clearable placeholder="请选择">
+                        <el-select readonly="true" v-if="item.type=='radio'" v-model="item.tittext" clearable placeholder="请选择">
                             <el-option v-for="(item,index) in item.childrens" :key="item.value" :label="index"
                                        :value="item.name">
                             </el-option>
                         </el-select>
                         <!--复选框-->
-                        <el-select multiple collapse-tags v-if="item.type=='checkbox'" v-model="item.tittext" clearable
+                        <el-select readonly="true" multiple collapse-tags v-if="item.type=='checkbox'" v-model="item.tittext" clearable
                                    placeholder="请选择">
                             <el-option v-for="(item,index) in item.childrens" :key="item.value" :label="index"
                                        :value="item.name">
                             </el-option>
                         </el-select>
                         <!--日期模版-->
-                        <el-date-picker v-if="item.type=='dataTime'" v-model="item.tittext" type="datetime"
+                        <el-date-picker readonly="true" v-if="item.type=='dataTime'" v-model="item.tittext" type="datetime"
                                         placeholder="选择日期时间"></el-date-picker>
                         <!--数字模版-->
+                        <el-input v-if="item.type=='numberBox'" v-model="item.tittext" type="number" auto-complete="off"
+                                  class="cpm" readonly="true"></el-input>
+                        <!--数字模版"number"-->
                         <el-input v-if="item.type=='number'" v-model="item.tittext" type="number" auto-complete="off"
                                   class="cpm" readonly="true"></el-input>
                     </div>
