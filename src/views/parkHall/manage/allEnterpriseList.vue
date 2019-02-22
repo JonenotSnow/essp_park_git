@@ -5,7 +5,8 @@
         <essp-bread-crumb :breadList="breadlist"></essp-bread-crumb>
         <div class="main_inter">
             <div class="com-tit">入驻企业</div>
-            <div class="com-brf">入驻企业400+家，在职人员10000+人</div>
+            <div class="com-brf" v-if="isBdPark">入驻企业400+家，在职人员10000+人</div>
+            <div class="com-brf" v-else>Entered enterprises</div>
             <div class="enterlist">
                 <div class="listcon">
                     <div class="listitem" v-for="(item,index) in enterprises" :key="index" @mouseenter="showDetail(item.isShowDetail,index)" @mouseleave="showDetail(item.isShowDetail,index)">
@@ -54,6 +55,7 @@
                         name: "入驻企业"
                     }
                 ],
+                isBdPark: this.utils.isBdPark() || "",
                 totalCount: 0,
                 pageNum: 1,
                 pageSize: 5,
@@ -163,7 +165,7 @@
                         height: 150px;
                         //background-color: #00a0e9;
                         opacity: 0.8;
-                        border-right: 1px solid #ccc;
+                        //border-right: 1px solid #ccc;
                         border-bottom:1px solid #ccc;
                         position:relative;
                         .enter_child{
@@ -173,7 +175,7 @@
                         .detailinfo{   
                             background-color:#fff;
                             .enterprisename{
-                                margin:-60px auto 10px;
+                                margin:0px auto 10px;
                                 height: 20px;
                                 padding:0 15px;
                                 .esspellipsis();
@@ -220,6 +222,9 @@
                                 margin:10px auto 0;
                             }
                         }
+                    }
+                    .listitem:last-child{
+
                     }
                 }
             }

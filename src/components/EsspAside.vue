@@ -2,7 +2,7 @@
     <div class="essp-aside-cont">
         <div class="cont-body">
             <div class='aside'>
-                <p class="tTitle">{{title}}</p>
+                <div class="tTitle"><div class="title_c">{{title}}</div><div class="title_e">{{title_e}}</div></div>
                 <ul class="fNav" v-if="asideList && asideList.length>0">
                     <li v-for="(it, i) in asideList" :key="i" :class="noChildMenu?'guanliStyle':'huodongStyle'">
                         <!-- 多层子菜单 -->
@@ -41,6 +41,7 @@
         data() {
             return {
                 title: "",
+                title_e: "",
                 asideList: [],
                 childId:'',
                 routerName: this.$route.name,
@@ -89,12 +90,14 @@
                         tmp.push(child.children[i]);
                     }
                     this.title = child.menu;
+                    this.title = child.icon;
                     this.asideList = tmp;
                 } else if (child.children[0].id.length == 6) {//子菜单第一个id长度为6时(二级导航，如活动)
                     for (let i = 0;i < child.children.length;i++) {
                         tmp.push(child.children[i]);
                     }
                     this.title = child.menu;
+                    this.title = child.icon;
                     this.asideList = tmp;
                 }
             },
@@ -137,12 +140,22 @@
                 .tTitle {
                     height: 120px;
                     font-size: 18px;
-                    line-height: 120px;
                     text-align: center;
                     //padding-left: 25px;
                     color: #fff;
                     background: url("../assets/imgs/aside-bg.jpg") no-repeat 25% center,
                     linear-gradient(265deg, #1598ff 0%, #1b83f8 100%);
+                    .title_c{
+                        padding-top:50px;
+                        text-align: left;
+                        padding-left:56px;
+                        font-size: 18px;
+                    }
+                    .title_e{
+                        font-size: 12px;
+                        text-align: left;
+                        padding-left:56px;
+                    }
                 }
                 .fNav {
                     background: #fff;

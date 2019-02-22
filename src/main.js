@@ -274,6 +274,7 @@ async function refreshAuthToken(token) {
             let data = response.resultData;
             // 开发阶段没必要加，暂时注释
             loginCtrl(data);
+            debugger
         }
     );
 }
