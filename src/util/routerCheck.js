@@ -2,7 +2,8 @@ import NProgress from "nprogress";
 import constants from "./constants";
 import utils from "./utils";
 import sessionStorageHandler from "./sessionStorageHandler";
-import {Message} from "element-ui";
+// import {Message} from "element-ui";
+import Message from './message'
 import {platform} from './initAndLogin'
 
 export function checkResource(to, from, next){

@@ -1,6 +1,7 @@
 import sessionStorageHandler from "../util/sessionStorageHandler";
 import NProgress from "nprogress";
-import { Message } from "element-ui";
+// import { Message } from "element-ui";
+import Message from '../util/message'
 import constants from "../util/constants";
 import utils from "../util/utils";
 

@@ -3,6 +3,13 @@ import constants from "./constants";
 
 var id = 2;
 const Message = function(options){
+    options = options || {}
+    if (typeof options === 'string') {
+        options = {
+            message: options
+        }
+    }
+
     options['id'] = id++
     if(!options.errType){
         options['errType'] = constants.RETURN_CODE.ERROR_BUSINESS_TYPE

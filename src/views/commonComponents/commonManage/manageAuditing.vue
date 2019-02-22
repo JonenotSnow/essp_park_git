@@ -151,6 +151,7 @@
                 this.noAccess = true;
             },
             auditFn(status) {
+                let _that = this;
                 let st = status;
                 if (!this.mark) {
                     this.$message({
@@ -163,7 +164,7 @@
                     st = '13'
                 }
                 this.$post(this.$apiUrl.manage.auditApplyPark, {
-                    entityId: this.$route.query.id,
+                    entityId: this.$route.query.entityId,
                     parkId: window.sessionStorage.getItem("parkId"),
                     status: st,
                     mark: this.mark,
@@ -183,7 +184,9 @@
                     });
                 this.access = false;
                 this.noAccess = false;
-                this.$router.push('/parkHall/manage/activityPoolAddPark')
+                setTimeout(() => {
+                    _that.$router.push('/parkHall/manage/activityPoolAddPark')
+                }, 1500);
             },
             //取消审核
             cancelAudit() {

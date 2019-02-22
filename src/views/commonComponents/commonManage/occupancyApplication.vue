@@ -103,17 +103,17 @@
 
                 <!-- 申请表第三列 -->
                 <!-- 下拉框 -->
-                <li class="title" v-if="',radioDown,checkboxDown,selectTS,'.indexOf(','+item.type+',')>-1">
+                <li class="title" v-if="',radioDown,checkboxDown,'.indexOf(','+item.type+',')>-1">
                     <select :placeholder="`请选择${item.name}`" disabled></select>
                 </li>
                 <li v-if="item.type == 'radio'">
                     <el-radio-group>
-                        <el-radio :label="is.name" disabled v-for="(is,j) in item.childrens.slice(0,2)" :key="j">{{is.name}}</el-radio>
+                        <el-radio :label="is.name" disabled v-for="(is,j) in item.childrens.slice(0,2)" :key="j">{{!is.name?is.placeholder:is.name}}</el-radio>
                     </el-radio-group>
                 </li>
                 <li v-if="item.type == 'checkbox'">
                     <el-checkbox-group>
-                        <el-checkbox :label="item.name" disabled v-for="(is,j) in item.childrens.slice(0,2)" :key="j">{{is.name}}</el-checkbox>
+                        <el-checkbox :label="item.name" disabled v-for="(is,j) in item.childrens.slice(0,2)" :key="j">{{!is.name?is.placeholder:is.name}}</el-checkbox>
                     </el-checkbox-group>
                 <!-- 单行文本 --> <!-- 多行文本 -->
                 <li v-if="item.type == 'text' || item.type == 'textarea'"><input type="text" :value="`请输入${item.name}`" disabled></li>
@@ -126,7 +126,7 @@
                 <!-- 企业规模 -->
                 <li class="title" v-else-if="item.type == 'selectTS'">
                     <select :placeholder="item.name" disabled>
-                        <option :value="is.id" :label="is.name" v-for="(is,j) in item.childrens" :key="j">{{is.name}}</option>
+                        <option :value="is.id" :label="is.name" v-for="(is,j) in item.childrens" :key="j">{{is.name}}dsafsd</option>
                     </select>
                 </li>
                 <!-- 申请表第四列 -->
@@ -184,20 +184,20 @@
                             </p>
                             <p v-else-if="!it.fx && it.type == 'radio'" class="downSel">
                                 <el-radio-group>
-                                    <el-radio :label="is.name" disabled v-for="(is,j) in it.childrens.slice(0,2)" :key="j">{{is.name}}</el-radio>
+                                    <el-radio :label="is.name" disabled v-for="(is,j) in it.childrens.slice(0,2)" :key="j">{{!is.name?is.placeholder:is.name}}</el-radio>
                                 </el-radio-group>
                             </p>
                             <p v-else-if="!it.fx && it.type == 'checkbox'"  class="downSel">
                                 <el-checkbox-group>
-                                    <el-checkbox :label="is.name" disabled v-for="(is,j) in it.childrens" :key="j">{{is.name}}</el-checkbox>
+                                    <el-checkbox :label="is.name" disabled v-for="(is,j) in it.childrens" :key="j">{{!is.name?is.placeholder:is.name}}</el-checkbox>
                                 </el-checkbox-group>
                             </p>
                             <p v-else-if="!it.fx && (it.type == 'dateTime' || it.type == 'dataTime')">
                                 <span class="sub">{{it.sub}}</span>
                                 <el-date-picker class="dataS" v-model="it.value" disabled type="date" :placeholder="`请选择${it.name}`"></el-date-picker>
                             </p>
-                            <p v-else-if="!it.fx && ',numberBox,number,'.indexOf(','+it.type+',')>-1">
-                                <span class="sub">{{it.sub}}</span>
+                            <p v-if="!it.fx && ',numberBox,number,'.indexOf(','+it.type+',')>-1">
+                                <!-- <span class="sub">{{it.sub}}</span> -->
                                 <input type="text" v-model='it.value' disabled :placeholder="`请输入${it.name}`">
                             </p>
 
@@ -332,21 +332,12 @@ export default {
                     fx: true
                 },
                 {
-                    name: "公司地址",
+                    name: "注册地",
                     type: "text", //输入框类型
                     requir: true, //是否必填
                     sub: "", //备注说明（如单位等）
                     value: "", //绑定值
-                    holder: "请输入公司地址",
-                    fx: false
-                },
-                {
-                    name: "申请说明",
-                    type: "textarea", //输入框类型
-                    requir: true, //是否必填
-                    sub: "", //备注说明（如单位等）
-                    value: "", //绑定值
-                    holder: "请输入申请说明",
+                    holder: "请输入注册地",
                     fx: false
                 },
                 {
@@ -365,6 +356,15 @@ export default {
                     sub: "", //备注说明（如单位等）
                     value: "", //绑定值
                     holder: "请输入联系电话",
+                    fx: false
+                },
+                {
+                    name: "申请说明",
+                    type: "textarea", //输入框类型
+                    requir: true, //是否必填
+                    sub: "", //备注说明（如单位等）
+                    value: "", //绑定值
+                    holder: "请输入申请说明",
                     fx: false
                 }
             ],
@@ -483,50 +483,50 @@ export default {
                     fx: false,
                     del:true
                 },
-                {
-                    type: "radioDown",
-                    name: "单选下拉框",
-                    btn_name: "单选下拉框",
-                    requir: false,
-                    tittext: "",
-                    fx: false,
-                    vaule: "",
-                    del:true,
-                    childrens: [
-                        {
-                            name: "",
-                            requir: false,
-                            placeholder: "单选下拉框选项1"
-                        },
-                        {
-                            name: "",
-                            requir: false,
-                            placeholder: "单选下拉框选项2"
-                        }
-                    ]
-                },
-                {
-                    type: "checkboxDown",
-                    name: "多选下拉框",
-                    btn_name: "多选下拉框",
-                    requir: false,
-                    tittext: "",
-                    fx: false,
-                    vaule: [],
-                    del:true,
-                    childrens: [
-                        {
-                            name: "",
-                            requir: false,
-                            placeholder: "多选下拉框选项1"
-                        },
-                        {
-                            name: "",
-                            requir: false,
-                            placeholder: "多选下拉框选项2"
-                        }
-                    ]
-                },
+                // {
+                //     type: "radioDown",
+                //     name: "单选下拉框",
+                //     btn_name: "单选下拉框",
+                //     requir: false,
+                //     tittext: "",
+                //     fx: false,
+                //     vaule: "",
+                //     del:true,
+                //     childrens: [
+                //         {
+                //             name: "",
+                //             requir: false,
+                //             placeholder: "单选下拉框选项1"
+                //         },
+                //         {
+                //             name: "",
+                //             requir: false,
+                //             placeholder: "单选下拉框选项2"
+                //         }
+                //     ]
+                // },
+                // {
+                    // type: "checkboxDown",
+                    // name: "多选下拉框",
+                    // btn_name: "多选下拉框",
+                    // requir: false,
+                    // tittext: "",
+                    // fx: false,
+                    // vaule: [],
+                    // del:true,
+                    // childrens: [
+                    //     {
+                    //         name: "",
+                    //         requir: false,
+                    //         placeholder: "多选下拉框选项1"
+                    //     },
+                    //     {
+                    //         name: "",
+                    //         requir: false,
+                    //         placeholder: "多选下拉框选项2"
+                    //     }
+                    // ]
+                // },
                 {
                     type: "radio",
                     name: "单选框",
@@ -713,57 +713,58 @@ export default {
                 };
             }
 
-            if (content.type == "radioDown") {
+            // if (content.type == "radioDown") {
+            //     obj = {
+            //         type: "radioDown",
+            //         name: "单选下拉框",
+            //         btn_name: "单选下拉框",
+            //         requir: false,
+            //         tittext: "",
+            //         fx: false,
+            //         vaule: "",
+            //         del:true,
+            //         childrens: [
+            //             {
+            //                 name: "",
+            //                 requir: false,
+            //                 placeholder: "单选下拉框选项1"
+            //             },
+            //             {
+            //                 name: "",
+            //                 requir: false,
+            //                 placeholder: "单选下拉框选项2"
+            //             }
+            //         ]
+            //     };
+            // }
+            // if (content.type == "checkboxDown") {
+            //     obj = {
+            //         type: "checkboxDown",
+            //         name: "多选下拉框",
+            //         btn_name: "多选下拉框",
+            //         requir: false,
+            //         tittext: "",
+            //         fx: false,
+            //         vaule: [],
+            //         del:true,
+            //         childrens: [
+            //             {
+            //                 name: "",
+            //                 requir: false,
+            //                 placeholder: "多选下拉框选项1"
+            //             },
+            //             {
+            //                 name: "",
+            //                 requir: false,
+            //                 placeholder: "多选下拉框选项2"
+            //             }
+            //         ]
+            //     };
+            // }
+            if (content.type == "dateTime" || content.type == "dataTime") {
+                let type = content.type;
                 obj = {
-                    type: "radioDown",
-                    name: "单选下拉框",
-                    btn_name: "单选下拉框",
-                    requir: false,
-                    tittext: "",
-                    fx: false,
-                    vaule: "",
-                    del:true,
-                    childrens: [
-                        {
-                            name: "",
-                            requir: false,
-                            placeholder: "单选下拉框选项1"
-                        },
-                        {
-                            name: "",
-                            requir: false,
-                            placeholder: "单选下拉框选项2"
-                        }
-                    ]
-                };
-            }
-            if (content.type == "checkboxDown") {
-                obj = {
-                    type: "checkboxDown",
-                    name: "多选下拉框",
-                    btn_name: "多选下拉框",
-                    requir: false,
-                    tittext: "",
-                    fx: false,
-                    vaule: [],
-                    del:true,
-                    childrens: [
-                        {
-                            name: "",
-                            requir: false,
-                            placeholder: "多选下拉框选项1"
-                        },
-                        {
-                            name: "",
-                            requir: false,
-                            placeholder: "多选下拉框选项2"
-                        }
-                    ]
-                };
-            }
-            if (content.type == "dateTime") {
-                obj = {
-                    type: "dataTime",
+                    type: type,
                     name: "日期选择框",
                     btn_name: "日期选择框",
                     requir: false,
