@@ -425,5 +425,41 @@
 
         background-color: #409EFF
     }
+    
+    .noAccess {	    
+        border-radius: 6px;	        
+        font-size: 18px;
+        p {	        
+            color: #666;
+            text-align: center;	
+            line-height: 72px;	
+            font-size: 18px;	
+            button {	
+                width: 140px;	
+                font-size: 18px;	
+                width: 277px;	
+                height: 50px;	
+                margin-bottom: 20px;	
+            }	    
+        }
+        .color1 {	
+            width: 80%;	
+            margin-left: 10%;	
+            margin-bottom: 15px;	
+            border-bottom: 1px solid #f5f5f5;	
+            color: #ccc;	
+            img {	
+                width: 22px;	
+                height: 22px;	
+                position: relative;	
+                top: 3px;	
+                left: -4px;	
+            }	
+        }	
+        &:nth-of-type(2) {	
+            margin-top: 15px;	
+            color: #666;	
+        }	
+    }
 </style>
 
