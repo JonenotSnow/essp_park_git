@@ -49,6 +49,7 @@
                         </div>
                     </li>
                 </ul>
+                <essp-loading :loading="loading" :nodata="getMemInfoList.length == 0 && !loading"></essp-loading>
                 <div class="pageList">
                     <el-pagination
                         @size-change="handleSizeChange"
@@ -113,7 +114,7 @@ export default {
             addType:false,
             showMore:false,
             addFL:false,
-
+            loading: false,
             inputVisible: false,
             inputValue: '',
             forTagList:[],
@@ -194,6 +195,7 @@ export default {
         },
         getMemInfo(){
             this.curSelectTag = '';
+            this.loading = true;
             this.$post(this.$apiUrl.manage.getMemInfo,{
                 cstNm : this.seachVal,
                 parkId : window.sessionStorage.getItem("parkId"),
@@ -201,11 +203,13 @@ export default {
                 pageNum : this.pageNum
             })
             .then((response) => {
+                this.loading = false;
                 if (response.resultData) {
-                    this.getMemInfoList = response.resultData.memberList
+                    this.getMemInfoList = response.resultData.memberList ? response.resultData.memberList : []
                     this.totalCount = response.resultData.memInfoCount;
                 }
             },(err)=>{
+                this.loading = false;
                 this.info = err.data.resultMsg;
             })
         },

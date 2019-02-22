@@ -112,8 +112,8 @@ export default {
             list: [],
             breadlist: [
                 {
-                    path: "/parkIndex/park/all",
-                    name: this.utils.isBdPark()?"系统管理":"园区管理"
+                    path: this.utils.isBdPark()? "/parkIndex/park/all" : "/parkHall/manage/baseInfo",
+                    name: this.utils.isBdPark()? "系统管理" : "园区管理"
                 },
                 {
                     path: "/parkHall/manage/userManage",
