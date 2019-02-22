@@ -22,7 +22,7 @@
         ref="esspRoll"
         @click.stop="cancelAudit(item)"
       >
-        <span style="display: inline-block">{{item.cstNm}}</span>
+        <span style="display: inline-block">{{item | messageFormat}}</span>
         <span
           style="display: inline-block; float: right; color: #999;"
         >{{(item.joinTime || item.time) | timerFormat}}</span>
@@ -55,32 +55,9 @@ export default {
       msg: "essp-roll",
       animate: true,
       listTemp: [
-        {
-          cstNm: "青海广兴源房地产开发有限公司0",
-          id: "20190221154059952576",
-          mark: null,
-          parkId: null,
-          time: "2019-02-1 15:40:59",
-          type: "2"
-        }
-        // {
-        //   cstNm: "青海广兴源房地产开发有限公司1",
-        //   id: "20190221154059952576",
-        //   mark: null,
-        //   parkId: null,
-        //   time: "2019-02-5 15:40:59",
-        //   type: "2"
-        // },
-        // {
-        //   cstNm: "青海广兴源房地产开发有限公司2",
-        //   id: "20190221154059952576",
-        //   mark: null,
-        //   parkId: null,
-        //   time: "2019-02-9 15:40:59",
-        //   type: "2"
-        // }
       ],
-      isBdPark: this.utils.isBdPark() || false
+      isBdPark: this.utils.isBdPark() || false,
+      timer:false
     };
   },
   methods: {
@@ -89,12 +66,16 @@ export default {
 
       // 在异步函数中会出现this的偏移问题，此处一定要先保存好this的指向
       let _this = this;
-
-      setTimeout(function() {
+      this.$nextTick(function() {
         _this.listTemp.push(_this.listTemp.shift());
         // 这个地方如果不把animate 取反会出现消息回滚的现象，此时把ul 元素的过渡属性取消掉就可以完美实现无缝滚动的效果了
+        // _this.animate = !_this.animate;
+      })
+      setTimeout(function() {
+        // _this.listTemp.push(_this.listTemp.shift());
+        // 这个地方如果不把animate 取反会出现消息回滚的现象，此时把ul 元素的过渡属性取消掉就可以完美实现无缝滚动的效果了
         _this.animate = !_this.animate;
-      }, 0);
+      }, 2000);
     },
 
     // 前往详情
@@ -201,11 +182,14 @@ export default {
   mounted() {
     this.listTemp = this.list;
     if (this.listTemp.length > 1) {
-      setInterval(this.scroll, 2500);
+     this.timer = setInterval(this.scroll, 2500);
     } else {
       this.animate = false;
     }
-  }
+  },
+  destroyed() {
+      clearInterval(this.timer)
+  },
 };
 </script>
 
@@ -227,9 +211,16 @@ export default {
     }
   }
 
-  .anim {
-    transition: all 0.5s;
-    transform: translateY(-35px);
+//   .anim {
+//     transition: all 0.5s;
+//     transform: translateY(-35px);
+//   }
+  .anim{
+      animation:mymove 0.5s;
+  }
+  @keyframes mymove {
+      from {transform: translateY(0);}
+    to {transform: translateY(-35px);}
   }
 }
 </style>
