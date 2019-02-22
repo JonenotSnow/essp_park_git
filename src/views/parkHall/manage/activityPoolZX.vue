@@ -132,7 +132,6 @@ export default {
                 }
             )
         }
-        await this.getCount()
         await this.getList()
     },
     computed: {
@@ -154,11 +153,11 @@ export default {
     methods:{
         handleSizeChange(val) {
             this.pageSize = val;
-            this.getList();
+            this.getList(true);
         },
         handleCurrentChange(val) {
             this.pageNum = val;
-            this.getList();
+            this.getList(true);
         },
         //条数
         getCount(){
@@ -166,11 +165,14 @@ export default {
                 parkId : sessionStorage.getItem("parkId")
             })
             .then((response) => {
-                this.count = response.resultData
+                this.count = response.resultData;
+
             })
         },
         //list列表
-        getList(){
+        getList(type){
+            console.log(!type);
+            var _this = this;
             var pop = {
                 parkId : this.searchCondition.parkId,
                 type : this.searchCondition.type,
@@ -185,11 +187,17 @@ export default {
             this.$post(this.$apiUrl.manage.getAuditList,pop).then((response) => {
                 this.list = response.resultData.infomationList;
                 this.totalCount = response.resultData.infomationCount;
+
+                // 切换页数时可以不需要获取条数
+                if(!type) {
+                    this.getCount();
+                }
             },(response)=>{
                 this.$message({
                     type: 'warn',
                     message: response.returnMsg
                 })
+
             })
         },
         reset(){
