@@ -36,18 +36,18 @@
             </el-row>
         </div>
         <div  class="standard-menu" v-else>
-           
-                <el-carousel height="170px" indicator-position="none" arrow="always" :autoplay="false">
-                    <el-carousel-item v-for="(items,indexs) in menuListStandard" :key="indexs">
-                        <div class="standard-menu-wrap" >
-                            <div class="standard-item" v-for="(item,index) in items" :key="index">
-                                <img :src="item.url" alt="" @mouseover="imgHover(item)" @mouseleave="imgOut(item)" @click="linkTo(item)">
-                                <div class="name" @click="linkTo(item)">{{item.name}}</div>
-                            </div>
+
+            <el-carousel height="170px" indicator-position="none" arrow="always" :autoplay="false">
+                <el-carousel-item v-for="(items,indexs) in menuListStandard" :key="indexs">
+                    <div class="standard-menu-wrap" >
+                        <div class="standard-item" v-for="(item,index) in items" :key="index">
+                            <img :src="item.url" alt="" @mouseover="imgHover(item)" @mouseleave="imgOut(item)" @click="linkTo(item)">
+                            <div class="name" @click="linkTo(item)">{{item.name}}</div>
                         </div>
-                    </el-carousel-item>
-                </el-carousel>
-           
+                    </div>
+                </el-carousel-item>
+            </el-carousel>
+
         </div>
         <el-dialog :visible.sync="showPower" width="650px" height="350px" class="noAccess">
             <p class="color1">
@@ -79,67 +79,68 @@
             return {
                 showNeedRange: false,
                 LoginUserRole: this.SSH.getItem("LoginUserRol"),
+                isLogin: this.SSH.getItem("LoginUserRol").indexOf("11") > -1,
                 isBdPark: this.utils.isBdPark(),
                 showPower: false,
                 menuList: [
                     {
-                            name: "关于我们",
-                            path: "/parkIndex/scanIndex",
-                            src: require("@/assets/newparkimg/home/img0.png"),
-                            isShow: true,
-                            query: {}
-                        },
-                        {
-                            name: "入驻申请",
-                            path: "/parkHall/manage/requestAddPark",
-                            src: require("@/assets/imgs/icon5.png"),
-                            isShow: true,
-                            query: {}
-                        },
-                        {
-                            name: "需求发布",
-                            path: "/requIndex/publish",
-                            src: require("@/assets/newparkimg/home/img2.png"),
-                            isShow: true,
-                            query: {}
-                        },
-                        {
-                            name: "普惠金融",
-                            path: "/parkHall/manage/inclusiveFinance",
-                            src: require("@/assets/imgs/icon6.png"),
-                            isShow: true,
-                            query: {}
-                        },
-                        {
-                            name: "入驻审核",
-                            path: "/parkHall/manage/activityPoolAddPark",
-                            src: require("@/assets/imgs/icon4.png"),
-                            isShow: false,
-                            query: {
-                                type: 1
-                            }
-                        },
-                        {
-                            name: "发布政策",
-                            path: "/parkHall/manage/publishSciAndTechPolicy?applyType=01",
-                            src: require("@/assets/imgs/icon2.png"),
-                            isShow: false,
-                            query: {}
-                        },
-                        {
-                            name: "发布资讯",
-                            path: "/news/addNews",
-                            src: require("@/assets/imgs/icon3.png"),
-                            isShow: false,
-                            query: {}
-                        },
-                        {
-                            name: "发布活动",
-                            path: "/parkIndex/launchForm",
-                            src: require("@/assets/imgs/icon1.png"),
-                            isShow: false,
-                            query: {}
+                        name: "关于我们",
+                        path: "/parkIndex/scanIndex",
+                        src: require("@/assets/newparkimg/home/img0.png"),
+                        isShow: true,
+                        query: {}
+                    },
+                    {
+                        name: "入驻申请",
+                        path: "/parkHall/manage/requestAddPark",
+                        src: require("@/assets/imgs/icon5.png"),
+                        isShow: true,
+                        query: {}
+                    },
+                    {
+                        name: "需求发布",
+                        path: "/requIndex/publish",
+                        src: require("@/assets/newparkimg/home/img2.png"),
+                        isShow: true,
+                        query: {}
+                    },
+                    {
+                        name: "普惠金融",
+                        path: "/parkHall/manage/inclusiveFinance",
+                        src: require("@/assets/imgs/icon6.png"),
+                        isShow: true,
+                        query: {}
+                    },
+                    {
+                        name: "入驻审核",
+                        path: "/parkHall/manage/activityPoolAddPark",
+                        src: require("@/assets/imgs/icon4.png"),
+                        isShow: false,
+                        query: {
+                            type: 1
                         }
+                    },
+                    {
+                        name: "发布政策",
+                        path: "/parkHall/manage/publishSciAndTechPolicy?applyType=01",
+                        src: require("@/assets/imgs/icon2.png"),
+                        isShow: false,
+                        query: {}
+                    },
+                    {
+                        name: "发布资讯",
+                        path: "/news/addNews",
+                        src: require("@/assets/imgs/icon3.png"),
+                        isShow: false,
+                        query: {}
+                    },
+                    {
+                        name: "发布活动",
+                        path: "/parkIndex/launchForm",
+                        src: require("@/assets/imgs/icon1.png"),
+                        isShow: false,
+                        query: {}
+                    }
                 ],
                 menuListStandard: [
                     [{
@@ -151,24 +152,24 @@
                         isShow: true,
                         query: {}
                     },
-                    {
-                        name: "发布惠政",
-                        path: "parkIndex/publishGover",
-                        url: require("@/assets/imgs/home/servicePublish.png"),
-                        src: require("@/assets/imgs/home/servicePublish.png"),
-                        srcHover: require("@/assets/imgs/home/servicePublishHover.png"),
-                        isShow: true,
-                        query: {}
-                    },
-                    {
-                        name: "发布资讯",
-                        path: "/parkIndex/publishNewInfo",
-                        url: require("@/assets/imgs/home/newsPublish.png"),
-                        src: require("@/assets/imgs/home/newsPublish.png"),
-                        srcHover: require("@/assets/imgs/home/newsPublishHover.png"),
-                        isShow: true,
-                        query: {}
-                    }],
+                        {
+                            name: "发布惠政",
+                            path: "parkIndex/publishGover",
+                            url: require("@/assets/imgs/home/servicePublish.png"),
+                            src: require("@/assets/imgs/home/servicePublish.png"),
+                            srcHover: require("@/assets/imgs/home/servicePublishHover.png"),
+                            isShow: true,
+                            query: {}
+                        },
+                        {
+                            name: "发布资讯",
+                            path: "/parkIndex/publishNewInfo",
+                            url: require("@/assets/imgs/home/newsPublish.png"),
+                            src: require("@/assets/imgs/home/newsPublish.png"),
+                            srcHover: require("@/assets/imgs/home/newsPublishHover.png"),
+                            isShow: true,
+                            query: {}
+                        }],
                     [{
                         name: "任务池",
                         path: "/parkHall/manage/activityPoolAddPark",
@@ -180,24 +181,24 @@
                             type: 1
                         }
                     },
-                    {
-                        name: "惠政管理",
-                        path: "/parkIndex/goverBene/all",
-                        url: require("@/assets/imgs/home/servicePublish.png"),
-                        src: require("@/assets/imgs/home/servicePublish.png"),
-                        srcHover: require("@/assets/imgs/home/servicePublishHover.png"),
-                        isShow: true,
-                        query: {}
-                    },
-                    {
-                        name: "成员管理",
-                        path: "/parkHall/manage/userManage",
-                        url: require("@/assets/imgs/home/managePeople.png"),
-                        src: require("@/assets/imgs/home/managePeople.png"),
-                        srcHover: require("@/assets/imgs/home/managePeopleHover.png"),
-                        isShow: true,
-                        query: {}
-                    }]
+                        {
+                            name: "惠政管理",
+                            path: "/parkIndex/goverBene/all",
+                            url: require("@/assets/imgs/home/servicePublish.png"),
+                            src: require("@/assets/imgs/home/servicePublish.png"),
+                            srcHover: require("@/assets/imgs/home/servicePublishHover.png"),
+                            isShow: true,
+                            query: {}
+                        },
+                        {
+                            name: "成员管理",
+                            path: "/parkHall/manage/userManage",
+                            url: require("@/assets/imgs/home/managePeople.png"),
+                            src: require("@/assets/imgs/home/managePeople.png"),
+                            srcHover: require("@/assets/imgs/home/managePeopleHover.png"),
+                            isShow: true,
+                            query: {}
+                        }]
                 ],
                 ccbUser: this.SSH.getItem("LoginUserRol") || [],
             };
@@ -207,6 +208,7 @@
             let userRol = this.SSH.getItem("LoginUserRol").indexOf("11") > -1
             console.log(this.menuListStandard)
             userRol?(this.menuListStandard=this.menuListStandard.slice(0,1)):''
+            console.log(this.menuListStandard)
         },
         methods: {
             imgHover(item){
@@ -375,53 +377,53 @@
         padding: 15px 0 60px;
         .standard-menu-wrap{
             display: flex;
-             width: 930px;
-             height: 160px;
-            margin: 5px auto;
-            box-shadow: 0 0 14.2px 0.8px 
-        rgba(0, 0, 0, 0.08);
-        .standard-item{
-            position: relative;
-            width: 310px;
+            width: 930px;
             height: 160px;
-            // background-color: #333;
-            img {
-                display: block;
-                margin: 20px auto;
-                cursor: pointer;
-                width: 80px;
+            margin: 5px auto;
+            box-shadow: 0 0 14.2px 0.8px
+            rgba(0, 0, 0, 0.08);
+            .standard-item{
+                position: relative;
+                width: 310px;
+                height: 160px;
+                // background-color: #333;
+                img {
+                    display: block;
+                    margin: 20px auto;
+                    cursor: pointer;
+                    width: 80px;
+                }
+                .name{
+                    text-align: center;
+                    cursor: pointer;
+                    font-size: 20px;
+                    color: #333
+                }
+                &::before{
+                    position: absolute;
+                    right: 0;
+                    top: 20px;
+                    content: ' ';
+                    height: 120px;
+                    width: 1px;
+                    background-color: #eeeeee
+                }
+
             }
-            .name{
-                text-align: center;
-                cursor: pointer;
-                font-size: 20px;
-                color: #333
+            &:last-child{
+                &::before{
+                    display: none
+                }
             }
-            &::before{
-                position: absolute;
-                right: 0;
-                top: 20px;
-                content: ' ';
-                height: 120px;
-                width: 1px;
-                background-color: #eeeeee
-            }
-             
         }
-        &:last-child{
-            &::before{
-                display: none
-            }
-        }
-       }
     }
     .noBackgroundImg{
         background-image: none;
         // overflow: hidden;
     }
     /deep/.el-carousel__arrow:hover{
-        
-                 background-color: #409EFF
-             }
+
+        background-color: #409EFF
+    }
 </style>
 
