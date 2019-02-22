@@ -141,7 +141,6 @@
                     position: relative;
                     height: 120px;
                     font-size: 18px;
-                    line-height: 120px;
                     text-align: center;
                     //padding-left: 25px;
                     color: #fff;
