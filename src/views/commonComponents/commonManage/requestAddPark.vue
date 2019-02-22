@@ -115,29 +115,10 @@ export default {
             show: false
         };
     },
-    created() {
+    async created() {
         this.rzz = JSON.parse(window.localStorage.getItem("rzz"));
-
-        this.getFxContent();
-        this.getForm();
-
-        // let filterList = ['0410','0411','0412','0413','0414','0415'];
-        // let menuList = this.SSH.getItem("menuList");
-        // let arr = [];
-        // if (!this.bdFlag && menuList.length>0) {
-        //     menuList.forEach(el => {
-        //         if (el.name == 'parkList' && el.children  && el.children.length>0) {
-        //             el.children.forEach((element,index)=>{
-        //                 if (!filterList.includes(element.id)) {
-        //                     arr.push(element)
-        //                 }
-        //             })
-        //             el.children = arr;
-        //         }
-        //         return;
-        //     });
-        // }
-        // this.SSH.setItem("menuList",menuList)
+        await this.getForm();
+        await this.getFxContent();
     },
     methods: {
         getForm() {
@@ -183,23 +164,35 @@ export default {
                     if (response.resultData) {
                         this.fxContent = Object.assign({}, response.resultData);
                         if (!this.fxContent.CSTNM) {
-                            this.fxContent.CSTNM = "其他行业";
+                            this.fxContent.CSTNM = "其他公司";
                         }
+                        //根据行业Id获取行业名称
                         if (this.rzz && this.rzz.length) {
                             for (let i = 0; i < this.rzz.length; i++) {
-                                if (
-                                    this.rzz[i].code == this.fxContent.IDYTPCD
-                                ) {
+                                if (this.rzz[i].code == this.fxContent.IDYTPCD) {
                                     if (this.rzz[i].name) {
-                                        this.fxContent.IDYTPCD = this.rzz[
-                                            i
-                                        ].name;
+                                        this.fxContent.IDYTPCD = this.rzz[i].name;
                                     }
                                     return false;
                                 } else {
                                     this.fxContent.IDYTPCD = "其他行业";
                                 }
                             }
+                        } 
+                        if (this.getFormList[0] && !this.getFormList[0].value) {
+                            this.getFormList[0].value = this.fxContent.CSTNM;
+                        }
+                        if (this.getFormList[1] && !this.getFormList[1].value) {
+                            this.getFormList[1].value = this.fxContent.IDYTPCD;
+                        }
+                        if (this.getFormList[2] && !this.getFormList[2].value) {
+                            this.getFormList[2].value = this.fxContent.area;
+                        }
+                        if (this.getFormList[4] && !this.getFormList[4].value) {
+                            this.getFormList[4].value = this.fxContent.linkMan;
+                        }
+                        if (this.getFormList[5] && !this.getFormList[5].value) {
+                            this.getFormList[5].value = this.fxContent.linkPhone;
                         }
                     }
                 }
@@ -219,10 +212,7 @@ export default {
             }
             let list = this.getFormList.slice(2, this.getFormList.length);
             let list1 = this.getFormList.slice(0, 2);
-            if (
-                this.getFormList.slice(2, 3)[0] &&
-                this.getFormList.slice(2, 3)[0].value
-            ) {
+            if (this.getFormList.slice(2, 3)[0] &&this.getFormList.slice(2, 3)[0].value) {
                 this.adr = this.getFormList.slice(2, 3)[0].value;
             }
             if (list.length > 0) {
@@ -236,21 +226,11 @@ export default {
                     }
                 }
             }
-            //area,linkMan,linkPhone 反显可修改
             if (this.getFormList[0] && !this.getFormList[0].value) {
                 this.getFormList[0].value = this.fxContent.CSTNM;
             }
             if (this.getFormList[1] && !this.getFormList[1].value) {
                 this.getFormList[1].value = this.fxContent.IDYTPCD;
-            }
-            if (this.getFormList[2] && !this.getFormList[2].value) {
-                this.getFormList[2].value = this.fxContent.area;
-            }
-            if (this.getFormList[3] && !this.getFormList[3].value) {
-                this.getFormList[3].value = this.fxContent.linkMan;
-            }
-            if (this.getFormList[4] && !this.getFormList[4].value) {
-                this.getFormList[4].value = this.fxContent.linkPhone;
             }
             this.accessT = true;
         },

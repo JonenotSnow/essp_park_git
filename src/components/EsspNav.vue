@@ -111,6 +111,16 @@
                 this.show = false;
             },
             goSearchPage() {
+                //重新打开页面打开
+                // var type = this.typeselect; //类型
+                // var tagTxt = this.tagTxt; //标签内容
+                // var title = this.indexSeachKW;
+                // let routeData = this.$router.resolve({
+                //     name: "detail",
+                //     query: {type, tagTxt, title}
+                // });
+                // window.open(routeData.href, '_blank');
+                
                 this.$store.commit('getSearchState',{show:!this.tab})
                 let _this = this;
                 var type = this.typeselect; //类型
@@ -122,6 +132,8 @@
                         query: {type, tagTxt, title}
                     });
                 }, 1000);
+                this.indexSeachKW = '';
+                this.typeselect = 'park_activity'
             }
         }
     };
