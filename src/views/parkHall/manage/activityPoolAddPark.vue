@@ -106,7 +106,7 @@ export default {
                 },
                 {
                     id: "02",
-                    name: "发布中"
+                    name: "园区审核通过"
                 },
                 {
                     id: "12",
@@ -155,7 +155,7 @@ export default {
         statusFormat(value){
             let statusList={
                 "10": "审核中",
-                "02": "发布中",
+                "02": "园区审核通过",
                 "12": "园区审核未通过",
                 "13": "审核中"
             }
