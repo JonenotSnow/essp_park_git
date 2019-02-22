@@ -8,7 +8,7 @@
         <div class="more_newscon esspclearfix" v-if="moreNewDates.length>0">
             <div class="newslastest" v-if="newsTabIndex==0">
                 <div class="newslist left_side">
-                    <div class="newsitem" @click="goinfoDetail(item)" v-for="(item,index) in moreNewDates" :key="index" v-if="index<3">
+                    <div class="newsitem" @click="goinfoDetail(item)" v-for="(item,index) in moreNewDates" :key="index" v-if="index< 6 && (index%2)==0">
                         <img class="newsimg" :src="item.titleImg" :alt="item.informationTitle">
                         <div class="newinfo">
                             <div class="img_tips">
@@ -22,7 +22,7 @@
                     </div>
                 </div>
                 <div class="newslist right_side">
-                    <div class="newsitem" @click="goinfoDetail(item)" v-for="(item,index) in moreNewDates" :key="index" v-if="index<6&&index>=3">
+                    <div class="newsitem" @click="goinfoDetail(item)" v-for="(item,index) in moreNewDates" :key="index" v-if="index< 6 &&(index%2)!==0">
                         <img class="newsimg" :src="item.titleImg" :alt="item.informationTitle">
                         <div class="newinfo">
                             <div class="img_tips">
