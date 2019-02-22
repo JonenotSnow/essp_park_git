@@ -54,28 +54,33 @@ export default {
     return {
       msg: "essp-roll",
       animate: true,
-      listTemp: [{
+      listTemp: [
+        {
           cstNm: "青海广兴源房地产开发有限公司0",
-        id: "20190221154059952576",
-        mark: null,
-        parkId: null,
-        time: "2019-02-1 15:40:59",
-        type: "2",
-      },{
-          cstNm: "青海广兴源房地产开发有限公司1",
-        id: "20190221154059952576",
-        mark: null,
-        parkId: null,
-        time: "2019-02-5 15:40:59",
-        type: "2",
-      },{
-          cstNm: "青海广兴源房地产开发有限公司2",
-        id: "20190221154059952576",
-        mark: null,
-        parkId: null,
-        time: "2019-02-9 15:40:59",
-        type: "2",
-      }]
+          id: "20190221154059952576",
+          mark: null,
+          parkId: null,
+          time: "2019-02-1 15:40:59",
+          type: "2"
+        }
+        // {
+        //   cstNm: "青海广兴源房地产开发有限公司1",
+        //   id: "20190221154059952576",
+        //   mark: null,
+        //   parkId: null,
+        //   time: "2019-02-5 15:40:59",
+        //   type: "2"
+        // },
+        // {
+        //   cstNm: "青海广兴源房地产开发有限公司2",
+        //   id: "20190221154059952576",
+        //   mark: null,
+        //   parkId: null,
+        //   time: "2019-02-9 15:40:59",
+        //   type: "2"
+        // }
+      ],
+      isBdPark: this.utils.isBdPark() || false
     };
   },
   methods: {
@@ -108,7 +113,7 @@ export default {
     },
     //校验审核状态
     cancelAudit(rows) {
-        // 1.入园审核 2.惠政申报审核 3.惠政发布 4.活动报名 5.资讯审核 6.活动发布
+      // 1.入园审核 2.惠政申报审核 3.惠政发布 4.活动报名 5.资讯审核 6.活动发布
       let selectObj = {};
       switch (Number(rows.type)) {
         case 1:
@@ -126,25 +131,25 @@ export default {
           break;
 
         case 3:
-        Object.assign(selectObj, {
+          Object.assign(selectObj, {
             path: "/parkHall/manage/manageGoverAuditing",
             query: { entityId: rows.id }
           });
           break;
 
         case 4:
-        Object.assign(selectObj, {
+          Object.assign(selectObj, {
             path: "/parkIndex/park/auditingBm",
             query: { activityId: rows.activityId }
           });
           break;
         case 5:
-        Object.assign(selectObj, {
+          Object.assign(selectObj, {
             path: "/parkHall/manage/manageZXAuditing",
             query: { id: rows.informationId }
           });
         case 6:
-        Object.assign(selectObj, {
+          Object.assign(selectObj, {
             path: "/parkHall/manage/manageActivityAudit",
             query: { id: rows.activityId }
           });
@@ -159,11 +164,47 @@ export default {
   filters: {
     timerFormat(vaule) {
       return Moment(vaule).format("YYYY-MM-DD");
+    },
+    messageFormat(rows) {
+      // 1.入园审核 2.惠政申报审核 3.惠政发布 4.活动报名 5.资讯审核 6.活动发布
+      switch (Number(rows.type)) {
+        case 1:
+          return rows.cstNm + "申请加入园区,请及时审核";
+          break;
+        case 2:
+          return "您收到一条惠政申报申请,请及时审核";
+
+          break;
+
+        case 3:
+          return "您收到一条惠政发布申请,请及时审核";
+
+          break;
+
+        case 4:
+          return "您收到一条活资讯发布申请,请及时审核";
+
+          break;
+        case 5:
+          return "您收到一条活动发布申请,请及时审核";
+          break;
+        case 6:
+          return "您收到一条活动发布申请,请及时审核";
+
+          break;
+        default:
+          return "消息异常,请联系管理员处理";
+          break;
+      }
     }
   },
   mounted() {
-    setInterval(this.scroll, 2500);
-    this.listTemp = this.list
+    this.listTemp = this.list;
+    if (this.listTemp.length > 1) {
+      setInterval(this.scroll, 2500);
+    } else {
+      this.animate = false;
+    }
   }
 };
 </script>
