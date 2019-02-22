@@ -116,9 +116,11 @@
         },
         methods: {
             getCommentList() {
+                // 惠政 传type 6   资讯传 2
                 this.$post(this.$apiUrl.manage.getCommentList, {
                     parkId: window.sessionStorage.getItem("parkId"),
-                    entityId: this.$route.query.entityId
+                    entityId: this.$route.query.entityId,
+                    type: '6'
                 })
                     .then((response) => {
                         this.auditInfo = response.resultData;

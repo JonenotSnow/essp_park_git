@@ -376,6 +376,13 @@
                 var resultMsg = "";
                 if (type == "01") {
                     resultMsg = "取消锁定成功";
+                    this.$alert(resultMsg, "审核", {
+                        confirmButtonText: "确定",
+                        callback: action => {
+                            this.$router.push("/parkIndex/goverReviewBm");
+                        }
+                    });
+                    return;
                 }
                 if (type == "02") {
                     resultMsg = "申请审核通过";
@@ -395,19 +402,19 @@
                     response => {
                         this.access = false;
                         // if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
-                        this.$alert(resultMsg, "审核", {
-                            confirmButtonText: "确定",
-                            callback: action => {
-                                this.$router.push("/parkIndex/goverReviewBm");
-                            }
-                        });
+//                        this.$alert(resultMsg, "审核", {
+//                            confirmButtonText: "确定",
+//                            callback: action => {
+//                                this.$router.push("/parkIndex/goverReviewBm");
+//                            }
+//                        });
                         // } else {
                         //     this.$message.error(response.resultMsg);
                         // }
                     },
                     err => {
                         this.access = false;
-                        this.$message.error(response.resultMsg);
+                        this.$message.error(err.resultMsg);
                     }
                 );
             }
