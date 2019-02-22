@@ -107,7 +107,7 @@
 //                }
                 var opMark = opMark || "03";
                 this.$router.push({
-                    path: "/parkHall/manage/manageActivityAudit",
+                    path: "/parkHall/activity/activityAuditDetail",
                     query: {
                         id: row.activityId,
                         opMark: opMark
