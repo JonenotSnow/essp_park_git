@@ -2,7 +2,7 @@
     <div class="essp-aside-cont">
         <div class="cont-body">
             <div class='aside'>
-                <p class="tTitle">{{title}}</p>
+                <p class="tTitle">{{title}} <span>{{en_title}}</span> </p>
                 <ul class="fNav" v-if="asideList && asideList.length>0">
                     <li v-for="(it, i) in asideList" :key="i" :class="noChildMenu?'guanliStyle':'huodongStyle'">
                         <!-- 多层子菜单 -->
@@ -41,6 +41,7 @@
         data() {
             return {
                 title: "",
+                en_title:'', // 英文标题
                 asideList: [],
                 childId:'',
                 routerName: this.$route.name,
@@ -89,12 +90,14 @@
                         tmp.push(child.children[i]);
                     }
                     this.title = child.menu;
+                    this.en_title = child.icon;
                     this.asideList = tmp;
                 } else if (child.children[0].id.length == 6) {//子菜单第一个id长度为6时(二级导航，如活动)
                     for (let i = 0;i < child.children.length;i++) {
                         tmp.push(child.children[i]);
                     }
                     this.title = child.menu;
+                    this.en_title = child.icon;
                     this.asideList = tmp;
                 }
             },
@@ -135,6 +138,7 @@
             margin-top: 0px;
             .aside {
                 .tTitle {
+                    position: relative;
                     height: 120px;
                     font-size: 18px;
                     line-height: 120px;
@@ -143,6 +147,15 @@
                     color: #fff;
                     background: url("../assets/imgs/aside-bg.jpg") no-repeat 25% center,
                     linear-gradient(265deg, #1598ff 0%, #1b83f8 100%);
+                    span {
+                        position: absolute;
+                        left: 31%;
+                        top: 60%;
+                        text-align: center;
+                        font-size: 12px;
+                        height: 14px;
+                        line-height: 14px;
+                    }
                 }
                 .fNav {
                     background: #fff;
