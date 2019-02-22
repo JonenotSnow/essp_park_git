@@ -207,7 +207,6 @@
             let userRol = this.SSH.getItem("LoginUserRol").indexOf("11") > -1
             console.log(this.menuListStandard)
             userRol?(this.menuListStandard=this.menuListStandard.slice(0,1)):''
-            console.log(this.menuListStandard)
         },
         methods: {
             imgHover(item){
@@ -220,6 +219,16 @@
                 this.$router.push("/parkHall/manage/activityPoolAddPark");
             },
             linkTo(item) {
+                // 标准版追加逻辑
+                    if(!this.isBdPark && this.LoginUserRole.includes('11') && !this.SSH.getItem('loginFlag')){
+                        this.$message("您尚未登陆，请您先登陆");
+                        let that = this
+                        setTimeout(() => {
+                            that.windowHrefUrl('/userIndex/login')
+                        }, 1000);
+                        return false
+                    }
+                //——————————————————————————————
                 let isInPark = !(this.SSH.getItem("LoginUserRol").indexOf("11") > -1);
                 let query = isInPark
                     ? {
