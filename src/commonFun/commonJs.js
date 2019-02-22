@@ -12,7 +12,8 @@
  *     informExplain:   举报说明
  * }
  */
-import { Message,MessageBox } from 'element-ui';
+import { MessageBox } from 'element-ui';
+import Message from '../util/message'
 import {post, get, patch, put, del} from '../fetch/http'
 var isTipOffClick = true;
 var retrunTipOffReason = function(type){
