@@ -4,7 +4,8 @@ import SSH from '@/util/sessionStorageHandler.js'
 import ReconnectingWebSocket from '@/util/ReconnectingWebSocket.js'
 import utils from '@/util/utils.js'
 import bus from '@/eventBus.js'
-import {Message} from 'element-ui';
+// import {Message} from 'element-ui';
+import Message from '../../util/message'
 //获取当前时间
 const now = new Date();
 const state = {
