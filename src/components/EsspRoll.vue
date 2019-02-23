@@ -93,7 +93,7 @@
             },
             //校验审核状态
             cancelAudit(rows) {
-                // 1.入园审核 2.惠政申报审核 3.惠政发布 4.活动报名 5.资讯审核 6.活动发布
+                // 1.入园审核 2.惠政申报审核 3.惠政发布 4.活动发布 5.资讯审核 6.活动报名
                 let selectObj = {};
                 console.log(rows);
                 switch (Number(rows.type)) {
@@ -120,8 +120,8 @@
 
                     case 4:
                         Object.assign(selectObj, {
-                            path: "/parkIndex/park/auditingBm",
-                            query: {activityId: rows.activityId}
+                            path: "/parkHall/manage/manageActivityAudit",
+                            query: {id: rows.id}
                         });
                         break;
                     case 5:
@@ -131,9 +131,10 @@
                         });
                         break;
                     case 6:
+                    // /parkIndex/activityBmAuditDetail?id=20190223105445004&enterinfoId=20190223105505002
                         Object.assign(selectObj, {
-                            path: "/parkHall/manage/manageActivityAudit",
-                            query: {id: rows.activityId}
+                            path: "/parkIndex/activityBmAuditDetail",
+                            query: {id: rows.id,enterinfoId:rows.enterinfoId}
                         });
                         break;
                     default:
@@ -148,7 +149,7 @@
                 return Moment(vaule).format("YYYY-MM-DD");
             },
             messageFormat(rows) {
-                // 1.入园审核 2.惠政申报审核 3.惠政发布 4.活动报名 5.资讯审核 6.活动发布
+                // 1.入园审核 2.惠政申报审核 3.惠政发布 4.活动发布 5.资讯审核 6.活动报名
                 switch (Number(rows.type)) {
                     case 1:
                         return rows.cstNm + "申请加入园区,请及时审核";
@@ -164,14 +165,14 @@
                         break;
 
                     case 4:
-                        return "您收到一条活动报名申请,请及时审核";
+                        return "您收到一条活动发布申请,请及时审核";
 
                         break;
                     case 5:
                         return "您收到一条资讯发布申请,请及时审核";
                         break;
                     case 6:
-                        return "您收到一条活动发布申请,请及时审核";
+                        return "您收到一条活动报名申请,请及时审核";
 
                         break;
                     default:
