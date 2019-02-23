@@ -3,7 +3,7 @@
      <!-- 加入的企业模块 -->
      <div class="main_inter">
         <div class="com-tit">入驻企业</div>
-        <div class="com-brf">Entered enterprises</div>
+        <div class="com-brf">{{en_title}}</div>
         <div class="entercons">
             <div class="hasenters" v-if="enterprises.length>0">
                 <div class="listcon">
@@ -35,6 +35,7 @@ import mixins_windowOpen from '@/components/mixins/mixins_windowOpen.js'
          enterprises:[],
          pageNum: 1,
          pageSize: 5,
+         en_title:this.utils.isBdPark() ? '入驻企业400+家，在职人员10000+人' : 'Entered enterprises',
          rzzMap:new Map()
      }
    },
@@ -175,7 +176,7 @@ import mixins_windowOpen from '@/components/mixins/mixins_windowOpen.js'
                 height: 120px;
                 overflow: hidden;
                 background-color: #ffffff;
-                box-shadow: 1.5px 2.6px 8.7px 0.3px 
+                box-shadow: 1.5px 2.6px 8.7px 0.3px
                     rgba(0, 0, 0, 0.1);
                 position:relative;
                 margin-right: 44px;
@@ -183,7 +184,7 @@ import mixins_windowOpen from '@/components/mixins/mixins_windowOpen.js'
                     width:100%;
                     height:100%;
                 }
-                .detailinfo{   
+                .detailinfo{
                     .enterprisename{
                         height: 20px;
                         width:130px;

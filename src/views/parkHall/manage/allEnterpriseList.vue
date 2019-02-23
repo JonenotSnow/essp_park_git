@@ -57,6 +57,7 @@
                 totalCount: 0,
                 pageNum: 1,
                 pageSize: 5,
+                en_title:this.utils.isBdPark() ? 'Entered enterprises' : '入驻企业400+家，在职人员10000+人',
                 enterprises:[],
                 rzzMap:new Map()
             }
