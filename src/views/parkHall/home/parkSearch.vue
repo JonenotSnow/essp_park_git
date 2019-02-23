@@ -47,7 +47,7 @@
                     </div>
                     <div class="tdcon esspclearfix bb" v-if="!isBdPark || typeselect == 'park_activity'">
                         <span class="inline_span"><em></em>{{typeName}}类型 :</span>
-                        <el-select v-model="classtType" placeholder="请选择" class="inline_select" @change="getListResult">
+                        <el-select v-model="classtType" placeholder="请选择" class="inline_select"  @change="getListResult">
                             <el-option v-for="(item,index) in typeitems" :key="index" :label="item.name"
                                     :value="item.id">
                             </el-option>
@@ -56,7 +56,7 @@
                 </div>
                 <div class="tdcon esspclearfix" :class="{'ccc':!isBdPark}">
                     <span class="inline_span"><em></em>发布日期 :</span>
-                     <el-date-picker @change="changeTimeSeach()"
+                     <el-date-picker
                         v-model="timeRange"
                         type="daterange"
                         range-separator="至"
@@ -353,6 +353,7 @@ export default {
                 pop.classtType = this.classtType
                 pop.type = '1'
             }
+            console.log(pop)
             this.loading = true
             this.$post(url, pop).then(response => {
                 this.loading = false
@@ -505,6 +506,7 @@ export default {
         background-color: rgba(0,0,0,0.7);
         margin-left: -450px;
         width: 900px;
+        z-index: 102;
         .typecon {
             //被傻逼全局污染了 只能打补丁了
             width: 80px;
