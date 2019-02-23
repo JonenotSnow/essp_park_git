@@ -2,7 +2,10 @@
     <div class="essp-aside-cont">
         <div class="cont-body">
             <div class='aside'>
-                <p class="tTitle">{{title}} <span>{{en_title}}</span> </p>
+                <p class="tTitle">
+                    <span>{{title}}</span>
+                    <span>{{en_title}}</span> 
+                </p>
                 <ul class="fNav" v-if="asideList && asideList.length>0">
                     <li v-for="(it, i) in asideList" :key="i" :class="noChildMenu?'guanliStyle':'huodongStyle'">
                         <!-- 多层子菜单 -->
@@ -140,20 +143,26 @@
                 .tTitle {
                     position: relative;
                     height: 120px;
-                    font-size: 18px;
-                    text-align: center;
-                    //padding-left: 25px;
-                    color: #fff;
                     background: url("../assets/imgs/aside-bg.jpg") no-repeat 25% center,
                     linear-gradient(265deg, #1598ff 0%, #1b83f8 100%);
-                    span {
-                        position: absolute;
-                        left: 31%;
-                        top: 60%;
-                        text-align: center;
-                        font-size: 12px;
-                        height: 14px;
-                        line-height: 14px;
+                    span{
+                        color: #fff;
+                        &:nth-of-type(1) {   
+                            font-size: 18px;
+                            text-align: center;
+                            position: absolute;
+                            top: 45px;
+                            left: 65px;
+                        }
+                        &:nth-of-type(2) {   
+                            position: absolute;
+                            left: 34%;
+                            top: 60%;
+                            text-align: center;
+                            font-size: 12px;
+                            height: 14px;
+                            line-height: 14px;
+                        }
                     }
                 }
                 .fNav {

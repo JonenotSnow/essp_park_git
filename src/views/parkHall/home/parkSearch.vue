@@ -253,9 +253,9 @@ export default {
         },
         //清空标签，清空类型
         resetSerchA(){
-            this.currentIndex = "";
-            this.tagTxt = "";
-            this.timeRange = [];
+            // this.currentIndex = "";
+            // this.tagTxt = "";
+            // this.timeRange = [];
 
         },
         //改变时间后搜索

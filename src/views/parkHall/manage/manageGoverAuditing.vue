@@ -134,7 +134,7 @@
             openOne(){
                 if (!this.mark) {
                     this.$message({
-                        type: 'warn',
+                        type: 'warning',
                         message: '审核意见不能为空'
                     });
                     return;
@@ -144,7 +144,7 @@
             openTwo(){
                 if (!this.mark) {
                     this.$message({
-                        type: 'warn',
+                        type: 'warning',
                         message: '审核意见不能为空'
                     });
                     return;

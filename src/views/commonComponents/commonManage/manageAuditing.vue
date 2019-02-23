@@ -125,7 +125,7 @@
                         this.infoList = JSON.parse(response.resultData)
                     }, (err) => {
                         this.$message({
-                            type: 'warn',
+                            type: 'warning',
                             message: response.returnMsg
                         })
                     })
@@ -133,7 +133,7 @@
             openOne(){
                 if (!this.mark) {
                     this.$message({
-                        type: 'warn',
+                        type: 'warning',
                         message: '审核意见不能为空'
                     });
                     return;
@@ -143,7 +143,7 @@
             openTwo(){
                 if (!this.mark) {
                     this.$message({
-                        type: 'warn',
+                        type: 'warning',
                         message: '审核意见不能为空'
                     });
                     return;
@@ -155,7 +155,7 @@
                 let st = status;
                 if (!this.mark) {
                     this.$message({
-                        type: 'warn',
+                        type: 'warning',
                         message: '审核意见不能为空'
                     });
                     return;
@@ -178,7 +178,7 @@
                         });
                     }, (err) => {
                         this.$message({
-                            type: 'warn',
+                            type: 'warning',
                             message: response.resultMsg
                         });
                     });
