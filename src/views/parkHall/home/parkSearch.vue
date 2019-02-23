@@ -244,6 +244,7 @@ export default {
             this.currentIndex = "";
             this.tagTxt = "";
             this.timeRange = [];
+            this.indexSeachKW = '';
         },
         //按重置的操作
         resetHandelSearch(){
@@ -254,6 +255,7 @@ export default {
         resetSerchA(){
             this.currentIndex = "";
             this.tagTxt = "";
+            this.timeRange = [];
 
         },
         //改变时间后搜索
@@ -297,8 +299,8 @@ export default {
             var pop = {
                 pageNum: this.pageNum,
                 pageSize: this.pageSize,
-                timeStart: this.timeRange[0] || "",
-                timeEnd: this.timeRange[1] || "",
+                timeStart: this.timeRange.length>0?this.timeRange[0] : "",
+                timeEnd: this.timeRange.length>0?this.timeRange[1] : "",
                 activityLabel: this.tagTxt,
                 parkId: this.parkId,
                 activityTheme: this.indexSeachKW,
@@ -319,8 +321,8 @@ export default {
             var pop = {
                 pageNum: this.pageNum,
                 pageSize: this.pageSize,
-                startDate: this.timeRange[0] || "",
-                endDate: this.timeRange[1] || "",
+                timeStart: this.timeRange.length>0?this.timeRange[0] : "",
+                timeEnd: this.timeRange.length>0?this.timeRange[1] : "",
                 tagTxt: this.tagTxt,
                 parkId: this.parkId,
                 title: this.indexSeachKW
@@ -341,8 +343,8 @@ export default {
             var pop = {
                 pageNum: this.pageNum,
                 pageSize: this.pageSize,
-                startDate: this.timeRange[0] || "",
-                endDate: this.timeRange[1] || "",
+                timeStart: this.timeRange.length>0?this.timeRange[0] : "",
+                timeEnd: this.timeRange.length>0?this.timeRange[1] : "",
                 tagTxt: this.tagTxt,
                 parkId: this.parkId,
                 title: this.indexSeachKW
