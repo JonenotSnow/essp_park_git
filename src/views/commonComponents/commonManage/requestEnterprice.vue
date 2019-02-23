@@ -105,7 +105,7 @@ export default {
             pageSize:5,
             breadlist: [
                 {
-                    path: "/parkIndex/park/all",
+                    path: "/parkHall/manage/baseInfo",
                     name: this.utils.isBdPark()?"系统管理":"园区管理"
                 },
                 {
