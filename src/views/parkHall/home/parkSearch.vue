@@ -353,7 +353,6 @@ export default {
                 pop.classtType = this.classtType
                 pop.type = '1'
             }
-            console.log(pop)
             this.loading = true
             this.$post(url, pop).then(response => {
                 this.loading = false
