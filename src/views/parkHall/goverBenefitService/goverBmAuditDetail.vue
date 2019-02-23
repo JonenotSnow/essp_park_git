@@ -405,7 +405,7 @@
 //                        this.$alert(resultMsg, "审核", {
 //                            confirmButtonText: "确定",
 //                            callback: action => {
-//                                this.$router.push("/parkIndex/goverReviewBm");
+                                this.$router.push("/parkIndex/goverReviewBm");
 //                            }
 //                        });
                         // } else {

@@ -5,8 +5,7 @@
         <essp-bread-crumb :breadList="breadlist"></essp-bread-crumb>
         <div class="main_inter">
             <div class="com-tit">入驻企业</div>
-            <div class="com-brf" v-if="isBdPark">入驻企业400+家，在职人员10000+人</div>
-            <div class="com-brf" v-else>Entered enterprises</div>
+            <div class="com-brf">入驻企业400+家，在职人员10000+人</div>
             <div class="enterlist">
                 <div class="listcon">
                     <div class="listitem" v-for="(item,index) in enterprises" :key="index" @mouseenter="showDetail(item.isShowDetail,index)" @mouseleave="showDetail(item.isShowDetail,index)">
@@ -55,7 +54,6 @@
                         name: "入驻企业"
                     }
                 ],
-                isBdPark: this.utils.isBdPark() || "",
                 totalCount: 0,
                 pageNum: 1,
                 pageSize: 5,
@@ -84,22 +82,22 @@
                 }).then(
                     response => {
                         // if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
-                            if(response.resultData.memInfoCount > 0){
-                                this.totalCount =response.resultData.memInfoCount
-                                this.enterprises = response.resultData.memberList
-                                let rzz = JSON.parse(localStorage.rzz);
-                                this.rzzMap = new Map()
-                                for (let i = 0; i < rzz.length; i++) {
-                                    this.rzzMap.set(rzz[i].code,rzz[i].name)
-                                }
-                                for (let i = 0; i < this.enterprises.length; i++) {
-                                    this.$set(this.enterprises[i],'isShowDetail',false)
-                                    let type = this.rzzMap.get(this.enterprises[i].idyTpcd)
-                                    this.enterprises[i].idyTpcd = type ? type : '其他行业'
-                                }
-                            }else{
-
+                        if(response.resultData.memInfoCount > 0){
+                            this.totalCount =response.resultData.memInfoCount
+                            this.enterprises = response.resultData.memberList
+                            let rzz = JSON.parse(localStorage.rzz);
+                            this.rzzMap = new Map()
+                            for (let i = 0; i < rzz.length; i++) {
+                                this.rzzMap.set(rzz[i].code,rzz[i].name)
                             }
+                            for (let i = 0; i < this.enterprises.length; i++) {
+                                this.$set(this.enterprises[i],'isShowDetail',false)
+                                let type = this.rzzMap.get(this.enterprises[i].idyTpcd)
+                                this.enterprises[i].idyTpcd = type ? type : '其他行业'
+                            }
+                        }else{
+
+                        }
                         // }
                     },
                     response => {
@@ -127,7 +125,7 @@
 </script>
 
 <style lang='less' scoped>
-@import "../../../assets/css/mixin";
+    @import "../../../assets/css/mixin";
     .allenterprise{
         .breadcrumbtrail{
             margin:44px auto 0;
@@ -155,27 +153,29 @@
                     margin:50px auto;
                     /*margin-left: 100px;
                     margin-top: 50px;*/
-                    border-left:1px solid #ccc;
+                    /*border-left:1px solid #ccc;*/
                     overflow: hidden;
                     .listitem{
-                        border-top:1px solid #ccc;
+                        /*border-top:1px solid #ccc;*/
                         float: left;
                         cursor: pointer;
                         width: 200px;
                         height: 150px;
                         //background-color: #00a0e9;
                         opacity: 0.8;
-                        //border-right: 1px solid #ccc;
-                        border-bottom:1px solid #ccc;
+                        /*border-right: 1px solid #ccc;*/
+                        /*border-bottom:1px solid #ccc;*/
                         position:relative;
                         .enter_child{
                             width:100%;
                             height:100%;
                         }
-                        .detailinfo{   
+                        .detailinfo{
                             background-color:#fff;
+                            opacity: 0;
+
                             .enterprisename{
-                                margin:0px auto 10px;
+                                margin:-60px auto 10px;
                                 height: 20px;
                                 padding:0 15px;
                                 .esspellipsis();
@@ -211,6 +211,7 @@
                             font-size: 16px;
                             width:100%;
                             height: 100%;
+                            opacity: 1;
                             .enterprisename{
                                 margin:36px auto 10px;
                                 .esspellipsis();
@@ -222,9 +223,6 @@
                                 margin:10px auto 0;
                             }
                         }
-                    }
-                    .listitem:last-child{
-
                     }
                 }
             }

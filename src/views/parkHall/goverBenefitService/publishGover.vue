@@ -957,6 +957,7 @@
             },
             checkInfo() {
                 var t_isOnlineApply = this.formTicketList.t_isOnlineApply;
+
                 if (this.formBaseList.action_theme == "") {
                     this.$message("惠政主题不能为空");
                     return false;
@@ -979,7 +980,9 @@
                         this.$message("有效时间不能为空");
                         return false;
                     }
-                    if (this.formTicketList.t_upperlimit <= 0) {
+                    console.log(this.formTicketList);
+                    var upperLimit = this.formTicketList.t_upperlimit || 0;
+                    if (upperLimit <= 0) {
                         this.$message("报名上限不能小于0");
                         this.formTicketList.t_upperlimit = '';
                         return false;
@@ -1056,68 +1059,7 @@
                 this.$post("/activity/getInvitingCst", {
                     parkId: sessionStorage.getItem("parkId")
                 }).then(response => {
-//                    var arr = response.resultData;
-                    var arr =  [{
-                            "id": null,
-                            "cstId": "91630103MA7578GT33",
-                            "cstNm": "青海宇志建筑有限公司",
-                            "orgCode": null,
-                            "cstShrNm": null,
-                            "entId": null,
-                            "lblTxt": null,
-                            "entTp": null,
-                            "parkId": "20181220204119007",
-                            "lblId": null,
-                            "idyTpcd": null,
-                            "entityForm": null,
-                            "joinTime": null,
-                            "applyUserId": null,
-                            "status": "02",
-                            "auditer": null,
-                            "dtlAdr": null,
-                            "commandInd": null,
-                            "area": null
-                        }, {
-                            "id": null,
-                            "cstId": "91630102MA758EL42L",
-                            "cstNm": "青海丽生商贸有限公司",
-                            "orgCode": null,
-                            "cstShrNm": null,
-                            "entId": null,
-                            "lblTxt": null,
-                            "entTp": null,
-                            "parkId": "20181220204119007",
-                            "lblId": null,
-                            "idyTpcd": null,
-                            "entityForm": null,
-                            "joinTime": null,
-                            "applyUserId": null,
-                            "status": "02",
-                            "auditer": null,
-                            "dtlAdr": null,
-                            "commandInd": null,
-                            "area": null
-                        }, {
-                            "id": null,
-                            "cstId": null,
-                            "cstNm": null,
-                            "orgCode": null,
-                            "cstShrNm": null,
-                            "entId": null,
-                            "lblTxt": null,
-                            "entTp": null,
-                            "parkId": "20181220204119007",
-                            "lblId": null,
-                            "idyTpcd": null,
-                            "entityForm": null,
-                            "joinTime": null,
-                            "applyUserId": null,
-                            "status": "02",
-                            "auditer": null,
-                            "dtlAdr": null,
-                            "commandInd": null,
-                            "area": null
-                        }]
+                    var arr = response.resultData;
                     arr.forEach((item, index) => {
                         if(item.cstId || item.cstNm){
                             item.key = item.cstId;
@@ -1218,7 +1160,7 @@
                                 console.log(data.applyMaximum);
                                 this.formTicketList.t_upperlimit = data.applyMaximum;
                                 this.formTicketList.t_intercheck = data.applyType
-                                this.formTicketList.t_intercheck = data.isonlineApply;
+                                this.formTicketList.t_isOnlineApply = data.isonlineApply;
                                 this.formTicketList.t_notes = data.approveComment;
                                 this.formTicketList.t_validateDate = [Moment(data.avaliableTime), Moment(data.avaliableEndTime)];
 

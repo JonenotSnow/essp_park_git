@@ -41,6 +41,7 @@
     import parkActive from '@/views/newparkHall/home/parkActive.vue'; //园区活动（旧园区，淮安）
     import newparkActive from '@/views/newparkHall/home/newparkActive.vue'; //园区活动（新园区，保定）
     import parkPolicy from '@/views/newparkHall/home/parkPolicy.vue'; //园区惠政(旧园区，淮安)
+
     export default {
         name: "",
         components: {
