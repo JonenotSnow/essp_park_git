@@ -364,11 +364,7 @@
                         // } else {
                         //     this.$message.info(response.resultMsg);
                         // }
-                    },
-                    err => {
-                        this.$message.error("接口异常");
-                    }
-                );
+                    });
             },
 
             //草稿箱
@@ -389,16 +385,7 @@
                             this.$message.success("删除成功");
                             this.getDraftInfoList();
                         // }
-                    },
-                    err => {
-                        if (err && err.data.resultMsg) {
-                            this.$message.error(err.data.resultMsg);
-                        } else {
-                            this.$message.error("接口异常");
-                        }
-
-                    }
-                );
+                    });
             },
             getDraftInfoList() {
                 var url = this.$apiUrl.parkInfo.lanchInfo;
@@ -420,11 +407,7 @@
                         // } else {
                         //     this.$message.info(failMsg + response.resultMsg);
                         // }
-                    },
-                    err => {
-                        this.$message.error("接口异常");
-                    }
-                );
+                    });
             },
             goBaoMing(scope) {
                 var informationId = scope.row.informationId;
