@@ -319,7 +319,8 @@ export default {
                     value: "", //绑定值
                     holder: "请输入公司名称",
                     nickName: "company",
-                    fx: true
+                    fx: true,
+                    nickName:'company'
                 },
                 {
                     name: "行业",
@@ -329,7 +330,8 @@ export default {
                     value: "", //绑定值
                     holder: "请输入行业",
                     nickName: "ind",
-                    fx: true
+                    fx: true,
+                    nickName:'ind'
                 },
                 {
                     name: "注册地",
@@ -338,7 +340,8 @@ export default {
                     sub: "", //备注说明（如单位等）
                     value: "", //绑定值
                     holder: "请输入注册地",
-                    fx: false
+                    fx: false,
+                    nickName:'area'
                 },
                 {
                     name: "联系人姓名",
@@ -347,7 +350,8 @@ export default {
                     sub: "", //备注说明（如单位等）
                     value: "", //绑定值
                     holder: "请输入联系人姓名",
-                    fx: false
+                    fx: false,
+                    nickName:'linkName'
                 },
                 {
                     name: "联系电话",
@@ -356,7 +360,8 @@ export default {
                     sub: "", //备注说明（如单位等）
                     value: "", //绑定值
                     holder: "请输入联系电话",
-                    fx: false
+                    fx: false,
+                    nickName:'phone'
                 },
                 {
                     name: "申请说明",
