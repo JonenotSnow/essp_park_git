@@ -31,9 +31,7 @@
                     <span class="inline_span">
                     <em>*</em>惠政内容：</span>
                     <div class="inline-box wrap">
-                        <!--<essp-editor :editorCont="this.content" @onEditorChange="onEditorChange"></essp-editor>-->
-                        <!--新版编辑器-->
-                        <vue-ueditor-wrap v-model="content" :config="ueditorConfig"/>
+                        <essp-editor :editorCont="this.content" @onEditorChange="onEditorChange"></essp-editor>
                     </div>
                 </div>
 
@@ -428,14 +426,7 @@
                         name: "发布惠政"
                     }
                 ],
-
                 content: "",//惠政详情
-                // 新版编辑器配置
-                ueditorConfig: {
-                    initialFrameWidth: 825,
-                    initialFrameHeight: 350
-                },
-
                 demoTags: [],
 
                 action_type_items: [
@@ -951,12 +942,12 @@
 
                 }).then(response => {
                     // if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
-                    this.$confirm(
-                        msg,
-                        maskConfig
-                    ).then(() => {
-                        this.$router.push(url);
-                    })
+                        this.$confirm(
+                            msg,
+                            maskConfig
+                        ).then(() => {
+                            this.$router.push(url);
+                        })
 
                     // } else {
                     //     this.$message.error(response.resultMsg);
@@ -1052,7 +1043,7 @@
 
                     }).then(response => {
                         // if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
-                        this.$router.push(url);
+                            this.$router.push(url);
                         // } else {
                         //     this.$message.error(response.resultMsg);
                         // }
@@ -1070,7 +1061,7 @@
                 }).then(response => {
                     var arr = response.resultData;
                     arr.forEach((item, index) => {
-                        if (item.cstId || item.cstNm) {
+                        if(item.cstId || item.cstNm){
                             item.key = item.cstId;
                             item.label = item.cstNm;
                             this.databox.push(item);
@@ -1140,38 +1131,38 @@
                         response => {
                             // var codestatus = response.resultCode;
                             // if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
-                            let data = response.resultData;
-                            this.formBaseList.action_theme = data.policyTitle;
-                            this.parkUploadData.src = data.titleImg;
-                            this.imageUrl = data.titleImg;
-                            this.content = data.infoDetail;
-                            console.log(data.fileUrl);
+                                let data = response.resultData;
+                                this.formBaseList.action_theme = data.policyTitle;
+                                this.parkUploadData.src = data.titleImg;
+                                this.imageUrl = data.titleImg;
+                                this.content = data.infoDetail;
+                                console.log(data.fileUrl);
 
-                            var fileList = JSON.parse(data.fileUrl);
+                                var fileList = JSON.parse(data.fileUrl);
 
-                            fileList.forEach((item, index) => {
-                                var obj = {
-                                    name: item.name,
-                                    url: item.url
-                                };
-                                this.fileList3.push(obj);
-                            })
+                                fileList.forEach((item, index) => {
+                                    var obj = {
+                                        name: item.name,
+                                        url: item.url
+                                    };
+                                    this.fileList3.push(obj);
+                                })
 
 //                                this.parkUploadData.src =  data.activityPhoto;
-                            this.formBaseList.fbjg = data.cstNm;
-                            console.log(data.tagsTxt);
-                            if (data.tagsTxt) {
-                                this.tags = data.tagsTxt.split(",") || "";
-                            }
+                                this.formBaseList.fbjg = data.cstNm;
+                                console.log(data.tagsTxt);
+                                if (data.tagsTxt) {
+                                    this.tags = data.tagsTxt.split(",") || "";
+                                }
 
 
-                            // applyMaximum
-                            console.log(data.applyMaximum);
-                            this.formTicketList.t_upperlimit = data.applyMaximum;
-                            this.formTicketList.t_intercheck = data.applyType
-                            this.formTicketList.t_isOnlineApply = data.isonlineApply;
-                            this.formTicketList.t_notes = data.approveComment;
-                            this.formTicketList.t_validateDate = [Moment(data.avaliableTime), Moment(data.avaliableEndTime)];
+                                // applyMaximum
+                                console.log(data.applyMaximum);
+                                this.formTicketList.t_upperlimit = data.applyMaximum;
+                                this.formTicketList.t_intercheck = data.applyType
+                                this.formTicketList.t_isOnlineApply = data.isonlineApply;
+                                this.formTicketList.t_notes = data.approveComment;
+                                this.formTicketList.t_validateDate = [Moment(data.avaliableTime), Moment(data.avaliableEndTime)];
 
                             // } else {
                             //     this.$message.info(response.resultMsg);

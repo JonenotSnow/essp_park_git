@@ -34,16 +34,14 @@
                     />
                 </el-form-item>
                 <el-form-item label="新闻动态详情：" prop="infoDetail" class="my-detail-edit">
-                    <!--<div class="my-quill-edit-wrap-ss">-->
-                    <!--<quill-editor-->
-                    <!--ref="myTextEditor"-->
-                    <!--v-model="ruleForm.infoDetail"-->
-                    <!--&gt;-->
-                    <!--<div id="toolbar" slot="toolbar"></div>-->
-                    <!--</quill-editor>-->
-                    <!--</div>-->
-                    <!--新版编辑器-->
-                    <vue-ueditor-wrap v-model="ruleForm.infoDetail" :config="ueditorConfig"/>
+                    <div class="my-quill-edit-wrap-ss">
+                        <quill-editor
+                            ref="myTextEditor"
+                            v-model="ruleForm.infoDetail"
+                        >
+                            <div id="toolbar" slot="toolbar"></div>
+                        </quill-editor>
+                    </div>
                 </el-form-item>
                 <el-form-item class="labelxing" label="新闻动态标签：">
                     <div class="inline_div_tag">
@@ -104,8 +102,14 @@
                     />
                 </el-form-item>
                 <el-form-item label="通知公告详情：" prop="infoDetail" class="my-detail-edit">
-                    <!--新版编辑器-->
-                    <vue-ueditor-wrap v-model="ruleForm.infoDetail" :config="ueditorConfig"/>
+                    <div class="my-quill-edit-wrap-ss">
+                        <quill-editor
+                            ref="myTextEditor"
+                            v-model="ruleForm.infoDetail"
+                        >
+                            <div id="toolbar" slot="toolbar"></div>
+                        </quill-editor>
+                    </div>
                 </el-form-item>
                 <el-form-item class="labelxing" label="通知公告标签：">
                     <div class="inline_div_tag">
@@ -157,8 +161,7 @@
         >
             <div class="my-scan-main">
                 <div class="main-head">
-                    <div class="head-title" v-if="this.ruleForm.informationTitle">{{this.ruleForm.informationTitle}}
-                    </div>
+                    <div class="head-title"  v-if="this.ruleForm.informationTitle">{{this.ruleForm.informationTitle}}</div>
                     <div class="head-tag" v-if="this.textTag && this.textTag.length > 0">
                         <essp-park-tag
                             v-for="(item, index) in this.textTag"
@@ -167,7 +170,7 @@
                         />
                     </div>
                 </div>
-                <div class="main-body">
+                <div class="main-body" >
                     <div v-html="this.ruleForm.infoDetail"></div>
                 </div>
                 <div class="main-foot" v-if="this.fileList && this.fileList.length > 0">
@@ -236,7 +239,7 @@
                 applyType: this.$route.query.applyType || '02', // 新闻动态：01，通知公告：02
                 id: this.$route.query.id || "",
                 userInfo: this.SSH.getItem("userInfo"), // 获取用户信息
-                textTag: [], // 标签
+                textTag:[], // 标签
                 timer: null,
                 //新版上传图片
                 parkUploadData: {
@@ -261,11 +264,6 @@
                 //     placeholder: "请输入模板内容",
                 //     theme: "snow"
                 // },
-                // 新版编辑器配置
-                ueditorConfig: {
-                    initialFrameWidth: 825,
-                    initialFrameHeight: 350
-                },
 
                 rules_01: {
                     informationTitle: [
@@ -347,10 +345,10 @@
                 var _this = this;
                 // 处理标签
                 _this.isShowTag = false;
-                if (this.textTag.length <= 0) {
+                if(this.textTag.length <= 0) {
                     _this.isShowTag = true;
                     clearTimeout(this.timer);
-                    _this.timer = setTimeout(function () {
+                    _this.timer = setTimeout(function(){
                         _this.isShowTag = false;
                     }, 2000)
 
@@ -362,12 +360,14 @@
                 this.ruleForm.tags = tags;
 
 
+
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
 
                         this.ruleForm.parkId = this.parkId;
 
                         this.ruleForm.saveType = saveType;
+
 
 
                         // 处理附件上传
@@ -389,26 +389,26 @@
                         this.$post(url, this.ruleForm).then(response => {
                             // let codestatus = response.resultCode;
                             // if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
-                            if (this.applyType === '01') {
-                                if (this.id) {
-                                    this.$message.success("新闻动态修改成功！");
-                                } else {
-                                    this.$message.success("新闻动态创建成功！");
+                                if (this.applyType === '01') {
+                                    if (this.id) {
+                                        this.$message.success("新闻动态修改成功！");
+                                    } else {
+                                        this.$message.success("新闻动态创建成功！");
+                                    }
+                                    this.$router.push({
+                                        path: '/parkHall/manage/publicNews'
+                                    });
                                 }
-                                this.$router.push({
-                                    path: '/parkHall/manage/publicNews'
-                                });
-                            }
-                            if (this.applyType === '02') {
-                                if (this.id) {
-                                    this.$message.success("通知公告修改改成功！");
-                                } else {
-                                    this.$message.success("通知公告创建成功！");
+                                if (this.applyType === '02') {
+                                    if (this.id) {
+                                        this.$message.success("通知公告修改改成功！");
+                                    } else {
+                                        this.$message.success("通知公告创建成功！");
+                                    }
+                                    this.$router.push({
+                                        path: '/parkHall/manage/publicNotice'
+                                    });
                                 }
-                                this.$router.push({
-                                    path: '/parkHall/manage/publicNotice'
-                                });
-                            }
                             // } else {
                             //     this.$message.info(response.resultMsg);
                             // }
@@ -428,7 +428,7 @@
                 // this.$refs[formName].resetFields();
 
                 // 处理标签
-                if (this.textTag.length > 0) {
+                if(this.textTag.length > 0) {
                     let tags = this.textTag.join(',');
                     this.ruleForm.tags = tags;
                 }
@@ -455,24 +455,24 @@
                 this.$post(url, this.ruleForm).then(response => {
                     // let codestatus = response.resultCode;
                     // if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
-                    if (this.applyType === '01') {
-                        this.$message.success("新闻动态暂存成功！");
-                        this.$router.push({
-                            path: '/parkHall/manage/publicNews',
-                            query: {
-                                status: '0'
-                            }
-                        });
-                    }
-                    if (this.applyType === '02') {
-                        this.$message.success("通知公告暂存成功！");
-                        this.$router.push({
-                            path: '/parkHall/manage/publicNotice',
-                            query: {
-                                status: '0'
-                            }
-                        });
-                    }
+                        if (this.applyType === '01') {
+                            this.$message.success("新闻动态暂存成功！");
+                            this.$router.push({
+                                path: '/parkHall/manage/publicNews',
+                                query: {
+                                    status: '0'
+                                }
+                            });
+                        }
+                        if (this.applyType === '02') {
+                            this.$message.success("通知公告暂存成功！");
+                            this.$router.push({
+                                path: '/parkHall/manage/publicNotice',
+                                query: {
+                                    status: '0'
+                                }
+                            });
+                        }
                     // } else {
                     //     this.$message.info(response.resultMsg);
                     // }
@@ -490,30 +490,30 @@
                     // let codestatus = response.resultCode;
                     // if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
 
-                    this.ruleForm = response.resultData;
+                        this.ruleForm = response.resultData;
 
-                    this.parkUploadData.src = this.ruleForm.titleImg ? this.ruleForm.titleImg : ""; //资讯配图
+                        this.parkUploadData.src = this.ruleForm.titleImg ? this.ruleForm.titleImg : ""; //资讯配图
 
 
-                    // 处理标签
-                    console.log("标签", response.resultData.tagsTxt);
-                    this.textTag = response.resultData.tagsTxt ? response.resultData.tagsTxt.split(",") : [];
-                    this.tagprops.entId = window.sessionStorage.getItem("parkId") + "_" + response.resultData.informationId; //获取标签
-                    // 删除时间“createTime”这个字段
-                    delete this.ruleForm.createTime;
+                        // 处理标签
+                        console.log("标签",response.resultData.tagsTxt);
+                        this.textTag = response.resultData.tagsTxt ? response.resultData.tagsTxt.split(",") : [];
+                        this.tagprops.entId = window.sessionStorage.getItem("parkId") + "_" + response.resultData.informationId; //获取标签
+                        // 删除时间“createTime”这个字段
+                        delete this.ruleForm.createTime;
 
-                    // 处理附件
-                    if (this.ruleForm.fileUrl) {
-                        let fileList = JSON.parse(this.ruleForm.fileUrl);
+                        // 处理附件
+                        if (this.ruleForm.fileUrl) {
+                            let fileList = JSON.parse(this.ruleForm.fileUrl);
 
-                        fileList.forEach((item, index) => {
-                            var obj = {
-                                name: item.name,
-                                url: item.url
-                            };
-                            this.fileList.push(obj);
-                        })
-                    }
+                            fileList.forEach((item, index) => {
+                                var obj = {
+                                    name: item.name,
+                                    url: item.url
+                                };
+                                this.fileList.push(obj);
+                            })
+                        }
 
 
                     // } else {
@@ -602,10 +602,13 @@
     }
 </script>
 <style>
+    .my-detail-edit .el-form-item__content {
+        line-height: normal;
+    }
+
     .labelxing {
         position: relative;
     }
-
     .labelxing .el-form-item__label:before {
         content: "*";
         margin-right: 4px;
@@ -664,6 +667,12 @@
                 }
             }
             .my-detail-edit {
+                .my-quill-edit-wrap {
+                    width: 825px;
+                    height: 360px;
+
+
+                }
             }
 
             .inline_div_tag {

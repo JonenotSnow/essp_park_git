@@ -108,16 +108,13 @@
             <i class="imicon">*</i>活动详情：
           </span>
                     <div class="inline-box wraps">
-                        <!--<quill-editor-->
-                        <!--ref="myTextEditor"-->
-                        <!--:options="editorOption"-->
-                        <!--v-model="editorOption.editorCon"-->
-                        <!--&gt;-->
-                        <!--<div id="toolbar" slot="toolbar"></div>-->
-                        <!--</quill-editor>-->
-
-                        <!--新版编辑器-->
-                        <vue-ueditor-wrap v-model="editorOption.editorCon" :config="ueditorConfig"/>
+                        <quill-editor
+                            ref="myTextEditor"
+                            :options="editorOption"
+                            v-model="editorOption.editorCon"
+                        >
+                            <div id="toolbar" slot="toolbar"></div>
+                        </quill-editor>
                     </div>
                 </div>
                 <ParkUpload :parkUploadData="parkUploadData" @changeImgUrl="showImgUrl"></ParkUpload>
@@ -164,7 +161,7 @@
                     <el-radio label="0">个人实名分页申报</el-radio>
                     <el-radio label="1">公司整体整合申报</el-radio>
                 </el-radio-group>
-                <el-button type="text" class="tipdetail" @click="setInstruction">
+                <el-button type="text" class="tipdetail" @click="setInstruction" >
                     <i class="blue el-icon-info">
                         <span class="tipdetail_text">设置说明</span>
                     </i>
@@ -692,20 +689,38 @@
                 p1: "",
                 p2: "",
                 toLimit: 0,
-
-                // 新版编辑器配置
+//                editorOption: {
+//
+//                    // readOnly: "true",
+//                    // placeholder: `请输入内容`
+//                },
                 editorOption: {
-                    editorCon: ""
-                },
-                ueditorConfig: {
-                    initialFrameWidth: 825,
-                    initialFrameHeight: 300
+                    readOnly: true,
+                    placeholder: '',
+                    editorCon: "",
+                    modules: {
+                        toolbar: [
+                            ['bold', 'italic', 'underline'],        // toggled buttons
+                            ['blockquote', 'code-block'],
+                            [{'header': 1}, {'header': 2}],
+                            [{'list': 'ordered'}, {'list': 'bullet'}],
+                            [{'script': 'sub'}, {'script': 'super'}],
+                            [{'indent': '-1'}, {'indent': '+1'}],
+                            [{'direction': 'rtl'}],
+                            [{'size': ['small', false, 'large', 'huge']}],
+                            [{'header': [1, 2, 3, 4, 5, 6, false]}],
+                            [{'color': []}, {'background': []}],
+                            [{'font': []}],
+                            [{'align': []}]
+                        ]
+                    },
+                    theme: 'snow'
                 },
                 thisDate: new Date(),
                 breadlist: [
                     {
                         path: "/parkIndex/park/launch",
-                        name: this.utils.isBdPark() ? '平台活动' : "园区活动"
+                        name: this.utils.isBdPark()?'平台活动':"园区活动"
                     },
                     {
                         path: "/parkIndex/launchForm",
@@ -906,8 +921,8 @@
                 activityLabel: [],
                 initiateUnits: "", //发起单位
                 initiatorWay: "1", //活动发起的渠道，pc端取:""
-                cstNm: this.SSH.getItem("userInfo").cstNm || "暂无",//发布方反显
-                enterType: this.utils.isBdPark() ? "1" : '0', //申报类型
+                cstNm:this.SSH.getItem("userInfo").cstNm || "暂无",//发布方反显
+                enterType: this.utils.isBdPark()?"1":'0', //申报类型
                 enterForm: {
                     formRqList: [],
                     formTypeList: []
@@ -948,7 +963,7 @@
 
                 // 创建成功弹窗
                 dialogVisible__SUCCESS: false,
-                parkFlag: true,//区分报名是否只有公司 true 默认开启选项
+                parkFlag:true,//区分报名是否只有公司 true 默认开启选项
             };
         },
         components: {
@@ -968,7 +983,7 @@
             this.objListName(); // 邀请对象
             this.getBaomingType(this.enterType); //设置默认报名表样式
 
-            if (this.isBdPark) {
+            if(this.isBdPark){
                 this.parkFlag = false;
 
             }
@@ -1027,7 +1042,7 @@
                     var arr = response.resultData;
 
                     arr.forEach((item, index) => {
-                        if (item.cstId && item.cstNm) {
+                        if(item.cstId && item.cstNm) {
                             item.key = item.cstId || '';
                             item.label = item.cstNm || '';
                             this.databox.push(item);
@@ -1151,36 +1166,36 @@
                         response => {
                             var codestatus = response.resultCode;
                             // if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
-                            let data = response.resultData;
-                            this.activityTheme = data.activityTheme || '';
-                            this.activityType = data.activityType;
-                            this.activityStarttime = data.activityStarttime || '';
-                            this.activityDays = data.activityDays || '';
-                            this.activityPlace = data.activityPlace || '';
-                            this.isCharge = data.isCharge || '';
-                            this.chargeInfo = data.chargeInfo || '';
-                            this.editorOption.editorCon = data.activityDetails || '';
-                            this.enterNeedAudit = data.enterNeedAudit || '';
-                            this.activityPhoto = data.activityPhoto || '';
-                            this.parkUploadData.src = data.activityPhoto || '';
-                            this.initiateUnits = data.initiateUnits || '';
-                            this.initiatorWay = data.initiatorWay || '';
-                            this.enterType = data.enterType || '';
-                            this.enterForm = JSON.parse(data.enterForm);
-                            this.ticketForm = JSON.parse(data.ticketForm);
-                            this.ticketLen = this.ticketForm.length;
-                            this.openScope = data.openScope;
-                            this.enterStarttime = data.enterStarttime;
-                            this.enterEndtime = data.enterEndtime;
-                            this.needCompanyAudit = data.needCompanyAudit;
-                            this.activityRemarks = data.activityRemarks;
-                            console.log();
-                            var tickNums = 0;
-                            this.ticketForm.forEach((item, index) => {
-                                tickNums += item.ticketNum
-                            })
-                            console.log(tickNums);
-                            this.enrolTopNum = tickNums;
+                                let data = response.resultData;
+                                this.activityTheme = data.activityTheme || '';
+                                this.activityType = data.activityType;
+                                this.activityStarttime = data.activityStarttime || '';
+                                this.activityDays = data.activityDays || '';
+                                this.activityPlace = data.activityPlace || '';
+                                this.isCharge = data.isCharge || '';
+                                this.chargeInfo = data.chargeInfo || '';
+                                this.editorOption.editorCon = data.activityDetails || '';
+                                this.enterNeedAudit = data.enterNeedAudit|| '';
+                                this.activityPhoto = data.activityPhoto || '';
+                                this.parkUploadData.src = data.activityPhoto || '';
+                                this.initiateUnits = data.initiateUnits || '';
+                                this.initiatorWay = data.initiatorWay || '';
+                                this.enterType = data.enterType || '';
+                                this.enterForm = JSON.parse(data.enterForm);
+                                this.ticketForm = JSON.parse(data.ticketForm);
+                                this.ticketLen = this.ticketForm.length;
+                                this.openScope = data.openScope;
+                                this.enterStarttime = data.enterStarttime;
+                                this.enterEndtime = data.enterEndtime;
+                                this.needCompanyAudit = data.needCompanyAudit;
+                                this.activityRemarks = data.activityRemarks;
+                                console.log( );
+                                var tickNums = 0 ;
+                                this.ticketForm.forEach((item,index) => {
+                                    tickNums += item.ticketNum
+                                })
+                                console.log(tickNums);
+                                this.enrolTopNum = tickNums;
 
                             // } else {
                             //     this.$message.error(response.resultMsg);
@@ -1401,13 +1416,13 @@
                             return;
                         }
                         brr = Array.from(new Set(arr));
-                        if (arr.length > brr.length) {
+                        if(arr.length > brr.length){
                             this.$message.error("不能有相同的票种名称");
                             return;
                         }
                     }
                 }
-                console.log("this.activityTheme", this.activityTheme);
+                console.log("this.activityTheme",this.activityTheme);
                 if (this.activityTheme == "") {
                     this.$message.error("活动主题不能为空！");
                     return;
@@ -1438,7 +1453,7 @@
                     this.$message.error("图片必传！");
                     return;
                 }
-                if (this.tags.length == 0) {
+                if(this.tags.length == 0) {
                     this.$message.error("标签必填！");
                     return;
                 }
@@ -1512,9 +1527,9 @@
                 }).then(
                     response => {
                         // if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
-                        this.$confirm(msg, maskConfig).then(() => {
-                            this.$router.push(url);
-                        });
+                            this.$confirm(msg, maskConfig).then(() => {
+                                this.$router.push(url);
+                            });
                         // } else {
                         //     this.$message.error(response.resultMsg);
                         // }
@@ -1582,12 +1597,12 @@
                         }).then(
                             response => {
                                 // if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
-                                this.$alert(response.resultMsg, {
-                                    confirmButtonText: "确定",
-                                    callback: action => {
-                                        this.$router.push(url);
-                                    }
-                                });
+                                    this.$alert(response.resultMsg, {
+                                        confirmButtonText: "确定",
+                                        callback: action => {
+                                            this.$router.push(url);
+                                        }
+                                    });
                                 // } else {
                                 //     this.$message.error(response.resultMsg);
                                 // }
@@ -1674,7 +1689,7 @@
             setInstruction() {
                 this.$router.push({
                     path: "/parkIndex/setInstruction",
-                    query: {pagetype: "active"}
+                    query: {pagetype:"active"}
                 });
             },
 

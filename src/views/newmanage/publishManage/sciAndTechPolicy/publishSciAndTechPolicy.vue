@@ -28,18 +28,15 @@
                     />
                 </el-form-item>
                 <el-form-item label="政策法规详情：" prop="infoDetail" class="my-detail-edit">
-                    <!--<div class="my-quill-edit-wrap-ss">-->
-                    <!--<quill-editor-->
-                    <!--ref="myTextEditor"-->
-                    <!--:options="editorOption"-->
-                    <!--v-model="ruleForm.infoDetail"-->
-                    <!--&gt;-->
-                    <!--<div id="toolbar" slot="toolbar"></div>-->
-                    <!--</quill-editor>-->
-                    <!--</div>-->
-
-                    <!--新版编辑器-->
-                    <vue-ueditor-wrap v-model="ruleForm.infoDetail" :config="ueditorConfig"/>
+                    <div class="my-quill-edit-wrap-ss">
+                        <quill-editor
+                            ref="myTextEditor"
+                            :options="editorOption"
+                            v-model="ruleForm.infoDetail"
+                        >
+                            <div id="toolbar" slot="toolbar"></div>
+                        </quill-editor>
+                    </div>
                 </el-form-item>
                 <el-form-item label="政策法规标签：" class="labelxing">
                     <div class="inline_div_tag">
@@ -114,8 +111,15 @@
                     />
                 </el-form-item>
                 <el-form-item label="科技服务详情：" prop="infoDetail" class="my-detail-edit">
-                    <!--新版编辑器-->
-                    <vue-ueditor-wrap v-model="ruleForm.infoDetail" :config="ueditorConfig"/>
+                    <div class="my-quill-edit-wrap-ss">
+                        <quill-editor
+                            ref="myTextEditor"
+                            :options="editorOption"
+                            v-model="ruleForm.infoDetail"
+                        >
+                            <div id="toolbar" slot="toolbar"></div>
+                        </quill-editor>
+                    </div>
                 </el-form-item>
                 <el-form-item label="科技服务标签：" class="labelxing">
                     <div class="inline_div_tag">
@@ -270,12 +274,6 @@
                 //     theme: "snow"
                 // },
 
-                // 新版编辑器配置
-                ueditorConfig: {
-                    initialFrameWidth: 825,
-                    initialFrameHeight: 350
-                },
-
                 rules_01: {
                     policyTitle: [
                         {required: true, message: '请输入政策法规标题', trigger: 'blur'},
@@ -393,34 +391,34 @@
                         this.$post("/policy/savePolicyTech", this.ruleForm).then(response => {
                             // let codestatus = response.resultCode;
                             // if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
-                            if (this.applyType === '01') {
-                                if (this.id) {
-                                    if (this.nuType === '0') {
+                                if (this.applyType === '01') {
+                                    if (this.id) {
+                                        if (this.nuType === '0') {
+                                            this.$message.success("政策法规创建成功！");
+                                        } else {
+                                            this.$message.success("政策法规修改成功！");
+                                        }
+                                    } else {
                                         this.$message.success("政策法规创建成功！");
-                                    } else {
-                                        this.$message.success("政策法规修改成功！");
                                     }
-                                } else {
-                                    this.$message.success("政策法规创建成功！");
+                                    this.$router.push({
+                                        path: '/parkHall/manage/sciAndTechPolicy/policieAndRegulation'
+                                    });
                                 }
-                                this.$router.push({
-                                    path: '/parkHall/manage/sciAndTechPolicy/policieAndRegulation'
-                                });
-                            }
-                            if (this.applyType === '02') {
-                                if (this.id) {
-                                    if (this.nuType === '0') {
+                                if (this.applyType === '02') {
+                                    if (this.id) {
+                                        if (this.nuType === '0') {
+                                            this.$message.success("科技服务创建成功！");
+                                        } else {
+                                            this.$message.success("科技服务修改成功！");
+                                        }
+                                    } else {
                                         this.$message.success("科技服务创建成功！");
-                                    } else {
-                                        this.$message.success("科技服务修改成功！");
                                     }
-                                } else {
-                                    this.$message.success("科技服务创建成功！");
+                                    this.$router.push({
+                                        path: '/parkHall/manage/sciAndTechPolicy/sciAndTechService'
+                                    });
                                 }
-                                this.$router.push({
-                                    path: '/parkHall/manage/sciAndTechPolicy/sciAndTechService'
-                                });
-                            }
                             // } else {
                             //     this.$message.info(response.resultMsg);
                             // }
@@ -479,24 +477,24 @@
                         this.$post("/policy/savePolicyTech", this.ruleForm).then(response => {
                             // let codestatus = response.resultCode;
                             // if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
-                            if (this.applyType === '01') {
-                                this.$message.success("政策法规暂存成功！");
-                                this.$router.push({
-                                    path: '/parkHall/manage/sciAndTechPolicy/policieAndRegulation',
-                                    query: {
-                                        status: '0'
-                                    }
-                                });
-                            }
-                            if (this.applyType === '02') {
-                                this.$message.success("科技服务暂存成功！");
-                                this.$router.push({
-                                    path: '/parkHall/manage/sciAndTechPolicy/sciAndTechService',
-                                    query: {
-                                        status: '0'
-                                    }
-                                });
-                            }
+                                if (this.applyType === '01') {
+                                    this.$message.success("政策法规暂存成功！");
+                                    this.$router.push({
+                                        path: '/parkHall/manage/sciAndTechPolicy/policieAndRegulation',
+                                        query: {
+                                            status: '0'
+                                        }
+                                    });
+                                }
+                                if (this.applyType === '02') {
+                                    this.$message.success("科技服务暂存成功！");
+                                    this.$router.push({
+                                        path: '/parkHall/manage/sciAndTechPolicy/sciAndTechService',
+                                        query: {
+                                            status: '0'
+                                        }
+                                    });
+                                }
                             // } else {
                             //     this.$message.info(response.resultMsg);
                             // }
@@ -520,30 +518,30 @@
                     // let codestatus = response.resultCode;
                     // if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
 
-                    this.ruleForm = response.resultData;
+                        this.ruleForm = response.resultData;
 
-                    // 删除时间“createTime”这个字段
-                    delete this.ruleForm.createTime;
+                        // 删除时间“createTime”这个字段
+                        delete this.ruleForm.createTime;
 
-                    // 处理标签
-                    if (response.resultData.tagsTxt) {
-                        this.showTags = response.resultData.tagsTxt.split(",");
-                    } else {
-                        this.showTags = [];
-                    }
-                    this.tagprops.entId = window.sessionStorage.getItem("parkId") + "_" + response.resultData.id; //获取标签
-                    // 处理附件
-                    if (this.ruleForm.fileUrl) {
-                        let fileList = JSON.parse(this.ruleForm.fileUrl);
+                        // 处理标签
+                        if (response.resultData.tagsTxt) {
+                            this.showTags = response.resultData.tagsTxt.split(",");
+                        } else {
+                            this.showTags = [];
+                        }
+                        this.tagprops.entId = window.sessionStorage.getItem("parkId") + "_" + response.resultData.id; //获取标签
+                        // 处理附件
+                        if (this.ruleForm.fileUrl) {
+                            let fileList = JSON.parse(this.ruleForm.fileUrl);
 
-                        fileList.forEach((item, index) => {
-                            var obj = {
-                                name: item.name,
-                                url: item.url
-                            };
-                            this.fileList.push(obj);
-                        })
-                    }
+                            fileList.forEach((item, index) => {
+                                var obj = {
+                                    name: item.name,
+                                    url: item.url
+                                };
+                                this.fileList.push(obj);
+                            })
+                        }
 
 
                     // } else {
@@ -689,6 +687,12 @@
             }
 
             .my-detail-edit {
+                /*.ql-container {*/
+                /*height: 170px;*/
+                /*}*/
+                /*.el-form-item__content {*/
+                /*line-height: normal;*/
+                /*}*/
             }
 
             .inline_div_tag {
