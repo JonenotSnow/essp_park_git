@@ -119,7 +119,7 @@
         color: #f56c6c;
     }
     .essp_message_position{
-        z-index: 2000;
+        z-index: 9999;
         position: fixed;
         top: 20px;
         left: 50%;
@@ -128,7 +128,7 @@
         transform: translateX(-50%);
     }
     .essp_message_style{
-        z-index: 2000;
+        z-index: 9999;
         width: 600px;
         margin: 5px 0px;
         border-width: 1px;
