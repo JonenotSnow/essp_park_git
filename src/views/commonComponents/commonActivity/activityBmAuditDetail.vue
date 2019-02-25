@@ -297,11 +297,7 @@ export default {
                     // } else {
                     //     this.$message.error(response.resultMsg);
                     // }
-                },
-                response => {
-                    this.$message.error(response.resultMsg);
-                }
-            );
+                });
         },
         // 取消
         cancelOption() {
