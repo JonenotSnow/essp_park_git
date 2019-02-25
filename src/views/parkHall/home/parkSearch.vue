@@ -356,7 +356,8 @@ export default {
                 endDate: this.timeRange.length>0?this.timeRange[1] : "",
                 tagTxt: this.tagTxt,
                 parkId: this.parkId,
-                title: this.indexSeachKW
+                title: this.indexSeachKW,
+                classtType:this.classtType
             };
             if(this.isBdPark) {
                 pop.classtType = this.classtType
