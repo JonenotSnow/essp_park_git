@@ -309,7 +309,6 @@ export default {
                                     } else {
                                         this.$set(childItem, "isShow", false)
                                     }
-
                                 } else {
                                     if(j == 0) {
                                         childItem.isShow = true;

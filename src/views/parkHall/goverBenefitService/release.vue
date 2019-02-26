@@ -80,7 +80,7 @@
                         <div class="detailcon detailcon_l essp-card-cont-inner1">
                             <h2 @click="goActiveDetail(item.id)">{{item.policyTitle}}</h2>
                             <!--<p class="release-introduce">{{item.infoDetail}}</p>-->
-                            <div class="release-introduce" v-html="item.infoDetail"></div>
+                            <div class="release-introduce" id="reset_con_style" v-html="item.infoDetail"></div>
                             <div class="fundiv">
                                 <span class="funitems">
                                     <i :class="icons[2]"></i>
@@ -114,206 +114,264 @@
 </template>
 
 <script>
-// import EsspTopToolbar from "@/components/EsspTopToolbar";
-import { goverBene } from "@/fetch/api/goverBene/goverBene";
-import Moment from "moment";
+    // import EsspTopToolbar from "@/components/EsspTopToolbar";
+    import { goverBene } from "@/fetch/api/goverBene/goverBene";
+    import Moment from "moment";
 
-export default {
-    components: {
-        // EsspTopToolbar,
-        Moment
-    },
-    name: "",
-    data() {
-        return {
-            msg: "我发起的惠政",
-            pageRanges: [5, 10, 20, 50, 100], //默认每页10条数区间
-            pageNum: 1, //当前页码
-            pageSize: 10, //每页条数
-            allTotal: 1, //总条数
-            startDate: "", //起始时间
-            endDate: "", //结束时间
-            pageType: "releaseGover", //发起的惠政列表页
-            activedata: [],
-            tag: [],
-            isLoginEnd:false,
-            curent_toolspan: 0,
-            toolspans: [
-                {
-                    id: 1,
-                    name: "已发布",
-                    path: "/parkIndex/goverBene/release"
-                },
-                {
-                    id: 2,
-                    name: "草稿箱",
-                    path: "/parkIndex/goverBene/draft"
-                }
-            ],
-            thisPage: 1, // 当前页数
-            icons: [
-                "icon iconfont icon-riqi",
-                "icon iconfont icon-dizhi",
-                "icon iconfont icon-liulan",
-                "icon iconfont icon-collect2"
-            ],
-            curstatus: 0,
-            nowTime: new Date().getTime(),
+    export default {
+        components: {
+            // EsspTopToolbar,
+            Moment
+        },
+        name: "",
+        data() {
+            return {
+                msg: "我发起的惠政",
+                pageRanges: [5, 10, 20, 50, 100], //默认每页10条数区间
+                pageNum: 1, //当前页码
+                pageSize: 10, //每页条数
+                allTotal: 1, //总条数
+                startDate: "", //起始时间
+                endDate: "", //结束时间
+                pageType: "releaseGover", //发起的惠政列表页
+                activedata: [],
+                tag: [],
+                isLoginEnd:false,
+                curent_toolspan: 0,
+                toolspans: [
+                    {
+                        id: 1,
+                        name: "已发布",
+                        path: "/parkIndex/goverBene/release"
+                    },
+                    {
+                        id: 2,
+                        name: "草稿箱",
+                        path: "/parkIndex/goverBene/draft"
+                    }
+                ],
+                thisPage: 1, // 当前页数
+                icons: [
+                    "icon iconfont icon-riqi",
+                    "icon iconfont icon-dizhi",
+                    "icon iconfont icon-liulan",
+                    "icon iconfont icon-collect2"
+                ],
+                curstatus: 0,
+                nowTime: new Date().getTime(),
 
-            //草稿合并参数
-            tableData3: [],
-            ids: "", //删除的ids
-            timeRange: [],
-            type: 0
-        };
-    },
-    methods: {
-        changeType(type) {
-            if (type == 0) {
-                this.type = type;
-                this.getMyPubPolList();
-            }
-            if (type == 1) {
-                this.type = type;
-                this.getGoverList();
-            }
+                //草稿合并参数
+                tableData3: [],
+                ids: "", //删除的ids
+                timeRange: [],
+                type: 0
+            };
         },
-        handleSizeChange(val) {
-            this.pageSize = val;
-            if (this.type == 0) {
-                this.getMyPubPolList();
-            } else {
-                this.getGoverList();
-            }
-        },
-        handleCurrentChange(val) {
-            this.pageNum = val;
-            if (this.type == 0) {
-                this.getMyPubPolList();
-            } else {
-                this.getGoverList();
-            }
-        },
-        auditActivity(id) {
-            this.$router.push({
-                path: "/parkIndex/goverEnrollForm",
-                query: {
-                    id: id
+        methods: {
+            changeType(type) {
+                if (type == 0) {
+                    this.type = type;
+                    this.getMyPubPolList();
                 }
-            });
-        },
-        editActivity(id) {
-            this.$router.push({
-                path: "/parkIndex/publishGover",
-                query: {
-                    draftId: id
+                if (type == 1) {
+                    this.type = type;
+                    this.getGoverList();
                 }
-            });
-        },
-        goGoverReviewBm(goverBenefitId) {
-            // /parkIndex/goverReviewBm
-            this.$router.push({
-                path: "/parkIndex/goverReviewBm",
-                query: {
-                    goverBenefitId: goverBenefitId
+            },
+            handleSizeChange(val) {
+                this.pageSize = val;
+                if (this.type == 0) {
+                    this.getMyPubPolList();
+                } else {
+                    this.getGoverList();
                 }
-            });
-        },
-        goActiveDetail(beneid) {
-            this.$router.push({
-                path: "/parkIndex/goverBeneDetail",
-                query: { id: beneid }
-            });
-        },
-        linkTo() {
-            this.$router.push("/parkIndex/publishGover");
-        },
-        diffDate(vaule, values1) {
-            var diff = values1 - vaule;
-            var day = Math.floor(diff / 1000 / 60 / 60 / 24);
-            return day + "天";
-        },
-        getMillisecond(vaule) {
-            // 获取秒数
-            return Moment(vaule).unix();
-        },
-        statusCn(startTime, endTime) {
-            if (!startTime && !endTime) {
-                return "发布成功";
-            }
-            // var thisTime = this.getMillisecond(new Date());
-            var enterEndtime = startTime / 1000; // 活动报名截止时间
-            var enterStarttime = endTime / 1000; // 活动报名开始时间
-            if (this.nowTime < enterStarttime) {
-                this.curstatus = 0;
-                return "预告中";
-            }
-            if (
-                this.nowTime >= enterStarttime &&
-                this.nowTime <= enterEndtime
-            ) {
-                this.curstatus = 1;
-                return "发布中";
-            }
-            if (this.nowTime > enterEndtime) {
-                this.curstatus = 2;
-                return "已结束";
-            }
-        },
-        getMyPubPolList() {
-            var url = this.$apiUrl.goverBene.getMyPubPol;
-            this.isLoginEnd = false;
-            this.$post(url, {
-                pageNum: this.pageNum,
-                pageSize: this.pageSize,
-                startDate: this.startDate,
-                endDate: this.endDate,
-                status: "01",
-                parkId: sessionStorage.getItem("parkId") || ""
-            }).then(
-                response => {
-                    // if (
-                    //     response.resultCode == "CLT000000000" ||
-                    //     response.resultCode == "0000000000"
-                    // ) {
+            },
+            handleCurrentChange(val) {
+                this.pageNum = val;
+                if (this.type == 0) {
+                    this.getMyPubPolList();
+                } else {
+                    this.getGoverList();
+                }
+            },
+            auditActivity(id) {
+                this.$router.push({
+                    path: "/parkIndex/goverEnrollForm",
+                    query: {
+                        id: id
+                    }
+                });
+            },
+            editActivity(id) {
+                this.$router.push({
+                    path: "/parkIndex/publishGover",
+                    query: {
+                        draftId: id
+                    }
+                });
+            },
+            goGoverReviewBm(goverBenefitId) {
+                // /parkIndex/goverReviewBm
+                this.$router.push({
+                    path: "/parkIndex/goverReviewBm",
+                    query: {
+                        goverBenefitId: goverBenefitId
+                    }
+                });
+            },
+            goActiveDetail(beneid) {
+                this.$router.push({
+                    path: "/parkIndex/goverBeneDetail",
+                    query: { id: beneid }
+                });
+            },
+            linkTo() {
+                this.$router.push("/parkIndex/publishGover");
+            },
+            diffDate(vaule, values1) {
+                var diff = values1 - vaule;
+                var day = Math.floor(diff / 1000 / 60 / 60 / 24);
+                return day + "天";
+            },
+            getMillisecond(vaule) {
+                // 获取秒数
+                return Moment(vaule).unix();
+            },
+            statusCn(startTime, endTime) {
+                if (!startTime && !endTime) {
+                    return "发布成功";
+                }
+                // var thisTime = this.getMillisecond(new Date());
+                var enterEndtime = startTime / 1000; // 活动报名截止时间
+                var enterStarttime = endTime / 1000; // 活动报名开始时间
+                if (this.nowTime < enterStarttime) {
+                    this.curstatus = 0;
+                    return "预告中";
+                }
+                if (
+                    this.nowTime >= enterStarttime &&
+                    this.nowTime <= enterEndtime
+                ) {
+                    this.curstatus = 1;
+                    return "发布中";
+                }
+                if (this.nowTime > enterEndtime) {
+                    this.curstatus = 2;
+                    return "已结束";
+                }
+            },
+            getMyPubPolList() {
+                var url = this.$apiUrl.goverBene.getMyPubPol;
+                this.isLoginEnd = false;
+                this.$post(url, {
+                    pageNum: this.pageNum,
+                    pageSize: this.pageSize,
+                    startDate: this.startDate,
+                    endDate: this.endDate,
+                    status: "01",
+                    parkId: sessionStorage.getItem("parkId") || ""
+                }).then(
+                    response => {
+                        // if (
+                        //     response.resultCode == "CLT000000000" ||
+                        //     response.resultCode == "0000000000"
+                        // ) {
                         this.isLoginEnd = true;
                         this.activedata = response.resultData.policyList;
                         this.allTotal = response.resultData.total;
                         this.tag = this.activedata.tagsTxt
                             ? this.activedata.tagsTxt
                             : [];
-                    // } else {
-                    //     this.$message.info(response.resultMsg);
-                    // }
-                },
-                err => {
-                    this.isLoginEnd = true;
-                    this.$message.error("接口异常");
+                        // } else {
+                        //     this.$message.info(response.resultMsg);
+                        // }
+                    },
+                    err => {
+                        this.isLoginEnd = true;
+                        this.$message.error("接口异常");
+                    }
+                );
+            },
+            delBene(id) {
+                if (id == "") {
+                    this.$message("您没有选择删除的项目！");
+                    return;
                 }
-            );
-        },
-        delBene(id) {
-            if (id == "") {
-                this.$message("您没有选择删除的项目！");
-                return;
-            }
-            var pop = { ids: id };
-            var url = this.$apiUrl.goverBene.delPolicy;
+                var pop = { ids: id };
+                var url = this.$apiUrl.goverBene.delPolicy;
 
-            this.$confirm("删除该项目,是否继续?", "提示", {
-                confirmButtonText: "确定",
-                cancelButtonText: "取消",
-                type: "warning"
-            }).then(() => {
+                this.$confirm("删除该项目,是否继续?", "提示", {
+                    confirmButtonText: "确定",
+                    cancelButtonText: "取消",
+                    type: "warning"
+                }).then(() => {
+                    this.$post(url, pop).then(
+                        response => {
+                            // if (
+                            //     response.resultCode == "CLT000000000" ||
+                            //     response.resultCode == "0000000000"
+                            // ) {
+                            this.$message.success("删除成功");
+                            this.activedata = [];
+                            this.getMyPubPolList();
+                            // } else {
+                            //     this.$message.info(response.resultMsg);
+                            // }
+                        },
+                        err => {
+                            this.$message.error("接口异常");
+                        }
+                    );
+                });
+            },
+            goBaoMing(scope) {
+                var draftId = scope.row.id;
+                this.$router.push({
+                    path: "/parkIndex/publishGover",
+                    query: { draftId: draftId }
+                });
+            },
+            handleSelectionChange(val) {
+                var _this = this;
+                var selectArray = [];
+                this.multipleSelection = val;
+                this.multipleSelection.forEach(function(item) {
+                    var id = item.id;
+                    selectArray.push(id);
+                });
+                _this.ids = selectArray.join(",");
+            },
+            getGoverList() {
+                var url = goverBene["getMyPubPol"] || "";
+
+                this.$post(url, {
+                    pageNum: this.pageNum,
+                    pageSize: this.pageSize,
+                    startDate: this.timeRange[0] ? this.timeRange[0] : "",
+                    endDate: this.timeRange[1] ? this.timeRange[1] : "",
+                    status: "0",
+                    parkId: sessionStorage.getItem("parkId") || ""
+                }).then(response => {
+                    this.timeRange = [];
+                    this.tableData3 = response.resultData.policyList;
+                    this.allTotal = response.resultData.total;
+                });
+            },
+            delDelDraft() {
+                if (this.ids == "") {
+                    this.$message("您没有选择删除的项目！");
+                    return;
+                }
+                var ids = this.ids;
+                var pop = { ids: ids };
+                var url = this.$apiUrl.goverBene.delPolicy;
                 this.$post(url, pop).then(
                     response => {
                         // if (
                         //     response.resultCode == "CLT000000000" ||
                         //     response.resultCode == "0000000000"
                         // ) {
-                            this.$message.success("删除成功");
-                            this.activedata = [];
-                            this.getMyPubPolList();
+                        this.getGoverList();
                         // } else {
                         //     this.$message.info(response.resultMsg);
                         // }
@@ -322,417 +380,379 @@ export default {
                         this.$message.error("接口异常");
                     }
                 );
-            });
-        },
-        goBaoMing(scope) {
-            var draftId = scope.row.id;
-            this.$router.push({
-                path: "/parkIndex/publishGover",
-                query: { draftId: draftId }
-            });
-        },
-        handleSelectionChange(val) {
-            var _this = this;
-            var selectArray = [];
-            this.multipleSelection = val;
-            this.multipleSelection.forEach(function(item) {
-                var id = item.id;
-                selectArray.push(id);
-            });
-            _this.ids = selectArray.join(",");
-        },
-        getGoverList() {
-            var url = goverBene["getMyPubPol"] || "";
+            },
 
-            this.$post(url, {
-                pageNum: this.pageNum,
-                pageSize: this.pageSize,
-                startDate: this.timeRange[0] ? this.timeRange[0] : "",
-                endDate: this.timeRange[1] ? this.timeRange[1] : "",
-                status: "0",
-                parkId: sessionStorage.getItem("parkId") || ""
-            }).then(response => {
-                this.timeRange = [];
-                this.tableData3 = response.resultData.policyList;
-                this.allTotal = response.resultData.total;
-            });
-        },
-        delDelDraft() {
-            if (this.ids == "") {
-                this.$message("您没有选择删除的项目！");
-                return;
-            }
-            var ids = this.ids;
-            var pop = { ids: ids };
-            var url = this.$apiUrl.goverBene.delPolicy;
-            this.$post(url, pop).then(
-                response => {
-                    // if (
-                    //     response.resultCode == "CLT000000000" ||
-                    //     response.resultCode == "0000000000"
-                    // ) {
-                        this.getGoverList();
-                    // } else {
-                    //     this.$message.info(response.resultMsg);
-                    // }
-                },
-                err => {
-                    this.$message.error("接口异常");
+            // 判断是不是自己发布的
+            checkActivityOperateAuth(recordOwner) {
+                let defautlFlag = false;
+                let currentUser = this.SSH.getItem("userName");
+
+                if (currentUser === recordOwner) {
+                    defautlFlag = true;
                 }
-            );
+
+                return defautlFlag;
+            }
         },
-
-        // 判断是不是自己发布的
-        checkActivityOperateAuth(recordOwner) {
-            let defautlFlag = false;
-            let currentUser = this.SSH.getItem("userName");
-
-            if (currentUser === recordOwner) {
-                defautlFlag = true;
-            }
-
-            return defautlFlag;
-        }
-    },
-    mounted() {},
-    created() {
-        if (this.$route.query.type) {
-            this.type = this.$route.query.type;
-            if (this.type == 1) {
-                return this.getGoverList();
-            }
-        }
-        this.getMyPubPolList();
-    },
-    computed: {
-        activityLabelList() {
-            let arr = [];
-            let brr = [];
-            let len = this.activedata.length;
-            for (let i = 0; i < len; i++) {
-                if (this.activedata[i].tagsTxt != undefined) {
-                    arr = this.activedata[i].tagsTxt.split(",");
-                } else {
-                    arr = [];
+        mounted() {},
+        created() {
+            if (this.$route.query.type) {
+                this.type = this.$route.query.type;
+                if (this.type == 1) {
+                    return this.getGoverList();
                 }
-                brr.push(arr);
             }
-            return brr;
+            this.getMyPubPolList();
+        },
+        computed: {
+            activityLabelList() {
+                let arr = [];
+                let brr = [];
+                let len = this.activedata.length;
+                for (let i = 0; i < len; i++) {
+                    if (this.activedata[i].tagsTxt != undefined) {
+                        arr = this.activedata[i].tagsTxt.split(",");
+                    } else {
+                        arr = [];
+                    }
+                    brr.push(arr);
+                }
+                return brr;
+            }
+        },
+        filters: {
+            statusFormat(value) {
+                let statusList = {
+                    "10": "园区待审核",
+                    "01": "园区审核中",
+                    "02": "发布中",
+                    "12": "园区审核未通过",
+                    "21": "企业待审核",
+                    "05": "企业审核中",
+                    "03": "企业审核未通过",
+                    "13": "高级管理员待审核",
+                    "14": "高级管理员审核中"
+                };
+                return statusList[value] ? statusList[value] : "————";
+            },
+            timerFormat(vaule) {
+                return Moment(vaule).format("YYYY-MM-DD");
+            },
+            timerFormatDraft(vaule) {
+                return Moment(vaule).format("YYYY-MM-DD HH:mm");
+            },
+            disableBtnFormat(code) {
+                // 在审核状态不可编辑
+                return code == "01" || code == "10";
+            }
         }
-    },
-    filters: {
-        statusFormat(value) {
-            let statusList = {
-                "10": "园区待审核",
-                "01": "园区审核中",
-                "02": "发布中",
-                "12": "园区审核未通过",
-                "21": "企业待审核",
-                "05": "企业审核中",
-                "03": "企业审核未通过",
-                "13": "高级管理员待审核",
-                "14": "高级管理员审核中"
-            };
-            return statusList[value] ? statusList[value] : "————";
-        },
-        timerFormat(vaule) {
-            return Moment(vaule).format("YYYY-MM-DD");
-        },
-        timerFormatDraft(vaule) {
-            return Moment(vaule).format("YYYY-MM-DD HH:mm");
-        },
-        disableBtnFormat(code) {
-            // 在审核状态不可编辑
-            return code == "01" || code == "10";
-        }
-    }
-};
+    };
 </script>
 
 <style scoped lang='less'>
-@import "../../../assets/css/mixin";
+    @import "../../../assets/css/mixin";
 
-.launchcon {
-    padding: 0px 20px 0;
-    background: #fff;
-}
+    .launchcon {
+        padding: 0px 20px 0;
+        background: #fff;
+    }
 
-.pageList {
-    background: #fff;
-    text-align: right;
-    padding: 20px 20px 10px;
-}
+    .pageList {
+        background: #fff;
+        text-align: right;
+        padding: 20px 20px 10px;
+    }
 
-// 消息简介汇总
-.itemli {
-    margin-top: 25px;
-}
+    // 消息简介汇总
+    .itemli {
+        margin-top: 25px;
+    }
 
-.infostit {
-    background-color: #f1f1f1;
-    height: 30px;
-    line-height: 30px;
-    span {
-        float: left;
-        // width: 30%;
-        padding-left: 1%;
-        text-align: left;
-        color: #666666;
-        em {
-            margin-left: 4px;
-            font-style: normal;
-            /*color: #00a0e9;*/
+    .infostit {
+        background-color: #f1f1f1;
+        height: 30px;
+        line-height: 30px;
+        span {
+            float: left;
+            // width: 30%;
+            padding-left: 1%;
+            text-align: left;
+            color: #666666;
+            em {
+                margin-left: 4px;
+                font-style: normal;
+                /*color: #00a0e9;*/
+            }
+        }
+
+        .spanfabu {
+            width: 23%;
+        }
+
+        .spantime {
+            width: 23%;
+        }
+
+        .spanfabuzhong {
+            width: 15%;
+        }
+
+        .delete {
+            float: right;
+            margin-right: 10px;
+
+            i {
+                cursor: pointer;
+            }
         }
     }
 
-    .spanfabu {
-        width: 23%;
-    }
-
-    .spantime {
-        width: 23%;
-    }
-
-    .spanfabuzhong {
-        width: 15%;
-    }
-
-    .delete {
-        float: right;
-        margin-right: 10px;
-
-        i {
-            cursor: pointer;
-        }
-    }
-}
-
-.infocon {
-    margin-top: 10px;
-    transition: all 1s;
-    &:hover {
-        zoom: 1;
-        box-shadow: 1px 1px 2px 0px rgba(0, 102, 179, 0.15);
-    }
-    h2 {
-        margin-top: 5px;
-    }
-    .funitems {
-        margin-right: 15px;
-    }
-}
-
-.logocon {
-    display: inline-block;
-    position: relative;
-    margin-right: 20px;
-    width: 25%;
-    height: 140px;
-    line-height: 140px;
-    transition: all 1s;
-    &:hover .img_tips {
-        display: block;
-        transform: scale(1.02);
-    }
-    //显示hover效果的遮盖层
-    .img_tips {
-        display: none;
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 20px;
-        background-color: #000000;
-        p {
-            position: absolute;
-            top: 0;
-            color: #fff;
-        }
-        .enrolled {
-            left: 10px;
-        }
-        .cost {
-            right: 10px;
-        }
-    }
-    .detaillogo {
-        display: block;
-        width: 100%;
-        height: 100%;
+    .infocon {
+        margin-top: 10px;
         transition: all 1s;
         &:hover {
+            zoom: 1;
+            box-shadow: 1px 1px 2px 0px rgba(0, 102, 179, 0.15);
+        }
+        h2 {
+            margin-top: 5px;
+        }
+        .funitems {
+            margin-right: 15px;
+        }
+    }
+
+    .logocon {
+        display: inline-block;
+        position: relative;
+        margin-right: 20px;
+        width: 25%;
+        height: 140px;
+        line-height: 140px;
+        transition: all 1s;
+        &:hover .img_tips {
+            display: block;
             transform: scale(1.02);
         }
-    }
-}
-
-.detailcon {
-}
-
-.detailcon_l {
-    display: inline-block;
-    width: 60%;
-    height: 140px;
-    h2 {
-        margin-top: 10px;
-        font-size: 18px;
-        color: #444;
-        .esspellipsis();
-        font-weight: normal;
-        &:hover {
-            cursor: pointer;
-        }
-    }
-    .release-introduce {
-        margin: 15px 0;
-        height: 38px;
-        &>p{
-            .esspellipsitwo();
-        }
-    }
-    .fundiv {
-        .funitems {
-            i {
-                margin-right: 5px;
-                color: #ff9900;
+        //显示hover效果的遮盖层
+        .img_tips {
+            display: none;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 20px;
+            background-color: #000000;
+            p {
+                position: absolute;
+                top: 0;
+                color: #fff;
+            }
+            .enrolled {
+                left: 10px;
+            }
+            .cost {
+                right: 10px;
             }
         }
-        p {
-            margin-bottom: 10px;
-            font-size: 12px;
+        .detaillogo {
+            display: block;
+            width: 100%;
+            height: 100%;
+            transition: all 1s;
+            &:hover {
+                transform: scale(1.02);
+            }
+        }
+    }
+
+    .detailcon {
+    }
+
+    .detailcon_l {
+        display: inline-block;
+        width: 60%;
+        height: 140px;
+        h2 {
+            margin-top: 10px;
+            font-size: 18px;
+            color: #444;
+            .esspellipsis();
             font-weight: normal;
-            font-stretch: normal;
-            letter-spacing: 0;
-            color: #999999;
-            i {
-                margin-right: 10px;
-                color: #ff9900;
-            }
-            span {
-                margin-right: 20px;
-            }
-        }
-    }
-}
-
-.detailcon_r {
-    display: inline-block;
-    float: right;
-    padding-top: 40px;
-    padding-right: 10px;
-    .essp-btn {
-        display: block;
-        padding: 0 10px;
-        min-width: 80px;
-        height: 28px;
-        line-height: 28px;
-        font-size: 14px;
-        color: #fff;
-        border-radius: 14px;
-        outline: none;
-    }
-}
-
-.statusnum {
-    margin-bottom: 15px;
-    span {
-        float: left;
-        margin-right: 20px;
-        font-size: 16px;
-        line-height: 24px;
-        color: #777;
-    }
-}
-
-.addrdiv {
-    margin-bottom: 15px;
-    color: #999999;
-    i {
-        margin-right: 5px;
-    }
-}
-
-//合并草稿箱追加
-.toolcon {
-    /*margin-bottom: 10px;*/
-    padding: 24px 0;
-    .toolleft {
-        float: left;
-        span {
-            font-size: 18px;
-            cursor: pointer;
-            &:nth-of-type(1) {
-                padding-right: 15px;
-                border-right: 1px solid #ccc;
-            }
-            &:nth-of-type(2) {
-                padding-left: 15px;
-            }
-        }
-        .showblue {
-            color: #00a0e9 !important;
-        }
-        .toolspan {
-            float: left;
-            padding: 0 7px;
-            position: relative;
-            font-size: 18px;
-            padding-right: 15px;
-            height: 30px;
-            line-height: 30px;
-            color: #333333;
             &:hover {
                 cursor: pointer;
             }
-            &:before {
-                content: " ";
-                position: absolute;
-                width: 1px;
-                height: 70%;
-                right: 0;
-                top: 5px;
-                background: #ccc;
+        }
+        .release-introduce {
+            margin: 15px 0;
+            height: 38px;
+            &>p{
+                .esspellipsitwo();
             }
-            &:last-child {
-                padding-left: 15px;
-                border-right: none;
-                &:before {
-                    width: 0;
+        }
+        .fundiv {
+            .funitems {
+                i {
+                    margin-right: 5px;
+                    color: #ff9900;
+                }
+            }
+            p {
+                margin-bottom: 10px;
+                font-size: 12px;
+                font-weight: normal;
+                font-stretch: normal;
+                letter-spacing: 0;
+                color: #999999;
+                i {
+                    margin-right: 10px;
+                    color: #ff9900;
+                }
+                span {
+                    margin-right: 20px;
                 }
             }
         }
     }
-    .toolright {
+
+    .detailcon_r {
+        display: inline-block;
         float: right;
-        .toolright_btn {
-            position: relative;
-            line-height: 30px;
+        padding-top: 40px;
+        padding-right: 10px;
+        .essp-btn {
+            display: block;
+            padding: 0 10px;
+            min-width: 80px;
+            height: 28px;
+            line-height: 28px;
             font-size: 14px;
-            padding: 0 8px 0 35px;
-            i {
-                position: absolute;
-                left: 6px;
-                top: 4px;
-                font-size: 22px;
-            }
+            color: #fff;
+            border-radius: 14px;
+            outline: none;
         }
     }
 
-}
-.launchcon_hz ul li:nth-child(1) {
-    margin-top: 0;
-}
-.edit-btn {
-    padding: 5px 15px;
-    width: 85px;
-    height: 30px;
-    line-height: 20px;
-    color: #fff;
-    border: none;
-    border-radius: 50px;
-    background: #409eff;
-    .edit-text {
-        margin-right: 15px;
+    .statusnum {
+        margin-bottom: 15px;
+        span {
+            float: left;
+            margin-right: 20px;
+            font-size: 16px;
+            line-height: 24px;
+            color: #777;
+        }
     }
-}
+
+    .addrdiv {
+        margin-bottom: 15px;
+        color: #999999;
+        i {
+            margin-right: 5px;
+        }
+    }
+
+    //合并草稿箱追加
+    .toolcon {
+        /*margin-bottom: 10px;*/
+        padding: 24px 0;
+        .toolleft {
+            float: left;
+            span {
+                font-size: 18px;
+                cursor: pointer;
+                &:nth-of-type(1) {
+                    padding-right: 15px;
+                    border-right: 1px solid #ccc;
+                }
+                &:nth-of-type(2) {
+                    padding-left: 15px;
+                }
+            }
+            .showblue {
+                color: #00a0e9 !important;
+            }
+            .toolspan {
+                float: left;
+                padding: 0 7px;
+                position: relative;
+                font-size: 18px;
+                padding-right: 15px;
+                height: 30px;
+                line-height: 30px;
+                color: #333333;
+                &:hover {
+                    cursor: pointer;
+                }
+                &:before {
+                    content: " ";
+                    position: absolute;
+                    width: 1px;
+                    height: 70%;
+                    right: 0;
+                    top: 5px;
+                    background: #ccc;
+                }
+                &:last-child {
+                    padding-left: 15px;
+                    border-right: none;
+                    &:before {
+                        width: 0;
+                    }
+                }
+            }
+        }
+        .toolright {
+            float: right;
+            .toolright_btn {
+                position: relative;
+                line-height: 30px;
+                font-size: 14px;
+                padding: 0 8px 0 35px;
+                i {
+                    position: absolute;
+                    left: 6px;
+                    top: 4px;
+                    font-size: 22px;
+                }
+            }
+        }
+
+    }
+    .launchcon_hz ul li:nth-child(1) {
+        margin-top: 0;
+    }
+    .edit-btn {
+        padding: 5px 15px;
+        width: 85px;
+        height: 30px;
+        line-height: 20px;
+        color: #fff;
+        border: none;
+        border-radius: 50px;
+        background: #409eff;
+        .edit-text {
+            margin-right: 15px;
+        }
+    }
+</style>
+
+<!--该问题为了暂时修复内容BUG-->
+<style>
+    #reset_con_style p, #reset_con_style li, #reset_con_style ul,
+    #reset_con_style div, #reset_con_style span,#reset_con_style em,
+    #reset_con_style i, #reset_con_style strong, #reset_con_style ol,
+    #reset_con_style dl, #reset_con_style dt, #reset_con_style dd,
+    #reset_con_style h1, #reset_con_style h2[data-v-2dskfasjj], #reset_con_style h3,
+    #reset_con_style h4, #reset_con_style h5 {
+        font-size: 14px!important;
+        color: #555!important;
+        line-height: 18px!important;
+        font-weight: normal!important;
+        font-style: normal!important;
+        text-align: left!important;
+        text-indent: 0!important;
+        padding: 0!important;
+        margin: 0!important;
+    }
 </style>
