@@ -141,7 +141,7 @@ export default {
             );
         },
         toOut() {
-            this.windowOpenNoParams("/messageCenter/sysMsg");
+            this.windowOpenNoParams("/messageCenter/parkMsg");
         },
         toHis() {
             window.history.go(-1);
