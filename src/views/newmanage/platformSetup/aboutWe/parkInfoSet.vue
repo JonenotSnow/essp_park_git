@@ -144,16 +144,16 @@ export default {
                 });
                 return;
             }
-            if (this.writeInfo.phoneNumber) {
-                let mb= /^([0-9]{3,4}-)?[0-9]{7,8}$/;
-                if (!mb.test(this.writeInfo.phoneNumber) ){
-                    this.$message({
-                        message: '固定电话格式不对',
-                        type: 'warning'
-                    });
-                    return;
-                }
-            }
+            // if (this.writeInfo.phoneNumber) {
+            //     let mb= /^([0-9]{3,4}-)?[0-9]{7,8}$/;
+            //     if (!mb.test(this.writeInfo.phoneNumber) ){
+            //         this.$message({
+            //             message: '固定电话格式不对',
+            //             type: 'warning'
+            //         });
+            //         return;
+            //     }
+            // }
             if (!this.writeInfo.email) {
                 this.$message({
                     message: '联系邮箱不能为空',
