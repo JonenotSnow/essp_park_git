@@ -256,47 +256,73 @@ export default {
                 opMark: opMark
             }).then(
                 response => {
-                    // if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
-                        _that.infoList = response.resultData;
-                        _that.items = JSON.parse(
-                            _that.infoList.activityTicketForm
-                        ); //总票数
-                        if (
-                            _that.infoList &&
+                    _that.infoList = response.resultData;
+                    _that.items = JSON.parse(
+                        _that.infoList.activityTicketForm
+                    ); //总票数
+                    if (
+                        _that.infoList &&
+                        _that.infoList.activityTicketUse
+                    ) {
+                        _that.activityTicketUse = JSON.parse(
                             _that.infoList.activityTicketUse
-                        ) {
-                            _that.activityTicketUse = JSON.parse(
-                                _that.infoList.activityTicketUse
-                            ); //已用票
-                        }
-                        //人数校验
-                        let len = _that.items.length;
-                        let leng = _that.activityTicketUse.length;
-                        let sum = []; //剩余可报名人数
-                        for (let i = 0; i < len; i++) {
-                            for (let j = 0; j < leng; j++) {
-                                if (
-                                    _that.items[i].ticketType ==
-                                    _that.items[j].ticketType
-                                ) {
-                                    let use =
-                                        _that.items[i].ticketNum -
-                                        _that.activityTicketUse[j].ticketUse;
-                                    sum.push(use);
-                                }
+                        ); //已用票
+                    }
+                    //人数校验
+                    let len = _that.items.length;
+                    let leng = _that.activityTicketUse.length;
+                    let sum = []; //剩余可报名人数
+                    for (let i = 0; i < len; i++) {
+                        for (let j = 0; j < leng; j++) {
+                            if (
+                                _that.items[i].ticketType ==
+                                _that.items[j].ticketType
+                            ) {
+                                let use =
+                                    _that.items[i].ticketNum -
+                                    _that.activityTicketUse[j].ticketUse;
+                                sum.push(use);
                             }
                         }
-                        for (let i = 0; i < sum.length; i++) {
-                            this.remain += sum[i];
-                            console.log(this.remain);
-                        }
-                        var enterForm = JSON.parse(this.infoList.enterForm); //申报信息
+                    }
+                    for (let i = 0; i < sum.length; i++) {
+                        this.remain += sum[i];
+                        console.log(this.remain);
+                    }
+                    var enterForm = JSON.parse(this.infoList.enterForm); //申报信息
 
-                        this.enrollType = this.infoList.enterType;
-                        this.nrollFormList = enterForm;
-                    // } else {
-                    //     this.$message.error(response.resultMsg);
-                    // }
+                    this.enrollType = this.infoList.enterType;
+                    this.nrollFormList = enterForm;
+                    var lens = this.nrollFormList.length;
+                    var nrollFormArr = []; // 设置一个参数
+                    if(this.nrollFormList.length > 0 && this.nrollFormList[0][0].requester == "APP") {
+                        console.log(lens);
+                        for(var j = 0; j < lens; j++) {
+                            var item = this.nrollFormList[j];
+                            var childLen = this.nrollFormList[j].length;
+                            console.log(item);
+                            for(var z = 0; z < childLen; z ++) {
+                                var childItem = item[z];
+                                if(!childItem.isShow) {
+                                    if(j == 0) {
+                                        this.$set(childItem, "isShow", true)
+                                    } else {
+                                        this.$set(childItem, "isShow", false)
+                                    }
+
+                                } else {
+                                    if(j == 0) {
+                                        childItem.isShow = true;
+                                    } else {
+                                        childItem.isShow = false;
+                                    }
+
+                                }
+                                console.log(childItem);
+                            }
+                        }
+                    }
+                    console.log(this.nrollFormList);
                 });
         },
         // 取消
@@ -317,7 +343,6 @@ export default {
                 },
                 response => {
                     this.noAccess = false;
-                    this.$message.error(response.resultMsg);
                 }
             );
         },
@@ -362,7 +387,6 @@ export default {
                 },
                 response => {
                     this.access = false;
-                    this.$message.error(response.resultMsg);
                 }
             );
         }
