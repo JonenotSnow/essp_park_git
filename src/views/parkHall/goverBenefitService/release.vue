@@ -586,7 +586,9 @@ export default {
     .release-introduce {
         margin: 15px 0;
         height: 38px;
-        .esspellipsitwo();
+        &>p{
+            .esspellipsitwo();
+        }
     }
     .fundiv {
         .funitems {

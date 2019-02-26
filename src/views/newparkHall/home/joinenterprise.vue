@@ -16,7 +16,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="entermore" @click="linkToPage"><span>More <i
+                <div class="entermore"><span @click="linkToPage">More <i
                 class="el-icon-arrow-right"></i></span></div>
             </div>
             <div v-else class="nobox"><i class="myicon"></i><span class="tipspan">暂无数据</span></div>
