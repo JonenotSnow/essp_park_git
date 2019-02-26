@@ -51,7 +51,8 @@
                         </li>
                         <li>
                             <span><em>*</em>联系电话：</span>
-                            <input type="text" v-model="writeInfo.phoneNumber" placeholder="0000-0000000格式">
+                            <input type="text" v-model="writeInfo.phoneNumber" placeholder="请输入固定电话或手机号码">
+                            <span class="notice">(&nbsp;固定电话格式：0000-0000000&nbsp;)</span>
                         </li>
                         <li>
                             <span><em>*</em>联系邮箱：</span>
@@ -367,6 +368,10 @@ export default {
                     }
                     button{
                         margin-left:50px;
+                    }
+                    .notice{
+                        margin-left:20px;
+                        color:#999!important;
                     }
                 }
             }
