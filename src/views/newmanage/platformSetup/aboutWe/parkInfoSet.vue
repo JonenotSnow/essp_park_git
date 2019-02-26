@@ -43,7 +43,7 @@
             <li>
                 <span><em>*</em>联系电话：</span>
                 <input type="text" v-model="writeInfo.phoneNumber" placeholder="请输入固定电话或手机号码">
-                <span class="notice">(&nbsp;固定电话格式：0000-0000000&nbsp;)</span>
+                <span class="notice">(&nbsp;固定电话格式：区号-号码&nbsp;)</span>
             </li>
             <li>
                 <span><em>*</em>联系邮箱：</span>
@@ -155,7 +155,7 @@ export default {
                     });
                     return;
                 }
-                if (!tb.test(this.writeInfo.phoneNumber)){
+                if (!this.writeInfo.phoneNumber.includes('-') && !tb.test(this.writeInfo.phoneNumber)){
                     this.$message({
                         message: '该手机号码不存在',
                         type: 'warning'
