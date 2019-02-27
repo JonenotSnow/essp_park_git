@@ -182,7 +182,16 @@
             }
         },
         mounted() {
-            this.listTemp = this.list;
+            if (this.isBdPark){
+                for (let i = 0; i < this.list.length; i++) {
+                    if (this.list[i].type == 1) {
+                        this.listTemp.push(this.list[i])
+                    }
+                    
+                }
+            }else{
+                this.listTemp = this.list;
+            }
             if (this.listTemp.length > 1) {
                 this.timer = setInterval(this.scroll, 2500);
             } else {
