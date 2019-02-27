@@ -20,13 +20,11 @@ let loadinginstance,
 axios.interceptors.request.use(
     config => {
         //判断用户是否被冻结
-        if (SSH.getItem('freezeFlag') === '1') {
-            if (utils.isFreeze(config.url)) {
-                Message.error({
-                    message: '您已被限制使用该功能，若需继续使用，请与您的建行客户经理联系或在线发起申诉。',
-                });
-                return Promise.reject(config)
-            }
+        if (SSH.getItem('freezeFlag') === '1' && utils.isFreeze(config.url)) {
+            Message.error({
+                message: '您已被限制使用该功能，若需继续使用，请与您的建行客户经理联系或在线发起申诉。',
+            });
+            return Promise.reject(config)
         }
         config.headers.requester = 'PC';
         if (!utils.isEmpty(SSH.getItem('grayFlag')))
@@ -159,14 +157,16 @@ axios.interceptors.response.use((res) => {
             });
         }
     } else {
-        let detailMsg = '报错参数：' + (error.response && error.response.config && error.response.config.url ? error.response.config.url : null) +
-            ' ;报错状态码：' + (error.response && error.response.status ? error.response.status : null) +
-            ' ;报错类型：' + constants.RETURN_CODE.ERROR_NETWORK_TYPE
-        Message.error({
-            message: '连接服务器失败,请检查网络是否正常',
-            errType: constants.RETURN_CODE.ERROR_NETWORK_TYPE,
-            detailMessage: detailMsg,
-        });
+        if (!(SSH.getItem('freezeFlag') === '1' && utils.isFreeze(config.url))) {
+            let detailMsg = '报错参数：' + (error.url ? error.url : null) +
+                ' ;报错类型：' + constants.RETURN_CODE.ERROR_NETWORK_TYPE +
+                ' ;报错详情：' + '无响应体'
+            Message.error({
+                message: '连接服务器失败,请检查网络是否正常',
+                errType: constants.RETURN_CODE.ERROR_NETWORK_TYPE,
+                detailMessage: detailMsg,
+            });
+        }
     }
     return Promise.reject(error);
 });

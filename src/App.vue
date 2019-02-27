@@ -1,6 +1,6 @@
 <template>
     <div class="app" id="app" v-loading="loading2">
-        <div :class="messageFixed == true ? 'init_isFixed' :''"  v-if="msgList.length>0">
+        <div :class="messageFixed == true ? 'init_isFixed' :'init_default'"  v-if="msgList.length>0">
             <essp-message :messageList="msgList" :errMsgList="errMsgList" :timeOutMsgList="timeOutMsgList"></essp-message>
         </div>
         <div class="myChat" :style="getTheWidth()" v-show="chat.openChat" @mousedown="moveChat" id='myChat'>
@@ -302,6 +302,18 @@
 
 <style lang="less">
     @import "./assets/css/mixin";
+    .init_default{
+        z-index: 9999;
+    }
+    .init_isFixed {
+        position: fixed;
+        background-color: @essp_con_bg;
+        top: 0;
+        width: 100%;
+        min-width: @essp_width_auto;
+        z-index: 9999;
+        box-shadow: 0px 4px 21px 0px rgba(116, 116, 116, 0.12);
+    }
     .app{
         .init_isFixed {
             position: fixed;
