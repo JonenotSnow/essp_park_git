@@ -155,7 +155,7 @@
                     })
             },
             openOne(){
-                if (!this.mark) {
+                if (this.mark.match(/^\s*$/)) {
                     this.$message({
                         type: 'warning',
                         message: '审核意见不能为空'
@@ -165,7 +165,7 @@
                 this.access = true;
             },
             openTwo(){
-                if (!this.mark) {
+                if (this.mark.match(/^\s*$/)) {
                     this.$message({
                         type: 'warning',
                         message: '审核意见不能为空'
