@@ -150,6 +150,11 @@ export default {
         }
     },
     methods: {
+        resetFormParam(){
+            this.pageNum = 1;
+            this.pageSize = 5;
+            this.seachVal = '';
+        },
         handleSizeChange(val) {
             this.pageSize = val;
             this.getMemInfo();
@@ -229,6 +234,7 @@ export default {
                     message: response.resultMsg
                 })
             })
+            this.resetFormParam();
             await this.getMemInfo();
             this.dialogTableVisible = false;
         },
@@ -247,9 +253,10 @@ export default {
                     entTp : '3000001'
                 })
                 .then((response) => {
-                    this.dynamicTags =response.resultData.lblInfo;
+                    this.dynamicTags = response.resultData.lblInfo;
+                    console.log(this.dynamicTags);
 
-                    if (this.dynamicTags.length>0) {
+                    if (this.dynamicTags && this.dynamicTags.length>0) {
                         this.dynamicTags.map(x=>{
                             this.forTagList.push(x.lblTxt)
                         })

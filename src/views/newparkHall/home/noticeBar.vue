@@ -2,7 +2,8 @@
     <div class="noticeBar">
         <!--/parkHall/manage/activityPoolAddPark-->
         <!--  公告快捷入口的模块-->
-        <div class="noticeBox" :class="{lineTwo:(LoginUserRole.includes('33') || LoginUserRole.includes('34'))?true:false}">
+        <div class="noticeBox"
+             :class="{lineTwo:(LoginUserRole.includes('33') || LoginUserRole.includes('34'))?true:false}">
             <div class="swiper_com esspclearfix">
                 <div class="swiper_inner">通知公告：</div>
                 <div v-if="infoList.length>0">
@@ -98,13 +99,11 @@
                     startDate: "",
                     title: "",
                     type: 2
-                })
-                    .then(result => {
-                        this.infoList = result.resultData.informationList; //通告数据源
-                    })
-                    .catch(err => {
-                        this.$message.error("接口异常");
-                    });
+                }).then(result => {
+                    this.infoList = result.resultData.informationList; //通告数据源
+                }).catch(err => {
+                    this.$message.error("接口异常");
+                });
             },
             //列表
             getNoticeList() {
@@ -156,8 +155,11 @@
                 }
             },
             //校验审核状态
-            cancelAudit(rows){
-                this.$router.push({path:'/parkHall/manage/manageParkAuditDetail',query:{entityId:rows.id,cstId:rows.cstId}});
+            cancelAudit(rows) {
+                this.$router.push({
+                    path: '/parkHall/manage/manageParkAuditDetail',
+                    query: {entityId: rows.id, cstId: rows.cstId}
+                });
             },
             goNoticeList() {
                 if (this.isBdPark) {
@@ -182,7 +184,7 @@
         background-size: contain;
         /*padding-top: 110px;*/
         /*padding-bottom: 16px;*/
-        .noticeBox{
+        .noticeBox {
             position: relative;
             overflow: hidden;
             cursor: pointer;
@@ -191,7 +193,7 @@
             left: 50%;
             top: -45px;
             margin-left: -400px;
-            background: rgba(255,255,255,0.8);
+            background: rgba(255, 255, 255, 0.8);
             z-index: 2;
             font-size: 14px;
             /*box-shadow: 2.5px 4.3px 4.8px 0.2px rgba(0, 0, 0, 0.2);
@@ -206,7 +208,7 @@
             -o-border-radius: 6px 6px 0px 0px;
             border-radius: 6px 6px 0px 0px;
         }
-        .noticeBox.lineTwo{
+        .noticeBox.lineTwo {
             top: -80px;
         }
     }
