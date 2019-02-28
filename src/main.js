@@ -89,6 +89,7 @@ if (process.env.NODE_ENV === "production") {
 } else {
     //require('./mock/index.js')
 }
+
 Vue.prototype.$openUrl = openUrl;
 
 import axios from "axios";

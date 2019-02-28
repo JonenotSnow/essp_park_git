@@ -69,8 +69,8 @@
                     </el-table-column>
                     <el-table-column align="center" prop="" width="100" label="操作">
                         <template slot-scope="scope">
-                            <span v-if="scope.row.status == '02'" class="operation"
-                                  @click="linkToAuditDetail(scope.row)">查看</span>
+            <span v-if="scope.row.status == '02'" class="operation"
+                  @click="linkToAuditDetail(scope.row)">查看</span>
                             <!--<span v-if="scope.row.status == '02'" class="operation"-->
                             <!--@click="linkToPublishDetail(scope.row)">查看</span>-->
                             <span v-if="scope.row.status == '12'" class="operation"
@@ -83,19 +83,23 @@
                     </el-table-column>
                 </el-table>
                 <!-- <div class="noData" v-if="policieAndRegulationData.length == 0 && requestTip == '数据加载中...'">
-                    <div class="no-list-desc">
-                        {{requestTip}}
-                    </div>
+                <div class="no-list-desc">
+                {{requestTip}}
+                </div>
                 </div>
                 <div class="noData" v-if="policieAndRegulationData.length == 0 && requestTip == '数据加载完毕'">
-                    <div class="no-list-pic">
-                        <img src="@assets/newparkimg/no-list-img.png" alt="">
-                    </div>
-                    <div class="no-list-desc">
-                        暂无数据
-                    </div>
+                <div class="no-list-pic">
+                <img src="@assets/newparkimg/no-list-img.png" alt="">
+                </div>
+                <div class="no-list-desc">
+                暂无数据
+                </div>
                 </div> -->
-                <essp-loading :loading="requestTip == '数据加载中...'" :loadingMsg="requestTip" :nodata="policieAndRegulationData.length == 0 && requestTip == '数据加载完毕'"></essp-loading>
+                <essp-loading
+                    :loading="requestTip == '数据加载中...'"
+                    :loadingMsg="requestTip"
+                    :nodata="policieAndRegulationData.length == 0 && requestTip == '数据加载完毕'"
+                ></essp-loading>
             </div>
             <div class="pageList">
                 <el-pagination
@@ -205,15 +209,10 @@
 
 
                 this.$post("/audit/getAuditList", params).then(response => {
-                    // let codestatus = response.resultCode;
-                    // if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
-                        let resultData = response.resultData;
-                        this.totalCount = resultData.policyCount;
-                        this.policieAndRegulationData = resultData.policyList;
-                        this.requestTip = '数据加载完毕';
-                    // } else {
-                    //     this.$message.info(response.resultMsg);
-                    // }
+                    let resultData = response.resultData;
+                    this.totalCount = resultData.policyCount;
+                    this.policieAndRegulationData = resultData.policyList;
+                    this.requestTip = '数据加载完毕';
                 }, err => {
                     this.$message.error("接口异常");
                 })

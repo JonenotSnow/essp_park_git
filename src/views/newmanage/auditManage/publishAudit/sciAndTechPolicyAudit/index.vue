@@ -8,21 +8,21 @@
         </div>
         <div class="policie-and-regulation-main">
             <policies-and-regulations v-if="status=='0'"/>
-            <technology-service v-if="status=='1'"/>
+            <sci-and-tech-service v-if="status=='1'"/>
         </div>
     </div>
 </template>
 
 <script>
     import policiesAndRegulations from "./policieAndRegulation.vue";
-    import technologyService from "./sciAndTechService.vue";
+    import sciAndTechService from "./sciAndTechService.vue";
 
     export default {
         name: 'vue-temp',
         props: {},
         components: {
             policiesAndRegulations,
-            technologyService
+            sciAndTechService
         },
         data() {
             return {

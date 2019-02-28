@@ -76,7 +76,7 @@
                         <p class="title_p">请添加合适该企业的标签，可多选</p>
                     </div>
                     <div class="yList">
-                        <el-tag v-if="TJTagList && TJTagList.length>0" :key="it.lblId" v-for="it in TJTagList" @click.native="addTagToL(it)">{{it.lblTxt}}</el-tag>
+                        <el-tag v-if="TJTagList && TJTagList.length>0 && i<6" :key="it.lblId" v-for="(it,i) in TJTagList" @click.native="addTagToL(it)">{{it.lblTxt}}</el-tag>
                     </div>
                     <div class="relist">
                         <el-tag :key="tag" v-for="tag in forTagList" closable :disable-transitions="false" @close="handleClose(tag)">{{tag}}</el-tag>

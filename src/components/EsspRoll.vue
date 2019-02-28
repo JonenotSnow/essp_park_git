@@ -9,7 +9,7 @@
                 ref="esspRoll"
                 @click.stop="getNoticeDetail(item)"
             >
-                <span style="display: inline-block">{{item.title || item.informationTitle}}</span>
+                <span style="display: inline-block">{{item.title || item.informationTitle || '暂无数据'}}</span>
                 <span
                     style="display: inline-block; float: right; color: #999;"
                 >{{item.createTime | timerFormat}}</span>

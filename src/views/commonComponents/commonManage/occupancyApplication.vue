@@ -319,8 +319,7 @@ export default {
                     value: "", //绑定值
                     holder: "请输入公司名称",
                     nickName: "company",
-                    fx: true,
-                    nickName:'company'
+                    fx: true
                 },
                 {
                     name: "行业",
@@ -330,8 +329,7 @@ export default {
                     value: "", //绑定值
                     holder: "请输入行业",
                     nickName: "ind",
-                    fx: true,
-                    nickName:'ind'
+                    fx: true
                 },
                 {
                     name: "注册地",
