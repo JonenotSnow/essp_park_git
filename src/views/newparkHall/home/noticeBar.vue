@@ -13,7 +13,7 @@
                     <!--v-html="infoList[0].title||infoList[0].informationTitle"-->
                     <!--@click="getNoticeDetail()"-->
                     <!--&gt;</div>-->
-                    <essp-roll listType="infoList" :list="infoList" class="swiper_inner3"/>
+                    <essp-roll :listType="'infoList'" :list.sync="infoList" class="swiper_inner3"/>
                     <!--<div-->
                     <!--style="padding-top: 8px"-->
                     <!--class="swiper_inner2"-->
@@ -40,7 +40,7 @@
                     <!--<div class="swiper_inner3" @click="cancelAudit(applyParkList[0].id)">-->
                     <!--{{applyParkList[0].cstNm}}-->
                     <!--</div>-->
-                    <essp-roll listType="applyParkList" :list="applyParkList" class="swiper_inner3"/>
+                    <essp-roll :listType="'applyParkList'" :list.sync="applyParkList" class="swiper_inner3"/>
 
                     <!-- <span
                         style="display: inline-block; padding-top: 9px"
@@ -126,7 +126,6 @@
                     parkId: window.sessionStorage.getItem("parkId")
                 }).then(response => {
                     if (response.resultData) {
-                        this.applyParkList = response.resultData;
                         let list=[]
                         if (this.isBdPark){
                             for (let i = 0; i < response.resultData.length; i++) {
@@ -137,6 +136,8 @@
                             }
                             this.applyParkList = list
                             // Vue.$set(this.applyParkList,list)
+                        } else {
+                            this.applyParkList = response.resultData;
                         }
                     }
                 });
