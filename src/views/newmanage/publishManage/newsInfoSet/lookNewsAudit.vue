@@ -60,7 +60,7 @@
                 </el-form-item>
             </el-form>
             <div class="audit-line" v-if="userInfo.userPostList.includes('34') && (satpDate.status== '13')"></div>
-            <div class="audit-button" v-if="userInfo.userPostList.includes('34') && (satpDate.status== '13')">
+            <div class="audit-button" v-if="userInfo.userPostList.includes('34') && (satpDate.status== '13') && isAudit !== '01'">
                 <span class="audit-btn audit-success" @click="submit('02')">通过</span><span
                 class="audit-btn audit-reject" @click="submit('12')">不通过</span>
             </div>
@@ -142,6 +142,7 @@
                 parkId: sessionStorage.getItem("parkId") || "",
                 applyType: this.$route.query.applyType || '01',
                 id: this.$route.query.id || "",
+                isAudit: this.$route.query.isAudit || '00',
                 userInfo: this.SSH.getItem("userInfo"), // 获取用户信息
                 userType: '',
                 breadlist_01: [
@@ -150,12 +151,12 @@
                         name: "系统管理"
                     },
                     {
-                        path: "/parkHall/manage/publicNews",
-                        name: "发布管理"
+                        path: this.$route.query.manageType ? "/parkHall/manage/sciAndTechPolicyAudit" : "/parkHall/manage/publicNews",
+                        name: this.$route.query.manageType ? "审核管理" : "发布管理"
                     },
                     {
-                        path: "/parkHall/manage/publicNews",
-                        name: "新闻动态"
+                        path: this.$route.query.manageType ? "/parkHall/manage/newsNoticeAudit" : "/parkHall/manage/publicNews",
+                        name: this.$route.query.manageType ? "资讯公告" : "新闻动态"
                     },
                     {
                         path: "",
@@ -168,12 +169,12 @@
                         name: "系统管理"
                     },
                     {
-                        path: "/parkHall/manage/publicNews",
-                        name: "发布管理"
+                        path: this.$route.query.manageType ? "/parkHall/manage/sciAndTechPolicyAudit" : "/parkHall/manage/publicNews",
+                        name: this.$route.query.manageType ? "审核管理" : "发布管理"
                     },
                     {
-                        path: "/parkHall/manage/publicNotice",
-                        name: "通知公告"
+                        path: this.$route.query.manageType ? "/parkHall/manage/newsNoticeAudit" : "/parkHall/manage/publicNotice",
+                        name: this.$route.query.manageType ? "资讯公告" : "通知公告"
                     },
                     {
                         path: "",
