@@ -744,7 +744,7 @@
     #reset_con_style div, #reset_con_style span,#reset_con_style em,
     #reset_con_style i, #reset_con_style strong, #reset_con_style ol,
     #reset_con_style dl, #reset_con_style dt, #reset_con_style dd,
-    #reset_con_style h1, #reset_con_style h2[data-v-2dskfasjj], #reset_con_style h3,
+    #reset_con_style h1, #reset_con_style h2, #reset_con_style h3,
     #reset_con_style h4, #reset_con_style h5 {
         font-size: 14px!important;
         color: #555!important;
