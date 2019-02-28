@@ -41,7 +41,8 @@ export default {
                 query: {
                     id: item.informationId,
                     status: item.status,
-                    applyType: this.entityType == 1 ? '01' : '02'
+                    applyType: this.entityType == 1 ? '01' : '02',
+                    manageType: true
                 }
             });
         },

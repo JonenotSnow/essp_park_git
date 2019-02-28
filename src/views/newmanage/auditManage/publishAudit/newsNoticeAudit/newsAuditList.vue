@@ -208,8 +208,8 @@ import newsNoticeMixins from './newsNoticeMixins'
                     font-stretch: normal;
                     line-height: 30px;
                     letter-spacing: 0px;
-                    cursor: pointer;
                     color: #00a0e9;
+                    cursor: pointer;
                 }
             }
 
