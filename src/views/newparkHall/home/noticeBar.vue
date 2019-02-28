@@ -128,6 +128,14 @@
                 }).then(response => {
                     if (response.resultData) {
                         this.applyParkList = response.resultData;
+                        if (this.isBdPark){
+                            for (let i = 0; i < this.list.length; i++) {
+                                if (this.list[i].type == 1) {
+                                    this.listTemp.push(this.list[i])
+                                }
+                                
+                            }
+            }
                     }
                 });
             },
