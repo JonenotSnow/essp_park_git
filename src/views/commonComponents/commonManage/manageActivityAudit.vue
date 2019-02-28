@@ -200,7 +200,7 @@
                         name: this.utils.isBdPark() ? "系统管理" : "园区管理"
                     },
                     {
-                        path:  '/parkHall/manage/activityPoolActivityAuditing',
+                        path: this.utils.isBdPark() ?'/parkHall/manage/activityPoolActivityAuditing':'/parkHall/manage/activityPoolActivityAditing',
                         name: this.utils.isBdPark() ? "审核管理" : "任务池"
                     },
                     {
@@ -352,7 +352,8 @@
                     })
                 this.access = false;
                 this.noAccess = false;
-                this.$router.push('/parkHall/manage/activityPoolActivityAuditing')
+                let url =  this.utils.isBdPark() ?'/parkHall/manage/activityPoolActivityAuditing':'/parkHall/manage/activityPoolActivityAditing';
+                this.$router.push(url);
             },
             //取消审核
             cancelAudit() {
@@ -362,8 +363,9 @@
                 //     type: '02',
                 //     status: '10',
                 //     flag: "noContent"
-                // })
-                this.$router.push('/parkHall/manage/activityPoolActivityAuditing')
+                // })  
+                let url =  this.utils.isBdPark() ?'/parkHall/manage/activityPoolActivityAuditing':'/parkHall/manage/activityPoolActivityAditing';
+                this.$router.push(url);
             }
         },
         filters: {

@@ -108,6 +108,7 @@
             },
             getListInfoTags(item){
                 this.typeselect = item.id;
+                this.typeName = item.name;
                 this.show = false;
             },
             goSearchPage() {
