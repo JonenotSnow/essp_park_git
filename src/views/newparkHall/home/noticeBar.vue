@@ -130,8 +130,8 @@
                         this.applyParkList = response.resultData;
                         if (this.isBdPark){
                             for (let i = 0; i < response.resultData.length; i++) {
-                                if (this.list[i].type == 1) {
-                                    this.applyParkList.push(this.list[i])
+                                if (response.resultData[i].type == 1) {
+                                    this.applyParkList.push(response.resultData[i])
                                 }
                                 
                             }
