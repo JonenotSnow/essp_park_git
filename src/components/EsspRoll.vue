@@ -2,7 +2,7 @@
     <div class="esspRoll-wrap">
         <ul class="roll-content">
             <li
-                v-if="listType == 'infoList' && listTemp.length>0"
+                v-if="listType == 'infoList'"
                 :class="{anim : animate == true}"
                 v-for="(item, index) in listTemp"
                 :key="index"
@@ -10,13 +10,12 @@
                 @click.stop="getNoticeDetail(item)"
             >
                 <span style="display: inline-block">{{item.title || item.informationTitle}}</span>
-                <span style="display: inline-block; float: right; color: #999;">{{item.createTime | timerFormat}}</span>
-            </li>
-            <li v-if="listType == 'infoList' && listTemp.length == 0">
-                <span>暂无数据~~~</span>
+                <span
+                    style="display: inline-block; float: right; color: #999;"
+                >{{item.createTime | timerFormat}}</span>
             </li>
             <li
-                v-if="listType == 'applyParkList' && listTemp.length>0"
+                v-if="listType == 'applyParkList'"
                 :class="{anim : animate == true}"
                 v-for="(item, index) in listTemp"
                 :key="index"
@@ -24,10 +23,12 @@
                 @click.stop="cancelAudit(item)"
             >
                 <span style="display: inline-block">{{item | messageFormat}}</span>
-                <span style="display: inline-block; float: right; color: #999;">{{(item.joinTime || item.time) | timerFormat}}</span>
-            </li>
-            <li v-if="listType == 'applyParkList' && listTemp.length == 0">
-                <span>暂无数据~~~</span>
+                <span
+                    style="display: inline-block; float: right; color: #999;"
+                >{{(item.joinTime || item.time) | timerFormat}}</span>
+
+                <!--<span style="display: inline-block">{{item.title || item.informationTitle}}</span>-->
+                <!--<span style="display: inline-block; float: right; color: #999;">{{item.createTime | timerFormat}}</span>-->
             </li>
         </ul>
     </div>

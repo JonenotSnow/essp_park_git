@@ -55,7 +55,7 @@
                         @size-change="handleSizeChange"
                         @current-change="handleCurrentChange"
                         :current-page="pageNum"
-                        :page-sizes="[3, 10, 15, 20]"
+                        :page-sizes="[5, 10, 15, 20]"
                         :page-size="pageSize"
                         layout="total, sizes, prev, pager, next, jumper"
                         :total="totalCount">
@@ -108,7 +108,7 @@ export default {
         return{
             totalCount:0,
             pageNum:1,
-            pageSize:3,
+            pageSize:5,
             seachVal:'',
             dialogTableVisible:false,
             addType:false,
