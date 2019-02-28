@@ -1,5 +1,5 @@
 <template>
-    <div id="noOpenNeed">
+    <div class="noOpenNeed">
         <div class="baseInfo">
             <div class="searchAdd">
                 <ul>
@@ -107,7 +107,7 @@ import newsNoticeMixins from './newsNoticeMixins'
 </script>
 
 <style lang='less' scoped>
-    #noOpenNeed {
+    .noOpenNeed {
         .baseInfo {
             width: 1000px;
             margin-bottom: 50px;
