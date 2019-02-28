@@ -2,20 +2,21 @@
     <div class="esspRoll-wrap">
         <ul class="roll-content">
             <li
-                v-if="listType == 'infoList'"
+                v-if="listType == 'infoList' && listTemp.length>0"
                 :class="{anim : animate == true}"
                 v-for="(item, index) in listTemp"
                 :key="index"
                 ref="esspRoll"
                 @click.stop="getNoticeDetail(item)"
             >
-                <span style="display: inline-block">{{item.title || item.informationTitle || '暂无数据'}}</span>
-                <span
-                    style="display: inline-block; float: right; color: #999;"
-                >{{item.createTime | timerFormat}}</span>
+                <span style="display: inline-block">{{item.title || item.informationTitle}}</span>
+                <span style="display: inline-block; float: right; color: #999;">{{item.createTime | timerFormat}}</span>
+            </li>
+            <li v-if="listType == 'infoList' && listTemp.length == 0">
+                <span>暂无数据~~~</span>
             </li>
             <li
-                v-if="listType == 'applyParkList'"
+                v-if="listType == 'applyParkList' && listTemp.length>0"
                 :class="{anim : animate == true}"
                 v-for="(item, index) in listTemp"
                 :key="index"
@@ -23,12 +24,10 @@
                 @click.stop="cancelAudit(item)"
             >
                 <span style="display: inline-block">{{item | messageFormat}}</span>
-                <span
-                    style="display: inline-block; float: right; color: #999;"
-                >{{(item.joinTime || item.time) | timerFormat}}</span>
-
-                <!--<span style="display: inline-block">{{item.title || item.informationTitle}}</span>-->
-                <!--<span style="display: inline-block; float: right; color: #999;">{{item.createTime | timerFormat}}</span>-->
+                <span style="display: inline-block; float: right; color: #999;">{{(item.joinTime || item.time) | timerFormat}}</span>
+            </li>
+            <li v-if="listType == 'applyParkList' && listTemp.length == 0">
+                <span>暂无数据~~~</span>
             </li>
         </ul>
     </div>
