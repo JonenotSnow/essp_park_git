@@ -125,16 +125,8 @@
                 this.$post(this.$apiUrl.manage.getLastApplyPark, {
                     parkId: window.sessionStorage.getItem("parkId")
                 }).then(response => {
-                    if (response.resultData) {
-                        this.applyParkList = [];
-                        if (this.isBdPark) {
-                            for (let i = 0; i < response.resultData.length; i++) {
-                                if (response.resultData[i].type == 1) {
-                                    this.applyParkList.push(response.resultData[i])
-                                }
-                            }
-                        }
-                    }
+                    let resultData = response.resultData;
+                    this.applyParkList = resultData;
                 });
             },
             getNoticeDetail() {
