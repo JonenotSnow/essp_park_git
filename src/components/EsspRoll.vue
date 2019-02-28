@@ -68,7 +68,8 @@
                     _this.listTemp.push(_this.listTemp.shift());
                     // 这个地方如果不把animate 取反会出现消息回滚的现象，此时把ul 元素的过渡属性取消掉就可以完美实现无缝滚动的效果了
                     // _this.animate = !_this.animate;
-                })
+                });
+
                 setTimeout(function () {
                     // _this.listTemp.push(_this.listTemp.shift());
                     // 这个地方如果不把animate 取反会出现消息回滚的现象，此时把ul 元素的过渡属性取消掉就可以完美实现无缝滚动的效果了
@@ -94,7 +95,6 @@
             cancelAudit(rows) {
                 // 1.入园审核 2.惠政申报审核 3.惠政发布 4.活动发布 5.资讯审核 6.活动报名
                 let selectObj = {};
-                console.log(rows);
                 switch (Number(rows.type)) {
                     case 1:
                         Object.assign(selectObj, {
@@ -130,10 +130,10 @@
                         });
                         break;
                     case 6:
-                    // /parkIndex/activityBmAuditDetail?id=20190223105445004&enterinfoId=20190223105505002
+                        // /parkIndex/activityBmAuditDetail?id=20190223105445004&enterinfoId=20190223105505002
                         Object.assign(selectObj, {
                             path: "/parkIndex/activityBmAuditDetail",
-                            query: {id: rows.mark,enterinfoId:rows.id}
+                            query: {id: rows.mark, enterinfoId: rows.id}
                         });
                         break;
                     default:
@@ -182,6 +182,16 @@
         },
         mounted() {
             this.listTemp = this.list;
+            if (this.isBdPark) {
+                for (let i = 0; i < this.list.length; i++) {
+                    if (this.list[i].type == 1) {
+                        this.listTemp.push(this.list[i]);
+                    }
+                }
+            } else {
+                this.listTemp = this.list;
+            }
+
             if (this.listTemp.length > 1) {
                 this.timer = setInterval(this.scroll, 2500);
             } else {
