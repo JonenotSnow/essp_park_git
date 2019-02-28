@@ -39,8 +39,8 @@ Vue.use(VueLazyload, {
     loading: "./assets/loading.png",
     error: "./assets/error.png"
 });
-import VueUeditorWrap from 'vue-ueditor-wrap'
-Vue.component('vue-ueditor-wrap', VueUeditorWrap)
+// import VueUeditorWrap from 'vue-ueditor-wrap'
+// Vue.component('vue-ueditor-wrap', VueUeditorWrap)
 
 
 // ajax全局配置
