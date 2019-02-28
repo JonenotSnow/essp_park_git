@@ -585,6 +585,7 @@
         }
         .release-introduce {
             margin: 15px 0;
+            overflow: hidden;
             height: 38px;
             &>p{
                 .esspellipsitwo();
