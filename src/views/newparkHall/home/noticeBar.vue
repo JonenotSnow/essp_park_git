@@ -129,9 +129,9 @@
                     if (response.resultData) {
                         this.applyParkList = response.resultData;
                         if (this.isBdPark){
-                            for (let i = 0; i < this.list.length; i++) {
+                            for (let i = 0; i < response.resultData.length; i++) {
                                 if (this.list[i].type == 1) {
-                                    this.listTemp.push(this.list[i])
+                                    this.applyParkList.push(this.list[i])
                                 }
                                 
                             }
