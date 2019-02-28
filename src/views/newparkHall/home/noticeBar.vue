@@ -127,15 +127,18 @@
                     parkId: window.sessionStorage.getItem("parkId")
                 }).then(response => {
                     if (response.resultData) {
-                        this.applyParkList = [];
+                        this.applyParkList = response.resultData;
+                        let list=[]
                         if (this.isBdPark){
                             for (let i = 0; i < response.resultData.length; i++) {
                                 if (response.resultData[i].type == 1) {
-                                    this.applyParkList.push(response.resultData[i])
+                                    list.push(response.resultData[i])
                                 }
                                 
                             }
-            }
+                            this.applyParkList = list
+                            // Vue.$set(this.applyParkList,list)
+                        }
                     }
                 });
             },
