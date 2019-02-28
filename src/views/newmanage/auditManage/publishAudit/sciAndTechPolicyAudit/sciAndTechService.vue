@@ -100,8 +100,12 @@
                         暂无数据
                     </div>
                 </div> -->
-                <essp-loading :loading="requestTip == '数据加载中...'" :loadingMsg="requestTip" :nodata="list.length == 0 && requestTip == '数据加载完毕'"></essp-loading>
-       
+                <essp-loading
+                    :loading="requestTip == '数据加载中...'"
+                    :loadingMsg="requestTip"
+                    :nodata="sciAndTechServiceData.length == 0 && requestTip == '数据加载完毕'"
+                ></essp-loading>
+
             </div>
             <div class="pageList">
                 <el-pagination
@@ -206,15 +210,10 @@
                 };
 
                 this.$post("/audit/getAuditList", params).then(response => {
-                    // let codestatus = response.resultCode;
-                    // if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
-                        let resultData = response.resultData;
-                        this.totalCount = resultData.policyCount;
-                        this.sciAndTechServiceData = resultData.policyList;
-                        this.requestTip = '数据加载完毕';
-                    // } else {
-                    //     this.$message.info(response.resultMsg);
-                    // }
+                    let resultData = response.resultData;
+                    this.totalCount = resultData.policyCount;
+                    this.sciAndTechServiceData = resultData.policyList;
+                    this.requestTip = '数据加载完毕';
                 }, err => {
                     this.$message.error("接口异常");
                 })
