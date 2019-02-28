@@ -180,7 +180,8 @@
             getMessage() {
                 const self = this;
                 let time = 60;
-                let userInfo = this.SSH.getItem('userInfo')
+                let userInfo = this.SSH.getItem('userInfo');
+                let historyArr = this.LSH.getItem('history');
                 let timer = null;
                 this.buriedTime++;
 
