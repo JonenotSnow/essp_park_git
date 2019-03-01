@@ -86,10 +86,9 @@ let openUrl = "http://128.196.235.132:1345/essp/#";
 
 if (process.env.NODE_ENV === "production") {
     openUrl = window.location.origin+'/essp/'+"#";
-} else {
-    // require('./mock/index.js')
-    // debugger
 }
+   // require('./mock/index.js')
+
 
 Vue.prototype.$openUrl = openUrl;
 
