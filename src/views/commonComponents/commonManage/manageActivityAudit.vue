@@ -348,6 +348,8 @@
                             type: 'success',
                             message: response.resultMsg
                         });
+                        let url =  this.utils.isBdPark() ?'/parkHall/manage/activityPoolActivityAuditing':'/parkHall/manage/activityPoolActivityAditing';
+                        this.$router.push(url);
                     }, (err) => {
                         this.$message({
                             type: 'warning',
@@ -356,8 +358,7 @@
                     })
                 this.access = false;
                 this.noAccess = false;
-                let url =  this.utils.isBdPark() ?'/parkHall/manage/activityPoolActivityAuditing':'/parkHall/manage/activityPoolActivityAditing';
-                this.$router.push(url);
+                
             },
             //取消审核
             cancelAudit() {
