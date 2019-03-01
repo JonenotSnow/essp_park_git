@@ -244,6 +244,10 @@
                     {
                         type: '8',
                         name: '沙龙'
+                    },
+                    {
+                        type: '9',
+                        name: '其他'
                     }
                 ],
                 items: [],
@@ -363,7 +367,7 @@
                 //     type: '02',
                 //     status: '10',
                 //     flag: "noContent"
-                // })  
+                // })
                 let url =  this.utils.isBdPark() ?'/parkHall/manage/activityPoolActivityAuditing':'/parkHall/manage/activityPoolActivityAditing';
                 this.$router.push(url);
             }
