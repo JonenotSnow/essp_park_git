@@ -26,7 +26,7 @@
                 <ul>
                     <li v-for="(it,i) in getMemInfoList" :key="i">
                         <div>
-                            <img src="../../../assets/actdetaillogo.png" alt="">
+                            <img :src="it.cstLogo || '../../../assets/actdetaillogo.png'" alt="">
                             <div>
                                 <p>{{it.cstNm}}</p>
                                 <p>行业：{{it.idyTpcd | idType(it.idyTpcd)}}</p>
