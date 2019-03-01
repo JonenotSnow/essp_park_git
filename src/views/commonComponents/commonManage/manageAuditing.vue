@@ -160,9 +160,9 @@
                     });
                     return;
                 }
-                if (this.isReview == '1' && this.access) {
-                    st = '13'
-                }
+                // if (this.isReview == '1' && this.access) {
+                //     st = '13'
+                // }
                 this.$post(this.$apiUrl.manage.auditApplyPark, {
                     entityId: this.$route.query.entityId,
                     parkId: window.sessionStorage.getItem("parkId"),

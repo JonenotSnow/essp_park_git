@@ -176,9 +176,9 @@
             },
             auditFn(status) {
                 let st = status;
-                if (this.isReview == '1' && this.access) {
-                    st = '13'
-                }
+                // if (this.isReview == '1' && this.access) {
+                //     st = '13'
+                // }
                 this.$post(this.$apiUrl.manage.auditInformation, {
                     entityId: this.$route.query.id,
                     parkId: window.sessionStorage.getItem("parkId"),
