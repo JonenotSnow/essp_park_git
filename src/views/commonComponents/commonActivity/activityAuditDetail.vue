@@ -301,11 +301,11 @@ export default {
                 reason: this.mark
             }).then(
                 response => {
-                    if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
+                    // if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                         this.$message.success(response.resultMsg);
-                    } else {
-                        this.$message.error(response.resultMsg);
-                    }
+                    // } else {
+                        this.$router.push("/parkIndex/park/auditing");
+                    // }
                 },
                 response => {
                     this.$message.error(response.resultMsg);
@@ -313,7 +313,7 @@ export default {
             );
             this.access = false;
             this.noAccess = false;
-            this.$router.push("/parkIndex/park/auditing");
+            
         }
     },
     filters: {
