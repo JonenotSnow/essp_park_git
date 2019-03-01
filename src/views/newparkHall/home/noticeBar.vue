@@ -132,7 +132,7 @@
                                 if (response.resultData[i].type == 1) {
                                     list.push(response.resultData[i])
                                 }
-                                
+
                             }
                             this.applyParkList = list
                             // Vue.$set(this.applyParkList,list)
@@ -193,7 +193,7 @@
             padding: 5px 11px 5px 45px;
             left: 50%;
             top: -45px;
-            margin-left: -400px;
+            margin-left: -430px;
             background: rgba(255, 255, 255, 0.8);
             z-index: 2;
             font-size: 14px;
