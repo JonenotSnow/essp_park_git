@@ -8,7 +8,7 @@
             </div>
             <div class="head-div head-right">
                 <div class="right-div search-wrap">
-                    <div class="searchBox">
+                    <div class="searchBox1">
                         <input type="text" placeholder="请输入搜索内容" v-model="searchContent">
                         <i class="icon iconfont icon-sousuo" @click="search()"></i>
                     </div>
@@ -232,7 +232,7 @@
                 }
 
                 .search-wrap {
-                    .searchBox {
+                    .searchBox1 {
                         width: 198px;
                         height: 35px;
                         line-height: 35px;
