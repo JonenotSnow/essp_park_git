@@ -242,8 +242,8 @@
                             padding: 0;
                             margin-left: 18px;
                             width: 150px;
-                            height: 35px;
-                            line-height: 35px;
+                            height: 33px;
+                            line-height: 33px;
                             font-size: 14px;
                             font-weight: normal;
                             font-stretch: normal;
@@ -251,6 +251,7 @@
                             color: #ccc;
                             outline: none;
                             border: none;
+                            background: none;
                         }
                         input::-webkit-input-placeholder {
                             color: #ccc;
@@ -264,7 +265,6 @@
                         input:-ms-input-placeholder { /* Internet Explorer 10-11 */
                             color: #ccc;
                         }
-
                         i {
                             width: 17px;
                             height: 17px;
