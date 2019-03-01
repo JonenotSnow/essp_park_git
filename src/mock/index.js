@@ -52,16 +52,24 @@ Mock.mock('api/comment/getComments','post',() => {
     return res.parkComment.getComments
 })
 
-Mock.mock('api/policy/getAllPolicy','post',() => {
-    return res.parkPolicy.getAllPolicy
-})
-
 Mock.mock('api/activity/getAllActivity','post',() => {
     return res.parkActivity.getAllActivity
 })
 
 Mock.mock('api/activity/getByActivityId','post',() => {
-    return res.parkActivity.getAllActivity
+    return res.parkActivity.getByActivityId
+})
+
+Mock.mock('api/policy/getAllPolicy','post',() => {
+    return res.parkPolicy.getAllPolicy
+})
+
+Mock.mock('api/policy/getPolById','post',() => {
+    return res.parkPolicy.getPolById
+})
+
+Mock.mock('api/information/getTagUsg','post',() => {
+    return res.parkPolicy.getTagUsg
 })
 
 

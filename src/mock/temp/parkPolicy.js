@@ -497,8 +497,80 @@ const getAllPolicy = {
 	}
 }
 
+const getPolById = {
+	"resultCode": "0000000000",
+	"resultMsg": "查询成功！",
+	"resultData": {
+		"id": "20190226152824231813",
+		"policyTitle": "惠政007",
+		"titleImg": "./static/img/cyzc1.3cea1c8.jpg",
+		"creator": 1000068002,
+		"createTime": "2019-02-26T07:28:24.000+0000",
+		"status": "02",
+		"pubCstName": "91630103MA7578GT33",
+		"avaliableTime": "2019-02-26T07:28:00.000+0000",
+		"parkId": "20181220204119007",
+		"viewTime": 5,
+		"reminder": "916301046791932311,91630103MA7578GT33",
+		"isonlineApply": "1",
+		"applyMaximum": 10,
+		"applyType": "1",
+		"infoDetail": "政策内容",
+		"applyForm": "{\"access_token\":\"63f9d955-0fa4-4028-84dc-1c6145d39a24\",\"requester\":\"APP\",\"formTypeList\":[],\"formRqList\":[{\"access_token\":\"63f9d955-0fa4-4028-84dc-1c6145d39a24\",\"requester\":\"APP\",\"tittext\":\"\",\"name\":\"公司名称\",\"id\":\"ge_1\",\"requir\":true,\"type\":\"text\"},{\"access_token\":\"63f9d955-0fa4-4028-84dc-1c6145d39a24\",\"requester\":\"APP\",\"tittext\":\"\",\"name\":\"联系人姓名\",\"id\":\"ge_2\",\"requir\":true,\"type\":\"text\"},{\"access_token\":\"63f9d955-0fa4-4028-84dc-1c6145d39a24\",\"requester\":\"APP\",\"tittext\":\"\",\"name\":\"联系人手机\",\"id\":\"ge_3\",\"requir\":true,\"type\":\"number\"},{\"access_token\":\"63f9d955-0fa4-4028-84dc-1c6145d39a24\",\"requester\":\"APP\",\"tittext\":\"\",\"name\":\"申报人数\",\"id\":\"ge_4\",\"requir\":true,\"type\":\"number\"}]}",
+		"countFollower": "0",
+		"userName": "小二",
+		"cstNm": "青海宇志建筑有限公司",
+		"tagsTxt": "惠政标签,软件企业",
+		"isNeedApprove": "1",
+		"avaliableEndTime": "2019-03-26T07:28:00.000+0000",
+		"approvedNum": 0,
+		"approvingNum": 0,
+		"classtType": "4",
+		"deleteFlag": "0",
+		"followStatus": "0"
+	}
+}
+
+const getTagUsg = {
+	"resultCode": "0000000000",
+	"resultMsg": "获取标签成功！",
+	"resultData": [{
+		"tagTxt": "惠政标签",
+		"tagCount": "14",
+		"tagTp": "3000004",
+		"tagId": "4166"
+	}, {
+		"tagTxt": "软件企业",
+		"tagCount": "8",
+		"tagTp": "3000004",
+		"tagId": "7329"
+	}, {
+		"tagTxt": "惠政",
+		"tagCount": "7",
+		"tagTp": "3000004",
+		"tagId": "2766"
+	}, {
+		"tagTxt": "标签1",
+		"tagCount": "6",
+		"tagTp": "3000004",
+		"tagId": "2765"
+	}, {
+		"tagTxt": "惠政1",
+		"tagCount": "6",
+		"tagTp": "3000004",
+		"tagId": "3174"
+	}, {
+		"tagTxt": "自由",
+		"tagCount": "3",
+		"tagTp": "3000004",
+		"tagId": "3177"
+	}]
+}
+
 const res = {
-	getAllPolicy
+	getAllPolicy,
+	getPolById,
+	getTagUsg
 }
 
 export default res
