@@ -25,7 +25,7 @@
                         <p class="icon_p_font">
                             <span class=""><i :class="icons[0]" style="color: #ccc"></i>{{item.viewTime}}</span>
                             <span><i :class="icons[1]" style="color: #ccc"></i>{{item.countFollower}}</span>
-                            <span><i :class="icons[3]" style="color: #ccc"></i>{{item.countComment}}</span>
+                            <span><i :class="icons[2]" style="color: #ccc"></i>{{item.countComment}}</span>
                         </p>
                     </div>
                     <div class="cont-detail-r">
