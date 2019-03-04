@@ -378,7 +378,7 @@
                 .content{
                     width:550px;
                     overflow-y: auto;
-                    height:338px;
+                    height:314px;
                     padding:0 20px 0 0;
                 }
             }
