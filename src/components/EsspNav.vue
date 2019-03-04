@@ -146,6 +146,7 @@
         width: 100%;
         // overflow: hidden;
         clear: both;
+        overflow: hidden;
         .essp-nav {
             margin: 0 auto;
             float: left;
