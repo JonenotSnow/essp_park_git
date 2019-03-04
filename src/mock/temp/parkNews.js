@@ -5,7 +5,7 @@ const getdataList = {
 		"hot": [{
 			"activityId": "20190122150451005",
 			"parkId": "20181220204119007",
-			"activityTheme": "app0125版本回归测试2",
+			"activityTheme": "12app0125版本回归测试2",
 			"activityType": "4",
 			"activityStarttime": "2019-01-27 15:03:00",
 			"activityDays": 2,
@@ -326,7 +326,7 @@ const getdataList = {
 		"newest": [{
 			"activityId": "20190225100607001",
 			"parkId": "20181220204119007",
-			"activityTheme": "123",
+			"activityTheme": "啊啊123",
 			"activityType": "4",
 			"activityStarttime": "2019-02-28 00:00",
 			"activityDays": 1,

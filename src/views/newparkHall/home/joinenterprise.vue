@@ -34,7 +34,7 @@ import mixins_windowOpen from '@/components/mixins/mixins_windowOpen.js'
          msg:"入驻企业",
          enterprises:[],
          pageNum: 1,
-         pageSize: 5,
+         pageSize: 6,
          en_title:this.utils.isBdPark() ? '入驻企业400+家，在职人员10000+人' : 'Entered enterprises',
          rzzMap:new Map()
      }

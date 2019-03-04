@@ -24,7 +24,7 @@
                     @size-change="handleSizeChange"
                     @current-change="handleCurrentChange"
                     :current-page="pageNum"
-                    :page-sizes="[5, 10, 15, 20]"
+                    :page-sizes="[25]"
                     :page-size="pageSize"
                     layout="total, sizes, prev, pager, next, jumper"
                     :total="totalCount">
@@ -56,7 +56,7 @@
                 ],
                 totalCount: 0,
                 pageNum: 1,
-                pageSize: 5,
+                pageSize: 25,
                 en_title:this.utils.isBdPark() ? 'Entered enterprises' : '入驻企业400+家，在职人员10000+人',
                 enterprises:[],
                 rzzMap:new Map()
@@ -64,7 +64,7 @@
 
         },
         async created(){
-            this.queryEnterpriseList(1,5)
+            this.queryEnterpriseList(1,25)
         },
         computed: {
             curId(){
@@ -149,24 +149,28 @@
                 font-size: 16px;
             }
             .enterlist{
+
                 .listcon{
                     width: 1005px;
                     margin:50px auto;
-                    /*margin-left: 100px;
-                    margin-top: 50px;*/
-                    /*border-left:1px solid #ccc;*/
+                    padding-bottom:2px;
+                    padding-left:2px;
                     overflow: hidden;
                     .listitem{
-                        /*border-top:1px solid #ccc;*/
                         float: left;
                         cursor: pointer;
                         width: 200px;
                         height: 150px;
                         //background-color: #00a0e9;
                         opacity: 0.8;
-                        /*border-right: 1px solid #ccc;*/
-                        /*border-bottom:1px solid #ccc;*/
+                        /*border: 1px solid #ccc;
+                        border-left: 0;
+                        border-right: 0;
+                        border-bottom: 0;*/
+                        margin-left: -1px;
+                        margin-bottom: -1px;
                         position:relative;
+                        overflow: hidden;
                         .enter_child{
                             width:100%;
                             height:100%;
@@ -174,7 +178,7 @@
                         .detailinfo{
                             background-color:#fff;
                             opacity: 0;
-
+                            overflow: hidden;
                             .enterprisename{
                                 margin:-60px auto 10px;
                                 height: 20px;
