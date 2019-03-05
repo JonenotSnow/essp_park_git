@@ -158,14 +158,29 @@
                 ],
                 bdModules: [
                     1, 2, 3, 4, 5, 11, 7, 8, 9, 10
-                ]
+                ],
+                curBdParkId:''
             };
         },
         mounted() {
         },
+        beforeCreate(){
+            
+        },
         created() {
+            //如果是接受邀请过来的，默认企业操作员，重新获取权限
+            if (this.$route.query.id) {
+                // 获取菜单权限 需要传入 parkId, 角色权限
+                sessionStorage.setItem('LoginUserRol',JSON.stringify(['32']));
+                this.$post(this.$apiUrl.manage.getParkById, {
+                    parkId: this.$route.query.id
+                }).then(response => {
+                    this.curBdParkId = response.resultData.bdParkId;
+                    this.getPower();
+                }); 
+                
+            }
             this.getAllData();
-            // this.getInfo();
             if (this.isBdPark) {
                 this.bdModules.forEach(item => {
                     this.modulesList.push(this.modulesAllList[item - 1].name)
@@ -175,13 +190,30 @@
                     this.modulesList.push(this.modulesAllList[item - 1].name)
                 })
             }
-
-
         },
         destroyed() {
             clearInterval(this.timer);
         },
         methods: {
+            getPower(){
+                this.$post(this.$apiUrl.home.selectResMenu, {
+                    sysType: "park",
+                    sysBsnAttr: this.curBdParkId,
+                    postIdList: ['31']
+                }).then(
+                    response => {
+                        var menuList = response.resultData.menuList[0] || {};
+                        sessionStorageHandler.setItem("menuList", menuList);
+                        sessionStorageHandler.setItem(
+                            "menuResource",
+                            response.resultData.routerResMap
+                        );
+                    },
+                    response => {
+                        Message.info(response.resultMsg);
+                    }
+                );
+            },
             // getInfo() {
             //     //0:表示活动1:表示惠政2:表示资讯 this.$post(url,param)
             //     this.$post(this.$apiUrl.home.homeInfo, {

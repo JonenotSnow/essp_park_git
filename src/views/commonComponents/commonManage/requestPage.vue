@@ -5,11 +5,11 @@
                 <img class='bg' src="./re1.png" alt="">
                 <i @click="toHis" class="el-icon-close close"></i>
                 <div class="contentn">
-                    <p class="infoing" v-html='content'></p>
+                    <p class="infoing" v-html='content' @click="skip"></p>
                     <p class="toDetail">
                         <i></i>
                         <img src="./re2.png" alt="">
-                        <span @click="toAddOpen">查看园区详情</span>
+                        <span @click="$router.push({path:'/parkIndex/scanIndex',query:{id:parkId}})">查看园区详情</span>
                         <i></i>
                     </p>
                     <div v-if="!mark && mark != 0">
@@ -85,8 +85,11 @@ export default {
                 });
             });
             setTimeout(() => {
-                this.toAddOpen();
+                this.$router.push({path:'/parkHome',query:{id:this.parkId}});
             }, 2000);
+        },
+        skip(){
+            this.$router.push({path:'/parkHome',query:{id:this.parkId}});
         },
         disagreeInvite() {
             let that = this;
@@ -112,9 +115,6 @@ export default {
                     this.parkNm = response.resultData.parkNm;
                 }
             );
-        },
-        toAddOpen() {
-            this.$router.push({path:'/parkIndex/scanIndex',query:{id:this.parkId}})
         },
         toHis() {
             window.history.go(-1);
