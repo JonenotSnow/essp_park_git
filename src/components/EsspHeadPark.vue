@@ -344,6 +344,8 @@ export default {
         this.SSH.setItem('LoginUserRol',["11"])
         await this.selectResMenu()
         await this.utils.logoutDelSSH();
+        this.SSH.setItem('loginFlag',false)
+
         this.$message.info("退出登录成功!");
         // this.$router.push({
         //     path: '/parkHome',
