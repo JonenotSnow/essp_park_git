@@ -710,7 +710,7 @@
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="less">
+<style lang="less" scoped>
     .essp-am-ld-wrap {
         margin: 20px auto;
         padding: 10px;

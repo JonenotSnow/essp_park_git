@@ -29,13 +29,14 @@
                 </el-form-item>
                 <el-form-item label="政策法规详情：" prop="infoDetail" class="my-detail-edit">
                     <div class="my-quill-edit-wrap-ss">
-                        <quill-editor
+                        <!-- <quill-editor
                             ref="myTextEditor"
                             :options="editorOption"
                             v-model="ruleForm.infoDetail"
                         >
                             <div id="toolbar" slot="toolbar"></div>
-                        </quill-editor>
+                        </quill-editor> -->
+                        <vue-ueditor v-model="ruleForm.infoDetail" :config="editorOption"></vue-ueditor>
                     </div>
                 </el-form-item>
                 <el-form-item label="政策法规标签：" class="labelxing">
@@ -184,8 +185,8 @@
                 </div>
                 <div class="main-body">
                     <!--<div v-html="this.ruleForm.infoDetail"></div>-->
-                    <div class="ql-container ql-snow bord-none">
-                        <div class="ql-editor" v-html="this.ruleForm.infoDetail"></div>
+                    <div class="">
+                        <div class="editor-content" v-html="this.ruleForm.infoDetail"></div>
                     </div>
                 </div>
                 <div class="main-foot" v-if="this.fileList && this.fileList.length > 0">

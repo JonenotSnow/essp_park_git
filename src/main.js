@@ -41,6 +41,8 @@ Vue.use(VueLazyload, {
 });
 import VueUeditorWrap from 'vue-ueditor-wrap'
 Vue.component('vue-ueditor-wrap', VueUeditorWrap)
+import vueUeditor from './components/vueUeditor'
+Vue.component('vue-ueditor', vueUeditor)
 
 
 // ajax全局配置
@@ -274,7 +276,6 @@ async function refreshAuthToken(token) {
             let data = response.resultData;
             // 开发阶段没必要加，暂时注释
             loginCtrl(data);
-            debugger
         }
     );
 }

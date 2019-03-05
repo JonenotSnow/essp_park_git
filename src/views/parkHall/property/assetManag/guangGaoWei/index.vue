@@ -419,7 +419,7 @@
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="less">
+<style lang="less" scoped>
     .essp-am-ggw-wrap {
         .am-ggw-publish {
         }
