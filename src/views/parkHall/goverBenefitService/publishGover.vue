@@ -414,16 +414,12 @@
                 fileList3: [],
                 breadlist: [
                     {
-                        path: "/parkIndex/goverBeneSer",
-                        name: "惠政服务"
-                    },
-                    {
                         path: "/parkIndex/goverBene/release",
-                        name: "我发布的惠政"
+                        name: "园区惠政"
                     },
                     {
-                        path: "/parkIndex/publishGover",
-                        name: "发布惠政"
+                        path: "",
+                        name: "发布的惠政"
                     }
                 ],
                 content: "",//惠政详情
