@@ -234,6 +234,7 @@
             .pageList{
                 text-align: right;
                 padding-right:40px;
+                padding-bottom:40px;
             }
         }
     }
