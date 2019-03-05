@@ -9,7 +9,7 @@
                     <p class="toDetail">
                         <i></i>
                         <img src="./re2.png" alt="">
-                        <span @click="$router.push({path:'/parkIndex/scanIndex',query:{id:parkId}})">查看园区详情</span>
+                        <span @click="toAddOpen">查看园区详情</span>
                         <i></i>
                     </p>
                     <div v-if="!mark && mark != 0">
@@ -66,17 +66,10 @@ export default {
             this.$post(this.$apiUrl.manage.getInviteByKey, {
                 key: this.$route.query.key
             }).then(response => {
-                // if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
-                    this.content = response.resultData.content;
-                    this.parkId = response.resultData.parkId;
-                    this.mark = response.resultData.mark;
-                    this.getParkById(this.parkId);
-                // } else {
-                //     this.$message({
-                //         type: "error",
-                //         message: response.resultMsg
-                //     });
-                // }
+                this.content = response.resultData.content;
+                this.parkId = response.resultData.parkId;
+                this.mark = response.resultData.mark;
+                this.getParkById(this.parkId);
             });
         },
         agreeInvite() {
@@ -86,20 +79,13 @@ export default {
                 key: this.$route.query.key,
                 fromUserId: this.$route.query.fromUserId
             }).then(response => {
-                // if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
-                    this.$message({
-                        type: "success",
-                        message: "加入成功"
-                    });
-                // } else {
-                //     this.$message({
-                //         type: "error",
-                //         message: response.resultMsg
-                //     });
-                // }
+                this.$message({
+                    type: "success",
+                    message: "加入成功"
+                });
             });
             setTimeout(() => {
-                that.toOut();
+                this.toAddOpen();
             }, 2000);
         },
         disagreeInvite() {
@@ -109,20 +95,13 @@ export default {
                 key: this.$route.query.key,
                 fromUserId: this.$route.query.fromUserId
             }).then(response => {
-                // if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
-                    this.$message({
-                        type: "success",
-                        message: `已拒绝${this.parkNm}的入园邀请`
-                    });
-                // } else {
-                //     this.$message({
-                //         type: "error",
-                //         message: response.resultMsg
-                //     });
-                // }
+                this.$message({
+                    type: "success",
+                    message: `已拒绝${this.parkNm}的入园邀请`
+                });
             });
             setTimeout(() => {
-                that.toOut();
+                that.windowOpenNoParams("/messageCenter/parkMsg");
             }, 2000);
         },
         getParkById(parkId) {
@@ -131,17 +110,11 @@ export default {
             }).then(
                 response => {
                     this.parkNm = response.resultData.parkNm;
-                },
-                err => {
-                    this.$message({
-                        type: "warn",
-                        message: response.resultMsg
-                    });
                 }
             );
         },
-        toOut() {
-            this.windowOpenNoParams("/messageCenter/parkMsg");
+        toAddOpen() {
+            this.$router.push({path:'/parkIndex/scanIndex',query:{id:this.parkId}})
         },
         toHis() {
             window.history.go(-1);
