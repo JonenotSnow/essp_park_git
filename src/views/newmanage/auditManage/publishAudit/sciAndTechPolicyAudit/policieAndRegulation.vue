@@ -207,13 +207,14 @@
                     endDate: this.searchCondition.endDate,          // 结束时间
                 };
 
-
+                this.policieAndRegulationData = []
                 this.$post("/audit/getAuditList", params).then(response => {
                     let resultData = response.resultData;
                     this.totalCount = resultData.policyCount;
                     this.policieAndRegulationData = resultData.policyList;
                     this.requestTip = '数据加载完毕';
                 }, err => {
+                    this.requestTip = '数据加载完毕';
                     this.$message.error("接口异常");
                 })
             },

@@ -319,6 +319,7 @@ d<template>
             getActiveList() {
                 var url = this.$apiUrl.active.actLanch;
                 this.isLoginEnd = false;
+                this.activedata = []
                 this.$post(url, {
                     pageNum: this.pageNumber,
                     pageSize: this.pageSize,

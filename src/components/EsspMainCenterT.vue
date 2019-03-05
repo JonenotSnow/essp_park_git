@@ -233,6 +233,7 @@ export default {
         getGoverBeneList() {
             var url = goverBene[this.pageType] || "";
             this.isLodingTxt = "数据加载中";
+            this.mcCardDataList = []
             this.$post(url, {
                 pageNum: this.pageNum,
                 pageSize: this.pageSize,

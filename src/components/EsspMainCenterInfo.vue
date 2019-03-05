@@ -1,7 +1,7 @@
 <template>
     <div class="essp-main-cont">
 
-        <essp-mc-card-info :mcCardList="mcCardDataList" :chilrPageType="pageType"></essp-mc-card-info>
+        <essp-mc-card-info :mcCardList="mcCardDataList" :chilrPageType="pageType" :isLodingTxt="isLodingTxt"></essp-mc-card-info>
         <div class="essp-aside-right-cont">
             <div class="aside-right-item aside-right-item-seach">
                 <div>
@@ -80,7 +80,8 @@
                 title:"",//搜索关键词
                 times:'',
                 tagTxt:"",//通过标签搜索
-                mcCardDataList:[]
+                mcCardDataList:[],
+                isLodingTxt: "数据加载中"
             }
         },
         created(){
@@ -163,6 +164,8 @@
             getParkInfoList() {
                 var parkId =  sessionStorage.getItem("parkId") || "";
                 var url = parkInfo[this.pageType] || " ";
+                this.mcCardDataList = []
+                this.isLodingTxt = "数据加载中";
                 this.$post(url,{
                     pageNum : this.pageNum,
                     pageSize: this.pageSize,
@@ -175,12 +178,14 @@
                 .then(response => {
                     // var codestatus = response.resultCode;
                     // if(codestatus=="CLT000000000" || codestatus=="0000000000"){
+                        this.isLodingTxt = "数据完毕!";
                         this.mcCardDataList = response.resultData.informationList;//数据源
                         this.allTotal = response.resultData.total;//总条数
                     // }else{
                     //     this.$message.info(response.resultMsg);
                     // }
                 },err =>{
+                    this.isLodingTxt = "数据完毕!";
                     this.$message.info(err.resultMsg);
                 })
             }

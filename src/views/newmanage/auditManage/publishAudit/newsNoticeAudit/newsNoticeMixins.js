@@ -63,7 +63,6 @@ export default {
                 startDate: this.searchCondition.startDate,      // 开始时间
                 endDate: this.searchCondition.endDate,          // 结束时间
             };
-
             this.$post("/audit/getAuditList", params).then(response => {
                 // let codestatus = response.resultCode;
                 // if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {

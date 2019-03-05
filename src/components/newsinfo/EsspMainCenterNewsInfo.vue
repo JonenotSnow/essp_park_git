@@ -1,7 +1,7 @@
 <template>
     <div class="essp-main-cont">
 
-        <EsspMcCardNewsInfo :mcCardList="mcCardDataList" @getCardList="getCardList" :chilrPageType="pageType" :temeTitle="temeTitle"></EsspMcCardNewsInfo>
+        <EsspMcCardNewsInfo :mcCardList="mcCardDataList" @getCardList="getCardList" :requestTip='requestTip' :chilrPageType="pageType" :temeTitle="temeTitle"></EsspMcCardNewsInfo>
         <div class="essp-aside-right-cont">
             <div class="aside-right-item aside-right-item-seach">
                 <div>
@@ -80,7 +80,8 @@
                 title:"",//搜索关键词
                 times:'',
                 tagTxt:"",//通过标签搜索
-                mcCardDataList:[]
+                mcCardDataList:[],
+                requestTip: '数据加载中...'
             }
         },
         created(){
@@ -177,9 +178,11 @@
                 this.getParkInfoList();
             },
             getParkInfoList() {
-                console.log(this.pageType)
+                
                 var parkId =  sessionStorage.getItem("parkId") || "";
                 var url = newsinfo[this.pageType] || " ";
+                this.mcCardDataList = []
+                this.requestTip = '数据加载中...';
                 this.$post(url,{
                     pageNum : this.pageNum,
                     pageSize: this.pageSize,
@@ -196,6 +199,7 @@
                     // if(codestatus=="CLT000000000" || codestatus=="0000000000"){
                         this.mcCardDataList = response.resultData.informationList;//数据源
                             console.log(this.mcCardDataList)
+                        this.requestTip = '数据加载完毕';
                         this.allTotal = response.resultData.total;//总条数
                     // }else{
                     //     this.$message.info(response.resultMsg);

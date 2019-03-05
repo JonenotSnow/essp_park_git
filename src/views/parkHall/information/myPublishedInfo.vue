@@ -156,7 +156,7 @@
             </ul>
             <div v-if="type == 0 && mcCardDataList && mcCardDataList && mcCardDataList.length==0">
                 <!-- <div style="text-align: center">暂无数据</div> -->
-                <essp-loading :nodata="true"></essp-loading>
+                <essp-loading :nodata="isLodingTxt == '数据完毕!'" :loading="isLodingTxt == '数据加载中'"></essp-loading>
             </div>
         </div>
         <div class="pageList">
@@ -234,7 +234,7 @@
                 dialogTableVisible: false,
 
                 //草稿合并参数
-                mcCardDataList: [],
+                isLodingTxt: "数据加载中",
                 timeRange: [],
                 ids: "",
                 flag: sessionStorage.getItem("loginFlag"),
@@ -348,6 +348,8 @@
             getLanchInfoList() {
                 var url = this.$apiUrl.parkInfo.lanchInfo;
                 var parkId = sessionStorage.getItem("parkId") || "";
+                this.mcCardDataList = []
+                this.isLodingTxt = "数据加载中";
                 this.$post(url, {
                     pageNum: this.pageNum,
                     pageSize: this.pageSize,
@@ -357,6 +359,7 @@
                     parkId: parkId
                 }).then(
                     response => {
+                        this.isLodingTxt = "数据完毕!";
                         // var codestatus = response.resultCode;
                         // if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
                             this.mcCardDataList = response.resultData.informationList;
@@ -364,6 +367,8 @@
                         // } else {
                         //     this.$message.info(response.resultMsg);
                         // }
+                    }, err => {
+                        this.isLodingTxt = "数据完毕!";
                     });
             },
 
