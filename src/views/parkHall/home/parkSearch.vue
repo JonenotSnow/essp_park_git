@@ -294,6 +294,9 @@ export default {
         },
         //全部活动
         getParkActiveList() {
+            if (this.timeRange == null) {
+                this.timeRange = [];
+            }
             this.searchData = [];
             var url = this.$apiUrl.active.actAll;
             var pop = {
@@ -316,13 +319,16 @@ export default {
         },
         //全部惠政
         getParkGoverList() {
+            if (this.timeRange == null) {
+                this.timeRange = [];
+            }
             this.searchData = [];
             var url = this.$apiUrl.goverBene.allPolicy;
             var pop = {
                 pageNum: this.pageNum,
                 pageSize: this.pageSize,
-                timeStart: this.timeRange.length>0?this.timeRange[0] : "",
-                timeEnd: this.timeRange.length>0?this.timeRange[1] : "",
+                startDate: this.timeRange.length>0?this.timeRange[0] : "",
+                endDate: this.timeRange.length>0?this.timeRange[1] : "",
                 tagTxt: this.tagTxt,
                 parkId: this.parkId,
                 title: this.indexSeachKW
@@ -338,16 +344,20 @@ export default {
         },
         //全部资讯
         getParkInfoList() {
+            if (this.timeRange == null) {
+                this.timeRange = [];
+            }
             this.searchData = [];
             var url = this.$apiUrl.parkInfo.allInfos;
             var pop = {
                 pageNum: this.pageNum,
                 pageSize: this.pageSize,
-                timeStart: this.timeRange.length>0?this.timeRange[0] : "",
-                timeEnd: this.timeRange.length>0?this.timeRange[1] : "",
+                startDate: this.timeRange.length>0?this.timeRange[0] : "",
+                endDate: this.timeRange.length>0?this.timeRange[1] : "",
                 tagTxt: this.tagTxt,
                 parkId: this.parkId,
-                title: this.indexSeachKW
+                title: this.indexSeachKW,
+                classtType:this.classtType
             };
             if(this.isBdPark) {
                 pop.classtType = this.classtType

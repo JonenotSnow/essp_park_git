@@ -108,6 +108,7 @@
             },
             getListInfoTags(item){
                 this.typeselect = item.id;
+                this.typeName = item.name;
                 this.show = false;
             },
             goSearchPage() {
@@ -145,6 +146,7 @@
         width: 100%;
         // overflow: hidden;
         clear: both;
+        overflow: hidden;
         .essp-nav {
             margin: 0 auto;
             float: left;

@@ -200,7 +200,7 @@
                         name: this.utils.isBdPark() ? "系统管理" : "园区管理"
                     },
                     {
-                        path:  this.utils.isBdPark() ? `/parkHall/manage/activityPoolActivityAuditing`:"/parkHall/manage/activityPoolActivityAditing",
+                        path: this.utils.isBdPark() ?'/parkHall/manage/activityPoolActivityAuditing':'/parkHall/manage/activityPoolActivityAditing',
                         name: this.utils.isBdPark() ? "审核管理" : "任务池"
                     },
                     {
@@ -244,6 +244,10 @@
                     {
                         type: '8',
                         name: '沙龙'
+                    },
+                    {
+                        type: '9',
+                        name: '其他'
                     }
                 ],
                 items: [],
@@ -308,7 +312,7 @@
                     })
             },
             openOne(){
-                if (!this.mark) {
+                if (this.mark.match(/^\s*$/)) {
                     this.$message({
                         type: 'warning',
                         message: '审核意见不能为空'
@@ -318,7 +322,7 @@
                 this.access = true;
             },
             openTwo(){
-                if (!this.mark) {
+                if (this.mark.match(/^\s*$/)) {
                     this.$message({
                         type: 'warning',
                         message: '审核意见不能为空'
@@ -329,9 +333,9 @@
             },
             auditFn(status) {
                 let st = status;
-                if (this.isReview == '1' && this.access) {
-                    st = '13'
-                }
+                // if (this.isReview == '1' && this.access) {
+                //     st = '13'
+                // }
                 this.$post(this.$apiUrl.manage.auditActivity, {
                     entityId: this.$route.query.id,
                     parkId: window.sessionStorage.getItem("parkId"),
@@ -344,6 +348,8 @@
                             type: 'success',
                             message: response.resultMsg
                         });
+                        let url =  this.utils.isBdPark() ?'/parkHall/manage/activityPoolActivityAuditing':'/parkHall/manage/activityPoolActivityAditing';
+                        this.$router.push(url);
                     }, (err) => {
                         this.$message({
                             type: 'warning',
@@ -352,7 +358,7 @@
                     })
                 this.access = false;
                 this.noAccess = false;
-                this.$router.push('/parkHall/manage/activityPoolActivityAditing')
+                
             },
             //取消审核
             cancelAudit() {
@@ -363,7 +369,8 @@
                 //     status: '10',
                 //     flag: "noContent"
                 // })
-                this.$router.push('/parkHall/manage/activityPoolActivityAditing')
+                let url =  this.utils.isBdPark() ?'/parkHall/manage/activityPoolActivityAuditing':'/parkHall/manage/activityPoolActivityAditing';
+                this.$router.push(url);
             }
         },
         filters: {

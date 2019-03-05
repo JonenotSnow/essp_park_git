@@ -8,7 +8,7 @@
             </div>
             <div class="head-div head-right">
                 <div class="right-div search-wrap">
-                    <div class="searchBox">
+                    <div class="searchBox1">
                         <input type="text" placeholder="请输入搜索内容" v-model="searchContent">
                         <i class="icon iconfont icon-sousuo" @click="search()"></i>
                     </div>
@@ -139,6 +139,7 @@
                     title: this.searchContent,          // 查询事件字段
                     // classtType: this.classtType     // 科技服务才会有这个字段---
                 };
+                this.dataList = []
                 this.$post("/policy/getMyPubPol", params).then(response => {
                     // let codestatus = response.resultCode;
                     // if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
@@ -232,7 +233,7 @@
                 }
 
                 .search-wrap {
-                    .searchBox {
+                    .searchBox1 {
                         width: 198px;
                         height: 35px;
                         line-height: 35px;
@@ -242,8 +243,8 @@
                             padding: 0;
                             margin-left: 18px;
                             width: 150px;
-                            height: 35px;
-                            line-height: 35px;
+                            height: 33px;
+                            line-height: 33px;
                             font-size: 14px;
                             font-weight: normal;
                             font-stretch: normal;
@@ -251,6 +252,7 @@
                             color: #ccc;
                             outline: none;
                             border: none;
+                            background: none;
                         }
                         input::-webkit-input-placeholder {
                             color: #ccc;
@@ -264,7 +266,6 @@
                         input:-ms-input-placeholder { /* Internet Explorer 10-11 */
                             color: #ccc;
                         }
-
                         i {
                             width: 17px;
                             height: 17px;

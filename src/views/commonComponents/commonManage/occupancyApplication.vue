@@ -126,7 +126,7 @@
                 <!-- 企业规模 -->
                 <li class="title" v-else-if="item.type == 'selectTS'">
                     <select :placeholder="item.name" disabled>
-                        <option :value="is.id" :label="is.name" v-for="(is,j) in item.childrens" :key="j">{{is.name}}dsafsd</option>
+                        <option :value="is.id" :label="is.name" v-for="(is,j) in item.childrens" :key="j">{{is.name}}</option>
                     </select>
                 </li>
                 <!-- 申请表第四列 -->
@@ -338,7 +338,8 @@ export default {
                     sub: "", //备注说明（如单位等）
                     value: "", //绑定值
                     holder: "请输入注册地",
-                    fx: false
+                    fx: false,
+                    nickName:'area'
                 },
                 {
                     name: "联系人姓名",
@@ -347,7 +348,8 @@ export default {
                     sub: "", //备注说明（如单位等）
                     value: "", //绑定值
                     holder: "请输入联系人姓名",
-                    fx: false
+                    fx: false,
+                    nickName:'linkName'
                 },
                 {
                     name: "联系电话",
@@ -356,7 +358,8 @@ export default {
                     sub: "", //备注说明（如单位等）
                     value: "", //绑定值
                     holder: "请输入联系电话",
-                    fx: false
+                    fx: false,
+                    nickName:'phone'
                 },
                 {
                     name: "申请说明",
@@ -410,7 +413,7 @@ export default {
                     type: "selectTS", //输入框类型  //text
                     requir: false, //是否必填
                     sub: "", //备注说明（如单位等）
-                    value: [], //绑定值
+                    value: '', //绑定值
                     holder: "请输入企业规模",
                     id: "5",
                     show: true,

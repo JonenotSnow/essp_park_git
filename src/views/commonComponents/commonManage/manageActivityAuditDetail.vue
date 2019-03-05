@@ -59,7 +59,7 @@
                     </p>
                     <p class="ts ql-container ql-snow bord-none">
                         <span class="tspan">活动详情：</span>
-                        <span style="border: none; padding:0;" class="ql-editor"  v-html="infoList.activityDetails"></span>
+                        <span style="border: none; padding:0;" class="ql-editor" v-html="infoList.activityDetails"></span>
                     </p>
                 </div>
             </div>
@@ -112,10 +112,14 @@
             <div v-if='auditInfo && auditInfo.length>0'>
                 <hr class="divider">
                 <div class="auditInfo" v-for="(it,i) in auditInfo" :key="i">
-                    <p><span>审核人：</span>{{it.auditer}}</p>
-                    <p><span>当前审核状态：</span>{{it.auditResult | statusFormat}}</p>
-                    <p><span>审核时间：</span>{{it.createTime | timerFormat}}</p>
-                    <p v-if="it.mark"><span>审核意见：</span>{{it.mark}}</p>
+                    <p>
+                        <span>审核人：</span>{{it.auditer}}</p>
+                    <p>
+                        <span>当前审核状态：</span>{{it.auditResult | statusFormat}}</p>
+                    <p>
+                        <span>审核时间：</span>{{it.createTime | timerFormat}}</p>
+                    <p v-if="it.mark">
+                        <span>审核意见：</span>{{it.mark}}</p>
                     <hr v-if="i<auditInfo.length-1">
                 </div>
             </div>
@@ -124,126 +128,146 @@
 </template>
 
 <script>
-import EsspBreadCrumb from "@/components/EsspBreadCrumb"
+import EsspBreadCrumb from "@/components/EsspBreadCrumb";
 export default {
-    components:{
+    components: {
         EsspBreadCrumb
     },
-    data () {
+    data() {
         return {
-            breadlist:[
+            breadlist: [
                 {
-                    path: '/parkHall/manage/baseInfo',
-                    name: this.utils.isBdPark()?"系统管理":"园区管理"
+                    path: "/parkHall/manage/baseInfo",
+                    name: this.utils.isBdPark() ? "系统管理" : "园区管理"
                 },
                 {
-                    path:  this.utils.isBdPark() ? `/parkHall/manage/activityPoolActivityAuditing`:"/parkHall/manage/activityPoolActivityAditing",
+                    path: this.utils.isBdPark()
+                        ? `/parkHall/manage/activityPoolActivityAuditing`
+                        : "/parkHall/manage/activityPoolActivityAditing",
                     name: this.utils.isBdPark() ? "审核管理" : "任务池"
                 },
                 {
-                    path:'',
+                    path: "",
                     name: "活动发布审核详情"
                 }
             ],
-            infoList:{},
-            rzz:JSON.parse(localStorage.getItem('rzz')),
-            auditInfo:[]
-        }
+            infoList: {},
+            rzz: JSON.parse(localStorage.getItem("rzz")),
+            auditInfo: []
+        };
     },
-    created () {
+    created() {
         this.getCommentList();
         this.getByActivityId();
     },
     filters: {
-        timerFormat(vaule){
+        timerFormat(vaule) {
             var d = new Date(vaule);
-            var times=d.getFullYear() +
-                '-' + (parseInt((d.getMonth() + 1))<10?'0'+(d.getMonth() + 1):(d.getMonth() + 1)) +
-                '-' + (parseInt(d.getDate())<10?'0'+d.getDate():d.getDate()) + ' ' +
-                (parseInt(d.getHours())<10?'0'+d.getHours():d.getHours()) + ':' +
-                (parseInt(d.getMinutes())<10?'0'+d.getMinutes():d.getMinutes()) + ':' +
-                (parseInt(d.getSeconds())<10?'0'+d.getSeconds():d.getSeconds());
+            var times =
+                d.getFullYear() +
+                "-" +
+                (parseInt(d.getMonth() + 1) < 10
+                    ? "0" + (d.getMonth() + 1)
+                    : d.getMonth() + 1) +
+                "-" +
+                (parseInt(d.getDate()) < 10 ? "0" + d.getDate() : d.getDate()) +
+                " " +
+                (parseInt(d.getHours()) < 10
+                    ? "0" + d.getHours()
+                    : d.getHours()) +
+                ":" +
+                (parseInt(d.getMinutes()) < 10
+                    ? "0" + d.getMinutes()
+                    : d.getMinutes()) +
+                ":" +
+                (parseInt(d.getSeconds()) < 10
+                    ? "0" + d.getSeconds()
+                    : d.getSeconds());
             return times;
         },
-        statusFormat(value){
-            let val = value?value.trim():'';
-            let statusList={
+        statusFormat(value) {
+            let val = value ? value.trim() : "";
+            let statusList = {
                 "10": "审核中",
                 "02": "发布中",
                 "12": "园区审核未通过",
                 "13": "审核中"
-            }
-            return statusList[val]?statusList[val]:''
+            };
+            return statusList[val] ? statusList[val] : "";
         },
-        activeType(value){
+        activeType(value) {
             let activeTypeList = {
-                '1':"培训",
-                '2':"论坛",
-                '3':"比赛",
-                '4':"聚会",
-                '5':"研讨会",
-                '6':"发布会",
-                '7':"分享会",
-                '8':"沙龙",
-                '9':"其他",
-            }
-            return activeTypeList[value]?activeTypeList[value]:'';
+                "1": "培训",
+                "2": "论坛",
+                "3": "比赛",
+                "4": "聚会",
+                "5": "研讨会",
+                "6": "发布会",
+                "7": "分享会",
+                "8": "沙龙",
+                "9": "其他"
+            };
+            return activeTypeList[value] ? activeTypeList[value] : "";
         },
         openStatus(value) {
-            if (value == '0') {
-                return '本园区';
-            } else if (value == '1') {
-                return '全开放';
+            if (value == "0") {
+                return "本园区";
+            } else if (value == "1") {
+                return "全开放";
             }
         }
     },
     methods: {
-        getByActivityId(){
-            this.$post(this.$apiUrl.manage.getByActivityId,{
-                parkId : window.sessionStorage.getItem("parkId"),
-                activityId : this.$route.query.entityId,
-                opMark :'01'
-            })
-            .then((response) => {
-                this.infoList = response.resultData;
-            },(response)=>{
-                this.$message({
-                    type: 'error',
-                    message: response.resultMsg
-                });
-            })
+        getByActivityId() {
+            this.$post(this.$apiUrl.manage.getByActivityId, {
+                parkId: window.sessionStorage.getItem("parkId"),
+                activityId: this.$route.query.entityId,
+                opMark: "01"
+            }).then(
+                response => {
+                    this.infoList = response.resultData;
+                },
+                response => {
+                    this.$message({
+                        type: "error",
+                        message: response.resultMsg
+                    });
+                }
+            );
         },
-        getCommentList(){
-            this.$post(this.$apiUrl.manage.getCommentList,{
-                parkId : window.sessionStorage.getItem("parkId"),
-                entityId :this.$route.query.entityId
-            })
-            .then((response) => {
-                this.auditInfo = response.resultData;
-            },(response)=>{
-                this.$message({
-                    type: 'error',
-                    message: response.resultMsg
-                });
-            })
+        getCommentList() {
+            this.$post(this.$apiUrl.manage.getCommentList, {
+                parkId: window.sessionStorage.getItem("parkId"),
+                entityId: this.$route.query.entityId
+            }).then(
+                response => {
+                    this.auditInfo = response.resultData;
+                },
+                response => {
+                    this.$message({
+                        type: "error",
+                        message: response.resultMsg
+                    });
+                }
+            );
         }
     }
-}
+};
 </script>
 
 <style scoped lang="less">
-#manageParkAuditDetail{
-    margin-bottom:50px;
+#manageParkAuditDetail {
+    margin-bottom: 50px;
 }
-.common_titwrap{
-    width:1200px;
-    margin:0 auto 50px;
-    background:#fff;
-    border-top: none!important;
-    .Otitle{
+.common_titwrap {
+    width: 1200px;
+    margin: 0 auto 50px;
+    background: #fff;
+    border-top: none !important;
+    .Otitle {
         font-size: 24px;
         line-height: 36px;
-        margin-bottom:20px;
+        margin-bottom: 20px;
         color: #333333;
         text-align: center;
         i {
@@ -254,177 +278,177 @@ export default {
             top: -6px;
         }
     }
-    .title{
+    .title {
         // width:1020px;
-        margin:0 auto;
+        margin: 0 auto;
         overflow: hidden;
-        h3{
-            text-indent:8px;
+        h3 {
+            text-indent: 8px;
             letter-spacing: 4.8px;
             font-weight: normal;
         }
     }
-    .k1{
-        margin-left:70px;
+    .k1 {
+        margin-left: 70px;
     }
     .contentList,
     .contentList1,
-    .contentList2{
-        width:990px;
-        margin:20px auto;
-        &>p{
-            line-height:50px;
-            span{
-                display:inline-block;
-                width:140px;
+    .contentList2 {
+        width: 990px;
+        margin: 20px auto;
+        & > p {
+            line-height: 50px;
+            span {
+                display: inline-block;
+                width: 140px;
                 font-size: 16px;
                 line-height: 40px;
-                margin-right:10px;
-                font-family: 'Microsoft YaHei';
+                margin-right: 10px;
+                font-family: "Microsoft YaHei";
                 color: #666;
                 text-align: right;
-                &:nth-of-type(2){
-                    width:700px;
+                &:nth-of-type(2) {
+                    width: 700px;
                     font-size: 16px;
                     line-height: 30px;
                     color: #333;
                     text-align: left;
                 }
             }
-            &.texta{
-                position:relative;
+            &.texta {
+                position: relative;
                 overflow: hidden;
-                span{
-                    float:left;
+                span {
+                    float: left;
                 }
-                textarea{
-                    width:820px;
-                    float:left;
-                    min-width:820px;
-                    max-width:820px;
-                    padding:5px;
-                    min-height:140px;
+                textarea {
+                    width: 820px;
+                    float: left;
+                    min-width: 820px;
+                    max-width: 820px;
+                    padding: 5px;
+                    min-height: 140px;
                 }
             }
-            &.ts{
-                position:relative;
+            &.ts {
+                position: relative;
                 overflow: hidden;
-                .tspan{
-                    position:relative;
+                .tspan {
+                    position: relative;
                     float: left;
                 }
             }
         }
     }
-    .radioBtn{
-        width:1034px;
-        margin:20px auto;
-        margin-bottom:20px;
-        label{
+    .radioBtn {
+        width: 1034px;
+        margin: 20px auto;
+        margin-bottom: 20px;
+        label {
             cursor: pointer;
             margin-right: 20px;
-            input{
-                position:relative;
-                top:2px;
+            input {
+                position: relative;
+                top: 2px;
                 margin-right: 5px;
             }
         }
     }
-    .contentList1{
+    .contentList1 {
         width: 1034px;
-        margin:20px auto;
+        margin: 20px auto;
         height: 404px;
         padding-bottom: 20px;
         border-radius: 6px;
         border: solid 1px #cccccc;
-        &>div{
+        & > div {
             width: 550px;
-            margin:0 auto;
-            line-height:35px;
-            &>p{
-                i{
-                    color:#ff9900;
-                    margin-right:5px;
+            margin: 0 auto;
+            line-height: 35px;
+            & > p {
+                i {
+                    color: #ff9900;
+                    margin-right: 5px;
                     font-size: 16px;
                 }
-                span{
-                    color:#666;
+                span {
+                    color: #666;
                     font-size: 16px;
                 }
-                input{
+                input {
                     width: 550px;
                     height: 35px;
                     background-color: #f6f9fb;
                     border: solid 1px #eaeff2;
                 }
             }
-            &:nth-of-type(1){
-                margin-top:20px;
+            &:nth-of-type(1) {
+                margin-top: 20px;
             }
         }
     }
-    .k2{
+    .k2 {
         margin-left: 70px;
-        .title{
-            margin:40px 0 20px;
+        .title {
+            margin: 40px 0 20px;
         }
-        .infoTitle{
-            width:1000px;
-            font-size:16px;
-            margin:20px auto;
-            margin-bottom:20px;
+        .infoTitle {
+            width: 1000px;
+            font-size: 16px;
+            margin: 20px auto;
+            margin-bottom: 20px;
         }
-        .tickInfo{
+        .tickInfo {
             width: 995px;
-            margin:0 auto;
+            margin: 0 auto;
             border: solid 1px #cccccc;
-            li{
+            li {
                 display: flex;
-                height:50px;
-                line-height:50px;
+                height: 50px;
+                line-height: 50px;
                 border-top: solid 1px #cccccc;
-                span{
-                    flex:1;
+                span {
+                    flex: 1;
                     text-align: center;
                     font-size: 16px;
                 }
-                &:nth-of-type(1){
-                    border-top:none;
+                &:nth-of-type(1) {
+                    border-top: none;
                 }
             }
         }
     }
-    .auditInfo{
-        width:950px;
-        margin:0 auto;
-        line-height:50px;
-        span{
-            display:inline-block;
-            width:140px;
+    .auditInfo {
+        width: 950px;
+        margin: 0 auto;
+        line-height: 50px;
+        span {
+            display: inline-block;
+            width: 140px;
             font-size: 16px;
             line-height: 40px;
-            margin-right:10px;
+            margin-right: 10px;
             color: #666666;
             text-align: right;
-            &:nth-of-type(2){
-                width:700px;
+            &:nth-of-type(2) {
+                width: 700px;
                 font-size: 16px;
                 line-height: 30px;
                 color: #333333;
                 text-align: left;
             }
         }
-        hr{
-            border:1px dashed #ccc;
+        hr {
+            border: 1px dashed #ccc;
         }
     }
-    .bord-none{
-        border:none;
+    .bord-none {
+        border: none;
     }
-    .divider{
-        width:100%;
-        margin:20px auto;
-        color:#ddd;
+    .divider {
+        width: 100%;
+        margin: 20px auto;
+        color: #ddd;
         border: 1px solid #f2f2f2;
     }
 }

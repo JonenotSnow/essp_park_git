@@ -1,7 +1,9 @@
 <template>
     <div class="publish-sciAnd-tech-policy-wrap" id="publishAchievement">
-        <essp-bread-crumb :breadList="breadlist_01" v-if="applyType === '01'"/>
-        <essp-bread-crumb :breadList="breadlist_02" v-if="applyType === '02'"/>
+        <essp-bread-crumb :breadList="breadlist_01" v-if="applyType === '01' && !manageType"/>
+        <essp-bread-crumb :breadList="breadlist_02" v-if="applyType === '02' && !manageType"/>
+        <essp-bread-crumb :breadList="breadlist_04" v-if="applyType === '01' && manageType"/>
+        <essp-bread-crumb :breadList="breadlist_03" v-if="applyType === '02' && manageType"/>
         <div class="publish-title">
             <i></i>审核详情<i></i>
         </div>
@@ -60,7 +62,7 @@
                 </el-form-item>
             </el-form>
             <div class="audit-line" v-if="userInfo.userPostList.includes('34') && (satpDate.status== '13')"></div>
-            <div class="audit-button" v-if="userInfo.userPostList.includes('34') && (satpDate.status== '13')">
+            <div class="audit-button" v-if="userInfo.userPostList.includes('34') && (satpDate.status== '13') && isAudit !== '01'">
                 <span class="audit-btn audit-success" @click="submit('02')">通过</span><span
                 class="audit-btn audit-reject" @click="submit('12')">不通过</span>
             </div>
@@ -118,7 +120,7 @@
                 </el-form-item>
             </el-form>
             <div class="audit-line" v-if="userInfo.userPostList.includes('34') && (satpDate.status== '13')"></div>
-            <div class="audit-button" v-if="userInfo.userPostList.includes('34') && (satpDate.status== '13')">
+            <div class="audit-button" v-if="userInfo.userPostList.includes('34') && (satpDate.status== '13') && isAudit !== '01'">
                 <span class="audit-btn audit-success" @click="submit('02')">通过</span><span
                 class="audit-btn audit-reject" @click="submit('12')">不通过</span>
             </div>
@@ -142,8 +144,10 @@
                 parkId: sessionStorage.getItem("parkId") || "",
                 applyType: this.$route.query.applyType || '01',
                 id: this.$route.query.id || "",
+                isAudit: this.$route.query.isAudit || '00',
                 userInfo: this.SSH.getItem("userInfo"), // 获取用户信息
                 userType: '',
+                manageType: this.$route.query.manageType ? true : false,
                 breadlist_01: [
                     {
                         path: "/parkHall/manage/baseInfo",
@@ -180,7 +184,50 @@
                         name: "通知公告审核详情"
                     }
                 ],
-
+                breadlist_03: [
+                    {
+                        path: "/parkHall/manage/baseInfo",
+                        name: "系统管理"
+                    },
+                    {
+                        path: "/parkHall/manage/sciAndTechPolicyAudit",
+                        name: "审核管理"
+                    },
+                    {
+                        path: "/parkHall/manage/sciAndTechPolicyAudit",
+                        name: "发布审核"
+                    },
+                    {
+                        path: "/parkHall/manage/newsNoticeAudit" ,
+                        name: "资讯公告"
+                    },
+                    {
+                        path: "",
+                        name: "通知公告审核详情"
+                    }
+                ],
+                breadlist_04: [
+                    {
+                        path: "/parkHall/manage/baseInfo",
+                        name: "系统管理"
+                    },
+                    {
+                        path: "/parkHall/manage/sciAndTechPolicyAudit" ,
+                        name: "审核管理" 
+                    },
+                    {
+                        path: "/parkHall/manage/sciAndTechPolicyAudit",
+                        name: "发布审核"
+                    },
+                    {
+                        path: "/parkHall/manage/newsNoticeAudit" ,
+                        name: "资讯公告"
+                    },
+                    {
+                        path: "",
+                        name: "新闻动态审核详情"
+                    }
+                ],
                 satpDate: {},
                 fileList: [],   // 附件字段
 

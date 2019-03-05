@@ -155,7 +155,7 @@
                     })
             },
             openOne(){
-                if (!this.mark) {
+                if (this.mark.match(/^\s*$/)) {
                     this.$message({
                         type: 'warning',
                         message: '审核意见不能为空'
@@ -165,7 +165,7 @@
                 this.access = true;
             },
             openTwo(){
-                if (!this.mark) {
+                if (this.mark.match(/^\s*$/)) {
                     this.$message({
                         type: 'warning',
                         message: '审核意见不能为空'
@@ -176,30 +176,26 @@
             },
             auditFn(status) {
                 let st = status;
-                if (this.isReview == '1' && this.access) {
-                    st = '13'
-                }
+                // if (this.isReview == '1' && this.access) {
+                //     st = '13'
+                // }
+                var _this = this;
                 this.$post(this.$apiUrl.manage.auditInformation, {
                     entityId: this.$route.query.id,
                     parkId: window.sessionStorage.getItem("parkId"),
                     status: st,
                     mark: this.mark,
                     isReview: this.isReview
+                }).then((response) => {
+                    _this.$message({
+                        type: 'success',
+                        message: response.resultMsg
+                    });
+                    _this.access = false;
+                    _this.noAccess = false;
+                    _this.$router.push('/parkHall/manage/activityPoolZX')
                 })
-                    .then((response) => {
-                        this.$message({
-                            type: 'success',
-                            message: response.resultMsg
-                        });
-                    }, (err) => {
-                        this.$message({
-                            type: 'warning',
-                            message: response.resultMsg
-                        });
-                    })
-                this.access = false;
-                this.noAccess = false;
-                this.$router.push('/parkHall/manage/activityPoolZX')
+
             },
             //取消审核
             cancelAudit() {

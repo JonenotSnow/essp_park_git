@@ -39,7 +39,7 @@
         </div>
         <div v-else>
             <!-- <div style="text-align: center">暂无数据</div> -->
-            <essp-loading :nodata="true"></essp-loading>
+            <essp-loading :nodata="isLodingTxt == '数据完毕!'" :loading="isLodingTxt == '数据加载中'"></essp-loading>
         </div>
 
         <!-- 关注事件对话框start -->
@@ -75,6 +75,10 @@
             },
             chilrPageType: {
                 type: String
+            },
+            isLodingTxt: {
+                type: String,
+                default: ''
             }
         },
         data() {

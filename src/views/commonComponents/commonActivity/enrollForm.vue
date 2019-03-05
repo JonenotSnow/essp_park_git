@@ -654,7 +654,7 @@
             grSubmit(bookstyle) {
                 if (bookstyle == 2) {
                     if (this.listfile.length == 0) {
-                        this.$message.error("请您选择");
+                        this.$message.error("您还未上传报名批量表");
                         return;
                     }
                     if (this.inputName == "") {

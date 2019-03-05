@@ -208,7 +208,7 @@
                 if (this.satpType === '01') {
                     delete params.classtType;
                 }
-
+                this.mcCardDataList = []
                 this.$post("/policy/getAllPolicy", params).then(response => {
                     // let codestatus = response.resultCode;
                     // if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
@@ -220,6 +220,7 @@
                     //     this.$message.info(response.resultMsg);
                     // }
                 }, err => {
+                    this.requestTip = '数据加载完毕';
                     this.$message.error("接口异常");
                 })
             }

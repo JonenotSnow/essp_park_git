@@ -131,7 +131,7 @@
                     })
             },
             openOne(){
-                if (!this.mark) {
+                if (this.mark.match(/^\s*$/)) {
                     this.$message({
                         type: 'warning',
                         message: '审核意见不能为空'
@@ -141,7 +141,7 @@
                 this.access = true;
             },
             openTwo(){
-                if (!this.mark) {
+                if (this.mark.match(/^\s*$/)) {
                     this.$message({
                         type: 'warning',
                         message: '审核意见不能为空'
@@ -153,16 +153,16 @@
             auditFn(status) {
                 let _that = this;
                 let st = status;
-                if (!this.mark) {
+                if (this.mark.match(/^\s*$/)) {
                     this.$message({
                         type: 'warning',
                         message: '审核意见不能为空'
                     });
                     return;
                 }
-                if (this.isReview == '1' && this.access) {
-                    st = '13'
-                }
+                // if (this.isReview == '1' && this.access) {
+                //     st = '13'
+                // }
                 this.$post(this.$apiUrl.manage.auditApplyPark, {
                     entityId: this.$route.query.entityId,
                     parkId: window.sessionStorage.getItem("parkId"),

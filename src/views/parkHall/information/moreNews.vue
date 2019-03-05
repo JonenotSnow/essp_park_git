@@ -38,7 +38,7 @@
             </div>
             <div class="newslastest" v-if="newsTabIndex==1">
                 <div class="newslist left_side">
-                    <div class="newsitem" @click="goinfoDetail(its)" v-for="(its,index) in hotNewDates" :key="index" v-if="index%2==0">
+                    <div class="newsitem" @click="goinfoDetail(its)" v-for="(its,index) in hotNewDates" :key="index" v-if="index< 6 && (index%2)==0">
                         <img class="newsimg" :src="its.titleImg" :alt="its.informationTitle">
                         <div class="newinfo">
                             <div class="img_tips">
@@ -52,7 +52,7 @@
                     </div>
                 </div>
                 <div class="newslist right_side">
-                    <div class="newsitem" @click="goinfoDetail(its)" v-for="(its,index) in hotNewDates" :key="index" v-if="index%2 !=0">
+                    <div class="newsitem" @click="goinfoDetail(its)" v-for="(its,index) in hotNewDates" :key="index" v-if="index< 6 &&(index%2)!==0">
                         <img class="newsimg" :src="its.titleImg" :alt="its.informationTitle">
                         <div class="newinfo">
                             <div class="img_tips">

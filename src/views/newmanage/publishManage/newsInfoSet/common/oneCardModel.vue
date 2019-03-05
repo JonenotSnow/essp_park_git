@@ -134,7 +134,8 @@
                     name: 'park-lookNewsAudit',
                     query: {
                         id: item.informationId,
-                        applyType: '0'+this.type
+                        applyType: '0'+this.type,
+                        isAudit: '01'
                     }
                 })
             },

@@ -115,10 +115,9 @@ export default {
             show: false
         };
     },
-    async created() {
+    created() {
         this.rzz = JSON.parse(window.localStorage.getItem("rzz"));
-        await this.getForm();
-        await this.getFxContent();
+        this.getForm();
     },
     methods: {
         getForm() {
@@ -131,6 +130,7 @@ export default {
                         this.getFormList = JSON.parse(
                             response.resultData.entryForm
                         );
+                        this.getFxContent();
                     }
                 },
                 err => {
@@ -179,20 +179,23 @@ export default {
                                 }
                             }
                         } 
-                        if (this.getFormList[0] && !this.getFormList[0].value) {
-                            this.getFormList[0].value = this.fxContent.CSTNM;
-                        }
-                        if (this.getFormList[1] && !this.getFormList[1].value) {
-                            this.getFormList[1].value = this.fxContent.IDYTPCD;
-                        }
-                        if (this.getFormList[2] && !this.getFormList[2].value) {
-                            this.getFormList[2].value = this.fxContent.area;
-                        }
-                        if (this.getFormList[3] && !this.getFormList[3].value) {
-                            this.getFormList[3].value = this.fxContent.linkMan;
-                        }
-                        if (this.getFormList[4] && !this.getFormList[5].value) {
-                            this.getFormList[4].value = this.fxContent.linkPhone;
+                        //反显
+                        for (let i = 0; i < this.getFormList.length; i++) {
+                            if (this.getFormList[i].name == '公司名称' && this.getFormList[i].nickName == 'company') {
+                                this.getFormList[i].value = this.fxContent.CSTNM;
+                            }
+                            if (this.getFormList[i].name == '行业' && this.getFormList[i].nickName == 'ind') {
+                                this.getFormList[i].value = this.fxContent.IDYTPCD;
+                            }
+                            if (this.getFormList[i].name == '注册地' && this.getFormList[i].nickName == 'area') {
+                                this.getFormList[i].value = this.fxContent.area;
+                            }
+                            if (this.getFormList[i].name == '联系人姓名' && this.getFormList[i].nickName == 'linkName') {
+                                this.getFormList[i].value = this.fxContent.linkMan;
+                            }
+                            if (this.getFormList[i].name == '联系电话' && this.getFormList[i].nickName == 'phone') {
+                                this.getFormList[i].value = this.fxContent.linkPhone;
+                            }
                         }
                     }
                 }
@@ -226,11 +229,13 @@ export default {
                     }
                 }
             }
-            if (this.getFormList[0] && !this.getFormList[0].value) {
-                this.getFormList[0].value = this.fxContent.CSTNM;
-            }
-            if (this.getFormList[1] && !this.getFormList[1].value) {
-                this.getFormList[1].value = this.fxContent.IDYTPCD;
+            for (let i = 0; i < this.getFormList.length; i++) {
+                if (this.getFormList[i].name == '公司名称' && this.getFormList[i].nickName == 'company') {
+                    this.getFormList[i].value = this.fxContent.CSTNM;
+                }
+                if (this.getFormList[i].name == '行业' && this.getFormList[i].nickName == 'ind') {
+                    this.getFormList[i].value = this.fxContent.IDYTPCD;
+                }
             }
             this.accessT = true;
         },

@@ -26,7 +26,7 @@
                 </div>
             </div>
         </div> -->
-        <essp-loading v-else :nodata="true"></essp-loading>
+        <essp-loading v-else :nodata="requestTip == '数据加载完毕'"  :loading="requestTip == '数据加载中...'"></essp-loading>
     </div>
 </template>
 
@@ -45,6 +45,10 @@
             },
             temeTitle: {
                 type: String
+            },
+            requestTip: {
+                type: String,
+                default: ''
             }
         },
         data() {

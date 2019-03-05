@@ -26,7 +26,7 @@
                 <ul>
                     <li v-for="(it,i) in getMemInfoList" :key="i">
                         <div>
-                            <img src="../../../assets/actdetaillogo.png" alt="">
+                            <img :src="it.cstLogo || '../../../assets/actdetaillogo.png'" alt="">
                             <div>
                                 <p>{{it.cstNm}}</p>
                                 <p>行业：{{it.idyTpcd | idType(it.idyTpcd)}}</p>
@@ -76,7 +76,7 @@
                         <p class="title_p">请添加合适该企业的标签，可多选</p>
                     </div>
                     <div class="yList">
-                        <el-tag v-if="TJTagList && TJTagList.length>0" :key="it.lblId" v-for="it in TJTagList" @click.native="addTagToL(it)">{{it.lblTxt}}</el-tag>
+                        <el-tag v-if="TJTagList && TJTagList.length>0 && i<6" :key="it.lblId" v-for="(it,i) in TJTagList" @click.native="addTagToL(it)">{{it.lblTxt}}</el-tag>
                     </div>
                     <div class="relist">
                         <el-tag :key="tag" v-for="tag in forTagList" closable :disable-transitions="false" @close="handleClose(tag)">{{tag}}</el-tag>
@@ -150,6 +150,11 @@ export default {
         }
     },
     methods: {
+        resetFormParam(){
+            this.pageNum = 1;
+            this.pageSize = 5;
+            this.seachVal = '';
+        },
         handleSizeChange(val) {
             this.pageSize = val;
             this.getMemInfo();
@@ -196,6 +201,7 @@ export default {
         getMemInfo(){
             this.curSelectTag = '';
             this.loading = true;
+            this.getMemInfoList = []
             this.$post(this.$apiUrl.manage.getMemInfo,{
                 cstNm : this.seachVal,
                 parkId : window.sessionStorage.getItem("parkId"),
@@ -229,6 +235,7 @@ export default {
                     message: response.resultMsg
                 })
             })
+            this.resetFormParam();
             await this.getMemInfo();
             this.dialogTableVisible = false;
         },
@@ -247,9 +254,10 @@ export default {
                     entTp : '3000001'
                 })
                 .then((response) => {
-                    this.dynamicTags =response.resultData.lblInfo;
+                    this.dynamicTags = response.resultData.lblInfo;
+                    console.log(this.dynamicTags);
 
-                    if (this.dynamicTags.length>0) {
+                    if (this.dynamicTags && this.dynamicTags.length>0) {
                         this.dynamicTags.map(x=>{
                             this.forTagList.push(x.lblTxt)
                         })

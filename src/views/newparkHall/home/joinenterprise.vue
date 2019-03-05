@@ -16,7 +16,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="entermore" @click="linkToPage"><span>More <i
+                <div class="entermore"><span @click="linkToPage">More <i
                 class="el-icon-arrow-right"></i></span></div>
             </div>
             <div v-else class="nobox"><i class="myicon"></i><span class="tipspan">暂无数据</span></div>
@@ -34,7 +34,7 @@ import mixins_windowOpen from '@/components/mixins/mixins_windowOpen.js'
          msg:"入驻企业",
          enterprises:[],
          pageNum: 1,
-         pageSize: 5,
+         pageSize: 6,
          en_title:this.utils.isBdPark() ? '入驻企业400+家，在职人员10000+人' : 'Entered enterprises',
          rzzMap:new Map()
      }

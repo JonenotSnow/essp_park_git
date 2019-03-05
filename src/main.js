@@ -89,8 +89,9 @@ let openUrl = "http://128.196.235.132:1345/essp/#";
 if (process.env.NODE_ENV === "production") {
     openUrl = window.location.origin+'/essp/'+"#";
 } else {
-    // require('./mock/index.js')
+    //require('./mock/index.js')
 }
+
 Vue.prototype.$openUrl = openUrl;
 
 import axios from "axios";
@@ -118,23 +119,23 @@ router.beforeEach(async (to, from, next) => {
 
     // let query  = getQueryObjuect()
     /* 埋点方案  start   */
-    // let pathname = window.location.pathname
-    // let historyArr = localStorageHandler.getItem('history')?localStorageHandler.getItem('history'):{path: []}
-    // if (sessionStorageHandler.getItem("loginFlag")) {
-    //     let userArr = {
-    //         userName: sessionStorageHandler.getItem('userInfo').userName,
-    //         url: pathname+'#'+to.path,
-    //         accessTime: Moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
-    //         channel: '01',
-    //         system: '',
-    //         opttype: 'url'
-    //     }
-    //     // if (historyArr && historyArr.path && historyArr.path.length && userArr.url === historyArr.path[historyArr.path.length-1].url) { // 过滤刷新
-    //     //     return
-    //     // }
-    //     historyArr.path.push(userArr)
-    //     localStorageHandler.setItem('history', historyArr)
-    // }
+    let pathname = window.location.pathname
+    let historyArr = localStorageHandler.getItem('history') ? localStorageHandler.getItem('history') : {path: []}
+    if (sessionStorageHandler.getItem("loginFlag")) {
+        let userArr = {
+            userName: sessionStorageHandler.getItem('userInfo').username,
+            url: pathname+'#'+to.path,
+            accessTime: Moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
+            channel: '01',
+            system: '',
+            opttype: 'url'
+        }
+        // if (historyArr && historyArr.path && historyArr.path.length && userArr.url === historyArr.path[historyArr.path.length-1].url) { // 过滤刷新
+        //     return
+        // }
+        historyArr.path.push(userArr)
+        localStorageHandler.setItem('history', historyArr)
+    }
     /* 埋点方案  end  */
 
     console.log(to)

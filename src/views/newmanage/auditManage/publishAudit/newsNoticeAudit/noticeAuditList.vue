@@ -209,6 +209,7 @@ import newsNoticeMixins from './newsNoticeMixins'
                     line-height: 30px;
                     letter-spacing: 0px;
                     color: #00a0e9;
+                    cursor: pointer;
                 }
             }
 

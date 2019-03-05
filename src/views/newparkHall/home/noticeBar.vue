@@ -2,7 +2,8 @@
     <div class="noticeBar">
         <!--/parkHall/manage/activityPoolAddPark-->
         <!--  公告快捷入口的模块-->
-        <div class="noticeBox" :class="{lineTwo:(LoginUserRole.includes('33') || LoginUserRole.includes('34'))?true:false}">
+        <div class="noticeBox"
+             :class="{lineTwo:(LoginUserRole.includes('33') || LoginUserRole.includes('34'))?true:false}">
             <div class="swiper_com esspclearfix">
                 <div class="swiper_inner">通知公告：</div>
                 <div v-if="infoList.length>0">
@@ -12,7 +13,7 @@
                     <!--v-html="infoList[0].title||infoList[0].informationTitle"-->
                     <!--@click="getNoticeDetail()"-->
                     <!--&gt;</div>-->
-                    <essp-roll listType="infoList" :list="infoList" class="swiper_inner3"/>
+                    <essp-roll :listType="'infoList'" :list.sync="infoList" class="swiper_inner3"/>
                     <!--<div-->
                     <!--style="padding-top: 8px"-->
                     <!--class="swiper_inner2"-->
@@ -39,7 +40,7 @@
                     <!--<div class="swiper_inner3" @click="cancelAudit(applyParkList[0].id)">-->
                     <!--{{applyParkList[0].cstNm}}-->
                     <!--</div>-->
-                    <essp-roll listType="applyParkList" :list="applyParkList" class="swiper_inner3"/>
+                    <essp-roll :listType="'applyParkList'" :list.sync="applyParkList" class="swiper_inner3"/>
 
                     <!-- <span
                         style="display: inline-block; padding-top: 9px"
@@ -98,13 +99,11 @@
                     startDate: "",
                     title: "",
                     type: 2
-                })
-                    .then(result => {
-                        this.infoList = result.resultData.informationList; //通告数据源
-                    })
-                    .catch(err => {
-                        this.$message.error("接口异常");
-                    });
+                }).then(result => {
+                    this.infoList = result.resultData.informationList; //通告数据源
+                }).catch(err => {
+                    this.$message.error("接口异常");
+                });
             },
             //列表
             getNoticeList() {
@@ -127,7 +126,19 @@
                     parkId: window.sessionStorage.getItem("parkId")
                 }).then(response => {
                     if (response.resultData) {
-                        this.applyParkList = response.resultData;
+                        let list=[]
+                        if (this.isBdPark){
+                            for (let i = 0; i < response.resultData.length; i++) {
+                                if (response.resultData[i].type == 1) {
+                                    list.push(response.resultData[i])
+                                }
+
+                            }
+                            this.applyParkList = list
+                            // Vue.$set(this.applyParkList,list)
+                        } else {
+                            this.applyParkList = response.resultData;
+                        }
                     }
                 });
             },
@@ -145,8 +156,11 @@
                 }
             },
             //校验审核状态
-            cancelAudit(rows){
-                this.$router.push({path:'/parkHall/manage/manageParkAuditDetail',query:{entityId:rows.id,cstId:rows.cstId}});
+            cancelAudit(rows) {
+                this.$router.push({
+                    path: '/parkHall/manage/manageParkAuditDetail',
+                    query: {entityId: rows.id, cstId: rows.cstId}
+                });
             },
             goNoticeList() {
                 if (this.isBdPark) {
@@ -171,7 +185,7 @@
         background-size: contain;
         /*padding-top: 110px;*/
         /*padding-bottom: 16px;*/
-        .noticeBox{
+        .noticeBox {
             position: relative;
             overflow: hidden;
             cursor: pointer;
@@ -179,8 +193,8 @@
             padding: 5px 11px 5px 45px;
             left: 50%;
             top: -45px;
-            margin-left: -400px;
-            background: rgba(255,255,255,0.8);
+            margin-left: -430px;
+            background: rgba(255, 255, 255, 0.8);
             z-index: 2;
             font-size: 14px;
             /*box-shadow: 2.5px 4.3px 4.8px 0.2px rgba(0, 0, 0, 0.2);
@@ -195,7 +209,7 @@
             -o-border-radius: 6px 6px 0px 0px;
             border-radius: 6px 6px 0px 0px;
         }
-        .noticeBox.lineTwo{
+        .noticeBox.lineTwo {
             top: -80px;
         }
     }

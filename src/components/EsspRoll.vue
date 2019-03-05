@@ -134,7 +134,7 @@
                     // /parkIndex/activityBmAuditDetail?id=20190223105445004&enterinfoId=20190223105505002
                         Object.assign(selectObj, {
                             path: "/parkIndex/activityBmAuditDetail",
-                            query: {id: rows.id,enterinfoId:rows.enterinfoId}
+                            query: {id: rows.mark,enterinfoId:rows.id}
                         });
                         break;
                     default:
