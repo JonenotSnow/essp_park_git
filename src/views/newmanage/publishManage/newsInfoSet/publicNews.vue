@@ -101,6 +101,7 @@
                     statusType: this.approveType
                 }
                 this.requestTip = '数据加载中...'
+                this.list = []
                 this.$post(url, pop).then(res => {
                     this.requestTip = '数据加载完毕';
                     var arr = res.resultData.informationList;

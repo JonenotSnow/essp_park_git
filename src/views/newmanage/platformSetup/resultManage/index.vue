@@ -136,6 +136,7 @@
             getAllAchiev(){
                 this.ajaxTit = "数据加载中……";
                 this.isAllChecked = false;
+                this.list = []
                 this.$post(this.$apiUrl.achievement.getAllAchiev, {
                     parkId:  this.parkId,
                     pageNum:this.pageNum,   // 页码

@@ -46,7 +46,7 @@
                     暂无数据
                 </div>
             </div> -->
-            <essp-loading :nodata="true"></essp-loading>
+            <essp-loading :nodata="requestTip == '数据加载完毕'" :loading="requestTip == '数据加载中...'"></essp-loading>
         </div>
         <!-- 关注事件对话框start -->
         <el-dialog class="quguanbox"
@@ -83,6 +83,10 @@
             },
             temeTitle: {
                 type: String
+            },
+            requestTip: {
+                type: String,
+                default: ''
             }
         },
         data() {

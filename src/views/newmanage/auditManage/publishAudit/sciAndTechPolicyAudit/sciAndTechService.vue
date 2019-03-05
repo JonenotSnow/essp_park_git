@@ -209,12 +209,14 @@
                     endDate: this.searchCondition.endDate,          // 结束时间
                 };
 
+                this.sciAndTechServiceData = []
                 this.$post("/audit/getAuditList", params).then(response => {
                     let resultData = response.resultData;
                     this.totalCount = resultData.policyCount;
                     this.sciAndTechServiceData = resultData.policyList;
                     this.requestTip = '数据加载完毕';
                 }, err => {
+                    this.requestTip = '数据加载完毕';
                     this.$message.error("接口异常");
                 })
             },

@@ -58,6 +58,7 @@
             // 获取专家团队列表
             getAllAchiev(){
                 this.ajaxTit = "数据加载中……"
+                this.list = []
                 this.$post(this.$apiUrl.achievement.getExpertInfo, {
                     parkId:  this.parkId,
                     pageNum:this.pageNum,        // 页码

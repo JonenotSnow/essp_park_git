@@ -201,6 +201,7 @@ export default {
         getMemInfo(){
             this.curSelectTag = '';
             this.loading = true;
+            this.getMemInfoList = []
             this.$post(this.$apiUrl.manage.getMemInfo,{
                 cstNm : this.seachVal,
                 parkId : window.sessionStorage.getItem("parkId"),

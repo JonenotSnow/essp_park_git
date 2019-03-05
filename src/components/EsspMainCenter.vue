@@ -266,6 +266,8 @@
             getActListSource() {
                 var url = active[this.pageType]||"";
                 var parkId =  sessionStorage.getItem("parkId") || "";
+                this.mcCardDataList = [];
+                this.loadMsg = "数据加载中~"
                 this.$post(url,{
                     parkId: parkId,
                     pageNum : this.pageNum,
@@ -277,7 +279,6 @@
                 })
                 .then((response) => {
                     // if(response.resultCode == "CLT000000000" || response.resultCode == "0000000000"){
-                        this.mcCardDataList = [];
                         var arr = response.resultData.activityList;
                         arr.forEach((item,index)=>{
                             var activityStarttime = this.getMillisecond(item.activityStarttime);  // 活动开始时间
@@ -311,6 +312,8 @@
                     //     this.$message.info(response.resultMsg);
                     // }
 
+                }, (err) => {
+                    this.loadMsg = "数据加载完毕！";
                 })
 
 

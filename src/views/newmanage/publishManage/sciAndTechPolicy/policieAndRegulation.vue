@@ -138,6 +138,7 @@
                     title: this.searchContent,          // 查询事件字段
                     // classtType: this.classtType     // 科技服务才会有这个字段---
                 };
+                this.dataList = []
                 this.$post("/policy/getMyPubPol", params).then(response => {
                     // let codestatus = response.resultCode;
                     // if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
