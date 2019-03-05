@@ -35,7 +35,7 @@
                 </ul>
             </div>
             <p class="saveBtn">
-                <el-button type="primary" size='small' @click='getList'>查询</el-button>
+                <el-button type="primary" size='small' @click='infosql'>查询</el-button>
                 <el-button type="info" size='small' @click='reset'>重置</el-button>
             </p>
             <p>采取先到先得的任务领取审核方式</p>
@@ -169,6 +169,12 @@ export default {
 
             })
         },
+        // 点击查询
+        infosql(){
+            this.pageNum = 1;
+            this.pageSize = 5;
+            this.getList();
+        },
         //list列表
         getList(type){
             console.log(!type);
@@ -201,8 +207,8 @@ export default {
             })
         },
         reset(){
-            this.searchCondition.startDate =
-            this.searchCondition.endDate =
+            this.searchCondition.startDate = '';
+            this.searchCondition.endDate = '';
             this.searchCondition.status =
             this.searchCondition.companyName =
             this.searchCondition.title = '';
