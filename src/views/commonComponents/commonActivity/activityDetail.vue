@@ -158,7 +158,7 @@
                     <!--</div>-->
                 </div>
                 <!--commentSty 传入的类型-->
-                <essp-info-comment commentSty="1"></essp-info-comment>
+                <essp-info-comment commentSty="1" :publishId ="publishId"></essp-info-comment>
             </div>
             <div class="active_detail_div active_detail_div1">
                 <div class="moreActive">
@@ -256,6 +256,7 @@
         },
         data() {
             return {
+			    publishId:"1",//长度为1不能改
                 logo: "",
                 icons: [
                     "icon iconfont icon-riqi1",
@@ -556,6 +557,8 @@
                         }
                         this.getLogo();
                         this.getBtnText();
+						this.publishId=""
+                        this.publishId=response.resultData.initiator
                         console.log(this.btnText)
                     // } else {
                     //     this.$message({
