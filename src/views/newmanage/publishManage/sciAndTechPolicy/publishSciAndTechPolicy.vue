@@ -36,7 +36,7 @@
                         >
                             <div id="toolbar" slot="toolbar"></div>
                         </quill-editor> -->
-                        <vue-ueditor v-model="ruleForm.infoDetail" :config="editorOption"></vue-ueditor>
+                        <vue-ueditor v-model="ruleForm.infoDetail" :ueditorConfig="editorOption"></vue-ueditor>
                     </div>
                 </el-form-item>
                 <el-form-item label="政策法规标签：" class="labelxing">
@@ -113,13 +113,15 @@
                 </el-form-item>
                 <el-form-item label="科技服务详情：" prop="infoDetail" class="my-detail-edit">
                     <div class="my-quill-edit-wrap-ss">
-                        <quill-editor
+                        <!-- <quill-editor
                             ref="myTextEditor"
                             :options="editorOption"
                             v-model="ruleForm.infoDetail"
                         >
                             <div id="toolbar" slot="toolbar"></div>
-                        </quill-editor>
+                        </quill-editor> -->
+                            <vue-ueditor v-model="ruleForm.infoDetail" :ueditorConfig="editorOption"></vue-ueditor>
+                   
                     </div>
                 </el-form-item>
                 <el-form-item label="科技服务标签：" class="labelxing">
@@ -270,10 +272,23 @@
                 },
 
                 // 编辑器提示语
-                // editorOption: {
-                //     placeholder: "请输入模板内容",
-                //     theme: "snow"
-                // },
+                editorOption: {
+                    // initialFrameWidth:900,
+                    // initialFrameHeight:340,
+                    // toolbars: [[
+                    //     'fullscreen', '|', 'undo', 'redo', '|',
+                    //     'bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'superscript', 'subscript', 'removeformat', 'formatmatch', 'autotypeset', 'blockquote', 'pasteplain', '|', 'forecolor', 'backcolor', 'insertorderedlist', 'insertunorderedlist', 'selectall', 'cleardoc', '|',
+                    //     'rowspacingtop', 'rowspacingbottom', 'lineheight', '|',
+                    //     'customstyle', 'paragraph', 'fontfamily', 'fontsize', '|',
+                    //     'directionalityltr', 'directionalityrtl', 'indent', '|',
+                    //     'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify', '|', 'touppercase', 'tolowercase', '|',
+                    //     'link', 'unlink', '|', 'imagenone', 'imageleft', 'imageright', 'imagecenter', '|',
+                    //     'map', 'pagebreak', 'template', 'background', '|',
+                    //     'horizontal', 'date', 'time', 'spechars', 'snapscreen', 'wordimage', '|',
+                    //     'inserttable', 'deletetable', 'insertparagraphbeforetable', 'insertrow', 'deleterow', 'insertcol', 'deletecol', 'mergecells', 'mergeright', 'mergedown', 'splittocells', 'splittorows', 'splittocols', 'charts', '|',
+                    //     'preview', 'searchreplace', 'help'
+                    // ]]
+                },
 
                 rules_01: {
                     policyTitle: [
