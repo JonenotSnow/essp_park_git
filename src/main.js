@@ -121,7 +121,7 @@ router.beforeEach(async (to, from, next) => {
     let historyArr = localStorageHandler.getItem('history') ? localStorageHandler.getItem('history') : {path: []}
     if (sessionStorageHandler.getItem("loginFlag")) {
         let userArr = {
-            userName: sessionStorageHandler.getItem('userInfo').userName,
+            userName: sessionStorageHandler.getItem('userInfo').username,
             url: pathname+'#'+to.path,
             accessTime: Moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
             channel: '01',

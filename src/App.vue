@@ -177,15 +177,17 @@
                 }
             },
             // 消息轮巡推送
-            getMessage() {
+            async getMessage() {
                 const self = this;
                 let time = 60;
                 let userInfo = this.SSH.getItem('userInfo');
                 let historyArr = this.LSH.getItem('history');
                 let timer = null;
                 this.buriedTime++;
+                console.log("userInfo====",userInfo);
 
                 if (!this.utils.isEmpty(userInfo) && userInfo.userType !== this.constants.userType.backgroundUser) {
+                    console.log(this.buriedTime >= 5);
                     if(this.buriedTime >= 5 && historyArr){
                         this.$post("/intermediary/termnl/insert", {
                             usrBhvrAnlParamList: historyArr.path
