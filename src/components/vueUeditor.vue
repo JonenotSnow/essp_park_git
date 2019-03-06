@@ -12,6 +12,10 @@ export default {
       type:String,
       default:'请编辑内容'
     },
+    imageFlag:{
+      type:String,
+      default:true
+    },
     ueditorConfig:{
       type:Object,
       default:()=>{
@@ -30,7 +34,8 @@ export default {
             'horizontal', 'date', 'time', 'spechars', 'snapscreen', 'wordimage', '|',
             'inserttable', 'deletetable', 'insertparagraphbeforetable', 'insertrow', 'deleterow', 'insertcol', 'deletecol', 'mergecells', 'mergeright', 'mergedown', 'splittocells', 'splittorows', 'splittocols', 'charts', '|',
             'preview', 'searchreplace', 'help'
-        ]]
+            ]],
+            UEDITOR_HOME_URL: '/essp_park/static/UEditor/'
         }
       }
     }
@@ -44,6 +49,7 @@ export default {
   methods: {
 
     addCustomButtom (editorId) {
+        if(!this.imageFlag)return false
         let that= this
         window.UE.registerUI('test-button', function (editor, uiName) {
             // 注册按钮执行时的 command 命令，使用命令默认就会带有回退操作
