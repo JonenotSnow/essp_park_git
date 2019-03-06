@@ -70,8 +70,8 @@
                 <span @click="scanTwo = true">预览</span>
             </p>
             <p class="createSave">
-                <span @click="getDataList">保存上传</span>
-                <span @click="$router.push('/parkHall/manage/baseInfo')">取&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;消</span>
+                <span @click="accessT=true">暂&nbsp;&nbsp;存</span>
+                <span @click="getDataList(0)">保存上传</span>
             </p>
         </div>
 
@@ -133,6 +133,27 @@
             <p>园区概览设置已成功上传</p>
             <p>
                 <el-button type="primary" size='mini' plain @click="$router.push('/parkHall/manage/baseInfo')">返回</el-button>
+            </p>
+        </el-dialog>
+
+        <!-- 园区概览暂存 -->
+        <el-dialog :visible.sync="accessT" width='520px' class='access'>
+            <h2 class="titleTips">提示</h2>
+            <p class="accessP">
+                <i class="el-icon-warning"></i>&nbsp;&nbsp;是否确认暂存当前模板编辑内容</p>
+            <p class="btn">
+                <span @click="$router.push('/parkHall/manage/baseInfo')">取消</span>
+                <span @click="getDataList(1)">确认</span>
+            </p>
+        </el-dialog>
+        <!-- 有暂存时给提示是否显示暂存 -->
+        <el-dialog :visible.sync="access" width='520px' class='access'>
+            <h2 class="titleTips">提示</h2>
+            <p class="accessP">
+                <i class="el-icon-warning"></i>&nbsp;&nbsp;是否继续编辑暂存模板</p>
+            <p class="btn">
+                <span @click="getModuleData(0)">取消</span>
+                <span @click="getModuleData(1)">确认</span>
             </p>
         </el-dialog>
     </div>
@@ -199,6 +220,8 @@ export default {
             confirmSend:false,
             title:this.utils.isBdPark()?"关于我们":"园区概览",
             isBdPark: this.utils.isBdPark(),
+            accessT:false,
+            access:false
         };
     },
     async created() {
@@ -270,28 +293,44 @@ export default {
 
             return false; // 返回false不会自动上传
         },
-        getDataList() {
+        getDataList(type) {
+            //type 0 保存  1 上传
             let _that = this;
-            this.$post(this.$apiUrl.manage.updatePark, {
+            let saveParams = {
                 logo: this.logoPic,
                 parkSet: this.displayList.parkSet,
                 parkId: window.sessionStorage.getItem("parkId"),
                 parkService : this.$route.query.moduleType.toString()
-            }).then(
+            }
+            let timelyParams = {
+                logo: this.logoPic,
+                temp1:this.displayList.parkSet,
+                parkId: window.sessionStorage.getItem("parkId"),
+                parkService : this.$route.query.moduleType.toString()
+            };
+           let params = {};
+            if (type == 0) {
+                params = saveParams;
+            }else{
+                params = timelyParams;
+            }
+            this.$post(this.$apiUrl.manage.updatePark, params).then(
                 response => {
                     this.$message({
-                        type: "sucess",
-                        message: response.resultMsg
+                        message: response.resultMsg,
+                        type: 'success'
                     });
-                    this.confirmSend = true;
+                    _that.confirmSend =  type == 0 ?true:false;
+                    _that.accessT =  type == 1 ?true:false;
                     setTimeout(() => {
                         _that.confirmSend = false;
+                        _that.accessT = false;
                         this.$router.push("/parkHall/manage/baseInfo");
                     }, 2000);
                 },
                 err => {
                     this.$message({
-                        type: "warn",
+                        type: "warning",
                         message: response.resultMsg
                     });
                 }
@@ -310,20 +349,38 @@ export default {
                     if (response.resultData.imgUrl) {
                         this.logoPic = response.resultData.imgUrl;
                     }
-                    if(_this.displayList.parkSet && _this.displayList.parkSet !=="default1"){
-                        _this.displayList.parkSet = JSON.parse(_this.displayList.parkSet);
+                    if (_this.displayList.temp1) {
+                        this.access = true;
                     }else{
-                        _this.displayList.parkSet = [{img:'',title:'',content:''}];
+                        if(_this.displayList.parkSet && _this.displayList.parkSet !=="default1"){
+                            _this.displayList.parkSet = JSON.parse(_this.displayList.parkSet);
+                        }else{
+                            _this.displayList.parkSet = [{img:'',title:'',content:''}];
+                        }
                     }
                     this.bLoading = false;
                 },
                 err => {
                     this.$message({
-                        type: "warn",
+                        type: "warning",
                         message: response.resultMsg
                     });
                 }
             );
+        },
+        //筛选出模板数据
+        getModuleData(type){
+            //type 0 保存的模板数据 1 暂存的模板数据
+            if (type == 0) {
+                if(this.displayList.parkSet && this.displayList.parkSet !=="default1"){
+                    this.displayList.parkSet = JSON.parse(this.displayList.parkSet);
+                }else{
+                    this.displayList.parkSet = [{img:'',title:'',content:''}];
+                }
+            }else{
+                this.displayList.parkSet = JSON.parse(this.displayList.temp1);
+            }
+            this.access = false;
         }
     }
 };
@@ -381,6 +438,19 @@ export default {
 /* #scanModelTwo .ql-video,#scanModelTwo .ql-image,#scanModelTwo .ql-link{
     display:none;
 } */
+#scanModelTwo .access .el-dialog__header {
+    display: none;
+}
+
+#scanModelTwo .access .el-dialog__body {
+    /* text-align: center; */
+    overflow: hidden;
+    padding: 30px 20px;
+}
+
+#scanModelTwo .access .el-dialog__body p:nth-of-type(1) {
+    line-height: 55px;
+}
 </style>
 
 
@@ -828,6 +898,54 @@ export default {
                     font-size: 18px;
                     margin: 33px 30px 20px;
                 }
+            }
+        }
+    }
+}
+
+.access {
+    .titleTips {
+        text-indent: 36px;
+        font-size: 24px;
+        color: #555;
+        position: relative;
+        font-weight: normal;
+        top: -30px;
+        margin-top: 20px;
+    }
+    .accessP {
+        text-indent: 20px;
+        font-size: 20px;
+        color: #333;
+        line-height: 30px;
+        i {
+            font-size: 28px;
+            color: #00a0e9;
+        }
+    }
+    .btn {
+        margin-top: 35px;
+        text-align: center;
+        span {
+            text-align: center;
+            display: inline-block;
+            width: 100px;
+            height: 35px;
+            border-radius: 2px;
+            line-height: 35px;
+            font-size: 18x;
+            cursor: pointer;
+            color: #fff;
+            letter-spacing: 4.8px;
+            &:nth-of-type(1) {
+                letter-spacing: 4.8px;
+                background: #e6f4ff;
+                color: #00a0e9;
+            }
+            &:nth-of-type(2) {
+                margin-left: 55px;
+                background: linear-gradient(31deg, #22a2fa 0%, #10b5ff 100%);
+                color: #fff;
             }
         }
     }

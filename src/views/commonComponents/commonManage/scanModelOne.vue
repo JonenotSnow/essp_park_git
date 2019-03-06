@@ -86,8 +86,8 @@
                         <span @click="getOne">预览</span>
                     </p>
                     <p class="createSave">
-                        <span @click="upDateModelA">保存上传</span>
-                        <span @click="$router.push('/parkHall/manage/baseInfo')">取&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;消</span>
+                        <span @click="accessT=true">暂&nbsp;&nbsp;存</span>
+                        <span @click="upDateModelA(0)">保存上传</span>
                     </p>
                 </div>
             </div>
@@ -141,13 +141,36 @@
 
         <!-- 园区概览设置已成功上传 -->
         <el-dialog :visible.sync="confirmSend" width='520px' height='280px' class='confirmSend' :show-close="false">
-            <p>
-                <i class="el-icon-close" @click="confirmSend=false" ></i>
+            <div>
+                <p>
+                    <i class="el-icon-close" @click="confirmSend=false" ></i>
+                </p>
+                <p><img src="../../../assets/sendConofirm.jpg" alt=""></p>
+                <p>园区概览设置已成功上传</p>
+                <p>
+                    <el-button type="primary" size='mini' @click="$router.push('/parkHall/manage/baseInfo')">返回</el-button>
+                </p>
+            </div>
+        </el-dialog>
+
+        <!-- 园区概览暂存 -->
+        <el-dialog :visible.sync="accessT" width='520px' class='access'>
+            <h2 class="titleTips">提示</h2>
+            <p class="accessP">
+                <i class="el-icon-warning"></i>&nbsp;&nbsp;是否确认暂存当前模板编辑内容</p>
+            <p class="btn">
+                <span @click="$router.push('/parkHall/manage/baseInfo')">取消</span>
+                <span @click="upDateModelA(1)">确认</span>
             </p>
-            <p><img src="../../../assets/sendConofirm.jpg" alt=""></p>
-            <p>园区概览设置已成功上传</p>
-            <p>
-                <el-button type="primary" size='mini' @click="$router.push('/parkHall/manage/baseInfo')">返回</el-button>
+        </el-dialog>
+        <!-- 有暂存时给提示是否显示暂存 -->
+        <el-dialog :visible.sync="access" width='520px' class='access'>
+            <h2 class="titleTips">提示</h2>
+            <p class="accessP">
+                <i class="el-icon-warning"></i>&nbsp;&nbsp;是否继续编辑暂存模板</p>
+            <p class="btn">
+                <span @click="getModuleData(0)">取消</span>
+                <span @click="getModuleData(1)">确认</span>
             </p>
         </el-dialog>
     </div>
@@ -211,7 +234,9 @@ export default {
                 [{ font: [] }],
                 [{ align: [] }],
                 ["clean"]
-            ]
+            ],
+            accessT:false,
+            access:false
         }
     },
     created(){
@@ -252,9 +277,12 @@ export default {
                 if((','+Object.keys(result).join(',')+',').indexOf(',imgUrl,')>-1){
                     this.comlogo = result.imgUrl;
                 }
-                if(result.parkSet2 && result.parkSet2!=="default2"){
-                    var parkset = JSON.parse(result.parkSet2)
-                    var deoptions = {
+                //如果有暂存模板 先提示是否继续编辑暂存模板 反之显示保存模板
+                if (result.temp2) {
+                    this.access = true;
+                }else if(result.parkSet2 && result.parkSet2!=="default2"){
+                    let parkset = JSON.parse(result.parkSet2)
+                    let deoptions = {
                         title:'',
                         content:'',
                         isPic:"0",
@@ -272,8 +300,27 @@ export default {
                 this.$message.error("接口异常");
             })
         },
-         //保存模版1
-        upDateModelA(){
+        //筛选出模板数据
+        getModuleData(type){
+            //type 0 保存的模板数据 1 暂存的模板数据
+            let parkset = type==0?JSON.parse(this.parkInfoes.parkSet2):JSON.parse(this.parkInfoes.temp2);
+            let deoptions = {
+                title:'',
+                content:'',
+                isPic:"0",
+                imgList:["","",""]
+            };
+            this.bannerDisList = parkset.bannerDisList?parkset.bannerDisList:[];
+            this.moduleList = parkset.moduleList?parkset.moduleList:[deoptions];
+            this.imgBoxA = [];
+            this.moduleList.forEach(item=>{
+                this.imgBoxA.push(item.imgList);
+            })
+            this.access = false;
+        },
+         //保存或暂存模版1
+        upDateModelA(type){
+            //type 0 保存  1 上传
             let _that = this;
             var updatePark = this.$apiUrl.manage.updatePark;
             var parkId = sessionStorage.getItem("parkId");
@@ -281,22 +328,41 @@ export default {
                 bannerDisList:this.bannerDisList,
                 moduleList:this.moduleList
             }
-            var pop = {
+            let saveParams = {
                 logo:this.comlogo,
                 parkSet2:this.parkSet1Obj,
                 parkId:sessionStorage.getItem("parkId"),
                 parkService : this.$route.query.moduleType.toString()
             }
-            this.$post(updatePark,pop).then((response) => {
-                this.$message.success(response.resultMsg);
-                _that.confirmSend = true;
+            let timelyParams = {
+                logo:this.comlogo,
+                parkId:sessionStorage.getItem("parkId"),
+                parkService : this.$route.query.moduleType.toString(),
+                temp2:this.parkSet1Obj
+            };
+            
+            let params = {};
+            if (type == 0) {
+                params = saveParams;
+            }else{
+                params = timelyParams;
+            }
+
+            this.$post(updatePark,params).then((response) => { 
+                this.$message({
+                    message: response.resultMsg,
+                    type: 'success'
+                });
+                _that.confirmSend =  type == 0 ?true:false;
+                _that.accessT =  type == 1 ?true:false;
                 setTimeout(() => {
                     _that.confirmSend = false;
+                    _that.accessT = false;
                     this.$router.push("/parkHall/manage/baseInfo");
                 }, 2000);
             },(err)=>{
                 this.$message({
-                    type: "warn",
+                    type: "warning",
                     message: response.resultMsg
                 });
             })
@@ -516,6 +582,19 @@ export default {
     /* #scanModelOne .ql-video,#scanModelOne .ql-image,#scanModelOne .ql-link{
         display:none;
     } */
+    #scanModelOne .access .el-dialog__header {
+        display: none;
+    }
+
+    #scanModelOne .access .el-dialog__body {
+        /* text-align: center; */
+        overflow: hidden;
+        padding: 30px 20px;
+    }
+
+    #scanModelOne .access .el-dialog__body p:nth-of-type(1) {
+        line-height: 55px;
+    }
 </style>
 
 
@@ -943,6 +1022,54 @@ export default {
     margin:20px auto;
     color:#ddd;
     border: 1px solid #f2f2f2;
+}
+
+.access {
+    .titleTips {
+        text-indent: 36px;
+        font-size: 24px;
+        color: #555;
+        position: relative;
+        font-weight: normal;
+        top: -30px;
+        margin-top: 20px;
+    }
+    .accessP {
+        text-indent: 20px;
+        font-size: 20px;
+        color: #333;
+        line-height: 30px;
+        i {
+            font-size: 28px;
+            color: #00a0e9;
+        }
+    }
+    .btn {
+        margin-top: 35px;
+        text-align: center;
+        span {
+            text-align: center;
+            display: inline-block;
+            width: 100px;
+            height: 35px;
+            border-radius: 2px;
+            line-height: 35px;
+            font-size: 18x;
+            cursor: pointer;
+            color: #fff;
+            letter-spacing: 4.8px;
+            &:nth-of-type(1) {
+                letter-spacing: 4.8px;
+                background: #e6f4ff;
+                color: #00a0e9;
+            }
+            &:nth-of-type(2) {
+                margin-left: 55px;
+                background: linear-gradient(31deg, #22a2fa 0%, #10b5ff 100%);
+                color: #fff;
+            }
+        }
+    }
 }
 </style>
 
