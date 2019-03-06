@@ -161,7 +161,7 @@ export default {
                 },
                 {
                     path: "/parkIndex/parkInformation/publishNewInfo",
-                    name: "发布资讯"
+                    name: "发布园区资讯"
                 }
             ],
             initiatorWay: "",

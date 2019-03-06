@@ -3,7 +3,7 @@
         <!-- 发布惠政模版  -->
         <essp-bread-crumb :breadList="breadlist"></essp-bread-crumb>
         <div class="titcon">
-            <h2 class="tit_tips">发布惠政</h2>
+            <h2 class="tit_tips">发布园区惠政</h2>
         </div>
         <div class="basecon">
             <div class="common_titwrap esspclearfix">
@@ -419,7 +419,7 @@
                     },
                     {
                         path: "",
-                        name: "发布的惠政"
+                        name: "发布园区惠政"
                     }
                 ],
                 content: "",//惠政详情
