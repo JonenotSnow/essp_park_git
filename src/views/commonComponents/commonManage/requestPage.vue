@@ -84,6 +84,7 @@ export default {
                     message: "加入成功"
                 });
             });
+            this.getInviteByKey();
             setTimeout(() => {
                 this.$router.push({path:'/parkHome',query:{id:this.parkId}});
             }, 2000);
@@ -103,6 +104,7 @@ export default {
                     message: `已拒绝${this.parkNm}的入园邀请`
                 });
             });
+            this.getInviteByKey();
             setTimeout(() => {
                 that.windowOpenNoParams("/messageCenter/parkMsg");
             }, 2000);
