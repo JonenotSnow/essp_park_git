@@ -275,6 +275,7 @@
                 editorOption: {
                     // initialFrameWidth:900,
                     initialFrameHeight: 340,
+                    UEDITOR_HOME_URL: '/essp_park/static/UEditor/',
                 },
 
                 rules_01: {
