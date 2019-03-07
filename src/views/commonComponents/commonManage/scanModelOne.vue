@@ -85,7 +85,11 @@
                         <span @click="createModule"><i class='el-icon-plus'></i>添加新模块</span>
                         <span @click="getOne">预览</span>
                     </p>
-                    <p class="createSave">
+                    <p class="createSave" v-if="isBdPark">
+                        <span @click="upDateModelA(0)">保存上传</span>
+                        <span @click="$router.push('/parkHall/manage/baseInfo')">取&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;消</span>
+                    </p>
+                    <p class="createSave" v-else>
                         <span @click="accessT=true">暂&nbsp;&nbsp;存</span>
                         <span @click="upDateModelA(0)">保存上传</span>
                     </p>
@@ -277,23 +281,53 @@ export default {
                 if((','+Object.keys(result).join(',')+',').indexOf(',imgUrl,')>-1){
                     this.comlogo = result.imgUrl;
                 }
-                //如果有暂存模板 先提示是否继续编辑暂存模板 反之显示保存模板
-                if (result.temp2) {
-                    this.access = true;
-                }else if(result.parkSet2 && result.parkSet2!=="default2"){
-                    let parkset = JSON.parse(result.parkSet2)
-                    let deoptions = {
-                        title:'',
-                        content:'',
-                        isPic:"0",
-                        imgList:["","",""]
-                    };
-                    this.bannerDisList = parkset.bannerDisList?parkset.bannerDisList:[];
-                    this.moduleList = parkset.moduleList?parkset.moduleList:[deoptions];
-                    this.imgBoxA = [];
-                    this.moduleList.forEach(item=>{
-                        this.imgBoxA.push(item.imgList);
-                    })
+                //保定
+                if (this.isBdPark) {
+                    if(result.parkSet2 && result.parkSet2!=="default2"){
+                        let parkset = JSON.parse(result.parkSet2)
+                        let deoptions = {
+                            title:'',
+                            content:'',
+                            isPic:"0",
+                            imgList:["","",""]
+                        };
+                        this.bannerDisList = parkset.bannerDisList?parkset.bannerDisList:[];
+                        this.moduleList = parkset.moduleList?parkset.moduleList:[deoptions];
+                        this.imgBoxA = [];
+                        this.moduleList.forEach(item=>{
+                            //配合app改造  app不传图片时，item.imgList.length == 0
+                            if (item.imgList.length == 0) {
+                                item.imgList = ["","",""]
+                            }
+                            this.imgBoxA.push(item.imgList);
+                        })
+                    }
+                }else{
+                    /*
+                    标准版：
+                    如果有暂存模板 先提示是否继续编辑暂存模板 反之显示保存模板
+                    */
+                    if (result.temp2) {
+                        this.access = true;
+                    }else if(result.parkSet2 && result.parkSet2!=="default2"){
+                        let parkset = JSON.parse(result.parkSet2)
+                        let deoptions = {
+                            title:'',
+                            content:'',
+                            isPic:"0",
+                            imgList:["","",""]
+                        };
+                        this.bannerDisList = parkset.bannerDisList?parkset.bannerDisList:[];
+                        this.moduleList = parkset.moduleList?parkset.moduleList:[deoptions];
+                        this.imgBoxA = [];
+                        this.moduleList.forEach(item=>{
+                            //配合app改造  app不传图片时，item.imgList.length == 0
+                            if (item.imgList.length == 0) {
+                                item.imgList = ["","",""]
+                            }
+                            this.imgBoxA.push(item.imgList);
+                        })
+                    }
                 }
                 this.bLoading = false;
             },(err)=>{
@@ -314,7 +348,11 @@ export default {
             this.moduleList = parkset.moduleList?parkset.moduleList:[deoptions];
             this.imgBoxA = [];
             this.moduleList.forEach(item=>{
+                if (item.imgList.length == 0) {
+                    item.imgList = ["","",""]
+                }
                 this.imgBoxA.push(item.imgList);
+                
             })
             this.access = false;
         },
@@ -340,9 +378,9 @@ export default {
                 parkService : this.$route.query.moduleType.toString(),
                 temp2:this.parkSet1Obj
             };
-            
             let params = {};
-            if (type == 0) {
+            //保定和标准版保存（type==0）是用保存参数saveParams，标准版存用暂存temp1参数timelyParams
+            if (this.isBdPark || type == 0) {
                 params = saveParams;
             }else{
                 params = timelyParams;
@@ -353,8 +391,12 @@ export default {
                     message: response.resultMsg,
                     type: 'success'
                 });
-                _that.confirmSend =  type == 0 ?true:false;
-                _that.accessT =  type == 1 ?true:false;
+                //保存成功提示
+                if (this.isBdPark || type == 0) {
+                        _that.confirmSend = true;
+                }else{  //暂存成功提示
+                    _that.accessT =  type == 1 ?true:false;
+                }
                 setTimeout(() => {
                     _that.confirmSend = false;
                     _that.accessT = false;

@@ -69,7 +69,11 @@
                 <span @click="createModule"><i class='el-icon-plus'></i>添加新模块</span>
                 <span @click="scanTwo = true">预览</span>
             </p>
-            <p class="createSave">
+            <p class="createSave" v-if="isBdPark">
+                <span @click="getDataList()">保存上传</span>
+                <span @click="$router.push('/parkHall/manage/baseInfo')">取&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;消</span>
+            </p>
+            <p class="createSave" v-else>
                 <span @click="accessT=true">暂&nbsp;&nbsp;存</span>
                 <span @click="getDataList(0)">保存上传</span>
             </p>
@@ -308,8 +312,9 @@ export default {
                 parkId: window.sessionStorage.getItem("parkId"),
                 parkService : this.$route.query.moduleType.toString()
             };
-           let params = {};
-            if (type == 0) {
+            let params = {};
+            //保定和标准版保存（type==0）是用保存参数saveParams，标准版存用暂存temp1参数timelyParams
+            if (this.isBdPark || type == 0) {
                 params = saveParams;
             }else{
                 params = timelyParams;
@@ -320,8 +325,11 @@ export default {
                         message: response.resultMsg,
                         type: 'success'
                     });
-                    _that.confirmSend =  type == 0 ?true:false;
-                    _that.accessT =  type == 1 ?true:false;
+                    if (this.isBdPark || type == 0) {
+                         _that.confirmSend = true;
+                    }else{
+                        _that.accessT =  type == 1 ?true:false;
+                    }
                     setTimeout(() => {
                         _that.confirmSend = false;
                         _that.accessT = false;
@@ -349,15 +357,26 @@ export default {
                     if (response.resultData.imgUrl) {
                         this.logoPic = response.resultData.imgUrl;
                     }
-                    if (_this.displayList.temp1) {
-                        this.access = true;
-                    }else{
+                    //保定只有保存没有暂存，标准版有暂存temp1
+                    if (_this.isBdPark) {
                         if(_this.displayList.parkSet && _this.displayList.parkSet !=="default1"){
                             _this.displayList.parkSet = JSON.parse(_this.displayList.parkSet);
                         }else{
                             _this.displayList.parkSet = [{img:'',title:'',content:''}];
                         }
+                    }else{
+                        //之前有暂存模板
+                        if (_this.displayList.temp1) {
+                            this.access = true;
+                        }else{ //没有暂存过模板
+                            if(_this.displayList.parkSet && _this.displayList.parkSet !=="default1"){
+                                _this.displayList.parkSet = JSON.parse(_this.displayList.parkSet);
+                            }else{
+                                _this.displayList.parkSet = [{img:'',title:'',content:''}];
+                            }
+                        }
                     }
+                    
                     this.bLoading = false;
                 },
                 err => {
@@ -368,7 +387,7 @@ export default {
                 }
             );
         },
-        //筛选出模板数据
+        //标准版筛选出模板数据
         getModuleData(type){
             //type 0 保存的模板数据 1 暂存的模板数据
             if (type == 0) {
