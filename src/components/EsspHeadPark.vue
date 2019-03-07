@@ -156,9 +156,6 @@ export default {
             indexSeachKW:'',//搜索框内容
         };
     },
-    mounted () { 
-        this.ready();
-    },
     computed: {
         ...mapGetters(["getUnReadNum"]),
         tab(){
@@ -166,6 +163,7 @@ export default {
         }
     },
     mounted() {
+        this.ready();
         this.addEvent("scroll", this.handleScroll);
     },
     created() {

@@ -456,7 +456,13 @@ export default {
         timerFormat(vaule) {
             return Moment(vaule).format("YYYY-MM-DD");
         }
-    }
+    },
+    watch: {
+        '$route.query.type'(){
+            this.typeselect = this.$route.query.type;
+            this.getListResult();
+        }
+    },
 };
 </script>
 <style>
