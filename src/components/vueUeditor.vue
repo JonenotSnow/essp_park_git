@@ -139,10 +139,14 @@ export default {
   },
   created () {
       this.editorContent = this.value
+      console.log(this.value)
   },
   watch: {
       'editorContent':function(){
           this.$emit('input',this.editorContent)
+      },
+      'value':function(){
+          this.editorContent = this.value
       }
   },
 }

@@ -116,9 +116,16 @@ router.beforeEach(async (to, from, next) => {
     //     sessionStorage.setItem("menuList", JSON.stringify(mockdata));
     //     next();
     // }
+    
+    let parkId = to.query.parkId;
+    if (parkId) {
+        sessionStorageHandler.setItem("parkId", parkId);
+    }
 
     // let query  = getQueryObjuect()
     /* 埋点方案  start   */
+ 
+
     let pathname = window.location.pathname
     let historyArr = localStorageHandler.getItem('history') ? localStorageHandler.getItem('history') : {path: []}
     if (sessionStorageHandler.getItem("loginFlag")) {
@@ -143,12 +150,10 @@ router.beforeEach(async (to, from, next) => {
     let menuList = sessionStorageHandler.getItem("menuList");
 
 
-    let parkId = to.query.parkId;
+   
     let token = to.query.token;
     let isUrlHasBd = window.location.href.indexOf("bdppc") > -1;
-    if (parkId) {
-        sessionStorageHandler.setItem("parkId", parkId);
-    }
+  
     oneId = sessionStorageHandler.getItem("bdParkId");
     if (!oneId && oneId === "undefined") {
         oneId = sessionStorageHandler.getItem("parkId");

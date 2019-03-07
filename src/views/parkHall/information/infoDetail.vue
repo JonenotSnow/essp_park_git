@@ -37,7 +37,7 @@
             <div class="jbnc" v-if="prompt == 1">PS: 该内容因被举报正在取证中，请您谨慎对待。</div>
         </div>
         <div class="infoDetail">
-            <div class="realinfo" v-html="infoDetail"></div>
+            <div class="realinfo editor-content" v-html="infoDetail"></div>
         </div>
         <div class="tagscon">
             <div class="tags_con esspclearfix">
