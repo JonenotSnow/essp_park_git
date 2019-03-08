@@ -60,7 +60,8 @@
                             </div>
                         </div>
                         <div class="noPic">
-                            <quill-editor :options="toolOptions" v-model="it.content"></quill-editor>
+                            <vue-ueditor v-model="it.content" :ueditorConfig="editorOption"></vue-ueditor>
+                            <!-- <quill-editor :options="toolOptions" v-model="it.content"></quill-editor> -->
                         </div>
                         <div class="picList" v-if="it.isPic == '1'">
                             <div v-for="(is,itemindex) in imgBoxA[moudelIndex]" :key="itemindex" @click="getCurPicOrder(itemindex,moudelIndex)"
@@ -146,12 +147,12 @@
         <!-- 园区概览设置已成功上传 -->
         <el-dialog :visible.sync="confirmSend" width='520px' height='280px' class='confirmSend' :show-close="false">
             <div>
-                <p>
+                <p class="confirmSend1 concom">
                     <i class="el-icon-close" @click="confirmSend=false" ></i>
                 </p>
-                <p><img src="../../../assets/sendConofirm.jpg" alt=""></p>
-                <p>园区概览设置已成功上传</p>
-                <p>
+                <p class="confirmSend2 concom"><img src="../../../assets/sendConofirm.jpg" alt=""></p>
+                <p class="confirmSend3 concom">园区概览设置已成功上传</p>
+                <p class="confirmSend4 concom">
                     <el-button type="primary" size='mini' @click="$router.push('/parkHall/manage/baseInfo')">返回</el-button>
                 </p>
             </div>
@@ -223,22 +224,12 @@ export default {
             bLoading:false,
             confirmSend:false,
             isBdPark: this.utils.isBdPark(),
-            toolOptions : [
-                // ['link', 'image', 'video'],
-                [{ header: 1 }, { header: 2 }],
-                ["blockquote", "code-block"],
-                ["bold", "italic", "underline", "strike"],
-                [{ list: "ordered" }, { list: "bullet" }],
-                [{ script: "sub" }, { script: "super" }],
-                [{ indent: "-1" }, { indent: "+1" }],
-                [{ direction: "rtl" }],
-                [{ header: [1, 2, 3, 4, 5, 6, false] }],
-                [{ size: ["small", false, "large", "huge"] }],
-                [{ color: [] }, { background: [] }],
-                [{ font: [] }],
-                [{ align: [] }],
-                ["clean"]
-            ],
+            // 编辑器提示语
+            editorOption: {
+                initialFrameWidth:778,
+                initialFrameHeight: 270,
+                UEDITOR_HOME_URL: '/essp_park/static/UEditor/',
+            },
             accessT:false,
             access:false
         }
@@ -387,10 +378,6 @@ export default {
             }
 
             this.$post(updatePark,params).then((response) => { 
-                this.$message({
-                    message: response.resultMsg,
-                    type: 'success'
-                });
                 //保存成功提示
                 if (this.isBdPark || type == 0) {
                         _that.confirmSend = true;
@@ -629,7 +616,7 @@ export default {
     }
 
     #scanModelOne .access .el-dialog__body {
-        /* text-align: center; */
+        text-align: center;
         overflow: hidden;
         padding: 30px 20px;
     }
@@ -1020,23 +1007,21 @@ export default {
     }
 }
 .confirmSend {
-    .el-dialog__body {
-        padding: 0 !important;
-        & > p {
-            text-align: right;
+    .concom{
+        text-align: right;
             & > i {
                 cursor: pointer;
                 margin-right: 10px;
                 margin-top: 10px;
             }
-            &:not(:first-child) {
+            &.confirmSend2,&.confirmSend3,&.confirmSend4 {
                 margin: 0 auto;
                 text-align: center;
                 font-size: 18px;
                 line-height: 72px;
                 color: #c7c7c7;
             }
-            &:nth-of-type(1) {
+            &.confirmSend1 {
                 height: 50px;
                 border-top: 5px solid #00a0e9;
                 position: relative;
@@ -1044,19 +1029,18 @@ export default {
                 left: -20px;
                 width: 520px;
             }
-            &:nth-of-type(3) {
+            &.confirmSend3 {
                 font-size: 20px;
                 line-height: 30px;
                 color: #333333;
             }
-            &:nth-of-type(4) {
+            &.confirmSend4  {
                 padding-bottom: 20px;
                 button {
                     font-size: 18px;
                     margin: 33px 30px 20px;
                 }
             }
-        }
     }
 }
 .divider{
