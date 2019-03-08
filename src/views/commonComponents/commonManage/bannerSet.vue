@@ -154,7 +154,7 @@
 
 
 
-                var len = this.bannerSetList.length - num;
+                var len = urlList.length;
 
                 if(len == 0 ) {
                     this.$message.error("banner图至少上传一张");
