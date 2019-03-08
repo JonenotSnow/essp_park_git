@@ -132,6 +132,9 @@
                 this.bannerSetList.splice(index,1)
             },
             saveUploadData(){
+                var num = 0;  // 判断banner图列表为空的个数
+                let urlList =[]; // 图片路径
+
                 if(this.bannerSetList.length > 5) {
                     this.$message.error("banner图至多上传五张");
                     return;
@@ -140,35 +143,31 @@
                     this.$message.error("banner图至少上传一张");
                     return;
                 }
-                var num = 0;
+
                 this.bannerSetList.map((item,index) => {
                     if(item.img_url == "") {
                         num ++;
+                    } else {
+                        urlList.push(item);
                     }
                 })
 
 
+
                 var len = this.bannerSetList.length - num;
-                // var lenUrl = this.bannerSetList.length - urlNum;
+
                 if(len == 0 ) {
                     this.$message.error("banner图至少上传一张");
                     return;
                 }
 
+//                urlList= this.bannerSetList;
+                console.log(urlList);
 
-                let urlList =[]; // 图片路径
-//                urlList= JSON.stringify(this.bannerSetList)
-                urlList= this.bannerSetList;
                 let paramsObj = this.radio ==="0"?{slidesImage:urlList,parkId: this.parkId}:{appBanner:urlList,parkId: this.parkId}
 
                 this.$post("/parkManage/updatePark", paramsObj).then((response) => {
-                    // if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
-                        this.$message.success(response.resultMsg);
-                    // } else {
-                    //     this.$message.error(response.resultMsg);
-                    // }
-                }).catch((response) => {
-                    this.$message.error(response.resultMsg);
+                    this.$message.success(response.resultMsg);
                 })
 
             },
