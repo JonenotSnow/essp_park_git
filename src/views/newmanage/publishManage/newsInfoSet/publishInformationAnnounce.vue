@@ -35,12 +35,13 @@
                 </el-form-item>
                 <el-form-item label="新闻动态详情：" prop="infoDetail" class="my-detail-edit">
                     <div class="my-quill-edit-wrap-ss">
-                        <quill-editor
+                        <!-- <quill-editor
                             ref="myTextEditor"
                             v-model="ruleForm.infoDetail"
                         >
                             <div id="toolbar" slot="toolbar"></div>
-                        </quill-editor>
+                        </quill-editor> -->
+                        <vue-ueditor v-model="ruleForm.infoDetail" :ueditorConfig="editorOption"></vue-ueditor>
                     </div>
                 </el-form-item>
                 <el-form-item class="labelxing" label="新闻动态标签：">
@@ -103,12 +104,13 @@
                 </el-form-item>
                 <el-form-item label="通知公告详情：" prop="infoDetail" class="my-detail-edit">
                     <div class="my-quill-edit-wrap-ss">
-                        <quill-editor
+                        <!-- <quill-editor
                             ref="myTextEditor"
                             v-model="ruleForm.infoDetail"
                         >
                             <div id="toolbar" slot="toolbar"></div>
-                        </quill-editor>
+                        </quill-editor> -->
+                        <vue-ueditor v-model="ruleForm.infoDetail" :ueditorConfig="editorOption"></vue-ueditor>
                     </div>
                 </el-form-item>
                 <el-form-item class="labelxing" label="通知公告标签：">
@@ -264,7 +266,9 @@
                 //     placeholder: "请输入模板内容",
                 //     theme: "snow"
                 // },
-
+                editorOption: {
+                initialFrameHeight: 350,
+            },
                 rules_01: {
                     informationTitle: [
                         {required: true, message: '请输入新闻动态标题', trigger: 'blur'},

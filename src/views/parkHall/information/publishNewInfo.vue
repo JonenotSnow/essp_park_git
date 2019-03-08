@@ -74,7 +74,8 @@
                     </span>
                     <div class="inline-box wrap" id="publishNewInfo">
                         <!-- <essp-editor ref="childEditor"></essp-editor> -->
-                        <essp-editor :editorCont="this.content" @onEditorChange="onEditorChange"></essp-editor>
+                        <vue-ueditor v-model="this.content" :ueditorConfig="editorOption"></vue-ueditor>
+                        <!-- <essp-editor :editorCont="this.content" @onEditorChange="onEditorChange"></essp-editor> -->
                     </div>
                 </div>
             </div>
@@ -164,6 +165,10 @@ export default {
                     name: "发布园区资讯"
                 }
             ],
+            editorOption: {
+                // initialFrameWidth:900,
+                initialFrameHeight: 350,
+            },
             initiatorWay: "",
             typeitems: [], //类型明细
             infoDialog: false,
