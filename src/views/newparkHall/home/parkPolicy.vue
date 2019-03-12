@@ -21,7 +21,7 @@
                             </div>
                         </div>
                         <div class="home_avtive_con">
-                            <div class="home_active_name" @click="toDetail(0,item.activityId)">{{item.policyTitle}}
+                            <div class="home_active_name" @click="toDetail(0,item.id)">{{item.policyTitle}}
                             </div>
                             <div class="home_active_icon esspclearfix">
                                 <span><i :class="icons[2]"></i>{{item.viewTime || 0}}</span>
@@ -114,6 +114,7 @@
                 })
                 //activity_hot   activity_newest  huizheng_hot huizheng_newest information_newest
                 .then(response => {
+                    console.log(response)
                     var arr = response.resultData.hot;
                     var arr1 = response.resultData.newest;
                     var thisTime = this.getMillisecond(new Date());
