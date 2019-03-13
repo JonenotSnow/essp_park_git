@@ -27,7 +27,7 @@
         </div>
         <div class="chat-text" @keyup.ctrl.enter="send('enter')">
             <quill-editor v-if="chat.selectId"
-                          ref="childEditor"  v-model="editorCon" @focus="onEditorFocus($event)"
+                          ref="childEditor" :options="editorOption" v-model="editorCon" @focus="onEditorFocus($event)"
                           @blur="onEditorBlur($event)" @change="changeText($event)">
             </quill-editor>
         </div>
@@ -36,7 +36,7 @@
             <span>结束咨询</span>
         </div>
         <el-tooltip class="item" effect="dark" content="ctrl+enter发送消息" placement="top">
-            <div v-if="selectedChat" class="send" @click="send('click')">
+            <div v-if="selectedChatId" class="send" @click="send('click')">
                 <span>发送</span>
             </div>
         </el-tooltip>
@@ -54,13 +54,18 @@
     // import textEditorTwo from '../text/textEditorTwo'
     import groupMembers from '../addfriends/groupMembers'
     import bus from '../../../eventBus'
+    import {quillEditor} from 'vue-quill-editor'
+    import 'quill/dist/quill.core.css'
+    import 'quill/dist/quill.snow.css'
+    import 'quill/dist/quill.bubble.css'
 
     export default {
         components: {
             // textEditor,
             // esspDitor,
             // textEditorTwo,
-            groupMembers
+            groupMembers,
+            quillEditor,
         },
         data() {
             return {
@@ -92,7 +97,7 @@
                 'chat',
             ]),
             ...mapGetters([
-                'selectedChat',
+                'selectedChatId',
             ])
         },
         methods: {
@@ -162,7 +167,7 @@
                             if (chat.nickName) {
                                 sendName = chat.nickName
                             } else {
-                                sendName = this.SSH.getItem('userInfo').truename
+                                sendName = vm.SSH.getItem('userInfo').truename
                             }
                             msg = {
                                 "senderId": vm.SSH.getItem('userInfo').id + '',
@@ -192,7 +197,7 @@
                                     "type": 'notice' //(群聊:group,私聊:friend,咨询:consult)
                                 };
                                 let consult = JSON.stringify(notice);
-                                this.$store.dispatch('sendWs', consult);
+                                vm.$store.dispatch('sendWs', consult);
                             }
                         }
                         let param = JSON.stringify(msg);
@@ -239,9 +244,11 @@
             //关闭咨询
             closeSend() {
                 let vm = this
+                vm.editorCon = ''
                 vm.$post(vm.$apiUrl.chat.delFriend, {
                     userid: vm.SSH.getItem('userInfo').id,
-                    friendid: vm.$store.state.chat.selectId
+                    friendid: vm.$store.state.chat.selectId,
+                    type: "refuseConsult"
                 }).then(response => {
                     let chat = this.$store.state.chat.chatlist.find(friend => friend.id == this.$store.state.chat.selectId);
                     let list = []
@@ -262,7 +269,7 @@
                         "recipientId": vm.$store.state.chat.selectId + '',
                         "sender": vm.SSH.getItem('userInfo').username + '',
                         "recipient": chat.receiver + '',
-                        "senderName": vm.SSH.getItem('userInfo').cstNm,
+                        "senderName": vm.SSH.getItem('userInfo').cstNm || vm.SSH.getItem('userInfo').ccbInsNm,
                         "photoUrl": vm.SSH.getItem('userInfo').photoUrl,
                         "msgType": 'text', //(文本:text,图片:image)
                         "content": 'consultDel',
@@ -281,13 +288,16 @@
             sendMsg() {
                 if (this.$store.state.chat.selectCard === 1) {
                     let chat = this.$store.state.chat.chatlist.find(friend => friend.id == this.$store.state.chat.selectId);
+                    let sendText = this.editorCon;
+                    sendText = sendText.replace(/<p>/g, '\r\n').replace(/<\/p>/g, "").replace(/<br>/g, "");
+                    sendText =sendText.substring(2)
                     let msg = {
                         "senderId": this.SSH.getItem('userInfo').id + '',
                         "recipientId": this.$store.state.chat.selectId + '',
                         "sender": this.SSH.getItem('userInfo').username + '',
                         "recipient": chat.receiver + '',
                         "msgType": 'text', //(文本:text,图片:image)
-                        "content": this.editorCon,
+                        "content": sendText,
                         "senderName": this.SSH.getItem('userInfo').username + '',
                         "photoUrl": this.SSH.getItem('userInfo').photoUrl,
                         "type": chat.type, //(群聊:group,私聊:friend,咨询:consult)
@@ -305,7 +315,7 @@
                             "sender": this.SSH.getItem('userInfo').username + '',
                             "recipient": this.$store.state.chat.selectId + '',
                             "msgType": 'text', //(文本:text,图片:image)
-                            "content": this.editorCon,
+                            "content": sendText,
                             "senderName": sendName + '',
                             "photoUrl": this.SSH.getItem('userInfo').photoUrl,
                             "type": chat.type, //(群聊:group,私聊:friend,咨询:consult)
@@ -374,7 +384,7 @@
             },
             // 点击发送按钮发送信息
             send(type) {
-                if (this.$store.state.chat.chatDelFlag == '1') {
+                if (this.$store.state.chat.chatDelFlag == '1'&&this.$store.state.chat.chatType=='group') {
                     this.$message.warning('当前群聊已解散,不能发送消息！')
                     this.editorCon = '';
                     this.$store.state.chat.selectMembersList = [];
@@ -403,7 +413,7 @@
         },
         watch: {
             // 在选择其它对话的时候 聚焦输入框
-            selectedChat() {
+            selectedChatId() {
                 let vm = this
                 setTimeout(() => {
                     vm.$refs.childEditor.quill.setSelection(0)

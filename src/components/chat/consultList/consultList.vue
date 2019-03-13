@@ -23,7 +23,7 @@
 
     export default {
         created() {
-            // this.getList();
+            this.getList();
         },
         data() {
             return {}
@@ -62,8 +62,10 @@
         filters: {
             // 将日期过滤为 hour:minutes
             changeTime(msg) {
-                let time = JSON.parse(msg)
-                return utils.changeTime(time[0].createDate)
+                if(msg){
+                    let time = JSON.parse(msg)
+                    return utils.changeTime(time[0].createDate)
+                }
             }
         },
     }

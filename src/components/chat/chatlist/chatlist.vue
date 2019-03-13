@@ -1,7 +1,7 @@
 <!-- 聊天列表 -->
 <template>
     <div class="msglist">
-        <ul>
+        <ul v-if="chat.chatlist.length>0">
             <li v-for="(item,index) in searchedChatlist" class="sessionlist"
                 :class="{ active: item.id == chat.selectId}" @click="selectChat(item.id)" :key="index">
                 <img class="avatar-chat list-left" v-if="item.type==='group'" :alt="item.receiver"

@@ -167,7 +167,7 @@
                     if (this.$store.state.chat.chatDelFlag != '1') {
                         this.getGroupMembers();
                     }
-                    this.nickName = this.user.nickName
+                    this.nickName = this.user.nickName||this.user.sendName
                 }
             }
         },
@@ -178,10 +178,10 @@
         mounted() {
             let vm = this;
             bus.$on("refreshList", function (val) {
-                if(val==1){
+                if (val == 1) {
                     vm.getGroupMembers();
-                }else {
-                    vm.groupChatMembers=[]
+                } else {
+                    vm.groupChatMembers = []
                 }
             })
         },
@@ -222,23 +222,21 @@
                         remarks: this.nickName
                     }
                 ).then((response) => {
-                    // if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
-                        vm.$store.dispatch('changeNickName', vm.nickName);
-                        let msg = {
-                            "senderId": vm.SSH.getItem('userInfo').id + '',
-                            "recipientId": vm.$store.state.chat.selectId + '',
-                            "sender": vm.SSH.getItem('userInfo').username + '',
-                            "senderName": vm.nickName + '',
-                            "recipient": vm.$store.state.chat.selectId + '',
-                            "msgType": 'text', //(文本:text,图片:image)
-                            "content": 'nickNameChange',
-                            "action": 'otherGroupMember',
-                            "groupId": vm.$store.state.chat.selectId + '',
-                            "type": 'notice' //(群聊:group,私聊:friend,咨询:consult)
-                        };
-                        let param = JSON.stringify(msg);
-                        vm.$store.dispatch('sendWs', param);
-                    // }
+                    vm.$store.dispatch('changeNickName', vm.nickName);
+                    let msg = {
+                        "senderId": vm.SSH.getItem('userInfo').id + '',
+                        "recipientId": vm.$store.state.chat.selectId + '',
+                        "sender": vm.SSH.getItem('userInfo').username + '',
+                        "senderName": vm.nickName + '',
+                        "recipient": vm.$store.state.chat.selectId + '',
+                        "msgType": 'text', //(文本:text,图片:image)
+                        "content": 'nickNameChange',
+                        "action": 'otherGroupMember',
+                        "groupId": vm.$store.state.chat.selectId + '',
+                        "type": 'notice' //(群聊:group,私聊:friend,咨询:consult)
+                    };
+                    let param = JSON.stringify(msg);
+                    vm.$store.dispatch('sendWs', param);
                 })
             },
             saveChatName() {
@@ -255,27 +253,22 @@
                                     groupname: this.groupName
                                 }
                             ).then((response) => {
-                                // if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
-                                    vm.$store.dispatch('modifyGroup', vm.groupName);
-                                    let msg = {
-                                        "senderId": vm.SSH.getItem('userInfo').id + '',
-                                        "recipientId": vm.$store.state.chat.selectId + '',
-                                        "sender": vm.SSH.getItem('userInfo').username + '',
-                                        "senderName": vm.SSH.getItem('userInfo').truename + '',
-                                        "recipient": vm.$store.state.chat.selectId + '',
-                                        "msgType": 'text', //(文本:text,图片:image)
-                                        "content": 'groupNameChange',
-                                        "action": 'otherGroupMember',
-                                        "groupId": vm.$store.state.chat.selectId + '',
-                                        "type": 'notice' //(群聊:group,私聊:friend,咨询:consult)
-                                    };
-                                    let param = JSON.stringify(msg);
-                                    vm.$store.dispatch('sendWs', param);
-                                // } else {
-                                //     vm.groupName = vm.user.receiver
-                                // }
-                            }, err => {
-                                vm.groupName = vm.user.receiver
+                                vm.$store.dispatch('modifyGroup', vm.groupName);
+                                let msg = {
+                                    "senderId": vm.SSH.getItem('userInfo').id + '',
+                                    "recipientId": vm.$store.state.chat.selectId + '',
+                                    "sender": vm.SSH.getItem('userInfo').username + '',
+                                    "senderName": vm.SSH.getItem('userInfo').truename + '',
+                                    "recipient": vm.$store.state.chat.selectId + '',
+                                    "msgType": 'text', //(文本:text,图片:image)
+                                    "content": 'groupNameChange',
+                                    "action": 'otherGroupMember',
+                                    "groupId": vm.$store.state.chat.selectId + '',
+                                    "type": 'notice' //(群聊:group,私聊:friend,咨询:consult)
+                                };
+                                let param = JSON.stringify(msg);
+                                vm.$store.dispatch('sendWs', param);
+
                             })
                         }
                     } else {
@@ -345,7 +338,7 @@
                             let param = JSON.stringify(msg);
                             vm.$store.dispatch('sendWs', param);
                             vm.$store.dispatch('quitChat', 'delete');
-                            vm.groupChatMembers=[]
+                            vm.groupChatMembers = []
                         })
                     })
 
@@ -490,7 +483,7 @@
                             type: 'success',
                             message: '删除成功!'
                         });
-                        
+
                     });
                 }).catch(() => {
 
@@ -680,6 +673,7 @@
         }
 
     }
+
     .detailList::-webkit-scrollbar-track {
         border-radius: 0;
         padding: 0;
