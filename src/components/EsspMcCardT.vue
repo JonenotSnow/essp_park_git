@@ -49,7 +49,7 @@
         </div>
         <div v-show="mcCardList.length==0" v-cloak>
             <!-- <div style="text-align: center">{{lodingMsg}}</div> -->
-            <essp-loading :loading="isLodingTxt == '数据加载中'" :nodata="isLodingTxt == '数据完毕!'"></essp-loading>
+            <essp-loading :loading="isLodingTxt == '数据加载中'" :nodata="isLodingTxt == '数据完毕!'" :nodataMsg='gologin ? nodataMsg : "暂无数据"' :gologin="gologin"></essp-loading>
         </div>
         <!-- 关注事件对话框start -->
         <el-dialog class="quguanbox" title="提示" :visible.sync="dialogVisible" width="30%" :before-close="handleClose">
@@ -86,6 +86,10 @@
             },
             isLodingTxt: {
                 type: String
+            },
+            gologin: {
+                type: Boolean,
+                default: false
             }
         },
         components: {
@@ -109,7 +113,8 @@
                 dialogVisible: false,
                 followId: "",
                 index: "",
-                LoginUserRol: sessionStorage.getItem("LoginUserRol").toString()
+                LoginUserRol: sessionStorage.getItem("LoginUserRol").toString(),
+                nodataMsg: this.chilrPageType == 'getMyApply' ? '未查询到您申请的惠政信息' : (this.chilrPageType == 'myFollPol' ? '未查询到您关注的惠政信息': '暂无数据')
             };
         },
         methods: {

@@ -5,18 +5,19 @@
                 <img src="@/assets/newparkimg/no-list-img.png" :width="width" alt="">
             </div>
             <div class="no-list-desc">
-                {{nodataMsg}}
+                {{nodataMsg}}<template v-if="gologin">，请先 <a @click="toLogin">登录</a></template>
             </div>
         </div>
         <div class="comnoData" v-if="loading">
-            <div class="no-list-desc">
-                {{loadingMsg}}
+            <div class="no-list-desc" v-html="loadingMsg">
             </div>
         </div>
     </div>
 </template>
 <script>
+import mixin from "@/components/mixins/mixins_windowOpen.js";
 export default {
+    mixins: [mixin],
     props: {
         loading: {
         type: Boolean,
@@ -37,6 +38,15 @@ export default {
         width: {
         type: Number,
         default: 245
+        },
+        gologin: {
+        type: Boolean,
+        default: false
+        }
+    },
+    methods: {
+        toLogin: function () {
+            this.windowHrefUrl("/userIndex/login");
         }
     }
 }
@@ -53,6 +63,10 @@ export default {
             font-stretch: normal;
             letter-spacing: 0px;
             color: #666666;
+            a{
+                color: #1792fd;
+                cursor: pointer;
+            }
         }
     }
 </style>

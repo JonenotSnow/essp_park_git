@@ -1,7 +1,7 @@
 <template>
     <div class="essp-main-cont">
 
-        <essp-mc-card-info :mcCardList="mcCardDataList" :chilrPageType="pageType" :isLodingTxt="isLodingTxt"></essp-mc-card-info>
+        <essp-mc-card-info :mcCardList="mcCardDataList" :chilrPageType="pageType" :isLodingTxt="isLodingTxt" :gologin="gologin"></essp-mc-card-info>
         <div class="essp-aside-right-cont">
             <div class="aside-right-item aside-right-item-seach">
                 <div>
@@ -81,7 +81,8 @@
                 times:'',
                 tagTxt:"",//通过标签搜索
                 mcCardDataList:[],
-                isLodingTxt: "数据加载中"
+                isLodingTxt: "数据加载中",
+                gologin: false
             }
         },
         created(){
@@ -164,6 +165,13 @@
             getParkInfoList() {
                 var parkId =  sessionStorage.getItem("parkId") || "";
                 var url = parkInfo[this.pageType] || " ";
+                this.gologin = false
+                if(!this.utils.isBdPark() && this.SSH.getItem("LoginUserRol").indexOf("11") > -1 && this.$route.query && this.$route.query.icon){
+                    this.gologin = true
+                    this.isLodingTxt = "数据完毕!";
+                    return
+                }
+
                 this.mcCardDataList = []
                 this.isLodingTxt = "数据加载中";
                 this.$post(url,{
