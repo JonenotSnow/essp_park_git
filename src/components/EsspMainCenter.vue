@@ -1,6 +1,6 @@
 <template>
     <div class="essp-main-cont">
-        <essp-mc-card :mcCardList="mcCardDataList" :lodingMsg="loadMsg" :chilrPageType="pageType"></essp-mc-card>
+        <essp-mc-card :mcCardList="mcCardDataList" :lodingMsg="loadMsg" :chilrPageType="pageType" :gologin="gologin"></essp-mc-card>
         <div class="essp-aside-right-cont">
             <div class="aside-right-item aside-right-item-seach">
                 <div>
@@ -97,6 +97,7 @@
                     {name:"最近一周",code:"week"},
                     {name:"最近一个月",code:"month"}
                 ],
+                gologin: false
             }
         },
         created(){
@@ -268,6 +269,12 @@
                 var parkId =  sessionStorage.getItem("parkId") || "";
                 this.mcCardDataList = [];
                 this.loadMsg = "数据加载中~"
+                this.gologin = false
+                if(!this.utils.isBdPark() && this.SSH.getItem("LoginUserRol").indexOf("11") > -1 && this.$route.query && this.$route.query.icon){
+                    this.gologin = true
+                    this.loadMsg = "数据加载完毕！";
+                    return
+                }
                 this.$post(url,{
                     parkId: parkId,
                     pageNum : this.pageNum,

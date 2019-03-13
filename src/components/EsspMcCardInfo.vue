@@ -39,7 +39,7 @@
         </div>
         <div v-else>
             <!-- <div style="text-align: center">暂无数据</div> -->
-            <essp-loading :nodata="isLodingTxt == '数据完毕!'" :loading="isLodingTxt == '数据加载中'"></essp-loading>
+            <essp-loading :nodata="isLodingTxt == '数据完毕!'" :loading="isLodingTxt == '数据加载中'" :nodataMsg='gologin ? nodataMsg : "暂无数据"' :gologin="gologin"></essp-loading>
         </div>
 
         <!-- 关注事件对话框start -->
@@ -79,11 +79,16 @@
             isLodingTxt: {
                 type: String,
                 default: ''
+            },
+            gologin: {
+                type: Boolean,
+                default: false
             }
         },
         data() {
             return {
                 msg: 'EsspMcCard',
+                nodataMsg: `未查询到您关注的咨询信息`,
                 icons: [
                     "icon iconfont icon-liulan",
                     "icon iconfont icon-collect2",

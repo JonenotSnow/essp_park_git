@@ -1,7 +1,7 @@
 <template>
   <div class="essp-main-cont">
     <!-- 惠政服务的全部惠政，关注惠政的模版 -->
-    <essp-mc-card-t :chilrPageType="pageType" @deleteCardList="getGoverBeneList" :mcCardList="mcCardDataList" :isLodingTxt="isLodingTxt"></essp-mc-card-t>
+    <essp-mc-card-t :chilrPageType="pageType" @deleteCardList="getGoverBeneList" :mcCardList="mcCardDataList" :isLodingTxt="isLodingTxt"  :gologin="gologin"></essp-mc-card-t>
     <div class="essp-aside-right-cont">
       <div class="aside-right-item aside-right-item-seach">
         <div>
@@ -73,7 +73,8 @@ export default {
             ],
             currentKeytime: "", //默认不选择时间区间
             currentKeyname: "", //默认不选择关键字
-            currentTime: [] //默认不选择时间
+            currentTime: [], //默认不选择时间
+            gologin: false
         };
     },
     filters: {
@@ -233,6 +234,12 @@ export default {
         getGoverBeneList() {
             var url = goverBene[this.pageType] || "";
             this.isLodingTxt = "数据加载中";
+            this.gologin = false
+            if(!this.utils.isBdPark() && this.SSH.getItem("LoginUserRol").indexOf("11") > -1 && this.$route.query && this.$route.query.icon){
+                this.gologin = true
+                this.isLodingTxt = "数据完毕!";
+                return
+            }
             this.mcCardDataList = []
             this.$post(url, {
                 pageNum: this.pageNum,

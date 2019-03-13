@@ -23,10 +23,10 @@
                             </ul>
                         </div>
                         <!-- 无子菜单 -->
-                        <div v-else>
-                            <router-link :to="{name:it.name}" tag='p'>
+                        <div v-else class="someli-ul">
+                            <p @click="linkRoute(it)"  :class="childId == it.id?'span-link':''">
                                 <span class="li-tag"></span>{{it.menu}}
-                            </router-link>
+                            </p>
                         </div>
                     </li>
                 </ul>
@@ -77,6 +77,8 @@
                 //保持左侧入口样式
                 this.parentId = currentMenu.menuid.toString().substr(0, 6);
                 this.childId = currentMenu.menuid.toString().substr(0, 8);
+                console.log(this.parentId)
+                console.log(this.childId)
                 //获取当前横向导航索引
                 let dir = currentMenu.menuid.substr(0, 4);
                 if (menuList.children && menuList.children.length>0) {
@@ -106,6 +108,13 @@
             },
             linkto(it,is) {
                 this.$router.push({name: is.name})
+            },
+            linkRoute(item) {
+                if(item && item.icon === '1') {
+                    this.$router.push({name:item.name, query: {icon: true}})
+                } else {
+                    this.$router.push({name:item.name})
+                }
             }
         },
         watch: {
@@ -221,6 +230,11 @@
                                 border-left: 6px solid #1792fd;
                                 //color: #22a2fa;
                             }
+                        }
+                        .span-link {
+                            padding-left: 44px;
+                            border-left: 6px solid #fff;
+                            border-left: 6px solid #1792fd;
                         }
                     }
                     //科技的

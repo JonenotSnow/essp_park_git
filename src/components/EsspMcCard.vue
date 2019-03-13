@@ -61,7 +61,7 @@
         </div>
         <div v-show="mcCardList.length==0" v-cloak>
             <!-- <div style="text-align: center">{{lodingMsg}}</div> -->
-            <essp-loading :loading="lodingMsg == '数据加载中~'" :nodata="lodingMsg == '数据加载完毕！'"></essp-loading>
+            <essp-loading :loading="lodingMsg == '数据加载中~'" :nodata="lodingMsg == '数据加载完毕！'" :nodataMsg='gologin ? nodataMsg : "暂无数据"' :gologin="gologin"></essp-loading>
         </div>
 
         <!-- 关注事件对话框start -->
@@ -101,6 +101,10 @@
             },
             lodingMsg: {
                 type: String
+            },
+            gologin: {
+                type: Boolean,
+                default: false
             }
         },
         components: {
@@ -126,8 +130,12 @@
                 activeId: '',
                 index: 0,
                 LoginUserRol: JSON.parse(sessionStorage.getItem("LoginUserRol")).join(''),
-                loginFlag: this.SSH.getItem("loginFlag") ? this.SSH.getItem("loginFlag") : false
+                loginFlag: this.SSH.getItem("loginFlag") ? this.SSH.getItem("loginFlag") : false,
+                nodataMsg: this.chilrPageType == 'actEnroll' ? '未查询到您报名的活动信息' : (this.chilrPageType == 'actFollow' ? '未查询到您关注的活动信息': '暂无数据')
             };
+        },
+        mounted() {
+            console.log(this.chilrPageType)
         },
         filters: {
             timerFormat(vaule) {
