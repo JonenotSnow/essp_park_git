@@ -36,7 +36,7 @@
                                    @click="agreeAdd(4,chat.theConsult.ufId)">同意
                         </el-button>
                         <el-button size="mini" class="apply-detail-button-disagree"
-                                   @click="agreeAdd(2,chat.theConsult.id)">
+                                   @click="agreeAdd(2,chat.theConsult.ufId)">
                             拒绝
                         </el-button>
                     </div>
@@ -158,12 +158,13 @@
                                 username: vm.$store.state.chat.theConsult.trueName,//用户名
                                 companyName: vm.$store.state.chat.theConsult.name,//公司名称
                                 messages: messages,
+                                unReadNum: 0
                             });
                         }
                         vm.SSH.setItem('messageList', vm.$store.state.chat.chatlist);
                         let msg = {
                             "senderId": vm.SSH.getItem('userInfo').id + '',
-                            "senderName": vm.SSH.getItem('userInfo').cstNm,
+                            "senderName": vm.SSH.getItem('userInfo').cstNm || vm.SSH.getItem('userInfo').ccbLv3InsNm || vm.SSH.getItem('userInfo').ccbLv3InsNm,
                             "recipientId": vm.$store.state.chat.selectConsultId + '',
                             "sender": vm.SSH.getItem('userInfo').username + '',
                             "recipient": vm.$store.state.chat.theConsult.userName + '',
@@ -180,6 +181,7 @@
                         vm.$store.state.chat.selectConsultList = []
                         vm.$store.state.chat.theConsult = {}
                         vm.$store.state.chat.selectConsultId = ''
+                        vm.$store.state.chat.chatDelFlag = '0'
                         vm.$store.state.chat.selNum = 0
                         // -获取咨询列表
                         vm.getConsultList()
@@ -187,16 +189,15 @@
                 }
                 //拒绝
                 if (value === 2) {
-                    this.$post(this.$apiUrl.chat.delFriend,
+                    this.$post(this.$apiUrl.chat.agreeAddFriend,
                         {
-                            userid: vm.SSH.getItem('userInfo').id,
-                            friendid: id,
-                            type: "refuseConsult"
+                            id: id,
+                            type: "2"
                         }
                     ).then((response) => {
                         let msg = {
                             "senderId": vm.SSH.getItem('userInfo').id + '',
-                            "senderName": vm.SSH.getItem('userInfo').cstNm,
+                            "senderName": vm.SSH.getItem('userInfo').cstNm || vm.SSH.getItem('userInfo').ccbLv3InsNm,
                             "recipientId": vm.$store.state.chat.selectConsultId + '',
                             "sender": vm.SSH.getItem('userInfo').username + '',
                             "recipient": vm.$store.state.chat.theConsult.userName + '',
@@ -210,6 +211,7 @@
                         vm.$store.state.chat.selectConsultList = []
                         vm.$store.state.chat.theConsult = {}
                         vm.$store.state.chat.selectConsultId = ''
+                        vm.$store.state.chat.chatDelFlag = '0'
                         vm.$store.state.chat.selNum = 0
                         // -获取咨询列表
                         vm.getConsultList()
@@ -242,6 +244,8 @@
         }
         .apply-detail-list {
             margin-left: 92px;
+            height: 300px;
+            overflow: auto;
             .apply-detail-items {
                 text-align: left;
                 margin-left: 8px;
@@ -276,8 +280,26 @@
                     float: right;
                     top: -20px;
                     right: 50px;
+                    font-size: 12px;
                 }
             }
+        }
+        .apply-detail-list::-webkit-scrollbar-track {
+            border-radius: 0;
+            padding: 0;
+            background-color: transparent;
+        }
+
+        .apply-detail-list::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+            padding: 0;
+            background-color: rgba(0, 0, 0, .2);
+        }
+
+        .apply-detail-list::-webkit-scrollbar {
+            width: 7px;
+            height: 7px;
+            background-color: transparent;
         }
         .apply-detail-buttons {
             display: flex;

@@ -50,7 +50,7 @@
                    @close="closeDialog"
                    :modal="false"
                    width="600px">
-            <addfriends></addfriends>
+            <addfriends v-if="chat.showAdd"></addfriends>
         </el-dialog>
         <el-dialog :visible.sync="chat.showGroupMembers"
                    @close="closeDialog2"

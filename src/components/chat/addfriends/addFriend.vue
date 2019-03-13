@@ -96,6 +96,8 @@
                 this.$store.state.chat.showAdd = false;
                 this.$store.state.chat.selectFriendsList = [];
                 this.$store.state.chat.addFriendList = [];
+                this.$store.state.chat.selectArr = [];
+                this.$store.state.chat.searchAdd = '';
             },
             // 创建群聊1，删除群聊人员2，好友聊天时创建群聊3 ,群聊添加人员4
             save1() {

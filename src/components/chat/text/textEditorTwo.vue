@@ -1,15 +1,23 @@
 <!--<script src="../../../video_admin/config/index.js"></script>-->
 <template>
-    <quill-editor ref="myTextEditor" v-model="editorCon" v-if="!IEshow" @focus="onEditorFocus($event)">
+    <quill-editor ref="myTextEditor" v-model="editorCon" :options="editorOption" v-if="!IEshow" @focus="onEditorFocus($event)">
         <div id="toolbar" slot="toolbar">
         </div>
     </quill-editor>
 </template>
 
 <script>
+
+    import 'quill/dist/quill.core.css'
+    import 'quill/dist/quill.snow.css'
+    import 'quill/dist/quill.bubble.css'
+    import {quillEditor} from 'vue-quill-editor'
+
+
     export default {
         name: 'editor',
         components: {
+            quillEditor
         },
         data() {
             return {
@@ -29,6 +37,7 @@
         },
         methods: {
             onEditorFocus(e){
+                debugger
             }
         },
     }

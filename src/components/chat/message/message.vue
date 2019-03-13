@@ -44,7 +44,7 @@
                     </div>
                 </li>
             </ul>
-            <div class="quitChat" v-if="selectedChat&&chat.chatDelFlag=='1'">
+            <div class="quitChat" v-if="selectedChat&&chat.chatDelFlag=='1'&&chat.chatType=='group'">
                 <span>当前群聊已解散</span>
             </div>
         </div>
@@ -186,8 +186,10 @@
             }
             .suoxiao {
                 margin-right: 20px;
+                cursor: pointer;
             }
             .moreDetail {
+                cursor: pointer;
                 float: right;
                 margin-top: 20px;
                 margin-right: -36px;
