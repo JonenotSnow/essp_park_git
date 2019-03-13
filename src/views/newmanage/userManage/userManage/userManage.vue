@@ -178,7 +178,7 @@ export default {
         addTagToL(tag){
             if (`,${this.forTagList},`.indexOf(`,${tag.lblTxt},`)>-1) {
                 this.$message({
-                    type: 'warn',
+                    type: 'warning',
                     message: "该类型标签已添加,请勿重新输入"
                 })
                 return;
