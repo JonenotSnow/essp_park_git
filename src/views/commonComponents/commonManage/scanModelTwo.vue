@@ -58,6 +58,7 @@
                 <div class="right">
                     <p class="title">
                         <input type="text" :placeholder="`请输入模块${index+1}标题`" v-model='it.title'>
+                        <i class="el-icon-delete" @click="delParams(it,index)"></i>
                     </p>
                     <div class="editorContent">
                         <!-- <quill-editor :options="toolOptions" v-model='it.content'></quill-editor> -->
@@ -149,7 +150,7 @@
             <p class="accessP">
                 <i class="el-icon-warning"></i>&nbsp;&nbsp;是否确认暂存当前模板编辑内容</p>
             <p class="btn">
-                <span @click="$router.push('/parkHall/manage/baseInfo')">取消</span>
+                <span @click="accessT = false">取消</span>
                 <span @click="getDataList(1)">确认</span>
             </p>
         </el-dialog>
@@ -302,8 +303,7 @@ export default {
             let timelyParams = {
                 logo: this.logoPic,
                 temp1:this.displayList.parkSet,
-                parkId: window.sessionStorage.getItem("parkId"),
-                parkService : this.$route.query.moduleType.toString()
+                parkId: window.sessionStorage.getItem("parkId")
             };
             let params = {};
             //保定和标准版保存（type==0）是用保存参数saveParams，标准版存用暂存temp1参数timelyParams
@@ -393,6 +393,17 @@ export default {
                 this.displayList.parkSet = JSON.parse(this.displayList.temp1);
             }
             this.access = false;
+        },
+        delParams(it,moudelIndex){
+            let that = this;
+            let newData = [];
+            let forArr = this.displayList.parkSet;
+            forArr.forEach((item,index)=>{
+                if (moudelIndex != index) {
+                   newData.push(item);
+                }
+            })
+            this.displayList.parkSet = newData;
         }
     }
 };
@@ -611,6 +622,12 @@ export default {
                         border: solid 1px #cccccc;
                         margin-bottom: 20px;
                         padding: 0 10px;
+                    }
+                    i{
+                        float: right;
+                        margin-top: 12px;
+                        cursor: pointer;
+                        font-size: 16px;
                     }
                 }
                 .editorContent{

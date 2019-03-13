@@ -51,6 +51,7 @@
                     <div class="moduleContent"  @click="getCurType('content')" v-for="(it,moudelIndex) in moduleList" :key="moudelIndex">
                         <div class="title">
                             <el-input type="text" :placeholder="`请输入模块${moudelIndex+1}标题`" v-model="it.title"></el-input>
+                            <i class="titleRight el-icon-delete" @click="delParams(it,moudelIndex)"></i>
                             <div class="titleRight">
                                 <span>选择模块类型：</span>
                                 <el-select v-model="it.isPic">
@@ -61,7 +62,6 @@
                         </div>
                         <div class="noPic">
                             <vue-ueditor v-model="it.content" :ueditorConfig="editorOption"></vue-ueditor>
-                            <!-- <quill-editor :options="toolOptions" v-model="it.content"></quill-editor> -->
                         </div>
                         <div class="picList" v-if="it.isPic == '1'">
                             <div v-for="(is,itemindex) in imgBoxA[moudelIndex]" :key="itemindex" @click="getCurPicOrder(itemindex,moudelIndex)"
@@ -164,7 +164,7 @@
             <p class="accessP">
                 <i class="el-icon-warning"></i>&nbsp;&nbsp;是否确认暂存当前模板编辑内容</p>
             <p class="btn">
-                <span @click="$router.push('/parkHall/manage/baseInfo')">取消</span>
+                <span @click="accessT = false">取消</span>
                 <span @click="upDateModelA(1)">确认</span>
             </p>
         </el-dialog>
@@ -172,7 +172,7 @@
         <el-dialog :visible.sync="access" width='520px' class='access'>
             <h2 class="titleTips">提示</h2>
             <p class="accessP">
-                <i class="el-icon-warning"></i>&nbsp;&nbsp;是否继续编辑暂存模板</p>
+                <i class="el-icon-warning"></i>&nbsp;&nbsp;存在暂存信息，是否显示</p>
             <p class="btn">
                 <span @click="getModuleData(0)">取消</span>
                 <span @click="getModuleData(1)">确认</span>
@@ -366,7 +366,6 @@ export default {
             let timelyParams = {
                 logo:this.comlogo,
                 parkId:sessionStorage.getItem("parkId"),
-                parkService : this.$route.query.moduleType.toString(),
                 temp2:this.parkSet1Obj
             };
             let params = {};
@@ -519,8 +518,17 @@ export default {
         getCurPicOrder(index,moudelIndex){
             this.curIndex = index;//当前点击到第几个图
             this.moudelIndex = moudelIndex;//当前所在的模块是哪一个
+        },
+        delParams(it,moudelIndex){
+            let that = this;
+            let newData = [];
+            this.moduleList.forEach((item,index)=>{
+                if (moudelIndex != index) {
+                   newData.push(item);
+                }
+            })
+            this.moduleList = newData;
         }
-
     },
 }
 </script>
@@ -751,6 +759,12 @@ export default {
                             font-size: 16px;
                             color:#999;
                         }
+                    }
+                    i.titleRight{
+                        margin-top: 15px;
+                        margin-left: 35px;
+                        cursor: pointer;
+                        font-size: 16px;
                     }
 
                 }
