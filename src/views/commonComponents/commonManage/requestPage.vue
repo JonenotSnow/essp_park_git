@@ -106,7 +106,7 @@ export default {
             });
             this.getInviteByKey();
             setTimeout(() => {
-                that.windowOpenNoParams("/messageCenter/parkMsg");
+                window.history.go(-1);
             }, 2000);
         },
         getParkById(parkId) {
