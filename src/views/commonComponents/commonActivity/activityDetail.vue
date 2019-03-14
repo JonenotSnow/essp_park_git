@@ -82,12 +82,12 @@
                                     </button>
                                     <button v-else disabled>未审核</button>
 
-                                    <span @click="showDialog()" v-if="flollowStatus === '0'" round><i
+                                    <span @click="showDialog()" class="guanzhu" v-if="flollowStatus === '0'" round><i
                                         class="iconfont icon-aixin-xianxing"
                                         style="margin-right:5px;color:#fc1878;font-size: 12px;"></i>关注</span>
-                                    <span class="btn-icon-star-on" size="mini" @click="showDialog()"
+                                    <span class="btn-icon-star-on guanzhu" size="mini" @click="showDialog()"
                                           v-if="flollowStatus === '1'" round><i class="iconfont icon-collect2"
-                                                                                style="margin-right:5px;color:#fc1878;font-size: 12px;"></i>已关注</span>
+                                                                                style="margin-right:5px;color:#00a0e9font-size: 12px;"></i>已关注</span>
                                     <span
                                         @click="tipOffFn(4,activeDetailData.activityId,activeDetailData.activityTheme)"
                                         style="cursor: pointer;"><i class="iconfont icon-warning"
@@ -158,7 +158,7 @@
                     <!--</div>-->
                 </div>
                 <!--commentSty 传入的类型-->
-                <essp-info-comment commentSty="1" :publishId ="publishId"></essp-info-comment>
+                <essp-info-comment commentSty="1"></essp-info-comment>
             </div>
             <div class="active_detail_div active_detail_div1">
                 <div class="moreActive">
@@ -256,7 +256,6 @@
         },
         data() {
             return {
-			    publishId:"1",//长度为1不能改
                 logo: "",
                 icons: [
                     "icon iconfont icon-riqi1",
@@ -557,8 +556,6 @@
                         }
                         this.getLogo();
                         this.getBtnText();
-						this.publishId=""
-                        this.publishId=response.resultData.initiator
                         console.log(this.btnText)
                     // } else {
                     //     this.$message({
@@ -731,10 +728,21 @@
 
     .status_btn {
         span {
-            margin-left: 30px;
+            float: left;
+            line-height: 38px;
+            text-align: center;
+
+            width: 90px;
+            height: 38px;
+            border-radius: 3px;
             cursor: pointer;
         }
+        .guanzhu {
+            margin-left: 30px;
+            border: solid 1px #00a0e9;
+        }
         button {
+            float: left;
             width: 140px;
             height: 40px;
             line-height: 40px;

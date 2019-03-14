@@ -135,12 +135,8 @@
         props:[
             "commentSty",// 评论类型 1. 活动  2. 资讯
             "info",
-            "publishId",
         ],
         created() {
-            //定时器
-            this.setTime();
-            console.log('1111',this.publishId)
             this.userInfo = this.SSH.getItem('userInfo');
             for(let o of this.SSH.getItem('LoginUserRol')){
                 if(o==='33' || o==='34'){
@@ -173,21 +169,6 @@
         computed: {
         },
         methods: {
-            setTime(){
-                let _this = this;
-                // console.log("监听成功",this.publishId)
-                // console.log("监听成功",this.userInfo.id)
-                if(!this.utils.isEmpty(this.publishId) && this.publishId.length>1){
-                    if(this.publishId===this.userInfo.id.toString()){
-                        this.showDel=true
-                        // console.log("监听成功2",this.showDel)
-                        // console.log("监听成功",this.userInfo.id)
-                    }
-                    //clearTimeout(_this.timer);
-                    return
-                }
-                _this.timer=setTimeout(this.setTime,500);
-            },
             handleSizeChange(val) {
                 this.pageSize = val;
                 this.getCnt();
@@ -773,6 +754,7 @@
         cursor: pointer;
     }
     .border_nm{
+
         .border {
             border: 1px solid #00a0e9;
         }
