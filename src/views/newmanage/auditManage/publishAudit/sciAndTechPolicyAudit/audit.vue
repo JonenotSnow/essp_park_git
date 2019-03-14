@@ -16,9 +16,10 @@
                 </el-form-item>
                 <el-form-item label="政策法规详情：" prop="infoDetail">
                     <div class="my-style">
-                        <div class="ql-container ql-snow bord-none">
-                            <div class="ql-editor editor-content" v-html="satpDate.infoDetail"></div>
-                        </div>
+                        <!--<div class="ql-container ql-snow bord-none">-->
+                        <!--<div class="ql-editor editor-content" v-html="satpDate.infoDetail"></div>-->
+                        <!--</div>-->
+                        <div class="editor-content" v-html="satpDate.infoDetail"></div>
                     </div>
                 </el-form-item>
                 <el-form-item label="政策法规标签：" prop="tags">
@@ -88,9 +89,10 @@
                 </el-form-item>
                 <el-form-item label="科技服务详情：" prop="infoDetail">
                     <div class="my-style">
-                        <div class="ql-container ql-snow bord-none">
-                            <div class="ql-editor editor-content" v-html="satpDate.infoDetail"></div>
-                        </div>
+                        <!--<div class="ql-container ql-snow bord-none">-->
+                        <!--<div class="ql-editor editor-content" v-html="satpDate.infoDetail"></div>-->
+                        <!--</div>-->
+                        <div class="editor-content" v-html="satpDate.infoDetail"></div>
                     </div>
                 </el-form-item>
                 <el-form-item label="科技服务标签：" prop="tags">
@@ -288,25 +290,25 @@
                 this.$post("/policy/getPolById", params).then(response => {
                     // let codestatus = response.resultCode;
                     // if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
-                        this.satpDate = response.resultData;
+                    this.satpDate = response.resultData;
 
-                        // 对标签进行处理
-                        if (this.satpDate.tagsTxt) {
-                            this.satpDate.tagsTxt = this.satpDate.tagsTxt.split(',');
-                        }
+                    // 对标签进行处理
+                    if (this.satpDate.tagsTxt) {
+                        this.satpDate.tagsTxt = this.satpDate.tagsTxt.split(',');
+                    }
 
-                        // 对附件进行处理
-                        if (this.satpDate.fileUrl) {
-                            let fileList = JSON.parse(this.satpDate.fileUrl);
+                    // 对附件进行处理
+                    if (this.satpDate.fileUrl) {
+                        let fileList = JSON.parse(this.satpDate.fileUrl);
 
-                            fileList.forEach((item, index) => {
-                                var obj = {
-                                    name: item.name,
-                                    url: item.url
-                                };
-                                this.fileList.push(obj);
-                            })
-                        }
+                        fileList.forEach((item, index) => {
+                            var obj = {
+                                name: item.name,
+                                url: item.url
+                            };
+                            this.fileList.push(obj);
+                        })
+                    }
                     // }
                     // else {
                     //     this.$message.info(response.resultMsg);
@@ -327,11 +329,11 @@
                 this.$post("/audit/getCommentList", params).then(response => {
                     // let codestatus = response.resultCode;
                     // if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
-                        this.commentList = response.resultData;
+                    this.commentList = response.resultData;
 
-                        if (this.commentList.length > 0) {
-                            this.lastComment = this.commentList[0];
-                        }
+                    if (this.commentList.length > 0) {
+                        this.lastComment = this.commentList[0];
+                    }
 
                     // } else {
                     //     this.$message.info(response.resultMsg);
@@ -366,10 +368,10 @@
                 this.$post("/audit/policy", params).then(response => {
                     // let codestatus = response.resultCode;
                     // if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
-                        this.satpDate = response.resultData;
-                        this.$router.push({
-                            path: '/parkHall/manage/sciAndTechPolicyAudit'
-                        });
+                    this.satpDate = response.resultData;
+                    this.$router.push({
+                        path: '/parkHall/manage/sciAndTechPolicyAudit'
+                    });
                     // } else {
                     //     this.$message.info(response.resultMsg);
                     // }

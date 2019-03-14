@@ -56,7 +56,7 @@
             </div>
         </div>
         <div class="pinglun">
-            <essp-info-comment commentSty="2" :publishId ="publishId"></essp-info-comment>
+            <essp-info-comment commentSty="2"></essp-info-comment>
         </div>
 
         <div class="common_titwrap esspclearfix">
@@ -109,7 +109,6 @@
         },
         data() {
             return {
-			    publishId:"1",//长度为1不能改
                 msg: "资讯详情",
                 breadlist: [
                     {
@@ -270,8 +269,6 @@
                                 this.countFollower = data.countFollower; //关注数
                                 this.countComment = data.countComment; //评论数
                                 this.followId = data.followId; //关注id，供取消关注用
-								this.publishId=""
-                                this.publishId=data.creator
                             // } else {
                             //     this.$message.info(response.resultMsg);
                             // }
