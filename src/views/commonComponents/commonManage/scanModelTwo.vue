@@ -58,7 +58,7 @@
                 <div class="right">
                     <p class="title">
                         <input type="text" :placeholder="`请输入模块${index+1}标题`" v-model='it.title'>
-                        <i class="el-icon-delete" @click="delParams(it,index)"></i>
+                        <i class="el-icon-delete" @click="delParams(it,index)" v-if="!isBdPark"></i>
                     </p>
                     <div class="editorContent">
                         <!-- <quill-editor :options="toolOptions" v-model='it.content'></quill-editor> -->
@@ -158,7 +158,7 @@
         <el-dialog :visible.sync="access" width='520px' class='access'>
             <h2 class="titleTips">提示</h2>
             <p class="accessP">
-                <i class="el-icon-warning"></i>&nbsp;&nbsp;是否继续编辑暂存模板</p>
+                <i class="el-icon-warning"></i>&nbsp;&nbsp;存在暂存信息，是否显示</p>
             <p class="btn">
                 <span @click="getModuleData(0)">取消</span>
                 <span @click="getModuleData(1)">确认</span>
@@ -628,6 +628,9 @@ export default {
                         margin-top: 12px;
                         cursor: pointer;
                         font-size: 16px;
+                        &:hover{
+                            color:#00a0e9;
+                        }
                     }
                 }
                 .editorContent{
@@ -895,11 +898,11 @@ export default {
 .confirmSend {
     .concom{
         text-align: right;
-            & > i {
-                cursor: pointer;
-                margin-right: 10px;
-                margin-top: 10px;
-            }
+        & > i {
+            cursor: pointer;
+            margin-right: 10px;
+            margin-top: 10px;
+        }
             &.confirmSend2,&.confirmSend3,&.confirmSend4 {
                 margin: 0 auto;
                 text-align: center;
