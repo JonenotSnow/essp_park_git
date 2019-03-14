@@ -51,7 +51,7 @@
                     <div class="moduleContent"  @click="getCurType('content')" v-for="(it,moudelIndex) in moduleList" :key="moudelIndex">
                         <div class="title">
                             <el-input type="text" :placeholder="`请输入模块${moudelIndex+1}标题`" v-model="it.title"></el-input>
-                            <i class="titleRight el-icon-delete" @click="delParams(it,moudelIndex)"></i>
+                            <i v-if="!isBdPark" class="titleRight el-icon-delete" @click="delParams(it,moudelIndex)"></i>
                             <div class="titleRight">
                                 <span>选择模块类型：</span>
                                 <el-select v-model="it.isPic">
@@ -765,6 +765,9 @@ export default {
                         margin-left: 35px;
                         cursor: pointer;
                         font-size: 16px;
+                        &:hover{
+                            color:#00a0e9;   
+                        }
                     }
 
                 }
