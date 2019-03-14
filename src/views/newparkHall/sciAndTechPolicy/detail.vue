@@ -30,9 +30,10 @@
                 </div>
             </div>
             <div class="main-body">
-                <div class="ql-container ql-snow bord-none">
-                    <div class="ql-editor bord-none editor-content" v-html="satpDate.infoDetail"></div>
-                </div>
+                <!--<div class="ql-container ql-snow bord-none">-->
+                <!--<div class="ql-editor bord-none editor-content" v-html="satpDate.infoDetail"></div>-->
+                <!--</div>-->
+                <div class="editor-content" v-html="satpDate.infoDetail"></div>
             </div>
             <div class="main-foot">
                 <p class="attachment-p attachment-title" v-if="fileList && fileList.length > 0">附件下载：</p>
@@ -105,25 +106,25 @@
                     // let codestatus = response.resultCode;
                     // if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
 
-                        this.satpDate = response.resultData;
+                    this.satpDate = response.resultData;
 
-                        // 对标签进行处理
-                        if (this.satpDate.tagsTxt) {
-                            this.satpDate.tagsTxt = this.satpDate.tagsTxt.split(',');
-                        }
+                    // 对标签进行处理
+                    if (this.satpDate.tagsTxt) {
+                        this.satpDate.tagsTxt = this.satpDate.tagsTxt.split(',');
+                    }
 
-                        // 对附件进行处理
-                        if (this.satpDate.fileUrl) {
-                            let fileList = JSON.parse(this.satpDate.fileUrl);
+                    // 对附件进行处理
+                    if (this.satpDate.fileUrl) {
+                        let fileList = JSON.parse(this.satpDate.fileUrl);
 
-                            fileList.forEach((item, index) => {
-                                var obj = {
-                                    name: item.name,
-                                    url: item.url
-                                };
-                                this.fileList.push(obj);
-                            })
-                        }
+                        fileList.forEach((item, index) => {
+                            var obj = {
+                                name: item.name,
+                                url: item.url
+                            };
+                            this.fileList.push(obj);
+                        })
+                    }
 
                     // } else {
                     //     this.$message.info(response.resultMsg);
@@ -203,7 +204,7 @@
             }
             .main-body {
                 padding: 40px 50px 0;
-                .ql-snow{
+                .ql-snow {
                     padding: 0 110px;
                     border: none;
                 }
