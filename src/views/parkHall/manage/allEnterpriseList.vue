@@ -5,7 +5,7 @@
         <essp-bread-crumb :breadList="breadlist"></essp-bread-crumb>
         <div class="main_inter">
             <div class="com-tit">入驻企业</div>
-            <div class="com-brf">入驻企业400+家，在职人员10000+人</div>
+            <div class="com-brf">入驻企业{{totalCount}}家</div>
             <div class="enterlist">
                 <div class="listcon">
                     <div class="listitem" v-for="(item,index) in enterprises" :key="index" @mouseenter="showDetail(item.isShowDetail,index)" @mouseleave="showDetail(item.isShowDetail,index)">
