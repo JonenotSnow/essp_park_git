@@ -698,6 +698,7 @@
                 editorOptions: {
                     // initialFrameWidth:900,
                     initialFrameHeight: 290,
+                    UEDITOR_HOME_URL: '/essp_park/static/UEditor/',
                 },
                 editorOption: {
                     // readOnly: true,
