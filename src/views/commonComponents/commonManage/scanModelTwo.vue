@@ -42,7 +42,6 @@
                 <i></i>
             </p>
             <div class="listC" v-for="(it,index) in displayList.parkSet" :key="index">
-
                 <div class="left" @click="getCurOrder(index)" v-loading='loading' element-loading-text="正在上传图片..." element-loading-spinner="el-icon-loading" element-loading-background="rgba(0, 0, 0, 0.8)">
                     <el-upload v-if="!it.img" :before-upload="beforeAvatarUpload" :action='uploads'>
                         <i class="icon iconfont icon-tianjia-" style="font-size:30px;display:block;margin-top:160px;"></i>
@@ -58,7 +57,7 @@
                 <div class="right">
                     <p class="title">
                         <input type="text" :placeholder="`请输入模块${index+1}标题`" v-model='it.title'>
-                        <i class="el-icon-delete" @click="delParams(it,index)" v-if="!isBdPark"></i>
+                        <i class="el-icon-delete" @click="delParams(index,0)" v-if="!isBdPark"></i>
                     </p>
                     <div class="editorContent">
                         <!-- <quill-editor :options="toolOptions" v-model='it.content'></quill-editor> -->
@@ -164,6 +163,16 @@
                 <span @click="getModuleData(1)">确认</span>
             </p>
         </el-dialog>
+        <!-- 删除提示框 -->
+        <el-dialog :visible.sync="accessA" width='520px' class='access'>
+            <h2 class="titleTips">提示</h2>
+            <p class="accessP">
+                <i class="el-icon-warning"></i>&nbsp;&nbsp;是否确认删除该模块</p>
+            <p class="btn">
+                <span @click="accessA = false">取消</span>
+                <span @click="delParams(2,1)">确认</span>
+            </p>
+        </el-dialog>
     </div>
 </template>
 
@@ -219,7 +228,9 @@ export default {
             title:this.utils.isBdPark()?"关于我们":"园区概览",
             isBdPark: this.utils.isBdPark(),
             accessT:false,
-            access:false
+            access:false,
+            accessA:false,
+            delIndex:'',//删除模块的索引
         };
     },
     async created() {
@@ -302,11 +313,11 @@ export default {
             }
             let timelyParams = {
                 logo: this.logoPic,
-                temp1:this.displayList.parkSet,
+                temp2:this.displayList.parkSet,
                 parkId: window.sessionStorage.getItem("parkId")
             };
             let params = {};
-            //保定和标准版保存（type==0）是用保存参数saveParams，标准版存用暂存temp1参数timelyParams
+            //保定和标准版保存（type==0）是用保存参数saveParams，标准版存用暂存temp2参数timelyParams
             if (this.isBdPark || type == 0) {
                 params = saveParams;
             }else{
@@ -350,7 +361,7 @@ export default {
                     if (response.resultData.imgUrl) {
                         this.logoPic = response.resultData.imgUrl;
                     }
-                    //保定只有保存没有暂存，标准版有暂存temp1
+                    //保定只有保存没有暂存，标准版有暂存temp2
                     if (_this.isBdPark) {
                         if(_this.displayList.parkSet && _this.displayList.parkSet !=="default1"){
                             _this.displayList.parkSet = JSON.parse(_this.displayList.parkSet);
@@ -359,7 +370,7 @@ export default {
                         }
                     }else{
                         //之前有暂存模板
-                        if (_this.displayList.temp1) {
+                        if (_this.displayList.temp2) {
                             this.access = true;
                         }else{ //没有暂存过模板
                             if(_this.displayList.parkSet && _this.displayList.parkSet !=="default1"){
@@ -390,20 +401,29 @@ export default {
                     this.displayList.parkSet = [{img:'',title:'',content:''}];
                 }
             }else{
-                this.displayList.parkSet = JSON.parse(this.displayList.temp1);
+                this.displayList.parkSet = JSON.parse(this.displayList.temp2);
             }
             this.access = false;
         },
-        delParams(it,moudelIndex){
-            let that = this;
-            let newData = [];
-            let forArr = this.displayList.parkSet;
-            forArr.forEach((item,index)=>{
-                if (moudelIndex != index) {
-                   newData.push(item);
-                }
-            })
-            this.displayList.parkSet = newData;
+        //删除模块
+        delParams(moudelIndex,type){
+            //type 0  打开删除框  保存删除信息   1 删除操作
+            if (type == 0) {
+                this.accessA = true;
+                this.delIndex = moudelIndex;
+                return;
+            }else{
+                let that = this;
+                let newData = [];
+                let forArr = this.displayList.parkSet;
+                forArr.forEach((item,index)=>{
+                    if (this.delIndex != index) {
+                        newData.push(item);
+                    }
+                })
+                this.displayList.parkSet = newData;
+                this.accessA = false;
+            }
         }
     }
 };
