@@ -487,7 +487,10 @@
                 }
                 .comment{
                     float: left;
-                    width:1020px;
+                    width: -ms-calc(100% - 80px);
+                    width: -moz-calc(100% - 80px);
+                    width: -webkit-calc(100% - 80px);
+                    width: calc(100% - 80px);
                 }
             }
         }
