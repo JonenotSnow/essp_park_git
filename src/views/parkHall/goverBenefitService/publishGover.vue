@@ -16,6 +16,18 @@
                     <span class="inline_span"><em>*</em>惠政主题：</span>
                     <el-input class="tdcon_input" v-model="formBaseList.action_theme" placeholder="请输入内容"></el-input>
                 </div>
+                <div class="tdcon">
+                    <span class="inline_span"><em>*</em>惠政类型：</span>
+                    <el-select v-model="formBaseList.classtType" placeholder="请选择">
+                        <el-option
+                            v-for="(item, index) in classtTypeList"
+                            :label="item.name"
+                            :value="item.id"
+                            :key="index"
+                        >
+                        </el-option>
+                    </el-select>
+                </div>
                 <ParkUpload :parkUploadData="parkUploadData" @changeImgUrl="showImgUrl"></ParkUpload>
                 <!--<div class="tdcon">-->
                 <!--<span class="inline_span"><em>*</em>惠政宣传图：</span>-->
@@ -31,7 +43,8 @@
                     <span class="inline_span">
                     <em>*</em>惠政内容：</span>
                     <div class="inline-box wrap">
-                        <essp-editor :editorCont="this.content" @onEditorChange="onEditorChange"></essp-editor>
+                        <!--<essp-editor :editorCont="this.content" @onEditorChange="onEditorChange"></essp-editor>-->
+                        <vue-ueditor v-model="formBaseList.action_content" :ueditorConfig="editorOption"></vue-ueditor>
                     </div>
                 </div>
 
@@ -423,12 +436,27 @@
                     }
                 ],
                 content: "",//惠政详情
+                // 编辑器配置
+                editorOption: {
+                    // initialFrameWidth:900,
+                    initialFrameHeight: 340,
+                    UEDITOR_HOME_URL: '/essp_park/static/UEditor/',
+                },
                 demoTags: [],
 
-                action_type_items: [
-                    {id: 1, name: "招聘类型"},
-                    {id: 2, name: "招商类型"}
-                ], //活动类型
+                //惠政类型选项
+                classtTypeList: [
+                    {id: '1', name: "科教文卫"},
+                    {id: '2', name: "监管监督"},
+                    {id: '3', name: "产业支持"},
+                    {id: '4', name: "民政事务"},
+                    {id: '5', name: "政务政策"},
+                    {id: '6', name: "基建生产"},
+                    {id: '7', name: "民族宗教"},
+                    {id: '8', name: "对外事务"},
+                    {id: '9', name: "财政金融"},
+                    {id: '10', name: "司法安全"},
+                ],
 
                 action_isFree_items: [
                     {
@@ -454,10 +482,6 @@
                     }
                 ],
 
-                editorOption: {
-                    readOnly: "true",
-                    placeholder: `请输入内容`
-                },
                 //海报上传
                 imageUrl: "",
                 rmdtagnum: "8",
@@ -571,9 +595,9 @@
                 ],
                 //基本信息表
                 formBaseList: {
-                    action_theme: "", //活动主题
+                    action_theme: "",   //惠政主题
                     fbjg: "",
-                    action_type: "", //选中后的活动类型
+                    classtType: "",    //惠政类型
                     action_start_time: "", //活动报名开始时间
                     // action_end_time: "", //活动报名截止时间
                     action_totaldays: 30, //活动天数
@@ -596,8 +620,6 @@
                     t_isOnlineApply: "1", //是否开放网上申请
                     t_validateDate: "", //有效期
                     t_invitings: '',  //  邀请对象 - 企业id
-
-
                     isReview: '0' //是否高级审核  默认不需要
                 },
                 formTypeList: [], // 表单类型数组
@@ -674,22 +696,20 @@
             // 编辑器的值获取
             onEditorChange(val) {
                 this.content = val;
-                console.log(this.content);
             },
             // 改变图片路径
             showImgUrl(url) {
                 this.imageUrl = url;
-                console.log(this.imageUrl);
                 this.parkUploadData.src = url
             },
             // handleAvatarSuccess(res, file) {
             //     this.imageUrl = URL.createObjectURL(file.raw);
             // },
             getContent: function (text) {
-                this.fformBaseList.action_content = text;
+                // this.fformBaseList.action_content = text;
+                this.formBaseList.action_content = text;
             },
             removeList(file, fileList) {
-                console.log(fileList);
                 this.fileList3 = fileList;
             },
             handleChangeMoveKye(value, direction, movedKeys) {
@@ -700,10 +720,7 @@
                             name.push(itemChild.cstNm);
                         }
                     })
-                })
-
-                console.log(name);
-
+                });
                 this.formTicketList.t_invitings = name.join(",");
 
             },
@@ -748,10 +765,8 @@
 
                 param.append("type", "park"); // 通过append向form对象添加数据
                 param.append("model", "fj"); // 通过append向form对象添加数据
-                console.log("上传文件格式：", file.type);
                 var flieName = file.name;
                 var fileType = flieName.substring(flieName.lastIndexOf(".") + 1).toLowerCase();
-                console.log(fileType);
                 const isFile = fileType === "docx" || fileType === "doc" || fileType === "rar" || fileType === "zip" || fileType === "xls" || fileType === "xlsx";
                 const isLt30M = file.size / 1024 / 1024 < 30;
 
@@ -901,7 +916,7 @@
                     center: true,
                     showCancelButton: false,
                     dangerouslyUseHTMLString: true
-                }
+                };
                 if (!this.checkInfo()) {
                     return false
                 }
@@ -916,8 +931,10 @@
                 this.$post(this.$apiUrl.goverBene.savePolicy, {
                     parkId: sessionStorage.getItem("parkId") || "",
                     policyTitle: this.formBaseList.action_theme,
+                    classtType: this.formBaseList.classtType,
                     titleImg: this.imageUrl,
-                    infoDetail: this.content ? this.content.replace(/\s/g, "&nbsp") : "",
+                    // infoDetail: this.content ? this.content.replace(/\s/g, "&nbsp") : "",
+                    infoDetail: this.formBaseList.action_content,
                     pubCstName: this.formBaseList.fbjg,
                     tags: this.tags.join(","),
                     id: this.$route.query.draftId,
@@ -938,12 +955,12 @@
 
                 }).then(response => {
                     // if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
-                        this.$confirm(
-                            msg,
-                            maskConfig
-                        ).then(() => {
-                            this.$router.push(url);
-                        })
+                    this.$confirm(
+                        msg,
+                        maskConfig
+                    ).then(() => {
+                        this.$router.push(url);
+                    })
 
                     // } else {
                     //     this.$message.error(response.resultMsg);
@@ -966,7 +983,7 @@
                     this.$message("惠政宣传图不能为空");
                     return false;
                 }
-                if (this.content == "") {
+                if (this.formBaseList.action_content == "") {
                     this.$message("惠政内容不能为空");
                     return false;
                 }
@@ -976,7 +993,6 @@
                         this.$message("有效时间不能为空");
                         return false;
                     }
-                    console.log(this.formTicketList);
                     var upperLimit = this.formTicketList.t_upperlimit || 0;
                     if (upperLimit <= 0) {
                         this.$message("报名上限不能小于0");
@@ -990,16 +1006,14 @@
             // 保持发布
             lookfinalData(type) {
                 var type = 1;
-                var msg = "您是否发布惠政？"
-                var url = "/parkIndex/goverBene/release?type=0"
+                var msg = "您是否发布惠政？";
+                var url = "/parkIndex/goverBene/release?type=0";
                 var maskConfig = {
                     confirmButtonText: "是",
                     cancelButtonText: "否",
                     center: true,
-                }
-
-
-                var tagIds = this.demoTags.join(',')
+                };
+                var tagIds = this.demoTags.join(',');
                 var t_isOnlineApply = this.formTicketList.t_isOnlineApply;
 
                 this.$confirm(
@@ -1018,8 +1032,9 @@
                     this.$post(this.$apiUrl.goverBene.savePolicy, {
                         parkId: sessionStorage.getItem("parkId") || "",
                         policyTitle: this.formBaseList.action_theme,
+                        classtType: this.formBaseList.classtType,
                         titleImg: this.imageUrl,
-                        infoDetail: this.content,
+                        infoDetail: this.formBaseList.action_content,
                         pubCstName: this.formBaseList.fbjg,
                         tags: this.tags.join(","),
                         id: this.$route.query.draftId,
@@ -1039,7 +1054,7 @@
 
                     }).then(response => {
                         // if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
-                            this.$router.push(url);
+                        this.$router.push(url);
                         // } else {
                         //     this.$message.error(response.resultMsg);
                         // }
@@ -1057,7 +1072,7 @@
                 }).then(response => {
                     var arr = response.resultData;
                     arr.forEach((item, index) => {
-                        if(item.cstId || item.cstNm){
+                        if (item.cstId || item.cstNm) {
                             item.key = item.cstId;
                             item.label = item.cstNm;
                             this.databox.push(item);
@@ -1127,38 +1142,36 @@
                         response => {
                             // var codestatus = response.resultCode;
                             // if (codestatus ==  "CLT000000000" || codestatus == "0000000000") {
-                                let data = response.resultData;
-                                this.formBaseList.action_theme = data.policyTitle;
-                                this.parkUploadData.src = data.titleImg;
-                                this.imageUrl = data.titleImg;
-                                this.content = data.infoDetail;
-                                console.log(data.fileUrl);
+                            let data = response.resultData;
+                            this.formBaseList.action_theme = data.policyTitle;
+                            this.formBaseList.classtType = data.classtType;
+                            this.parkUploadData.src = data.titleImg;
+                            this.imageUrl = data.titleImg;
+                            this.content = data.infoDetail;
 
-                                var fileList = JSON.parse(data.fileUrl);
+                            var fileList = JSON.parse(data.fileUrl);
 
-                                fileList.forEach((item, index) => {
-                                    var obj = {
-                                        name: item.name,
-                                        url: item.url
-                                    };
-                                    this.fileList3.push(obj);
-                                })
+                            fileList.forEach((item, index) => {
+                                var obj = {
+                                    name: item.name,
+                                    url: item.url
+                                };
+                                this.fileList3.push(obj);
+                            })
 
 //                                this.parkUploadData.src =  data.activityPhoto;
-                                this.formBaseList.fbjg = data.cstNm;
-                                console.log(data.tagsTxt);
-                                if (data.tagsTxt) {
-                                    this.tags = data.tagsTxt.split(",") || "";
-                                }
+                            this.formBaseList.fbjg = data.cstNm;
+                            if (data.tagsTxt) {
+                                this.tags = data.tagsTxt.split(",") || "";
+                            }
 
 
-                                // applyMaximum
-                                console.log(data.applyMaximum);
-                                this.formTicketList.t_upperlimit = data.applyMaximum;
-                                this.formTicketList.t_intercheck = data.applyType
-                                this.formTicketList.t_isOnlineApply = data.isonlineApply;
-                                this.formTicketList.t_notes = data.approveComment;
-                                this.formTicketList.t_validateDate = [Moment(data.avaliableTime), Moment(data.avaliableEndTime)];
+                            // applyMaximum
+                            this.formTicketList.t_upperlimit = data.applyMaximum;
+                            this.formTicketList.t_intercheck = data.applyType
+                            this.formTicketList.t_isOnlineApply = data.isonlineApply;
+                            this.formTicketList.t_notes = data.approveComment;
+                            this.formTicketList.t_validateDate = [Moment(data.avaliableTime), Moment(data.avaliableEndTime)];
 
                             // } else {
                             //     this.$message.info(response.resultMsg);

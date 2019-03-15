@@ -13,6 +13,19 @@
                     <label>发布机构：</label>
                     <em>{{dataDetail.cstNm || '暂无机构'}}</em>
                 </span>
+                <span class="statusitems">
+                    <label>惠政类型：</label>
+                    <em v-if="dataDetail.classtType == '1'">科教文卫</em>
+                    <em v-if="dataDetail.classtType == '2'">监管监督</em>
+                    <em v-if="dataDetail.classtType == '3'">产业支持</em>
+                    <em v-if="dataDetail.classtType == '4'">民政事务</em>
+                    <em v-if="dataDetail.classtType == '5'">政务政策</em>
+                    <em v-if="dataDetail.classtType == '6'">基建生产</em>
+                    <em v-if="dataDetail.classtType == '7'">民族宗教</em>
+                    <em v-if="dataDetail.classtType == '8'">对外事务</em>
+                    <em v-if="dataDetail.classtType == '9'">财政金融</em>
+                    <em v-if="dataDetail.classtType == '10'">司法安全</em>
+                </span>
 
                 <!-- <span class="statusitems">
                     <label>已申报人数：</label>
@@ -29,32 +42,27 @@
                 </div>
             </div>
             <div class="newsbtncon">
-                <!--<el-button type="primary" size="mini" round>立即申请</el-button>-->
                 <div class="btncon">
-                    <!--{{followStatus == 0 ? "立即申请" : "取消申请"}}-->
-                    <span v-if="dataDetail.isonlineApply == '1'" style="margin-right: 120px">
-                        <el-button type="primary" size="mini" round
-                                   v-if="new Date(dataDetail.avaliableTime).valueOf() < this.now &&
+                    <span v-if="dataDetail.isonlineApply == '1'" class="apply-btn-status">
+                        <button
+                            class="btn-apply"
+                            v-if="new Date(dataDetail.avaliableTime).valueOf() < this.now &&
                                     this.now < new Date(dataDetail.avaliableEndTime).valueOf()"
-                                   @click="linkTo(dataDetail.id)">立即申报</el-button>
-                        <el-button type="info" size="mini" round
-                                   v-if="new Date(dataDetail.avaliableTime).valueOf() > this.now">预告中</el-button>
+                            @click="linkTo(dataDetail.id)">立即申报</button>
+                        <button class="btn-announce"
+                                v-if="new Date(dataDetail.avaliableTime).valueOf() > this.now">预告中</button>
+                        <button class="btn-end"
+                                v-if="new Date(dataDetail.avaliableEndTime).valueOf() < this.now">已结束</button>
                     </span>
-                    <!--<span v-if="dataDetail.isonlineApply == '0'">-->
-                    <!--<el-button type="info" size="mini" round>未开放</el-button>-->
-                    <!--</span>-->
-
-                    <el-button type="primary" size="mini" round
-                               class="focus-btn"
-                               @click="showDialog()"
-                    >
+                    <span class="focus-btn" @click="showDialog()">
                         <i class="iconfont icon-font-size"
-                           :class="followStatus == 0 ? 'icon-aixin-xianxing':'icon-collect2'"></i>{{followStatus
-                        == 0 ? "关注" : "已关注"}}
-                    </el-button>
+                           :class="followStatus == 0 ? 'icon-aixin-xianxing':'icon-collect2'"></i>
+                        {{followStatus == 0 ? "关注" : "已关注"}}
+                    </span>
                 </div>
             </div>
-            <div class="newscontain" v-html="dataDetail.infoDetail">
+            <div class="newscontain">
+                <div class="editor-content" v-html="dataDetail.infoDetail"></div>
             </div>
             <div class="fileListDown" v-if="fileList.length > 0">
                 <div class="scfj">上传附件:</div>
@@ -93,7 +101,7 @@
 
     export default {
         name: "",
-        mixins:[mixin],
+        mixins: [mixin],
         components: {
             EsspBreadCrumb,
             EsspParkTag,
@@ -124,8 +132,8 @@
                 id: "",
                 followId: "",
                 fileList: [], // 附件数据,
-                LoginUserRol:this.SSH.getItem("LoginUserRol").toString(),
-                loginFlag:this.SSH.getItem("loginFlag")
+                LoginUserRol: this.SSH.getItem("LoginUserRol").toString(),
+                loginFlag: this.SSH.getItem("loginFlag")
             };
         },
 
@@ -175,14 +183,14 @@
                 }).then(response => {
                     let _self = this;
                     // if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
-                        let lblInfo = response.resultData.lblInfo;
-                        if (response.resultData.lblInfo) {
+                    let lblInfo = response.resultData.lblInfo;
+                    if (response.resultData.lblInfo) {
 
-                            for (let i = 0, len = lblInfo.length; i < len; i++) {
+                        for (let i = 0, len = lblInfo.length; i < len; i++) {
 
-                                _self.tags.push(lblInfo[i].lblTxt);
-                            }
+                            _self.tags.push(lblInfo[i].lblTxt);
                         }
+                    }
                     // }
                 });
             },
@@ -193,16 +201,16 @@
             // 弹窗
             showDialog() {
                 //未登录
-                if(!this.utils.isLoginMode()){
+                if (!this.utils.isLoginMode()) {
                     var _this = this;
                     this.$message.warning("您尚未登陆，请您先登陆");
-                    setTimeout(function(){
+                    setTimeout(function () {
                         _this.windowHrefUrl('/userIndex/login')
-                    },2000);
+                    }, 2000);
                     return
                 }
                 //游客模式暂不支持关注
-                if(this.utils.isVisitorMode()){
+                if (this.utils.isVisitorMode()) {
                     this.$message.warning("您暂无权限进行关注/取消关注");
                     return;
                 }
@@ -215,12 +223,8 @@
             },
             upDatefollowStatus() {
                 let type = this.followStatus;
-                var pop =
-                    type == 0 ? {id: this.$route.query.id} : {followId: this.followId};
-                var url =
-                    type == 0
-                        ? this.$apiUrl.goverBene.addMyFocus
-                        : this.$apiUrl.goverBene.cancelMyFocus;
+                var pop = type == 0 ? {id: this.$route.query.id} : {followId: this.followId};
+                var url = type == 0 ? this.$apiUrl.goverBene.addMyFocus : this.$apiUrl.goverBene.cancelMyFocus;
                 var successMsg = type == 0 ? "关注成功" : "取消关注成功";
                 var failMsg = type == 0 ? "关注失败" : "取消关注失败";
                 this.$post(url, pop).then(
@@ -249,17 +253,38 @@
     .newsbtncon {
         text-align: center;
         .btncon {
+            .apply-btn-status {
+                margin-right: 50px;
+                button {
+                    width: 120px;
+                    height: 35px;
+                    line-height: 35px;
+                    color: #fff;
+                    border-radius: 3px;
+                    border: none;
+                    outline: none;
+                }
+                .btn-apply {
+                    background-color: #00a0e9;
+                    cursor: pointer;
+                }
+                .btn-announce {
+                    background-color: #fbba1e;
+                }
+                .btn-end {
+                    background-color: #c9ccd3;
+                }
+            }
             .focus-btn {
-                color: black;
                 min-width: 100px;
-                border-color: #cccccc;
+                color: #999999;
                 background-color: #fff;
+                cursor: pointer;
                 i {
                     margin-right: 5px;
-                    color: #fc1878;
                     font-size: 12px;
+                    color: #999999;
                 }
-
             }
         }
     }
@@ -330,13 +355,11 @@
 
     //新闻详情页内容区填充
     .newscontain {
-        margin: 30px auto 0 auto;
+        margin: 55px auto 0 auto;
         padding: 30px 0;
         width: 1100px;
         border-top: 1px solid #ccc;
-
         background: @con_bg;
-
     }
 
     .news_td {

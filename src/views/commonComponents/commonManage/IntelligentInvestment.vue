@@ -157,7 +157,7 @@ export default {
                 }
             }
             if(!flag){
-                return '其他行业';
+                return '未知';
             }
         }
     },
@@ -436,20 +436,22 @@ export default {
         font-weight: normal;
         top: -30px;
         margin-top: 20px;
+        text-align: left;
     }
     .accessP {
         text-indent: 20px;
         font-size: 20px;
         color: #333;
         line-height: 30px;
+        text-align: left;
         i {
             font-size: 28px;
             color: #00a0e9;
         }
     }
     .btn {
-        text-align:center;
         margin-top: 35px;
+        text-align: right;
         span {
             text-align: center;
             display: inline-block;
