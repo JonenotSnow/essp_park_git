@@ -51,7 +51,7 @@
                     <div class="moduleContent"  @click="getCurType('content')" v-for="(it,moudelIndex) in moduleList" :key="moudelIndex">
                         <div class="title">
                             <el-input type="text" :placeholder="`请输入模块${moudelIndex+1}标题`" v-model="it.title"></el-input>
-                            <i v-if="!isBdPark" class="titleRight el-icon-delete" @click="delParams(it,moudelIndex)"></i>
+                            <i v-if="!isBdPark" class="titleRight el-icon-delete" @click="delParams(moudelIndex,0)"></i>
                             <div class="titleRight">
                                 <span>选择模块类型：</span>
                                 <el-select v-model="it.isPic">
@@ -178,6 +178,16 @@
                 <span @click="getModuleData(1)">确认</span>
             </p>
         </el-dialog>
+        <!-- 删除提示框 -->
+        <el-dialog :visible.sync="accessA" width='520px' class='access'>
+            <h2 class="titleTips">提示</h2>
+            <p class="accessP">
+                <i class="el-icon-warning"></i>&nbsp;&nbsp;是否确认删除该模块</p>
+            <p class="btn">
+                <span @click="accessA = false">取消</span>
+                <span @click="delParams(2,1)">确认</span>
+            </p>
+        </el-dialog>
     </div>
 </template>
 
@@ -231,7 +241,9 @@ export default {
                 UEDITOR_HOME_URL: '/essp_park/static/UEditor/',
             },
             accessT:false,
-            access:false
+            access:false,
+            accessA:false,
+            delIndex:'',//删除模块的索引
         }
     },
     created(){
@@ -298,7 +310,7 @@ export default {
                     标准版：
                     如果有暂存模板 先提示是否继续编辑暂存模板 反之显示保存模板
                     */
-                    if (result.temp2) {
+                    if (result.temp1) {
                         this.access = true;
                     }else if(result.parkSet2 && result.parkSet2!=="default2"){
                         let parkset = JSON.parse(result.parkSet2)
@@ -328,7 +340,7 @@ export default {
         //筛选出模板数据
         getModuleData(type){
             //type 0 保存的模板数据 1 暂存的模板数据
-            let parkset = type==0?JSON.parse(this.parkInfoes.parkSet2):JSON.parse(this.parkInfoes.temp2);
+            let parkset = type==0?JSON.parse(this.parkInfoes.parkSet2):JSON.parse(this.parkInfoes.temp1);
             let deoptions = {
                 title:'',
                 content:'',
@@ -366,7 +378,7 @@ export default {
             let timelyParams = {
                 logo:this.comlogo,
                 parkId:sessionStorage.getItem("parkId"),
-                temp2:this.parkSet1Obj
+                temp1:this.parkSet1Obj
             };
             let params = {};
             //保定和标准版保存（type==0）是用保存参数saveParams，标准版存用暂存temp1参数timelyParams
@@ -519,15 +531,24 @@ export default {
             this.curIndex = index;//当前点击到第几个图
             this.moudelIndex = moudelIndex;//当前所在的模块是哪一个
         },
-        delParams(it,moudelIndex){
-            let that = this;
-            let newData = [];
-            this.moduleList.forEach((item,index)=>{
-                if (moudelIndex != index) {
-                   newData.push(item);
-                }
-            })
-            this.moduleList = newData;
+        //删除模块
+        delParams(moudelIndex,type){
+            //type 0  打开删除框  保存删除信息   1 删除操作
+            if (type == 0) {
+                this.accessA = true;
+                this.delIndex = moudelIndex;
+                return;
+            }else{
+                let that = this;
+                let newData = [];
+                this.moduleList.forEach((item,index)=>{
+                    if (this.delIndex != index) {
+                        newData.push(item);
+                    }
+                })
+                this.moduleList = newData;
+                this.accessA = false;
+            }
         }
     },
 }
@@ -1076,9 +1097,11 @@ export default {
         font-weight: normal;
         top: -30px;
         margin-top: 20px;
+        text-align: left;
     }
     .accessP {
         text-indent: 20px;
+        text-align: left;
         font-size: 20px;
         color: #333;
         line-height: 30px;

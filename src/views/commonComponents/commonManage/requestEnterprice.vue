@@ -46,6 +46,7 @@
                             {{scope.row.idyTpcd | idType(scope.row.idyTpcd)}}
                         </template>
                     </el-table-column>
+                    <!-- <el-table-column prop="industry" label="所属行业" width="350" align='center'></el-table-column> -->
                     <el-table-column label="操作" width="150" align='center'>
                         <template slot-scope="scope">
                             <el-button @click="handleClick(scope.row)" type="primary" style="font-size: 16px;padding: 6px 7px;
@@ -150,7 +151,7 @@ export default {
                 }
             }
             if(!flag){
-                return '其他行业';
+                return '未知';
             }
         }
     },
