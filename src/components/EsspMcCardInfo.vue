@@ -391,6 +391,7 @@
                     //.esspellipsis();
                     cursor: pointer;
                     //margin-top: 10px;
+                    margin: 0;
                     margin-bottom: 8px;
                     width: 100%;
                     height: 45px;
