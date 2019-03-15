@@ -446,16 +446,16 @@
 
                 //惠政类型选项
                 classtTypeList: [
-                    {id: '01', name: "财政金融"},
-                    {id: '02', name: "产业支持"},
-                    {id: '03', name: "对外事务"},
-                    {id: '04', name: "基建生产"},
-                    {id: '05', name: "监管监督"},
-                    {id: '06', name: "科教文卫"},
-                    {id: '07', name: "民政民事"},
-                    {id: '08', name: "民族宗教"},
-                    {id: '09', name: "司法安全"},
-                    {id: '10', name: "政务政策"},
+                    {id: '1', name: "科教文卫"},
+                    {id: '2', name: "监管监督"},
+                    {id: '3', name: "产业支持"},
+                    {id: '4', name: "民政事务"},
+                    {id: '5', name: "政务政策"},
+                    {id: '6', name: "基建生产"},
+                    {id: '7', name: "民族宗教"},
+                    {id: '8', name: "对外事务"},
+                    {id: '9', name: "财政金融"},
+                    {id: '10', name: "司法安全"},
                 ],
 
                 action_isFree_items: [
@@ -983,7 +983,7 @@
                     this.$message("惠政宣传图不能为空");
                     return false;
                 }
-                if (this.content == "") {
+                if (this.formBaseList.action_content == "") {
                     this.$message("惠政内容不能为空");
                     return false;
                 }
