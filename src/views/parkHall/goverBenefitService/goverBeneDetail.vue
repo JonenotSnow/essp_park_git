@@ -15,16 +15,16 @@
                 </span>
                 <span class="statusitems">
                     <label>惠政类型：</label>
-                    <em v-if="dataDetail.classtType == '01'">财政金融</em>
-                    <em v-if="dataDetail.classtType == '02'">产业支持</em>
-                    <em v-if="dataDetail.classtType == '03'">对外事务</em>
-                    <em v-if="dataDetail.classtType == '04'">基建生产</em>
-                    <em v-if="dataDetail.classtType == '05'">监管监督</em>
-                    <em v-if="dataDetail.classtType == '06'">科教文卫</em>
-                    <em v-if="dataDetail.classtType == '07'">民政民事</em>
-                    <em v-if="dataDetail.classtType == '08'">民族宗教</em>
-                    <em v-if="dataDetail.classtType == '09'">司法安全</em>
-                    <em v-if="dataDetail.classtType == '10'">政务政策</em>
+                    <em v-if="dataDetail.classtType == '1'">科教文卫</em>
+                    <em v-if="dataDetail.classtType == '2'">监管监督</em>
+                    <em v-if="dataDetail.classtType == '3'">产业支持</em>
+                    <em v-if="dataDetail.classtType == '4'">民政事务</em>
+                    <em v-if="dataDetail.classtType == '5'">政务政策</em>
+                    <em v-if="dataDetail.classtType == '6'">基建生产</em>
+                    <em v-if="dataDetail.classtType == '7'">民族宗教</em>
+                    <em v-if="dataDetail.classtType == '8'">对外事务</em>
+                    <em v-if="dataDetail.classtType == '9'">财政金融</em>
+                    <em v-if="dataDetail.classtType == '10'">司法安全</em>
                 </span>
 
                 <!-- <span class="statusitems">
