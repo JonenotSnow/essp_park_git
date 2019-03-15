@@ -2,74 +2,81 @@
     <div style="margin-bottom: 30px;">
         <essp-bread-crumb class="detailNav" :breadList="breadlist"></essp-bread-crumb>
         <!-- 资讯详情页 -->
-        <div class="newscon">
-            <h2>{{informationTitle}}</h2>
-            <div class="newstatus esspclearfix">
-        <span class="statusitemsA">
-          <label>发布时间：</label>
-          <em>{{createTime | timerFormat(createTime)}}</em>
-        </span>
-                <span class="statusitemsB">
-          <label>发布机构：</label>
-          <em>{{cstNm}}</em>
-        </span>
-                <span class="statusitems">
-          <!-- <div class="follow">
-                        <i class="icon iconfont icon-liulan"></i>
-                        <em>{{viewTime}}</em>
-          </div>-->
-          <div class="follow cursor guanzhu" @click="showDialog()">
-            <i class="icon iconfont" :class="followStatus == 0 ?'icon-aixin-xianxing':'icon-collect2'"></i>
-            <em>{{followStatus == 0 ? "关注" : "已关注"}}</em>
-          </div>
-          <div
-              class="follow cursor"
-              @click="tipOffFn(3,infoDetailData.informationId,infoDetailData.informationTitle)"
-          >
-            <i class="iconfont icon-warning" style="font-size: 14px;"></i>
-            <em>举报</em>
-          </div>
-        </span>
-            </div>
-            <!-- <div class="btncon">
-                      <el-button type="primary" @click="upDatefollowStatus(followStatus)">{{followStatus==0?"关注":"取消关注"}}</el-button>
-            </div>-->
-            <div class="jbnc" v-if="prompt == 1">PS: 该内容因被举报正在取证中，请您谨慎对待。</div>
-        </div>
-        <div class="infoDetail">
-            <div class="realinfo editor-content" v-html="infoDetail"></div>
-        </div>
-        <div class="tagscon">
-            <div class="tags_con esspclearfix">
-                <div class="tagssubcon" v-show="tags.length">
-                    <span class="taglables">资讯标签：</span>
-                    <essp-park-tag
-                        v-for="(item, eptIndex) in tags"
-                        :value="item"
-                        :key="eptIndex"
-                    />
+        <div class="content-wrap">
+            <div class="content-limit">
+                <div class="newscon">
+                <h2>{{informationTitle}}</h2>
+                <div class="newstatus esspclearfix">
+                <p class="statusitemsA">
+                <em>{{createTime | timerFormat(createTime)}}</em>
+                </p>
+                <div class="flex-between">
+                    <div>
+                    <span class="statusitemsB">
+                        <label>资讯类型：</label>
+                        <em>{{cstNm}}</em>
+                    </span>
+                    <span class="statusitemsB">
+                        <label>发布机构：</label>
+                        <em>{{cstNm}}</em>
+                    </span>
+                    </div>
+                    <span class="statusitems">
+                        <div class="follow cursor guanzhu" @click="showDialog()">
+                                <i class="icon iconfont" :class="followStatus == 0 ?'icon-aixin-xianxing':'icon-collect2'"></i>
+                                <em>{{followStatus == 0 ? "关注" : "已关注"}}</em>
+                            </div>
+                            <div
+                                class="follow cursor"
+                                @click="tipOffFn(3,infoDetailData.informationId,infoDetailData.informationTitle)"
+                            >
+                            <i class="iconfont icon-warning" style="font-size: 14px;"></i>
+                            <em>举报</em>
+                        </div>
+                    </span>
                 </div>
-                <!--author：miguel，跟纯玲确认不需要此举报-->
-                <!--<button class="infojb"-->
-                        <!--@click="tipOffFn(3,infoDetailData.informationId,infoDetailData.informationTitle)">举报-->
-                <!--</button>-->
+                </div>
+                <!-- <div class="btncon">
+                        <el-button type="primary" @click="upDatefollowStatus(followStatus)">{{followStatus==0?"关注":"取消关注"}}</el-button>
+                </div>-->
+                <div class="jbnc" v-if="prompt == 1">PS: 该内容因被举报正在取证中，请您谨慎对待。</div>
+            </div>
+            <div class="infoDetail">
+                <div class="realinfo editor-content" v-html="infoDetail"></div>
+            </div>
+       
+        
+            <div class="tagscon">
+                <div class="tags_con esspclearfix">
+                    <div class="tagssubcon" v-show="tags.length">
+                        <span class="taglables">资讯标签：</span>
+                        <essp-park-tag
+                            v-for="(item, eptIndex) in tags"
+                            :value="item"
+                            :key="eptIndex"
+                        />
+                    </div>
+                    <!--author：miguel，跟纯玲确认不需要此举报-->
+                    <!--<button class="infojb"-->
+                            <!--@click="tipOffFn(3,infoDetailData.informationId,infoDetailData.informationTitle)">举报-->
+                    <!--</button>-->
+                </div>
+            </div>
+            <div class="pinglun">
+                <essp-info-comment commentSty="2"></essp-info-comment>
+            </div>
+            </div>
+            <div class="">
+                <div class="moreinfo">
+                    <h3 class="common_titdesa">相关资讯</h3>
+                    <!-- <div class="info_more" @click="goParkInfoAll">查看更多></div> -->
+                </div>
+                <!-- 更多资讯模块 -->
+                <div class="newscard_con">
+                    <about-news :classtType = classtType></about-news>
+                </div>
             </div>
         </div>
-        <div class="pinglun">
-            <essp-info-comment commentSty="2"></essp-info-comment>
-        </div>
-
-        <div class="common_titwrap esspclearfix">
-            <div class="moreinfo esspclearfix">
-                <h3 class="common_titdesa">更多热门资讯</h3>
-                <!-- <div class="info_more" @click="goParkInfoAll">查看更多></div> -->
-            </div>
-            <!-- 更多资讯模块 -->
-            <div class="newscard_con">
-                <more-news></more-news>
-            </div>
-        </div>
-
         <!-- 关注事件对话框start -->
         <el-dialog class="quguanbox"
                    title="提示"
@@ -92,7 +99,7 @@
 
 <script>
     import EsspBreadCrumb from "@/components/EsspBreadCrumb";
-    import MoreNews from "@/views/parkHall/information/moreNews";
+    import aboutNews from "@/views/parkHall/information/aboutNews";
     import EsspInfoComment from "@/components/EsspInfoComment";
     import EsspParkTag from "@/components/EsspParkTag";
     import Moment from "moment";
@@ -104,7 +111,7 @@
         components: {
             EsspBreadCrumb,
             EsspInfoComment,
-            MoreNews,
+            aboutNews,
             EsspParkTag
         },
         data() {
@@ -141,7 +148,8 @@
                 followStatus: "", //资讯关注状态，非0 就是关注了
                 followId: "", // 关注id,
                 LoginUserRol:this.SSH.getItem("LoginUserRol").toString(),
-                loginFlag:this.SSH.getItem("loginFlag")
+                loginFlag:this.SSH.getItem("loginFlag"),
+                classtType:'0'
             };
         },
         created() {
@@ -269,6 +277,7 @@
                                 this.countFollower = data.countFollower; //关注数
                                 this.countComment = data.countComment; //评论数
                                 this.followId = data.followId; //关注id，供取消关注用
+                                this.classtType = data.classtType
                             // } else {
                             //     this.$message.info(response.resultMsg);
                             // }
@@ -329,8 +338,8 @@
     }
 
     .newscon {
-        .essp_width_auto();
-        background: #fff;
+        // .essp_width_auto();
+        
         padding: 40px 0 50px;
         // border-bottom: 1px solid #ccc;
         // margin-bottom: 15px;
@@ -339,7 +348,7 @@
             font-size: 20px;
             line-height: 36px;
             color: #333;
-            text-align: center;
+            text-align: left;
             margin-bottom: 15px;
             font-weight: normal;
         }
@@ -351,7 +360,7 @@
 
     //标签模块样式
     .tagscon {
-        .essp_width_auto();
+        // .essp_width_auto();
         background: #fff;
         margin-bottom: 0;
         .tags_con {
@@ -378,21 +387,19 @@
     }
 
     .newstatus {
-        padding: 0 15%;
+        // padding: 0 15%;
         margin-bottom: 20px;
         .statusitemsA {
-            float: left;
             width: 30%;
             font-size: 14px;
             line-height: 25px;
             color: #999;
-            text-align: center;
+            text-align: left;
             em {
                 font-style: normal;
             }
         }
         .statusitemsB {
-            float: left;
             width: 40%;
             font-size: 14px;
             line-height: 25px;
@@ -406,15 +413,14 @@
             }
         }
         .statusitems {
-            float: left;
             width: 20%;
             margin-left: 30px;
             font-size: 14px;
             line-height: 25px;
             color: #999;
             text-align: center;
+            display: flex;
             .follow {
-                float: left;
                 margin-right: 15px;
                 em {
                     font-style: normal;
@@ -430,8 +436,8 @@
     }
 
     .infoDetail {
-        .essp_width_auto();
-        background: #fff;
+        // .essp_width_auto();
+        
         padding: 34px 0px 0;
         line-height: 30px;
         text-indent: 2em;
@@ -440,7 +446,7 @@
             padding: 0px 50px;
         }
         .realinfo {
-            padding: 10px 50px;
+            // padding: 10px 50px;
             line-height: 30px;
         }
     }
@@ -448,13 +454,14 @@
     .moreinfo {
         margin-bottom: 20px;
         margin-right: 50px;
+        display: flex;
         .common_titdesa {
-            float: left;
-            font-size: 20px;
+            font-size: 16px;
             margin-left: 35px;
             padding: 0 12px 4px;
+            color:#666;
             font-weight: normal;
-            border-left: 10px solid #00a0e9;
+            border-left: 4px solid #00a0e9;
         }
         .info_more {
             float: right;
@@ -469,7 +476,7 @@
 
     .newscard_con {
         //.essp_width_auto();
-        width:1180px;
+        // width:1180px;
         margin:0 auto;
         background: #fff;
         margin-bottom: 30px;
@@ -480,10 +487,25 @@
     }
 
     .pinglun {
-        width: 1100px;
-        padding: 50px 50px 0;
+        // width: 1100px;
+        // padding: 50px 50px 0;
         margin: 0 auto;
         background-color: #fff;
         overflow: hidden;
+    }
+    .content-wrap{
+        padding: 40px;
+        background: #fff;
+        width: 1120px;
+        margin: 0 auto;
+        display: flex;
+        .content-limit{
+            width: 770px;
+
+        }
+    }
+    .flex-between{
+        display: flex;
+        justify-content: space-between;
     }
 </style>
