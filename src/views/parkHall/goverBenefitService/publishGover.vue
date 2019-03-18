@@ -1147,7 +1147,8 @@
                             this.formBaseList.classtType = data.classtType;
                             this.parkUploadData.src = data.titleImg;
                             this.imageUrl = data.titleImg;
-                            this.content = data.infoDetail;
+                            // this.content = data.infoDetail;
+                            this.formBaseList.action_content = data.infoDetail;
 
                             var fileList = JSON.parse(data.fileUrl);
 
@@ -1157,7 +1158,7 @@
                                     url: item.url
                                 };
                                 this.fileList3.push(obj);
-                            })
+                            });
 
 //                                this.parkUploadData.src =  data.activityPhoto;
                             this.formBaseList.fbjg = data.cstNm;
