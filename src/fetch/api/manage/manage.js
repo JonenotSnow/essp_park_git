@@ -61,5 +61,5 @@ export const manage = {
     applyFormExport:'/memberManage/applyFormExport', //入驻申请表到导出
 
     
-    deleteTag:'/intermediary/tag/deleteTag' //成员管理全局标签删除
+    deleteTag:'/tag/deleteByParkId' //成员管理全局标签删除
 }
