@@ -58,5 +58,8 @@ export const manage = {
 
     checkAuth:'commom/checkAuth',  //flag:(1,0)
     getByActivityId:'activity/getByActivityId',  //flag:(1,0)
-    applyFormExport:'/memberManage/applyFormExport' //入驻申请表到导出
+    applyFormExport:'/memberManage/applyFormExport', //入驻申请表到导出
+
+    
+    deleteTag:'/intermediary/tag/deleteTag' //成员管理全局标签删除
 }

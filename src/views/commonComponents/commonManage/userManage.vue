@@ -17,13 +17,53 @@
                     <input type="text" placeholder="请输入搜索企业" v-model="seachVal" />
                     <i class="el-icon-search" @click="getMemInfo"></i>
                 </div>
-                <div class='item'>
+                <div class='item' v-if="isBdPark">
                     <span>我的分类：</span>
                     <span v-for="(it,i) in hotTagList.slice(0,6)" :key="i" :class="{'active':curSelectTag == it.tagId}" @click="getMemByTblTxt(it)" >{{it.tagTxt}}&nbsp;({{it.tagCount}})</span>
                 </div>
+                <div class='item_bz' v-else>
+                    <span class="title">我的分类：</span>
+                    <div class="tagList">
+                        <span v-for="(it,i) in hotTagList.slice(0,curI)" :key="i" :class="{'active':curSelectTag == it.tagId}" @click="getMemByTblTxt(it)" >
+                            {{it.tagTxt}}&nbsp;({{it.tagCount}})
+                            <i v-if="curSelectTag == it.tagId" class="el-icon-close" @click="deleteTag(it)"></i>
+                        </span>
+                    </div>
+                    <span class="more" @click="showMoreBtn" v-if="hotTagList.length>0">
+                        More
+                        <i class="el-icon-arrow-down" :class="{'tran':curI == 10000}"></i>
+                    </span>
+                </div>
             </div>
             <div class="userList">
-                <ul>
+                <ul v-if="isBdPark">
+                    <li v-for="(it,i) in getMemInfoList" :key="i">
+                        <div>
+                            <img :src="it.cstLogo || '../../../assets/actdetaillogo.png'" alt="">
+                            <div>
+                                <p>{{it.cstNm}}</p>
+                                <!-- <p>行业：{{it.idyTpcd | idType(it.idyTpcd)}}</p> -->
+                                <p>{{it.idyTpcdNm}}</p>
+                                <p>
+                                    <span>标签：</span>
+                                    <span class='tagItem' v-if="it.tbList.length>0" v-for="(is,j) in it.tbList.slice(0,5)" :key="j">{{is.lblTxt}}</span>
+                                    <span class='tagItem' @click="getDefaultTag(it.cstId)"><i class="el-icon-plus" style="color:#00a0e9;"></i>添加分类</span>
+                                </p>
+                                <p v-if="it.cstOrgPlace"><i class="icon iconfont icon-dizhi" style="color: orange;"></i>{{it.cstOrgPlace}}</p>
+                            </div>
+                            <div>
+                                <p>
+                                    <span  @click="toOut(it.cstId)">查看详情</span>
+                                </p>
+                                <p>
+                                    <span v-if="it.commandInd != '1'" @click="openDelPop(it.cstId)">{{isBdPark?'移除中心':'移除园区'}}</span>
+                                    <span v-if="it.commandInd == '1'" class="ts">{{isBdPark?'移除中心':'移除园区'}}</span>
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <ul v-else>
                     <li v-for="(it,i) in getMemInfoList" :key="i">
                         <div>
                             <img :src="it.cstLogo || '../../../assets/actdetaillogo.png'" alt="">
@@ -32,8 +72,15 @@
                                 <p>行业：{{it.idyTpcd | idType(it.idyTpcd)}}</p>
                                 <p>
                                     <span>标签：</span>
-                                    <span class='tagItem' v-if="it.tbList.length>0" v-for="(is,j) in it.tbList.slice(0,5)" :key="j">{{is.lblTxt}}</span>
-                                    <span class='tagItem' @click="getDefaultTag(it.cstId)"><i class="el-icon-plus"></i>添加分类</span>
+                                    <span class='tagItem' v-if="it.tbList.length>0" @mouseover="getValue(is,it)" @mouseout="clearSelect"
+                                        :class="{'activeA':(curSelectTagUser == is.lblId && curSelectTxt == is.lblTxt && curCas == it.cstId)}"
+                                        v-for="(is,j) in it.tbList.slice(0,5)" :key="j">
+                                        {{is.lblTxt}}
+                                        <i v-if="(curSelectTagUser == is.lblId && curSelectTxt == is.lblTxt  && curCas == it.cstId)"
+                                        @click="deleteTagUser(is)" 
+                                        class="el-icon-close"></i>
+                                    </span>
+                                    <span class='tagItem' @click="getDefaultTag(it.cstId)"><i class="el-icon-plus" style="color: #00a0e9;"></i>添加分类</span>
                                 </p>
                                 <p v-if="it.cstOrgPlace"><i class="icon iconfont icon-dizhi" style="color: orange;"></i>{{it.cstOrgPlace}}</p>
                             </div>
@@ -93,6 +140,17 @@
         <div v-else class="noInfo">
             非该园区管理员不能执行此操作!
         </div>
+        <!-- 标签删除 -->
+        <el-dialog :visible.sync="accessT" width='520px' class='access'>
+            <h2 class="titleTips">提示</h2>
+            <p class="accessP">
+                <i class="el-icon-warning"></i>&nbsp;&nbsp;是否确认删除该标签</p>
+            <p class="btn">
+                <span @click="accessT = false">否</span>
+                <span v-if="deleteType == 0" @click="confirmDeleteTag">是</span>
+                <span v-else @click="saveEntityTagss">是</span>
+            </p>
+        </el-dialog>
     </div>
 </template>
 
@@ -124,10 +182,19 @@ export default {
             hotTagList:[],//全局标签
             TJTagList:[],//企业推荐标签
             dynamicTags: [],//企业已有标签
-            curSelectTag:'',
-            info:'',
+            curSelectTag:'',//当前删除全局标签Id
+            curSelectTxt:'',//当前删除全局标签文本
+            curSelectTagTp:'',//当前删除全局标签tagTp
+            curSelectTagUser:'', //当前删除企业标签Id
+            delectUserData:[],//当前删除企业标签总列表
             stop:false,
             isBdPark: this.utils.isBdPark(),//是否是保定园区
+            curI:0,
+            checkDis:0,
+            accessT:false,
+            deleteType:0, //删除标签的类型
+            curCas:'', //当前操作企业casId
+            curSelectTxt:'' //当前删除企业标签文本
         }
     },
     async created () {
@@ -175,7 +242,7 @@ export default {
         handleInputConfirm() {
             if (this.inputValue.length >5) {
                 this.$message({
-                    type: 'warn',
+                    type: 'warning',
                     message: "输入的标签不能超过6个字符,请重新输入",
                 })
                 this.stop = true;
@@ -183,6 +250,15 @@ export default {
             }
             let inputValue = this.inputValue;
             if (inputValue) {
+                for (let i = 0; i < this.forTagList.length; i++) {
+                    if (this.forTagList[i] == inputValue) {
+                        this.$message({
+                            type: 'warning',
+                            message: `该类型标签已添加,请勿重新输入`,
+                        })
+                        return;
+                    }
+                }
                 this.forTagList.push(inputValue);
             }
             this.inputVisible = false;
@@ -191,7 +267,7 @@ export default {
         addTagToL(tag){
             if (`,${this.forTagList},`.indexOf(`,${tag.lblTxt},`)>-1) {
                 this.$message({
-                    type: 'warn',
+                    type: 'warning',
                     message: "该类型标签已添加,请勿重新输入"
                 })
                 return;
@@ -216,7 +292,6 @@ export default {
                 }
             },(err)=>{
                 this.loading = false;
-                this.info = err.data.resultMsg;
             })
         },
         openDelPop(cstId){
@@ -276,13 +351,37 @@ export default {
         },
         //全局推荐标签
         getTagUsg(){
+            let that = this;
             this.$post(this.$apiUrl.manage.getTagUsg,{
                     parkId : window.sessionStorage.getItem("parkId"),
                     tagTp : '3000001',
                     isParkManager:'212' //只要不为空
                 })
                 .then((response) => {
-                    this.hotTagList =response.resultData
+                    this.hotTagList =response.resultData;
+                    if (!this.isBdPark) {
+                        let returnData  = response.resultData;
+                        let arr = [];
+                        let charLength = 0;
+                        let curTagIndex = 0;
+                        if (returnData && returnData.length>0) {
+                            for (let i = 0; i < returnData.length; i++) {
+                                arr.push(returnData[i].tagTxt);
+                            }
+                            for (let j = 0; j < arr.length; j++) {
+                                charLength += arr[j].length;
+                                if (charLength>=24) {
+                                    that.curI = j;
+                                    console.log('that.curI')
+                                    console.log(that.curI)
+                                    that.checkDis = j;
+                                    return;
+                                }else{
+                                   that.curI = 10000; 
+                                }
+                            }
+                        }
+                    }
                 })
         },
         //保存标签
@@ -304,8 +403,8 @@ export default {
                 // })
             },(err)=>{
                 this.$message({
-                    type: 'warn',
-                    message: response.resultMsg
+                    type: 'warning',
+                    message: err.resultMsg
                 })
             })
             setTimeout(()=>{
@@ -324,18 +423,98 @@ export default {
                     pageNum : this.pageNum
                 })
                 .then((response) => {
-                    // this.$message({
-                    //     type: 'sucess',
-                    //     message: response.resultMsg
-                    // })
                     this.getMemInfoList = response.resultData.memberList;
                     this.totalCount = response.resultData.totalCount;
                 },(err)=>{
                     this.$message({
-                        type: 'warn',
-                        message: response.resultMsg
+                        type: 'warning',
+                        message: err.resultMsg
                     })
                 })
+        },
+        //标签删除弹窗
+        deleteTag(v){
+            //deleteType 0 删除我的分类中的全局标签 1 删除成员中的标签
+            this.accessT = true;
+            this.deleteType = 0;
+            this.curSelectTag = v.tagId;//当前删除全局标签id
+            this.curSelectTxt = v.tagTxt;//当前删除全局标签文本
+            this.curSelectTagTp = v.tagTp;//当前删除全局标签tagTp
+            this.delectUserData = [];//当前删除企业标签总列表
+        },
+        deleteTagUser(){
+            this.accessT = true;
+            this.deleteType = 1;
+        },
+        //移入成员标签 样式
+        getValue(is,it){
+            this.curSelectTagUser = is.lblId;
+            this.curSelectTxt = is.lblTxt;
+            this.curCas = it.cstId;
+            this.delectUserData = it.tbList;
+        },
+        //鼠标移除成员标签 而且删除弹窗不是打开状态
+        clearSelect(){
+            if (!this.accessT) {
+                this.curSelectTag = '';
+                this.curSelectTagUser = '';
+                this.curSelectTag = '';//当前删除全局标签id
+                this.curSelectTxt = '';//当前删除全局标签文本
+                this.curSelectTagTp = '';//当前删除全局标签tagTp
+            }
+        },
+        //成员标签删除 过滤掉需要删除的标签重新查询
+        saveEntityTagss(){
+            let sendData = this.delectUserData.filter( item => {
+                return item.lblId != this.curSelectTagUser;
+            })
+            let lblTxtList = '';
+            for (let i = 0; i < sendData.length; i++) {
+                lblTxtList += sendData[i].lblTxt+',';
+            }
+            lblTxtList = lblTxtList.slice(0,lblTxtList.length-1);
+            this.$post(this.$apiUrl.manage.saveEntityTags,{
+                entId : `${window.sessionStorage.getItem("parkId")}_${this.curCas}`,
+                entTp : '3000001',
+                lblTxtList : lblTxtList,
+            })
+            .then((response) => {
+                this.$message({
+                    type: 'success',
+                    message: '标签删除成功'
+                })
+            },(err)=>{
+                this.$message({
+                    type: 'warning',
+                    message: err.resultMsg
+                })
+            })
+            this.getMemInfo();
+            setTimeout(()=>{
+                this.getTagUsg();
+            },500)
+            this.accessT = false;
+        },
+        //我的分类--全局标签删除
+        confirmDeleteTag(){
+            this.$post(this.$apiUrl.manage.deleteTag,{
+                parkId:sessionStorage.getItem('parkId'),
+                lblTxt:this.curSelectTxt,
+                entTp:this.curSelectTagTp
+            })
+            .then((response) => {
+                this.$message({
+                    type: 'success',
+                    message: response.resultMsg
+                })
+            },(err)=>{
+                this.$message({
+                    type: 'warning',
+                    message: err.resultMsg
+                })
+            })
+            this.getMemByTblTxt();
+            this.accessT = false;
         },
         toOut(cstId) {
             let parkId = this.SSH.getItem('parkId');
@@ -344,6 +523,14 @@ export default {
             let params = {label:cur,cstId:cstId}
             this.windowOpenUrl('/centerIndex/showHome',params);
         },
+        showMoreBtn(){
+            //更多切换，10000用来做展开切换，this.checkDis收缩切换
+            if (this.curI == 10000) {
+                this.curI = this.checkDis;
+            }else{
+                this.curI = 10000;
+            }
+        }
     }
 }
 </script>
@@ -394,6 +581,19 @@ export default {
     }
     #userManage .el-button--mini{
         border-radius: 20px;
+    }
+    #userManage .access .el-dialog__header {
+        display: none;
+    }
+
+    #userManage .access .el-dialog__body {
+        /* text-align: center; */
+        overflow: hidden;
+        padding: 30px 20px;
+    }
+
+    #userManage .access .el-dialog__body p:nth-of-type(1) {
+        line-height: 55px;
     }
 </style>
 <style lang='less' scoped>
@@ -455,7 +655,7 @@ export default {
             }
             .search{
                 position:relative!important;
-                height:100px!important;
+                min-height:100px!important;
                 width:990px!important;
                 &>div{
                     // min-height:54px;
@@ -501,6 +701,62 @@ export default {
                             }
                         }
                     }
+                    &.item_bz{
+                        margin:15px 0;
+                        line-height: 54px;
+                        overflow: hidden;
+                        &>span{
+                            float: left;
+                            margin-left:20px;
+                            line-height: 20px;
+                        }
+                        .tagList{
+                            float: left;
+                            width: 815px;
+                            &>span{
+                                float: left;
+                                margin-left:20px;
+                                margin-bottom:20px;
+                                line-height: 20px;
+                                display:inline-block;
+                                text-align: center;
+                                font-size: 12px;
+                                // min-width:80px;
+                                height: 20px;
+                                padding: 2px 12px;
+                                background: #fff;
+                                color:#666;
+                                border-radius: 12px;
+                                cursor: pointer;
+                                &.active{
+                                    background-color: #33bcfe;
+                                    color:#fff;
+                                }
+                                &:hover{
+                                    background-color: #33bcfe;
+                                    color:#fff; 
+                                }
+                            }
+                        }
+                        .more{
+                            float: right;
+                            color: #666;
+                            font-size: 14px;
+                            cursor: pointer;
+                            margin-right:10px;
+                            &:hover{
+                                background-color: #fff;
+                                color: #666666;
+                            }
+                            i{
+                                transform:  rotate(0);
+                                transition: .5s;
+                                &.tran{
+                                    transform: rotate(180deg);
+                                }
+                            }
+                        }
+                    }
                 }
                 &>div:not([class="item"]){
                     overflow: hidden;
@@ -517,7 +773,7 @@ export default {
                         &>div{
                             width:950px;
                             min-height: 120px;
-                            background-color: #f7f7f7;
+                            // background-color: #f7f7f7;
                             margin:20px;
                             overflow: hidden;
                             display:flex;
@@ -567,6 +823,11 @@ export default {
                                                 em{
                                                     color:#00a0e9;
                                                 }
+                                                &.activeA{
+                                                    background: #00a0e9;
+                                                    color:#fff;
+                                                    border-color:#00a0e9;
+                                                }
                                             }
                                             &>div{
                                                 width: 75px;
@@ -614,6 +875,9 @@ export default {
                                         }
                                     }
                                 }
+                            }
+                            &:hover{
+                                background-color: #f7f7f7;
                             }
                         }
                         &:nth-of-type(1){
@@ -760,4 +1024,51 @@ export default {
             color:#c7c7c7;
         }
     }
+.access {
+    .titleTips {
+        text-indent: 36px;
+        font-size: 24px;
+        color: #555;
+        position: relative;
+        font-weight: normal;
+        top: -30px;
+        margin-top: 20px;
+    }
+    .accessP {
+        text-indent: 20px;
+        font-size: 20px;
+        color: #333;
+        line-height: 30px;
+        i {
+            font-size: 28px;
+            color: #00a0e9;
+        }
+    }
+    .btn {
+        margin-top: 35px;
+        text-align: center;
+        span {
+            text-align: center;
+            display: inline-block;
+            width: 100px;
+            height: 35px;
+            border-radius: 2px;
+            line-height: 35px;
+            font-size: 18x;
+            cursor: pointer;
+            color: #fff;
+            letter-spacing: 4.8px;
+            &:nth-of-type(1) {
+                letter-spacing: 4.8px;
+                background: #e6f4ff;
+                color: #00a0e9;
+            }
+            &:nth-of-type(2) {
+                margin-left: 55px;
+                background: linear-gradient(31deg, #22a2fa 0%, #10b5ff 100%);
+                color: #fff;
+            }
+        }
+    }
+}
 </style>
