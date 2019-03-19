@@ -61,7 +61,7 @@
                     </p>
                     <div class="editorContent">
                         <!-- <quill-editor :options="toolOptions" v-model='it.content'></quill-editor> -->
-                        <vue-ueditor v-model="it.content" :ueditorConfig="editorOption"></vue-ueditor>
+                        <vue-ueditor :id="index" v-model="it.content" :ueditorConfig="editorOption"></vue-ueditor>
                         <span>350字</span>
                     </div>
                 </div>
@@ -355,16 +355,18 @@ export default {
             }).then(
                 response => {
                     _this.displayList = response.resultData;
-                    _this.displayList.parkSet = response.resultData.parkSet;
-
+                    if (response.resultData.parkSet) {
+                        _this.displayList.parkSet = JSON.parse(response.resultData.parkSet);
+                    }
+                    console.log(_this.displayList.parkSet)
                     //返回数据存logo图片
                     if (response.resultData.imgUrl) {
                         this.logoPic = response.resultData.imgUrl;
                     }
                     //保定只有保存没有暂存，标准版有暂存temp2
                     if (_this.isBdPark) {
-                        if(_this.displayList.parkSet && _this.displayList.parkSet !=="default1"){
-                            _this.displayList.parkSet = JSON.parse(_this.displayList.parkSet);
+                        if(_this.displayList.parkSet && JSON.stringify(_this.displayList.parkSet) !=="default1"){
+                            // _this.displayList.parkSet = _this.displayList.parkSet;
                         }else{
                             _this.displayList.parkSet = [{img:'',title:'',content:''}];
                         }
@@ -372,15 +374,15 @@ export default {
                         //之前有暂存模板
                         if (_this.displayList.temp2) {
                             this.access = true;
+                            // return;
                         }else{ //没有暂存过模板
-                            if(_this.displayList.parkSet && _this.displayList.parkSet !=="default1"){
-                                _this.displayList.parkSet = JSON.parse(_this.displayList.parkSet);
+                            if(_this.displayList.parkSet &&  JSON.stringify(_this.displayList.parkSet) !=="default1"){
+                                // _this.displayList.parkSet = JSON.parse(_this.displayList.parkSet);
                             }else{
                                 _this.displayList.parkSet = [{img:'',title:'',content:''}];
                             }
                         }
                     }
-                    
                     this.bLoading = false;
                 },
                 err => {
@@ -395,8 +397,8 @@ export default {
         getModuleData(type){
             //type 0 保存的模板数据 1 暂存的模板数据
             if (type == 0) {
-                if(this.displayList.parkSet && this.displayList.parkSet !=="default1"){
-                    this.displayList.parkSet = JSON.parse(this.displayList.parkSet);
+                if(this.displayList.parkSet && JSON.stringify(this.displayList.parkSet) !=="default1"){
+                    // this.displayList.parkSet = JSON.parse(this.displayList.parkSet);
                 }else{
                     this.displayList.parkSet = [{img:'',title:'',content:''}];
                 }
