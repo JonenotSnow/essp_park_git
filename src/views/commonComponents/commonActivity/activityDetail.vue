@@ -739,7 +739,10 @@
         }
         .guanzhu {
             margin-left: 30px;
-            border: solid 1px #00a0e9;
+            i{
+                color: #fc1878;
+            }
+            
         }
         button {
             float: left;
