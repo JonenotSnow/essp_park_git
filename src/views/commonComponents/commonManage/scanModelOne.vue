@@ -174,8 +174,8 @@
             <p class="accessP">
                 <i class="el-icon-warning"></i>&nbsp;&nbsp;存在暂存信息，是否显示</p>
             <p class="btn">
-                <span @click="getModuleData(0)">取消</span>
-                <span @click="getModuleData(1)">确认</span>
+                <span @click="getModuleData(0)">否</span>
+                <span @click="getModuleData(1)">是</span>
             </p>
         </el-dialog>
         <!-- 删除提示框 -->
@@ -650,9 +650,9 @@ export default {
         padding: 30px 20px;
     }
 
-    #scanModelOne .access .el-dialog__body p:nth-of-type(1) {
+    /* #scanModelOne .access .el-dialog__body p:nth-of-type(1) {
         line-height: 55px;
-    }
+    } */
 </style>
 
 
@@ -1095,8 +1095,8 @@ export default {
         color: #555;
         position: relative;
         font-weight: normal;
-        top: -30px;
-        margin-top: 20px;
+        top: -12px;
+        margin-top: 5px;
         text-align: left;
     }
     .accessP {
@@ -1112,7 +1112,7 @@ export default {
     }
     .btn {
         margin-top: 35px;
-        text-align: center;
+        text-align: right;
         span {
             text-align: center;
             display: inline-block;
@@ -1120,7 +1120,7 @@ export default {
             height: 35px;
             border-radius: 2px;
             line-height: 35px;
-            font-size: 18x;
+            font-size: 18px;
             cursor: pointer;
             color: #fff;
             letter-spacing: 4.8px;
@@ -1131,6 +1131,7 @@ export default {
             }
             &:nth-of-type(2) {
                 margin-left: 55px;
+                margin-right:11px;
                 background: linear-gradient(31deg, #22a2fa 0%, #10b5ff 100%);
                 color: #fff;
             }
