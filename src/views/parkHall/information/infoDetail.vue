@@ -14,8 +14,9 @@
                     <div>
                     <span class="statusitemsB">
                         <label>资讯类型：</label>
-                        <em>{{cstNm}}</em>
+                        <em>{{classtType | typeFormat }}</em>
                     </span>
+                    <span class="center_bord"></span>
                     <span class="statusitemsB">
                         <label>发布机构：</label>
                         <em>{{cstNm}}</em>
@@ -41,6 +42,7 @@
                 </div>-->
                 <div class="jbnc" v-if="prompt == 1">PS: 该内容因被举报正在取证中，请您谨慎对待。</div>
             </div>
+            <div><img class="img-width" :src="titleImg" alt=""></div>
             <div class="infoDetail">
                 <div class="realinfo editor-content" v-html="infoDetail"></div>
             </div>
@@ -104,7 +106,17 @@
     import EsspParkTag from "@/components/EsspParkTag";
     import Moment from "moment";
     import mixin from '@/components/mixins/mixins_windowOpen.js'
-
+    // import {classtType} from "./../../../util/classtType";
+    const types={"":"全部",
+                "1":"行业动态",
+                "2":"通知公告",
+                "3":"政府公告",
+                "4":"方针政策",
+                "5":"专家解读",
+                "6":"专栏",
+                "7":"财经新闻",
+                "8":"其他"
+                }
     export default {
         name: "",
         mixins:[mixin],
@@ -149,7 +161,8 @@
                 followId: "", // 关注id,
                 LoginUserRol:this.SSH.getItem("LoginUserRol").toString(),
                 loginFlag:this.SSH.getItem("loginFlag"),
-                classtType:'0'
+                classtType:'',
+                titleImg:''
             };
         },
         created() {
@@ -278,6 +291,7 @@
                                 this.countComment = data.countComment; //评论数
                                 this.followId = data.followId; //关注id，供取消关注用
                                 this.classtType = data.classtType
+                                this.titleImg = data.titleImg
                             // } else {
                             //     this.$message.info(response.resultMsg);
                             // }
@@ -292,6 +306,10 @@
         filters: {
             timerFormat(vaule) {
                 return Moment(vaule).format("YYYY-MM-DD HH:mm");
+            },
+            typeFormat(type) {
+               return types[type]
+                 
             }
         },
         watch: {
@@ -340,7 +358,7 @@
     .newscon {
         // .essp_width_auto();
         
-        padding: 40px 0 50px;
+        padding: 0 0 10px;
         // border-bottom: 1px solid #ccc;
         // margin-bottom: 15px;
         h2 {
@@ -408,8 +426,26 @@
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
+            
             em {
                 font-style: normal;
+            }
+            
+        }
+        .center_bord{
+                width: 60px;
+                height: 16px;
+                position: relative;
+                display: inline-block;
+                vertical-align: middle;
+            &::before{
+                content: ' ';
+                height: 16px;
+                width: 1px;
+                background-color:#ccc;
+                position: absolute;
+                left:50%;
+                top:0;
             }
         }
         .statusitems {
@@ -507,5 +543,8 @@
     .flex-between{
         display: flex;
         justify-content: space-between;
+    }
+    .img-width{
+        max-width: 100%;
     }
 </style>
