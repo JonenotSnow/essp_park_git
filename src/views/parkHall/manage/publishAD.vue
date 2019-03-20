@@ -21,7 +21,8 @@
                 <div class='lineContent'>
           <span><i>*</i>内容详情：</span>
                     <div class="editorContent">
-                        <quill-editor  v-model='params.content' :options="editorOption"></quill-editor>
+                        <!-- <quill-editor  v-model='params.content' :options="editorOption"></quill-editor> -->
+                        <vue-ueditor v-model="params.content" :ueditorConfig="editorOption"></vue-ueditor>
                         <span v-if="!params.content" class='control'>100字</span>
                     </div>
                 </div>
