@@ -61,28 +61,13 @@
                     </p>
                 </div>
 
-                <div class="park-tag">
-                    <p class="tag-p tag-title" v-if="tags && tags.length > 0">惠政标签：</p>
-                    <div class="tag-div tag-main">
-                        <div class="tag-single-line" v-if="oomTag === 'one'">
-                            <essp-park-tag
-                                v-for="(item, index) in tags"
-                                :value="item"
-                                :key="index"
-                            />
-                        </div>
-
-                        <div class="tag-mul-line" v-if="oomTag === 'mul'">
-                            <essp-park-tag
-                                v-for="(item, index) in tags"
-                                :value="item"
-                                :key="index"
-                            />
-                        </div>
-                    </div>
-                    <p class="tag-p tag-foot" @click="showOneOrMulTags()" v-if="showAllBtnTag">
-                        <span>展开全部<i></i></span>
-                    </p>
+                <!--<div class="park-tag" v-if="tags && tags.length > 0">-->
+                <div v-if="tags && tags.length > 0">
+                    <essp-park-tag-busi
+                        tagBusiName="惠政标签"
+                        tagWidth="900"
+                        :tagList="tags"
+                    />
                 </div>
             </div>
         </div>
@@ -111,6 +96,7 @@
 <script>
     import EsspBreadCrumb from "@/components/EsspBreadCrumb";
     import EsspParkTag from "@/components/EsspParkTag";
+    import EsspParkTagBusi from "@/components/EsspParkTagBusi";
     import Moment from "moment";
     import mixin from '@/components/mixins/mixins_windowOpen.js'
 
@@ -120,6 +106,7 @@
         components: {
             EsspBreadCrumb,
             EsspParkTag,
+            EsspParkTagBusi,
             Moment
         },
         data() {
@@ -149,11 +136,6 @@
                 fileList: [], // 附件数据,
                 LoginUserRol: this.SSH.getItem("LoginUserRol").toString(),
                 loginFlag: this.SSH.getItem("loginFlag"),
-
-                // 标签展示标记
-                oomTag: 'one',
-                // 展示全部按钮标记位
-                showAllBtnTag: false
             };
         },
         mounted() {
@@ -194,19 +176,6 @@
                     this.followId = response.resultData.followId;
                     this.tags = this.dataDetail.tagsTxt ? this.dataDetail.tagsTxt.split(",") : [];
                     this.fileList = JSON.parse(this.dataDetail.fileUrl);
-
-
-                    // 获取标签整体高度
-                    this.$nextTick(() => {
-                        let esspParkTagWrap = document.getElementsByClassName('essp-park-tag__wrap');
-                        let esspParkTagWrapWidth = null;
-                        for (let i = 0; i < esspParkTagWrap.length; i++) {
-                            esspParkTagWrapWidth += esspParkTagWrap[i].clientWidth;
-                        }
-                        if (esspParkTagWrapWidth > 900) {
-                            return this.showAllBtnTag = true;
-                        }
-                    });
                 });
             },
             // 请求标签接口
@@ -271,19 +240,6 @@
                         this.$message.error(response.resultMsg);
                     }
                 );
-            },
-
-            /**
-             * 显示一行还是多行标签的相关事件
-             */
-            // “展开全部”事件
-            showOneOrMulTags() {
-                if (this.oomTag === 'one') {
-                    return this.oomTag = 'mul';
-                }
-                if (this.oomTag === 'mul') {
-                    return this.oomTag = 'one';
-                }
             }
         }
     };
@@ -423,57 +379,6 @@
             }
 
             .park-tag {
-                .tag-p {
-                    display: inline-block;
-                    vertical-align: top;
-                    height: 30px;
-                    line-height: 30px;
-                    letter-spacing: 0px;
-                    font-size: 16px;
-                    font-weight: normal;
-                    font-stretch: normal;
-                    color: #666666;
-                }
-                .tag-title {
-
-                }
-                .tag-main {
-                    display: inline-block;
-                    vertical-align: top;
-                    width: 900px;
-                    height: auto;
-                    line-height: 30px;
-                    letter-spacing: 0px;
-                    font-size: 16px;
-                    font-weight: normal;
-                    font-stretch: normal;
-                    color: #666666;
-                    .tag-single-line {
-                        height: 30px;
-                        line-height: 30px;
-                        overflow: hidden;
-                    }
-                    .tag-mul-line {
-                    }
-                }
-                .tag-foot {
-                    width: 100px;
-                    height: 30px;
-                    line-height: 30px;
-                    text-align: center;
-                    span {
-                        display: inline-block;
-                        padding: 0 18px;
-                        font-size: 16px;
-                        font-weight: normal;
-                        font-stretch: normal;
-                        letter-spacing: 0px;
-                        &:hover {
-                            color: #36c0ff;
-                            cursor: pointer;
-                        }
-                    }
-                }
             }
 
         }
