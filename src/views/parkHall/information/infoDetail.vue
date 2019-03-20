@@ -50,14 +50,15 @@
         
             <div class="tagscon">
                 <div class="tags_con esspclearfix">
-                    <div class="tagssubcon" v-show="tags.length">
+                    <!-- <div class="tagssubcon" v-show="tags.length">
                         <span class="taglables">资讯标签：</span>
                         <essp-park-tag
                             v-for="(item, eptIndex) in tags"
                             :value="item"
                             :key="eptIndex"
                         />
-                    </div>
+                    </div> -->
+                    <essp-park-tag-busi v-if="tags.length>0" :tagList="tags" tagBusiName="资讯标签" tagMainWidth="700"></essp-park-tag-busi>
                     <!--author：miguel，跟纯玲确认不需要此举报-->
                     <!--<button class="infojb"-->
                             <!--@click="tipOffFn(3,infoDetailData.informationId,infoDetailData.informationTitle)">举报-->
@@ -103,7 +104,7 @@
     import EsspBreadCrumb from "@/components/EsspBreadCrumb";
     import aboutNews from "@/views/parkHall/information/aboutNews";
     import EsspInfoComment from "@/components/EsspInfoComment";
-    import EsspParkTag from "@/components/EsspParkTag";
+    import EsspParkTagBusi from "@/components/EsspParkTagBusi";
     import Moment from "moment";
     import mixin from '@/components/mixins/mixins_windowOpen.js'
     // import {classtType} from "./../../../util/classtType";
@@ -124,7 +125,7 @@
             EsspBreadCrumb,
             EsspInfoComment,
             aboutNews,
-            EsspParkTag
+            EsspParkTagBusi
         },
         data() {
             return {
