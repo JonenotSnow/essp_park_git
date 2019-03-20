@@ -43,7 +43,7 @@
                 <div class="jbnc" v-if="prompt == 1">PS: 该内容因被举报正在取证中，请您谨慎对待。</div>
             </div>
             <div><img class="img-width" :src="titleImg" alt=""></div>
-            <div class="infoDetail">
+            <div class="">
                 <div class="realinfo editor-content" v-html="infoDetail"></div>
             </div>
        
@@ -449,13 +449,14 @@
             }
         }
         .statusitems {
-            width: 20%;
+            width: 200px;
             margin-left: 30px;
             font-size: 14px;
             line-height: 25px;
             color: #999;
             text-align: center;
             display: flex;
+            justify-content: flex-end;
             .follow {
                 margin-right: 15px;
                 em {

@@ -60,6 +60,11 @@ ul{
             font-size: 16px;
             color: #333333;
             padding:25px 0;
+            width: 300px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            -webkit-line-clamp: 1;
+            white-space: nowrap;
             // &:hover{
                 
             // }
@@ -74,6 +79,7 @@ ul{
             width: 300px;
             text-overflow: ellipsis;
             -o-text-overflow:ellipsis;
+            -webkit-box-orient: vertical;
             display:block;
             display: -webkit-box;
             -webkit-line-clamp: 2;
