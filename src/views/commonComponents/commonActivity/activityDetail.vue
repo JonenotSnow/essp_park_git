@@ -144,14 +144,19 @@
                     <div class="l">
                         <p><strong>收费说明 :</strong>{{activeDetailData.chargeInfo || "无收费说明"}}</p>
                         <p><strong>发起单位 :</strong>{{activeDetailData.initiateUnits || "暂无"}}</p>
-                        <p>
-                            <strong>活动标签 :</strong>
+                        <div>
+                            <!-- <strong>活动标签 :</strong>
                             <essp-park-tag
                                 v-for="(item, eptIndex) in activityLabelList"
                                 :value="item"
                                 :key="eptIndex"
+                            /> -->
+                            <essp-park-tag-busi
+                                tagBusiName="活动标签"
+                                tagMainWidth="790"
+                                :tagList="activityLabelList"
                             />
-                        </p>
+                        </div>
                     </div>
                     <!--<div class="r">-->
                     <!--<el-button type="danger" size="mini" round @click="tipOffFn(4,activeDetailData.activityId,activeDetailData.activityTheme)">举报</el-button>-->
@@ -220,6 +225,7 @@
     import {swiper, swiperSlide} from 'vue-awesome-swiper'
     import Moment from "moment";
     import EsspParkTag from "@/components/EsspParkTag";
+    import EsspParkTagBusi from "@/components/EsspParkTagBusi";
     import mixin from '@/components/mixins/mixins_windowOpen.js'
     export default {
         mixins:[mixin],
@@ -228,7 +234,8 @@
             swiper,
             swiperSlide,
             EsspInfoComment,
-            EsspParkTag
+            EsspParkTag,
+            EsspParkTagBusi
         },
         filters: {
             fromDates(vaule) {
