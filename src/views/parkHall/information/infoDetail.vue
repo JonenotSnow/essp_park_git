@@ -17,9 +17,9 @@
                         <em>{{classtType | typeFormat }}</em>
                     </span>
                     <span class="center_bord"></span>
-                    <span class="statusitemsB">
+                    <span class="statusitemsB" style="cursor: pointer" @click="enterBusiness">
                         <label>发布机构：</label>
-                        <em>{{cstNm}}</em>
+                        <em >{{cstNm}}</em>
                     </span>
                     </div>
                     <span class="statusitems">
@@ -162,7 +162,8 @@
                 LoginUserRol:this.SSH.getItem("LoginUserRol").toString(),
                 loginFlag:this.SSH.getItem("loginFlag"),
                 classtType:'',
-                titleImg:''
+                titleImg:'',
+                cstId:''
             };
         },
         created() {
@@ -170,6 +171,9 @@
             this.isPit();
         },
         methods: {
+            enterBusiness(item){
+                this.windowOpenUrl('/centerIndex/showHome',{cstId:this.cstId})
+            },
             goParkInfoAll() {
                 this.$router.push({path: "/parkIndex/parkInformation/all"});
             },
@@ -292,6 +296,7 @@
                                 this.followId = data.followId; //关注id，供取消关注用
                                 this.classtType = data.classtType
                                 this.titleImg = data.titleImg
+                                this.cstId = data.pubCstName
                             // } else {
                             //     this.$message.info(response.resultMsg);
                             // }
