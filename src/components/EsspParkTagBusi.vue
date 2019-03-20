@@ -2,15 +2,7 @@
     <div class="essp-park-tag-busi__wrap">
         <p class="tag-p tag-title">{{tagBusiName}}：</p>
         <div class="tag-div tag-main">
-            <div class="tag-single-line" v-if="oomTag === 'one'">
-                <essp-park-tag
-                    v-for="(item, index) in tagList"
-                    :value="item"
-                    :key="index"
-                />
-            </div>
-
-            <div class="tag-mul-line" v-if="oomTag === 'mul'">
+            <div :class="tagLineChange">
                 <essp-park-tag
                     v-for="(item, index) in tagList"
                     :value="item"
@@ -57,35 +49,48 @@
                 showAllBtnTag: false
             }
         },
+        computed: {
+            tagLineChange() {
+                return this.oomTag === 'one' ? {'tag-single-line': true} : {'tag-mul-line': true};
+            }
+        },
         methods: {
             /**
-             * 显示一行还是多行标签的相关事件
+             * 显示一行还是多行标签
              */
-            // “展开全部”事件
             showOneOrMulTags() {
-                if (this.oomTag === 'one') {
-                    return this.oomTag = 'mul';
-                }
-                if (this.oomTag === 'mul') {
-                    return this.oomTag = 'one';
-                }
+                return this.oomTag === 'one' ? this.oomTag = 'mul' : this.oomTag = 'one';
+            },
+
+            /**
+             * 通过类名获取元素集合
+             * @param className
+             * @returns {HTMLCollectionOf<Element>}
+             */
+            esspGetElByClassName(className) {
+                return document.getElementsByClassName(className);
             }
         },
         mounted() {
 
-            // 设置
             this.$nextTick(() => {
-                let tagMain = document.getElementsByClassName('tag-main');
+
+                let tagMain = this.esspGetElByClassName('tag-main');
                 tagMain[0].style.width = parseInt(this.tagMainWidth) + 'px';
 
-                let esspParkTagWrap = document.getElementsByClassName('essp-park-tag__wrap');
+                let esspParkTagWrap = this.esspGetElByClassName('essp-park-tag__wrap');
+                let i = 0;
+                let esspParkTagWrapLength = esspParkTagWrap.length;
+
+                // 通过标签组件的总长度来判断是一行显示还是多行显示
                 let esspParkTagWrapWidth = null;
-                for (let i = 0; i < esspParkTagWrap.length; i++) {
+                for (; i < esspParkTagWrapLength; i++) {
                     esspParkTagWrapWidth += esspParkTagWrap[i].clientWidth;
                 }
                 if (esspParkTagWrapWidth > this.tagMainWidth) {
                     return this.showAllBtnTag = true;
                 }
+
             });
         }
     }

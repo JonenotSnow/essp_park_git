@@ -61,11 +61,10 @@
                     </p>
                 </div>
 
-                <!--<div class="park-tag" v-if="tags && tags.length > 0">-->
-                <div v-if="tags && tags.length > 0">
+                <div class="park-tag" v-if="tags && tags.length > 0">
                     <essp-park-tag-busi
                         tagBusiName="惠政标签"
-                        tagWidth="900"
+                        tagMainWidth="900"
                         :tagList="tags"
                     />
                 </div>
@@ -287,7 +286,7 @@
                     i {
                         margin-right: 5px;
                         font-size: 12px;
-                        color: #999999;
+                        color: #fc1878;
                     }
                 }
             }
