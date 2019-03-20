@@ -50,13 +50,14 @@
                 <span class="require">*</span>
                 <span class="title">成果详情：</span>
                 <div class="editor_wrap esspclearfix">
-                    <quill-editor
+                    <!-- <quill-editor
                         ref="myTextEditor"
                         :options="editorOption"
                         v-model="form.detail"
                     >
                         <div id="toolbar" slot="toolbar"></div>
-                    </quill-editor>
+                    </quill-editor> -->
+                    <vue-ueditor v-model="form.detail" :ueditorConfig="editorOption"></vue-ueditor>
                 </div>
             </li>
             <li>
@@ -188,7 +189,13 @@
                         id: '8',
                         name: '其他'
                     }
-                ]
+                ],
+                editorOption: {
+                    // initialFrameWidth:900,
+                    initialFrameHeight: 340,
+                    UEDITOR_HOME_URL: '/essp_park/static/UEditor/',     // 线上
+                    // UEDITOR_HOME_URL: '/static/UEditor/'                // 本地
+                },
             }
                 console.log(this.$route.query)
         },

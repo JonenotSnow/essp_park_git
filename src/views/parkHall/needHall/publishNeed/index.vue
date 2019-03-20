@@ -17,7 +17,8 @@
         <el-form-item label="需求详情" required>
 
           <div class="wrap" >
-                      <quill-editor  v-model="form.detail"></quill-editor>
+                      <!-- <quill-editor  v-model="form.detail"></quill-editor> -->
+                      <vue-ueditor v-model="form.detail" :ueditorConfig="editorOption"></vue-ueditor>
           </div>
 
         </el-form-item>
@@ -76,10 +77,12 @@ export default {
         cstName:''
       },
       fileList: [],
-      // editorOption: {
-      //   placeholder: "请输入模板内容",
-      //   theme: "snow"
-      // },
+      editorOption: {
+          // initialFrameWidth:900,
+          initialFrameHeight: 340,
+          UEDITOR_HOME_URL: '/essp_park/static/UEditor/',     // 线上
+          // UEDITOR_HOME_URL: '/static/UEditor/'                // 本地
+      },
       rules: {
         title: [
           { required: true, message: "请输入需求标题", trigger: "blur" },
