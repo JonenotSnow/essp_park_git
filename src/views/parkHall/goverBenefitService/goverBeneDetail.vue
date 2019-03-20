@@ -283,7 +283,7 @@
                 i {
                     margin-right: 5px;
                     font-size: 12px;
-                    color: #999999;
+                    color: #fc1878;
                 }
             }
         }
