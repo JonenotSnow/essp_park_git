@@ -1,5 +1,5 @@
 <template>
-    <div style="margin-bottom: 30px;">
+    <div class="park-gov-detail">
         <essp-bread-crumb class="detailNav" :breadList="breadlist"></essp-bread-crumb>
         <!-- 惠政服务申请模板 -->
         <div class="newscon">
@@ -26,20 +26,6 @@
                     <em v-if="dataDetail.classtType == '9'">财政金融</em>
                     <em v-if="dataDetail.classtType == '10'">司法安全</em>
                 </span>
-
-                <!-- <span class="statusitems">
-                    <label>已申报人数：</label>
-                    <em>{{dataDetail.approvedNum || '0'}}</em>
-                </span> -->
-            </div>
-            <div class="tagscon" v-show="tags && tags.length>0">
-                <div style="text-align: center">
-                    <essp-park-tag
-                        v-for="(item, eptIndex) in tags"
-                        :value="item"
-                        :key="eptIndex"
-                    />
-                </div>
             </div>
             <div class="newsbtncon">
                 <div class="btncon">
@@ -61,13 +47,42 @@
                     </span>
                 </div>
             </div>
-            <div class="newscontain">
+            <div class="main-body">
                 <div class="editor-content" v-html="dataDetail.infoDetail"></div>
             </div>
-            <div class="fileListDown" v-if="fileList.length > 0">
-                <div class="scfj">上传附件:</div>
-                <div v-for="(item,index) in fileList" :key="index">
-                    <a :href="item.url" target="_blank" :download="item.name">{{item.name}}</a>
+            <div class="main-foot">
+                <div class="file-down">
+                    <p class="attachment-p attachment-title" v-if="fileList && fileList.length > 0">附件下载：</p>
+                    <p class="attachment-p attachment-main"
+                       v-for="(item, index) in fileList"
+                       :key="index"
+                    >
+                        <a :href="item.url" :download="item.name">·附件{{index+1}}：{{item.name}}</a>
+                    </p>
+                </div>
+
+                <div class="park-tag">
+                    <p class="tag-p tag-title" v-if="tags && tags.length > 0">惠政标签：</p>
+                    <div class="tag-div tag-main">
+                        <div class="tag-single-line" v-if="oomTag === 'one'">
+                            <essp-park-tag
+                                v-for="(item, index) in tags"
+                                :value="item"
+                                :key="index"
+                            />
+                        </div>
+
+                        <div class="tag-mul-line" v-if="oomTag === 'mul'">
+                            <essp-park-tag
+                                v-for="(item, index) in tags"
+                                :value="item"
+                                :key="index"
+                            />
+                        </div>
+                    </div>
+                    <p class="tag-p tag-foot" @click="showOneOrMulTags()" v-if="showAllBtnTag">
+                        <span>展开全部<i></i></span>
+                    </p>
                 </div>
             </div>
         </div>
@@ -133,15 +148,20 @@
                 followId: "",
                 fileList: [], // 附件数据,
                 LoginUserRol: this.SSH.getItem("LoginUserRol").toString(),
-                loginFlag: this.SSH.getItem("loginFlag")
+                loginFlag: this.SSH.getItem("loginFlag"),
+
+                // 标签展示标记
+                oomTag: 'one',
+                // 展示全部按钮标记位
+                showAllBtnTag: false
             };
         },
-
-        created() {
-            this.now = new Date().valueOf();
+        mounted() {
             this.getGoverBenneDetail();
             this.getTagList();
-
+        },
+        created() {
+            this.now = new Date().valueOf();
         },
         filters: {
             timerFormat(vaule) {
@@ -174,6 +194,19 @@
                     this.followId = response.resultData.followId;
                     this.tags = this.dataDetail.tagsTxt ? this.dataDetail.tagsTxt.split(",") : [];
                     this.fileList = JSON.parse(this.dataDetail.fileUrl);
+
+
+                    // 获取标签整体高度
+                    this.$nextTick(() => {
+                        let esspParkTagWrap = document.getElementsByClassName('essp-park-tag__wrap');
+                        let esspParkTagWrapWidth = null;
+                        for (let i = 0; i < esspParkTagWrap.length; i++) {
+                            esspParkTagWrapWidth += esspParkTagWrap[i].clientWidth;
+                        }
+                        if (esspParkTagWrapWidth > 900) {
+                            return this.showAllBtnTag = true;
+                        }
+                    });
                 });
             },
             // 请求标签接口
@@ -185,9 +218,7 @@
                     // if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
                     let lblInfo = response.resultData.lblInfo;
                     if (response.resultData.lblInfo) {
-
                         for (let i = 0, len = lblInfo.length; i < len; i++) {
-
                             _self.tags.push(lblInfo[i].lblTxt);
                         }
                     }
@@ -240,6 +271,19 @@
                         this.$message.error(response.resultMsg);
                     }
                 );
+            },
+
+            /**
+             * 显示一行还是多行标签的相关事件
+             */
+            // “展开全部”事件
+            showOneOrMulTags() {
+                if (this.oomTag === 'one') {
+                    return this.oomTag = 'mul';
+                }
+                if (this.oomTag === 'mul') {
+                    return this.oomTag = 'one';
+                }
             }
         }
     };
@@ -250,204 +294,196 @@
 
     @com_font_size: 16px;
     @con_bg: #fff;
-    .newsbtncon {
-        text-align: center;
-        .btncon {
-            .apply-btn-status {
-                margin-right: 50px;
-                button {
-                    width: 120px;
-                    height: 35px;
-                    line-height: 35px;
-                    color: #fff;
-                    border-radius: 3px;
-                    border: none;
-                    outline: none;
+
+    .park-gov-detail {
+        margin-bottom: 20px;
+
+        .newsbtncon {
+            text-align: center;
+            .btncon {
+                .apply-btn-status {
+                    margin-right: 50px;
+                    button {
+                        width: 120px;
+                        height: 35px;
+                        line-height: 35px;
+                        color: #fff;
+                        border-radius: 3px;
+                        border: none;
+                        outline: none;
+                    }
+                    .btn-apply {
+                        background-color: #00a0e9;
+                        cursor: pointer;
+                    }
+                    .btn-announce {
+                        background-color: #fbba1e;
+                    }
+                    .btn-end {
+                        background-color: #c9ccd3;
+                    }
                 }
-                .btn-apply {
-                    background-color: #00a0e9;
-                    cursor: pointer;
-                }
-                .btn-announce {
-                    background-color: #fbba1e;
-                }
-                .btn-end {
-                    background-color: #c9ccd3;
-                }
-            }
-            .focus-btn {
-                min-width: 100px;
-                color: #999999;
-                background-color: #fff;
-                cursor: pointer;
-                i {
-                    margin-right: 5px;
-                    font-size: 12px;
+                .focus-btn {
+                    min-width: 100px;
                     color: #999999;
+                    background-color: #fff;
+                    cursor: pointer;
+                    i {
+                        margin-right: 5px;
+                        font-size: 12px;
+                        color: #999999;
+                    }
                 }
             }
         }
-    }
 
-    .fileListDown {
-        padding: 10px 48px;
-        .scfj {
-            padding-bottom: 10px;
-        }
-        a {
-            padding: 0 10px;
-            display: block;
-            height: 30px;
-            line-height: 30px;
-        }
-        a:hover {
-            background: #ccf;
-        }
-    }
+        .newscon {
+            .essp_width_auto();
+            background: @con_bg;
+            padding: 58px 0 38px;
+            h2 {
+                margin-bottom: 20px;
+                line-height: 36px;
+                text-align: center;
+                font-size: 20px;
+                font-weight: normal;
+                font-stretch: normal;
+                letter-spacing: 0px;
+                color: #333;
+            }
 
-    .newscon {
-        .essp_width_auto();
-        background: @con_bg;
-        padding: 58px 0 38px;
-        h2 {
+            em {
+                font-style: normal;
+            }
+
+        }
+
+        .newstatus {
+            padding: 0 15%;
             margin-bottom: 20px;
-            line-height: 36px;
-            text-align: center;
-            font-size: 20px;
-            font-weight: normal;
-            font-stretch: normal;
-            letter-spacing: 0px;
-            color: #333;
-        }
-
-        em {
-            font-style: normal;
-        }
-
-    }
-
-    .newstatus {
-        padding: 0 15%;
-        margin-bottom: 20px;
-        margin-left: 120px;
-        .statusitems {
-            float: left;
-            margin: 0 24px;
-            font-size: 14px;
-            line-height: 25px;
-            color: #999;
-            text-align: center;
-        }
-    }
-
-    .newstags {
-        margin-bottom: 20px;
-        text-align: center;
-        .tagsbox {
-            margin-right: 12px;
-            background-color: #cccccc;
-            color: #fff;
-            font-size: 12px;
-            height: 24px;
-            line-height: 24px;
-        }
-    }
-
-    //新闻详情页内容区填充
-    .newscontain {
-        margin: 55px auto 0 auto;
-        padding: 30px 0;
-        width: 1100px;
-        border-top: 1px solid #ccc;
-        background: @con_bg;
-    }
-
-    .news_td {
-        padding: 5px 50px;
-        margin-bottom: 10px;
-        .news_to,
-        h2 {
-            font-size: 16px;
-            line-height: 30px;
-            margin-bottom: 15px;
-            color: #333;
-        }
-        p {
-            line-height: 30px;
-            font-size: 14px;
-            text-indent: 2em;
-            margin-bottom: 10px;
-            color: #444;
-        }
-    }
-
-    .tit_con {
-        width: 81%;
-        margin: 0 auto 20px;
-        background-color: #fef9f0;
-        border: solid 1px #ff9900;
-        padding: 18px 24px;
-        p {
-            text-align: left;
-            font-size: 16px;
-            line-height: 24px;
-            color: #666666;
-        }
-    }
-
-    //基本信息布局
-    .tdcon {
-        overflow: hidden;
-        // margin-bottom: 25px;
-        width: 500px;
-        margin: 0 auto;
-        margin-bottom: 25px;
-        // margin-left: 150px;
-        //text-align: center;
-
-        .inline_div {
-            line-height: 40px;
-            margin-left: 50px;
-
-            .tagsspanbox {
+            margin-left: 120px;
+            .statusitems {
                 float: left;
-                .it_tag {
-                    float: left;
-                    margin-right: 5px;
-                    margin-top: 10px;
+                margin: 0 24px;
+                font-size: 14px;
+                line-height: 25px;
+                color: #999;
+                text-align: center;
+            }
+        }
+
+        .newstags {
+            margin-bottom: 20px;
+            text-align: center;
+            .tagsbox {
+                margin-right: 12px;
+                background-color: #cccccc;
+                color: #fff;
+                font-size: 12px;
+                height: 24px;
+                line-height: 24px;
+            }
+        }
+
+        //新闻详情页内容区填充
+        .main-body {
+            margin: 55px auto 0 auto;
+            padding: 30px 0;
+            width: 1100px;
+            border-top: 1px solid #ccc;
+            background: @con_bg;
+        }
+        .main-foot {
+            padding: 60px 50px 0;
+
+            .file-down {
+                margin-bottom: 35px;
+                padding-bottom: 30px;
+                border-bottom: 1px solid #ccc;
+                .attachment-p {
+                    font-size: 16px;
+                    font-weight: normal;
+                    font-stretch: normal;
+                    line-height: 30px;
+                    letter-spacing: 0px;
+                    color: #666666;
+                }
+                .attachment-title {
+
+                }
+                .attachment-main {
+                    text-indent: 1rem;
+                    a {
+                        &:hover {
+                            color: #00a0e9;
+                            cursor: pointer;
+                        }
+                    }
                 }
             }
-        }
-    }
 
-    //标签模块样式
-    .tagscon {
-        background: @con_bg;
-        padding-bottom: 40px;
-        .essp_width_auto(1100px);
-        .tags_con {
-            // padding: 30px 5%;
-            overflow: hidden;
-            .taglables {
-                float: left;
-                margin-right: 20px;
-                font-size: 14px;
-                // line-height: 30px;
+            .park-tag {
+                .tag-p {
+                    display: inline-block;
+                    vertical-align: top;
+                    height: 30px;
+                    line-height: 30px;
+                    letter-spacing: 0px;
+                    font-size: 16px;
+                    font-weight: normal;
+                    font-stretch: normal;
+                    color: #666666;
+                }
+                .tag-title {
+
+                }
+                .tag-main {
+                    display: inline-block;
+                    vertical-align: top;
+                    width: 900px;
+                    height: auto;
+                    line-height: 30px;
+                    letter-spacing: 0px;
+                    font-size: 16px;
+                    font-weight: normal;
+                    font-stretch: normal;
+                    color: #666666;
+                    .tag-single-line {
+                        height: 30px;
+                        line-height: 30px;
+                        overflow: hidden;
+                    }
+                    .tag-mul-line {
+                    }
+                }
+                .tag-foot {
+                    width: 100px;
+                    height: 30px;
+                    line-height: 30px;
+                    text-align: center;
+                    span {
+                        display: inline-block;
+                        padding: 0 18px;
+                        font-size: 16px;
+                        font-weight: normal;
+                        font-stretch: normal;
+                        letter-spacing: 0px;
+                        &:hover {
+                            color: #36c0ff;
+                            cursor: pointer;
+                        }
+                    }
+                }
             }
-            .tagitem {
-                margin-right: 20px;
-                color: #fff;
-                border: solid 1px #999999;
-                background-color: #999;
-            }
+
         }
-    }
 
-    .icon-font-size {
-        font-size: 12px;
-    }
+        .icon-font-size {
+            font-size: 12px;
+        }
 
-    .icon-red {
-        color: #ca0c16;
+        .icon-red {
+            color: #ca0c16;
+        }
     }
 </style>

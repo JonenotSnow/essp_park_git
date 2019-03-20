@@ -77,7 +77,7 @@
                                         v-for="(is,j) in it.tbList.slice(0,5)" :key="j">
                                         {{is.lblTxt}}
                                         <i v-if="(curSelectTagUser == is.lblId && curSelectTxt == is.lblTxt  && curCas == it.cstId)"
-                                        @click="deleteTagUser(is)" 
+                                        @click="deleteTagUser(is)"
                                         class="el-icon-close"></i>
                                     </span>
                                     <span class='tagItem' @click="getDefaultTag(it.cstId)"><i class="el-icon-plus" style="color: #00a0e9;"></i>添加分类</span>
@@ -377,7 +377,7 @@ export default {
                                     that.checkDis = j;
                                     return;
                                 }else{
-                                   that.curI = 10000; 
+                                   that.curI = 10000;
                                 }
                             }
                         }
@@ -513,7 +513,8 @@ export default {
                     message: err.resultMsg
                 })
             })
-            this.getMemByTblTxt();
+            this.getTagUsg();
+            this.getMemInfo();
             this.accessT = false;
         },
         toOut(cstId) {
@@ -734,7 +735,7 @@ export default {
                                 }
                                 &:hover{
                                     background-color: #33bcfe;
-                                    color:#fff; 
+                                    color:#fff;
                                 }
                             }
                         }
