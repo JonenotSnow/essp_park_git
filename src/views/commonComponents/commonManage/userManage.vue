@@ -240,12 +240,12 @@ export default {
             });
         },
         handleInputConfirm() {
-            if (this.inputValue.length >5) {
+            if (this.inputValue.length >6) {
                 this.$message({
                     type: 'warning',
                     message: "输入的标签不能超过6个字符,请重新输入",
                 })
-                this.stop = true;
+                // this.stop = true;
                 return;
             }
             let inputValue = this.inputValue;
@@ -386,11 +386,11 @@ export default {
         },
         //保存标签
         saveEntityTags(){
-            if (this.stop) {
-                this.stop = false;
-                this.addFL = false;
-                return;
-            }
+            // if (this.stop) {
+            //     this.stop = false;
+            //     this.addFL = false;
+            //     return;
+            // }
             this.$post(this.$apiUrl.manage.saveEntityTags,{
                 entId : `${window.sessionStorage.getItem("parkId")}_${this.curCasId}`,
                 entTp : '3000001',

@@ -434,16 +434,16 @@ export default {
         color: #555;
         position: relative;
         font-weight: normal;
-        top: -30px;
-        margin-top: 20px;
+        top: -12px;
+        margin-top: 5px;
         text-align: left;
     }
     .accessP {
         text-indent: 20px;
+        text-align: left;
         font-size: 20px;
         color: #333;
         line-height: 30px;
-        text-align: left;
         i {
             font-size: 28px;
             color: #00a0e9;
@@ -459,17 +459,18 @@ export default {
             height: 35px;
             border-radius: 2px;
             line-height: 35px;
-            font-size: 18x;
+            font-size: 18px;
             cursor: pointer;
             color: #fff;
-            margin: 0 30px;
-            letter-spacing: 0;
+            letter-spacing: 4.8px;
             &:nth-of-type(1) {
-                letter-spacing: 0;
+                letter-spacing: 4.8px;
                 background: #e6f4ff;
                 color: #00a0e9;
             }
             &:nth-of-type(2) {
+                margin-left: 55px;
+                margin-right:11px;
                 background: linear-gradient(31deg, #22a2fa 0%, #10b5ff 100%);
                 color: #fff;
             }
