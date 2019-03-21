@@ -150,10 +150,10 @@
                 }
             }
             i{
-                transform: rotate(0deg);
+                transform: rotate(180deg);
                 transition: 0.5s;
                 &.active{
-                    transform: rotate(180deg);
+                    transform: rotate(0deg);
                 }
             }
         }
