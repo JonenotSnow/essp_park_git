@@ -19,12 +19,12 @@
                 </div>
                 <div class='item' v-if="isBdPark">
                     <span>我的分类：</span>
-                    <span v-for="(it,i) in hotTagList.slice(0,6)" :key="i" :class="{'active':curSelectTag == it.tagId}" @click="getMemByTblTxt(it)" >{{it.tagTxt}}&nbsp;({{it.tagCount}})</span>
+                    <span v-for="(it,i) in hotTagList.slice(0,6)" :key="i" :class="{'active':curSelectTag == it.tagId}" @click="getMemByTblTxt(it,i)" >{{it.tagTxt}}&nbsp;({{it.tagCount}})</span>
                 </div>
                 <div class='item_bz' v-else>
                     <span class="title">我的分类：</span>
                     <div class="tagList">
-                        <span v-for="(it,i) in hotTagList.slice(0,curI)" :key="i" :class="{'active':curSelectTag == it.tagId}" @click="getMemByTblTxt(it)" >
+                        <span v-for="(it,i) in hotTagList.slice(0,curI)" :key="i" :class="{'active':it.done}" @click="getMemByTblTxt(it,i)" >
                             {{it.tagTxt}}&nbsp;({{it.tagCount}})
                             <i v-if="curSelectTag == it.tagId" class="el-icon-close" @click="deleteTag(it)"></i>
                         </span>
@@ -194,7 +194,7 @@ export default {
             accessT:false,
             deleteType:0, //删除标签的类型
             curCas:'', //当前操作企业casId
-            curSelectTxt:'' //当前删除企业标签文本
+            curSelectTxt:'', //当前删除企业标签文本
         }
     },
     async created () {
@@ -366,14 +366,13 @@ export default {
                         let curTagIndex = 0;
                         if (returnData && returnData.length>0) {
                             for (let i = 0; i < returnData.length; i++) {
+                                returnData[i].done = false;
                                 arr.push(returnData[i].tagTxt);
                             }
                             for (let j = 0; j < arr.length; j++) {
                                 charLength += arr[j].length;
                                 if (charLength>=24) {
                                     that.curI = j;
-                                    console.log('that.curI')
-                                    console.log(that.curI)
                                     that.checkDis = j;
                                     return;
                                 }else{
@@ -414,8 +413,21 @@ export default {
             this.addFL = false;
         },
         //全局标签查询
-        getMemByTblTxt(v){
-            this.curSelectTag =v.tagId
+        getMemByTblTxt(v,i){
+            this.curSelectTag = v.tagId;
+            //标准版 全局标签点击切换
+            this.hotTagList.forEach((item,index)=>{
+                if(index == i){
+                    item.done = !item.done;
+                    if (!item.done) {
+                        this.curSelectTag = ''
+                        this.getMemInfo();
+                        return;
+                    }
+                }else{
+                    item.done = false;
+                }
+            });
             this.$post(this.$apiUrl.manage.getMemByTblTxt,{
                     parkId : window.sessionStorage.getItem("parkId"),
                     lblTxt : v.tagTxt,
@@ -505,7 +517,7 @@ export default {
             .then((response) => {
                 this.$message({
                     type: 'success',
-                    message: response.resultMsg
+                    message: `标签删除成功`
                 })
             },(err)=>{
                 this.$message({
@@ -1032,11 +1044,13 @@ export default {
         color: #555;
         position: relative;
         font-weight: normal;
-        top: -30px;
-        margin-top: 20px;
+        top: -12px;
+        margin-top: 5px;
+        text-align: left;
     }
     .accessP {
         text-indent: 20px;
+        text-align: left;
         font-size: 20px;
         color: #333;
         line-height: 30px;
@@ -1047,7 +1061,7 @@ export default {
     }
     .btn {
         margin-top: 35px;
-        text-align: center;
+        text-align: right;
         span {
             text-align: center;
             display: inline-block;
@@ -1055,7 +1069,7 @@ export default {
             height: 35px;
             border-radius: 2px;
             line-height: 35px;
-            font-size: 18x;
+            font-size: 18px;
             cursor: pointer;
             color: #fff;
             letter-spacing: 4.8px;
@@ -1066,6 +1080,7 @@ export default {
             }
             &:nth-of-type(2) {
                 margin-left: 55px;
+                margin-right:11px;
                 background: linear-gradient(31deg, #22a2fa 0%, #10b5ff 100%);
                 color: #fff;
             }
