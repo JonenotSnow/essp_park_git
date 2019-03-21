@@ -29,13 +29,13 @@
                                     <span><i :class="icons[3]" style="color: #ccc"></i>{{actData.attentionSum}}</span>
                                     <span><i :class="icons[5]" style="color: #ccc"></i>{{actData.commentSum}}</span>
                                 </p>
-                                <div class="tagcon esspclearfix">
+                                <div class="tagcon1 esspclearfix">
                                     <span v-for="(item,index) in activityLabelList" v-if="index < 3" :key="index">{{item}}</span>
                                 </div>
                                 <div class="infos">
                                     <div class="infos_item">
                                         <i class="icon iconfont icon-riqi1" style="color: #ccc;"></i>
-                                        <b>时间：</b>
+                                        <b style="padding-left: 8px;">时间：</b>
                                         <em>{{actData.activityStarttime}}</em>
                                     </div>
                                     <div class="infos_item btns">
@@ -43,19 +43,21 @@
                                         <b>地点：</b>
                                         <em>{{actData.activityPlace}}</em>
                                     </div>
-                                    <!--<div class="infos_item"><i class="icon iconfont icon-faburen" style="color: #ccc;"></i>-->
-                                    <!--<b>发布机构：</b><em>{{actData.initiatorWay || '暂无发起人'}}</em></div>-->
+                                    <div>
+                                        <i class="icon el-icon-menu"  style="color: #ccc;"></i>
+                                        <b style="padding-left: 7px;">活动类型：</b><em v-for="(item,index) in activeTypeList" :key="index" v-if="item.type == actData.activityType">{{item.name || '暂无发起人'}}</em>
+                                    </div>
                                     <div style="margin-bottom: 18px;">
-                                        <i class="icon iconfont icon-piaozhong" style="color: #ccc;"></i>
-                                        <b style="padding-left: 0;">票种：</b>
-                                        <em></em>
+                                        <i class="icon iconfont icon-piaozhong icon_span_float" style="color: #ccc;"></i>
+                                        <b class="icon_span_float" style="padding-left: 0;">票种：</b>
+                                        <div class="infobtn icon_span_float esspclearfix">
+                                            <div class="btnitem" v-for="(item,index) in tableData" :key="index">
+                                                ￥{{item.ticketPirce || '0.00'}} {{item.ticketType}}
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="infobtn esspclearfix">
-                                    <div class="btnitem" v-for="(item,index) in tableData" :key="index">
-                                        ￥{{item.ticketPirce || '0.00'}} {{item.ticketType}}
-                                    </div>
-                                </div>
+
                             </div>
                         </div>
 
@@ -360,6 +362,45 @@
                     "icon iconfont icon-collect2",
                     "icon iconfont icon-faburen",
                     "icon iconfont icon-pinglun"
+                ],
+                // 活动类型列表
+                activeTypeList: [
+                    {
+                        type: '1',
+                        name: '培训'
+                    },
+                    {
+                        type: '2',
+                        name: '论坛'
+                    },
+                    {
+                        type: '3',
+                        name: '比赛'
+                    },
+                    {
+                        type: '4',
+                        name: '聚会'
+                    },
+                    {
+                        type: '5',
+                        name: '研讨会'
+                    },
+                    {
+                        type: '6',
+                        name: '发布会'
+                    },
+                    {
+                        type: '7',
+                        name: '分享会'
+                    },
+                    {
+                        type: '8',
+                        name: '沙龙'
+                    },
+                    {
+                        type: '9',
+                        name: '其他'
+                    }
                 ],
                 selcetfile: "",
                 listfile: [],
@@ -1135,7 +1176,9 @@
             padding-right: 5px;
         }
     }
-
+    .icon_span_float {
+        float: left;
+    }
     // 左侧部分
     .actleft {
         float: left;
@@ -1229,7 +1272,7 @@
         width: 420px;
         height: 240px;
         float: left;
-        margin-right: 41px;
+        margin-right: 14px;
         .detaillogo {
             display: block;
             width: 100%;
@@ -1273,7 +1316,7 @@
 
     .detailcon {
         float: left;
-        width: 450px;
+        width: 480px;
         h2 {
             font-size: 20px;
             color: #333333;
@@ -1309,7 +1352,7 @@
     }
 
     //标签模块
-    .tagcon {
+    .tagcon1 {
         margin-bottom: 5px;
         min-height: 25px;
         span {
@@ -1320,6 +1363,7 @@
             font-size: 12px;
             font-weight: normal;
             font-stretch: normal;
+            margin-right: 20px;
             letter-spacing: 0px;
             color: #36c0ff;
             background-color: #d9f3ff;
@@ -1343,12 +1387,13 @@
         }
         .icon-piaozhong {
             font-size: 14px;
+            margin-top: 5px;
         }
         .icon-dizhi {
             font-size: 14px;
         }
         b {
-            padding-left: 5px;
+            padding-left: 10px;
         }
         b,
         em {
@@ -1361,6 +1406,7 @@
 
     .infobtn {
         margin-bottom: 20px;
+        width: 360px;
         .btnitem {
             float: left;
             width: 125px;

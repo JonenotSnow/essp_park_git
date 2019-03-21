@@ -44,25 +44,28 @@
                                 <div class="infos">
                                     <div class="infos_item">
                                         <i class="icon iconfont icon-riqi1" style="color: #ccc;"></i>
-                                        <b>时间：</b><em>{{activeDetailData.activityStarttime}}</em></div>
+                                        <b style="padding-left: 9px;">时间：</b><em>{{activeDetailData.activityStarttime}}</em></div>
                                     <div class="btns">
                                         <i class="icon iconfont icon-dizhi" style="color: #ccc;"></i>
                                         <b>地点：</b><em>{{activeDetailData.activityPlace}}</em>
                                     </div>
-                                    <!--<div><i class="iconcoom el-icon-zoom-in"></i>-->
-                                    <!--<b>发起人：</b><em>{{activeDetailData.initiatorName || '暂无发起人'}}</em></div>-->
+                                    <div>
+                                        <i class="icon el-icon-menu"  style="color: #ccc;"></i>
+                                        <b style="padding-left: 8px;">活动类型：</b><em v-for="(item,index) in activeTypeList" :key="index" v-if="item.type == activeDetailData.activityType">{{item.name || '暂无发起人'}}</em>
+                                    </div>
                                     <div style="margin-bottom: 20px;">
-                                        <i class="icon iconfont icon-piaozhong" style="color: #ccc;"></i>
-                                        <b style="padding-left: 7px;">票种：</b>
+                                        <i class="icon iconfont icon-piaozhong icon_span_float" style="color: #ccc;"></i>
+                                        <b class="icon_span_float" style="padding-left: 7px;">票种：</b>
+                                        <div class="icon_span_float infobtn esspclearfix">
+                                            <div class="btnitem"
+                                                 v-for="(item,index) in activeDetailData.ticketForm"
+                                                 v-if=" activeDetailData.ticketForm != null && index<10" :key="index">
+                                                ￥{{item.ticketPirce || "0.00"}} {{item.ticketType}}
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="infobtn esspclearfix">
-                                    <div class="btnitem"
-                                         v-for="(item,index) in activeDetailData.ticketForm"
-                                         v-if=" activeDetailData.ticketForm != null && index<10" :key="index">
-                                        ￥{{item.ticketPirce || "0.00"}} {{item.ticketType}}
-                                    </div>
-                                </div>
+
                                 <div class="status_btn">
                                     <button
                                         class="no_begin_active_btn"
@@ -274,6 +277,45 @@
                 ],
                 userInfo: {},
                 activityLabelList: [],
+                // 活动类型列表
+                activeTypeList: [
+                    {
+                        type: '1',
+                        name: '培训'
+                    },
+                    {
+                        type: '2',
+                        name: '论坛'
+                    },
+                    {
+                        type: '3',
+                        name: '比赛'
+                    },
+                    {
+                        type: '4',
+                        name: '聚会'
+                    },
+                    {
+                        type: '5',
+                        name: '研讨会'
+                    },
+                    {
+                        type: '6',
+                        name: '发布会'
+                    },
+                    {
+                        type: '7',
+                        name: '分享会'
+                    },
+                    {
+                        type: '8',
+                        name: '沙龙'
+                    },
+                    {
+                        type: '9',
+                        name: '其他'
+                    }
+                ],
                 flollowStatus: "0",
                 flollowStatusCn: "关注",
                 dataModel: {},  //活动详情model
@@ -749,7 +791,7 @@
             i{
                 color: #fc1878;
             }
-            
+
         }
         button {
             float: left;
@@ -1362,7 +1404,7 @@
         width: 420px;
         height: 240px;
         float: left;
-        margin-right: 41px;
+        margin-right: 14px;
         .detaillogo {
             display: block;
             width: 100%;
@@ -1373,7 +1415,7 @@
 
     .detailcon {
         float: left;
-        width: 450px;
+        width: 480px;
         h2 {
             font-size: 20px;
             color: #333333;
@@ -1411,7 +1453,6 @@
             -moz-border-radius: 2px;
             border-radius: 2px;
         }
-
     }
 
     .infos {
@@ -1427,6 +1468,8 @@
         }
         .icon-piaozhong {
             font-size: 14px;
+            margin-top: 5px;
+
             b {
                 padding-left: 0;
                 margin-left: -3px;
@@ -1436,7 +1479,7 @@
             font-size: 14px;
         }
         b {
-            padding-left: 15px;
+            padding-left: 11px;
         }
         b, em {
             font-weight: normal;
@@ -1446,9 +1489,12 @@
 
         }
     }
-
+    .icon_span_float {
+        float: left;
+    }
     .infobtn {
         margin-bottom: 20px;
+        width: 360px;
         .btnitem {
             float: left;
             width: 125px;
