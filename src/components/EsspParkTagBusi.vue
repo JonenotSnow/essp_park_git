@@ -11,7 +11,8 @@
             </div>
         </div>
         <p class="tag-p tag-foot" @click="showOneOrMulTags()" v-if="showAllBtnTag">
-            <span>展开全部<i></i></span>
+            <span>展开全部</span>
+            <i class="el-icon-arrow-down" :class="{'active':oomTag === 'one'}"></i>
         </p>
     </div>
 </template>
@@ -138,7 +139,7 @@
             text-align: center;
             span {
                 display: inline-block;
-                padding: 0 18px;
+                // padding: 0 18px;
                 font-size: 16px;
                 font-weight: normal;
                 font-stretch: normal;
@@ -146,6 +147,13 @@
                 &:hover {
                     color: #36c0ff;
                     cursor: pointer;
+                }
+            }
+            i{
+                transform: rotate(0deg);
+                transition: 0.5s;
+                &.active{
+                    transform: rotate(180deg);
                 }
             }
         }
