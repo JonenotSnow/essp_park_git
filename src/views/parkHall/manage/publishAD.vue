@@ -19,7 +19,7 @@
                   <el-date-picker type="date" v-model="params.startDate" placeholder="选择日期" value-format="yyyy-MM-dd"></el-date-picker>
                 </p> -->
                 <div class='lineContent'>
-          <span><i>*</i>内容详情：</span>
+                    <span><i>*</i>内容详情：</span>
                     <div class="editorContent">
                         <!-- <quill-editor  v-model='params.content' :options="editorOption"></quill-editor> -->
                         <vue-ueditor v-model="params.content" :ueditorConfig="editorOption"></vue-ueditor>
@@ -76,9 +76,7 @@
 
 
     export default {
-        components: {
-
-        },
+        components: {},
         data() {
             return {
                 totalCount: 0,
@@ -90,29 +88,38 @@
                     content: '',
                     userName: this.SSH.getItem('userName')
                 },
+                // editorOption: {
+                //     readOnly: true,
+                //     placeholder: '',
+                //     modules: {
+                //         toolbar: [
+                //             ['bold', 'italic', 'underline'],        // toggled buttons
+                //             ['blockquote', 'code-block'],
+                //             [{'header': 1}, {'header': 2}],
+                //             [{'list': 'ordered'}, {'list': 'bullet'}],
+                //             [{'script': 'sub'}, {'script': 'super'}],
+                //             [{'indent': '-1'}, {'indent': '+1'}],
+                //             [{'direction': 'rtl'}],
+                //             [{'size': ['small', false, 'large', 'huge']}],
+                //             [{'header': [1, 2, 3, 4, 5, 6, false]}],
+                //             [{'color': []}, {'background': []}],
+                //             [{'font': []}],
+                //             [{'align': []}]
+                //         ]
+                //     },
+                //     theme: 'snow'
+                // },
+
+                // 新编编辑器配置
                 editorOption: {
-                    readOnly: true,
-                    placeholder: '',
-                    modules: {
-                        toolbar: [
-                            ['bold', 'italic', 'underline'],        // toggled buttons
-                            ['blockquote', 'code-block'],
-                            [{'header': 1}, {'header': 2}],
-                            [{'list': 'ordered'}, {'list': 'bullet'}],
-                            [{'script': 'sub'}, {'script': 'super'}],
-                            [{'indent': '-1'}, {'indent': '+1'}],
-                            [{'direction': 'rtl'}],
-                            [{'size': ['small', false, 'large', 'huge']}],
-                            [{'header': [1, 2, 3, 4, 5, 6, false]}],
-                            [{'color': []}, {'background': []}],
-                            [{'font': []}],
-                            [{'align': []}]
-                        ]
-                    },
-                    theme: 'snow'
+                    // initialFrameWidth:900,
+                    initialFrameHeight: 340,
+                    // UEDITOR_HOME_URL: '/essp_park/static/UEditor/',     // 线上路径
+                    UEDITOR_HOME_URL: '/static/UEditor/',               // 本地测试
                 },
+
                 confirmSend: false,
-                access:false
+                access: false
 
             };
         },
@@ -127,7 +134,7 @@
                 this.pageNum = val;
                 this.getList();
             },
-            check(){
+            check() {
                 if (!this.params.title) {
                     this.$message({
                         type: "error",
@@ -199,21 +206,22 @@
 </script>
 
 <style>
-#publishAD .access .el-dialog__header {
-    display: none;
-}
+    #publishAD .access .el-dialog__header {
+        display: none;
+    }
 
-#publishAD .access .el-dialog__body {
-    overflow: hidden;
-    margin: 30px 20px;
-}
+    #publishAD .access .el-dialog__body {
+        overflow: hidden;
+        margin: 30px 20px;
+    }
 
-#publishAD .access .el-dialog__body p:nth-of-type(1) {
-    line-height: 55px;
-}
-#publishAD .line_area p {
-    word-break: break-all;
-}
+    #publishAD .access .el-dialog__body p:nth-of-type(1) {
+        line-height: 55px;
+    }
+
+    #publishAD .line_area p {
+        word-break: break-all;
+    }
 </style>
 
 <style lang='less' scoped>
@@ -317,10 +325,10 @@
                     .ql-container {
                         min-height: 240px;
                     }
-                    .control{
+                    .control {
                         position: absolute;
-                        right:10px;
-                        bottom:10px;
+                        right: 10px;
+                        bottom: 10px;
                     }
                 }
             }
@@ -384,6 +392,7 @@
             }
         }
     }
+
     .access {
         .titleTips {
             text-indent: 36px;
@@ -405,7 +414,7 @@
             }
         }
         .btn {
-            text-align:right;
+            text-align: right;
             margin-top: 35px;
             span {
                 text-align: center;
