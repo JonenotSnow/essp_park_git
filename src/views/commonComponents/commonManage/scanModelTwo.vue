@@ -327,10 +327,10 @@ export default {
             }
             this.$post(this.$apiUrl.manage.updatePark, params).then(
                 response => {
-                    this.$message({
-                        message: response.resultMsg,
-                        type: 'success'
-                    });
+                    // this.$message({
+                    //     message: response.resultMsg,
+                    //     type: 'success'
+                    // });
                     if (this.isBdPark || type == 0) {
                          _that.confirmSend = true;
                     }else{
