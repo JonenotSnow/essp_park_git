@@ -207,7 +207,7 @@ export default {
             editorOption: {
                 initialFrameWidth:558,
                 initialFrameHeight: 220,
-                UEDITOR_HOME_URL: '/essp_park/static/UEditor/',
+                UEDITOR_HOME_URL: '/static/UEditor/',
             },
             scanTwo: false,
             logoPic: "",
@@ -305,6 +305,8 @@ export default {
         getDataList(type) {
             //type 0 保存  1 上传
             let _that = this;
+            // this.displayList.parkSet = "default1";//测试用作清空模板
+
             let saveParams = {
                 logo: this.logoPic,
                 parkSet: this.displayList.parkSet,
@@ -355,32 +357,21 @@ export default {
             }).then(
                 response => {
                     _this.displayList = response.resultData;
-                    if (response.resultData.parkSet) {
-                        _this.displayList.parkSet = JSON.parse(response.resultData.parkSet);
+                    //初始数据
+                    if (_this.displayList.parkSet && _this.displayList.parkSet !="default1") {
+                        _this.displayList.parkSet = JSON.parse(_this.displayList.parkSet);
+                    }else{
+                        _this.displayList.parkSet = [{img:'',title:'',content:''}];
                     }
-                    console.log(_this.displayList.parkSet)
                     //返回数据存logo图片
                     if (response.resultData.imgUrl) {
                         this.logoPic = response.resultData.imgUrl;
                     }
-                    //保定只有保存没有暂存，标准版有暂存temp2
-                    if (_this.isBdPark) {
-                        if(_this.displayList.parkSet && JSON.stringify(_this.displayList.parkSet) !=="default1"){
-                            // _this.displayList.parkSet = _this.displayList.parkSet;
-                        }else{
-                            _this.displayList.parkSet = [{img:'',title:'',content:''}];
-                        }
-                    }else{
+                    //暂存功能  保定只有保存没有暂存，标准版有暂存temp2
+                    if (!_this.isBdPark) {
                         //之前有暂存模板
                         if (_this.displayList.temp2) {
                             this.access = true;
-                            // return;
-                        }else{ //没有暂存过模板
-                            if(_this.displayList.parkSet &&  JSON.stringify(_this.displayList.parkSet) !=="default1"){
-                                // _this.displayList.parkSet = JSON.parse(_this.displayList.parkSet);
-                            }else{
-                                _this.displayList.parkSet = [{img:'',title:'',content:''}];
-                            }
                         }
                     }
                     this.bLoading = false;
@@ -396,13 +387,7 @@ export default {
         //标准版筛选出模板数据
         getModuleData(type){
             //type 0 保存的模板数据 1 暂存的模板数据
-            if (type == 0) {
-                if(this.displayList.parkSet && JSON.stringify(this.displayList.parkSet) !=="default1"){
-                    // this.displayList.parkSet = JSON.parse(this.displayList.parkSet);
-                }else{
-                    this.displayList.parkSet = [{img:'',title:'',content:''}];
-                }
-            }else{
+            if (type == 1) {
                 this.displayList.parkSet = JSON.parse(this.displayList.temp2);
             }
             this.access = false;
