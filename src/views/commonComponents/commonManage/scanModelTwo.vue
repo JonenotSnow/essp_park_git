@@ -207,7 +207,7 @@ export default {
             editorOption: {
                 initialFrameWidth:558,
                 initialFrameHeight: 220,
-                UEDITOR_HOME_URL: '/static/UEditor/',
+                UEDITOR_HOME_URL: '/essp_park/static/UEditor/',
             },
             scanTwo: false,
             logoPic: "",
