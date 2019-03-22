@@ -16,11 +16,11 @@
                         <li>
                             <div>企业所在地：</div>
                             <el-select filterable v-model="searchForm.bngProvCd" placeholder="省份" @change="delete searchForm.bngCityCd;">
-                                <el-option v-for="item in dataSoure.COM_00001" :key="item.key" :label="item.value" :value="item.key">
+                                <el-option v-for="item in dataSoure.COM_00001" :key="item.key" :label="item.value" :value="item.value">
                                 </el-option>
                             </el-select>
                             <el-select filterable v-model="searchForm.bngCityCd" placeholder="城市">
-                                <el-option v-for="item in dataSoure.COM_00002" :key="item.key" :label="item.value" :value="item.key" v-if="searchForm.bngProvCd && item.key.startsWith(searchForm.bngProvCd.slice(0,2))">
+                                <el-option v-for="item in dataSoure.COM_00002" :key="item.key" :label="item.value" :value="item.key" v-if="searchForm.bngProvCdId && item.key.startsWith(searchForm.bngProvCdId.slice(0,2))">
                                 </el-option>
                             </el-select>
                         </li>
@@ -133,12 +133,13 @@ export default {
                 indLvl3Cd: "",
                 bngCntyCd: "",
                 bngProvCd: "",
+                bngProvCdId:'',
                 bngCityCd: ""
             },
             rzz:JSON.parse(localStorage.getItem('rzz')),
             access:false,
             curcstId:'',//当前邀请企业信用代码
-            parkNm:''// 当前园区名称
+            parkNm:'',// 当前园区名称
         };
     },
     created() {
@@ -159,6 +160,20 @@ export default {
             if(!flag){
                 return '未知';
             }
+        }
+    },
+    watch:{
+        'searchForm.bngProvCd'(){
+            this.searchForm.bngProvCdId = '';
+            let arr = this.dataSoure.COM_00001;
+            for (let index = 0; index < arr.length; index++) {
+                if (this.searchForm.bngProvCd == arr[index].value) {
+                    this.searchForm.bngProvCdId = arr[index].key;
+                    console.log(arr[index])
+                    return;
+                }
+            }
+            console.log(this.searchForm.bngProvCdId)
         }
     },
     methods: {

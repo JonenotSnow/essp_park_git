@@ -396,20 +396,14 @@ export default {
                 lblTxtList : this.forTagList.join(',')
             })
             .then((response) => {
-                // this.$message({
-                //     type: 'sucess',
-                //     message: response.resultMsg
-                // })
+                this.getMemInfo();
+                this.getTagUsg();
             },(err)=>{
                 this.$message({
                     type: 'warning',
                     message: err.resultMsg
                 })
             })
-            setTimeout(()=>{
-                this.getMemInfo();
-                this.getTagUsg();
-            },500)
             this.addFL = false;
         },
         //全局标签查询
@@ -495,16 +489,14 @@ export default {
                     type: 'success',
                     message: '标签删除成功'
                 })
+                this.getMemInfo();
+                this.getTagUsg();
             },(err)=>{
                 this.$message({
                     type: 'warning',
                     message: err.resultMsg
                 })
             })
-            this.getMemInfo();
-            setTimeout(()=>{
-                this.getTagUsg();
-            },500)
             this.accessT = false;
         },
         //我的分类--全局标签删除
