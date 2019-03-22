@@ -173,7 +173,7 @@
                     </div>
                 </div>
                 <div class="main-body" >
-                    <div v-html="this.ruleForm.infoDetail"></div>
+                    <div class="editor-content" v-html="this.ruleForm.infoDetail"></div>
                 </div>
                 <div class="main-foot" v-if="this.fileList && this.fileList.length > 0">
                     <p class="attachment-p attachment-title">附件下载：</p>
