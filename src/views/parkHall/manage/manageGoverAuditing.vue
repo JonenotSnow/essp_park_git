@@ -34,7 +34,7 @@
                 </div>
                  <div class="dtcon ql-container ql-snow bord-none">
                     <span class="lable_span">惠政内容：</span>
-                    <span class="line_area ql-editor" v-html="infoList.infoDetail"></span>
+                    <span class="line_area ql-editor editor-content" v-html="infoList.infoDetail"></span>
                 </div>
                 <div class="dtcon" v-if="infoList.avaliableTime && infoList.avaliableEndTime">
                     <span class="lable_span">惠政有效期：</span>

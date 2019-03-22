@@ -28,7 +28,7 @@
                 </div>
             </div>
             <div class="newscontent ql-container ql-snow bord-none" style="border: none; padding: 0 110px">
-                <div class="ql-editor bord-none" v-html="achievementResult.detail" v-if="achievementResult.detail != null"></div>
+                <div class="ql-editor bord-none editor-content" v-html="achievementResult.detail" v-if="achievementResult.detail != null"></div>
                 <div v-else>
                     暂无详细内容
                 </div>

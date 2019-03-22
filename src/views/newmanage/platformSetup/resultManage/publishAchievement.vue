@@ -76,7 +76,7 @@
             </li>
         </ul>
         <p class="save">
-            <span  @click="uploadAchievement">保存上传</span>
+            <span @click="uploadAchievement">保存上传</span>
         </p>
         <!-- 遮罩层 -->
         <el-dialog
@@ -111,10 +111,11 @@
                         </div>
                     </div>
                     <div class="newscontent  ql-container ql-snow bord-none">
-                        <div class="ql-editor" style="border: none; padding:0;"  v-html="form.detail" v-if="form.detail != null"></div>
-                        <div v-else>
-                            暂无详细内容
-                        </div>
+                        <!--<div class="ql-editor" style="border: none; padding:0;"  v-html="form.detail" v-if="form.detail != null"></div>-->
+                        <!--<div v-else>-->
+                        <!--暂无详细内容-->
+                        <!--</div>-->
+                        <div class="editor-content" v-html="form.detail"></div>
                     </div>
                 </div>
                 <!--成果名称end-->
@@ -132,8 +133,8 @@
         },
         data() {
             return {
-                isShowOverview:false,
-                info:{},
+                isShowOverview: false,
+                info: {},
                 id: this.$route.query.id || '', // 成果id
                 dialogVisible: false,
                 opMark: this.$route.query.opMark || "01",
@@ -143,7 +144,7 @@
                     photo: '',   // 上传图片
                     title: '',  // 简介
                     detail: '', //编辑器内容
-                    inventor:  '',   //发明人
+                    inventor: '',   //发明人
                     unit: ''        // 所属单位
                 },
                 breadlist: [
@@ -193,11 +194,10 @@
                 editorOption: {
                     // initialFrameWidth:900,
                     initialFrameHeight: 340,
-                    UEDITOR_HOME_URL: '/essp_park/static/UEditor/',     // 线上
-                    // UEDITOR_HOME_URL: '/static/UEditor/'                // 本地
+                    // UEDITOR_HOME_URL: '/essp_park/static/UEditor/',     // 线上
+                    UEDITOR_HOME_URL: '/static/UEditor/'                // 本地
                 },
             }
-                console.log(this.$route.query)
         },
         filters: {
             formatField(vaule) {
@@ -215,8 +215,8 @@
                 return fieldMap[vaule] || defaulT;
             }
         },
-        created(){
-            if(this.id) {
+        created() {
+            if (this.id) {
                 this.getAchievementDetail();
             }
         },
@@ -272,35 +272,35 @@
             },
             // 提交数据验证
             ruleData() {
-                if(this.form.name == "") {
+                if (this.form.name == "") {
                     this.$message.error("成果标题不能为空！");
                     return false;
                 }
-                if(this.form.name.length > 40) {
+                if (this.form.name.length > 40) {
                     this.$message.error("成果标题不能大于40个字");
                     return false;
                 }
-                if(this.form.field == "") {
+                if (this.form.field == "") {
                     this.$message.error("所属领域不能为空！");
                     return false;
                 }
-                if(this.form.photo == "") {
+                if (this.form.photo == "") {
                     this.$message.error("图片不能为空！");
                     return false;
                 }
-                if(this.form.title == "") {
+                if (this.form.title == "") {
                     this.$message.error("简介不能为空！");
                     return false;
                 }
-                if(this.form.title.length > 120) {
+                if (this.form.title.length > 120) {
                     this.$message.error("成果简介不能大于120个字");
                     return false;
                 }
-                if(this.form.detail == "") {
+                if (this.form.detail == "") {
                     this.$message.error("详情不能为空！");
                     return false;
                 }
-                if(this.form.inventor == "" && this.form.unit == "") {
+                if (this.form.inventor == "" && this.form.unit == "") {
                     this.$message.error("发明人和所属单位必填一项！");
                     return false;
                 }
@@ -310,7 +310,7 @@
             uploadAchievement() {
                 var isTrue = this.ruleData();// 提交表单规则校验
                 console.log(isTrue);
-                if(isTrue) {
+                if (isTrue) {
                     this.$post(this.$apiUrl.achievement.addActivity, {
                         id: this.id,
                         name: this.form.name, // 成果标题
@@ -319,8 +319,8 @@
                         title: this.form.title,  // 简介
                         detail: this.form.detail, //编辑器内容
                         inventor: this.form.inventor,   //发明人
-                        unit:this.form.unit,        // 所属单位
-                        parkId:sessionStorage.getItem("parkId")//园区ID
+                        unit: this.form.unit,        // 所属单位
+                        parkId: sessionStorage.getItem("parkId")//园区ID
                     }).then(
                         response => {
                             console.log(response);
@@ -333,11 +333,11 @@
                 }
             },
             showExpertInfo() {
-               this.dialogVisible = !this.dialogVisible
+                this.dialogVisible = !this.dialogVisible
             },
-            hideDetail(){
+            hideDetail() {
                 let that = this;
-                if(that.isShowOverview){
+                if (that.isShowOverview) {
                     that.isShowOverview = false;
                 }
             }
@@ -350,15 +350,18 @@
         line-height: 35px !important;
         border: 1px solid #ccc;
     }
+
     .form_input_height .el-input__icon {
         line-height: 35px !important;
     }
+
     /*图片样式*/
-    .avatar-uploader-chengguo{
+    .avatar-uploader-chengguo {
         position: absolute;
         left: 95px;
         top: 0;
     }
+
     .sub1 {
         position: absolute;
         left: 44%;
@@ -366,19 +369,22 @@
         color: #999;
         width: 63%;
     }
+
     #publishAchievement .avatar-uploader-chengguo .el-upload {
         border: 1px dashed #d9d9d9;
         border-radius: 6px;
         cursor: pointer;
         position: relative;
         overflow: hidden;
-         width: 285px;
-         height: 120px;
+        width: 285px;
+        height: 120px;
         line-height: 120px;
     }
+
     #publishAchievement .avatar-uploader-chengguo.el-upload:hover {
         border-color: #409EFF;
     }
+
     #publishAchievement .avatar-uploader-chengguo .avatar-uploader-icon {
         font-size: 28px;
         color: #fff;
@@ -392,13 +398,15 @@
         border-radius: 50%;
 
     }
+
     #publishAchievement .avatar-uploader-chengguo .avatar {
         width: 100%;
         min-height: 100%;
         display: block;
     }
+
     #publishAchievement .newscontent img {
-        max-width: 97%!important;
+        max-width: 97% !important;
     }
 </style>
 <style lang='less' scoped>
@@ -505,6 +513,7 @@
             }
         }
     }
+
     #publishAchievement {
         width: 1200px;
         background: #fff;
@@ -565,7 +574,7 @@
                     border-radius: 3px;
                     border: solid 1px #cccccc;
                 }
-                .sub{
+                .sub {
                     font-size: 14px;
                     font-weight: normal;
                     font-stretch: normal;
@@ -656,38 +665,38 @@
                 text-align: center;
             }
         }
-        .viewexpertinfo{
+        .viewexpertinfo {
             z-index: 1000;
-            width:750px;
-            background:#fff;
+            width: 750px;
+            background: #fff;
             font-size: 16px;
             position: fixed;
             left: 50%;
             top: 100px;
             margin-left: -25%;
-            border-radius:3px;
+            border-radius: 3px;
             font-size: 14px;
-            .btn_close{
-                float:right;
+            .btn_close {
+                float: right;
                 margin: 10px;
                 cursor: pointer;
             }
-            .infodetail{
-                padding:30px;
+            .infodetail {
+                padding: 30px;
                 float: left;
-                .infocont{
+                .infocont {
                     max-width: 400px;
                     display: inline-block;
                     vertical-align: top;
                 }
             }
-            .pic{
-                float:left;
-                width:100px;
+            .pic {
+                float: left;
+                width: 100px;
                 height: 100px;
-                margin:30px 0 30px 30px;
-                border:1px solid #ccc;
-                border-radius:3px;
+                margin: 30px 0 30px 30px;
+                border: 1px solid #ccc;
+                border-radius: 3px;
             }
         }
         .img-layer {

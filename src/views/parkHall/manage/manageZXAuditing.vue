@@ -38,7 +38,7 @@
                 </div>
                 <div class="dtcon ql-container ql-snow dtcon bord-none">
                     <span class="lable_span">资讯详情：</span>
-                    <span class="detail ql-editor dis" v-html="infoList.infoDetail"></span>
+                    <span class="detail ql-editor dis editor-content" v-html="infoList.infoDetail"></span>
                 </div>
             </div>
         </div>
