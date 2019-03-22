@@ -42,7 +42,7 @@
           </p>
           <p>
             <span style="float: left">活动详情：</span>
-            <span style="border: none; padding:0;" class="ql-editor" v-html="infoList.activityDetails"></span>
+            <span style="border: none; padding:0;" class="ql-editor editor-content" v-html="infoList.activityDetails"></span>
           </p>
           <p class="esspclearfix">
             <span style="float: left">活动宣传图/海报：</span>
@@ -313,7 +313,7 @@ export default {
             );
             this.access = false;
             this.noAccess = false;
-            
+
         }
     },
     filters: {

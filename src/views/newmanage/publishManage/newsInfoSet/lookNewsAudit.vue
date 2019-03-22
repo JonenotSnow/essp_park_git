@@ -19,7 +19,7 @@
                 </el-form-item>
                 <el-form-item label="新闻动态详情：" prop="infoDetail">
                     <div class="my-style ql-container ql-snow" style="border: none">
-                        <div class="ql-editor" v-html="satpDate.infoDetail"></div>
+                        <div class="ql-editor editor-content" v-html="satpDate.infoDetail"></div>
                     </div>
                 </el-form-item>
                 <el-form-item label="新闻动态标签：" prop="tags">
@@ -79,7 +79,7 @@
                 </el-form-item>
                 <el-form-item label="通知公告详情：" prop="infoDetail">
                     <div class="my-style ql-container ql-snow" style="border: none">
-                        <div class="ql-editor" v-html="satpDate.infoDetail"></div>
+                        <div class="ql-editor editor-content" v-html="satpDate.infoDetail"></div>
                     </div>
                 </el-form-item>
                 <el-form-item label="通知公告标签：" prop="tags">
@@ -213,7 +213,7 @@
                     },
                     {
                         path: "/parkHall/manage/sciAndTechPolicyAudit" ,
-                        name: "审核管理" 
+                        name: "审核管理"
                     },
                     {
                         path: "/parkHall/manage/sciAndTechPolicyAudit",

@@ -55,7 +55,7 @@
             <div class="jbnc" v-if="prompt == 1">PS: 该内容因被举报正在取证中，请您谨慎对待。</div>
             </div>
             <div class="infoDetail ql-container ql-snow bord-none" style="border: none">
-                <div class="realinfo ql-editor bord-none" v-html="infoDetail"></div>
+                <div class="realinfo ql-editor bord-none editor-content" v-html="infoDetail"></div>
             </div>
 
             <div class="pinglun">

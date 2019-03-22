@@ -47,7 +47,7 @@
                     </p>
                     <p class="ts ql-container ql-snow bord-none">
                         <span class="tspan">活动详情：</span>
-                        <span style="border: none; padding:0;" class="ql-editor" v-html="infoList.activityDetails"></span>
+                        <span style="border: none; padding:0;" class="ql-editor editor-content" v-html="infoList.activityDetails"></span>
                     </p>
                     <p class="ts">
                         <span class="tspan">活动宣传图/海报：</span>
@@ -358,7 +358,7 @@
                     })
                 this.access = false;
                 this.noAccess = false;
-                
+
             },
             //取消审核
             cancelAudit() {

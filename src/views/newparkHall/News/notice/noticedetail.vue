@@ -31,7 +31,7 @@
             </div>
             <div class="main-body">
                 <div class="ql-container ql-snow bord-none" style="border: none; padding: 0 110px">
-                    <div class="ql-editor bord-none" v-html="satpDate.infoDetail"></div>
+                    <div class="ql-editor bord-none editor-content" v-html="satpDate.infoDetail"></div>
                 </div>
             </div>
             <div class="main-foot" v-if="fileList && fileList.length > 0">
@@ -144,7 +144,7 @@
             background-color: #fff;
 
             .main-head {
-                .head-title {    
+                .head-title {
                     width: 880px;
                     margin: 0 auto;
                     line-height: 35px;

@@ -41,7 +41,7 @@
                 </div>
                 <div class="dtcon ql-container ql-snow dtcon bord-none">
                     <span class="lable_span">资讯详情：</span>
-                    <span class="detail ql-editor " v-html="infoList.infoDetail"></span>
+                    <span class="detail ql-editor editor-content" v-html="infoList.infoDetail"></span>
                 </div>
                 <div class="dtcon">
                     <span class="lable_span">审核状态：</span>
@@ -216,8 +216,8 @@
             margin-bottom: 15px;
             overflow: hidden;
         }
-        .bord-none{
-            border:none;
+        .bord-none {
+            border: none;
         }
         .lable_span {
             float: left;
@@ -258,12 +258,12 @@
             font-size: 16px;
             overflow: auto;
         }
-        .detail{
+        .detail {
             float: left;
             width: 600px;
             padding: 10px;
             overflow: auto;
-            border:none;
+            border: none;
         }
 
     }
