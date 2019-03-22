@@ -13,16 +13,11 @@
             <i>*</i>发布人：</span>
                     <input class="fx" type="text" v-model="params.userName" disabled>
                 </p>
-                <!-- <p class='line'>
-                  <span>
-                    <i>*</i>发布时间：</span>
-                  <el-date-picker type="date" v-model="params.startDate" placeholder="选择日期" value-format="yyyy-MM-dd"></el-date-picker>
-                </p> -->
                 <div class='lineContent'>
                     <span><i>*</i>内容详情：</span>
                     <div class="editorContent">
-                        <!-- <quill-editor  v-model='params.content' :options="editorOption"></quill-editor> -->
-                        <vue-ueditor v-model="params.content" :ueditorConfig="editorOption"></vue-ueditor>
+                        <textarea v-model="params.content" maxlength="100" rows="10" cols="90"
+                                  style="padding: 10px; border-color: #ccc; border-radius: 4px; resize: none; outline: none"></textarea>
                         <span v-if="!params.content" class='control'>100字</span>
                     </div>
                 </div>
@@ -318,18 +313,12 @@
             .lineContent {
                 margin-top: 10px;
                 .editorContent {
-                    width: 700px;
-                    border-radius: 4px;
                     position: relative;
-                    float: left;
-                    .ql-container {
-                        min-height: 240px;
-                    }
-                    .control {
-                        position: absolute;
-                        right: 10px;
-                        bottom: 10px;
-                    }
+                }
+                .control {
+                    position: absolute;
+                    right: 120px;
+                    bottom: 10px;
                 }
             }
         }
