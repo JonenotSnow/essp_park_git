@@ -489,15 +489,14 @@ export default {
                     type: 'success',
                     message: '标签删除成功'
                 })
-                this.getMemInfo();
                 this.getTagUsg();
+                this.getMemInfo();
             },(err)=>{
                 this.$message({
                     type: 'warning',
                     message: err.resultMsg
                 })
             })
-            this.accessT = false;
         },
         //我的分类--全局标签删除
         confirmDeleteTag(){
@@ -511,14 +510,14 @@ export default {
                     type: 'success',
                     message: `标签删除成功`
                 })
+                this.getTagUsg();
+                this.getMemInfo();
             },(err)=>{
                 this.$message({
                     type: 'warning',
                     message: err.resultMsg
                 })
             })
-            this.getTagUsg();
-            this.getMemInfo();
             this.accessT = false;
         },
         toOut(cstId) {
