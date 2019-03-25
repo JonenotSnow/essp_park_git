@@ -77,10 +77,11 @@
     .park_contact {
         background: #3d8afd url("../../../assets/newparkimg/home/contact_bg.png") center;
         min-height: 160px;
+        padding: 10px 0;
         .contact_center {
             width: 1200px;
             margin: 0 auto;
-            padding-top:76px;
+            padding-top:66px;
             .contact_item {
                 float: left;
                 font-size: 16px;
