@@ -49,7 +49,7 @@
                                     <span class='tagItem' v-if="it.tbList.length>0" v-for="(is,j) in it.tbList.slice(0,5)" :key="j">{{is.lblTxt}}</span>
                                     <span class='tagItem' @click="getDefaultTag(it.cstId)"><i class="el-icon-plus" style="color:#00a0e9;"></i>添加分类</span>
                                 </p>
-                                <p v-if="it.cstOrgPlace"><i class="icon iconfont icon-dizhi" :style="isBdPark?addressClass2:addressClass1"></i>{{it.cstOrgPlace}}</p>
+                                <p v-if="it.cstOrgPlace"><i class="icon iconfont icon-dizhi" style="color: orange;"></i>{{it.cstOrgPlace}}</p>
                             </div>
                             <div>
                                 <p>
@@ -82,7 +82,7 @@
                                     </span>
                                     <span class='tagItem' @click="getDefaultTag(it.cstId)"><i class="el-icon-plus" style="color: #00a0e9;"></i>添加分类</span>
                                 </p>
-                                <p v-if="it.cstOrgPlace"><i class="icon iconfont icon-dizhi" style="color: orange;"></i>{{it.cstOrgPlace}}</p>
+                                <p v-if="it.cstOrgPlace"><i class="icon iconfont icon-dizhi" style="color: #ccc;"></i>{{it.cstOrgPlace}}</p>
                             </div>
                             <div>
                                 <p>
@@ -195,12 +195,6 @@ export default {
             deleteType:0, //删除标签的类型
             curCas:'', //当前操作企业casId
             curSelectTxt:'', //当前删除企业标签文本
-            addressClass1:{
-                color:'#ccc'
-            },
-            addressClass2:{
-                color:'orange'
-            }
         }
     },
     async created () {
