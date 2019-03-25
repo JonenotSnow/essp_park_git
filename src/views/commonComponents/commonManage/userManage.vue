@@ -82,7 +82,7 @@
                                     </span>
                                     <span class='tagItem' @click="getDefaultTag(it.cstId)"><i class="el-icon-plus" style="color: #00a0e9;"></i>添加分类</span>
                                 </p>
-                                <p v-if="it.cstOrgPlace"><i class="icon iconfont icon-dizhi" style="color: orange;"></i>{{it.cstOrgPlace}}</p>
+                                <p v-if="it.cstOrgPlace"><i class="icon iconfont icon-dizhi" style="color: #ccc;"></i>{{it.cstOrgPlace}}</p>
                             </div>
                             <div>
                                 <p>
