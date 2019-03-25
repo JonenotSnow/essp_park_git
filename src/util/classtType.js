@@ -24,7 +24,16 @@ export const classtType = {
         {id:"8",name:"其他"}
     ],
     goverType : [
-        {id:"",name:"全部"}
-        // {id:"1",name:"其他"}
+        {id:"",name:"全部"},
+        {id: '1', name: "科教文卫"},
+        {id: '2', name: "监管监督"},
+        {id: '3', name: "产业支持"},
+        {id: '4', name: "民政事务"},
+        {id: '5', name: "政务政策"},
+        {id: '6', name: "基建生产"},
+        {id: '7', name: "民族宗教"},
+        {id: '8', name: "对外事务"},
+        {id: '9', name: "财政金融"},
+        {id: '10', name: "司法安全"}
     ]
 }
