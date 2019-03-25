@@ -1,7 +1,7 @@
 <script src="../../../../config/index.js"></script>
 <template>
     <div>
-        <fix-part :userDetail="userDetail"></fix-part>
+        <fix-part :userDetail="userDetail" v-if="isBdPark"></fix-part>
 
         <component :is="item" v-for="item in modulesList" :key="item.id" :parkInfo="parkInfo" :bannerDisList="bannerDisList"></component>
         <!-- <banner :bannerDisList="bannerDisList"></banner>

@@ -76,7 +76,7 @@
     }
     .park_contact {
         background: #3d8afd url("../../../assets/newparkimg/home/contact_bg.png") center;
-        min-height: 160px;
+        min-height: 140px;
         padding: 10px 0;
         .contact_center {
             width: 1200px;
