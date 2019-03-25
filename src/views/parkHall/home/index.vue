@@ -3,7 +3,7 @@
     <div>
         <fix-part :userDetail="userDetail"></fix-part>
 
-        <component :is="item" v-for="item in modulesList" :key="item.id" :bannerDisList="bannerDisList"></component>
+        <component :is="item" v-for="item in modulesList" :key="item.id" :parkInfo="parkInfo" :bannerDisList="bannerDisList"></component>
         <!-- <banner :bannerDisList="bannerDisList"></banner>
 
         <order-menu></order-menu>
@@ -35,12 +35,13 @@
     import resultsdisplay from '@/views/newparkHall/home/resultsdisplay';//成果展示
     import joinenterprise from '@/views/newparkHall/home/joinenterprise';//加入团队
     import banner from "@/views/newparkHall/home/banner.vue";
-
     import orderMenu from "@/views/newparkHall/home/menu.vue"; //菜单
     import serviceHall from '@/views/newparkHall/home/serviceHall.vue'; //大厅服务
     import parkActive from '@/views/newparkHall/home/parkActive.vue'; //园区活动（旧园区，淮安）
     import newparkActive from '@/views/newparkHall/home/newparkActive.vue'; //园区活动（新园区，保定）
     import parkPolicy from '@/views/newparkHall/home/parkPolicy.vue'; //园区惠政(旧园区，淮安)
+    import parkContactWay from '@/views/newparkHall/home/parkContactWay.vue'; //园区联系方式
+
 
     export default {
         name: "",
@@ -59,7 +60,8 @@
             serviceHall,//   fd
             parkActive,
             newparkActive,
-            parkPolicy
+            parkPolicy,
+            parkContactWay
         },
         data() {
             return {
@@ -77,6 +79,7 @@
                 animate: false,
                 bannerDisList: [],
                 moreNewDates: [],
+                parkInfo: {},  // 园区信息
                 // // keyWord: ["PPP", "园区招商", "技术孵化", "并购重组"],
                 timer: null,
                 userrole: "",
@@ -150,11 +153,16 @@
                         label: "最新资讯",
                         key: 13,
                         name: 'MoreNews'
+                    },
+                    {
+                        label: "园区联系方式",
+                        key: 14,
+                        name: 'parkContactWay'
                     }
 
                 ],
                 defaultModules: [
-                    1, 2, 6, 12, 13, 10
+                    1, 2, 6, 12, 13, 10,14
                 ],
                 bdModules: [
                     1, 2, 3, 4, 5, 11, 7, 8, 9, 10
@@ -165,7 +173,7 @@
         mounted() {
         },
         beforeCreate(){
-            
+
         },
         created() {
             //如果是接受邀请过来的，默认企业操作员，重新获取权限
@@ -176,9 +184,11 @@
                     parkId: this.$route.query.id
                 }).then(response => {
                     this.curBdParkId = response.resultData.bdParkId;
-                    this.getPower();
-                }); 
-                
+                    this.parkInfo = response.resultData;
+                    console.log( "请求数据",this.parkInfo);
+                    this.getPower()
+                });
+
             }
             this.getAllData();
             if (this.isBdPark) {
@@ -245,6 +255,8 @@
                             console.log( this.bannerDisList);
                         }
                         if (res.resultData) {
+                            this.parkInfo = res.resultData;
+                            console.log( "请求数据",this.parkInfo);
                             this.userDetail.email = res.resultData.email
                             this.userDetail.parkPosition = res.resultData.parkPosition
                             this.userDetail.parkAdminTel = res.resultData.parkAdminTel
