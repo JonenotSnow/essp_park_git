@@ -194,6 +194,7 @@
     .newsitem {
         padding:20px 20px 0;
         height: 120px;
+        cursor: pointer;
         .newsimg{
             float: left;
             width:210px;
