@@ -197,12 +197,14 @@ export default {
   computed: {
     // 撮合分类数据源
     serviecTpCdData: function() {
+      console.log(this.matchType)
       return this.matchType;
     },
     // 需求类型数据源
     rqmTpCdData: function() {
       let data = [];
       let { serviecTpCd, rqmTpCd } = this.searchForm;
+      console.log(this.searchForm)
       if (!!serviecTpCd) {
         data = this.matchType.filter(o => o.codeKey === serviecTpCd)[0]
           .children;
@@ -216,14 +218,13 @@ export default {
       let { serviecTpCd, rqmTpCd, rqmRole } = this.searchForm;
       if (!!serviecTpCd && serviecTpCd !== "03") {
         // 非项目撮合
-        data = this.serviecTpCdData.filter(o => o.codeKey === serviecTpCd)[0]
-          .roleList;
+        data = this.serviecTpCdData.filter(o => o.codeKey === serviecTpCd)[0].roleList || [];
       } else {
         // 项目撮合
         if ((rqmTpCd || "").length > 0) {
           data = this.rqmTpCdData.filter(
             o => o.codeKey === rqmTpCd[rqmTpCd.length - 1]
-          )[0].roleList;
+          )[0].roleList || [];
         }
       }
       this.resetRqmRoleTp();

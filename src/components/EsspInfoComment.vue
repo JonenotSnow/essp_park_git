@@ -624,7 +624,7 @@
             }
             .main_about {
                 float: left;
-                width: 90%;
+                width: calc(100% - 70px);
                 .username {
                     margin-bottom: 9px;
                     font-size: 14px;
