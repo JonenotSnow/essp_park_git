@@ -1449,8 +1449,12 @@
                     this.$message.error("活动主题不能为空！");
                     return;
                 }
-                if (this.activityTheme.length > 40) {
+               if (this.activityTheme.length > 40) {
                     this.$message.error("活动主题长度不能大于40个字！");
+                    return;
+                }
+                if (this.activityPlace == "") {
+                    this.$message.error("活动地点不能为空！");
                     return;
                 }
                 if (this.activityType == "" || this.activityType == null) {
@@ -1483,16 +1487,12 @@
                     this.$message.error("发布单位必填！");
                     return;
                 }
-                if (this.enterEndtime == "") {
-                    this.$message.error("报名开始时间必填！");
-                    return;
-                }
                 if (this.enterStarttime == "") {
                     this.$message.error("报名开始时间必填！");
                     return;
                 }
                 if (this.enterEndtime == "") {
-                    this.$message.error("报名结束时间必填！");
+                    this.$message.error("报名截止时间必填！");
                     return;
                 }
                 return true;
