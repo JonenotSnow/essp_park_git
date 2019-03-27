@@ -322,7 +322,6 @@ export default {
     },
     // 重置搜索条件
     resetSeachOption() {
-      8;
       //onsole.log(this.bsnDt)
       this.bsnDt = [];
       (this.watchObject = {
