@@ -364,6 +364,7 @@
                 height: 100%;
                 transition: all 1s;
                 h5 {
+                    margin: 0;
                     cursor: pointer;
                     //margin-top: 10px;
                     margin-bottom: 34px;
