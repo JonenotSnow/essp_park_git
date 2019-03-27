@@ -188,7 +188,7 @@
             </div>
         </div>
 
-        <p class="btn">
+        <p class="btn" v-if="vIshow != '02'">
             <span @click="openOne">通过</span>
             <span @click="noAccess = true">不通过</span>
             <span @click="auditOption('01')">取消</span>
@@ -247,6 +247,7 @@
                 auditType: "", //审核类型（企业审核、园区审核）
                 infoList: {},
                 inputName: "",
+                vIshow: this.$route.query.isShow,
                 inputTel: "",
                 maxNum: 1, // 报名上限
                 fileList: [

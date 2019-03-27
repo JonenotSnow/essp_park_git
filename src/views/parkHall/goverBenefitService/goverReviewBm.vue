@@ -67,8 +67,11 @@
                 </el-table-column>
                 <el-table-column prop="" label="操作">
                     <template slot-scope="scope">
-                        <el-button type="text" class="status_button" @click="tolink(scope.row)"
-                                   :class="scope.row.status=='01'||scope.row.status=='10'?'':'sel'">审核
+                        <el-button type="text" class="status_button" @click="tolink(scope.row)" v-if="scope.row.status=='01'||scope.row.status == '10'"
+                                   >审核
+                        </el-button>
+                        <el-button type="text" class="status_button" @click="tolink(scope.row)" v-else
+                        >查看
                         </el-button>
                     </template>
                 </el-table-column>
@@ -148,14 +151,15 @@
         methods: {
             tolink(row) {
                 //var draftId = scope.row.draftId
-                if (row.status == "01" || row.status == "10") {
-                    this.$router.push({
-                        path: "/parkIndex/goverBmAuditDetail",
-                        query: {
-                            id: row.id
-                        }
-                    });
-                }
+
+                var isTrue = row.status == "01" || row.status == "10";
+                this.$router.push({
+                    path: "/parkIndex/goverBmAuditDetail",
+                    query: {
+                        id: row.id,
+                        isShow: isTrue ? "01" : '02'
+                    }
+                });
             },
             handleSizeChange(val) {
                 this.pageSize = val;
@@ -268,7 +272,7 @@
         padding: 13px 0;
         background: #f5f5f5;
         color: #333;
-        
+
         font-size: 16px;
         font-weight: normal;
     }
