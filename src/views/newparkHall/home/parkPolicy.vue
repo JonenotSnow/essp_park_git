@@ -167,7 +167,7 @@
                 if(value == 2) {
                     obj = {
                         color: "#00a0e9",
-                        msg: "开放申请"
+                        msg: "开放申报"
                     }
                 }
                 if(value == 3) {

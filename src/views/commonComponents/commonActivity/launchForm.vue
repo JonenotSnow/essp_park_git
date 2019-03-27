@@ -1488,6 +1488,9 @@
             },
             //暂存
             goToBox() {
+                if(!this.checkInfo()){
+                    return
+                }
                 var type = 0;
                 var msg =
                     "<p><i class='icon iconfont icon-queren' style='font-size: 45px;color: #00a0e9;'></i></p><p style='padding: 25px 0 30px;'>您发布的活动已保存至草稿箱</p>";
