@@ -17,7 +17,7 @@ export default {
     data() {
         return {
             newList:[],
-            
+
         }
     },
     methods:{
@@ -28,7 +28,8 @@ export default {
             this.$post('information/getAllInformation',{
                 pageNum: 1,
                 pageSize: 6,
-                classtType:this.classtType
+                classtType:this.classtType,
+                parkId: sessionStorage.getItem("parkId"),
             }).then((result) => {
                 this.newList = result.resultData.informationList
             }).catch((err) => {
@@ -48,7 +49,7 @@ export default {
 </script>
 <style lang="less" scoped>
 ul{
-    padding-left:35px; 
+    padding-left:35px;
     li{
         cursor: pointer;
         &:hover{
@@ -66,7 +67,7 @@ ul{
             -webkit-line-clamp: 1;
             white-space: nowrap;
             // &:hover{
-                
+
             // }
         }
         .content{
