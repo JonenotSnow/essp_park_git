@@ -360,7 +360,7 @@
                                 size="medium"
                                 v-for="(item,index) in commonItems"
                                 :key="index"
-                                @click.native="addTableItems(item)"
+                                @click.native="addTableItems(item,'must')"
                                 class="tagitem"
                             >
                                 <i class="eleicon el-icon-circle-plus-outline"></i>
@@ -375,7 +375,7 @@
                                 :type="item.type"
                                 :key="index"
                                 class="tagitem"
-                                @click.native="addTableItems(item)"
+                                @click.native="addTableItems(item,'no_must')"
                             >
                                 <i class="eleicon el-icon-circle-plus-outline"></i>
                                 {{item.btn_name}}
@@ -690,37 +690,12 @@
                 p1: "",
                 p2: "",
                 toLimit: 0,
-//                editorOption: {
-//
-//                    // readOnly: "true",
-//                    // placeholder: `请输入内容`
-//                },
                 editorOptions: {
-                    // initialFrameWidth:900,
                     initialFrameHeight: 290,
-                    UEDITOR_HOME_URL: '/essp_park/static/UEditor/',
+                    UEDITOR_HOME_URL: '/static/UEditor/',
                 },
                 editorOption: {
-                    // readOnly: true,
-                    // placeholder: '',
                     editorCon: "",
-                    // modules: {
-                    //     toolbar: [
-                    //         ['bold', 'italic', 'underline'],        // toggled buttons
-                    //         ['blockquote', 'code-block'],
-                    //         [{'header': 1}, {'header': 2}],
-                    //         [{'list': 'ordered'}, {'list': 'bullet'}],
-                    //         [{'script': 'sub'}, {'script': 'super'}],
-                    //         [{'indent': '-1'}, {'indent': '+1'}],
-                    //         [{'direction': 'rtl'}],
-                    //         [{'size': ['small', false, 'large', 'huge']}],
-                    //         [{'header': [1, 2, 3, 4, 5, 6, false]}],
-                    //         [{'color': []}, {'background': []}],
-                    //         [{'font': []}],
-                    //         [{'align': []}]
-                    //     ]
-                    // },
-                    // theme: 'snow'
                 },
                 thisDate: new Date(),
                 breadlist: [
@@ -822,42 +797,48 @@
                         name: "职业",
                         btn_name: "职业",
                         requir: false,
-                        tittext: ""
+                        tittext: "",
+                        option_type: 'must'
                     },
                     {
                         type: "text",
                         name: "年龄",
                         btn_name: "年龄",
                         requir: false,
-                        tittext: ""
+                        tittext: "",
+                        option_type: 'must'
                     },
                     {
                         type: "text",
                         name: "部门",
                         btn_name: "部门",
                         requir: false,
-                        tittext: ""
+                        tittext: "",
+                        option_type: 'must'
                     },
                     {
                         type: "text",
                         name: "邮箱",
                         btn_name: "邮箱",
                         requir: false,
-                        tittext: ""
+                        tittext: "",
+                        option_type: 'must'
                     },
                     {
                         type: "text",
                         name: "附件",
                         btn_name: "附件",
                         requir: false,
-                        tittext: ""
+                        tittext: "",
+                        option_type: 'must'
                     },
                     {
                         type: "text",
                         name: "毕业学校",
                         btn_name: "毕业学校",
                         requir: false,
-                        tittext: ""
+                        tittext: "",
+                        option_type: 'must'
                     }
                 ],
                 // 标签
@@ -867,7 +848,8 @@
                         name: "",
                         btn_name: "单行文本",
                         requir: false,
-                        tittext: ""
+                        tittext: "",
+                        option_type: 'no_must'
                     },
                     {
                         type: "textarea",
@@ -875,7 +857,8 @@
                         btn_name: "多行文本框",
                         requir: false,
                         tittext: "",
-                        childrens: []
+                        childrens: [],
+                        option_type: 'no_must'
                     },
                     {
                         type: "radio",
@@ -883,28 +866,32 @@
                         btn_name: "单选下拉框",
                         requir: false,
                         tittext: "",
-                        childrens: []
+                        childrens: [],
+                        option_type: 'no_must'
                     },
                     {
                         type: "checkbox",
                         name: "",
                         btn_name: "多选下拉框",
                         requir: false,
-                        tittext: ""
+                        tittext: "",
+                        option_type: 'no_must'
                     },
                     {
                         type: "dataTime",
                         name: "",
                         btn_name: "日期选择框",
                         requir: false,
-                        tittext: ""
+                        tittext: "",
+                        option_type: 'no_must'
                     },
                     {
                         type: "numberBox",
                         name: "",
                         btn_name: "数值输入框",
                         requir: false,
-                        tittext: ""
+                        tittext: "",
+                        option_type: 'no_must'
                     }
                 ],
 
@@ -1188,6 +1175,23 @@
                                 this.initiatorWay = data.initiatorWay || '';
                                 this.enterType = data.enterType || '';
                                 this.enterForm = JSON.parse(data.enterForm);
+                                let that = this;
+                                let enterFoArr = [];  // 默认设置数组 commonItems
+                                for(var i = 0; i < this.enterForm.formTypeList.length; i ++) {
+                                    var formTypeLists = this.enterForm.formTypeList[i];
+
+                                    for(var j = 0; j < this.commonItems.length; j++) {
+                                        var commonItemsss = this.commonItems[j];
+
+                                        if(commonItemsss.name == formTypeLists.name && formTypeLists.option_type == "must") {
+//                                            console.log(formTypeLists);
+                                            this.commonItems.splice(j,1)
+                                        }
+                                    }
+                                }
+                                console.log("两个数组去重===",this.commonItems);
+
+
                                 this.ticketForm = JSON.parse(data.ticketForm);
                                 this.ticketLen = this.ticketForm.length;
                                 this.openScope = data.openScope;
@@ -1280,14 +1284,15 @@
                     1
                 );
             },
-            addTableItems(item) {
+            addTableItems(item,option_type) {
                 if (item.type == "text") {
                     var obj = {
                         type: "text",
                         name: item.name,
                         btn_name: item.btn_name,
                         requir: false,
-                        tittext: ""
+                        tittext: "",
+                        option_type: option_type
                     };
                 }
                 if (item.type == "textarea") {
@@ -1296,7 +1301,8 @@
                         name: item.name,
                         btn_name: item.btn_name,
                         requir: false,
-                        tittext: ""
+                        tittext: "",
+                        option_type: option_type
                     };
                 }
                 if (item.type == "radio") {
@@ -1306,6 +1312,7 @@
                         btn_name: item.btn_name,
                         requir: false,
                         tittext: "",
+                        option_type: option_type,
                         childrens: [
                             {
                                 name: "",
@@ -1327,6 +1334,7 @@
                         btn_name: item.btn_name,
                         requir: false,
                         tittext: "",
+                        option_type: option_type,
                         childrens: [
                             {
                                 name: "",
@@ -1348,7 +1356,8 @@
                         btn_name: item.btn_name,
                         requir: false,
                         tittext: "",
-                        dayDate: new Date()
+                        dayDate: new Date(),
+                        option_type: option_type
                     };
                 }
                 if (item.type == "numberBox") {
@@ -1357,15 +1366,22 @@
                         name: item.name,
                         btn_name: item.btn_name,
                         requir: false,
-                        tittext: ""
+                        tittext: "",
+                        option_type: option_type
                     };
                 }
                 this.enterForm.formTypeList.push(obj);
-                this.commonItems.splice(this.commonItems.indexOf(item), 1);
+                if(option_type == 'must') {
+                    this.commonItems.splice(this.commonItems.indexOf(item), 1);
+                }
+
             },
             delTableItems(index, item) {
                 this.enterForm.formTypeList.splice(index, 1);
-                this.commonItems.push(item);
+                if(item.option_type === "must") {
+                    this.commonItems.push(item);
+                }
+
             },
             lookformTypeList() {
                 this.previewbox = true;
