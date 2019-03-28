@@ -17,23 +17,24 @@
                     <input type="text" placeholder="请输入搜索企业" v-model="seachVal" />
                     <i class="el-icon-search" @click="getMemInfo(0)"></i>
                 </div>
-                <div class='item' v-if="isBdPark">
+                <div class='item' v-if="!isBdPark">
                     <span>我的分类：</span>
                     <span v-for="(it,i) in hotTagList.slice(0,6)" :key="i" :class="{'active':curSelectTag == it.tagId}" @click="getMemByTblTxt(it,i)" >{{it.tagTxt}}&nbsp;({{it.tagCount}})</span>
                 </div>
-                <div class='item_bz' v-else>
-                    <span class="title">我的分类：</span>
+                <!-- <div class='item_bz' v-else>
+                    <span class="title">我的分类{{showAllBtnTag}}：</span>
                     <div class="tagList">
-                        <span v-for="(it,i) in hotTagList.slice(0,curI)" :key="i" :class="{'active':it.done}" @click="getMemByTblTxt(it,i)" >
+                        <span v-for="(it,i) in hotTagList" :key="i" :class="{'active':it.done}" @click="(it,i)" >
                             {{it.tagTxt}}&nbsp;({{it.tagCount}})
                             <i v-if="curSelectTag == it.tagId" class="el-icon-close" @click="deleteTag(it)"></i>
                         </span>
                     </div>
-                    <span class="more" @click="showMoreBtn" v-if="hotTagList.length>0">
+                    <span class="more" @click="showOneOrMulTags" v-if="showAllBtnTag">
                         More
-                        <i class="el-icon-arrow-down" :class="{'tran':curI == 10000}"></i>
+                        <i class="el-icon-arrow-down" :class="{'tran':oomTag === 'one'}"></i>
                     </span>
-                </div>
+                </div> -->
+                <EsspTagManage v-else :tagList= hotTagList @openDelPop='openDelPop' @getMemInfo='getMemInfo' @getChildData='getChildData' :pageSize='pageSize' :pageNum='pageNum'></EsspTagManage>
             </div>
             <div class="userList">
                 <ul v-if="isBdPark">
@@ -155,11 +156,11 @@
 </template>
 
 <script>
-import EsspTag from '../../../components/EsspTag'
+import EsspTagManage from '@/components/EsspTagManage'
 import mixins from '@/components/mixins/mixins_windowOpen.js'
 export default {
     components:{
-        EsspTag
+        EsspTagManage
     },
     mixins:[mixins],
     data(){
@@ -189,12 +190,11 @@ export default {
             delectUserData:[],//当前删除企业标签总列表
             stop:false,
             isBdPark: this.utils.isBdPark(),//是否是保定园区
-            curI:0,
-            checkDis:0,
             accessT:false,
             deleteType:0, //删除标签的类型
             curCas:'', //当前操作企业casId
             curSelectTxt:'', //当前删除企业标签文本
+
         }
     },
     async created () {
@@ -214,6 +214,11 @@ export default {
             if(!flag){
                 return '其他行业';
             }
+        }
+    },
+    computed: {
+        tagLineChange() {
+            return this.oomTag === 'one' ? {'tag-single-line': true} : {'tag-mul-line': true};
         }
     },
     methods: {
@@ -362,28 +367,6 @@ export default {
                 })
                 .then((response) => {
                     this.hotTagList =response.resultData;
-                    if (!this.isBdPark) {
-                        let returnData  = response.resultData;
-                        let arr = [];
-                        let charLength = 0;
-                        let curTagIndex = 0;
-                        if (returnData && returnData.length>0) {
-                            for (let i = 0; i < returnData.length; i++) {
-                                returnData[i].done = false;
-                                arr.push(returnData[i].tagTxt);
-                            }
-                            for (let j = 0; j < arr.length; j++) {
-                                charLength += arr[j].length;
-                                if (charLength>=24) {
-                                    that.curI = j;
-                                    that.checkDis = j;
-                                    return;
-                                }else{
-                                   that.curI = 10000;
-                                }
-                            }
-                        }
-                    }
                 })
         },
         //保存标签
@@ -440,16 +423,6 @@ export default {
                         message: err.resultMsg
                     })
                 })
-        },
-        //标签删除弹窗
-        deleteTag(v){
-            //deleteType 0 删除我的分类中的全局标签 1 删除成员中的标签
-            this.accessT = true;
-            this.deleteType = 0;
-            this.curSelectTag = v.tagId;//当前删除全局标签id
-            this.curSelectTxt = v.tagTxt;//当前删除全局标签文本
-            this.curSelectTagTp = v.tagTp;//当前删除全局标签tagTp
-            this.delectUserData = [];//当前删除企业标签总列表
         },
         deleteTagUser(){
             this.accessT = true;
@@ -531,13 +504,20 @@ export default {
             let params = {label:cur,cstId:cstId}
             this.windowOpenUrl('/centerIndex/showHome',params);
         },
-        showMoreBtn(){
-            //更多切换，10000用来做展开切换，this.checkDis收缩切换
-            if (this.curI == 10000) {
-                this.curI = this.checkDis;
-            }else{
-                this.curI = 10000;
-            }
+        //全局标签搜索--接收标签子组件数据
+        getChildData(val){
+            this.getMemInfoList = val.memberList;
+            this.totalCount = val.totalCount;
+        },
+        //全局删除弹窗--接收标签子组件数据
+        openDelPop(val){
+            //deleteType 0 删除我的分类中的全局标签 1 删除成员中的标签
+            this.accessT = val.accessT;
+            this.deleteType = val.deleteType;
+            this.curSelectTag = val.curSelectTag;//当前删除全局标签id
+            this.curSelectTxt = val.curSelectTxt;//当前删除全局标签文本
+            this.curSelectTagTp = val.curSelectTagTp;//当前删除全局标签tagTp
+            this.delectUserData = val.delectUserData;//当前删除企业标签总列表
         }
     }
 }
