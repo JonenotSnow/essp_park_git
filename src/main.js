@@ -84,10 +84,14 @@ Vue.filter("timerFormat", function(value) {
 });
 
 // Vue.prototype.$uploadCommom = uploadCommom;
+
+Vue.prototype.$urlUEditor = "/static/UEditor/"
 let openUrl = "http://128.196.235.132:1345/essp/#";
 
 if (process.env.NODE_ENV === "production") {
     openUrl = window.location.origin+'/essp/'+"#";
+    Vue.prototype.$urlUEditor = "/essp_park/static/UEditor/"
+
 } else {
     //require('./mock/index.js')
 }

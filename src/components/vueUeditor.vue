@@ -22,7 +22,7 @@ export default {
          return {
             initialFrameWidth:900,
             initialFrameHeight:340,
-            UEDITOR_HOME_URL: '/essp_park/static/UEditor/'
+            UEDITOR_HOME_URL: this.$urlUEditor
         }
       }
     }

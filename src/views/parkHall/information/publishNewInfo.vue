@@ -174,8 +174,8 @@
                 editorOption: {
                     // initialFrameWidth:900,
                     initialFrameHeight: 340,
-                    // UEDITOR_HOME_URL: '/essp_park/static/UEditor/',     // 线上
-                    UEDITOR_HOME_URL: '/static/UEditor/'                // 本地
+                    UEDITOR_HOME_URL: this.$urlUEditor,     // 线上
+                    // UEDITOR_HOME_URL: '/static/UEditor/'                // 本地
                 },
                 initiatorWay: "",
                 typeitems: [], //类型明细

@@ -692,7 +692,7 @@
                 toLimit: 0,
                 editorOptions: {
                     initialFrameHeight: 290,
-                    UEDITOR_HOME_URL: '/essp_park/static/UEditor/',
+                    UEDITOR_HOME_URL: this.$urlUEditor,
                 },
                 editorOption: {
                     editorCon: "",

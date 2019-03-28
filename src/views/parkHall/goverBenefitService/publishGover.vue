@@ -440,7 +440,7 @@
                 editorOption: {
                     // initialFrameWidth:900,
                     initialFrameHeight: 340,
-                    UEDITOR_HOME_URL: '/essp_park/static/UEditor/',     // 线上路径
+                    UEDITOR_HOME_URL: this.$urlUEditor,     // 线上路径
 //                     UEDITOR_HOME_URL: '/static/UEditor/',               // 本地测试
                 },
                 demoTags: [],
@@ -980,6 +980,11 @@
                     this.$message.error("惠政主题长度不能大于40个字");
                     return false;
                 }
+                
+                if (this.formBaseList.classtType == "") {
+                    this.$message.error("请选择惠政类型");
+                    return false;
+                }
                 if (this.imageUrl == "") {
                     this.$message.error("惠政宣传图不能为空");
                     return false;
@@ -993,7 +998,7 @@
                     return;
                 }
                 if (t_isOnlineApply == "1") {
-                    if (this.formTicketList.t_validateDate[0] == "" || this.formTicketList.t_validateDate[1] == "") {
+                    if (this.formTicketList.t_validateDate == '' || this.formTicketList.t_validateDate[0] == "" || this.formTicketList.t_validateDate[1] == "") {
                         this.$message.error("有效时间不能为空");
                         return false;
                     }

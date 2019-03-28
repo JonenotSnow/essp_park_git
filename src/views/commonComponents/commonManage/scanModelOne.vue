@@ -238,7 +238,7 @@ export default {
             editorOption: {
                 initialFrameWidth:778,
                 initialFrameHeight: 270,
-                UEDITOR_HOME_URL: '/essp_park/static/UEditor/',
+                UEDITOR_HOME_URL: this.$urlUEditor,
             },
             accessT:false,
             access:false,
