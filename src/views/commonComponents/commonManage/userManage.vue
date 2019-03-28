@@ -17,23 +17,10 @@
                     <input type="text" placeholder="请输入搜索企业" v-model="seachVal" />
                     <i class="el-icon-search" @click="getMemInfo(0)"></i>
                 </div>
-                <div class='item' v-if="!isBdPark">
+                <div class='item' v-if="isBdPark">
                     <span>我的分类：</span>
                     <span v-for="(it,i) in hotTagList.slice(0,6)" :key="i" :class="{'active':curSelectTag == it.tagId}" @click="getMemByTblTxt(it,i)" >{{it.tagTxt}}&nbsp;({{it.tagCount}})</span>
                 </div>
-                <!-- <div class='item_bz' v-else>
-                    <span class="title">我的分类{{showAllBtnTag}}：</span>
-                    <div class="tagList">
-                        <span v-for="(it,i) in hotTagList" :key="i" :class="{'active':it.done}" @click="(it,i)" >
-                            {{it.tagTxt}}&nbsp;({{it.tagCount}})
-                            <i v-if="curSelectTag == it.tagId" class="el-icon-close" @click="deleteTag(it)"></i>
-                        </span>
-                    </div>
-                    <span class="more" @click="showOneOrMulTags" v-if="showAllBtnTag">
-                        More
-                        <i class="el-icon-arrow-down" :class="{'tran':oomTag === 'one'}"></i>
-                    </span>
-                </div> -->
                 <EsspTagManage v-else :tagList= hotTagList @openDelPop='openDelPop' @getMemInfo='getMemInfo' @getChildData='getChildData' :pageSize='pageSize' :pageNum='pageNum'></EsspTagManage>
             </div>
             <div class="userList">
