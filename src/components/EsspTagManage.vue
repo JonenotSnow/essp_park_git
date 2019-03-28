@@ -8,7 +8,7 @@
             </span>
         </div>
         <span class="more" @click="showOneOrMulTags" v-if="showAllBtnTag">
-            More<i class="el-icon-arrow-down" :class="{'tran':oomTag === 'one'}"></i>
+            More<i class="el-icon-arrow-up" :class="{'tran':oomTag === 'one'}"></i>
         </span>
     </div>
 </template>
@@ -45,7 +45,7 @@
                 oomTag: 'one',
 
                 // 展示全部按钮标记
-                showAllBtnTag: true,
+                showAllBtnTag: false,
                 curSelectTag:''
             }
         },
@@ -118,6 +118,27 @@
                 this.$emit('openDelPop',params);
             },
         },
+        watch:{
+            'tagList.length'(){
+                this.$nextTick(() => {
+                    let tagMain = this.esspGetElByClassName('tagList');
+                    tagMain[0].style.width = parseInt(this.tagMainWidth) + 'px';
+
+                    let esspParkTagWrap = this.esspGetElByClassName('self-tag');
+                    let i = 0;
+                    let esspParkTagWrapLength = esspParkTagWrap.length;
+
+                    // 通过标签组件的总长度来判断是一行显示还是多行显示
+                    let esspParkTagWrapWidth = null;
+                    for (i=0; i < esspParkTagWrapLength; i++) {
+                        esspParkTagWrapWidth += esspParkTagWrap[i].clientWidth + 20;
+                    }
+                    if (esspParkTagWrapWidth > this.tagMainWidth) {
+                        return this.showAllBtnTag = true;
+                    }
+                });
+            }
+        },
         mounted() {
             this.$nextTick(() => {
 
@@ -130,7 +151,7 @@
 
                 // 通过标签组件的总长度来判断是一行显示还是多行显示
                 let esspParkTagWrapWidth = null;
-                for (; i < esspParkTagWrapLength; i++) {
+                for (i=0; i < esspParkTagWrapLength; i++) {
                     esspParkTagWrapWidth += esspParkTagWrap[i].clientWidth + 20;
                 }
                 if (esspParkTagWrapWidth > this.tagMainWidth) {

@@ -44,7 +44,7 @@
                                     <span  @click="toOut(it.cstId)">查看详情</span>
                                 </p>
                                 <p>
-                                    <span v-if="it.commandInd != '1'" @click="openDelPop(it.cstId)">{{isBdPark?'移除中心':'移除园区'}}</span>
+                                    <span v-if="it.commandInd != '1'" @click="openDelParkPop(it.cstId)">{{isBdPark?'移除中心':'移除园区'}}</span>
                                     <span v-if="it.commandInd == '1'" class="ts">{{isBdPark?'移除中心':'移除园区'}}</span>
                                 </p>
                             </div>
@@ -77,7 +77,7 @@
                                     <span  @click="toOut(it.cstId)">查看详情</span>
                                 </p>
                                 <p>
-                                    <span v-if="it.commandInd != '1'" @click="openDelPop(it.cstId)">{{isBdPark?'移除中心':'移除园区'}}</span>
+                                    <span v-if="it.commandInd != '1'" @click="openDelParkPop(it.cstId)">{{isBdPark?'移除中心':'移除园区'}}</span>
                                     <span v-if="it.commandInd == '1'" class="ts">{{isBdPark?'移除中心':'移除园区'}}</span>
                                 </p>
                             </div>
@@ -289,7 +289,7 @@ export default {
                 this.loading = false;
             })
         },
-        openDelPop(cstId){
+        openDelParkPop(cstId){
             this.dialogTableVisible = true;
             this.curCasId = cstId;
             this.findEntityTags();
