@@ -111,7 +111,7 @@
                 <!-- 移除园区 -->
                 <el-dialog :visible.sync="dialogTableVisible"  width='560px' class='removePark'>
                     <p>是否确认将该成员移除园区</p>
-                    <p>确实移除后系统将自动给被移除企业发送被移除园区的消息提示</p>
+                    <p>确认移除后系统将自动给被移除企业发送被移除园区的消息提示</p>
                     <p>
                         <el-button type="primary" @click="delMemInfo">是</el-button>
                         <el-button type="primary" @click="dialogTableVisible =false">否</el-button>
