@@ -30,7 +30,7 @@
                 </div>
             </div>
             <p class="seaBtn">
-                <el-button type="primary" size="small" @click="getCstInfo">查询</el-button>
+                <el-button type="primary" size="small" @click="getCstInfo(0)">查询</el-button>
                 <el-button type="info" size="small" @click="rest">重置</el-button>
             </p>
             <div class="list">
@@ -164,7 +164,10 @@ export default {
             this.pageNum = val;
             this.getCstInfo();
         },
-        getCstInfo() {
+        getCstInfo(type) {
+            if (type == 0) {
+                this.pageNum = 1;
+            }
             this.$post(this.$apiUrl.manage.getCstInfo, {
                 parkId: sessionStorage.getItem("parkId"),
                 pageSize : this.pageSize,
@@ -181,7 +184,7 @@ export default {
                 cstName : '',
                 cstId : ''
             }
-            this.getCstInfo();
+            this.getCstInfo(0);
         },
         handleClick(row) {
             this.access = true;

@@ -43,7 +43,7 @@
                 </div>
             </div>
             <p class="seaBtn">
-                <el-button type="primary" size="small" @click="getInviteByInfo">查询</el-button>
+                <el-button type="primary" size="small" @click="getInviteByInfo(0)">查询</el-button>
                 <el-button type="info" size="small" @click="reset">重置</el-button>
             </p>
             <div class="list">
@@ -189,7 +189,10 @@ export default {
             this.access = true;
             this.curcstId = row.cstId;
         },
-        getInviteByInfo() {
+        getInviteByInfo(type) {
+            if (type == 0) {
+                this.pageNum = 1;
+            }
             let address = '';
             if (this.searchForm.bngProvCd) {
                 for (let index = 0; index < this.dataSoure.COM_00001.length; index++) {
@@ -225,6 +228,7 @@ export default {
                 }
             }
             let job = this.searchForm.indLvl3Cd;
+
             //如果二级查询存在 三级查询无  取二级查询
             if (!this.searchForm.indLvl3Cd && this.searchForm.indLvl2Cd) {
                 job = this.searchForm.indLvl2Cd;
@@ -275,7 +279,7 @@ export default {
                 bngProvCd: "",
                 bngCityCd: ""
             }
-            this.getInviteByInfo();
+            this.getInviteByInfo(0);
         },
         inviteMember() {
             this.$post(this.$apiUrl.manage.inviteMember, {

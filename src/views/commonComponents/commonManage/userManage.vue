@@ -15,7 +15,7 @@
             <div class="search">
                 <div>
                     <input type="text" placeholder="请输入搜索企业" v-model="seachVal" />
-                    <i class="el-icon-search" @click="getMemInfo"></i>
+                    <i class="el-icon-search" @click="getMemInfo(0)"></i>
                 </div>
                 <div class='item' v-if="isBdPark">
                     <span>我的分类：</span>
@@ -274,7 +274,10 @@ export default {
             }
             this.forTagList.push(tag.lblTxt);
         },
-        getMemInfo(){
+        getMemInfo(type){
+            if (type == 0) {
+                this.pageNum = 1;
+            }
             this.curSelectTag = '';
             this.loading = true;
             this.getMemInfoList = []
@@ -497,6 +500,7 @@ export default {
                     message: err.resultMsg
                 })
             })
+            this.accessT = false;
         },
         //我的分类--全局标签删除
         confirmDeleteTag(){

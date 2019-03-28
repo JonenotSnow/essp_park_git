@@ -35,7 +35,7 @@
                 </ul>
             </div>
             <p class="saveBtn">
-                <el-button type="primary" size='small' @click='queryList'>查询</el-button>
+                <el-button type="primary" size='small' @click='getList(0)'>查询</el-button>
                 <el-button type="info" size='small' @click='reset'>重置</el-button>
             </p>
             <p>采取先到先得的任务领取审核方式</p>
@@ -141,10 +141,6 @@ export default {
         }
     },
     methods:{
-        queryList(){
-            this.pageNum = 1;
-            this.getList();
-        },
         handleSizeChange(val) {
             this.pageSize = val;
             this.getList();
@@ -163,7 +159,10 @@ export default {
             })
         },
         //list列表
-        getList(){
+        getList(type){
+            if (type == 0) {
+                this.pageNum = 1;
+            }
             var pop = {
                 parkId : this.searchCondition.parkId,
                 type : this.searchCondition.type,
@@ -191,7 +190,7 @@ export default {
             this.searchCondition.status =
             this.searchCondition.companyName =
             this.searchCondition.title = '';
-            this.getList()
+            this.getList(0)
         },
         //校验审核状态
         cancelAudit(row,id){
