@@ -36,6 +36,7 @@
             float: unset;
             text-align: center;
             .newsfirtitle {
+                margin: 0;
                 font-size: 28px;
                 color: #333;
                 letter-spacing: 2.8px;

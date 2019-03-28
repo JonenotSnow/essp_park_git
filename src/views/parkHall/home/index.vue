@@ -1,6 +1,6 @@
 <script src="../../../../config/index.js"></script>
 <template>
-    <div>
+    <div class="index_common">
         <fix-part :userDetail="userDetail" v-if="isBdPark"></fix-part>
 
         <component :is="item" v-for="item in modulesList" :key="item.id" :parkInfo="parkInfo" :bannerDisList="bannerDisList"></component>
@@ -279,6 +279,8 @@
         -ms-transition: all 0.5s;
         -o-transition: all 0.5s;
     }
-
+    .index_common h3 {
+        margin: 0;
+    }
 
 </style>
