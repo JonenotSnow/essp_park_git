@@ -54,7 +54,7 @@
                               :readonly="true"></el-input>
                 </div>
                 <div class="tdcon">
-                    <span class="inline_span">惠政标签 :</span>
+                    <span class="inline_span"><em>*</em>惠政标签 :</span>
                     <div class="inline_div_tag">
                         <essp-add-tag ref="eat" :showtags="tags" @showTagWin="showTagWin" @delTag="delTag"
                                       @initTag="initTag" :tagprops="tagprops"></essp-add-tag>
@@ -62,7 +62,7 @@
                     <essp-tag @showtag="closetag" :centerDialogVisible="visible" :tagprops="tagprops"></essp-tag>
                 </div>
                 <div class="tdcon">
-                    <span class="inline_span">上传附件:</span>
+                    <span class="inline_span">上传附件 :</span>
                     <div class="uploadcon">
                         <el-upload class="upload-demo" action="#" :on-remove="removeList"
                                    :before-upload="beforeAvatarUploadFile"
@@ -973,30 +973,33 @@
                 var t_isOnlineApply = this.formTicketList.t_isOnlineApply;
 
                 if (this.formBaseList.action_theme == "") {
-                    this.$message("惠政主题不能为空");
+                    this.$message.error("惠政主题不能为空");
                     return false;
                 }
                 if (this.formBaseList.action_theme.length > 40) {
-                    this.$message("惠政主题长度不能大于40个字");
+                    this.$message.error("惠政主题长度不能大于40个字");
                     return false;
                 }
                 if (this.imageUrl == "") {
-                    this.$message("惠政宣传图不能为空");
+                    this.$message.error("惠政宣传图不能为空");
                     return false;
                 }
                 if (this.formBaseList.action_content == "") {
-                    this.$message("惠政内容不能为空");
+                    this.$message.error("惠政内容不能为空");
                     return false;
                 }
-
+                if(this.tags.length == 0) {
+                    this.$message.error("标签必填！");
+                    return;
+                }
                 if (t_isOnlineApply == "1") {
                     if (this.formTicketList.t_validateDate[0] == "" || this.formTicketList.t_validateDate[1] == "") {
-                        this.$message("有效时间不能为空");
+                        this.$message.error("有效时间不能为空");
                         return false;
                     }
                     var upperLimit = this.formTicketList.t_upperlimit || 0;
                     if (upperLimit <= 0) {
-                        this.$message("报名上限不能小于0");
+                        this.$message.error("报名上限不能小于0");
                         this.formTicketList.t_upperlimit = '';
                         return false;
                     }
@@ -1006,6 +1009,9 @@
             },
             // 保持发布
             lookfinalData(type) {
+                if (!this.checkInfo()) {
+                    return false
+                }
                 var type = 1;
                 var msg = "您是否发布惠政？";
                 var url = "/parkIndex/goverBene/release?type=0";
@@ -1021,9 +1027,9 @@
                     msg,
                     maskConfig
                 ).then(() => {
-                    if (!this.checkInfo()) {
-                        return false
-                    }
+                    // if (!this.checkInfo()) {
+                    //     return false
+                    // }
 
                     var avaliableTime = t_isOnlineApply == "1" ? this.formTicketList.t_validateDate[0] : '';
                     var avaliableEndTime = t_isOnlineApply == "1" ? this.formTicketList.t_validateDate[1] : '';

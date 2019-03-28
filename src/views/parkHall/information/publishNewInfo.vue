@@ -63,7 +63,7 @@
                 </div>
                 <div class="tdcon">
                     <span class="inline_span">
-                        <!--<em>*</em>-->
+                        <em>*</em>
                         资讯标签 :
                     </span>
                     <div class="inline_div_tag">
@@ -174,8 +174,8 @@
                 editorOption: {
                     // initialFrameWidth:900,
                     initialFrameHeight: 340,
-                    UEDITOR_HOME_URL: '/essp_park/static/UEditor/',     // 线上
-                    // UEDITOR_HOME_URL: '/static/UEditor/'                // 本地
+                    // UEDITOR_HOME_URL: '/essp_park/static/UEditor/',     // 线上
+                    UEDITOR_HOME_URL: '/static/UEditor/'                // 本地
                 },
                 initiatorWay: "",
                 typeitems: [], //类型明细
@@ -317,6 +317,10 @@
                     this.$message.warning("资讯主题长度不能大于50个字");
                     return false;
                 }
+                if (this.contentbrif == "") {
+                    this.$message.warning("请您选择资讯简介");
+                    return false;
+                }
                 if (this.infoDetail == "") {
                     this.$message.warning("资讯内容不能为空");
                     return false;
@@ -328,6 +332,10 @@
                 if (this.classtType == "") {
                     this.$message.warning("请您选择资讯类型");
                     return false;
+                }
+                if(this.tags.length == 0) {
+                    this.$message.error("标签必填！");
+                    return;
                 }
                 return true;
             },
