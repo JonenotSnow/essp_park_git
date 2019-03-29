@@ -2,7 +2,7 @@
     <div class='EsspTagManage'>
         <span class="title">{{tagBusiName}}：</span>
         <div class="tagList" :class="tagLineChange">
-            <span class="self-tag" v-for="(it,i) in tagList" :key="i" :class="{'active':it.done}" @click="getMemByTblTxt(it,i)" >
+            <span class="self-tag" v-for="(it,i) in tagList" :key="i" :class="{'active':it.done}" @click="getMemByTblTxt(it,i,0)" >
                 {{it.tagTxt}}&nbsp;({{it.tagCount}})
                 <i v-if="curSelectTag == it.tagId" class="el-icon-close" @click="deleteTag(it)"></i>
             </span>
@@ -86,6 +86,9 @@
                         item.done = false;
                     }
                 });
+                if (type == 0) {
+                    this.pageNum = 1;
+                }
                 this.$post(this.$apiUrl.manage.getMemByTblTxt,{
                         parkId : window.sessionStorage.getItem("parkId"),
                         lblTxt : v.tagTxt,
@@ -117,9 +120,8 @@
                 }
                 this.$emit('openDelPop',params);
             },
-        },
-        watch:{
-            'tagList.length'(){
+            changeDom(){
+                
                 this.$nextTick(() => {
                     let tagMain = this.esspGetElByClassName('tagList');
                     tagMain[0].style.width = parseInt(this.tagMainWidth) + 'px';
@@ -130,34 +132,20 @@
 
                     // 通过标签组件的总长度来判断是一行显示还是多行显示
                     let esspParkTagWrapWidth = null;
-                    for (i=0; i < esspParkTagWrapLength; i++) {
-                        esspParkTagWrapWidth += esspParkTagWrap[i].clientWidth + 20;
+                    for (i=0; i < esspParkTagWrapLength; i++) { 
+                        esspParkTagWrapWidth += esspParkTagWrap[i].clientWidth+20;  //20 margin-left   24 padding-right 12 padding-left 12
                     }
-                    if (esspParkTagWrapWidth > this.tagMainWidth) {
-                        return this.showAllBtnTag = true;
+                    if (esspParkTagWrapWidth> this.tagMainWidth) {  
+                        this.showAllBtnTag = true;
+                    }else{
+                        this.showAllBtnTag = false
                     }
                 });
             }
         },
         mounted() {
-            this.$nextTick(() => {
-
-                let tagMain = this.esspGetElByClassName('tagList');
-                tagMain[0].style.width = parseInt(this.tagMainWidth) + 'px';
-
-                let esspParkTagWrap = this.esspGetElByClassName('self-tag');
-                let i = 0;
-                let esspParkTagWrapLength = esspParkTagWrap.length;
-
-                // 通过标签组件的总长度来判断是一行显示还是多行显示
-                let esspParkTagWrapWidth = null;
-                for (i=0; i < esspParkTagWrapLength; i++) {
-                    esspParkTagWrapWidth += esspParkTagWrap[i].clientWidth + 20;
-                }
-                if (esspParkTagWrapWidth > this.tagMainWidth) {
-                    return this.showAllBtnTag = true;
-                }
-
+            this.$watch('tagList', this.changeDom, {
+                deep: true,
             });
         }
     }

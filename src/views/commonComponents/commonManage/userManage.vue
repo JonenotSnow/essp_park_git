@@ -19,9 +19,9 @@
                 </div>
                 <div class='item' v-if="isBdPark">
                     <span>我的分类：</span>
-                    <span v-for="(it,i) in hotTagList.slice(0,6)" :key="i" :class="{'active':curSelectTag == it.tagId}" @click="getMemByTblTxt(it,i)" >{{it.tagTxt}}&nbsp;({{it.tagCount}})</span>
+                    <span v-for="(it,i) in hotTagList.slice(0,6)" :key="i" :class="{'active':curSelectTag == it.tagId}" @click="getMemByTblTxt(it,i,0)" >{{it.tagTxt}}&nbsp;({{it.tagCount}})</span>
                 </div>
-                <EsspTagManage v-else :tagList= hotTagList @openDelPop='openDelPop' @getMemInfo='getMemInfo' @getChildData='getChildData' :pageSize='pageSize' :pageNum='pageNum'></EsspTagManage>
+                <EsspTagManage v-else :tagList= hotTagList @openDelPop='openDelPop' @getMemInfo='getMemInfo(0)' @getChildData='getChildData' :pageSize='pageSize' :pageNum='pageNum'></EsspTagManage>
             </div>
             <div class="userList">
                 <ul v-if="isBdPark">
@@ -380,7 +380,7 @@ export default {
             this.addFL = false;
         },
         //全局标签查询
-        getMemByTblTxt(v,i){
+        getMemByTblTxt(v,i,type){
             this.curSelectTag = v.tagId;
             //标准版 全局标签点击切换
             this.hotTagList.forEach((item,index)=>{
@@ -388,13 +388,16 @@ export default {
                     item.done = !item.done;
                     if (!item.done) {
                         this.curSelectTag = ''
-                        this.getMemInfo();
+                        this.getMemInfo(0);
                         return;
                     }
                 }else{
                     item.done = false;
                 }
             });
+            if(type==0){
+                this.pageNum = 1;
+            }
             this.$post(this.$apiUrl.manage.getMemByTblTxt,{
                     parkId : window.sessionStorage.getItem("parkId"),
                     lblTxt : v.tagTxt,
