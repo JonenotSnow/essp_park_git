@@ -15,16 +15,16 @@
                 </span>
                 <span class="statusitems">
                     <label>惠政类型：</label>
-                    <em v-if="dataDetail.classtType == '1'">科教文卫</em>
-                    <em v-if="dataDetail.classtType == '2'">监管监督</em>
-                    <em v-if="dataDetail.classtType == '3'">产业支持</em>
-                    <em v-if="dataDetail.classtType == '4'">民政事务</em>
-                    <em v-if="dataDetail.classtType == '5'">政务政策</em>
-                    <em v-if="dataDetail.classtType == '6'">基建生产</em>
-                    <em v-if="dataDetail.classtType == '7'">民族宗教</em>
-                    <em v-if="dataDetail.classtType == '8'">对外事务</em>
-                    <em v-if="dataDetail.classtType == '9'">财政金融</em>
-                    <em v-if="dataDetail.classtType == '10'">司法安全</em>
+                    <em>{{dataDetail.classtType | showGoverType}}</em>
+                    <!--<em v-if="dataDetail.classtType == '2'">监管监督</em>-->
+                    <!--<em v-if="dataDetail.classtType == '3'">产业支持</em>-->
+                    <!--<em v-if="dataDetail.classtType == '4'">民政事务</em>-->
+                    <!--<em v-if="dataDetail.classtType == '5'">政务政策</em>-->
+                    <!--<em v-if="dataDetail.classtType == '6'">基建生产</em>-->
+                    <!--<em v-if="dataDetail.classtType == '7'">民族宗教</em>-->
+                    <!--<em v-if="dataDetail.classtType == '8'">对外事务</em>-->
+                    <!--<em v-if="dataDetail.classtType == '9'">财政金融</em>-->
+                    <!--<em v-if="dataDetail.classtType == '10'">司法安全</em>-->
                 </span>
             </div>
             <div class="newsbtncon">
@@ -147,6 +147,42 @@
         filters: {
             timerFormat(vaule) {
                 return Moment(vaule).format("YYYY-MM-DD");
+            },
+            showGoverType(value){
+                switch (value){
+                    case "1":
+                        return '科教文卫';
+                        break;
+                    case "2":
+                        return '监管监督';
+                        break;
+                    case "3":
+                        return '产业支持';
+                        break;
+                    case "4":
+                        return '民政事务';
+                        break;
+                    case "5":
+                        return '政务政策';
+                        break;
+                    case "6":
+                        return '基建生产';
+                        break;
+                    case "7":
+                        return '民族宗教';
+                        break;
+                    case "8":
+                        return '对外事务';
+                        break;
+                    case "9":
+                        return '财政金融';
+                        break;
+                    case "10":
+                        return '司法安全';
+                        break;
+                    default:
+                        return '其他'
+                }
             }
         },
         methods: {
