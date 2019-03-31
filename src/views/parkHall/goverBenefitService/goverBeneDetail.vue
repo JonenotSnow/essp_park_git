@@ -142,6 +142,7 @@
             this.getTagList();
         },
         created() {
+
             this.now = new Date().valueOf();
         },
         filters: {
