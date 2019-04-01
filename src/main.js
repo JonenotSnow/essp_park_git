@@ -84,8 +84,13 @@ Vue.filter("timerFormat", function(value) {
 });
 
 // Vue.prototype.$uploadCommom = uploadCommom;
+<<<<<<< HEAD
 let openUrl = "http://128.196.235.132:1345/essp/#";
 
+=======
+let openUrl = "http://128.196.235.131:1345/essp/#";
+Vue.prototype.$urlUEditor = "/static/UEditor/"; // 不能删除
+>>>>>>> dd3c5728d7bea0745ae2102a00bfa37eb4ebd017
 if (process.env.NODE_ENV === "production") {
     openUrl = window.location.origin+'/essp/'+"#";
     Vue.prototype.$urlUEditor = "/essp_park/static/UEditor/"
@@ -118,7 +123,7 @@ router.beforeEach(async (to, from, next) => {
     //     sessionStorage.setItem("menuList", JSON.stringify(mockdata));
     //     next();
     // }
-    
+
     let parkId = to.query.parkId;
     if (parkId) {
         sessionStorageHandler.setItem("parkId", parkId);
@@ -126,7 +131,7 @@ router.beforeEach(async (to, from, next) => {
 
     // let query  = getQueryObjuect()
     /* 埋点方案  start   */
- 
+
 
     let pathname = window.location.pathname
     let historyArr = localStorageHandler.getItem('history') ? localStorageHandler.getItem('history') : {path: []}
@@ -152,10 +157,10 @@ router.beforeEach(async (to, from, next) => {
     let menuList = sessionStorageHandler.getItem("menuList");
 
 
-   
+
     let token = to.query.token;
     let isUrlHasBd = window.location.href.indexOf("bdppc") > -1;
-  
+
     oneId = sessionStorageHandler.getItem("bdParkId");
     if (!oneId && oneId === "undefined") {
         oneId = sessionStorageHandler.getItem("parkId");

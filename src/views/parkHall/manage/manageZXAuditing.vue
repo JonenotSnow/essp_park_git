@@ -17,6 +17,10 @@
                     <span class="line_span">{{infoList.informationTitle}}</span>
                 </div>
                 <div class="dtcon">
+                    <span class="lable_span">资讯类型：</span>
+                    <span class="line_span">{{infoList.classtType | showClassType }}</span>
+                </div>
+                <div class="dtcon">
                     <span class="lable_span">发布人：</span>
                     <span class="line_span">{{infoList.userName}}</span>
                 </div>
@@ -133,6 +137,20 @@
                     (parseInt(d.getSeconds()) < 10 ? '0' + d.getSeconds() : d.getSeconds());
                 return times;
             },
+            showClassType(value){
+                const types = {
+                    "": "全部",
+                    "1": "行业动态",
+                    "2": "通知公告",
+                    "3": "政府公告",
+                    "4": "方针政策",
+                    "5": "专家解读",
+                    "6": "专栏",
+                    "7": "财经新闻",
+                    "8": "其他"
+                }
+                return types[value]
+            }
         },
         components: {
             EsspBreadCrumb

@@ -16,6 +16,10 @@
                     <span class="line_span">{{infoList.policyTitle}}</span>
                 </div>
                 <div class="dtcon">
+                    <span class="lable_span">惠政类型：</span>
+                    <span class="line_span">{{infoList.classtType | showGoverType}}</span>
+                </div>
+                <div class="dtcon">
                     <span class="lable_span">发布机构：</span>
                     <span class="line_span">{{infoList.cstNm}}</span>
                 </div>
@@ -101,11 +105,47 @@
             statusFormat(value) {
                 let val = value ? value.trim() : '';
                 let statusList = {
-                    "02":"发布中",
-                    "12":"园区审核未通过",
+                    "02": "发布中",
+                    "12": "园区审核未通过",
                     "13": "审核中"
                 }
                 return statusList[val] ? statusList[val] : ''
+            },
+            showGoverType(value){
+                switch (value){
+                    case "1":
+                        return '科教文卫';
+                        break;
+                    case "2":
+                        return '监管监督';
+                        break;
+                    case "3":
+                        return '产业支持';
+                        break;
+                    case "4":
+                        return '民政事务';
+                        break;
+                    case "5":
+                        return '政务政策';
+                        break;
+                    case "6":
+                        return '基建生产';
+                        break;
+                    case "7":
+                        return '民族宗教';
+                        break;
+                    case "8":
+                        return '对外事务';
+                        break;
+                    case "9":
+                        return '财政金融';
+                        break;
+                    case "10":
+                        return '司法安全';
+                        break;
+                    default:
+                        return '其他'
+                }
             }
         },
         methods: {

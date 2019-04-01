@@ -307,7 +307,6 @@
             },
             typeFormat(type) {
                 return types[type]
-
             }
         },
         watch: {

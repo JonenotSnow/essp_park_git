@@ -16,15 +16,6 @@
                 <span class="statusitems">
                     <label>惠政类型：</label>
                     <em>{{dataDetail.classtType | showGoverType}}</em>
-                    <!--<em v-if="dataDetail.classtType == '2'">监管监督</em>-->
-                    <!--<em v-if="dataDetail.classtType == '3'">产业支持</em>-->
-                    <!--<em v-if="dataDetail.classtType == '4'">民政事务</em>-->
-                    <!--<em v-if="dataDetail.classtType == '5'">政务政策</em>-->
-                    <!--<em v-if="dataDetail.classtType == '6'">基建生产</em>-->
-                    <!--<em v-if="dataDetail.classtType == '7'">民族宗教</em>-->
-                    <!--<em v-if="dataDetail.classtType == '8'">对外事务</em>-->
-                    <!--<em v-if="dataDetail.classtType == '9'">财政金融</em>-->
-                    <!--<em v-if="dataDetail.classtType == '10'">司法安全</em>-->
                 </span>
             </div>
             <div class="newsbtncon">
