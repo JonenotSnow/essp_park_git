@@ -550,7 +550,6 @@
                     contactName = this.inputName;
                     contactPhone = this.inputTel;
                 }
-                debugger
                 /* var isNull = this.rulenrollFormList();
                     if(isNull) {
                         this.btnBloon = true;
