@@ -1,7 +1,7 @@
 <template>
     <div class="el-main" id="noticeAndAD">
         <p style="height: 50px; line-height: 50px; background-color: #e6f4ff; font-size: 16px; font-weight: normal; font-stretch: normal; letter-spacing: 0px; color: #00a0e9;">
-            <i class="icon iconfont icon-guangbo" style="color: orange; margin-left:17px;"></i>【温馨提示】您发布的最新通知公告已在园区大厅首页进行展示</p>
+            <i class="icon iconfont icon-guangbo" style="color: orange; margin-left:17px;"></i>【温馨提示】您发布的最新通知公告已在园区首页进行展示</p>
         <div class="baseInfos">
             <p>
                 <span style="letter-spacing: 4px;"> 已发布</span>

@@ -8,7 +8,7 @@
             </span>
         </div>
         <span class="more" @click="showOneOrMulTags" v-if="showAllBtnTag">
-            More<i class="el-icon-arrow-up" :class="{'tran':oomTag === 'one'}"></i>
+            More&nbsp;<i class="el-icon-arrow-up" :class="{'tran':oomTag === 'one'}"></i>
         </span>
     </div>
 </template>
@@ -86,9 +86,6 @@
                         item.done = false;
                     }
                 });
-                if (type == 0) {
-                    this.pageNum = 1;
-                }
                 this.$post(this.$apiUrl.manage.getMemByTblTxt,{
                         parkId : window.sessionStorage.getItem("parkId"),
                         lblTxt : v.tagTxt,

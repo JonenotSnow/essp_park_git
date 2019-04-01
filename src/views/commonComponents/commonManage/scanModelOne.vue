@@ -394,6 +394,10 @@ export default {
                         _that.confirmSend = true;
                 }else{  //暂存成功提示
                     _that.accessT =  type == 1 ?true:false;
+                    this.$message({
+                        type: "success",
+                        message: '已暂存'
+                    });
                 }
                 setTimeout(() => {
                     _that.confirmSend = false;
