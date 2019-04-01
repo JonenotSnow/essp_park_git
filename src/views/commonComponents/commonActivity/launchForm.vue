@@ -1444,7 +1444,6 @@
                         }
                     }
                 }
-                console.log("this.activityTheme",this.activityTheme);
                 if (this.activityTheme == "") {
                     this.$message.error("活动主题不能为空！");
                     return;
