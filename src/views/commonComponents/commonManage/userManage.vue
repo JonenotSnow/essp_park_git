@@ -341,7 +341,7 @@ export default {
                     lblTpCd : '3000001'
                 })
                 .then((response) => {
-                    this.TJTagList =response.resultData.lblInfo
+                    this.TJTagList =response.resultData.lblInfo || []
                 })
         },
         //全局推荐标签
