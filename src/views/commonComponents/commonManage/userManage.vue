@@ -29,9 +29,11 @@
                         <div>
                             <img :src="it.cstLogo || '../../../assets/actdetaillogo.png'" alt="">
                             <div>
-                                <p>{{it.cstNm}}</p>
+                                <p>{{it.cstNm}}
+                                    <!--<i class="iconfont icon-chat-msg"></i>-->
                                 <!-- <p>行业：{{it.idyTpcd | idType(it.idyTpcd)}}</p> -->
                                 <p>{{it.idyTpcdNm}}</p>
+
                                 <p>
                                     <span>标签：</span>
                                     <span class='tagItem' v-if="it.tbList.length>0" v-for="(is,j) in it.tbList.slice(0,5)" :key="j">{{is.lblTxt}}</span>
@@ -57,6 +59,7 @@
                             <img :src="it.cstLogo || '../../../assets/actdetaillogo.png'" alt="">
                             <div>
                                 <p>{{it.cstNm}}</p>
+                                <!--<i class="iconfont icon-chat-msg"></i>-->
                                 <p>行业：{{it.idyTpcd | idType(it.idyTpcd)}}</p>
                                 <p>
                                     <span>标签：</span>
@@ -860,6 +863,11 @@ export default {
                         }
                         &:nth-of-type(1){
                             border-top:1px solid #ccc;
+                        }
+                        .icon-chat-msg {
+                            cursor: pointer;
+                            color: #33bcfe;
+                            margin-left: 5px;
                         }
                     }
                 }
