@@ -24,24 +24,22 @@
                 <EsspTagManage v-else :tagList= hotTagList @openDelPop='openDelPop' @getMemInfo='getMemInfo(0)' @getChildData='getChildData' :pageSize='pageSize' :pageNum='pageNum'></EsspTagManage>
             </div>
             <div class="userList">
-                <ul v-if="isBdPark">
+                <ul v-if="isBdPark" id="bdList">
                     <li v-for="(it,i) in getMemInfoList" :key="i">
                         <div>
                             <img :src="it.cstLogo || '../../../assets/actdetaillogo.png'" alt="">
-                            <div>
-                                <p>{{it.cstNm}}
-                                    <!--<i class="iconfont icon-chat-msg"></i>-->
+                            <div class='parkInfo'>
+                                <p class="cstNm">{{it.cstNm}}</p>
                                 <!-- <p>行业：{{it.idyTpcd | idType(it.idyTpcd)}}</p> -->
-                                <p>{{it.idyTpcdNm}}</p>
-
-                                <p>
+                                <p class="idyTpcdNm">{{it.idyTpcdNm}}</p>
+                                <p class="tbList">
                                     <span>标签：</span>
                                     <span class='tagItem' v-if="it.tbList.length>0" v-for="(is,j) in it.tbList.slice(0,5)" :key="j">{{is.lblTxt}}</span>
                                     <span class='tagItem' @click="getDefaultTag(it.cstId)"><i class="el-icon-plus" style="color:#00a0e9;"></i>添加分类</span>
                                 </p>
-                                <p v-if="it.cstOrgPlace"><i class="icon iconfont icon-dizhi" style="color: orange;"></i>{{it.cstOrgPlace}}</p>
+                                <p v-if="it.cstOrgPlace" class="cstOrgPlace"><i class="icon iconfont icon-dizhi" style="color: orange;"></i>{{it.cstOrgPlace}}</p>
                             </div>
-                            <div>
+                            <div class="opBtn">
                                 <p>
                                     <span  @click="toOut(it.cstId)">查看详情</span>
                                 </p>
@@ -53,16 +51,16 @@
                         </div>
                     </li>
                 </ul>
-                <ul v-else>
+                <ul v-else id="bzList">
                     <li v-for="(it,i) in getMemInfoList" :key="i">
                         <div>
                             <img :src="it.cstLogo || '../../../assets/actdetaillogo.png'" alt="">
-                            <div>
-                                <p>{{it.cstNm}}</p>
-                                <!--<i class="iconfont icon-chat-msg"></i>-->
-                                <p>行业：{{it.idyTpcd | idType(it.idyTpcd)}}</p>
-                                <p>
-                                    <span>标签：</span>
+                            <div class='parkInfo'>
+                                <p class="cstNm">{{it.cstNm}}</p>
+                                <p class="idyTpcd">所在行业：{{it.idyTpcd | idType(it.idyTpcd)}}</p>
+                                <p class="lglRprsNm">企业法人：<span>{{it.lglRprsNm}}</span>企业管理员：<span>{{it.entMgrName}}</span> 管理员联系电话：<span>{{it.entMgr}}</span></p>
+                                <p class='tbList'>
+                                    <!-- <span>标签：</span> -->
                                     <span class='tagItem' v-if="it.tbList.length>0" @mouseover="getValue(is,it)" @mouseout="clearSelect"
                                         :class="{'activeA':(curSelectTagUser == is.lblId && curSelectTxt == is.lblTxt && curCas == it.cstId)}"
                                         v-for="(is,j) in it.tbList.slice(0,5)" :key="j">
@@ -73,9 +71,9 @@
                                     </span>
                                     <span class='tagItem' @click="getDefaultTag(it.cstId)"><i class="el-icon-plus" style="color: #00a0e9;"></i>添加分类</span>
                                 </p>
-                                <p v-if="it.cstOrgPlace"><i class="icon iconfont icon-dizhi" style="color: #ccc;"></i>{{it.cstOrgPlace}}</p>
+                                <p v-if="it.cstOrgPlace" class="cstOrgPlace"><i class="icon iconfont icon-dizhi" style="color: #ccc;"></i>{{it.cstOrgPlace}}</p>
                             </div>
-                            <div>
+                            <div class="opBtn">
                                 <p>
                                     <span  @click="toOut(it.cstId)">查看详情</span>
                                 </p>
@@ -99,38 +97,39 @@
                         :total="totalCount">
                     </el-pagination>
                 </div>
-                <!-- 移除园区 -->
-                <el-dialog :visible.sync="dialogTableVisible"  width='560px' class='removePark'>
-                    <p>是否确认将该成员移除园区</p>
-                    <p>确认移除后系统将自动给被移除企业发送被移除园区的消息提示</p>
-                    <p>
-                        <el-button type="primary" @click="delMemInfo">是</el-button>
-                        <el-button type="primary" @click="dialogTableVisible =false">否</el-button>
-                    </p>
-                </el-dialog>
-                <!-- 添加分类 -->
-                <el-dialog :visible.sync="addFL" width="720px" center class="reTag">
-                    <div class="tabletit">
-                        <p class="title_p">请添加合适该企业的标签，可多选</p>
-                    </div>
-                    <div class="yList">
-                        <el-tag v-if="TJTagList && TJTagList.length>0 && i<6" :key="it.lblId" v-for="(it,i) in TJTagList" @click.native="addTagToL(it)">{{it.lblTxt}}</el-tag>
-                    </div>
-                    <div class="relist">
-                        <el-tag :key="tag" v-for="tag in forTagList" closable :disable-transitions="false" @close="handleClose(tag)">{{tag}}</el-tag>
-                        <el-input class="input-new-tag" v-if="inputVisible" v-model="inputValue" ref="saveTagInput" size="small" @keyup.enter.native="handleInputConfirm" @blur="handleInputConfirm"></el-input>
-                        <el-button v-else class="button-new-tag" size="small" @click="showInput">+ 添加标签</el-button>
-                    </div>
-                    <span slot="footer" class="dialog-footer">
-                        <!-- <el-button @click="addFL = false">取 消</el-button> -->
-                        <el-button type="primary" @click="saveEntityTags" style="width: 277px;font-size: 18px;">保存</el-button>
-                    </span>
-                </el-dialog>
             </div>
         </div>
         <div v-else class="noInfo">
             非该园区管理员不能执行此操作!
         </div>
+        
+        <!-- 移除园区 -->
+        <el-dialog :visible.sync="dialogTableVisible"  width='560px' class='removePark'>
+            <p>是否确认将该成员移除园区</p>
+            <p>确认移除后系统将自动给被移除企业发送被移除园区的消息提示</p>
+            <p>
+                <el-button type="primary" @click="delMemInfo">是</el-button>
+                <el-button type="primary" @click="dialogTableVisible =false">否</el-button>
+            </p>
+        </el-dialog>
+        <!-- 添加分类 -->
+        <el-dialog :visible.sync="addFL" width="720px" center class="reTag">
+            <div class="tabletit">
+                <p class="title_p">请添加合适该企业的标签，可多选</p>
+            </div>
+            <div class="yList">
+                <el-tag v-if="TJTagList && TJTagList.length>0 && i<6" :key="it.lblId" v-for="(it,i) in TJTagList" @click.native="addTagToL(it)">{{it.lblTxt}}</el-tag>
+            </div>
+            <div class="relist">
+                <el-tag :key="tag" v-for="tag in forTagList" closable :disable-transitions="false" @close="handleClose(tag)">{{tag}}</el-tag>
+                <el-input class="input-new-tag" v-if="inputVisible" v-model="inputValue" ref="saveTagInput" size="small" @keyup.enter.native="handleInputConfirm" @blur="handleInputConfirm"></el-input>
+                <el-button v-else class="button-new-tag" size="small" @click="showInput">+ 添加标签</el-button>
+            </div>
+            <span slot="footer" class="dialog-footer">
+                <!-- <el-button @click="addFL = false">取 消</el-button> -->
+                <el-button type="primary" @click="saveEntityTags" style="width: 277px;font-size: 18px;">保存</el-button>
+            </span>
+        </el-dialog>
         <!-- 标签删除 -->
         <el-dialog :visible.sync="accessT" width='520px' class='access'>
             <h2 class="titleTips">提示</h2>
@@ -682,62 +681,6 @@ export default {
                             }
                         }
                     }
-                    &.item_bz{
-                        margin:15px 0;
-                        line-height: 54px;
-                        overflow: hidden;
-                        &>span{
-                            float: left;
-                            margin-left:20px;
-                            line-height: 20px;
-                        }
-                        .tagList{
-                            float: left;
-                            width: 815px;
-                            &>span{
-                                float: left;
-                                margin-left:20px;
-                                margin-bottom:20px;
-                                line-height: 20px;
-                                display:inline-block;
-                                text-align: center;
-                                font-size: 12px;
-                                // min-width:80px;
-                                height: 20px;
-                                padding: 2px 12px;
-                                background: #fff;
-                                color:#666;
-                                border-radius: 12px;
-                                cursor: pointer;
-                                &.active{
-                                    background-color: #33bcfe;
-                                    color:#fff;
-                                }
-                                &:hover{
-                                    background-color: #33bcfe;
-                                    color:#fff;
-                                }
-                            }
-                        }
-                        .more{
-                            float: right;
-                            color: #666;
-                            font-size: 14px;
-                            cursor: pointer;
-                            margin-right:10px;
-                            &:hover{
-                                background-color: #fff;
-                                color: #666666;
-                            }
-                            i{
-                                transform:  rotate(0);
-                                transition: .5s;
-                                &.tran{
-                                    transform: rotate(180deg);
-                                }
-                            }
-                        }
-                    }
                 }
                 &>div:not([class="item"]){
                     overflow: hidden;
@@ -747,14 +690,13 @@ export default {
                 }
             }
             .userList{
-                ul{
+                #bdList,#bzList{
                     li{
                         width:990px;
                         border-bottom:1px solid #ccc;
                         &>div{
                             width:950px;
                             min-height: 120px;
-                            // background-color: #f7f7f7;
                             margin:20px;
                             overflow: hidden;
                             display:flex;
@@ -764,95 +706,32 @@ export default {
                                 float: left;
                                 align-self: center;
                             }
-                            &>div{
-                                &:nth-of-type(1){
-                                    margin-left:20px;
-                                    width:650px;
-                                    float: left;
-                                    &>p{
-                                        line-height:35px;
-                                        &:nth-of-type(1){
-                                            font-size: 16px;
-                                            color: #444444;
-                                        }
-                                        &:nth-of-type(2){
-                                            font-size: 14px;
-                                            color: #666;
-                                        }
-                                        &:nth-of-type(3){
-                                            overflow: hidden;
-                                            &>span{
-                                                float:left;
-                                                // width: 70px;
-                                                height: 18px;
-                                                line-height:18px;
-                                                border-radius: 10px;
-                                                border: solid 1px #999;
-                                                margin-left:10px;
-                                                text-align: center;
-                                                padding:0 8px;
-                                                color:#999;
-                                                cursor: pointer;
-                                                &:nth-of-type(1){
-                                                    margin-left:0;
-                                                    border: none;
-                                                    width: 45px;
-                                                    text-align: left;
-                                                    padding: 0;
-                                                    color:#666;
-                                                }
-                                                em{
-                                                    color:#00a0e9;
-                                                }
-                                                &.activeA{
-                                                    background: #00a0e9;
-                                                    color:#fff;
-                                                    border-color:#00a0e9;
-                                                }
-                                            }
-                                            &>div{
-                                                width: 75px;
-                                                height:20px;
-                                                float: left;
-                                                position: relative;
-                                                top: -10px;
-                                                left: 15px;
-                                            }
-                                        }
-                                        &:nth-of-type(4){
-                                            i{
-                                                color:orange;
-                                            }
+                            .opBtn{
+                                float: right;
+                                margin-right:75px;
+                                height:80px;
+                                margin-top:18px;
+                                &>p{
+                                    span{
+                                        display: inline-block;
+                                        width: 80px;
+                                        margin:10px 0;
+                                        height: 28px;
+                                        line-height:28px;
+                                        background-color: #00a0e9;
+                                        border-radius: 14px;
+                                        font-size: 14px;
+                                        color:#fffefe;
+                                        text-align: center;
+                                        cursor: pointer;
+                                        &:hover{
+                                            background: #00afff;
                                         }
                                     }
-                                }
-                                &:nth-of-type(2){
-                                    float: right;
-                                    margin-right:75px;
-                                    height:80px;
-                                    margin-top:18px;
-                                    &>p{
-                                        span{
-                                            display: inline-block;
-                                            width: 80px;
-                                            margin:10px 0;
-                                            height: 28px;
-                                            line-height:28px;
-                                            background-color: #00a0e9;
-                                            border-radius: 14px;
-                                            font-size: 14px;
-                                            color:#fffefe;
-                                            text-align: center;
-                                            cursor: pointer;
-                                            &:hover{
-                                                background: #00afff;
-                                            }
-                                        }
-                                        &:nth-of-type(2){
-                                            span.ts{
-                                                background: #ccc;
-                                                cursor: default;
-                                            }
+                                    &:nth-of-type(2){
+                                        span.ts{
+                                            background: #ccc;
+                                            cursor: default;
                                         }
                                     }
                                 }
@@ -868,6 +747,135 @@ export default {
                             cursor: pointer;
                             color: #33bcfe;
                             margin-left: 5px;
+                        }
+                    }
+                }
+                #bdList{
+                    .parkInfo{
+                        margin-left:20px;
+                        width:650px;
+                        float: left;
+                        &>p{
+                            line-height:35px;
+                            &.cstNm{
+                                font-size: 16px;
+                                color: #444444;
+                            }
+                            &.idyTpcd{
+                                font-size: 14px;
+                                color: #666;
+                            }
+                            &.tbList{
+                                overflow: hidden;
+                                &>span{
+                                    float:left;
+                                    // width: 70px;
+                                    height: 18px;
+                                    line-height:18px;
+                                    border-radius: 10px;
+                                    border: solid 1px #999;
+                                    margin-left:10px;
+                                    text-align: center;
+                                    padding:0 8px;
+                                    color:#999;
+                                    cursor: pointer;
+                                    &:nth-of-type(1){
+                                        margin-left:0;
+                                        border: none;
+                                        width: 45px;
+                                        text-align: left;
+                                        padding: 0;
+                                        color:#666;
+                                    }
+                                    em{
+                                        color:#00a0e9;
+                                    }
+                                    &.activeA{
+                                        background: #00a0e9;
+                                        color:#fff;
+                                        border-color:#00a0e9;
+                                    }
+                                }
+                                &>div{
+                                    width: 75px;
+                                    height:20px;
+                                    float: left;
+                                    position: relative;
+                                    top: -10px;
+                                    left: 15px;
+                                }
+                            }
+                            &.cstOrgPlace{
+                                i{
+                                    color:orange;
+                                }
+                            }
+                        }
+                    }
+                }
+                #bzList{
+                    .parkInfo{
+                        margin-left:20px;
+                        width:650px;
+                        float: left;
+                        &>p{
+                            line-height:35px;
+                            &.cstNm{
+                                font-size: 16px;
+                                color: #444444;
+                            }
+                            &.idyTpcd{
+                                font-size: 14px;
+                                color: #666;
+                                line-height:25px;
+                            }
+                            &.lglRprsNm{
+                                font-size: 14px;
+                                color: #666;
+                                span{
+                                    margin-right:28px;
+                                }
+                            }
+                            &.tbList{
+                                overflow: hidden;
+                                &>span{
+                                    float:left;
+                                    // width: 70px;
+                                    height: 18px;
+                                    line-height:18px;
+                                    border-radius: 10px;
+                                    border: solid 1px #999;
+                                    margin-left:10px;
+                                    text-align: center;
+                                    padding:0 8px;
+                                    color:#999;
+                                    cursor: pointer;
+                                    &:nth-of-type(1){
+                                        margin-left:0;
+                                    }
+                                    em{
+                                        color:#00a0e9;
+                                    }
+                                    &.activeA{
+                                        background: #00a0e9;
+                                        color:#fff;
+                                        border-color:#00a0e9;
+                                    }
+                                }
+                                &>div{
+                                    width: 75px;
+                                    height:20px;
+                                    float: left;
+                                    position: relative;
+                                    top: -10px;
+                                    left: 15px;
+                                }
+                            }
+                            &.cstOrgPlace{
+                                i{
+                                    color:orange;
+                                }
+                            }
                         }
                     }
                 }
