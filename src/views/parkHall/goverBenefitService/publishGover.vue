@@ -998,7 +998,7 @@
                     return;
                 }
                 if (t_isOnlineApply == "1") {
-                    if (this.formTicketList.t_validateDate == '' || this.formTicketList.t_validateDate[0] == "" || this.formTicketList.t_validateDate[1] == "") {
+                    if (!this.formTicketList.t_validateDate || this.formTicketList.t_validateDate == '' || this.formTicketList.t_validateDate[0] == "" || this.formTicketList.t_validateDate[1] == "") {
                         this.$message.error("有效时间不能为空");
                         return false;
                     }
