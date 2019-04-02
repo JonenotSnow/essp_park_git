@@ -13,7 +13,7 @@
                         <span>填写招商条件</span>
                     </p>
                     <ul>
-                        <li>
+                        <li v-if="dataSoure.COM_00001 && dataSoure.COM_00001.length>0">
                             <div>企业所在地：</div>
                             <el-select filterable v-model="searchForm.bngProvCd" placeholder="省份" @change="delete searchForm.bngCityCd;">
                                 <el-option v-for="item in dataSoure.COM_00001" :key="item.key" :label="item.value" :value="item.key">
@@ -24,7 +24,7 @@
                                 </el-option>
                             </el-select>
                         </li>
-                        <li>
+                        <li v-if="dataSoure.RZZL_00017 && dataSoure.RZZL_00017.length>0">
                             <div>所属行业：</div>
                             <el-select filterable v-model="searchForm.indLvl1Cd" placeholder="请选择行业" @change="delete searchForm.indLvl2Cd;delete searchForm.indLvl3Cd" class="el-select_input">
                                 <el-option v-for="item in dataSoure.RZZL_00017" :key="item.key" :label="item.value" :value="item.key">
@@ -208,7 +208,7 @@ export default {
                 ]
             }).then(response => {
                 if (response.resultMsg === "success") {
-                    that.dataSoure = response.resultData;
+                    that.dataSoure = response.resultData || {};
                 }
             });
         },
@@ -245,7 +245,7 @@ export default {
                 parkId: sessionStorage.getItem("parkId")
             }).then(
                 response => {
-                    this.parkNm = response.resultData.parkNm
+                    this.parkNm = response.resultData.parkNm || '';
                 },
                 err => {
                     this.$message({

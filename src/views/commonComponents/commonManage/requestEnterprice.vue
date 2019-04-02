@@ -168,15 +168,15 @@ export default {
             if (type == 0) {
                 this.pageNum = 1;
             }
-            this.$post(this.$apiUrl.manage.getCstInfo, {
-                parkId: sessionStorage.getItem("parkId"),
-                pageSize : this.pageSize,
-                pageNum : this.pageNum,
-                cstNm : this.condition.cstName,
-                cstId : this.condition.cstId
+            this.$post(this.$apiUrl.manage.queryBriefEntInfos, {
+                entNm:'',
+                pageSize: this.pageSize,
+                currentPage: this.pageNum,
+                nalEncCd: "", //行业
+                areaId: "" //地址
             }).then(response => {
-                this.list = response.resultData.cstInfo;
-                this.totalCount = response.resultData.cstInfoCount;
+                this.list = response.resultData && response.resultData.list || [];
+                this.totalCount = response.resultData && response.resultData.totalCount;
             });
         },
         rest(){

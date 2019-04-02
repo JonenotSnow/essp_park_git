@@ -31,7 +31,7 @@
                             <div class='parkInfo'>
                                 <p class="cstNm">{{it.cstNm}}</p>
                                 <!-- <p>行业：{{it.idyTpcd | idType(it.idyTpcd)}}</p> -->
-                                <p class="idyTpcdNm">{{it.idyTpcdNm}}</p>
+                                <p class="idyTpcdNm">{{it.idyTpcdNm?it.idyTpcdNm:"未知行业"}}</p>
                                 <p class="tbList">
                                     <span>标签：</span>
                                     <span class='tagItem' v-if="it.tbList.length>0" v-for="(is,j) in it.tbList.slice(0,5)" :key="j">{{is.lblTxt}}</span>
@@ -778,7 +778,7 @@ export default {
                                     text-align: center;
                                     padding:0 8px;
                                     color:#999;
-                                    cursor: pointer;
+                                    // cursor: pointer;
                                     &:nth-of-type(1){
                                         margin-left:0;
                                         border: none;
@@ -786,6 +786,9 @@ export default {
                                         text-align: left;
                                         padding: 0;
                                         color:#666;
+                                    }
+                                    &:nth-last-of-type(1){
+                                        cursor: pointer;
                                     }
                                     em{
                                         color:#00a0e9;
