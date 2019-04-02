@@ -16,11 +16,11 @@
                         <li v-if="dataSoure.COM_00001 && dataSoure.COM_00001.length>0">
                             <div>企业所在地：</div>
                             <el-select filterable v-model="searchForm.bngProvCd" placeholder="省份" @change="delete searchForm.bngCityCd;">
-                                <el-option v-for="item in dataSoure.COM_00001" :key="item.key" :label="item.value" :value="item.key">
+                                <el-option v-for="item in dataSoure.COM_00001" :key="item.key" :label="item.value" :value="item.value">
                                 </el-option>
                             </el-select>
                             <el-select filterable v-model="searchForm.bngCityCd" placeholder="城市">
-                                <el-option v-for="item in dataSoure.COM_00002" :key="item.key" :label="item.value" :value="item.key" v-if="searchForm.bngProvCd && item.key.startsWith(searchForm.bngProvCd.slice(0,2))">
+                                <el-option v-for="item in dataSoure.COM_00002" :key="item.key" :label="item.value" :value="item.key" v-if="searchForm.bngProvCdId && item.key.startsWith(searchForm.bngProvCdId.slice(0,2))">
                                 </el-option>
                             </el-select>
                         </li>
@@ -43,7 +43,7 @@
                 </div>
             </div>
             <p class="seaBtn">
-                <el-button type="primary" size="small" @click="queryBriefEntInfos">查询</el-button>
+                <el-button type="primary" size="small" @click="getInviteByInfo(0)">查询</el-button>
                 <el-button type="info" size="small" @click="reset">重置</el-button>
             </p>
             <div class="list">
@@ -60,6 +60,7 @@
                             {{scope.row.idyTpcd | idType(scope.row.idyTpcd)}}
                         </template>
                     </el-table-column>
+                    <!-- <el-table-column prop="industry" label="所属行业" width="250" align='center'></el-table-column> -->
                     <el-table-column label="操作" width="120" align='center'>
                         <template slot-scope="scope">
                             <el-button
@@ -131,7 +132,9 @@ export default {
                 indLvl1Cd: "",
                 indLvl2Cd: "",
                 indLvl3Cd: "",
+                bngCntyCd: "",
                 bngProvCd: "",
+                bngProvCdId:'',
                 bngCityCd: ""
             },
             rzz:JSON.parse(localStorage.getItem('rzz')),
@@ -142,13 +145,13 @@ export default {
     },
     created() {
         this.getCasParentList();
-        this.queryBriefEntInfos();
+        this.getInviteByInfo();
         this.getParkById();
     },
     filters:{
         idType(value){
             let flag = false;
-            let rzz = JSON.parse(window.localStorage.getItem('rzz')) || [];
+            let rzz = JSON.parse(window.localStorage.getItem('rzz'));
             for (let i = 0; i < rzz.length; i++) {
                 if (rzz[i].code == value) {
                     flag = true;
@@ -160,21 +163,71 @@ export default {
             }
         }
     },
+    watch:{
+        'searchForm.bngProvCd'(){
+            this.searchForm.bngProvCdId = '';
+            let arr = this.dataSoure.COM_00001;
+            for (let index = 0; index < arr.length; index++) {
+                if (this.searchForm.bngProvCd == arr[index].value) {
+                    this.searchForm.bngProvCdId = arr[index].key;
+                    console.log(arr[index])
+                    return;
+                }
+            }
+            console.log(this.searchForm.bngProvCdId)
+        }
+    },
     methods: {
         handleSizeChange(val) {
             this.pageSize = val;
-            this.queryBriefEntInfos();
+            this.getInviteByInfo();
         },
         handleCurrentChange(val) {
             this.pageNum = val;
-            this.queryBriefEntInfos();
+            this.getInviteByInfo();
         },
         handleClick(row) {
             this.access = true;
             this.curcstId = row.cstId;
         },
-        queryBriefEntInfos() {
-            let address = this.searchForm.bngCityCd ? this.searchForm.bngCityCd:this.searchForm.bngProvCd;
+        getInviteByInfo(type) {
+            if (type == 0) {
+                this.pageNum = 1;
+            }
+            let address = '';
+            if (this.searchForm.bngProvCd) {
+                for (let index = 0; index < this.dataSoure.COM_00001.length; index++) {
+                    let item = this.dataSoure.COM_00001[index];
+                    if (item.key == this.searchForm.bngProvCd) {
+                        this.searchForm.bngProvCd = item.value;
+                        break;
+                    }
+                }
+                for (let index = 0; index < this.dataSoure.COM_00002.length; index++) {
+                    let item = this.dataSoure.COM_00002[index];
+                    if (item.key == this.searchForm.bngCityCd) {
+                        this.searchForm.bngCityCd = item.value;
+                        break;
+                    }
+                }
+                let bngProvCd = this.searchForm.bngProvCd;
+                let bngCityCd = this.searchForm.bngCityCd;
+                if (bngProvCd.indexOf('自治区')>-1) {
+                    bngProvCd = bngProvCd.slice(0,bngProvCd.length-3);
+                }else if(bngProvCd.slice(bngProvCd.length-1,bngProvCd.length == '市')>-1){
+                    bngProvCd = bngProvCd.slice(0,bngProvCd.length-1);
+                }
+                if (',北京,上海,重庆,天津,'.indexOf(','+bngProvCd+',')>-1) {
+                    bngCityCd = '';
+                    address = bngProvCd+'%';
+                }else{
+                    if (bngCityCd) {
+                        address = bngProvCd+'%'+bngCityCd.slice(0,bngCityCd.length-1) +'%';
+                    } else {
+                        address = bngProvCd+'%';
+                    }
+                }
+            }
             let job = this.searchForm.indLvl3Cd;
             //如果二级查询存在 三级查询无  取二级查询
             if (!this.searchForm.indLvl3Cd && this.searchForm.indLvl2Cd) {
@@ -184,14 +237,14 @@ export default {
             if (!this.searchForm.indLvl2Cd) {
                 job = this.searchForm.indLvl1Cd;
             }
-            this.$post(this.$apiUrl.manage.queryBriefEntInfos, {
-                entNm:'',
+            this.$post(this.$apiUrl.manage.getInviteByInfo, {
+                parkId: sessionStorage.getItem("parkId"),
                 pageSize: this.pageSize,
-                currentPage: this.pageNum,
-                nalEncCd: job, //行业
-                areaId: address //地址
+                pageNum: this.pageNum,
+                idyCode: job,
+                adress: address
             }).then(response => {
-                this.list = response.resultData && response.resultData.list || [];
+                this.list = response.resultData.list;
                 this.totalCount = response.resultData.totalCount;
             });
         },
@@ -208,7 +261,7 @@ export default {
                 ]
             }).then(response => {
                 if (response.resultMsg === "success") {
-                    that.dataSoure = response.resultData || {};
+                    that.dataSoure = response.resultData;
                 }
             });
         },
@@ -222,10 +275,11 @@ export default {
                 indLvl1Cd: "",
                 indLvl2Cd: "",
                 indLvl3Cd: "",
+                bngCntyCd: "",
                 bngProvCd: "",
                 bngCityCd: ""
             }
-            this.queryBriefEntInfos();
+            this.getInviteByInfo(0);
         },
         inviteMember() {
             this.$post(this.$apiUrl.manage.inviteMember, {
@@ -233,10 +287,17 @@ export default {
                 parkId: sessionStorage.getItem("parkId"),
                 parkName: this.SSH.getItem("parkName")
             }).then(response => {
-                this.$message({
-                    type: "success",
-                    message: '邀请函已发送'
-                });
+                // if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
+                    this.$message({
+                        type: "success",
+                        message: '邀请函已发送'
+                    });
+                // }else{
+                //     this.$message({
+                //         type: "warn",
+                //         message: response.resultMsg
+                //     });
+                // }
             });
             this.access = false;
         },
@@ -245,7 +306,7 @@ export default {
                 parkId: sessionStorage.getItem("parkId")
             }).then(
                 response => {
-                    this.parkNm = response.resultData.parkNm || '';
+                    this.parkNm = response.resultData.parkNm
                 },
                 err => {
                     this.$message({
@@ -265,16 +326,13 @@ export default {
     line-height: 40px!important;
     border-radius: 6px!important;
 }
-
 #IntelligentInvestment .access .el-dialog__header {
     display: none;
 }
-
 #IntelligentInvestment .access .el-dialog__body {
     overflow: hidden;
     margin: 30px 20px;
 }
-
 #IntelligentInvestment .access .el-dialog__body p:nth-of-type(1) {
     line-height: 55px;
 }
@@ -378,7 +436,6 @@ export default {
         }
     }
 }
-
 .pageList {
     width: 1020px;
     margin: 30px auto 0;

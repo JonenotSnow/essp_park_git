@@ -168,15 +168,15 @@ export default {
             if (type == 0) {
                 this.pageNum = 1;
             }
-            this.$post(this.$apiUrl.manage.queryBriefEntInfos, {
-                entNm:'',
-                pageSize: this.pageSize,
-                currentPage: this.pageNum,
-                nalEncCd: "", //行业
-                areaId: "" //地址
+            this.$post(this.$apiUrl.manage.getCstInfo, {
+                parkId: sessionStorage.getItem("parkId"),
+                pageSize : this.pageSize,
+                pageNum : this.pageNum,
+                cstNm : this.condition.cstName,
+                cstId : this.condition.cstId
             }).then(response => {
-                this.list = response.resultData && response.resultData.list || [];
-                this.totalCount = response.resultData && response.resultData.totalCount;
+                this.list = response.resultData.cstInfo;
+                this.totalCount = response.resultData.cstInfoCount;
             });
         },
         rest(){
@@ -234,7 +234,6 @@ export default {
             param.append("file", file);
             param.append("parkId", sessionStorage.getItem("parkId"));
             param.append("access_token", this.SSH.getItem('token'));
-
             this.$post(this.$apiUrl.manage.exceclImport, param).then(response => {
                 this.$message({
                     type: "success",
@@ -248,7 +247,6 @@ export default {
 };
 </script>
 <style>
-
 #requestEnterprice .toGether .el-dialog__header {
     padding: 0;
 }
@@ -262,16 +260,13 @@ export default {
     border: solid 1px #cccccc;
     border-radius: 5px;
 }
-
 #requestEnterprice .access .el-dialog__header {
     display: none;
 }
-
 #requestEnterprice .access .el-dialog__body {
     overflow: hidden;
     margin: 30px 20px;
 }
-
 #requestEnterprice .access .el-dialog__body p:nth-of-type(1) {
     line-height: 55px;
 }
@@ -390,7 +385,6 @@ export default {
         padding-bottom: 40px;
     }
 }
-
 .toGether {
     .el-dialog__body {
         padding: 0 !important;
@@ -512,5 +506,4 @@ export default {
         }
     }
 }
-
 </style>
