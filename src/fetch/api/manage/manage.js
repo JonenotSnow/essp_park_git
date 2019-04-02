@@ -52,7 +52,8 @@ export const manage = {
     agreeInvite: '/memberManage/agreeInvite', //同意邀请  
     disagreeInvite: '/memberManage/disAgreeInvite', //拒绝邀请  
 
-    queryBriefEntInfos: '/usr/entq/brief/infos', //智能推荐邀请 idyCode address parkId
+    queryBriefEntInfos: '/usr/entq/brief/infos', // idyCode address parkId   
+    getInviteByInfo: '/memberManage/getInviteInfo', //智能推荐邀请
     getInfoByEntityId: '/audit/getInfoByEntityId', //资讯审核信息 idyCode address parkId
 
 
