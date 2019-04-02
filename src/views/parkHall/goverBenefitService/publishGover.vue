@@ -457,6 +457,7 @@
                     {id: '8', name: "对外事务"},
                     {id: '9', name: "财政金融"},
                     {id: '10', name: "司法安全"},
+                    {id: '11', name: "其他"}
                 ],
 
                 action_isFree_items: [
@@ -980,7 +981,7 @@
                     this.$message.error("惠政主题长度不能大于40个字");
                     return false;
                 }
-                
+
                 if (this.formBaseList.classtType == "") {
                     this.$message.error("请选择惠政类型");
                     return false;
