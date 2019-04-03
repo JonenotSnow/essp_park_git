@@ -40,6 +40,9 @@
                             <li><a @click="getUrlPath('bdPark')">保定科技企业服务平台</a></li>
                             <li><a @click="getUrlPath('haPark')">淮安高新科技产业开发区</a></li>
                             <li><a @click="getUrlPath('green')">绿色投融资项目库</a></li>
+                            <li><a @click="getUrlPath('cqnblwh')">重庆南滨路文化产业园</a></li>
+                            <li><a @click="getUrlPath('cqxywd')">重庆西永微电子产业园区</a></li>
+                            <li><a @click="getUrlPath('zgmgxm')">中国梦谷厦门文创产业园</a></li>
                         </ul>
                     </div>
                     <div class="center-list center-list-entrance">
