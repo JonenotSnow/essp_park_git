@@ -491,11 +491,6 @@ export default {
                 this.$message.error("图片只支持jpg、png、gif等格式上传");
                 return isJPG;
             }
-            //轮播图上传不能超过五张
-            if (this.bannerDisList.length > 5){
-                this.$message.error("轮播图不能超过5张。如需更改，轮播图区域删除后再新增");
-                return;
-            } 
             if (!isLt5M) {
                 this.$message.error("上传图片大小不能超过 5MB!");
                 return isLt5M;
@@ -507,8 +502,14 @@ export default {
             var _this = this;
             _this.loading = true;
             this.$post(this.$apiUrl.upload.upload,param).then(response => {
-                if (this.curType == 'banner') {
-                    this.bannerDisList.push(response.resultData[0].url);
+                if (_this.curType == 'banner') {
+                    //轮播图上传不能超过五张
+                    if (_this.bannerDisList.length > 4 ){
+                        _this.$message.error("轮播图不能超过5张。如需更改，轮播图区域删除后再新增");
+                        return;
+                    }else{
+                        _this.bannerDisList.push(response.resultData[0].url);
+                    } 
                     _this.loading = false;
                     return
                 }

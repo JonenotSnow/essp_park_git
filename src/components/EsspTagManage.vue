@@ -71,7 +71,7 @@
                 return document.getElementsByClassName(className);
             },
             //全局标签查询
-            getMemByTblTxt(v,i){
+            getMemByTblTxt(v,i,type){
                 this.curSelectTag = v.tagId;
                 //标准版 全局标签点击切换
                 this.tagList.forEach((item,index)=>{
@@ -86,6 +86,9 @@
                         item.done = false;
                     }
                 });
+                if(type==0){
+                    this.pageNum = 1;
+                }
                 this.$post(this.$apiUrl.manage.getMemByTblTxt,{
                         parkId : window.sessionStorage.getItem("parkId"),
                         lblTxt : v.tagTxt,
