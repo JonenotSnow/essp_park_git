@@ -591,7 +591,12 @@
                 }
 
                 item.isShow = !item.isShow;
-                this.activityPhoto = item.src;
+                if (process.env.NODE_ENV === "development") {
+                    this.activityPhoto = '.'+item.src;
+                } else {
+                    this.activityPhoto = item.src;
+                }
+
                 this.itemIndex = item.index;
             },
             //  点击取消按钮
