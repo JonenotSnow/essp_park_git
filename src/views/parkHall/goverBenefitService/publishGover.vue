@@ -457,7 +457,7 @@
                     {id: '8', name: "对外事务"},
                     {id: '9', name: "财政金融"},
                     {id: '10', name: "司法安全"},
-                    {id: '11', name: "其他"}
+                    {id: '0', name: "其他"}
                 ],
 
                 action_isFree_items: [
