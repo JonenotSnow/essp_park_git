@@ -392,7 +392,7 @@ export default {
             height: 5px;
             background-color: #00a0e9;
             position: relative;
-            top: -47px;
+            top: -48px;
             width: 520px;
             left: -20px;
         }
