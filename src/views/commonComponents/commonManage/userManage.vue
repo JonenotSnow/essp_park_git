@@ -57,7 +57,7 @@
                             <img :src="it.cstLogo || '../../../assets/actdetaillogo.png'" alt="">
                             <div class='parkInfo'>
                                 <p class="cstNm">{{it.cstNm}}</p>
-                                <p class="idyTpcd">所在行业：{{it.idyTpcd | idType(it.idyTpcd)}}</p>
+                                <p class="idyTpcd">所在行业：{{it.idyTpcdNm?it.idyTpcdNm:"未知行业"}}</p>
                                 <p class="lglRprsNm">企业法人：<span>{{it.lglRprsNm}}</span>企业管理员：<span>{{it.entMgrName}}</span> 管理员联系电话：<span>{{it.entMgr}}</span></p>
                                 <p class='tbList'>
                                     <!-- <span>标签：</span> -->
