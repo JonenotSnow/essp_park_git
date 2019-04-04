@@ -69,62 +69,11 @@ export default {
 }
 </script>
 <style lang='less' scoped>
-    .infobox {
-        padding: 38px 0 0;
-        .themeTit {
-            position: relative;
-            margin-bottom: 20px;
-            text-align: center;
-            .tittext {
-                font-size: 24px;
-                line-height: 36px;
-                position: relative;
-                color: #333333;
-                &:before {
-                    content: '';
-                    position: absolute;
-                    width: 68px;
-                    left: -83px;
-                    top: 16px;
-                    border-top: 2px solid #ddd;
-                }
-                &:after {
-                    content: '';
-                    position: absolute;
-                    width: 68px;
-                    right: -83px;
-                    top: 16px;
-                    border-top: 2px solid #ddd;
+    @import "./baseInfoLess";
 
-                }
-            }
-        }
-    }
-
-    .itemCon {
-        padding-left: 100px;
-        .title {
-            width: 1050px;
-            margin: 0 auto;
-            overflow: hidden;
-            .common_titwrap {
-                border-top: none !important;
-            }
-            h3 {
-                margin: 0;
-                text-indent: 8px;
-                letter-spacing: 4.8px;
-                float: left;
-                font-size: 20px;
-                // margin-left: 55px;
-                padding: 0 12px 4px;
-                border-left: 10px solid #00a0e9;
-            }
-        }
-    }
     .contentList {
         width: 950px;
-        margin: 20px auto;
+        margin: 0 auto;
         & > p.common {
             line-height: 50px;
             overflow: hidden;

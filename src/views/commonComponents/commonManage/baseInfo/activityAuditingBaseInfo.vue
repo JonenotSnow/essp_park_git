@@ -1,4 +1,4 @@
-// 惠政基本信息
+// 活动基本信息
 <template>
     <div class="common_titwrap infobox">
         <div class="themeTit">
@@ -254,39 +254,9 @@ export default {
 }
 </script>
 <style lang='less' scoped>
+    @import "./baseInfoLess";
     .k1, .k2{
         margin-left: 70px;
-    }
-    .infobox {
-        padding: 50px 0 0;
-        .themeTit {
-            position: relative;
-            margin-bottom: 30px;
-            text-align: center;
-            .tittext {
-                font-size: 24px;
-                line-height: 36px;
-                position: relative;
-                color: #333333;
-                &:before {
-                    content: '';
-                    position: absolute;
-                    width: 68px;
-                    left: -83px;
-                    top: 15px;
-                    border-top: 2px solid #cccccc;
-                }
-                &:after {
-                    content: '';
-                    position: absolute;
-                    width: 68px;
-                    right: -83px;
-                    top: 15px;
-                    border-top: 2px solid #cccccc;
-
-                }
-            }
-        }
     }
 
     .common_titwrap {
@@ -315,13 +285,13 @@ export default {
                     font-size: 16px;
                     line-height: 40px;
                     margin-right: 10px;
-                    color: #666666;
+                    color: #666;
                     text-align: right;
                     &:nth-of-type(2) {
                         width: 700px;
                         font-size: 16px;
                         line-height: 30px;
-                        color: #333333;
+                        color: #333;
                         text-align: left;
                     }
                 }
@@ -369,7 +339,7 @@ export default {
             height: auto;
             padding-bottom: 20px;
             border-radius: 6px;
-            border: solid 1px #cccccc;
+            border: solid 1px #ccc;
             & > div {
                 width: 550px;
                 margin: 0 auto;
@@ -420,12 +390,12 @@ export default {
             .tickInfo {
                 width: 995px;
                 margin: 0 auto;
-                border: solid 1px #cccccc;
+                border: solid 1px #ccc;
                 li {
                     display: flex;
                     height: 50px;
                     line-height: 50px;
-                    border-top: solid 1px #cccccc;
+                    border-top: solid 1px #ccc;
                     span {
                         flex: 1;
                         font-size: 16px;
