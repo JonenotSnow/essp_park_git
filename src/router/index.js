@@ -1,19 +1,17 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-Vue.use(Router)
-import {parkRouter1} from "./park.js"
-import newsinfo from './newsinfo.js'
-import sciAndTechPolicy from './sciAndTechPolicy.js'
-import officeHall from './officeHall.js'
-import commonComponents from './commonComponents.js'
+Vue.use(Router);
 
-var parkToal = [];
-parkToal.push(parkRouter1,newsinfo, sciAndTechPolicy, officeHall,commonComponents);
+import isBdPark from "../util/isBdPark";
 
+import bzRouter from './bzRouter/index'
+import bdRouter from './bdRouter/index'
+
+let curRouter = isBdPark.isBdPark()?bdRouter:bzRouter || [];
 
 export default new Router({
-    mode: 'hash',
-    routes: parkToal,
+    mode: 'hash',  
+    routes:curRouter,
     scrollBehavior(to, from, savedPosition) {
         if (savedPosition) {
             return savedPosition

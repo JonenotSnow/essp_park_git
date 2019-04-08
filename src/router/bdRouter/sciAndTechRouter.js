@@ -1,17 +1,8 @@
-/*
- * @Author: Evanlian
- * @Date: 20181204 08:50:37
- * @LastEditors: Evan-lian
- * @LastEditTime: 2019-01-03 10:10:39
- * @Description: 科技政策模块核心文件，请统一风格，谢谢！！！
- */
+/***********************科技政策路由***************************/
+
 // 园区侧边栏公共路口
-const parkIndex = resolve => require(['@/views/parkHall/index'], resolve);
+const parkIndex = resolve => require(['@/views/parkHall/index'],resolve);
 const asideComRoot = resolve => require(['@/views/parkHall/asideComRoot/index'], resolve);
-
-// 科技政策模块首页
-const sciAndTechPolicyIndex = () => import ('@/views/newparkHall/sciAndTechPolicy/index').then(m => m.default)
-
 
 /**
  * 政策法规相关路由
@@ -19,12 +10,10 @@ const sciAndTechPolicyIndex = () => import ('@/views/newparkHall/sciAndTechPolic
  */
 const policieAndRegulatio = () => import ('@/views/newparkHall/sciAndTechPolicy/policieAndRegulation/policieAndRegulation/index').then(m => m.default)
 
-
 /**
  * 科技服务相关路由
  * @returns {Promise<T | never>}
  */
-const sciAndTechService = () => import ('@/views/newparkHall/sciAndTechPolicy/sciAndTechService/index').then(m => m.default)
 const technInnoCertificate = () => import ('@/views/newparkHall/sciAndTechPolicy/sciAndTechService/technInnoCertificate/index').then(m => m.default)
 const techContractRegistration = () => import ('@/views/newparkHall/sciAndTechPolicy/sciAndTechService/techContractRegistration/index').then(m => m.default)
 const seniorEnterpriseIdentify = () => import ('@/views/newparkHall/sciAndTechPolicy/sciAndTechService/seniorEnterpriseIdentify/index').then(m => m.default)
@@ -38,7 +27,6 @@ const angelInvestment = () => import ('@/views/newparkHall/sciAndTechPolicy/sciA
  * 详情页面
  */
 const detail = () => import ('@/views/newparkHall/sciAndTechPolicy/detail.vue').then(m => m.default)
-
 
 export default {
     path: '/',

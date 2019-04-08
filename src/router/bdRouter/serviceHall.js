@@ -1,12 +1,7 @@
-/*
- * @Author: Evanlian
- * @Date: 20181204 08:50:37
- * @LastEditors: Evan-lian
- * @LastEditTime: 2019-01-03 17:38:12
- * @Description: 新闻公告模块核心文件，请统一风格，谢谢！！！
- */
+/***********************办事大厅路由***************************/
+
 // 园区侧边栏公共路口
-const parkIndex = resolve => require(['@/views/parkHall/index'], resolve);
+const parkIndex = resolve => require(['@/views/parkHall/index'],resolve);
 
 // 办事大厅模块入口
 const officeHall = resolve => require(['@/views/newparkHall/officeHall'], resolve);
@@ -32,13 +27,12 @@ const innoAndEntreCompetition = resolve => require(['@/views/newparkHall/officeH
 // 高新科技企业统计管理系统---页面
 const sohtEnterprisesManagementSystem = resolve => require(['@/views/newparkHall/officeHall/sohtEnterprisesManagementSystem'], resolve);
 
-
 export default {
     path: '/',
     name: "parkHome",
     component: parkIndex,
     redirect: '/parkHome',
-    children: [
+    children:[
         {
             path: "/officeHall",
             name: "park-officeHall",
@@ -82,5 +76,5 @@ export default {
                 }
             ]
         }
-    ]
-};
+   ]
+ };
