@@ -16,7 +16,7 @@
             <div class="swiper-button-prev2" tabindex="0" role="button" aria-label="Previous slide"></div>
             <div class='swiper-pagination'></div>
         </div>
-
+    {{indexSeachKW}}
         <div class="indexSeach" v-if="isBdPark">
             <el-input placeholder="请输入搜索关键词" v-model="indexSeachKW">
                 <el-select
@@ -98,8 +98,9 @@
                         hideOnClick: true, //默认分页器会一直显示。这个选项设置为true时点击Swiper会隐藏/显示分页器。
                         clickable: true, //此参数设置为true时，点击分页器的指示点分页器会控制Swiper切换。
 
-                    },
+                    }
                 },
+                indexSeachKW:''
             }
         },
         methods: {
