@@ -74,7 +74,7 @@
             <h2></h2>
             <p>下载模板批量导入入驻企业</p>
             <p>
-                <a href="/essp_vue/static/excel/applyParkTemp.xlsx">下载模板</a>
+                <a href="/essp_park/static/excel/applyParkTemp.xlsx">下载模板</a>
                 <el-upload ref='upload' class="upload-demo" :show-file-list='false' style="" :before-upload="beforeAvatarUpload" :action='uploads'>
                     上传表格
                 </el-upload>
@@ -234,6 +234,7 @@ export default {
             param.append("file", file);
             param.append("parkId", sessionStorage.getItem("parkId"));
             param.append("access_token", this.SSH.getItem('token'));
+
             this.$post(this.$apiUrl.manage.exceclImport, param).then(response => {
                 this.$message({
                     type: "success",
@@ -247,6 +248,7 @@ export default {
 };
 </script>
 <style>
+
 #requestEnterprice .toGether .el-dialog__header {
     padding: 0;
 }
@@ -260,13 +262,16 @@ export default {
     border: solid 1px #cccccc;
     border-radius: 5px;
 }
+
 #requestEnterprice .access .el-dialog__header {
     display: none;
 }
+
 #requestEnterprice .access .el-dialog__body {
     overflow: hidden;
     margin: 30px 20px;
 }
+
 #requestEnterprice .access .el-dialog__body p:nth-of-type(1) {
     line-height: 55px;
 }
@@ -385,6 +390,7 @@ export default {
         padding-bottom: 40px;
     }
 }
+
 .toGether {
     .el-dialog__body {
         padding: 0 !important;
@@ -392,7 +398,7 @@ export default {
             height: 5px;
             background-color: #00a0e9;
             position: relative;
-            top: -48px;
+            top: -47px;
             width: 520px;
             left: -20px;
         }
@@ -506,4 +512,5 @@ export default {
         }
     }
 }
+
 </style>
