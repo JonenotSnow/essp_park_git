@@ -40,7 +40,7 @@
         <div class="headmain" id="bignav" :class="searchBarFixed == true ? 'isFixed' :''">
           <div class="auto padding esspclearfix">
             <div class="logocon">
-              <img :src="isBdPark?logoUrl:logoUrl1" alt="" :class="isBdPark?'bdlogo':''" @click="tolink();">
+              <img :src="isBdPark?logoUrl:logoUrl1" alt="" :class="isBdPark?'bdlogo':''" @click="toHome">
             </div>
 
             <div class="header_nav">
@@ -443,7 +443,7 @@ export default {
             //     query: {type, tagTxt, title}
             // });
             // window.open(routeData.href, '_blank');
-            
+
             this.$store.commit('getSearchState',{show:!this.tab})
             let _this = this;
             var type = this.typeselect; //类型
@@ -872,7 +872,7 @@ export default {
     &>i{
         cursor: pointer;
     }
-    
+
 }
 .pop{
     position: absolute;

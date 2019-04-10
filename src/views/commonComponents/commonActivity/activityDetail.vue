@@ -1408,8 +1408,8 @@
         .detaillogo {
             display: block;
             width: 100%;
-            height: 100%;
-            cursor: none;
+            min-height: 100%;
+            cursor: default;
         }
     }
 
