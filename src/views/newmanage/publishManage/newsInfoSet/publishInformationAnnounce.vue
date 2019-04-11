@@ -267,8 +267,9 @@
                 //     theme: "snow"
                 // },
                 editorOption: {
-                initialFrameHeight: 350,
-            },
+                    initialFrameHeight: 350,
+                    EDITOR_HOME_URL: this.$urlUEditor,
+                },
                 rules_01: {
                     informationTitle: [
                         {required: true, message: '请输入新闻动态标题', trigger: 'blur'},
