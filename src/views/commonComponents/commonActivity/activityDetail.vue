@@ -1430,6 +1430,7 @@
             -ms-line-clamp: 2;
             -ms-box-orient: vertical;
             font-weight: normal;
+            margin-top: 0;
         }
         .icon_p_font {
             margin-bottom: 15px;
