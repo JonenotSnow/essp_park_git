@@ -12,15 +12,15 @@
                         </p>
                         <div class="flex-between">
                             <div>
-                    <span class="statusitemsB">
-                        <label>资讯类型：</label>
-                        <em>{{classtType | typeFormat }}</em>
-                    </span>
+                                <span class="statusitemsB">
+                                    <label>资讯类型：</label>
+                                    <em>{{classtType | typeFormat }}</em>
+                                </span>
                                 <span class="center_bord"></span>
-                                <span class="statusitemsB" style="cursor: pointer" @click="enterBusiness">
-                        <label>发布机构：</label>
-                        <em>{{cstNm}}</em>
-                    </span>
+                                <span class="statusitems_float_r" style="cursor: pointer" @click="enterBusiness">
+                                    <label class="statusitems_float_l">发布机构：</label>
+                                    <em class="statusitems_float_l statusitems_float_w">{{cstNm}}</em>
+                                </span>
                             </div>
                             <span class="statusitems">
                         <div class="follow cursor guanzhu" @click="showDialog()">
@@ -391,6 +391,23 @@
             em {
                 font-style: normal;
             }
+        }
+        .statusitems_float_l {
+            float: left;
+            label {
+                line-height: 26px;
+            }
+        }
+        .statusitems_float_w {
+            width: 270px;
+            font-weight: normal;
+            font-style: normal;
+            line-height: 26px;
+        }
+        .statusitems_float_r {
+            float: right;
+            line-height: 26px;
+            color: #999;
         }
         .statusitemsB {
             width: 40%;
