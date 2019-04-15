@@ -133,8 +133,7 @@ export default {
             )
         }
         await this.getList()
-    },
-    computed: {
+        await this.getCount()
     },
     filters: {
         timerFormat(vaule){
