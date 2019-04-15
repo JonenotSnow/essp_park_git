@@ -196,26 +196,33 @@ export default {
 
     },
     methods: {
-        getValueKey(item, key) { //tab标签key值
+        //tab标签key值
+        getValueKey(item, key) {
             return item[key]
         },
-        tagClickFun(item) {  //tab标签切换事件
+        //tab标签切换事件
+        tagClickFun(item) {  
             let value = this.getValueKey(item, this.tagKey)
             this.$emit('serTagClick', value)
         },
+        //热门下拉框切换
         hotChange() {
             this.$emit('serHotChange', this.hot)
         },
+        //类型下拉框切换
         typeChange() {
             this.$emit('serTypeChange', this.type)
         },
-        dataChange() { //日期返回事件
+        //日期选择切换事件
+        dataChange() { 
             this.$emit('serDateChange', this.date)
         },
-        searchEnter() { //搜索框enter事件
+        //搜索框enter事件
+        searchEnter() { 
             this.$emit('serEnter', this.mark)
         },
-        resetClick() { //重置按钮事件
+        //重置按钮事件
+        resetClick() { 
             this.date = []
             this.mark = ''
             this.hot = ''

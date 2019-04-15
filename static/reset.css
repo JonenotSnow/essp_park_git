@@ -347,3 +347,10 @@ html {
 .editor-style {
     white-space: pre-wrap;
 }
+.container {
+    background-color: #fff;
+}
+.main {
+    width: 1200px;
+    margin: 0 auto;
+}

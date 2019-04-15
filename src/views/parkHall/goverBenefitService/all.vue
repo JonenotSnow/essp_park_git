@@ -23,12 +23,14 @@
             @serEnter="serEnter"
             @serReset="serReset"
         ></essp-list-search>
-        <div class="common_titwrap esspclearfix" style="height:400px;background: #fff;">
-            <div style="width: 300px;float: right;">
-                <essp-right-side-hot-msg 
-                    :listData="listData"
-                    @hotItemClick="hotItemClick"
-                    ></essp-right-side-hot-msg>
+        <div class="comtainer" style="height:400px;background: #fff;">
+            <div class="main esspclearfix">
+                <div style="width: 300px;float: right;">
+                    <essp-right-side-hot-msg 
+                        :listData="listData"
+                        @hotItemClick="hotItemClick"
+                        ></essp-right-side-hot-msg>
+                </div>
             </div>
         </div>
     </div>
@@ -69,7 +71,7 @@
                         title: '活动标题',
                         date: 1234565434544
                     }, {
-                        title: '活动标题活动标题活动标题活动标题',
+                        title: '活动标题活动活动标题活动活动标题活动活动标题活动活动标题活动',
                         date: 1234565434544
                     },
                 ]
