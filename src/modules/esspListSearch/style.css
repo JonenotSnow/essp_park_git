@@ -1,0 +1,60 @@
+.essp-park-search {
+  position: relative;
+  box-shadow: 0px 3px 9.7px 0.3px rgba(7, 7, 7, 0.08);
+  background-color: #fff;
+  z-index: 2;
+}
+.essp-park-search .essp-type {
+  border-bottom: solid 1px #e3e8f3;
+  padding: 30px 0;
+}
+.essp-park-search .essp-type .type-ul {
+  width: 1200px;
+  position: relative;
+  margin: 0 auto;
+}
+.essp-park-search .essp-type .type-ul li {
+  font-size: 14px;
+  padding: 8px 28px;
+  line-height: 14px;
+  float: left;
+  color: #777;
+  cursor: pointer;
+  border-radius: 3px;
+}
+.essp-park-search .essp-type .type-ul li.active,
+.essp-park-search .essp-type .type-ul li:hover {
+  background-color: #1792fd;
+  color: #fff;
+}
+.essp-park-search .essp-search {
+  padding: 15px 0;
+}
+.essp-park-search .essp-search .main {
+  width: 1200px;
+  margin: 0 auto;
+}
+.essp-park-search .essp-search .main .select,
+.essp-park-search .essp-search .main .picker {
+  float: left;
+  margin-right: 10px;
+}
+.essp-park-search .essp-search .main .select {
+  width: 160px;
+}
+.essp-park-search .essp-search .main .search {
+  float: right;
+  position: relative;
+}
+.essp-park-search .essp-search .main .search .input {
+  width: 230px;
+  height: 35px;
+  background-color: #ffffff;
+  border-radius: 3px;
+  padding: 0 10px;
+  outline: none;
+  border: solid 1px #e3e8f3;
+}
+.essp-park-search .essp-search .main .search .input:focus {
+  border: 1px solid #409EFF;
+}

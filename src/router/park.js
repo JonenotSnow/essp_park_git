@@ -269,19 +269,26 @@ export const parkRouter1 = {
             component: scanIndex,
 
         },
+        //新的
+        {
+            path: '/parkIndex/goverBene/all',
+            name: 'park-allGoverBene',
+            component: allGoverBene,
 
+        },
         {
             path: '/parkIndex/goverBeneSer',
             name: "park-goverBeneSer",
             component: asideComRoot,
             redirect: '/parkIndex/goverBene/all',
             children: [
-                {
-                    path: '/parkIndex/goverBene/all',
-                    name: 'park-allGoverBene',
-                    component: allGoverBene,
+                //旧的
+                // {
+                //     path: '/parkIndex/goverBene/all',
+                //     name: 'park-allGoverBene',
+                //     component: allGoverBene,
 
-                },
+                // },
                 {
                     path: '/parkIndex/goverBene/release',
                     name: 'park-releaseGoverBene',
