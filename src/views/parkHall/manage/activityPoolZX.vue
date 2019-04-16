@@ -133,6 +133,7 @@ export default {
             )
         }
         await this.getList()
+        await this.getCount()
     },
     computed: {
     },
