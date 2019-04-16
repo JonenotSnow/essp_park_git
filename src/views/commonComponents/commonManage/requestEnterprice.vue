@@ -20,12 +20,12 @@
                                 <input type="text" placeholder="请输入公司名称" v-model="condition.cstName">
                             </div>
                         </li>
-                        <li>
+                        <!-- <li>
                             <div>
                                 <span>统一社会信用代码：</span>
                                 <input type="text" placeholder="统一社会信用代码" v-model="condition.cstId">
                             </div>
-                        </li>
+                        </li> -->
                     </ul>
                 </div>
             </div>
