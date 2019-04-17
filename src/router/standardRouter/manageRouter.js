@@ -33,34 +33,35 @@ const addParkAudit = resolve => require(['@/pages/manage/taskPool/addParkAudit/a
 const addParkAuditDetail = resolve => require(['@/pages/manage/taskPool/addParkAudit/addParkAuditDetail.vue'],resolve);
 const addParkAuditList = resolve => require(['@/pages/manage/taskPool/addParkAudit/addParkAuditList.vue'],resolve);
 //园区管理--任务池--报名审核--活动报名审核
-const activityAudit = resolve => require(['@/pages/manage/taskPool/enrollAudit/ActivityErollAudit/activityAudit.vue'],resolve);
-const activityAuditDetail = resolve => require(['@/pages/manage/taskPool/enrollAudit/ActivityErollAudit/activityAuditDetail.vue'],resolve);
-const activityEnrollList = resolve => require(['@/pages/manage/taskPool/enrollAudit/ActivityErollAudit/activityEnrollList.vue'],resolve);
+const activityEnrollAudit = resolve => require(['@/pages/manage/taskPool/enrollAudit/ActivityEnrollAudit/activityEnrollAudit.vue'],resolve);
+const activityEnrollAuditDetail = resolve => require(['@/pages/manage/taskPool/enrollAudit/ActivityEnrollAudit/activityEnrollAuditDetail.vue'],resolve);
+const activityEnrollList = resolve => require(['@/pages/manage/taskPool/enrollAudit/ActivityEnrollAudit/activityEnrollList.vue'],resolve);
 //园区管理--任务池--报名审核--惠政申报审核
-const benevolentAudit = resolve => require(['@/pages/manage/taskPool/enrollAudit/benevolentErollAudit/benevolentAudit.vue'],resolve);
-const benevolentAuditDetail = resolve => require(['@/pages/manage/taskPool/enrollAudit/benevolentErollAudit/benevolentAuditDetail.vue'],resolve);
-const benevolentEnrollList = resolve => require(['@/pages/manage/taskPool/enrollAudit/benevolentErollAudit/benevolentEnrollList.vue'],resolve);
-//成员事物--任务池--发布审核--活动发布审核
+const benevolentEnrollAudit = resolve => require(['@/pages/manage/taskPool/enrollAudit/benevolentEnrollAudit/benevolentEnrollAudit.vue'],resolve);
+const benevolentEnrollAuditDetail = resolve => require(['@/pages/manage/taskPool/enrollAudit/benevolentEnrollAudit/benevolentEnrollAuditDetail.vue'],resolve);
+const benevolentEnrollList = resolve => require(['@/pages/manage/taskPool/enrollAudit/benevolentEnrollAudit/benevolentEnrollList.vue'],resolve);
+//园区管理--任务池--发布审核--活动发布审核
 const activityPublishAudit = resolve => require(['@/pages/manage/taskPool/publishAudit/activityPublish/activityPublishAudit.vue'],resolve);
 const activityPublishAuditDetail = resolve => require(['@/pages/manage/taskPool/publishAudit/activityPublish/activityPublishAuditDetail.vue'],resolve);
 const activityPublishList = resolve => require(['@/pages/manage/taskPool/publishAudit/activityPublish/activityPublishList.vue'],resolve);
-//成员事物--任务池--发布审核--惠政发布审核
+//园区管理--任务池--发布审核--惠政发布审核
 const benevolentPublishAuditDetail = resolve => require(['@/pages/manage/taskPool/publishAudit/benevolentPublish/benevolentPublishAuditDetail.vue'],resolve);
 const benevolentPublishList = resolve => require(['@/pages/manage/taskPool/publishAudit/benevolentPublish/benevolentPublishList.vue'],resolve);
-const benevolentPublishPublishAudit = resolve => require(['@/pages/manage/taskPool/publishAudit/benevolentPublish/benevolentPublishPublishAudit.vue'],resolve);
-//成员事物--任务池--发布审核--资讯发布审核
+const benevolentPublishAudit = resolve => require(['@/pages/manage/taskPool/publishAudit/benevolentPublish/benevolentPublishAudit.vue'],resolve);
+//园区管理--任务池--发布审核--资讯发布审核
 const informationPublishAudit = resolve => require(['@/pages/manage/taskPool/publishAudit/informationPublish/informationPublishAudit.vue'],resolve);
 const informationPublishAuditDetail = resolve => require(['@/pages/manage/taskPool/publishAudit/informationPublish/informationPublishAuditDetail.vue'],resolve);
 const informationPublishList = resolve => require(['@/pages/manage/taskPool/publishAudit/informationPublish/informationPublishList.vue'],resolve);
 
 //园区管理--园区设置--入驻申请表
-const applicationForAdmission = resolve => require(['@/pages/manage/parkStup/applicationForAdmission/applicationForAdmission.vue'],resolve);
+const application = resolve => require(['@/pages/manage/parkStup/application/application.vue'],resolve);
 //园区管理--园区设置--banner设置
 const bannerSet = resolve => require(['@/pages/manage/parkStup/bannerSettings/bannerSet.vue'],resolve);
 //园区管理--园区设置--基本信息及模板设置
 const baseInfoSettings = resolve => require(['@/pages/manage/parkStup/overviewSettings/baseInfoSettings.vue'],resolve);
 const moduleSelect = resolve => require(['@/pages/manage/parkStup/overviewSettings/moduleSelect.vue'],resolve);
 const setModuleOne = resolve => require(['@/pages/manage/parkStup/overviewSettings/setModuleOne.vue'],resolve);
+const setModuleTwo = resolve => require(['@/pages/manage/parkStup/overviewSettings/setModuleTwo.vue'],resolve);
 
 //园区管理--我的事项--我的报名
 const myEnrollActivty = resolve => require(['@/pages/manage/myBusiness/myEnroll/myEnrollActivty.vue'],resolve);
@@ -78,16 +79,316 @@ export default {
     redirect: '/parkHome',
     children:[
         {
-            path: '/parkHall/manage/manageMain',
+            path: '/pages/manage/manageMain',
             name: "park-manageMain",
             component: asideComRoot,
             children: [
+                //主页
                 {
-                    path: "/parkHall/manage/manageMain",
+                    path: "/pages/manage/manageMain",
                     name: "park-manageMain",
                     component: manageMain
+                },
+                //成员管理
+                {
+                    path: "/pages/manage/userManage/memberList",
+                    name: "park-memberList",
+                    component: memberList
+                },
+                //内容管理
+                {
+                    path: "/pages/manage/contentManage",
+                    name: "park-activityDraft",
+                    component: activityDraft,
+                    redirect: '/pages/manage/contentManage/activityDraft',
+                    children:[
+                        //内容管理--活动管理
+                        {
+                            path: "/pages/manage/contentManage/activityDraft",
+                            name: "park-activityDraft",
+                            component: activityDraft,
+                            children:[
+                                {
+                                    path: "/pages/manage/contentManage/activityDraft",
+                                    name: "park-activityDraft",
+                                    component: benevolentDraft
+                                },
+                                {
+                                    path: "/pages/manage/contentManage/activityPublished",
+                                    name: "park-activityPublished",
+                                    component: activityPublished
+                                },
+                            ]
+                        },
+                        //内容管理--惠政管理
+                        {
+                            path: "/pages/manage/contentManage/benevolentDraft",
+                            name: "park-benevolentDraft",
+                            component: benevolentDraft,
+                            children:[
+                                {
+                                    path: "/pages/manage/contentManage/benevolentDraft",
+                                    name: "park-benevolentDraft",
+                                    component: benevolentDraft
+                                },
+                                {
+                                    path: "/pages/manage/contentManage/benevolentPublished",
+                                    name: "park-benevolentPublished",
+                                    component: benevolentPublished
+                                },
+                            ]
+                        },
+                        //内容管理--资讯管理
+                        {
+                            path: "/pages/manage/contentManage/informationDraft",
+                            name: "park-informationDraft",
+                            component: informationDraft,
+                            children:[
+                                {
+                                    path: "/pages/manage/contentManage/informationDraft",
+                                    name: "park-informationDraft",
+                                    component: informationDraft
+                                },
+                                {
+                                    path: "/pages/manage/contentManage/informationPublished",
+                                    name: "park-informationPublished",
+                                    component: informationPublished
+                                },
+                            ]
+                        },
+                        //内容管理--通知公告管理
+                        {
+                            path: "/pages/manage/contentManage/noticeDraft",
+                            name: "park-noticeDraft",
+                            component: noticeDraft,
+                            children:[
+                                {
+                                    path: "/pages/manage/contentManage/noticeDraft",
+                                    name: "park-noticeDraft",
+                                    component: noticeDraft
+                                },
+                                {
+                                    path: "/pages/manage/contentManage/noticePublished",
+                                    name: "park-noticePublished",
+                                    component: noticePublished
+                                },
+                            ]
+                        }
+                    ]
+                },
+                //任务池
+                {
+                    path: "/pages/manage/taskPool/addParkAuditList",
+                    name: "park-addParkAuditList",
+                    component: addParkAuditList,
+                    children:[
+                        //任务池--入园审核
+                        {
+                            path: "/pages/manage/taskPool/addParkAuditList",
+                            name: "park-addParkAuditList",
+                            component: addParkAuditList
+                        },
+                        //任务池--发布审核
+                        {
+                            path: "/pages/manage/taskPool/activityPublishList",
+                            name: "park-activityPublishList",
+                            component: activityPublishList,
+                            children:[
+                                {
+                                    path: "/pages/manage/taskPool/activityPublishList",
+                                    name: "park-activityPublishList",
+                                    component: activityPublishList
+                                },
+                                {
+                                    path: "/pages/manage/taskPool/benevolentPublishList",
+                                    name: "park-benevolentPublishList",
+                                    component: benevolentPublishList
+                                },
+                                {
+                                    path: "/pages/manage/taskPool/informationPublishList",
+                                    name: "park-informationPublishList",
+                                    component: informationPublishList
+                                },
+                            ]
+                        },
+                        //任务池--报名审核
+                        {
+                            path: "/pages/manage/taskPool/activityEnrollList",
+                            name: "park-activityEnrollList",
+                            component: activityEnrollList,
+                            children:[
+                                {
+                                    path: "/pages/manage/taskPool/activityEnrollList",
+                                    name: "park-activityEnrollList",
+                                    component: activityEnrollList
+                                },
+                                {
+                                    path: "/pages/manage/taskPool/benevolentEnrollList",
+                                    name: "park-benevolentEnrollList",
+                                    component: benevolentEnrollList
+                                },
+                            ]
+                        }
+                    ]
+                },
+                //园区设置
+                {
+                    path: "/pages/manage/parkStup/application",
+                    name: "park-application",
+                    component: application,
+                    children:[
+                        {
+                            path: "/pages/manage/parkStup/application",
+                            name: "park-application",
+                            component: application
+                        },
+                        {
+                            path: "/pages/manage/parkStup/bannerSet",
+                            name: "park-bannerSet",
+                            component: bannerSet
+                        },
+                        {
+                            path: "/pages/manage/parkStup/baseInfoSettings",
+                            name: "park-baseInfoSettings",
+                            component: baseInfoSettings
+                        },
+                        {
+                            path: "/pages/manage/parkStup/moduleSelect",
+                            name: "park-moduleSelect",
+                            component: moduleSelect
+                        }
+                    ]
+                },
+                //我的事项
+                {
+                    path: "/pages/manage/myBusiness/myEnroll",
+                    name: "park-myEnrollActivty",
+                    component: myEnrollActivty,
+                    children:[
+                        //我的报名
+                        {
+                            path: "/pages/manage/myBusiness/myEnrollActivty",
+                            name: "park-myEnrollActivty",
+                            component: myEnrollActivty,
+                            children:[
+                                {
+                                    path: "/pages/manage/myBusiness/myEnrollActivty",
+                                    name: "park-myEnrollActivty",
+                                    component: myEnrollActivty
+                                },
+                                {
+                                    path: "/pages/manage/myBusiness/myEnrollbenevolent",
+                                    name: "park-myEnrollbenevolent",
+                                    component: myEnrollbenevolent
+                                }
+                            ]
+                        },
+                        //我的关注
+                        {
+                            path: "/pages/manage/myBusiness/myFollowActivty",
+                            name: "park-myFollowActivty",
+                            component: myFollowActivty,
+                            children:[
+                                {
+                                    path: "/pages/manage/myBusiness/myFollowActivty",
+                                    name: "park-myFollowActivty",
+                                    component: myFollowActivty
+                                },
+                                {
+                                    path: "/pages/manage/myBusiness/myFollowbenevolent",
+                                    name: "park-myFollowbenevolent",
+                                    component: myFollowbenevolent
+                                },
+                                {
+                                    path: "/pages/manage/myBusiness/myFollowInformation",
+                                    name: "park-myFollowInformation",
+                                    component: myFollowInformation
+                                }
+                            ]
+                        }
+                    ]
                 }
             ]
+        },
+        {
+            path: "/pages/manage/userManage/immediate",
+            name: "park-immediate",
+            component: immediate
+        },
+        {
+            path: "/pages/manage/userManage/intelligent",
+            name: "park-intelligent",
+            component: intelligent
+        },
+        {
+            path: "/pages/manage/taskPool/addParkAudit",
+            name: "park-addParkAudit",
+            component: addParkAudit
+        },
+        {
+            path: "/pages/manage/taskPool/addParkAuditDetail",
+            name: "park-addParkAuditDetail",
+            component: addParkAuditDetail
+        },
+        {
+            path: "/pages/manage/taskPool/activityEnrollAudit",
+            name: "park-activityEnrollAudit",
+            component: activityEnrollAudit
+        },
+        {
+            path: "/pages/manage/taskPool/activityEnrollAuditDetail",
+            name: "park-activityEnrollAuditDetail",
+            component: activityEnrollAuditDetail
+        },
+        {
+            path: "/pages/manage/taskPool/benevolentEnrollAudit",
+            name: "park-benevolentEnrollAudit",
+            component: benevolentEnrollAudit
+        },
+        {
+            path: "/pages/manage/taskPool/benevolentEnrollAuditDetail",
+            name: "park-benevolentEnrollAuditDetail",
+            component: benevolentEnrollAuditDetail
+        },
+        {
+            path: "/pages/manage/taskPool/activityPublishAudit",
+            name: "park-activityPublishAudit",
+            component: activityPublishAudit
+        },
+        {
+            path: "/pages/manage/taskPool/activityPublishAuditDetail",
+            name: "park-activityPublishAuditDetail",
+            component: activityPublishAuditDetail
+        },
+        {
+            path: "/pages/manage/taskPool/benevolentPublishAudit",
+            name: "park-benevolentPublishAudit",
+            component: benevolentPublishAudit
+        },
+        {
+            path: "/pages/manage/taskPool/benevolentPublishAuditDetail",
+            name: "park-benevolentPublishAuditDetail",
+            component: benevolentPublishAuditDetail
+        },
+        {
+            path: "/pages/manage/taskPool/informationPublishAudit",
+            name: "park-informationPublishAudit",
+            component: informationPublishAudit
+        },
+        {
+            path: "/pages/manage/taskPool/informationPublishAuditDetail",
+            name: "park-informationPublishAuditDetail",
+            component: informationPublishAuditDetail
+        },
+        {
+            path: "/pages/manage/taskPool/setModuleOne",
+            name: "park-setModuleOne",
+            component: setModuleOne
+        },
+        {
+            path: "/pages/manage/taskPool/setModuleTwo",
+            name: "park-setModuleTwo",
+            component: setModuleTwo
         }
    ]
  };

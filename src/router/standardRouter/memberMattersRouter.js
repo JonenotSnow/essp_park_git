@@ -18,8 +18,8 @@ const informationDraft = resolve => require(['@/pages/memberMatters/memberConten
 const informationPublished = resolve => require(['@/pages/memberMatters/memberContent/informationManage/informationPublished.vue'],resolve);
 
 //成员事物--任务池--活动报名审核
-const activityAudit = resolve => require(['@/pages/memberMatters/memberTaskPool/enrollAudit/activityAudit.vue'],resolve);
-const activityAuditDetail = resolve => require(['@/pages/memberMatters/memberTaskPool/enrollAudit/activityAuditDetail.vue'],resolve);
+const activityEnrollAudit = resolve => require(['@/pages//memberMatters//memberTaskPool//enrollAudit/activityEnrolllAudit.vue'],resolve);
+const activityEnrollAuditDetail = resolve => require(['@/pages/memberMatters/memberTaskPool/enrollAudit/activityEnrollAuditDetail.vue'],resolve);
 const activityEnrollList = resolve => require(['@/pages/memberMatters/memberTaskPool/enrollAudit/activityEnrollList.vue'],resolve);
 
 //成员事物--任务池--发布审核--活动发布审核
@@ -47,18 +47,182 @@ export default {
     component: parkIndex,
     redirect: '/parkHome',
     children:[
-        // {
-        //     path: '/parkHall/memberMatters/baseInfo',
-        //     name: "park-memberMatters",
-        //     component: asideComRoot,
-        //     redirect: '/parkHall/memberMatters/baseInfo',
-        //     children: [
-        //         {
-        //             path: "/parkHall/memberMatters/baseInfo",
-        //             name: "park-baseInfo",
-        //             component: baseInfo
-        //         }
-        //     ]
-        // }
+        
+        {
+            path: '/pages/manage/memberMain',
+            name: "park-memberMain",
+            component: asideComRoot,
+            children: [
+                //主页
+                {
+                    path: "/pages/manage/memberMain",
+                    name: "park-memberMain",
+                    component: memberMain
+                },
+                //内容管理
+                {
+                    path: "/pages/manage/contentManage",
+                    name: "park-activityDraft",
+                    component: activityDraft,
+                    redirect: '/pages/manage/contentManage/activityDraft',
+                    children:[
+                        //内容管理--活动管理
+                        {
+                            path: "/pages/manage/contentManage/activityDraft",
+                            name: "park-activityDraft",
+                            component: activityDraft,
+                            children:[
+                                {
+                                    path: "/pages/manage/contentManage/activityDraft",
+                                    name: "park-activityDraft",
+                                    component: activityDraft
+                                },
+                                {
+                                    path: "/pages/manage/contentManage/activityPublished",
+                                    name: "park-activityPublished",
+                                    component: activityPublished
+                                },
+                            ]
+                        },
+                        //内容管理--资讯管理
+                        {
+                            path: "/pages/manage/contentManage/informationDraft",
+                            name: "park-informationDraft",
+                            component: informationDraft,
+                            children:[
+                                {
+                                    path: "/pages/manage/contentManage/informationDraft",
+                                    name: "park-informationDraft",
+                                    component: informationDraft
+                                },
+                                {
+                                    path: "/pages/manage/contentManage/informationPublished",
+                                    name: "park-informationPublished",
+                                    component: informationPublished
+                                },
+                            ]
+                        },
+                    ]
+                },
+                //任务池
+                {
+                    path: "/pages/manage/taskPool/activityPublishList",
+                    name: "park-activityPublishList",
+                    component: activityPublishList,
+                    children:[
+                        //任务池--发布审核
+                        {
+                            path: "/pages/manage/taskPool/activityPublishList",
+                            name: "park-activityPublishList",
+                            component: activityPublishList,
+                            children:[
+                                {
+                                    path: "/pages/manage/taskPool/activityPublishList",
+                                    name: "park-activityPublishList",
+                                    component: activityPublishList
+                                },
+                                {
+                                    path: "/pages/manage/taskPool/informationPublishList",
+                                    name: "park-informationPublishList",
+                                    component: informationPublishList
+                                },
+                            ]
+                        },
+                        //任务池--报名审核
+                        {
+                            path: "/pages/manage/taskPool/activityEnrollList",
+                            name: "park-activityEnrollList",
+                            component: activityEnrollList,
+                            children:[
+                                {
+                                    path: "/pages/manage/taskPool/activityEnrollList",
+                                    name: "park-activityEnrollList",
+                                    component: activityEnrollList
+                                }
+                            ]
+                        }
+                    ]
+                },
+                //我的事项
+                {
+                    path: "/pages/manage/myBusiness/myEnroll",
+                    name: "park-myEnrollActivty",
+                    component: myEnrollActivty,
+                    children:[
+                        //我的报名
+                        {
+                            path: "/pages/manage/myBusiness/myEnrollActivty",
+                            name: "park-myEnrollActivty",
+                            component: myEnrollActivty,
+                            children:[
+                                {
+                                    path: "/pages/manage/myBusiness/myEnrollActivty",
+                                    name: "park-myEnrollActivty",
+                                    component: myEnrollActivty
+                                },
+                                {
+                                    path: "/pages/manage/myBusiness/myEnrollbenevolent",
+                                    name: "park-myEnrollbenevolent",
+                                    component: myEnrollbenevolent
+                                }
+                            ]
+                        },
+                        //我的关注
+                        {
+                            path: "/pages/manage/myBusiness/myFollowActivty",
+                            name: "park-myFollowActivty",
+                            component: myFollowActivty,
+                            children:[
+                                {
+                                    path: "/pages/manage/myBusiness/myFollowActivty",
+                                    name: "park-myFollowActivty",
+                                    component: myFollowActivty
+                                },
+                                {
+                                    path: "/pages/manage/myBusiness/myFollowbenevolent",
+                                    name: "park-myFollowbenevolent",
+                                    component: myFollowbenevolent
+                                },
+                                {
+                                    path: "/pages/manage/myBusiness/myFollowInformation",
+                                    name: "park-myFollowInformation",
+                                    component: myFollowInformation
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            path: "/pages/manage/taskPool/activityEnrollAudit",
+            name: "park-activityEnrollAudit",
+            component: activityEnrollAudit
+        },
+        {
+            path: "/pages/manage/taskPool/activityEnrollAuditDetail",
+            name: "park-activityEnrollAuditDetail",
+            component: activityEnrollAuditDetail
+        },
+        {
+            path: "/pages/manage/taskPool/activityPublishAudit",
+            name: "park-activityPublishAudit",
+            component: activityPublishAudit
+        },
+        {
+            path: "/pages/manage/taskPool/activityPublishAuditDetail",
+            name: "park-activityPublishAuditDetail",
+            component: activityPublishAuditDetail
+        },
+        {
+            path: "/pages/manage/taskPool/informationPublishAudit",
+            name: "park-informationPublishAudit",
+            component: informationPublishAudit
+        },
+        {
+            path: "/pages/manage/taskPool/informationPublishAuditDetail",
+            name: "park-informationPublishAuditDetail",
+            component: informationPublishAuditDetail
+        }
    ]
  };

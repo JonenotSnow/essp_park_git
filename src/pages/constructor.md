@@ -92,9 +92,9 @@
 
 ### 	parkStup                            园区设置
 
-#### 		applicationForAdmission    
+#### 		application    
 
-##### 				applicationForAdmission  入驻申请表
+##### 				application  入驻申请表
 
 #### 		bannerSettings      
 
