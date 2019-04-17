@@ -29,10 +29,18 @@
                     <essp-list-item
                         v-for="(item, index) in listData"
                         :key="index"
+                        :img="item.titleImg"
+                        :approved-num="item.approvedNum"
+                        :title="item.policyTitle"
+                        :create-time="item.createTime"
+                        :activity-label-list="item.tagsTxt"
+                        :cst-nm="item.cstNm"
+                        :view-time="item.viewTime"
+                        :count-follower="item.countFollower"
+                        :info-detail="item.infoDetail"
                     ></essp-list-item>
                 </div>
                 <div class="right-side">
-
                     <essp-right-side-hot-msg 
                         :listData="sideListData"
                         @hotItemClick="hotItemClick"
