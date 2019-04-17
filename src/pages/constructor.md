@@ -2,7 +2,7 @@
 
 ## activity                                 园区活动
 
-### 	index		                        园区活动入口
+### 	allActivity		                    园区活动入口
 
 ### 	activityDetail	
 
@@ -12,8 +12,8 @@
 
 ## benevolent                               园区惠政
 
-### 	index                               园区惠政
-
+### 	allBenevolent                       园区惠政
+###     benevolentSetDetail                 惠政设置说明
 ### 	benevolentDetail   
 
 #### 		benevolentDetail                惠政详情
@@ -36,7 +36,7 @@
 
 ## information                              园区咨询
 
-### 	index                               园区咨询入口
+### 	allInformation                      园区咨询入口
 
 ### 	informationDetail                   园区咨询详情
 
@@ -70,7 +70,7 @@
 
 ##### 
 
-### 	memberMain                          园区管理主页
+### 	manageMain                          园区管理主页
 
 #### 		index		                    主页入口
 

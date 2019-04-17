@@ -4,14 +4,12 @@
 */
 
 // 园区侧边栏公共路口
-const parkIndex = resolve => require(['@/views/parkHall/index'],resolve);
- //概览暂无右侧菜单
-// const asideComRoot = resolve => require(['@/views/parkHall/asideComRoot/index'],resolve);
+const parkIndex = resolve => require(['@/pages/index'],resolve);
 
 // 园区预览
-const scanIndex = resolve => require(['@/views/commonComponents/commonPreview/scanIndex'],resolve);
+const scanIndex = resolve => require(['@/pages/overView/index.vue'],resolve);
 //申请入驻园区
-const requestAddPark = resolve => require(['@/views/commonComponents/commonManage/requestAddPark'],resolve);
+const requestAddPark = resolve => require(['@/pages/overView/requestAddPark.vue'],resolve);
 
 export default {
     path: '/',

@@ -4,9 +4,9 @@ import benevolentRouter from './benevolentRouter';
 import homePageRouter from './homePageRouter';
 import informationRouter from './informationRouter';
 import manageRouter from './manageRouter';
-import memberMatters from './memberMatters';
+import memberMattersRouter from './memberMattersRouter';
 import overViewRouter from './overViewRouter';
-import publicRental from './publicRental';
+import publicRentalRouter from './publicRentalRouter';
 
 let bzRouter = [];
 bzRouter.push(
@@ -15,9 +15,9 @@ bzRouter.push(
     homePageRouter,
     informationRouter,
     manageRouter,
-    memberMatters,
+    memberMattersRouter,
     overViewRouter,
-    publicRental
+    publicRentalRouter
 );
 
 export default bzRouter;
