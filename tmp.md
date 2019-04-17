@@ -59,3 +59,4 @@
 ├── static                          纯静态资源，不会被wabpack构建。
 │  │  ├── cdn                  		cdn预加载
 │  │  └── reset.css                 重置文件css
+
