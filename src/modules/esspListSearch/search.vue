@@ -45,10 +45,11 @@
                     @change="dataChange"
                     :picker-options="pickerOptions2">
                 </el-date-picker>
-                <el-button @click="resetClick" size="medium">重置</el-button>
+                <el-button @click="searchClick" type="primary" size="medium">查询</el-button>
+                <button class="reset-btn" @click="resetClick">重置</button>
                 <div class="search">
-                    <input type="text" class="input" @keyup.enter="searchEnter" placeholder="请输入搜索内容" v-model="mark" />
-                    <i></i>
+                    <input type="text" class="input" @focus="searchEnter" placeholder="请输入搜索内容" v-model="mark" />
+                    <i class="iconfont search-icon" @click="searchClick">&#xe63a;</i>
                 </div>
             </div>
         </div>
@@ -228,6 +229,10 @@ export default {
             this.hot = ''
             this.type = ''
             this.$emit('serReset')
+        },
+        //查询事件
+        searchClick() { 
+            this.$emit('serGetList')
         },
         
     }

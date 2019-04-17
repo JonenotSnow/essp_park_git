@@ -51,13 +51,13 @@ export default {
     padding: 30px 0;
     margin-top: -1px;
     .item-imgbox {
-        width: 145px;
+        width: 135px;
         .img {
             border: none;
         }
     }
     .item-intor {
-        width: 160px;
+        padding-left: 10px;
         .item-title {
             margin: 0;
             font-size: 16px;

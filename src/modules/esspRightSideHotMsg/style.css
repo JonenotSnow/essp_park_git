@@ -22,4 +22,7 @@
   color: #999;
   outline: none;
   cursor: pointer;
+  background: url(../../assets/imgs/home/refresh.png) left center no-repeat;
+  background-size: 13px auto;
+  padding-left: 20px;
 }

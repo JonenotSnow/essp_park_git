@@ -15,7 +15,6 @@ export default {
     methods: {
         serTagClick(val) { //类型切换事件
             this.tagModel = val
-            this.getList()
         },
         serHotChange(val) {
             this.hotModel = val
@@ -25,7 +24,6 @@ export default {
         },
         serDateChange (val) { // 日期
             this.dateModel = val
-            this.getList()
         },
         serReset() { //重置
             this.tagModel = ''
@@ -33,11 +31,12 @@ export default {
             this.typeModel = ''
             this.dateModel = []
             this.markModel = ''
-            this.getList()
 
         },
         serEnter(val){ //输入框搜索
             this.markModel = val
+        },
+        serGetList() {
             this.getList()
         },
         getList() { //获取列表初始化
