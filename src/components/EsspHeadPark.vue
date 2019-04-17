@@ -296,7 +296,12 @@ export default {
         },
         login() {},
         toHome() {
-            this.windowOpenNoParams("/");
+            if(this.isBdPark) {
+                this.tolink();
+            } else {
+                this.windowOpenNoParams("/");
+            }
+
         },
         tolink() {
             this.$router.push("/parkHome");
