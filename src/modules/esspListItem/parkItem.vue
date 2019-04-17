@@ -8,7 +8,7 @@
             </div>
         </div>
         <div class="inter">
-            <h3 class="title">{{title}}</h3>
+            <h3 class="title"><i class="type">{{type}}</i>{{title}}</h3>
             <div class="spread">
                 <span class="icon-box"><i class="icon iconfont icon-liulan"></i>{{viewTime}}</span>
                 <span class="icon-box"><i class="icon iconfont icon-collect2"></i>{{countFollower}}</span>
@@ -30,47 +30,51 @@ import imgfault from "@/assets/error.png";
 export default {
     name: "单个详情组件",
     props: {
-        img: {
-            type: String,
-            default: ''
-        }, 
-        title: {
+        img: { //图片
             type: String,
             default: ''
         },
-        approvedNum: {
+        type: { //状态类型
+            type: String,
+            default: ''
+        },
+        title: { //标题
+            type: String,
+            default: ''
+        },
+        approvedNum: { //申报个数
             type: Number,
             default: null
         },
-        createTime: {
+        createTime: { //创建时间
             type: Number,
             default: null
         },
-        activityLabelList: {
+        activityLabelList: { //标签数组
             type: Array,
             default: () => {
                 return []
             }
         },
-        cstNm: {
+        cstNm: { //公司地址
             type: String,
             default: ''
         },
-        viewTime: {
+        viewTime: { //浏览数
             type: Number,
             default: null
         },
-        countFollower: {
+        countFollower: { //关注数
             type: Number,
             default: null
         },
-        infoDetail: {
+        infoDetail: { //内容详情
             type: String,
             default: ''
         }
     },
     methods: {
-        setDefaultImg(event) {
+        setDefaultImg(event) { //图片默认设置
             var ele = event.currentTarget;
                 ele.src = imgfault;
                 ele.title = "默认配图";

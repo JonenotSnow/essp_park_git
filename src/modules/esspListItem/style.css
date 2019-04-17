@@ -55,7 +55,8 @@
 .essp-list-item-detail .inter .info {
   font-size: 14px;
   color: #999;
-  padding: 3px 0;
+  line-height: 20px;
+  height: 20px;
 }
 .essp-list-item-detail .inter .message {
   color: #999;
