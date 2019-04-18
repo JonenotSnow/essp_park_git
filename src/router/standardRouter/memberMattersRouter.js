@@ -49,36 +49,36 @@ export default {
     children:[
         
         {
-            path: '/pages/manage/memberMain',
+            path: '/pages/memberMatters/memberMain',
             name: "park-memberMain",
             component: asideComRoot,
             children: [
                 //主页
                 {
-                    path: "/pages/manage/memberMain",
+                    path: "/pages/memberMatters/memberMain",
                     name: "park-memberMain",
                     component: memberMain
                 },
                 //内容管理
                 {
-                    path: "/pages/manage/contentManage",
+                    path: "/pages/memberMatters/contentManage",
                     name: "park-activityDraft",
                     component: activityDraft,
-                    redirect: '/pages/manage/contentManage/activityDraft',
+                    redirect: '/pages/memberMatters/contentManage/activityDraft',
                     children:[
                         //内容管理--活动管理
                         {
-                            path: "/pages/manage/contentManage/activityDraft",
+                            path: "/pages/memberMatters/contentManage/activityDraft",
                             name: "park-activityDraft",
                             component: activityDraft,
                             children:[
                                 {
-                                    path: "/pages/manage/contentManage/activityDraft",
+                                    path: "/pages/memberMatters/contentManage/activityDraft",
                                     name: "park-activityDraft",
                                     component: activityDraft
                                 },
                                 {
-                                    path: "/pages/manage/contentManage/activityPublished",
+                                    path: "/pages/memberMatters/contentManage/activityPublished",
                                     name: "park-activityPublished",
                                     component: activityPublished
                                 },
@@ -86,17 +86,17 @@ export default {
                         },
                         //内容管理--资讯管理
                         {
-                            path: "/pages/manage/contentManage/informationDraft",
+                            path: "/pages/memberMatters/contentManage/informationDraft",
                             name: "park-informationDraft",
                             component: informationDraft,
                             children:[
                                 {
-                                    path: "/pages/manage/contentManage/informationDraft",
+                                    path: "/pages/memberMatters/contentManage/informationDraft",
                                     name: "park-informationDraft",
                                     component: informationDraft
                                 },
                                 {
-                                    path: "/pages/manage/contentManage/informationPublished",
+                                    path: "/pages/memberMatters/contentManage/informationPublished",
                                     name: "park-informationPublished",
                                     component: informationPublished
                                 },
@@ -106,23 +106,23 @@ export default {
                 },
                 //任务池
                 {
-                    path: "/pages/manage/taskPool/activityPublishList",
+                    path: "/pages/memberMatters/memberTaskPool/activityPublishList",
                     name: "park-activityPublishList",
                     component: activityPublishList,
                     children:[
                         //任务池--发布审核
                         {
-                            path: "/pages/manage/taskPool/activityPublishList",
+                            path: "/pages/memberMatters/memberTaskPool/activityPublishList",
                             name: "park-activityPublishList",
                             component: activityPublishList,
                             children:[
                                 {
-                                    path: "/pages/manage/taskPool/activityPublishList",
+                                    path: "/pages/memberMatters/memberTaskPool/activityPublishList",
                                     name: "park-activityPublishList",
                                     component: activityPublishList
                                 },
                                 {
-                                    path: "/pages/manage/taskPool/informationPublishList",
+                                    path: "/pages/memberMatters/memberTaskPool/informationPublishList",
                                     name: "park-informationPublishList",
                                     component: informationPublishList
                                 },
@@ -130,12 +130,12 @@ export default {
                         },
                         //任务池--报名审核
                         {
-                            path: "/pages/manage/taskPool/activityEnrollList",
+                            path: "/pages/memberMatters/memberTaskPool/activityEnrollList",
                             name: "park-activityEnrollList",
                             component: activityEnrollList,
                             children:[
                                 {
-                                    path: "/pages/manage/taskPool/activityEnrollList",
+                                    path: "/pages/memberMatters/memberTaskPool/activityEnrollList",
                                     name: "park-activityEnrollList",
                                     component: activityEnrollList
                                 }
@@ -145,23 +145,23 @@ export default {
                 },
                 //我的事项
                 {
-                    path: "/pages/manage/myBusiness/myEnroll",
+                    path: "/pages/memberMatters/myBusiness/myEnroll",
                     name: "park-myEnrollActivty",
                     component: myEnrollActivty,
                     children:[
                         //我的报名
                         {
-                            path: "/pages/manage/myBusiness/myEnrollActivty",
+                            path: "/pages/memberMatters/myBusiness/myEnrollActivty",
                             name: "park-myEnrollActivty",
                             component: myEnrollActivty,
                             children:[
                                 {
-                                    path: "/pages/manage/myBusiness/myEnrollActivty",
+                                    path: "/pages/memberMatters/myBusiness/myEnrollActivty",
                                     name: "park-myEnrollActivty",
                                     component: myEnrollActivty
                                 },
                                 {
-                                    path: "/pages/manage/myBusiness/myEnrollbenevolent",
+                                    path: "/pages/memberMatters/myBusiness/myEnrollbenevolent",
                                     name: "park-myEnrollbenevolent",
                                     component: myEnrollbenevolent
                                 }
@@ -169,22 +169,22 @@ export default {
                         },
                         //我的关注
                         {
-                            path: "/pages/manage/myBusiness/myFollowActivty",
+                            path: "/pages/memberMatters/myBusiness/myFollowActivty",
                             name: "park-myFollowActivty",
                             component: myFollowActivty,
                             children:[
                                 {
-                                    path: "/pages/manage/myBusiness/myFollowActivty",
+                                    path: "/pages/memberMatters/myBusiness/myFollowActivty",
                                     name: "park-myFollowActivty",
                                     component: myFollowActivty
                                 },
                                 {
-                                    path: "/pages/manage/myBusiness/myFollowbenevolent",
+                                    path: "/pages/memberMatters/myBusiness/myFollowbenevolent",
                                     name: "park-myFollowbenevolent",
                                     component: myFollowbenevolent
                                 },
                                 {
-                                    path: "/pages/manage/myBusiness/myFollowInformation",
+                                    path: "/pages/memberMatters/myBusiness/myFollowInformation",
                                     name: "park-myFollowInformation",
                                     component: myFollowInformation
                                 }
@@ -195,32 +195,32 @@ export default {
             ]
         },
         {
-            path: "/pages/manage/taskPool/activityEnrollAudit",
+            path: "/pages/memberMatters/memberTaskPool/activityEnrollAudit",
             name: "park-activityEnrollAudit",
             component: activityEnrollAudit
         },
         {
-            path: "/pages/manage/taskPool/activityEnrollAuditDetail",
+            path: "/pages/memberMatters/memberTaskPool/activityEnrollAuditDetail",
             name: "park-activityEnrollAuditDetail",
             component: activityEnrollAuditDetail
         },
         {
-            path: "/pages/manage/taskPool/activityPublishAudit",
+            path: "/pages/memberMatters/memberTaskPool/activityPublishAudit",
             name: "park-activityPublishAudit",
             component: activityPublishAudit
         },
         {
-            path: "/pages/manage/taskPool/activityPublishAuditDetail",
+            path: "/pages/memberMatters/memberTaskPool/activityPublishAuditDetail",
             name: "park-activityPublishAuditDetail",
             component: activityPublishAuditDetail
         },
         {
-            path: "/pages/manage/taskPool/informationPublishAudit",
+            path: "/pages/memberMatters/memberTaskPool/informationPublishAudit",
             name: "park-informationPublishAudit",
             component: informationPublishAudit
         },
         {
-            path: "/pages/manage/taskPool/informationPublishAuditDetail",
+            path: "/pages/memberMatters/memberTaskPool/informationPublishAuditDetail",
             name: "park-informationPublishAuditDetail",
             component: informationPublishAuditDetail
         }
