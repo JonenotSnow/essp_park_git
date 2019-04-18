@@ -1,9 +1,11 @@
 .essp-list-item-detail {
-    padding: 25px 0;
+    padding: 25px 0 15px;
     border-top: 1px solid #e3e8f3;
     border-bottom: 1px solid #e3e8f3;
     display: flex;
     flex-direction:row;
+    margin-top: -1px;
+    align-items: flex-start;
     &:hover {
         .item-left-img{
             margin-left: 20px;
@@ -18,6 +20,8 @@
         cursor: pointer;
         img {
             min-height: 90px;
+            max-height: 100px;
+            vertical-align: top;
         }
         .mark {
             display: block;
@@ -32,10 +36,11 @@
         }
     }
     .inter {
+        overflow: hidden;
         .title {
             font-size: 20px;
-            height: 30px;
-            line-height: 30px;
+            height: 26px;
+            line-height: 22px;
             color: #333;
             margin: 0;
             overflow: hidden;
@@ -55,14 +60,51 @@
             }
         }
         .info {
+            width: 100%;
             font-size: 14px;
             color: #999;
-            line-height: 20px;
-            height: 20px;
+            line-height: 30px;
+            height: 30px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            p {
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+            }
         }
         .message {
             color: #999;
             font-size: 12px;
+            line-height: 30px;
+            height: 30px;
+            img {
+                vertical-align: middle;
+                margin-right: 5px;
+                border-radius: 13px;
+            }
+            .time {
+                position: relative;
+                &:before ,&:after {
+                    content: '·';
+                    width: 20px;
+                    display: inline-block;
+                    height: 16px;
+                    text-align: center;
+                }
+            }
+            .label {
+                position: relative;
+                display: inline-block;
+                border: 1px solid #e3e8f3;
+                border-radius: 1px;
+                padding: 2px 5px;
+                line-height: 14px;
+                height: 14px;
+                margin-right: 10px;
+                
+            }
         }
     }
 }

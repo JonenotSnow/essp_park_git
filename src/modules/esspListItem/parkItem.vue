@@ -10,15 +10,15 @@
         <div class="inter">
             <h3 class="title"><i class="type">{{type}}</i>{{title}}</h3>
             <div class="spread">
-                <span class="icon-box"><i class="icon iconfont icon-liulan"></i>{{viewTime}}</span>
-                <span class="icon-box"><i class="icon iconfont icon-collect2"></i>{{countFollower}}</span>
+                <span class="icon-box"><i class="icon iconfont icon-liulan"></i>{{viewTime || 0}}</span>
+                <span class="icon-box"><i class="icon iconfont icon-collect2"></i>{{countFollower || 0}}</span>
                 <span class="icon-box"><i></i></span>
             </div>
             <div class="info" v-html="infoDetail"></div>
             <div class="message">
-                <span class="company"><i class=""></i>{{cstNm}}</span>
-                <span class="time">{{createTime}}</span>
-                <span class="label"></span>
+                <span class="company"><img :src="img" width="25" height="25" @error="setDefaultImg($event)"/>{{cstNm}}</span>
+                <span class="time">{{createTime | dateFilter}}</span>
+                <span class="label" v-for="(item, index) in activityLabel" :key="index">{{item}}</span>
             </div>
             <slot></slot>
         </div>
@@ -26,7 +26,9 @@
 </template>
 
 <script>
+import Moment from "moment";
 import imgfault from "@/assets/error.png";
+let nowDate = new Date().getTime()
 export default {
     name: "单个详情组件",
     props: {
@@ -51,10 +53,8 @@ export default {
             default: null
         },
         activityLabelList: { //标签数组
-            type: Array,
-            default: () => {
-                return []
-            }
+            type: String,
+            default: ''
         },
         cstNm: { //公司地址
             type: String,
@@ -71,6 +71,25 @@ export default {
         infoDetail: { //内容详情
             type: String,
             default: ''
+        }
+    },
+    computed: {
+        activityLabel() {
+            let val = this.activityLabelList ? this.activityLabelList.split(",") : []
+            return val.slice(0, 3)
+        }
+    },
+    filters: {
+        dateFilter(val) {
+            if(nowDate - 3600 * 1000 * 24 -val < 0 ) {
+                return "今天"
+            } else if (nowDate - 3600 * 1000 * 24 * 7 -val < 0 ) {
+                return "最近一周"
+            } else if (nowDate - 3600 * 1000 * 24 * 30 -val < 0 ) {
+                return "最近一个月"
+            } else {
+                return Moment(val).format("YYYY-MM-DD");
+            }
         }
     },
     methods: {

@@ -9,7 +9,9 @@ export default {
             hasType: true,
             typeModel: '',
             dateModel: [],
-            markModel: ''
+            markModel: '',
+            startDate: '',
+            endDate: '',
         }
     },
     methods: {
@@ -23,7 +25,9 @@ export default {
             this.typeModel = val
         },
         serDateChange (val) { // 日期
-            this.dateModel = val
+            this.dateModel = val || []
+            this.startDate = this.dateModel[0] || ''
+            this.endDate = this.dateModel[1] || ''
         },
         serReset() { //重置
             this.tagModel = ''
@@ -31,16 +35,19 @@ export default {
             this.typeModel = ''
             this.dateModel = []
             this.markModel = ''
+            this.startDate = ''
+            this.endDate = ''
 
         },
         serEnter(val){ //输入框搜索
             this.markModel = val
         },
         serGetList() {
+            this.pageNum = 1
             this.getList()
         },
         getList() { //获取列表初始化
-
+            console.log(213456)
         }
     }
 }

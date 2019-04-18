@@ -14,7 +14,7 @@ module.exports = {
             '/api': {
                 // target: 'http://128.64.216.95:8088/',
                 // target: 'http://128.64.200.202:8088/',
-                //  target: 'http://128.196.235.132:8088/',
+                   target: 'http://128.196.235.132:8088/',
                 // target: 'http://128.64.203.43:8088/',
                 secure: false,  // 如果是https接口，需要配置这个参数
                 changeOrigin: true,
