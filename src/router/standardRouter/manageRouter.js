@@ -400,19 +400,19 @@ export default {
             component: activityPublish
         },
         {
-            path: "/pages/manage/taskPool/informationPublish",
+            path: "/pages/manage/informationManage/informationPublish",
             name: "park-informationPublish",
             component: informationPublish
         },
         {
-            path: "/pages/manage/taskPool/noticePublish",
+            path: "/pages/manage/noticeManage/noticePublish",
             name: "park-noticePublish",
             component: noticePublish
         },
         {
-            path: "/pages/manage/taskPool/benevolentPublish",
+            path: "/pages/manage/benevolentManage/benevolentPublish",
             name: "park-benevolentPublish",
-            component: setModuleTwo
+            component: benevolentPublish
         }
    ]
  };
