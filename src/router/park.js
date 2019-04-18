@@ -73,7 +73,8 @@ const userManage = resolve => require(['@/views/commonComponents/commonManage/us
 // 园区邀请函
 const requestPage = resolve => require(['@/views/commonComponents/commonManage/requestPage'],resolve);
 // 园区管理入园审核
-const activityPoolAddPark =resolve => require(['@/views/parkHall/manage/activityPoolAddPark'],resolve);
+// const activityPoolAddPark =resolve => require(['@/views/parkHall/manage/activityPoolAddPark'],resolve);
+const activityPoolAddPark =resolve => require(['@/views/newmanage/testComponents.vue'],resolve);
 // 园区管理资讯审核
 const activityPoolZX = resolve => require(['@/views/parkHall/manage/activityPoolZX'],resolve);
 
