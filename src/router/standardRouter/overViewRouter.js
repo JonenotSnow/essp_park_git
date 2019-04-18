@@ -7,7 +7,7 @@
 const parkIndex = resolve => require(['@/pages/index'],resolve);
 
 // 园区预览
-const scanIndex = resolve => require(['@/pages/overView/index.vue'],resolve);
+const overView = resolve => require(['@/pages/overView/index.vue'],resolve);
 //申请入驻园区
 const requestAddPark = resolve => require(['@/pages/overView/requestAddPark.vue'],resolve);
 
@@ -18,9 +18,9 @@ export default {
     redirect: '/parkHome',
     children:[
         {
-            path: '/parkIndex/scanIndex',
-            name: "park-scanIndex",
-            component: scanIndex,
+            path: '/parkIndex/overView',
+            name: "park-overView",
+            component: overView,
         },
         {
             path: '/parkHall/manage/requestAddPark',
