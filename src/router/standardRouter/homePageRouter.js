@@ -17,6 +17,8 @@ const allEnterpriseList =  resolve => require(['@/pages/homePage/allEnterpriseLi
 const requestPage =  resolve => require(['@/pages/homePage/requestPage.vue'],resolve);
 // 园区搜索页面
 const parkSearch = resolve => require(['@/pages/homePage/parkSearch.vue'],resolve);
+// 通知公告详情
+const noticeDetail = resolve => require(['@/pages/homePage/noticeDetail.vue'],resolve);
 
 export default {
     path: '/',
@@ -56,6 +58,12 @@ export default {
             path: '/parkList',
             name: 'parkList',
             component: parkList,
+
+        },
+        {
+            path: '/noticeDetail',
+            name: 'park-noticeDetail',
+            component: noticeDetail,
 
         }
    ]

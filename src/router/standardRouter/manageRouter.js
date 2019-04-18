@@ -16,15 +16,19 @@ const immediate = resolve => require(['@/pages/manage/userManage/immediate.vue']
 const intelligent = resolve => require(['@/pages/manage/userManage/intelligent.vue'],resolve);
 
 //园区管理--内容管理--活动管理
+const activityPublish = resolve => require(['@/pages/manage/contentManage/activityManage/activityPublish.vue'],resolve);
 const activityDraft = resolve => require(['@/pages/manage/contentManage/activityManage/activityDraft.vue'],resolve);
 const activityPublished = resolve => require(['@/pages/manage/contentManage/activityManage/activityPublished.vue'],resolve);
 //园区管理--内容管理--惠政管理
+const benevolentPublish = resolve => require(['@/pages/manage/contentManage/benevolentManage/benevolentPublish.vue'],resolve);
 const benevolentDraft = resolve => require(['@/pages/manage/contentManage/benevolentManage/benevolentDraft.vue'],resolve);
 const benevolentPublished = resolve => require(['@/pages/manage/contentManage/benevolentManage/benevolentPublished.vue'],resolve);
 //园区管理--内容管理--资讯管理
+const informationPublish = resolve => require(['@/pages/manage/contentManage/informationManage/informationPublish.vue'],resolve);
 const informationDraft = resolve => require(['@/pages/manage/contentManage/informationManage/informationDraft.vue'],resolve);
 const informationPublished = resolve => require(['@/pages/manage/contentManage/informationManage/informationPublished.vue'],resolve);
 //园区管理--内容管理--通知公告管理
+const noticePublish = resolve => require(['@/pages/manage/contentManage/noticeManage/noticePublish.vue'],resolve);
 const noticeDraft = resolve => require(['@/pages/manage/contentManage/noticeManage/noticeDraft.vue'],resolve);
 const noticePublished = resolve => require(['@/pages/manage/contentManage/noticeManage/noticePublished.vue'],resolve);
 
@@ -388,6 +392,26 @@ export default {
         {
             path: "/pages/manage/taskPool/setModuleTwo",
             name: "park-setModuleTwo",
+            component: setModuleTwo
+        },
+        {
+            path: "/pages/manage/activityManage/activityPublish",
+            name: "park-activityPublish",
+            component: activityPublish
+        },
+        {
+            path: "/pages/manage/taskPool/informationPublish",
+            name: "park-informationPublish",
+            component: informationPublish
+        },
+        {
+            path: "/pages/manage/taskPool/noticePublish",
+            name: "park-noticePublish",
+            component: noticePublish
+        },
+        {
+            path: "/pages/manage/taskPool/benevolentPublish",
+            name: "park-benevolentPublish",
             component: setModuleTwo
         }
    ]

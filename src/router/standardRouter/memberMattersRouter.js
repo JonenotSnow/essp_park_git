@@ -11,9 +11,11 @@ const asideComRoot = resolve => require(['@/pages/asideComRoot/index'],resolve);
 const memberMain = resolve => require(['@/pages/memberMatters/memberMain/index.vue'],resolve);
 
 //成员事物--内容管理--活动管理
+const activityPublish = resolve => require(['@/pages/memberMatters/memberContent/activityManage/activityPublish.vue'],resolve);
 const activityDraft = resolve => require(['@/pages/memberMatters/memberContent/activityManage/activityDraft.vue'],resolve);
 const activityPublished = resolve => require(['@/pages/memberMatters/memberContent/activityManage/activityPublished.vue'],resolve);
 //成员事物--内容管理--资讯管理
+const informationPublish = resolve => require(['@/pages/memberMatters/memberContent/informationManage/informationPublish.vue'],resolve);
 const informationDraft = resolve => require(['@/pages/memberMatters/memberContent/informationManage/informationDraft.vue'],resolve);
 const informationPublished = resolve => require(['@/pages/memberMatters/memberContent/informationManage/informationPublished.vue'],resolve);
 
@@ -223,6 +225,16 @@ export default {
             path: "/pages/memberMatters/memberTaskPool/informationPublishAuditDetail",
             name: "park-informationPublishAuditDetail",
             component: informationPublishAuditDetail
+        },
+        {
+            path: "/pages/manage/activityManage/activityPublish",
+            name: "park-activityPublish",
+            component: activityPublish
+        },
+        {
+            path: "/pages/manage/informationManage/informationPublish",
+            name: "park-informationPublish",
+            component: informationPublish
         }
    ]
  };
