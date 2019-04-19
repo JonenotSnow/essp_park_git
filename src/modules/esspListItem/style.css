@@ -33,6 +33,17 @@
   line-height: 25px;
   background-color: #000;
   opacity: .7;
+  color: #fff;
+  overflow: hidden;
+  font-size: 12px;
+}
+.essp-list-item-detail .item-left-img .mark .sign {
+  margin-left: 10px;
+  float: left;
+}
+.essp-list-item-detail .item-left-img .mark .price {
+  margin-right: 10px;
+  float: right;
 }
 .essp-list-item-detail .inter {
   overflow: hidden;

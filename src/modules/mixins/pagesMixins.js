@@ -5,6 +5,7 @@ export default {
             pageNum: 1, //当前页码
             pageSize: 10, //每页条数
             allTotal: 0, //总条数
+            isLoding: false
         }
     },
     methods: {

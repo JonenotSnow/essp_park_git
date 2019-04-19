@@ -15,10 +15,9 @@
                     <el-option
                     v-for="(item, index) in hotList"
                     :key="index"
-                    :label="getValueKey(item, hotName)"
                     :value="getValueKey(item, hotKey)">
-                    <span style="float: left">{{ item.label }}</span>
-                    <span style="float: right; color: #8492a6; font-size: 13px">{{ item.value }}</span>
+                    <span style="float: left">{{ getValueKey(item, hotName) }}</span>
+                    <span style="float: right; color: #8492a6; font-size: 13px">{{ getValueKey(item, hotCount) }}</span>
                     </el-option>
                 </el-select>
                 <el-select class="select" v-model="type" @change="typeChange" placeholder="全部状态" v-if="hasType" size="medium">
@@ -102,7 +101,7 @@ export default {
                     label: "预告中"
                 }, {
                     name: "2",
-                    label: "报名中"
+                    label: "申报中"
                 }, {
                     name: "3",
                     label: "已结束"
@@ -122,6 +121,10 @@ export default {
         hotName: { //热门展示字段
             type: String,
             default: 'label'
+        },
+        hotCount: { //热门展示数字字段
+            type: String,
+            default: 'num'
         },
         hotList: { //标签数据
             type: Array,

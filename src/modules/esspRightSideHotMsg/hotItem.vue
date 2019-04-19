@@ -5,12 +5,14 @@
         </div>
         <div class="item-intor">
             <h3 class="item-title">{{ title }}</h3>
-            <p class="item-date">{{ date }}</p>
+            <p class="item-date">{{ date | dateFilter }}</p>
         </div>
         
     </div>
 </template>
 <script>
+import Moment from "moment";
+let nowDate = new Date().getTime()
 export default {
     name: '热门活动item',
     props: {
@@ -25,6 +27,21 @@ export default {
         imgUrl: { //图片
             type: String,
             default: ''
+        },
+    },
+    filters: {
+        dateFilter(val) {
+            if(nowDate - 3600 * 1000 * 24 -val < 0 ) {
+                return "今天"
+            } else if (nowDate - 3600 * 1000 * 24 * 2 -val < 0 ) {
+                return "1天前"
+            } else if (nowDate - 3600 * 1000 * 24 * 3 -val < 0 ) {
+                return "2天前"
+            } else if (nowDate - 3600 * 1000 * 24 * 4 -val < 0 ) {
+                return "3天前"
+            } else {
+                return Moment(val).format("YYYY-MM-DD");
+            }
         },
     },
     data() {
