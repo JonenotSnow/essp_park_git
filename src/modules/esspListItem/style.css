@@ -59,6 +59,26 @@
   font-weight: 400;
   cursor: pointer;
 }
+.essp-list-item-detail .inter .title .type {
+  display: inline-block;
+  padding-left: 8px;
+  padding-right: 15px;
+  height: 26px;
+  line-height: 26px;
+  font-size: 14px;
+  border-radius: 8px 0 20px 0;
+  background-image: linear-gradient(31deg, #22a2fa 0%, #10b5ff 100%), linear-gradient(#41c3ff, #41c3ff);
+  color: #fff;
+  margin-right: 15px;
+  margin-top: -2px;
+  vertical-align: middle;
+}
+.essp-list-item-detail .inter .title .type.end {
+  background-image: linear-gradient(256deg, #dddee2 0%, #c9ccd3 100%), linear-gradient(#cdcdcd, #cdcdcd);
+}
+.essp-list-item-detail .inter .title .type.notice {
+  background-image: linear-gradient(40deg, #fbba1e 0%, #fdb722 100%), linear-gradient(#ffcf6a, #ffcf6a);
+}
 .essp-list-item-detail .inter .spread {
   color: #999;
   padding: 5px 0;

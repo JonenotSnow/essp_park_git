@@ -40,13 +40,15 @@
                             :approved-num="item.approvedNum"
                             :avaliableTime="item.avaliableTime"
                             :avaliableEndTime="item.avaliableEndTime"
-                            :type="item.applyType || 0"
+                            :type="item.classtType || 0"
                             :title="item.policyTitle"
                             :create-time="item.createTime"
                             :activity-label-list="item.tagsTxt"
                             :cst-nm="item.cstNm"
                             :view-time="item.viewTime"
                             :count-follower="item.countFollower"
+                            :comment-num="item.commentSum"
+                            @click="jumpClick(item)"
                         ></essp-list-item>
                         <div class="pageList page-list">
                             <el-pagination 
@@ -85,7 +87,8 @@
             esspComBanner,
             esspListSearch,
             esspRightSideHotMsg,
-            esspListItem
+            esspListItem,
+            esspHomeCard
         },
         data() {
             return {
@@ -155,6 +158,9 @@
             hotItemClick(item) {
                 console.log(item)
             },
+            jumpClick(item) {
+                console.log(item)
+            }
         }
     }
 </script>

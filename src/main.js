@@ -84,7 +84,7 @@ Vue.filter("timerFormat", function(value) {
 });
 
 // Vue.prototype.$uploadCommom = uploadCommom;
-let openUrl = "http://128.196.235.131:1345/essp/#";
+let openUrl = "http://128.196.235.132:1345/essp/#";
 
 if (process.env.NODE_ENV === "production") {
     openUrl = window.location.origin+'/essp/'+"#";
@@ -196,13 +196,13 @@ router.beforeEach(async (to, from, next) => {
     // console.log(name)
     // console.log('currentMenu')
     // console.log(currentMenu)
-    if(!currentMenu && to.name !='park-requestPage'){
-        Message.error('暂无权限访问此页面')
-        if(!from.name){
-            router.push('parkHome')
-        }
-        return false
-    }
+    // if(!currentMenu && to.name !='park-requestPage'){
+    //     Message.error('暂无权限访问此页面')
+    //     if(!from.name){
+    //         router.push('parkHome')
+    //     }
+    //     return false
+    // }
     next();
 });
 async function getResetSession() {

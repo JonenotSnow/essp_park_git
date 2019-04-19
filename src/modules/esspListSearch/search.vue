@@ -11,7 +11,7 @@
         <!-- 搜索条件 -->
         <div class="essp-search esspclearfix">
             <div class="main">
-                <el-select class="select" v-model="hot" placeholder="全部" @change="hotChange" v-if="hasHot" size="medium">
+                <el-select class="select" v-model="hot" placeholder="热门标签" @change="hotChange" v-if="hasHot" size="medium">
                     <el-option
                     v-for="(item, index) in hotList"
                     :key="index"
