@@ -1,0 +1,151 @@
+// 表单外部样式
+.essp-forminfos {
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+    background: #fff;
+    // 表头样式
+    .fheadcon {
+        overflow: hidden;
+        background-color: #f5f5f5;
+        border-bottom: 1px solid #ccc;
+        span {
+            float: left;
+            text-align: center;
+            height: 50px;
+            line-height: 50px;
+            font-size: 16px;
+            color: #333;
+        }
+        .category {
+            width: 30%;
+        }
+        .importan {
+            width: 20%;
+        }
+        .tipstext {
+            width: 35%;
+        }
+        .handlecon {
+            width: 15%;
+        }
+    }
+    //必填项,单行文本框区域 /多行文本框/单选框公共样式/多选框
+    .requiredcon,
+    .singleline,
+    .multiline,
+    .radiobuttonCon,
+    .multibuttonCon {
+        width: 100%;
+        overflow: hidden;
+        .requir_1 {
+            width: 26%;
+            padding-left: 4%;
+        }
+        .requir_2 {
+            width: 20%;
+            text-align: center;
+        }
+        .requir_3 {
+            width: 35%;
+        }
+        .requir_4 {
+            width: 15%;
+            text-align: center;
+            .requreinput {
+                outline: none;
+                border: none;
+            }
+
+            .handle_delicon:hover {
+                cursor: pointer;
+                color: #00a0e9;
+            }
+        }
+        .cistern {
+            float: left;
+            line-height: 60px;
+            height: 60px;
+        }
+        .con_name {
+            font-size: 14px;
+            color: #666666;
+        }
+    }
+    .radiobuttonCon,
+    .multibuttonCon {
+        .main_con {
+            width: 100%;
+            overflow: hidden;
+            margin-bottom: 10px;
+            .cistern {
+                border: none;
+            }
+        }
+        .padding_con {
+            position: relative;
+
+            width: 100%;
+            .ro_tiem {
+                position: relative;
+                padding-left: 10px;
+                margin-bottom: 5px;
+                .orderinput {
+                    width: 20%;
+                    margin-left: 10px;
+                }
+            }
+            .delitems {
+                position: absolute;
+                top: 14px;
+                left: 244px;
+                font-size: 18px;
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+            .additems {
+                position: absolute;
+                bottom: 0px;
+                left: 270px;
+                font-size: 24px;
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+    // 表单列表外部样式
+    .formTypeList {
+        border-bottom: 1px solid #ccc;
+    }
+
+    //新增报名项 样式
+    .extendtagcon {
+        background-color: #f5f5f5;
+        line-height: 40px;
+        padding: 20px 50px;
+        .extendtit {
+            overflow: hidden;
+            font-size: 16px;
+            line-height: 30px;
+            margin-bottom: 12px;
+            color: #333;
+        }
+        .extenditme {
+            overflow: hidden;
+            .inline_span {
+                font-size: 14px;
+                margin-right: 14px;
+            }
+        }
+        .inline_span {
+            display: inline-block;
+            width: 94px;
+            text-align: right;
+        }
+        .tagitem {
+            margin-right: 20px;
+        }
+    }
+
+}
