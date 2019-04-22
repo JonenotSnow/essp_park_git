@@ -5,76 +5,75 @@
 
 // 园区入口
 const parkIndex = resolve => require(['@/pages/index.vue'],resolve);
-const asideComRoot = resolve => require(['@/pages/asideComRoot/index'],resolve);
+const asideComRoot = resolve => require(['@/pages/standard/asideComRoot/index'],resolve);
 
 //园区管理--主页
-const manageMain = resolve => require(['@/pages/manage/manageMain/index.vue'],resolve);
+const manageMain = resolve => require(['@/pages/standard/manage/manageMain/index.vue'],resolve);
 
 //园区管理--成员管理
-const memberList = resolve => require(['@/pages/manage/userManage/memberList.vue'],resolve);
-const immediate = resolve => require(['@/pages/manage/userManage/immediate.vue'],resolve);
-const intelligent = resolve => require(['@/pages/manage/userManage/intelligent.vue'],resolve);
+const memberList = resolve => require(['@/pages/standard/manage/userManage/memberList.vue'],resolve);
+const immediate = resolve => require(['@/pages/standard/manage/userManage/immediate.vue'],resolve);
+const intelligent = resolve => require(['@/pages/standard/manage/userManage/intelligent.vue'],resolve);
 
 //园区管理--内容管理--活动管理
-const activityPublish = resolve => require(['@/pages/manage/contentManage/activityManage/activityPublish.vue'],resolve);
-const activityDraft = resolve => require(['@/pages/manage/contentManage/activityManage/activityDraft.vue'],resolve);
-const activityPublished = resolve => require(['@/pages/manage/contentManage/activityManage/activityPublished.vue'],resolve);
+const activityPublish = resolve => require(['@/pages/standard/manage/contentManage/activityManage/activityPublish.vue'],resolve);
+const activityDraft = resolve => require(['@/pages/standard/manage/contentManage/activityManage/activityDraft.vue'],resolve);
+const activityPublished = resolve => require(['@/pages/standard/manage/contentManage/activityManage/activityPublished.vue'],resolve);
 //园区管理--内容管理--惠政管理
-const benevolentPublish = resolve => require(['@/pages/manage/contentManage/benevolentManage/benevolentPublish.vue'],resolve);
-const benevolentDraft = resolve => require(['@/pages/manage/contentManage/benevolentManage/benevolentDraft.vue'],resolve);
-const benevolentPublished = resolve => require(['@/pages/manage/contentManage/benevolentManage/benevolentPublished.vue'],resolve);
+const benevolentPublish = resolve => require(['@/pages/standard/manage/contentManage/benevolentManage/benevolentPublish.vue'],resolve);
+const benevolentDraft = resolve => require(['@/pages/standard/manage/contentManage/benevolentManage/benevolentDraft.vue'],resolve);
+const benevolentPublished = resolve => require(['@/pages/standard/manage/contentManage/benevolentManage/benevolentPublished.vue'],resolve);
 //园区管理--内容管理--资讯管理
-const informationPublish = resolve => require(['@/pages/manage/contentManage/informationManage/informationPublish.vue'],resolve);
-const informationDraft = resolve => require(['@/pages/manage/contentManage/informationManage/informationDraft.vue'],resolve);
-const informationPublished = resolve => require(['@/pages/manage/contentManage/informationManage/informationPublished.vue'],resolve);
+const informationPublish = resolve => require(['@/pages/standard/manage/contentManage/informationManage/informationPublish.vue'],resolve);
+const informationDraft = resolve => require(['@/pages/standard/manage/contentManage/informationManage/informationDraft.vue'],resolve);
+const informationPublished = resolve => require(['@/pages/standard/manage/contentManage/informationManage/informationPublished.vue'],resolve);
 //园区管理--内容管理--通知公告管理
-const noticePublish = resolve => require(['@/pages/manage/contentManage/noticeManage/noticePublish.vue'],resolve);
-const noticeDraft = resolve => require(['@/pages/manage/contentManage/noticeManage/noticeDraft.vue'],resolve);
-const noticePublished = resolve => require(['@/pages/manage/contentManage/noticeManage/noticePublished.vue'],resolve);
+const noticePublish = resolve => require(['@/pages/standard/manage/contentManage/noticeManage/noticePublish.vue'],resolve);
+const noticeDraft = resolve => require(['@/pages/standard/manage/contentManage/noticeManage/noticeDraft.vue'],resolve);
+const noticePublished = resolve => require(['@/pages/standard/manage/contentManage/noticeManage/noticePublished.vue'],resolve);
 
 //园区管理--任务池--入园审核
-const addParkAudit = resolve => require(['@/pages/manage/taskPool/addParkAudit/addParkAudit.vue'],resolve);
-const addParkAuditDetail = resolve => require(['@/pages/manage/taskPool/addParkAudit/addParkAuditDetail.vue'],resolve);
-const addParkAuditList = resolve => require(['@/pages/manage/taskPool/addParkAudit/addParkAuditList.vue'],resolve);
+const addParkAudit = resolve => require(['@/pages/standard/manage/taskPool/addParkAudit/addParkAudit.vue'],resolve);
+const addParkAuditDetail = resolve => require(['@/pages/standard/manage/taskPool/addParkAudit/addParkAuditDetail.vue'],resolve);
+const addParkAuditList = resolve => require(['@/pages/standard/manage/taskPool/addParkAudit/addParkAuditList.vue'],resolve);
 //园区管理--任务池--报名审核--活动报名审核
-const activityEnrollAudit = resolve => require(['@/pages/manage/taskPool/enrollAudit/ActivityEnrollAudit/activityEnrollAudit.vue'],resolve);
-const activityEnrollAuditDetail = resolve => require(['@/pages/manage/taskPool/enrollAudit/ActivityEnrollAudit/activityEnrollAuditDetail.vue'],resolve);
-const activityEnrollList = resolve => require(['@/pages/manage/taskPool/enrollAudit/ActivityEnrollAudit/activityEnrollList.vue'],resolve);
+const activityEnrollAudit = resolve => require(['@/pages/standard/manage/taskPool/enrollAudit/ActivityEnrollAudit/activityEnrollAudit.vue'],resolve);
+const activityEnrollAuditDetail = resolve => require(['@/pages/standard/manage/taskPool/enrollAudit/ActivityEnrollAudit/activityEnrollAuditDetail.vue'],resolve);
+const activityEnrollList = resolve => require(['@/pages/standard/manage/taskPool/enrollAudit/ActivityEnrollAudit/activityEnrollList.vue'],resolve);
 //园区管理--任务池--报名审核--惠政申报审核
-const benevolentEnrollAudit = resolve => require(['@/pages/manage/taskPool/enrollAudit/benevolentEnrollAudit/benevolentEnrollAudit.vue'],resolve);
-const benevolentEnrollAuditDetail = resolve => require(['@/pages/manage/taskPool/enrollAudit/benevolentEnrollAudit/benevolentEnrollAuditDetail.vue'],resolve);
-const benevolentEnrollList = resolve => require(['@/pages/manage/taskPool/enrollAudit/benevolentEnrollAudit/benevolentEnrollList.vue'],resolve);
+const benevolentEnrollAudit = resolve => require(['@/pages/standard/manage/taskPool/enrollAudit/benevolentEnrollAudit/benevolentEnrollAudit.vue'],resolve);
+const benevolentEnrollAuditDetail = resolve => require(['@/pages/standard/manage/taskPool/enrollAudit/benevolentEnrollAudit/benevolentEnrollAuditDetail.vue'],resolve);
+const benevolentEnrollList = resolve => require(['@/pages/standard/manage/taskPool/enrollAudit/benevolentEnrollAudit/benevolentEnrollList.vue'],resolve);
 //园区管理--任务池--发布审核--活动发布审核
-const activityPublishAudit = resolve => require(['@/pages/manage/taskPool/publishAudit/activityPublish/activityPublishAudit.vue'],resolve);
-const activityPublishAuditDetail = resolve => require(['@/pages/manage/taskPool/publishAudit/activityPublish/activityPublishAuditDetail.vue'],resolve);
-const activityPublishList = resolve => require(['@/pages/manage/taskPool/publishAudit/activityPublish/activityPublishList.vue'],resolve);
+const activityPublishAudit = resolve => require(['@/pages/standard/manage/taskPool/publishAudit/activityPublish/activityPublishAudit.vue'],resolve);
+const activityPublishAuditDetail = resolve => require(['@/pages/standard/manage/taskPool/publishAudit/activityPublish/activityPublishAuditDetail.vue'],resolve);
+const activityPublishList = resolve => require(['@/pages/standard/manage/taskPool/publishAudit/activityPublish/activityPublishList.vue'],resolve);
 //园区管理--任务池--发布审核--惠政发布审核
-const benevolentPublishAuditDetail = resolve => require(['@/pages/manage/taskPool/publishAudit/benevolentPublish/benevolentPublishAuditDetail.vue'],resolve);
-const benevolentPublishList = resolve => require(['@/pages/manage/taskPool/publishAudit/benevolentPublish/benevolentPublishList.vue'],resolve);
-const benevolentPublishAudit = resolve => require(['@/pages/manage/taskPool/publishAudit/benevolentPublish/benevolentPublishAudit.vue'],resolve);
+const benevolentPublishAuditDetail = resolve => require(['@/pages/standard/manage/taskPool/publishAudit/benevolentPublish/benevolentPublishAuditDetail.vue'],resolve);
+const benevolentPublishList = resolve => require(['@/pages/standard/manage/taskPool/publishAudit/benevolentPublish/benevolentPublishList.vue'],resolve);
+const benevolentPublishAudit = resolve => require(['@/pages/standard/manage/taskPool/publishAudit/benevolentPublish/benevolentPublishAudit.vue'],resolve);
 //园区管理--任务池--发布审核--资讯发布审核
-const informationPublishAudit = resolve => require(['@/pages/manage/taskPool/publishAudit/informationPublish/informationPublishAudit.vue'],resolve);
-const informationPublishAuditDetail = resolve => require(['@/pages/manage/taskPool/publishAudit/informationPublish/informationPublishAuditDetail.vue'],resolve);
-const informationPublishList = resolve => require(['@/pages/manage/taskPool/publishAudit/informationPublish/informationPublishList.vue'],resolve);
+const informationPublishAudit = resolve => require(['@/pages/standard/manage/taskPool/publishAudit/informationPublish/informationPublishAudit.vue'],resolve);
+const informationPublishAuditDetail = resolve => require(['@/pages/standard/manage/taskPool/publishAudit/informationPublish/informationPublishAuditDetail.vue'],resolve);
+const informationPublishList = resolve => require(['@/pages/standard/manage/taskPool/publishAudit/informationPublish/informationPublishList.vue'],resolve);
 
 //园区管理--园区设置--入驻申请表
-const application = resolve => require(['@/pages/manage/parkStup/application/application.vue'],resolve);
+const application = resolve => require(['@/pages/standard/manage/parkStup/application/application.vue'],resolve);
 //园区管理--园区设置--banner设置
-const bannerSet = resolve => require(['@/pages/manage/parkStup/bannerSettings/bannerSet.vue'],resolve);
+const bannerSet = resolve => require(['@/pages/standard/manage/parkStup/bannerSettings/bannerSet.vue'],resolve);
 //园区管理--园区设置--基本信息及模板设置
-const baseInfoSettings = resolve => require(['@/pages/manage/parkStup/overviewSettings/baseInfoSettings.vue'],resolve);
-const moduleSelect = resolve => require(['@/pages/manage/parkStup/overviewSettings/moduleSelect.vue'],resolve);
-const setModuleOne = resolve => require(['@/pages/manage/parkStup/overviewSettings/setModuleOne.vue'],resolve);
-const setModuleTwo = resolve => require(['@/pages/manage/parkStup/overviewSettings/setModuleTwo.vue'],resolve);
+const baseInfoSettings = resolve => require(['@/pages/standard/manage/parkStup/overviewSettings/baseInfoSettings.vue'],resolve);
+const setModuleOne = resolve => require(['@/pages/standard/manage/parkStup/overviewSettings/setModuleOne.vue'],resolve);
+const setModuleTwo = resolve => require(['@/pages/standard/manage/parkStup/overviewSettings/setModuleTwo.vue'],resolve);
 
 //园区管理--我的事项--我的报名
-const myEnrollActivty = resolve => require(['@/pages/manage/myBusiness/myEnroll/myEnrollActivty.vue'],resolve);
-const myEnrollbenevolent = resolve => require(['@/pages/manage/myBusiness/myEnroll/myEnrollbenevolent.vue'],resolve);
+const myEnrollActivty = resolve => require(['@/pages/standard/manage/myBusiness/myEnroll/myEnrollActivty.vue'],resolve);
+const myEnrollbenevolent = resolve => require(['@/pages/standard/manage/myBusiness/myEnroll/myEnrollbenevolent.vue'],resolve);
 
 //园区管理--我的事项--我的关注
-const myFollowActivty = resolve => require(['@/pages/manage/myBusiness/myFollow/myFollowActivty.vue'],resolve);
-const myFollowbenevolent = resolve => require(['@/pages/manage/myBusiness/myFollow/myFollowbenevolent.vue'],resolve);
-const myFollowInformation = resolve => require(['@/pages/manage/myBusiness/myFollow/myFollowInformation.vue'],resolve);
+const myFollowActivty = resolve => require(['@/pages/standard/manage/myBusiness/myFollow/myFollowActivty.vue'],resolve);
+const myFollowbenevolent = resolve => require(['@/pages/standard/manage/myBusiness/myFollow/myFollowbenevolent.vue'],resolve);
+const myFollowInformation = resolve => require(['@/pages/standard/manage/myBusiness/myFollow/myFollowInformation.vue'],resolve);
 
 export default {
     path: '/',
@@ -255,11 +254,6 @@ export default {
                             path: "/pages/manage/parkStup/baseInfoSettings",
                             name: "park-baseInfoSettings",
                             component: baseInfoSettings
-                        },
-                        {
-                            path: "/pages/manage/parkStup/moduleSelect",
-                            name: "park-moduleSelect",
-                            component: moduleSelect
                         }
                     ]
                 },

@@ -7,11 +7,11 @@
 const parkIndex = resolve => require(['@/pages/index.vue'],resolve);
 
 //全部活动
-const allActivity = resolve => require(['@/pages/activity/allActivity.vue'],resolve);
+const allActivity = resolve => require(['@/pages/standard/activity/allActivity.vue'],resolve);
 //活动详情
-const activityDetail = resolve => require(['@/pages/activity/activityDetail/activityDetail.vue'],resolve);
+const activityDetail = resolve => require(['@/pages/standard/activity/activityDetail/activityDetail.vue'],resolve);
 //活动报名详情
-const activityErollDetail = resolve => require(['@/pages/activity/activityDetail/activityErollDetail.vue'],resolve);
+const activityErollDetail = resolve => require(['@/pages/standard/activity/activityDetail/activityErollDetail.vue'],resolve);
 
 export default {
     path: '/',

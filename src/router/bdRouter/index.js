@@ -5,7 +5,7 @@ import manageRouter from './manageRouter';
 import needHallRouter from './needHallRouter';
 import sciAndTechRouter from './sciAndTechRouter';
 import serviceHall from './serviceHall';
-import firstPageRouter from './firstPageRouter';
+import homePageRouter from './homePageRouter';
 
 let bdRouter = [];
 bdRouter.push(
@@ -15,7 +15,7 @@ bdRouter.push(
     needHallRouter,
     sciAndTechRouter,
     serviceHall,
-    firstPageRouter
+    homePageRouter
 );
 
 export default bdRouter;

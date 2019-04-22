@@ -8,9 +8,9 @@
 const parkIndex = resolve => require(['@/pages/index.vue'],resolve);
 
 //全部资讯
-const allInformation = resolve => require(['@/pages/information/allInformation.vue'],resolve);
+const allInformation = resolve => require(['@/pages/standard/information/allInformation.vue'],resolve);
 //资讯详情
-const informationDetail = resolve => require(['@/pages/information/informationDetail.vue'],resolve);
+const informationDetail = resolve => require(['@/pages/standard/information/informationDetail.vue'],resolve);
 
 export default {
     path: '/',

@@ -7,9 +7,9 @@
 const parkIndex = resolve => require(['@/pages/index'],resolve);
 
 // 园区预览
-const overView = resolve => require(['@/pages/overView/index.vue'],resolve);
+const overView = resolve => require(['@/pages/standard/overView/index.vue'],resolve);
 //申请入驻园区
-const requestAddPark = resolve => require(['@/pages/overView/requestAddPark.vue'],resolve);
+const requestAddPark = resolve => require(['@/pages/standard/overView/requestAddPark.vue'],resolve);
 
 export default {
     path: '/',

@@ -7,13 +7,13 @@
 const parkIndex = resolve => require(['@/pages/index.vue'],resolve);
 
 //全部惠政
-const allBenevolent = resolve => require(['@/pages/benevolent/allBenevolent.vue'],resolve);
+const allBenevolent = resolve => require(['@/pages/standard/benevolent/allBenevolent.vue'],resolve);
 //惠政详情
-const benevolentDetail = resolve => require(['@/pages/benevolent/benevolentDetail/benevolentDetail.vue'],resolve);
+const benevolentDetail = resolve => require(['@/pages/standard/benevolent/benevolentDetail/benevolentDetail.vue'],resolve);
 //惠政申报详情
-const benevolentErollDetail = resolve => require(['@/pages/benevolent/benevolentDetail/benevolentErollDetail.vue'],resolve);
+const benevolentErollDetail = resolve => require(['@/pages/standard/benevolent/benevolentDetail/benevolentErollDetail.vue'],resolve);
 //惠政设置说明
-const benevolentSetDetail = resolve => require(['@/pages/benevolent/benevolentSetDetail.vue'],resolve);
+const benevolentSetDetail = resolve => require(['@/pages/standard/benevolent/benevolentSetDetail.vue'],resolve);
 
 
 export default {

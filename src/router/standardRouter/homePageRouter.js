@@ -6,19 +6,19 @@
 // 园区入口
 const parkIndex = resolve => require(['@/pages/index.vue'],resolve);
 // 园区首页
-const parkHome = resolve => require(['@/pages/homePage/index.vue'],resolve);
+const parkHome = resolve => require(['@/pages/standard/homePage/index.vue'],resolve);
 //园区列表
-const parkList =  resolve => require(['@/pages/homePage/parkList.vue'],resolve);
+const parkList =  resolve => require(['@/pages/standard/homePage/parkList.vue'],resolve);
 // 普惠金融
-const inclusiveFinance =  resolve => require(['@/pages/homePage/inclusiveFinance.vue'], resolve);
+const inclusiveFinance =  resolve => require(['@/pages/standard/homePage/inclusiveFinance.vue'], resolve);
 // 入驻企业
-const allEnterpriseList =  resolve => require(['@/pages/homePage/allEnterpriseList.vue'], resolve);
+const allEnterpriseList =  resolve => require(['@/pages/standard/homePage/allEnterpriseList.vue'], resolve);
 //邀请函
-const requestPage =  resolve => require(['@/pages/homePage/requestPage.vue'],resolve);
+const requestPage =  resolve => require(['@/pages/standard/homePage/requestPage.vue'],resolve);
 // 园区搜索页面
-const parkSearch = resolve => require(['@/pages/homePage/parkSearch.vue'],resolve);
+const parkSearch = resolve => require(['@/pages/standard/homePage/parkSearch.vue'],resolve);
 // 通知公告详情
-const noticeDetail = resolve => require(['@/pages/homePage/noticeDetail.vue'],resolve);
+const noticeDetail = resolve => require(['@/pages/standard/homePage/noticeDetail.vue'],resolve);
 
 export default {
     path: '/',
