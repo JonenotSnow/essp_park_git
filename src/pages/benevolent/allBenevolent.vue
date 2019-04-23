@@ -94,19 +94,17 @@
                 sideListData: [],
                 listData: [],
                 tagItems: [], //热门标签
-                pageType: "actAll",
-                parkId: window.sessionStorage.getItem("parkId")
+                pageType: "allPolicy"
             }
         },
         mixins: [listSearchMixins, pagesMixins],
         mounted() {
             this.getList()
             this.getListGoverBeneTags()
-            this.getHotList()
         },
         methods: {
             getList() {
-                var url = this.$apiUrl.active[this.pageType] || "";
+                var url = this.$apiUrl.goverBene[this.pageType] || "";
                 this.isLoding = true;
                 this.listData = []
                 this.$post(url, {
@@ -114,11 +112,11 @@
                     pageSize: this.pageSize,
                     startDate: this.startDate,
                     endDate: this.endDate,
-                    activityLabel: this.tagModel, //根据标签搜索
+                    tagTxt: this.tagModel, //根据标签搜索
                     mark: this.mark,
                     parkId: sessionStorage.getItem("parkId") || ""
                 }).then(response => {
-                    this.listData = response.resultData.activityList;
+                    this.listData = response.resultData.policyList;
                     this.allTotal = response.resultData.total;
                     this.isLoding = false;
                 },
@@ -129,10 +127,11 @@
             },
             getListGoverBeneTags() {
                 var url = this.$apiUrl.parkInfo.getListTags;
+                var parkId = sessionStorage.getItem("parkId") || "";
                 var _this = this;
                 this.$post(url, {
-                    tagTp: "3000004", //活动标签
-                    parkId: this.parkId
+                    tagTp: "3000004", //惠政标签
+                    parkId: parkId
                 }).then(
                     response => {
                         _this.tagItems = response.resultData;
@@ -140,16 +139,6 @@
                     err => {
                     }
                 );
-            },
-            getHotList() { // 获取
-                this.$post(this.$apiUrl.active.getHotActivity, {
-                    pageNum: 0,
-                    pageSize: 20,
-                    type: 0,
-                    parkId: this.parkId
-                }).then((response) => {
-                    this.sideListData = response.resultData.hot;
-                });
             },
             hotItemClick(item) {
             },
