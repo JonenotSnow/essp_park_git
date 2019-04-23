@@ -74,7 +74,6 @@
     </div>
 </template>
 <script>
-    import { goverBene } from "@/fetch/api/goverBene/goverBene";
     import esspComBanner from '@/modules/esspComBanner';
     import esspListSearch from '@/modules/esspListSearch';
     import esspRightSideHotMsg from '@/modules/esspRightSideHotMsg';
@@ -87,26 +86,12 @@
             esspComBanner,
             esspListSearch,
             esspRightSideHotMsg,
-            esspListItem,
-            esspHomeCard
+            esspListItem
         },
         data() {
             return {
                 url: './static/images/bannerLan.png',
-                sideListData: [{
-                        title: '活动标题',
-                        date: 1234565434544
-                    }, {
-                        title: '活动标题活动活动标题活动活动标题活动活动标题活动活动标题活动',
-                        date: 1234565434544
-                    }, {
-                        title: '活动标题活动活动标题活动活动标题活动活动标题活动活动标题活动',
-                        date: 1234565434544
-                    }, {
-                        title: '活动标题活动活动标题活动活动标题活动活动标题活动活动标题活动',
-                        date: 1234565434544
-                    }
-                ],
+                sideListData: [],
                 listData: [],
                 tagItems: [], //热门标签
                 pageType: "allPolicy"
@@ -119,7 +104,7 @@
         },
         methods: {
             getList() {
-                var url = goverBene[this.pageType] || "";
+                var url = this.$apiUrl.goverBene[this.pageType] || "";
                 this.isLoding = true;
                 this.listData = []
                 this.$post(url, {
@@ -156,10 +141,8 @@
                 );
             },
             hotItemClick(item) {
-                console.log(item)
             },
             jumpClick(item) {
-                console.log(item)
             }
         }
     }
