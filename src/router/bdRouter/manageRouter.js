@@ -1,104 +1,94 @@
 /***********************园区管理路由***************************/
 
 // 园区侧边栏公共路口
-const parkIndex = resolve => require(['@/views/parkHall/index'],resolve);
-const asideComRoot = resolve => require(['@/views/parkHall/asideComRoot/index'],resolve);
+const parkIndex = resolve => require(['@/pages/index.vue'],resolve);
+const asideComRoot = resolve => require(['@/pages/asideComRoot/index'],resolve);
 
 /***********平台设置************/
 
 /*****关于我们******/
-const baseInfo= resolve => require(['@/views/parkHall/manage/baseInfo'],resolve);
-//园区管理 概览设置 模板选择
-const selectModule = resolve => require(['@/views/parkHall/manage/selectModule'],resolve);
+const baseInfo= resolve => require(['@/pages/bd/manage/platformSetup/aboutWe/baseInfo'],resolve);
 //园区管理 概览设置 模板1
-const scanModelOne = resolve => require(['@/views/commonComponents/commonManage/scanModelOne'],resolve);
+const scanModelOne = resolve => require(['@/pages/bd/manage/platformSetup/aboutWe/scanModelOne'],resolve);
 //园区管理 概览设置 模板2
-const scanModelTwo = resolve => require(['@/views/commonComponents/commonManage/scanModelTwo'],resolve);
+const scanModelTwo = resolve => require(['@/pages/bd/manage/platformSetup/aboutWe/scanModelTwo'],resolve);
 
 /*****入驻申请表******/
-const occupancyApplication = resolve => require(['@/views/commonComponents/commonManage/occupancyApplication'],resolve);
+const occupancyApplication = resolve => require(['@/pages/bd/manage/platformSetup/addParkRequestForm/occupancyApplication'],resolve);
 
 /*****bannert设置******/
-const bannerSet= resolve => require(['@/views/commonComponents/commonManage/bannerSet'], resolve);
+const bannerSet= resolve => require(['@/pages/bd/manage/platformSetup/bannerSet/bannerSet'], resolve);
 
 /*****数据管理******/
-const dataManage = resolve => require(['@/views/newmanage/platformSetup/dataManage/dataManage'], resolve);
+const dataManage = resolve => require(['@/pages/bd/manage/platformSetup/dataManage/dataManage'], resolve);
 
 /*****专家团队******/
-const expertTeam = resolve => require(['@/views/newmanage/platformSetup/expertTeam'], resolve);
+const expertTeam = resolve => require(['@/pages/bd/manage/platformSetup/expertTeam'], resolve);
 //发布专家团队
-const publishExpertTeam = resolve => require(['@/views/newmanage/platformSetup/expertTeam/publishExpertTeam'], resolve);
+const publishExpertTeam = resolve => require(['@/pages/bd/manage/platformSetup/expertTeam/publishExpertTeam'], resolve);
 
 /*****发布成果******/
-const resultManage = resolve => require(['@/views/newmanage/platformSetup/resultManage'], resolve);
+const resultManage = resolve => require(['@/pages/bd/manage/platformSetup/resultManage'], resolve);
 //发布成果
-const publishAchievement = resolve => require(['@/views/newmanage/platformSetup/resultManage/publishAchievement'], resolve);
+const publishAchievement = resolve => require(['@/pages/bd/manage/platformSetup/resultManage/publishAchievement'], resolve);
 
 
 /***********发布管理************/
 
 /*****科技政策******/
-const sciAndTechPolicy = resolve => require(['@/views/newmanage/publishManage/sciAndTechPolicy'], resolve);
+const sciAndTechPolicy = resolve => require(['@/pages/bd/manage/publishManage/sciAndTechPolicy'], resolve);
 //科技政策列表---政策法规
-const policieAndRegulation = resolve => require(['@/views/newmanage/publishManage/sciAndTechPolicy/policieAndRegulation'], resolve);
+const policieAndRegulation = resolve => require(['@/pages/bd/manage/publishManage/sciAndTechPolicy/policieAndRegulation'], resolve);
 //科技政策列表---科技服务
-const sciAndTechService = resolve => require(['@/views/newmanage/publishManage/sciAndTechPolicy/sciAndTechService'], resolve);
+const sciAndTechService = resolve => require(['@/pages/bd/manage/publishManage/sciAndTechPolicy/sciAndTechService'], resolve);
 //发布科技政策
-const publishSciAndTechPolicy = resolve => require(['@/views/newmanage/publishManage/sciAndTechPolicy/publishSciAndTechPolicy'], resolve);
+const publishSciAndTechPolicy = resolve => require(['@/pages/bd/manage/publishManage/sciAndTechPolicy/publishSciAndTechPolicy'], resolve);
 //科技政策审核
-const sciAndTechPolicyAuditDetail = resolve => require(['@/views/newmanage/publishManage/sciAndTechPolicy/sciAndTechPolicyAuditDetail'], resolve);
+const sciAndTechPolicyAuditDetail = resolve => require(['@/pages/bd/manage/publishManage/sciAndTechPolicy/sciAndTechPolicyAuditDetail'], resolve);
 
 /*****咨询公告******/
 
 /***********成员管理************/
-const userManage = resolve => require(['@/views/commonComponents/commonManage/userManage'],resolve);
+const userManage = resolve => require(['@/pages/bd/manage/userManage/userManage/userManage'],resolve);
 // 园区管理 成员管理 智能推荐
-const IntelligentInvestment = resolve => require(['@/views/commonComponents/commonManage/IntelligentInvestment'],resolve);
+const IntelligentInvestment = resolve => require(['@/pages/bd/manage/userManage/userManage/IntelligentInvestment'],resolve);
 // 园区管理 成员管理 邀请企业加入园区
-const requestEnterprice =  resolve => require(['@/views/commonComponents/commonManage/requestEnterprice'],resolve);
+const requestEnterprice =  resolve => require(['@/pages/bd/manage/userManage/userManage/requestEnterprice'],resolve);
 
 
 /***********审核管理************/
 
-const publishAudit = resolve => require(['@/views/newmanage/auditManage/publishAudit'], resolve);
+const publishAudit = resolve => require(['@/pages/bd/manage/auditManage/publishAudit'], resolve);
 //科技政策审核列表
-const sciAndTechPolicyAudit = resolve => require(['@/views/newmanage/auditManage/publishAudit/sciAndTechPolicyAudit/index.vue'], resolve);
+const sciAndTechPolicyAudit = resolve => require(['@/pages/bd/manage/auditManage/publishAudit/sciAndTechPolicyAudit/index.vue'], resolve);
 //发布审核详情
-const audit = resolve => require(['@/views/newmanage/auditManage/publishAudit/sciAndTechPolicyAudit/audit'], resolve);
+const audit = resolve => require(['@/pages/bd/manage/auditManage/publishAudit/sciAndTechPolicyAudit/audit'], resolve);
 //发布审核历史详情
-const auditDetail = resolve => require(['@/views/newmanage/auditManage/publishAudit/sciAndTechPolicyAudit/auditDetail'], resolve);
+const auditDetail = resolve => require(['@/pages/bd/manage/auditManage/publishAudit/sciAndTechPolicyAudit/auditDetail'], resolve);
 //资讯新闻审核列表
-const newsNoticeAudit = resolve => require(['@/views/newmanage/auditManage/publishAudit/newsNoticeAudit/index.vue'], resolve);
+const newsNoticeAudit = resolve => require(['@/pages/bd/manage/auditManage/publishAudit/newsNoticeAudit/index.vue'], resolve);
 
 /*****入园审核******/
-// 园区管理入园审核
-const activityPoolAddPark =resolve => require(['@/views/parkHall/manage/activityPoolAddPark'],resolve);
-// 园区管理 入园审核详情
-const manageAuditing =  resolve => require(['@/views/commonComponents/commonManage/manageAuditing'],resolve);
-//园区管理 入园状态审核详情
-const manageParkAuditDetail =  resolve => require(['@/views/commonComponents/commonManage/manageParkAuditDetail'],resolve);
+/*****入园审核--列表******/
+const activityPoolAddPark =resolve => require(['@/pages/bd/manage/auditManage/addParkAudit/activityPoolAddPark'],resolve);
+/*****入园审核--待审核******/
+const manageAuditing =  resolve => require(['@/pages/bd/manage/auditManage/addParkAudit/manageAuditing'],resolve);
+/*****入园审核--已审核******/
+const manageParkAuditDetail =  resolve => require(['@/pages/bd/manage/auditManage/addParkAudit/manageParkAuditDetail'],resolve);
 
 /*****活动审核******/
-const activityPoolActivityAuditing = resolve => require(['@/views/parkHall/manage/activityPoolActivityAuditing'],resolve);
-const activityPoolActivityAditing = resolve => require(['@/views/parkHall/manage/activityPoolActivityAuditing'],resolve);
-//园区管理 活动状态审核详情
-const manageActivityAuditDetail =  resolve => require(['@/views/commonComponents/commonManage/manageActivityAuditDetail'],resolve);
-// 园区管理 活动审核详情
-const manageActivityAudit =  resolve => require(['@/views/commonComponents/commonManage/manageActivityAudit'],resolve);
-
-/*****资讯审核******/
-// 园区管理资讯审核
-const activityPoolZX = resolve => require(['@/views/parkHall/manage/activityPoolZX'],resolve);
-// 园区管理 咨询审核详情
-const manageZXAuditing =  resolve => require(['@/views/parkHall/manage/manageZXAuditing'],resolve);
-//园区管理 活动状态审核详情
-const manageZXAuditingDetail = resolve => require(['@/views/parkHall/manage/manageZXAuditingDetail'],resolve);
+const activityPoolActivityAuditing = resolve => require(['@/pages/bd/manage/auditManage/activityPublishAudit/activityPublishAudit'],resolve);
+const activityPoolActivityAditing = resolve => require(['@/pages/bd/manage/auditManage/activityPublishAudit/activityPublishAudit'],resolve);
+/*****活动审核--已审核******/
+const manageActivityAuditDetail =  resolve => require(['@/pages/bd/manage/auditManage/activityPublishAudit/manageActivityAuditDetail'],resolve);
+/*****活动审核--待审核******/
+const manageActivityAudit =  resolve => require(['@/pages/bd/manage/auditManage/activityPublishAudit/manageActivityAudit'],resolve);
 
 /***********需求管理************/
 //园区管理-需求管理
-const needManage = resolve => require(['@/views/newmanage/needManage/needManage'], resolve);
+const needManage = resolve => require(['@/pages/bd/manage/needManage/needManage'], resolve);
 //园区管理-需求管理详情
-const needManageDetail = resolve => require(['@/views/newmanage/needManage/needManage/needManageDetail'], resolve);
+const needManageDetail = resolve => require(['@/pages/bd/manage/needManage/needManage/needManageDetail'], resolve);
 
 
 
@@ -123,12 +113,6 @@ export default {
                     component: baseInfo
                 },
                 {
-                    path: '/parkHall/manage/selectModule',
-                    name: "park-selectModule",
-                    component: selectModule,
-
-                },
-                {
                     path: '/parkHall/manage/userManage',
                     name: "park-userManage",
                     component: userManage,
@@ -144,12 +128,6 @@ export default {
                     path: '/parkHall/manage/activityPoolAddPark',
                     name: "park-activityPoolAddPark",
                     component: activityPoolAddPark,
-
-                },
-                {
-                    path: '/parkHall/manage/activityPoolZX',
-                    name: "park-activityPoolZX",
-                    component: activityPoolZX,
 
                 },
                 {
@@ -252,18 +230,6 @@ export default {
             name: "park-requestEnterprice",
             component: requestEnterprice,
             
-        },
-        {
-            path: '/parkHall/manage/manageZXAuditing',
-            name: "park-manageZXAuditing",
-            component: manageZXAuditing,
-
-        },
-        {
-            path: '/parkHall/manage/manageZXAuditingDetail',
-            name: "park-manageZXAuditingDetail",
-            component: manageZXAuditingDetail,
-
         },
         {
             path: '/parkHall/manage/manageAuditing',

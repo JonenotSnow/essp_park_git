@@ -239,12 +239,7 @@ async function getLoginUserRole(options) {
     };
     await post(urlapi, pop).then(
         response => {
-            // if (response.resultCode == "CLT000000000" || response.resultCode == "0000000000") {
-                LoginUserRol = response.resultData;
-                sessionStorageHandler.setItem("LoginUserRol", LoginUserRol);
-            // } else {
-            //     Message.info(response.resultMsg);
-            // }
+            LoginUserRol = response.resultData;
         },
         response => {
             Message.info(response.resultMsg);
@@ -254,11 +249,31 @@ async function getLoginUserRole(options) {
 
 // 获取菜单权限 需要传入 parkId, 角色权限
 async function selectResMenu(options, next) {
+    //确认园区是保定还是标准版，保定用多角色获取权限，不做任何过滤，标准版用最高角色获取权限
+    await getParkByName();
+    let curMaxRole = [];
+    if (oneId !== bdParkId) {
+        if (options.LoginUserRol.length>1) {
+            let maxRole = ''
+            for (let i = 0; i < options.LoginUserRol.length; i++) {
+                if (i<options.LoginUserRol.length-1) {
+                    let lg = Number(options.LoginUserRol[i])>Number(options.LoginUserRol[i+1]);
+                    maxRole = lg ? options.LoginUserRol[i] : options.LoginUserRol[i+1];
+                }
+            }
+            curMaxRole.push(maxRole);
+        }else{
+            curMaxRole = options.LoginUserRol;
+        }
+    }else{
+        curMaxRole = options.LoginUserRol;
+    }
     var urlapi = apiUrl.home.selectResMenu;
+    console.log(curMaxRole)
     var pop = {
         sysType: "park",
         sysBsnAttr: options.oneId,
-        postIdList: options.LoginUserRol
+        postIdList: curMaxRole
     };
     await post(urlapi, pop).then(
         response => {

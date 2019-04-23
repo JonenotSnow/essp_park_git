@@ -5,7 +5,7 @@
 
 // 园区入口
 const parkIndex = resolve => require(['@/pages/index.vue'],resolve);
-const asideComRoot = resolve => require(['@/pages/standard/asideComRoot/index'],resolve);
+const asideComRoot = resolve => require(['@/pages/asideComRoot/index'],resolve);
 
 //园区管理--主页
 const manageMain = resolve => require(['@/pages/standard/manage/manageMain/index.vue'],resolve);

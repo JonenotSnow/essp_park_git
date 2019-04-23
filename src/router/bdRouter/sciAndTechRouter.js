@@ -1,32 +1,32 @@
 /***********************科技政策路由***************************/
 
 // 园区侧边栏公共路口
-const parkIndex = resolve => require(['@/views/parkHall/index'],resolve);
-const asideComRoot = resolve => require(['@/views/parkHall/asideComRoot/index'], resolve);
+const parkIndex = resolve => require(['@/pages/index.vue'],resolve);
+const asideComRoot = resolve => require(['@/pages/asideComRoot/index'],resolve);
 
 /**
  * 政策法规相关路由
  * @returns {Promise<T | never>}
  */
-const policieAndRegulatio = () => import ('@/views/newparkHall/sciAndTechPolicy/policieAndRegulation/policieAndRegulation/index').then(m => m.default)
+const policieAndRegulatio = () => import ('@/pages/bd/sciAndTech/policieAndRegulation/policieAndRegulation/index').then(m => m.default)
 
 /**
  * 科技服务相关路由
  * @returns {Promise<T | never>}
  */
-const technInnoCertificate = () => import ('@/views/newparkHall/sciAndTechPolicy/sciAndTechService/technInnoCertificate/index').then(m => m.default)
-const techContractRegistration = () => import ('@/views/newparkHall/sciAndTechPolicy/sciAndTechService/techContractRegistration/index').then(m => m.default)
-const seniorEnterpriseIdentify = () => import ('@/views/newparkHall/sciAndTechPolicy/sciAndTechService/seniorEnterpriseIdentify/index').then(m => m.default)
-const familyJuniorIdentify = () => import ('@/views/newparkHall/sciAndTechPolicy/sciAndTechService/familyJuniorIdentify/index').then(m => m.default)
-const intellectualProperty = () => import ('@/views/newparkHall/sciAndTechPolicy/sciAndTechService/intellectualProperty/index').then(m => m.default)
-const technologyServiceOrganization = () => import ('@/views/newparkHall/sciAndTechPolicy/sciAndTechService/technologyServiceOrganization/index').then(m => m.default)
-const riskInvestment = () => import ('@/views/newparkHall/sciAndTechPolicy/sciAndTechService/riskInvestment/index').then(m => m.default)
-const angelInvestment = () => import ('@/views/newparkHall/sciAndTechPolicy/sciAndTechService/angelInvestment/index').then(m => m.default)
+const technInnoCertificate = () => import ('@/pages/bd/sciAndTech/sciAndTechService/technInnoCertificate/index').then(m => m.default)
+const techContractRegistration = () => import ('@/pages/bd/sciAndTech/sciAndTechService/techContractRegistration/index').then(m => m.default)
+const seniorEnterpriseIdentify = () => import ('@/pages/bd/sciAndTech/sciAndTechService/seniorEnterpriseIdentify/index').then(m => m.default)
+const familyJuniorIdentify = () => import ('@/pages/bd/sciAndTech/sciAndTechService/familyJuniorIdentify/index').then(m => m.default)
+const intellectualProperty = () => import ('@/pages/bd/sciAndTech/sciAndTechService/intellectualProperty/index').then(m => m.default)
+const technologyServiceOrganization = () => import ('@/pages/bd/sciAndTech/sciAndTechService/technologyServiceOrganization/index').then(m => m.default)
+const riskInvestment = () => import ('@/pages/bd/sciAndTech/sciAndTechService/riskInvestment/index').then(m => m.default)
+const angelInvestment = () => import ('@/pages/bd/sciAndTech/sciAndTechService/angelInvestment/index').then(m => m.default)
 
 /**
  * 详情页面
  */
-const detail = () => import ('@/views/newparkHall/sciAndTechPolicy/detail.vue').then(m => m.default)
+const detail = () => import ('@/pages/bd/sciAndTech/detail.vue').then(m => m.default)
 
 export default {
     path: '/',

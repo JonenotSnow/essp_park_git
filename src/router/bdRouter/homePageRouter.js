@@ -1,7 +1,7 @@
 /***********************园区首页路由***************************/
 
 // 园区侧边栏公共路口
-const parkIndex = resolve => require(['@/views/parkHall/index'],resolve);
+const parkIndex = resolve => require(['@/pages/index'],resolve);
 //首页暂时无菜单导航
 // const asideComRoot = resolve => require(['@/views/parkHall/asideComRoot/index'],resolve);
 
@@ -11,19 +11,19 @@ const parkIndex = resolve => require(['@/views/parkHall/index'],resolve);
 /**********全页面路由放置区***********/
 
 // 园区首页
-const parkHome = resolve => require(['@/views/parkHall/home/index'],resolve);
+const parkHome = resolve => require(['@/pages/bd/homePage/index'],resolve);
 // 园区列表
-const parkList =  resolve => require(['@/views/parkHall/home/parkList.vue'],resolve);
+const parkList =  resolve => require(['@/pages/bd/homePage/parkList.vue'],resolve);
 // 普惠金融
-const inclusiveFinance =  resolve => require(['@/views/parkHall/manage/inclusiveFinance'], resolve);
+const inclusiveFinance =  resolve => require(['@/pages/bd/homePage/inclusiveFinance'], resolve);
 // 入驻企业
-const allEnterpriseList =  resolve => require(['@/views/parkHall/manage/allEnterpriseList'], resolve);
+const allEnterpriseList =  resolve => require(['@/pages/bd/homePage/allEnterpriseList'], resolve);
 //邀请函
-const requestPage =  resolve => require(['@/views/commonComponents/commonManage/requestPage.vue'],resolve);
+const requestPage =  resolve => require(['@/pages/bd/homePage/requestPage.vue'],resolve);
 // 园区搜索页面
-const parkSearch = resolve => require(['@/views/parkHall/home/parkSearch'],resolve);
+const parkSearch = resolve => require(['@/pages/bd/homePage/parkSearch'],resolve);
 //园区管理 申请入驻园区
-const requestAddPark = resolve => require(['@/views/commonComponents/commonManage/requestAddPark'],resolve);
+const requestAddPark = resolve => require(['@/pages/bd/homePage/requestAddPark'],resolve);
 
 export default {
     path: '/',

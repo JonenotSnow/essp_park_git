@@ -4,28 +4,28 @@
 const parkIndex = resolve => require(['@/views/parkHall/index'],resolve);
 
 // 办事大厅模块入口
-const officeHall = resolve => require(['@/views/newparkHall/officeHall'], resolve);
+const officeHall = resolve => require(['@/pages/bd/serviceHall'], resolve);
 
 // 科技计划项目申报---页面
-const sciAndTechProDeclaration = resolve => require(['@/views/newparkHall/officeHall/sciAndTechProDeclaration'], resolve);
+const sciAndTechProDeclaration = resolve => require(['@/pages/bd/serviceHall/sciAndTechProDeclaration'], resolve);
 
 // 技术合同登记---页面
-const techContractRegistration = resolve => require(['@/views/newparkHall/officeHall/techContractRegistration'], resolve);
+const techContractRegistration = resolve => require(['@/pages/bd/serviceHall/techContractRegistration'], resolve);
 
 // 审批认定---页面
-const examAndApprovalIdentified = resolve => require(['@/views/newparkHall/officeHall/examAndApprovalIdentified'], resolve);
+const examAndApprovalIdentified = resolve => require(['@/pages/bd/serviceHall/examAndApprovalIdentified'], resolve);
 
 // 知识产权申报---页面
-const intellectualPropertyDeclaration = resolve => require(['@/views/newparkHall/officeHall/intellectualPropertyDeclaration'], resolve);
+const intellectualPropertyDeclaration = resolve => require(['@/pages/bd/serviceHall/intellectualPropertyDeclaration'], resolve);
 
 // 创新劵管理---页面
-const innovativeSecuritiesManagement = resolve => require(['@/views/newparkHall/officeHall/innovativeSecuritiesManagement'], resolve);
+const innovativeSecuritiesManagement = resolve => require(['@/pages/bd/serviceHall/innovativeSecuritiesManagement'], resolve);
 
 // 创新创业大赛---页面
-const innoAndEntreCompetition = resolve => require(['@/views/newparkHall/officeHall/innoAndEntreCompetition'], resolve);
+const innoAndEntreCompetition = resolve => require(['@/pages/bd/serviceHall/innoAndEntreCompetition'], resolve);
 
 // 高新科技企业统计管理系统---页面
-const sohtEnterprisesManagementSystem = resolve => require(['@/views/newparkHall/officeHall/sohtEnterprisesManagementSystem'], resolve);
+const sohtEnterprisesManagementSystem = resolve => require(['@/pages/bd/serviceHall/sohtEnterprisesManagementSystem'], resolve);
 
 export default {
     path: '/',

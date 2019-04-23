@@ -3,20 +3,21 @@
 // 园区侧边栏公共路口
 const parkIndex = resolve => require(['@/views/parkHall/index'],resolve);
 const asideComRoot = resolve => require(['@/views/parkHall/asideComRoot/index'],resolve);
-const newsInfoSet = resolve => require(['@/views/newmanage/publishManage/newsInfoSet'], resolve);// 新园区-资讯公告管理
-const publicNews = resolve => require(['@/views/newmanage/publishManage/newsInfoSet/publicNews'], resolve);// 新园区-新闻管理页
-const publicNotice = resolve => require(['@/views/newmanage/publishManage/newsInfoSet/publicNotice'], resolve);// 新园区-新闻管理页
-const alllistnews = resolve => require(['@/views/newparkHall/News/allNews/alllistnews'], resolve);//全部新闻
-const myfcsnews = resolve => require(['@/views/newparkHall/News/allNews/myfcsnews'], resolve);//我关注的新闻
-const allnotice = resolve => require(['@/views/newparkHall/News/notice/allnotice'], resolve);//全部通告
-const newsdetail = resolve => require(['@/views/newparkHall/News/allNews/newsdetail'], resolve);//新闻详情页
-const noticedetail = resolve => require(['@/views/newparkHall/News/notice/noticedetail'], resolve);//通知公告详情页
+
+const newsInfoSet = resolve => require(['@/pages/bd/information/newsInfoSet'], resolve);// 新园区-资讯公告管理
+const publicNews = resolve => require(['@/pages/bd/information/newsInfoSet/publicNews'], resolve);// 新园区-新闻管理页
+const publicNotice = resolve => require(['@/pages/bd/information/newsInfoSet/publicNotice'], resolve);// 新园区-新闻管理页
+const alllistnews = resolve => require(['@/pages/bd/information/News/allNews/alllistnews'], resolve);//全部新闻
+const myfcsnews = resolve => require(['@/pages/bd/information/News/allNews/myfcsnews'], resolve);//我关注的新闻
+const allnotice = resolve => require(['@/pages/bd/information/News/notice/allnotice'], resolve);//全部通告
+const newsdetail = resolve => require(['@/pages/bd/information/News/allNews/newsdetail'], resolve);//新闻详情页
+const noticedetail = resolve => require(['@/pages/bd/information/News/notice/noticedetail'], resolve);//通知公告详情页
 
 // 发布页面公用这个
-const publishInformationAnnounce = resolve => require(['@/views/newmanage/publishManage/newsInfoSet/publishInformationAnnounce'], resolve);//新闻发布页
+const publishInformationAnnounce = resolve => require(['@/pages/bd/information/newsInfoSet/publishInformationAnnounce'], resolve);//新闻发布页
 
-const lookNewsAudit = resolve => require(['@/views/newmanage/publishManage/newsInfoSet/lookNewsAudit'], resolve);//新闻审核详情页展示
-const lookNoticeAudit = resolve => require(['@/views/newmanage/publishManage/newsInfoSet/lookNoticeAudit'], resolve);//通知公告审核详情页展示
+const lookNewsAudit = resolve => require(['@/pages/bd/information/newsInfoSet/lookNewsAudit'], resolve);//新闻审核详情页展示
+const lookNoticeAudit = resolve => require(['@/pages/bd/information/newsInfoSet/lookNoticeAudit'], resolve);//通知公告审核详情页展示
 
 export default {
     path: '/',

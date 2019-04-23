@@ -9,6 +9,10 @@ import standardRouter from './standardRouter/index'
 
 let curRouter = isBdPark.isBdPark()?bdRouter:standardRouter || [];
 
+
+console.log('curRouter***************************************************************************')
+console.log(curRouter)
+
 export default new Router({
     mode: 'hash',  
     routes:curRouter,
